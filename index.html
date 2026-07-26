@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zyekh Abdul Qadir Jailani | Full Stack Developer &amp; Security Researcher</title>
+  <meta name="description" content="Official Portfolio of Zyekh Abdul Qadir Jailani - Full Stack Developer & Security Researcher. Enterprise Backend Architecture, Network Security Hardening, and Android Modding.">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Pure.css CDN & Responsive Grids -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+  
+  <!-- Google Fonts: Outfit & Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #09090b;
+      --bg-card: #141417;
+      --bg-card-hover: #1f1f23;
+      --border-color: #27272a;
+      --border-color-hover: #52525b;
+      --text-main: #fafafa;
+      --text-muted: #a1a1aa;
+      --accent-white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, .brand-title {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    /* Header & Navigation */
+    .header-nav {
+      background-color: rgba(9, 9, 11, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.75rem 1.5rem;
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-logo {
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 1.1rem;
+      letter-spacing: -0.05em;
+    }
+
+    .pure-menu-link {
+      color: var(--text-muted) !important;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .pure-menu-link:hover, .pure-menu-link:focus {
+      background: transparent !important;
+      color: var(--text-main) !important;
+    }
+
+    /* Layout Containers */
+    .main-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .section-padding {
+      padding: 3.5rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-subtitle {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    /* Badges & Tags */
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-family: 'Fira Code', monospace;
+      font-weight: 600;
+      background: #18181b;
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 4rem 0 3rem 0;
+    }
+
+    .hero-title {
+      font-size: 2.8rem;
+      line-height: 1.15;
+      margin: 0.5rem 0 1rem 0;
+      color: var(--accent-white);
+    }
+
+    .hero-tagline {
+      font-family: 'Fira Code', monospace;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 680px;
+      margin-bottom: 2rem;
+    }
+
+    /* Buttons */
+    .pure-button-primary {
+      background-color: #fafafa !important;
+      color: #09090b !important;
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 0.65rem 1.4rem;
+      border: 1px solid #ffffff !important;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .pure-button-primary:hover {
+      background-color: #e4e4e7 !important;
+    }
+
+    .button-secondary {
+      background-color: var(--bg-card) !important;
+      color: var(--text-main) !important;
+      border: 1px solid var(--border-color) !important;
+      font-weight: 500;
+      border-radius: 6px;
+      padding: 0.65rem 1.4rem;
+      transition: border-color 0.2s ease;
+    }
+    .button-secondary:hover {
+      border-color: var(--border-color-hover) !important;
+    }
+
+    /* Cards */
+    .custom-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      height: 100%;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .custom-card:hover {
+      border-color: var(--border-color-hover);
+      transform: translateY(-2px);
+    }
+    .card-grid-gap { padding: 0.5rem; }
+
+    /* Profile Image Styling */
+    .profile-img-container {
+      width: 100%;
+      max-width: 220px;
+      aspect-ratio: 1/1;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 2px solid var(--border-color);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      filter: grayscale(100%);
+      transition: filter 0.3s ease;
+    }
+    .profile-img-container:hover {
+      filter: grayscale(0%);
+    }
+    .profile-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Terminal Component */
+    .terminal-window {
+      background-color: #000000;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .terminal-header {
+      background-color: #121215;
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .terminal-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      background: #3f3f46;
+    }
+
+    .terminal-title {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-left: auto;
+    }
+
+    .terminal-body {
+      padding: 1rem;
+      min-height: 260px;
+      max-height: 380px;
+      overflow-y: auto;
+      font-size: 0.88rem;
+      color: #e4e4e7;
+    }
+
+    .terminal-line {
+      margin-bottom: 0.4rem;
+      word-break: break-word;
+    }
+    .prompt-user { color: #ffffff; font-weight:600; }
+    .prompt-path { color: #a1a1aa; }
+
+    .terminal-input-line {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .terminal-input {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      outline: none;
+      width: 100%;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 2.5rem 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-color);
+    }
+    .footer a {
+      color: var(--text-main);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="header-nav">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">ZYEKH_ABDUL</a>
+      <div class="pure-menu pure-menu-horizontal">
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item"><a href="#about" class="pure-menu-link">About</a></li>
+          <li class="pure-menu-item"><a href="#skills" class="pure-menu-link">Skills</a></li>
+          <li class="pure-menu-item"><a href="#projects" class="pure-menu-link">Projects</a></li>
+          <li class="pure-menu-item"><a href="#terminal" class="pure-menu-link">Terminal</a></li>
+          <li class="pure-menu-item"><a href="/tools/" class="pure-menu-link" style="color: #ffffff !important; font-weight:600;">🧰 Tools Hub</a></li>
+          <li class="pure-menu-item"><a href="#contact" class="pure-menu-link">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="pure-g">
+        <div class="pure-u-1 pure-u-md-3-4">
+          <span class="badge">FULL STACK DEVELOPER &amp; SECURITY RESEARCHER</span>
+          <h1 class="hero-title">Zyekh Abdul Qadir Jailani</h1>
+          <p class="hero-tagline">"CODE IS TEMPORARY, SECURITY IS PERMANENT"</p>
+          <p class="hero-desc">
+            Specializing in enterprise backend architecture, network &amp; system security hardening research, and advanced Android platform customization.
+          </p>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <a href="#projects" class="pure-button pure-button-primary">View Repositories</a>
+            <a href="/tools/" class="pure-button button-secondary">Explore Web Tools (19+)</a>
+            <a href="#contact" class="pure-button button-secondary">Contact Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About & Education Section -->
+    <section id="about" class="section-padding">
+      <h2 class="section-title">01. About &amp; Academics</h2>
+      <p class="section-subtitle">Verified identity profile and academic background</p>
+      
+      <div class="pure-g" style="align-items: center;">
+        <!-- Profile Picture Column -->
+        <div class="pure-u-1 pure-u-md-1-3 card-grid-gap" style="display: flex; justify-content: center; margin-bottom: 1.5rem;">
+          <div class="profile-img-container">
+            <img src="/profile.jpg" alt="Zyekh Abdul Qadir Jailani" class="profile-img">
+          </div>
+        </div>
+
+        <!-- Information Column -->
+        <div class="pure-u-1 pure-u-md-2-3 card-grid-gap">
+          <div class="custom-card">
+            <h3 style="margin-top:0;">Background &amp; Credentials</h3>
+            <ul style="padding-left: 1.2rem; color: var(--text-muted);">
+              <li style="margin-bottom: 0.6rem;"><strong style="color:#fff;">Academics:</strong> SMK Skill Village • SMPIT Daarul Ijabah • MI Al-Husein</li>
+              <li style="margin-bottom: 0.6rem;"><strong style="color:#fff;">Certification:</strong> DUDI Habituasi (Back-End Track) — Skillage</li>
+              <li style="margin-bottom: 0.6rem;"><strong style="color:#fff;">Certification:</strong> DUDI Habituasi (Front-End Track) — Skillage</li>
+              <li style="margin-bottom: 0.6rem;"><strong style="color:#fff;">Core Focus:</strong> Enterprise Backend Architecture, Android modding, Network Security hardening.</li>
+              <li><strong style="color:#fff;">Availability:</strong> Open for software engineering projects, architectural consulting, &amp; security audits.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Matrix -->
+    <section id="skills" class="section-padding">
+      <h2 class="section-title">02. Capability Matrix</h2>
+      <p class="section-subtitle">Primary technology focus and system research</p>
+
+      <div class="pure-g">
+        <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 card-grid-gap">
+          <div class="custom-card">
+            <h4 style="margin-top:0;">Backend Architecture</h4>
+            <p style="font-size:0.88rem; color:var(--text-muted);">Laravel 12, PHP, Redis, REST APIs, Microservices, Docker, SQL Database Optimization.</p>
+          </div>
+        </div>
+        <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 card-grid-gap">
+          <div class="custom-card">
+            <h4 style="margin-top:0;">Security &amp; Hardening</h4>
+            <p style="font-size:0.88rem; color:var(--text-muted);">Network Vulnerability Audit, CWE/SANS DevSecOps, Android Persistence Research, Penetration Testing.</p>
+          </div>
+        </div>
+        <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 card-grid-gap">
+          <div class="custom-card">
+            <h4 style="margin-top:0;">Automation &amp; Shell</h4>
+            <p style="font-size:0.88rem; color:var(--text-muted);">Bash / Shell Scripting, PowerShell, Linux Server Administration, Nginx Configuration.</p>
+          </div>
+        </div>
+        <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-4 card-grid-gap">
+          <div class="custom-card">
+            <h4 style="margin-top:0;">Android &amp; OS Modding</h4>
+            <p style="font-size:0.88rem; color:var(--text-muted);">Custom ROM Development, System Debloating, Game Modification &amp; Rapid Prototyping.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Repository -->
+    <section id="projects" class="section-padding">
+      <h2 class="section-title">03. Core Repositories</h2>
+      <p class="section-subtitle">Verified research archive and open-source projects</p>
+
+      <div class="pure-g">
+        <div class="pure-u-1 pure-u-md-1-2 card-grid-gap">
+          <div class="custom-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 style="margin:0; font-size:1.1rem; color:#fff;">Laravel_12_Microservices</h3>
+              <span class="badge">PUBLIC</span>
+            </div>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin:0.8rem 0;">Modern microservices architecture built with Laravel 12, equipped with Redis caching and Docker containerization.</p>
+            <div style="font-family:'Fira Code', monospace; font-size:0.78rem; color:var(--text-muted);">PHP • Redis • Docker</div>
+          </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-2 card-grid-gap">
+          <div class="custom-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 style="margin:0; font-size:1.1rem; color:#fff;">Kernel_Level_Research</h3>
+              <span class="badge">RESTRICTED</span>
+            </div>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin:0.8rem 0;">Kernel-level operating system hardening research and low-level memory protection mechanisms.</p>
+            <div style="font-family:'Fira Code', monospace; font-size:0.78rem; color:var(--text-muted);">C • Assembly • Bash</div>
+          </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-2 card-grid-gap">
+          <div class="custom-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 style="margin:0; font-size:1.1rem; color:#fff;">Remote Agent Research</h3>
+              <span class="badge">PUBLIC</span>
+            </div>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin:0.8rem 0;">Distributed agent experimentation and secure communication protocols for remote server management.</p>
+            <div style="font-family:'Fira Code', monospace; font-size:0.78rem; color:var(--text-muted);">JavaScript • Remote Agent Protocol</div>
+          </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-2 card-grid-gap">
+          <div class="custom-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 style="margin:0; font-size:1.1rem; color:#fff;">OS Debloat &amp; Modding Scripts</h3>
+              <span class="badge">PUBLIC</span>
+            </div>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin:0.8rem 0;">Automation scripts for operating system bloatware removal and performance optimization.</p>
+            <div style="font-family:'Fira Code', monospace; font-size:0.78rem; color:var(--text-muted);">Bash • PowerShell</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Terminal Console -->
+    <section id="terminal" class="section-padding">
+      <h2 class="section-title">04. Interactive Terminal Console</h2>
+      <p class="section-subtitle">Execute live commands to explore profile (Type <code style="color:#fff;">help</code> for manual)</p>
+
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+          <span class="terminal-dot"></span>
+          <span class="terminal-title">guest_user@zyekh_abdul: ~</span>
+        </div>
+        <div class="terminal-body" id="terminalOutput">
+          <div class="terminal-line"><span style="color:#ffffff">[SYSTEM]</span> Initializing interactive shell v2.4...</div>
+          <div class="terminal-line">Type <span style="color:#ffffff">help</span> to view available command manuals.</div>
+        </div>
+        <div style="padding: 0.5rem 1rem; border-top: 1px solid var(--border-color); background:#0a0a0c;">
+          <div class="terminal-input-line">
+            <span class="prompt-user">guest</span>@<span class="prompt-path">zyekh</span>:~$
+            <input type="text" id="terminalInput" class="terminal-input" placeholder="type command here..." autocomplete="off">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Web Tools Hub Feature Highlight -->
+    <section class="section-padding">
+      <div class="custom-card" style="border: 1px solid var(--border-color-hover);">
+        <div class="pure-g" style="align-items:center;">
+          <div class="pure-u-1 pure-u-md-2-3">
+            <h3 style="margin-top:0; font-size:1.4rem;">🧰 Zyekh Web Tools Hub (19+ Free Tools)</h3>
+            <p style="color:var(--text-muted); margin-bottom:1rem;">
+              Collection of client-side web utility tools with no sign-up required: Zakat Calculator, PPh 21, THR, Mortgage (KPR), Split Bill, QR Code Generator, Password Generator, Diff Checker, Pomodoro, and more.
+            </p>
+          </div>
+          <div class="pure-u-1 pure-u-md-1-3" style="text-align:right;">
+            <a href="/tools/" class="pure-button pure-button-primary" style="width:100%; text-align:center;">Open Tools Hub →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding" style="border-bottom:none;">
+      <h2 class="section-title">05. Primary Contact</h2>
+      <p class="section-subtitle">Send a direct message or connect (Messages are delivered to <strong style="color:#fff;">aqz220309@gmail.com</strong>)</p>
+
+      <div class="pure-g">
+        <div class="pure-u-1 pure-u-md-1-2 card-grid-gap">
+          <div class="custom-card">
+            <h3 style="margin-top:0;">Contact Information</h3>
+            <p style="color:var(--text-muted); font-size:0.95rem; line-height: 1.8;">
+              <strong>Primary Email:</strong> <a href="mailto:aqz220309@gmail.com" style="color:#ffffff; font-weight:600;">aqz220309@gmail.com</a><br>
+              <strong>GitHub:</strong> <a href="https://github.com/zyekhabdul" target="_blank" style="color:#ffffff; font-weight:600;">github.com/zyekhabdul</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="pure-u-1 pure-u-md-1-2 card-grid-gap">
+          <form action="https://formsubmit.co/aqz220309@gmail.com" method="POST" class="pure-form pure-form-stacked custom-card">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_subject" value="New Message from zyekh.com Website Contact">
+            <input type="hidden" name="_next" value="https://zyekh.com/#contact">
+            
+            <h3 style="margin-top:0;">Send Direct Message</h3>
+            <label for="name" style="color:var(--text-muted); font-size:0.85rem;">Your Name</label>
+            <input type="text" id="name" name="name" class="pure-input-1" style="background:#09090b; border:1px solid var(--border-color); color:#fff; padding:0.5rem;" required>
+
+            <label for="email" style="color:var(--text-muted); font-size:0.85rem; margin-top:0.5rem;">Your Email</label>
+            <input type="email" id="email" name="email" class="pure-input-1" style="background:#09090b; border:1px solid var(--border-color); color:#fff; padding:0.5rem;" required>
+
+            <label for="message" style="color:var(--text-muted); font-size:0.85rem; margin-top:0.5rem;">Message</label>
+            <textarea id="message" name="message" class="pure-input-1" rows="3" style="background:#09090b; border:1px solid var(--border-color); color:#fff; padding:0.5rem;" required></textarea>
+
+            <button type="submit" class="pure-button pure-button-primary" style="margin-top:1rem; width:100%;">Confirm</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
+
+  <!-- Interactive Terminal Script -->
+  <script>
+    const input = document.getElementById('terminalInput');
+    const output = document.getElementById('terminalOutput');
+
+    const commands = {
+      help: `Available Commands:<br>
+  - <b>about</b>    : Academic background & profile<br>
+  - <b>skills</b>   : Capability matrix<br>
+  - <b>projects</b> : Verified core repositories<br>
+  - <b>contact</b>  : Email & GitHub links<br>
+  - <b>neofetch</b> : Compact system diagnostic info<br>
+  - <b>clear</b>    : Clear terminal screen`,
+      about: `=== ZYEKH ABDUL QADIR JAILANI ===<br>Full Stack Developer & Security Researcher<br>Academics: SMK Skill Village, SMPIT Daarul Ijabah, MI Al-Husein<br>Certifications: DUDI Habituasi (Back-End & Front-End) - Skillage`,
+      skills: `=== CAPABILITY MATRIX ===<br>- Backend: Laravel 12, PHP, Redis, Docker<br>- Security: System Hardening, DevSecOps, Android Research<br>- Scripting: Bash, PowerShell<br>- Android: Custom ROMs & Modding`,
+      projects: `=== CORE REPOSITORIES ===<br>1. Laravel_12_Microservices [PHP, Redis, Docker]<br>2. Kernel_Level_Research [C, Assembly, Bash]<br>3. Remote Agent Research [JS, Remote Agent]<br>4. OS Debloat & Modding Scripts [Bash, PowerShell]`,
+      contact: `=== CONTACT ===<br>Email: aqz220309@gmail.com<br>GitHub: https://github.com/zyekhabdul`,
+      neofetch: `guest_user@zyekh_abdul<br>---------------------<br>OS: Zyekh Onyx Linux x86_64<br>Host: zyekh.com Production Node<br>Shell: bash 5.2.15<br>Theme: Pure.css Monochrome Dark`
+    };
+
+    input.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        const cmd = this.value.trim().toLowerCase();
+        this.value = '';
+        
+        if (!cmd) return;
+
+        const cmdLine = document.createElement('div');
+        cmdLine.className = 'terminal-line';
+        cmdLine.innerHTML = `<span class="prompt-user">guest</span>@<span class="prompt-path">zyekh</span>:~$ ${cmd}`;
+        output.appendChild(cmdLine);
+
+        if (cmd === 'clear') {
+          output.innerHTML = '';
+        } else if (commands[cmd]) {
+          const resp = document.createElement('div');
+          resp.className = 'terminal-line';
+          resp.style.color = '#ffffff';
+          resp.innerHTML = commands[cmd];
+          output.appendChild(resp);
+        } else {
+          const err = document.createElement('div');
+          err.className = 'terminal-line';
+          err.style.color = '#a1a1aa';
+          err.innerHTML = `bash: ${cmd}: command not found. Type 'help' for manual.`;
+          output.appendChild(err);
+        }
+
+        output.scrollTop = output.scrollHeight;
+      }
+    });
+  </script>
+</body>
+</html>

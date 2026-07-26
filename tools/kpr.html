@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kalkulator KPR &amp; Cicilan - Simulasi Angsuran Pinjaman | Zyekh</title>
+  <meta name="description" content="Simulasi cicilan KPR atau kendaraan. Hitung angsuran bulanan, total bunga, dan total pembayaran dari plafon, tenor, dan suku bunga.">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Pure.css CDN & Responsive Grids -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+  
+  <!-- Google Fonts: Outfit & Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #09090b;
+      --bg-card: #141417;
+      --border-color: #27272a;
+      --border-color-hover: #52525b;
+      --text-main: #fafafa;
+      --text-muted: #a1a1aa;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 0;
+    }
+
+    .header-nav {
+      background-color: rgba(9, 9, 11, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.75rem 1.5rem;
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-logo {
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 1.1rem;
+      letter-spacing: -0.05em;
+    }
+
+    .pure-menu-link {
+      color: var(--text-muted) !important;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    .pure-menu-link:hover, .pure-menu-link:focus {
+      color: var(--text-main) !important;
+      background: transparent !important;
+    }
+
+    .main-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .tool-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 2rem;
+      border-radius: 8px;
+    }
+
+    input[type="text"], input[type="number"], input[type="email"], input[type="password"], input[type="datetime-local"], select, textarea {
+      background: #09090b !important;
+      border: 1px solid var(--border-color) !important;
+      color: #fff !important;
+      padding: 0.6rem 0.9rem !important;
+      border-radius: 6px !important;
+      font-size: 0.95rem;
+      width: 100%;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, sans-serif;
+      margin-bottom: 0.8rem;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--border-color-hover) !important;
+      outline: none;
+    }
+    label {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    button, .pure-button {
+      background-color: #fafafa !important;
+      color: #09090b !important;
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 0.55rem 1.2rem;
+      border: 1px solid #ffffff !important;
+      cursor: pointer;
+      font-family: 'Inter', system-ui, sans-serif;
+      margin-right: 0.4rem;
+      margin-bottom: 0.4rem;
+      transition: background-color 0.2s ease;
+    }
+    button:hover, .pure-button:hover {
+      background-color: #e4e4e7 !important;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: #09090b;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+    th, td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+    }
+    th {
+      background: #141417;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.88rem;
+    }
+    td {
+      color: var(--text-main);
+    }
+
+    a {
+      color: var(--text-main);
+      text-decoration: underline;
+    }
+
+    .footer {
+      padding: 2.5rem 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-color);
+    }
+  </style>
+</head>
+<body>
+  <header class="header-nav">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">ZYEKH_ABDUL</a>
+      <div class="pure-menu pure-menu-horizontal">
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item"><a href="/" class="pure-menu-link">Project Home</a></li>
+          <li class="pure-menu-item"><a href="/tools/" class="pure-menu-link" style="color: #ffffff !important; font-weight:600;">🧰 All Tools (19)</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div style="margin-bottom: 1.5rem;">
+      <a href="/tools/" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">← Back to Tools Hub</a>
+    </div>
+    
+    <div class="tool-box">
+      <h1>Kalkulator Cicilan (KPR / Kendaraan)</h1>
+
+  <p>
+    <label for="plafon">Plafon pinjaman (Rp)</label><br>
+    <input type="number" id="plafon" min="0" step="1000000" placeholder="500000000" oninput="calc()">
+  </p>
+  <p>
+    <label for="bunga">Suku bunga efektif (% per tahun)</label><br>
+    <input type="number" id="bunga" min="0" max="30" step="0.1" value="8.5" oninput="calc()">
+  </p>
+  <p>
+    <label for="tenor">Tenor (tahun)</label><br>
+    <input type="number" id="tenor" min="1" max="30" value="15" oninput="calc()">
+  </p>
+  <p>
+    <label for="dp">Uang muka / DP (Rp, opsional)</label><br>
+    <input type="number" id="dp" min="0" step="1000000" value="0" oninput="calc()">
+  </p>
+
+  <table>
+    <tr><th>Pinjaman bersih</th><td id="pinjaman">—</td></tr>
+    <tr><th>Total bunga</th><td id="bungaTotal">—</td></tr>
+    <tr><th>Total bayar</th><td id="totalBayar">—</td></tr>
+    <tr><th>Angsuran per bulan</th><td id="angsuranOut"><strong>—</strong></td></tr>
+  </table>
+
+  <p><small>Simulasi angsuran tetap (annuity). Bunga efektif tahunan ÷ 12. Hasil estimasi — biaya admin, asuransi, dan provisi bank tidak termasuk.</small></p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — Tools Hub. All tools run client-side locally in browser.</p>
+  </footer>
+
+  <script>
+    function fmt(n) { return 'Rp ' + Math.round(n).toLocaleString('id-ID'); }
+
+    function calc() {
+      const plafon = +document.getElementById('plafon').value || 0;
+      const dp = +document.getElementById('dp').value || 0;
+      const principal = Math.max(0, plafon - dp);
+      const annualRate = (+document.getElementById('bunga').value || 0) / 100;
+      const years = +document.getElementById('tenor').value || 1;
+      const n = years * 12;
+      const r = annualRate / 12;
+
+      let angsuran = 0;
+      if (principal > 0 && n > 0) {
+        if (r === 0) angsuran = principal / n;
+        else angsuran = principal * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+      }
+
+      const totalBayar = angsuran * n;
+      const bungaTotal = totalBayar - principal;
+
+      document.getElementById('pinjaman').textContent = fmt(principal);
+      document.getElementById('bungaTotal').textContent = fmt(bungaTotal);
+      document.getElementById('totalBayar').textContent = fmt(totalBayar);
+      document.getElementById('angsuranOut').innerHTML = '<strong>' + fmt(angsuran) + '</strong>';
+    }
+    calc();
+  </script>
+</body>
+</html>

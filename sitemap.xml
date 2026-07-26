@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://zyekh.com/</loc>
+    <lastmod>2026-07-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://zyekh.com/tools/</loc>
+    <lastmod>2026-07-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url><loc>https://zyekh.com/tools/zakat.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/thr.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/kpr.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/pph21.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/split-bill.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/converter.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/counter.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/case-converter.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/diff-checker.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/markdown.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/lorem.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/qr.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/password.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/color.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/tts.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/countdown.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/random-picker.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/dice.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/pomodoro.html</loc><lastmod>2026-07-26</lastmod><priority>0.8</priority></url>
+</urlset>

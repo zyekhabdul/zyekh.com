@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Konverter Satuan &amp; Mata Uang | Zyekh</title>
+  <meta name="description" content="Konverter satuan panjang, berat, suhu, dan mata uang. Atur kurs sendiri — tanpa backend, langsung di browser.">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Pure.css CDN & Responsive Grids -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+  
+  <!-- Google Fonts: Outfit & Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #09090b;
+      --bg-card: #141417;
+      --border-color: #27272a;
+      --border-color-hover: #52525b;
+      --text-main: #fafafa;
+      --text-muted: #a1a1aa;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+      margin-top: 0;
+    }
+
+    .header-nav {
+      background-color: rgba(9, 9, 11, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0.75rem 1.5rem;
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-logo {
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+      font-size: 1.1rem;
+      letter-spacing: -0.05em;
+    }
+
+    .pure-menu-link {
+      color: var(--text-muted) !important;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    .pure-menu-link:hover, .pure-menu-link:focus {
+      color: var(--text-main) !important;
+      background: transparent !important;
+    }
+
+    .main-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .tool-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 2rem;
+      border-radius: 8px;
+    }
+
+    input[type="text"], input[type="number"], input[type="email"], input[type="password"], input[type="datetime-local"], select, textarea {
+      background: #09090b !important;
+      border: 1px solid var(--border-color) !important;
+      color: #fff !important;
+      padding: 0.6rem 0.9rem !important;
+      border-radius: 6px !important;
+      font-size: 0.95rem;
+      width: 100%;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, sans-serif;
+      margin-bottom: 0.8rem;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--border-color-hover) !important;
+      outline: none;
+    }
+    label {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    button, .pure-button {
+      background-color: #fafafa !important;
+      color: #09090b !important;
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 0.55rem 1.2rem;
+      border: 1px solid #ffffff !important;
+      cursor: pointer;
+      font-family: 'Inter', system-ui, sans-serif;
+      margin-right: 0.4rem;
+      margin-bottom: 0.4rem;
+      transition: background-color 0.2s ease;
+    }
+    button:hover, .pure-button:hover {
+      background-color: #e4e4e7 !important;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      background: #09090b;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+    th, td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      text-align: left;
+    }
+    th {
+      background: #141417;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.88rem;
+    }
+    td {
+      color: var(--text-main);
+    }
+
+    a {
+      color: var(--text-main);
+      text-decoration: underline;
+    }
+
+    .footer {
+      padding: 2.5rem 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-color);
+    }
+  </style>
+</head>
+<body>
+  <header class="header-nav">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">ZYEKH_ABDUL</a>
+      <div class="pure-menu pure-menu-horizontal">
+        <ul class="pure-menu-list">
+          <li class="pure-menu-item"><a href="/" class="pure-menu-link">Project Home</a></li>
+          <li class="pure-menu-item"><a href="/tools/" class="pure-menu-link" style="color: #ffffff !important; font-weight:600;">🧰 All Tools (19)</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div style="margin-bottom: 1.5rem;">
+      <a href="/tools/" style="color: var(--text-muted); text-decoration: none; font-size: 0.9rem;">← Back to Tools Hub</a>
+    </div>
+    
+    <div class="tool-box">
+      <h1>Konverter Satuan &amp; Mata Uang</h1>
+
+  <p>
+    <button type="button" onclick="tab('panjang')">Panjang</button>
+    <button type="button" onclick="tab('berat')">Berat</button>
+    <button type="button" onclick="tab('suhu')">Suhu</button>
+    <button type="button" onclick="tab('uang')">Mata Uang</button>
+  </p>
+
+  <div id="panjang">
+    <p>
+      <input type="number" id="p-in" value="1" oninput="conv('panjang')">
+      <select id="p-from" onchange="conv('panjang')">
+        <option value="m">meter</option>
+        <option value="km">kilometer</option>
+        <option value="cm">sentimeter</option>
+        <option value="mm">milimeter</option>
+        <option value="mi">mil</option>
+        <option value="ft">kaki</option>
+        <option value="in">inci</option>
+      </select>
+    </p>
+    <p><button type="button" onclick="swap('p')">⇅ tukar</button></p>
+    <p>
+      <input type="number" id="p-out" readonly>
+      <select id="p-to" onchange="conv('panjang')">
+        <option value="km">kilometer</option>
+        <option value="m" selected>meter</option>
+        <option value="cm">sentimeter</option>
+        <option value="mm">milimeter</option>
+        <option value="mi">mil</option>
+        <option value="ft">kaki</option>
+        <option value="in">inci</option>
+      </select>
+    </p>
+  </div>
+
+  <div id="berat" hidden>
+    <p>
+      <input type="number" id="b-in" value="1" oninput="conv('berat')">
+      <select id="b-from" onchange="conv('berat')">
+        <option value="kg">kilogram</option>
+        <option value="g">gram</option>
+        <option value="mg">miligram</option>
+        <option value="lb">pound</option>
+        <option value="oz">ons</option>
+      </select>
+    </p>
+    <p><button type="button" onclick="swap('b')">⇅ tukar</button></p>
+    <p>
+      <input type="number" id="b-out" readonly>
+      <select id="b-to" onchange="conv('berat')">
+        <option value="g">gram</option>
+        <option value="kg" selected>kilogram</option>
+        <option value="mg">miligram</option>
+        <option value="lb">pound</option>
+        <option value="oz">ons</option>
+      </select>
+    </p>
+  </div>
+
+  <div id="suhu" hidden>
+    <p>
+      <input type="number" id="t-in" value="0" oninput="conv('suhu')">
+      <select id="t-from" onchange="conv('suhu')">
+        <option value="C">°C</option>
+        <option value="F">°F</option>
+        <option value="K">Kelvin</option>
+      </select>
+    </p>
+    <p><button type="button" onclick="swap('t')">⇅ tukar</button></p>
+    <p>
+      <input type="number" id="t-out" readonly>
+      <select id="t-to" onchange="conv('suhu')">
+        <option value="F">°F</option>
+        <option value="C" selected>°C</option>
+        <option value="K">Kelvin</option>
+      </select>
+    </p>
+  </div>
+
+  <div id="uang" hidden>
+    <p>Atur kurs manual (1 unit mata uang asing = Rp):</p>
+    <p><label>USD <input type="number" id="rate-usd" value="16000" step="100" oninput="conv('uang')"></label></p>
+    <p><label>EUR <input type="number" id="rate-eur" value="17500" step="100" oninput="conv('uang')"></label></p>
+    <p><label>SGD <input type="number" id="rate-sgd" value="12000" step="100" oninput="conv('uang')"></label></p>
+    <p><label>JPY <input type="number" id="rate-jpy" value="105" step="1" oninput="conv('uang')"></label></p>
+    <hr>
+    <p>
+      <input type="number" id="u-in" value="100" oninput="conv('uang')">
+      <select id="u-from" onchange="conv('uang')">
+        <option value="IDR">IDR</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="SGD">SGD</option>
+        <option value="JPY">JPY</option>
+      </select>
+    </p>
+    <p><button type="button" onclick="swap('u')">⇅ tukar</button></p>
+    <p>
+      <input type="number" id="u-out" readonly>
+      <select id="u-to" onchange="conv('uang')">
+        <option value="USD">USD</option>
+        <option value="IDR" selected>IDR</option>
+        <option value="EUR">EUR</option>
+        <option value="SGD">SGD</option>
+        <option value="JPY">JPY</option>
+      </select>
+    </p>
+  </div>
+
+  <p><small>Kurs mata uang diinput manual — bukan kurs real-time. Perbarui sesuai kurs terbaru.</small></p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — Tools Hub. All tools run client-side locally in browser.</p>
+  </footer>
+
+  <script>
+    const TO_M = { m: 1, km: 1000, cm: 0.01, mm: 0.001, mi: 1609.344, ft: 0.3048, in: 0.0254 };
+    const TO_KG = { kg: 1, g: 0.001, mg: 0.000001, lb: 0.453592, oz: 0.0283495 };
+    const PANELS = ['panjang', 'berat', 'suhu', 'uang'];
+
+    function tab(name) {
+      PANELS.forEach(id => { document.getElementById(id).hidden = id !== name; });
+    }
+
+    function swap(prefix) {
+      const f = document.getElementById(prefix + '-from');
+      const t = document.getElementById(prefix + '-to');
+      const fi = document.getElementById(prefix + '-in');
+      const fo = document.getElementById(prefix + '-out');
+      [f.value, t.value] = [t.value, f.value];
+      fi.value = fo.value || fi.value;
+      const map = { p: 'panjang', b: 'berat', t: 'suhu', u: 'uang' };
+      conv(map[prefix]);
+    }
+
+    function toCelsius(v, from) {
+      if (from === 'C') return v;
+      if (from === 'F') return (v - 32) * 5 / 9;
+      return v - 273.15;
+    }
+
+    function fromCelsius(c, to) {
+      if (to === 'C') return c;
+      if (to === 'F') return c * 9 / 5 + 32;
+      return c + 273.15;
+    }
+
+    function toIDR(amount, cur) {
+      if (cur === 'IDR') return amount;
+      const rates = {
+        USD: +document.getElementById('rate-usd').value || 0,
+        EUR: +document.getElementById('rate-eur').value || 0,
+        SGD: +document.getElementById('rate-sgd').value || 0,
+        JPY: +document.getElementById('rate-jpy').value || 0
+      };
+      return amount * (rates[cur] || 0);
+    }
+
+    function fromIDR(idr, cur) {
+      if (cur === 'IDR') return idr;
+      const rates = {
+        USD: +document.getElementById('rate-usd').value || 0,
+        EUR: +document.getElementById('rate-eur').value || 0,
+        SGD: +document.getElementById('rate-sgd').value || 0,
+        JPY: +document.getElementById('rate-jpy').value || 0
+      };
+      return idr / (rates[cur] || 1);
+    }
+
+    function conv(type) {
+      let result;
+      if (type === 'panjang') {
+        const v = +document.getElementById('p-in').value || 0;
+        const from = document.getElementById('p-from').value;
+        const to = document.getElementById('p-to').value;
+        result = v * TO_M[from] / TO_M[to];
+        document.getElementById('p-out').value = +result.toPrecision(10);
+      } else if (type === 'berat') {
+        const v = +document.getElementById('b-in').value || 0;
+        const from = document.getElementById('b-from').value;
+        const to = document.getElementById('b-to').value;
+        result = v * TO_KG[from] / TO_KG[to];
+        document.getElementById('b-out').value = +result.toPrecision(10);
+      } else if (type === 'suhu') {
+        const v = +document.getElementById('t-in').value || 0;
+        const from = document.getElementById('t-from').value;
+        const to = document.getElementById('t-to').value;
+        result = fromCelsius(toCelsius(v, from), to);
+        document.getElementById('t-out').value = +result.toFixed(4);
+      } else {
+        const v = +document.getElementById('u-in').value || 0;
+        const from = document.getElementById('u-from').value;
+        const to = document.getElementById('u-to').value;
+        result = fromIDR(toIDR(v, from), to);
+        document.getElementById('u-out').value = to === 'IDR'
+          ? Math.round(result)
+          : +result.toFixed(4);
+      }
+    }
+
+    conv('panjang');
+  </script>
+</body>
+</html>
