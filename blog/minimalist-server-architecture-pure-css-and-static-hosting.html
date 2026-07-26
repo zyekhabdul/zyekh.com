@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security — zyekh.com</title>
+  <meta name="description" content="Architectural comparison of static edge hosting versus server-rendered monolithic frameworks: attack surface reduction, performance optimization, and maintenance simplicity.">
+  <link rel="canonical" href="https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+
+  <style>
+    :root {
+      --bg-color: #09090b;
+      --bg-card: #121215;
+      --border-color: #27272a;
+      --border-color-hover: #3f3f46;
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --code-bg: #000000;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Navigation Bar */
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 3rem;
+    }
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+    }
+    .back-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s ease;
+    }
+    .back-link:hover {
+      color: var(--text-main);
+    }
+
+    /* Header */
+    .article-header {
+      margin-bottom: 3rem;
+    }
+    .meta-tag {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+    .article-title {
+      font-size: 2.25rem;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .article-meta {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    /* Content */
+    .article-body {
+      font-size: 1.05rem;
+    }
+    .article-body h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+    .article-body p {
+      margin-bottom: 1.5rem;
+      color: #e4e4e7;
+    }
+    .article-body ul {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+      color: #e4e4e7;
+    }
+    .article-body li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Navigation -->
+    <nav class="nav-bar">
+      <a href="/" class="brand-title">zyekh.com</a>
+      <a href="/blog/" class="back-link">← Back to Articles</a>
+    </nav>
+
+    <!-- Header -->
+    <header class="article-header">
+      <span class="meta-tag">Linux • Optimization</span>
+      <h1 class="article-title">Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security</h1>
+      <div class="article-meta">
+        <span>Published: July 10, 2026</span>
+        <span>•</span>
+        <span>Reading Time: 5 min read</span>
+        <span>•</span>
+        <span>Author: Zyekh Abdul Qadir Jailani</span>
+      </div>
+    </header>
+
+    <!-- Body -->
+    <main class="article-body">
+      <p>Modern web development often trends toward heavy server-side frameworks and complex runtime dependencies. However, for portfolios, documentation, technical blogs, and client-side utilities, static web architectures offer unmatched security, velocity, and near-zero infrastructure maintenance overhead.</p>
+
+      <h2>1. Attack Surface Reduction</h2>
+      <p>Traditional dynamic applications require active web application servers, database engines, language runtimes, and hundreds of third-party dependencies. Each layer introduces vulnerability vectors (SQL injection, RCE, memory leaks, dependency supply chain attacks).</p>
+      <p>Static sites eliminate server-side code execution entirely. Serving pre-rendered HTML, CSS, and client-side JavaScript from global CDN edge networks effectively removes database target vectors.</p>
+
+      <h2>2. Performance & Global CDN Edge Distribution</h2>
+      <ul>
+        <li><strong>Sub-50ms Time To First Byte (TTFB)</strong>: Requests are served immediately from edge points of presence closest to the visitor.</li>
+        <li><strong>Zero Cold Starts</strong>: No container boot time or database query latency.</li>
+        <li><strong>Minimal Asset Footprint</strong>: Lightweight utilities built with pure CSS and vanilla JavaScript render instantaneously without mega-byte bundle payloads.</li>
+      </ul>
+
+      <h2>3. The Power of YAGNI & Minimalist Code</h2>
+      <p>By adhering to YAGNI (You Aren't Gonna Need It) principles, developers build resilient systems that require zero patch maintenance cycles and survive indefinitely on immutable storage nodes.</p>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+    </footer>
+
+  </div>
+</body>
+</html>
