@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog & Security Insights — zyekh.com</title>
+  <meta name="description" content="Technical articles, Linux kernel news, system hardening guides, and cybersecurity research by Zyekh Abdul Qadir Jailani.">
+  <link rel="canonical" href="https://zyekh.com/blog/">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+
+  <style>
+    :root {
+      --bg-color: #09090b;
+      --bg-card: #121215;
+      --border-color: #27272a;
+      --border-color-hover: #3f3f46;
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --accent-color: #ffffff;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Navigation Bar */
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 2.5rem;
+    }
+    .brand-title {
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text-main);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    /* Page Header */
+    .page-header {
+      margin-bottom: 3rem;
+    }
+    .page-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .page-subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 700px;
+    }
+
+    /* Categories Filter */
+    .filter-bar {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--text-main);
+      color: var(--bg-color);
+      border-color: var(--text-main);
+      font-weight: 600;
+    }
+
+    /* Cards & Layout */
+    .card-grid-gap {
+      padding: 0.75rem;
+      box-sizing: border-box;
+    }
+    .article-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.75rem;
+      height: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+    .article-card:hover {
+      border-color: var(--border-color-hover);
+      transform: translateY(-2px);
+    }
+    .meta-tag {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+    .article-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      line-height: 1.4;
+    }
+    .article-title a {
+      color: var(--text-main);
+      text-decoration: none;
+    }
+    .article-title a:hover {
+      text-decoration: underline;
+    }
+    .article-excerpt {
+      color: var(--text-muted);
+      font-size: 0.925rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    .article-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      padding-top: 1rem;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+    .footer a {
+      color: var(--text-main);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <a href="/" class="brand-title">
+        <span>zyekh.com</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/tools/">Tools</a></li>
+        <li><a href="/blog/" class="active">Articles</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+      <h1 class="page-title">Linux & Cyber Security Articles</h1>
+      <p class="page-subtitle">In-depth technical analysis, system hardening blueprints, Linux kernel security updates, and DevSecOps research.</p>
+    </header>
+
+    <!-- Categories Filter Bar -->
+    <div class="filter-bar">
+      <a href="#" class="filter-btn active" onclick="filterArticles('all', this); return false;">All Articles</a>
+      <a href="#" class="filter-btn" onclick="filterArticles('security', this); return false;">Cyber Security</a>
+      <a href="#" class="filter-btn" onclick="filterArticles('linux', this); return false;">Linux Kernel & SysAdmin</a>
+      <a href="#" class="filter-btn" onclick="filterArticles('hardening', this); return false;">System Hardening</a>
+      <a href="#" class="filter-btn" onclick="filterArticles('research', this); return false;">Research & Exploitation</a>
+    </div>
+
+    <!-- Articles Grid -->
+    <main class="pure-g" id="articlesGrid">
+      
+      <!-- Article Card 1 -->
+      <div class="pure-u-1 pure-u-md-1-2 card-grid-gap article-item" data-category="hardening security">
+        <article class="article-card">
+          <div>
+            <span class="meta-tag">System Hardening • Linux</span>
+            <h2 class="article-title">
+              <a href="/blog/linux-vps-hardening-guide-2026.html">Comprehensive Linux VPS Hardening Blueprint for 2026</a>
+            </h2>
+            <p class="article-excerpt">
+              A step-by-step technical guide to hardening Debian/Ubuntu production servers: SSH key-only auth, UFW/Nginx rate limiting, kernel sysctl parameters, and automated fail2ban configuration.
+            </p>
+          </div>
+          <div class="article-footer">
+            <span>July 26, 2026</span>
+            <span>8 min read</span>
+          </div>
+        </article>
+      </div>
+
+      <!-- Article Card 2 -->
+      <div class="pure-u-1 pure-u-md-1-2 card-grid-gap article-item" data-category="linux research">
+        <article class="article-card">
+          <div>
+            <span class="meta-tag">Linux Kernel • Research</span>
+            <h2 class="article-title">
+              <a href="/blog/understanding-linux-ebpf-security-monitoring.html">Understanding eBPF for Real-Time Linux Security Monitoring</a>
+            </h2>
+            <p class="article-excerpt">
+              How Extended Berkeley Packet Filter (eBPF) transforms observability and security event detection in Linux environments without modifying kernel source code.
+            </p>
+          </div>
+          <div class="article-footer">
+            <span>July 20, 2026</span>
+            <span>12 min read</span>
+          </div>
+        </article>
+      </div>
+
+      <!-- Article Card 3 -->
+      <div class="pure-u-1 pure-u-md-1-2 card-grid-gap article-item" data-category="security">
+        <article class="article-card">
+          <div>
+            <span class="meta-tag">DevSecOps • Security</span>
+            <h2 class="article-title">
+              <a href="/blog/securing-web-applications-with-strict-content-security-policy.html">Implementing Strict Content Security Policy (CSP) & Security Headers</a>
+            </h2>
+            <p class="article-excerpt">
+              Eliminating Cross-Site Scripting (XSS) and clickjacking using strict CSP nonces, HSTS preloading, X-Content-Type-Options, and referrer policy configurations in Nginx.
+            </p>
+          </div>
+          <div class="article-footer">
+            <span>July 15, 2026</span>
+            <span>6 min read</span>
+          </div>
+        </article>
+      </div>
+
+      <!-- Article Card 4 -->
+      <div class="pure-u-1 pure-u-md-1-2 card-grid-gap article-item" data-category="linux hardening">
+        <article class="article-card">
+          <div>
+            <span class="meta-tag">Linux • Optimization</span>
+            <h2 class="article-title">
+              <a href="/blog/minimalist-server-architecture-pure-css-and-static-hosting.html">Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security</a>
+            </h2>
+            <p class="article-excerpt">
+              An architectural breakdown of attack surface reduction by migrating static sites to global CDN edge nodes with GitHub Pages, Cloudflare, and pure CSS frameworks.
+            </p>
+          </div>
+          <div class="article-footer">
+            <span>July 10, 2026</span>
+            <span>5 min read</span>
+          </div>
+        </article>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    function filterArticles(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const items = document.querySelectorAll('.article-item');
+      items.forEach(item => {
+        if (category === 'all' || item.dataset.category.includes(category)) {
+          item.style.display = 'block';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

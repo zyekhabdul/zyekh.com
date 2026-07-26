@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comprehensive Linux VPS Hardening Blueprint for 2026 — zyekh.com</title>
+  <meta name="description" content="Technical blueprint for securing Debian/Ubuntu production servers: SSH hardening, kernel sysctl parameters, firewall configuration, and automated security auditing.">
+  <link rel="canonical" href="https://zyekh.com/blog/linux-vps-hardening-guide-2026.html">
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+
+  <style>
+    :root {
+      --bg-color: #09090b;
+      --bg-card: #121215;
+      --border-color: #27272a;
+      --border-color-hover: #3f3f46;
+      --text-main: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --code-bg: #000000;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Navigation Bar */
+    .nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 2.5rem;
+    }
+    .brand-title {
+      font-family: 'Fira Code', monospace;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text-main);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    /* Article Layout */
+    .article-header {
+      margin-bottom: 2.5rem;
+    }
+    .meta-tag {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+      display: inline-block;
+    }
+    .article-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+    .article-meta {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.5rem;
+    }
+
+    .article-content h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+
+    .article-content h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 1.75rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .article-content p {
+      font-size: 1.05rem;
+      color: #e4e4e7;
+      margin-bottom: 1.25rem;
+    }
+
+    .article-content ul, .article-content ol {
+      color: #e4e4e7;
+      font-size: 1.05rem;
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .article-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Code Blocks */
+    pre, code {
+      font-family: 'Fira Code', monospace;
+    }
+    code {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9em;
+      color: #ffffff;
+    }
+    pre {
+      background-color: var(--code-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.25rem;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+    pre code {
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    /* Callout Box */
+    .callout {
+      background-color: var(--bg-card);
+      border-left: 4px solid var(--text-main);
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      border-radius: 0 8px 8px 0;
+    }
+    .callout p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* Back Link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .back-link:hover {
+      color: var(--text-main);
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <a href="/" class="brand-title">zyekh.com</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/tools/">Tools</a></li>
+        <li><a href="/blog/" class="active">Articles</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Back to Blog -->
+    <a href="/blog/" class="back-link">&larr; Back to Articles</a>
+
+    <!-- Article Header -->
+    <header class="article-header">
+      <span class="meta-tag">System Hardening • Security</span>
+      <h1 class="article-title">Comprehensive Linux VPS Hardening Blueprint for 2026</h1>
+      <div class="article-meta">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <span>Published: July 26, 2026</span>
+        <span>8 min read</span>
+      </div>
+    </header>
+
+    <!-- Article Body Content -->
+    <main class="article-content">
+      <p>
+        Securing a public-facing Linux virtual private server (VPS) requires a defense-in-depth strategy. By systematically restricting SSH authentication, tuning kernel network security flags, establishing automated firewall policies, and disabling unused services, you drastically minimize the server's attack surface.
+      </p>
+
+      <h2>1. Hardening OpenSSH Server Configuration</h2>
+      <p>
+        Password-based brute force attacks account for over 80% of automated VPS compromises. Enforce modern Public Key Authentication (Ed25519) and disable password-based logins completely.
+      </p>
+
+      <p>Edit <code>/etc/ssh/sshd_config.d/hardening.conf</code>:</p>
+<pre><code># Enforce SSH Key Authentication Only
+PermitRootLogin prohibit-password
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+PubkeyAuthentication yes
+
+# Restrict Encryption Ciphers & MACs
+KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com
+MACs hmac-sha2-512-etm@openssh.com
+
+# Session Limits
+ClientAliveInterval 300
+ClientAliveCountMax 2
+MaxAuthTries 3</code></pre>
+
+      <p>Test the configuration and reload the OpenSSH service:</p>
+<pre><code>sudo sshd -t && sudo systemctl reload sshd</code></pre>
+
+      <h2>2. Kernel Hardening via sysctl Parameters</h2>
+      <p>
+        Modify Linux kernel sysctl variables to protect against SYN flood attacks, IP spoofing, packet redirects, and memory inspection vulnerabilities.
+      </p>
+
+      <p>Add the following settings to <code>/etc/sysctl.d/99-security-hardening.conf</code>:</p>
+<pre><code># Disable IP Source Routing & ICMP Redirects
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv6.conf.all.accept_redirects = 0
+
+# Protect Against TCP SYN Flood Attacks
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_max_syn_backlog = 4096
+
+# Enable Reverse Path Filtering (Anti-Spoofing)
+net.ipv4.conf.all.rp_filter = 1
+net.ipv4.conf.default.rp_filter = 1
+
+# Disable ICMP Echo Requests Broadcasts
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+
+# ASLR (Address Space Layout Randomization)
+kernel.randomize_va_space = 2</code></pre>
+
+      <p>Apply settings immediately without rebooting:</p>
+<pre><code>sudo sysctl --system</code></pre>
+
+      <div class="callout">
+        <p><strong>Security Tip:</strong> Regularly audit active network listening ports using <code>sudo ss -tulpn</code> to verify that no unauthorized service is bound to public interfaces.</p>
+      </div>
+
+      <h2>3. Uncomplicated Firewall (UFW) Configuration</h2>
+      <p>
+        Default-deny inbound policy is mandatory. Only expose ports that are actively required (HTTP, HTTPS, SSH).
+      </p>
+<pre><code>sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 22/tcp comment 'SSH Access'
+sudo ufw allow 80/tcp comment 'HTTP'
+sudo ufw allow 443/tcp comment 'HTTPS'
+sudo ufw enable</code></pre>
+
+      <h2>4. Summary Checklist</h2>
+      <ul>
+        <li>Disable password-based SSH authentication in favor of Ed25519 SSH keys.</li>
+        <li>Enable UFW firewall with default deny incoming rules.</li>
+        <li>Tune Linux kernel sysctl flags for SYN flood and spoofing defense.</li>
+        <li>Keep system packages updated automatically using <code>unattended-upgrades</code>.</li>
+      </ul>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+    </footer>
+
+  </div>
+</body>
+</html>
