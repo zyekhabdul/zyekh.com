@@ -7,7 +7,7 @@ Zyekh Abdul Qadir Jailani is a Full Stack Developer & Security Researcher specia
 
 - Website: https://zyekh.com/
 - GitHub: https://github.com/zyekhabdul
-- Email: aqz220309@gmail.com
+- Email: zyekhabdulqadirjailani@gmail.com
 
 ## Web Utility Tools (Client-Side & Privacy-First)
 - [Kalkulator Zakat Online](https://zyekh.com/tools/zakat.html): Calculate Zakat Maal and Zakat Profesi (Income) based on 85g gold nisab and 2.5% rate.
