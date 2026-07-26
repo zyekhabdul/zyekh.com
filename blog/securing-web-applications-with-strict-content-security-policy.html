@@ -5,7 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Implementing Strict Content Security Policy (CSP) & Security Headers — zyekh.com</title>
   <meta name="description" content="Technical guide for configuring strict Content Security Policy (CSP), HTTP response security headers, HSTS preloading, and XSS defense in Nginx and web servers.">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
   <link rel="canonical" href="https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html">
+
+  <!-- Open Graph / Medium Import Meta Tags -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Implementing Strict Content Security Policy (CSP) &amp; Security Headers">
+  <meta property="og:description" content="Technical guide for configuring strict Content Security Policy (CSP), HTTP response security headers, HSTS preloading, and XSS defense in Nginx and web servers.">
+  <meta property="og:url" content="https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/profile.jpg">
+  <meta property="article:published_time" content="2026-07-15T00:00:00Z">
+  <meta property="article:author" content="Zyekh Abdul Qadir Jailani">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Implementing Strict Content Security Policy (CSP) &amp; Security Headers">
+  <meta name="twitter:description" content="Technical guide for configuring strict Content Security Policy (CSP), HTTP response security headers, HSTS preloading, and XSS defense in Nginx and web servers.">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/profile.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Implementing Strict Content Security Policy (CSP) & Security Headers",
+    "description": "Technical guide for configuring strict Content Security Policy (CSP), HTTP response security headers, HSTS preloading, and XSS defense in Nginx and web servers.",
+    "url": "https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html",
+    "image": "https://zyekh.com/assets/img/profile.jpg",
+    "datePublished": "2026-07-15",
+    "author": {
+      "@type": "Person",
+      "name": "Zyekh Abdul Qadir Jailani",
+      "url": "https://zyekh.com/"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Zyekh Abdul Qadir Jailani",
+      "url": "https://zyekh.com/"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html"
+    }
+  }
+  </script>
   
   <!-- Favicons -->
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
@@ -332,7 +376,7 @@
     </div>
   </header>
 
-  <div class="container">
+  <article class="container" itemscope itemtype="https://schema.org/TechArticle">
     
     <!-- Navigation -->
     
@@ -401,7 +445,7 @@ add_header Content-Security-Policy "default-src 'self'; script-src 'self' https:
       <p>&copy; 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
     </footer>
 
-  </div>
+  </article>
 
   <script>
     const navToggle = document.getElementById("navToggle");
