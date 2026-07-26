@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="theme-color" content="#0f172a">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Implementing Strict Content Security Policy (CSP) & Security Headers — zyekh.com</title>
   <meta name="description" content="Technical guide for configuring strict Content Security Policy (CSP), HTTP response security headers, HSTS preloading, and XSS defense in Nginx and web servers.">
@@ -26,30 +27,58 @@
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "Implementing Strict Content Security Policy (CSP) & Security Headers",
-    "description": "Technical guide for configuring strict Content Security Policy (CSP), HTTP response security headers, HSTS preloading, and XSS defense in Nginx and web servers.",
-    "url": "https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html",
-    "image": "https://zyekh.com/assets/img/profile.jpg",
-    "datePublished": "2026-07-15",
-    "author": {
-      "@type": "Person",
-      "name": "Zyekh Abdul Qadir Jailani",
-      "url": "https://zyekh.com/"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Implementing Strict Content Security Policy (CSP) & Security Headers",
+      "description": "Technical guide for configuring strict Content Security Policy (CSP), HTTP response security headers, HSTS preloading, and XSS defense in Nginx and web servers.",
+      "url": "https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html",
+      "image": "https://zyekh.com/assets/img/profile.jpg",
+      "datePublished": "2026-07-15",
+      "author": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html"
+      }
     },
-    "publisher": {
-      "@type": "Person",
-      "name": "Zyekh Abdul Qadir Jailani",
-      "url": "https://zyekh.com/"
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html"
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zyekh.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog & Articles",
+          "item": "https://zyekh.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Implementing Strict Content Security Policy (CSP) & Security Headers",
+          "item": "https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html"
+        }
+      ]
     }
-  }
-  </script>
+  ]
+}
+</script>
   
   <!-- Favicons -->
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">

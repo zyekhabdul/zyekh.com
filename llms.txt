@@ -19,6 +19,16 @@ Zyekh Abdul Qadir Jailani is a Full Stack Developer & Security Researcher specia
 - [QR Code Generator](https://zyekh.com/tools/qr.html): Free high-definition QR code generator.
 - [Diff Checker](https://zyekh.com/tools/diff-checker.html): Side-by-side text and code difference comparison tool.
 - [Pomodoro Timer](https://zyekh.com/tools/pomodoro.html): Focus timer for productivity and study.
+- [Text Case Converter](https://zyekh.com/tools/case-converter.html): Convert text between UPPERCASE, lowercase, camelCase, snake_case, and kebab-case.
+- [Color Palette & Converter](https://zyekh.com/tools/color.html): Convert HEX, RGB, HSL color formats with palette generator.
+- [Unit & Currency Converter](https://zyekh.com/tools/converter.html): Client-side unit and measurement converter.
+- [Countdown Timer](https://zyekh.com/tools/countdown.html): Customizable event countdown timer with alert sounds.
+- [Word & Character Counter](https://zyekh.com/tools/counter.html): Real-time word, character, sentence, paragraph, and reading time counter.
+- [Random Dice & Number Picker](https://zyekh.com/tools/dice.html): Cryptographically fair random number and dice roller.
+- [Lorem Ipsum Generator](https://zyekh.com/tools/lorem.html): Customizable placeholder text generator for developers and designers.
+- [Markdown Live Editor](https://zyekh.com/tools/markdown.html): Live preview Markdown editor with GFM support and HTML export.
+- [Random Item Picker](https://zyekh.com/tools/random-picker.html): Decision-making tool to pick items randomly from custom lists.
+- [Text to Speech (TTS)](https://zyekh.com/tools/tts.html): Client-side voice synthesizer using SpeechSynthesis Web API.
 - [Web Tools Hub](https://zyekh.com/tools/): Access all 19+ client-side web utilities.
 
 ## Articles & Research
