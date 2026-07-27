@@ -396,6 +396,32 @@
       display: block;
     }
 
+  
+    /* Article Hero Figure & Caption Styling */
+    .article-hero-wrapper {
+      margin: 1.5rem 0 2rem 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      background-color: #1e293b;
+    }
+    .article-hero-img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-caption {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      padding: 0.5rem 1rem;
+      background: rgba(15, 23, 42, 0.6);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
   </style>
 </head>
 <body>
@@ -423,19 +449,7 @@
     </div>
   </header>
 
-    <!-- Featured Hero Image -->
-    <div class="article-hero-wrapper">
-      <picture>
-        <source srcset="/assets/img/csp-security.webp" type="image/webp">
-        <img src="/assets/img/csp-security.jpg" 
-             alt="Implementing Strict Content Security Policy (CSP) & Security Headers" 
-             class="article-hero-img" 
-             width="1280" height="720" 
-             loading="eager" 
-             fetchpriority="high"
-             itemprop="image">
-      </picture>
-    </div>
+    
 
 
   <article class="container" itemscope itemtype="https://schema.org/TechArticle">
@@ -455,6 +469,16 @@
         <span>Author: Zyekh Abdul Qadir Jailani</span>
       </div>
     </header>
+
+    <!-- Featured Hero Image for Medium & Web Readers -->
+    <figure class="article-hero-wrapper">
+      <img src="https://zyekh.com/assets/img/csp-security.jpg" 
+           alt="Implementing Strict Content Security Policy (CSP) & Security Headers" 
+           class="article-hero-img" 
+           width="1280" height="720" 
+           itemprop="image">
+      <figcaption class="hero-caption">Implementing Strict Content Security Policy (CSP) & Security Headers</figcaption>
+    </figure>
 
     <!-- Body -->
     <main class="article-body">
