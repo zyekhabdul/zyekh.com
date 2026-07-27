@@ -528,6 +528,7 @@
     }
 
   </style>
+  <link rel="image_src" href="https://zyekh.com/assets/img/vps-hardening.jpg">
 </head>
 <body>
     <!-- Header Navigation -->
@@ -576,18 +577,20 @@
       </div>
     </header>
 
-    <!-- Featured Hero Image for Medium & Web Readers -->
-    <figure class="article-hero-wrapper">
-      <img src="https://zyekh.com/assets/img/vps-hardening.jpg" 
-           alt="Comprehensive Linux VPS Hardening Blueprint for 2026" 
-           class="article-hero-img" 
-           width="1280" height="720" 
-           itemprop="image">
-      <figcaption class="hero-caption">Comprehensive Linux VPS Hardening Blueprint for 2026</figcaption>
-    </figure>
+    
 
     <!-- Article Body Content -->
     <main class="article-content">
+
+      <!-- Featured Hero Image for Medium & Web Readers -->
+      <figure class="article-hero-wrapper">
+        <img src="https://zyekh.com/assets/img/vps-hardening.jpg" 
+             alt="Comprehensive Linux VPS Hardening Blueprint for 2026" 
+             class="article-hero-img" 
+             width="1280" height="720" 
+             itemprop="image">
+        <figcaption class="hero-caption">Comprehensive Linux VPS Hardening Blueprint for 2026</figcaption>
+      </figure>
       <p>
         Securing a public-facing Linux virtual private server (VPS) requires a defense-in-depth strategy. By systematically restricting SSH authentication, tuning kernel network security flags, establishing automated firewall policies, and disabling unused services, you drastically minimize the server's attack surface.
       </p>
@@ -598,7 +601,7 @@
       </p>
 
       <p>Edit <code>/etc/ssh/sshd_config.d/hardening.conf</code>:</p>
-<pre><code># Enforce SSH Key Authentication Only
+<pre><code class="language-ini"># Enforce SSH Key Authentication Only
 PermitRootLogin prohibit-password
 PasswordAuthentication no
 KbdInteractiveAuthentication no
@@ -615,7 +618,7 @@ ClientAliveCountMax 2
 MaxAuthTries 3</code></pre>
 
       <p>Test the configuration and reload the OpenSSH service:</p>
-<pre><code>sudo sshd -t && sudo systemctl reload sshd</code></pre>
+<pre><code class="language-bash">sudo sshd -t && sudo systemctl reload sshd</code></pre>
 
       <h2>2. Kernel Hardening via sysctl Parameters</h2>
       <p>
@@ -623,7 +626,7 @@ MaxAuthTries 3</code></pre>
       </p>
 
       <p>Add the following settings to <code>/etc/sysctl.d/99-security-hardening.conf</code>:</p>
-<pre><code># Disable IP Source Routing & ICMP Redirects
+<pre><code class="language-ini"># Disable IP Source Routing & ICMP Redirects
 net.ipv4.conf.all.accept_source_route = 0
 net.ipv4.conf.all.accept_redirects = 0
 net.ipv6.conf.all.accept_redirects = 0
@@ -643,7 +646,7 @@ net.ipv4.icmp_echo_ignore_broadcasts = 1
 kernel.randomize_va_space = 2</code></pre>
 
       <p>Apply settings immediately without rebooting:</p>
-<pre><code>sudo sysctl --system</code></pre>
+<pre><code class="language-bash">sudo sysctl --system</code></pre>
 
       <div class="callout">
         <p><strong>Security Tip:</strong> Regularly audit active network listening ports using <code>sudo ss -tulpn</code> to verify that no unauthorized service is bound to public interfaces.</p>
@@ -653,7 +656,7 @@ kernel.randomize_va_space = 2</code></pre>
       <p>
         Default-deny inbound policy is mandatory. Only expose ports that are actively required (HTTP, HTTPS, SSH).
       </p>
-<pre><code>sudo ufw default deny incoming
+<pre><code class="language-bash">sudo ufw default deny incoming
 sudo ufw default allow outgoing
 sudo ufw allow 22/tcp comment 'SSH Access'
 sudo ufw allow 80/tcp comment 'HTTP'

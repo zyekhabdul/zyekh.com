@@ -442,6 +442,7 @@
     }
 
   </style>
+  <link rel="image_src" href="https://zyekh.com/assets/img/ebpf-monitoring.jpg">
 </head>
 <body>
     <!-- Header Navigation -->
@@ -489,18 +490,20 @@
       </div>
     </header>
 
-    <!-- Featured Hero Image for Medium & Web Readers -->
-    <figure class="article-hero-wrapper">
-      <img src="https://zyekh.com/assets/img/ebpf-monitoring.jpg" 
-           alt="Understanding eBPF for Real-Time Linux Security Monitoring" 
-           class="article-hero-img" 
-           width="1280" height="720" 
-           itemprop="image">
-      <figcaption class="hero-caption">Understanding eBPF for Real-Time Linux Security Monitoring</figcaption>
-    </figure>
+    
 
     <!-- Body -->
     <main class="article-body">
+
+      <!-- Featured Hero Image for Medium & Web Readers -->
+      <figure class="article-hero-wrapper">
+        <img src="https://zyekh.com/assets/img/ebpf-monitoring.jpg" 
+             alt="Understanding eBPF for Real-Time Linux Security Monitoring" 
+             class="article-hero-img" 
+             width="1280" height="720" 
+             itemprop="image">
+        <figcaption class="hero-caption">Understanding eBPF for Real-Time Linux Security Monitoring</figcaption>
+      </figure>
       <p>Extended Berkeley Packet Filter (eBPF) represents a fundamental paradigm shift in Linux kernel observability, network telemetry, and security monitoring. By executing sandboxed Bytecode directly inside the Linux kernel without requiring kernel modules or recompilation, eBPF delivers unprecedented visibility at minimal performance overhead.</p>
 
       <h2>1. Architecture: How eBPF Operates in the Kernel</h2>
@@ -521,9 +524,10 @@
       <h2>3. Example: Tracing Process Executions with bpftrace</h2>
       <p>You can quickly monitor process creation events across the system with a single <code>bpftrace</code> snippet:</p>
 
-      <pre><code># Monitor all execve syscalls with process name and arguments
-sudo bpftrace -e 'tracepoint:sys_enter_execve { printf("%s (%d) executed %s\n", comm, pid, str(args->filename)); }'
-</code></pre>
+      <pre><code class="language-bash"># Monitor all execve syscalls with process name and arguments
+sudo bpftrace -e 'tracepoint:sys_enter_execve {
+    printf("%s (%d) executed %s\n", comm, pid, str(args->filename));
+}'</code></pre>
 
       <h2>4. eBPF Security Monitoring Tooling</h2>
       <p>Modern Linux production stacks utilize enterprise eBPF-based security solutions:</p>

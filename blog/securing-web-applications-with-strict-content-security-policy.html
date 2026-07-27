@@ -423,6 +423,7 @@
     }
 
   </style>
+  <link rel="image_src" href="https://zyekh.com/assets/img/csp-security.jpg">
 </head>
 <body>
     <!-- Header Navigation -->
@@ -470,24 +471,26 @@
       </div>
     </header>
 
-    <!-- Featured Hero Image for Medium & Web Readers -->
-    <figure class="article-hero-wrapper">
-      <img src="https://zyekh.com/assets/img/csp-security.jpg" 
-           alt="Implementing Strict Content Security Policy (CSP) & Security Headers" 
-           class="article-hero-img" 
-           width="1280" height="720" 
-           itemprop="image">
-      <figcaption class="hero-caption">Implementing Strict Content Security Policy (CSP) & Security Headers</figcaption>
-    </figure>
+    
 
     <!-- Body -->
     <main class="article-body">
+
+      <!-- Featured Hero Image for Medium & Web Readers -->
+      <figure class="article-hero-wrapper">
+        <img src="https://zyekh.com/assets/img/csp-security.jpg" 
+             alt="Implementing Strict Content Security Policy (CSP) & Security Headers" 
+             class="article-hero-img" 
+             width="1280" height="720" 
+             itemprop="image">
+        <figcaption class="hero-caption">Implementing Strict Content Security Policy (CSP) & Security Headers</figcaption>
+      </figure>
       <p>Content Security Policy (CSP) is one of the most effective defense-in-depth mechanisms against Cross-Site Scripting (XSS), data injection, and clickjacking attacks. Configuring strict security response headers ensures web applications defend against modern client-side attack vectors.</p>
 
       <h2>1. Recommended Nginx Security Headers Configuration</h2>
       <p>Add the following directives to your Nginx site configuration block:</p>
 
-      <pre><code># Strict-Transport-Security (HSTS)
+      <pre><code class="language-nginx"># Strict-Transport-Security (HSTS)
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
 
 # Prevent Clickjacking
@@ -516,7 +519,7 @@ add_header Content-Security-Policy "default-src 'self'; script-src 'self' https:
       <h2>3. Testing Your Configuration</h2>
       <p>Verify your security header deployment using <code>curl</code> from the command line:</p>
 
-      <pre><code>curl -I https://zyekh.com</code></pre>
+      <pre><code class="language-bash">curl -I https://zyekh.com</code></pre>
     
       <div class="article-cross-links" style="margin-top: 2.5rem; padding: 1.25rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px;">
         <h4 style="margin-top:0; margin-bottom: 0.5rem; color: var(--text-main);">🔒 Security Tools Recommendation:</h4>
