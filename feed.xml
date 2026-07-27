@@ -11,6 +11,7 @@
   <item>
     <title>Comprehensive Linux VPS Hardening Blueprint for 2026</title>
     <link>https://zyekh.com/blog/linux-vps-hardening-guide-2026.html</link>
+    <enclosure url="https://zyekh.com/assets/img/vps-hardening.jpg" length="170611" type="image/jpeg" />
     <description>Technical blueprint for securing Debian/Ubuntu production servers: SSH hardening, sysctl parameters, firewall configuration, and auditing.</description>
     <pubDate>Sun, 26 Jul 2026 00:00:00 GMT</pubDate>
     <guid>https://zyekh.com/blog/linux-vps-hardening-guide-2026.html</guid>
@@ -19,6 +20,7 @@
   <item>
     <title>Understanding eBPF for Real-Time Linux Security Monitoring</title>
     <link>https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html</link>
+    <enclosure url="https://zyekh.com/assets/img/ebpf-monitoring.jpg" length="182939" type="image/jpeg" />
     <description>Extended Berkeley Packet Filter (eBPF) for system observability, tracepoints, kernel event monitoring, and real-time threat detection.</description>
     <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
     <guid>https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html</guid>
@@ -27,6 +29,7 @@
   <item>
     <title>Implementing Strict Content Security Policy (CSP) &amp; Security Headers</title>
     <link>https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html</link>
+    <enclosure url="https://zyekh.com/assets/img/csp-security.jpg" length="179684" type="image/jpeg" />
     <description>Eliminating Cross-Site Scripting (XSS) and clickjacking using strict CSP nonces, HSTS preloading, and referrer policy configurations.</description>
     <pubDate>Wed, 15 Jul 2026 00:00:00 GMT</pubDate>
     <guid>https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html</guid>
@@ -35,6 +38,7 @@
   <item>
     <title>Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security</title>
     <link>https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html</link>
+    <enclosure url="https://zyekh.com/assets/img/static-architecture.jpg" length="201218" type="image/jpeg" />
     <description>Architectural breakdown of attack surface reduction by migrating static sites to global CDN edge nodes with GitHub Pages and pure CSS.</description>
     <pubDate>Fri, 10 Jul 2026 00:00:00 GMT</pubDate>
     <guid>https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html</guid>

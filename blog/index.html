@@ -308,6 +308,27 @@
       color: var(--text-main);
       text-decoration: none;
     }
+  
+    /* Card Thumbnail Styling */
+    .card-thumb-wrapper {
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background-color: #1e293b;
+      aspect-ratio: 16 / 9;
+    }
+    .card-thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .article-card:hover .card-thumb-img {
+      transform: scale(1.03);
+    }
+
   </style>
 </head>
 <body>
@@ -380,6 +401,14 @@
       <div class="pure-u-1 pure-u-md-1-2 card-grid-gap article-item" data-category="linux research">
         <article class="article-card">
           <div>
+            <div class="card-thumb-wrapper">
+              <a href="/blog/understanding-linux-ebpf-security-monitoring.html">
+                <picture>
+                  <source srcset="/assets/img/ebpf-monitoring.webp" type="image/webp">
+                  <img src="/assets/img/ebpf-monitoring.jpg" alt="Linux eBPF Monitoring" class="card-thumb-img" width="640" height="360" loading="lazy">
+                </picture>
+              </a>
+            </div>
             <span class="meta-tag">Linux Kernel • Research</span>
             <h2 class="article-title">
               <a href="/blog/understanding-linux-ebpf-security-monitoring.html">Understanding eBPF for Real-Time Linux Security Monitoring</a>
@@ -399,6 +428,14 @@
       <div class="pure-u-1 pure-u-md-1-2 card-grid-gap article-item" data-category="security">
         <article class="article-card">
           <div>
+            <div class="card-thumb-wrapper">
+              <a href="/blog/securing-web-applications-with-strict-content-security-policy.html">
+                <picture>
+                  <source srcset="/assets/img/csp-security.webp" type="image/webp">
+                  <img src="/assets/img/csp-security.jpg" alt="Strict CSP & Security Headers" class="card-thumb-img" width="640" height="360" loading="lazy">
+                </picture>
+              </a>
+            </div>
             <span class="meta-tag">DevSecOps • Security</span>
             <h2 class="article-title">
               <a href="/blog/securing-web-applications-with-strict-content-security-policy.html">Implementing Strict Content Security Policy (CSP) & Security Headers</a>
@@ -418,6 +455,14 @@
       <div class="pure-u-1 pure-u-md-1-2 card-grid-gap article-item" data-category="linux hardening">
         <article class="article-card">
           <div>
+            <div class="card-thumb-wrapper">
+              <a href="/blog/minimalist-server-architecture-pure-css-and-static-hosting.html">
+                <picture>
+                  <source srcset="/assets/img/static-architecture.webp" type="image/webp">
+                  <img src="/assets/img/static-architecture.jpg" alt="Minimalist Static Hosting Architecture" class="card-thumb-img" width="640" height="360" loading="lazy">
+                </picture>
+              </a>
+            </div>
             <span class="meta-tag">Linux • Optimization</span>
             <h2 class="article-title">
               <a href="/blog/minimalist-server-architecture-pure-css-and-static-hosting.html">Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security</a>

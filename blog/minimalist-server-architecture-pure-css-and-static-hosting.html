@@ -15,7 +15,7 @@
   <meta property="og:title" content="Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security">
   <meta property="og:description" content="Static edge hosting vs monolithic frameworks: attack surface reduction, performance optimization, and maintenance simplicity.">
   <meta property="og:url" content="https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html">
-  <meta property="og:image" content="https://zyekh.com/assets/img/profile.jpg">
+  <meta property="og:image" content="https://zyekh.com/assets/img/static-architecture.jpg">
   <meta property="article:published_time" content="2026-07-10T00:00:00Z">
   <meta property="article:author" content="Zyekh Abdul Qadir Jailani">
 
@@ -23,7 +23,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security">
   <meta name="twitter:description" content="Static edge hosting vs monolithic frameworks: attack surface reduction, performance optimization, and maintenance simplicity.">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/profile.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/static-architecture.jpg">
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -35,7 +35,7 @@
       "headline": "Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security",
       "description": "Static edge hosting vs monolithic frameworks: attack surface reduction, performance optimization, and maintenance simplicity.",
       "url": "https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html",
-      "image": "https://zyekh.com/assets/img/profile.jpg",
+      "image": "https://zyekh.com/assets/img/static-architecture.jpg",
       "datePublished": "2026-07-10",
       "author": {
         "@type": "Person",
@@ -354,6 +354,24 @@
       }
     }
 
+  
+    /* Article Hero Image Styling */
+    .article-hero-wrapper {
+      margin: 1.5rem 0 2rem 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      background-color: #1e293b;
+    }
+    .article-hero-img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
   </style>
 </head>
 <body>
@@ -380,6 +398,21 @@
       </nav>
     </div>
   </header>
+
+    <!-- Featured Hero Image -->
+    <div class="article-hero-wrapper">
+      <picture>
+        <source srcset="/assets/img/static-architecture.webp" type="image/webp">
+        <img src="/assets/img/static-architecture.jpg" 
+             alt="Why Minimalist Static Hosting Outperforms Monolithic Frameworks" 
+             class="article-hero-img" 
+             width="1280" height="720" 
+             loading="eager" 
+             fetchpriority="high"
+             itemprop="image">
+      </picture>
+    </div>
+
 
   <article class="container" itemscope itemtype="https://schema.org/TechArticle">
     
