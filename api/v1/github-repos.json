@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "zyekh.com",
+    "url": "https://github.com/zyekhabdul/zyekh.com",
+    "description": "Official static portfolio, security research blog, and 24+ privacy-first web utility tools.",
+    "stars": 4,
+    "forks": 1,
+    "language": "HTML / JavaScript",
+    "updatedAt": "2026-07-28T12:00:00Z"
+  },
+  {
+    "id": 2,
+    "name": "zyekh_abdul-porto",
+    "url": "https://github.com/zyekhabdul/zyekh_abdul-porto",
+    "description": "Previous React + Vite portfolio application archive and asset repository.",
+    "stars": 3,
+    "forks": 1,
+    "language": "TypeScript",
+    "updatedAt": "2026-07-26T00:00:00Z"
+  },
+  {
+    "id": 3,
+    "name": "Android-Persistence-Research",
+    "url": "https://github.com/zyekhabdul",
+    "description": "Deep-dive research into Android persistence techniques, SELinux policies, and defensive mitigations.",
+    "stars": 5,
+    "forks": 2,
+    "language": "Python / Android",
+    "updatedAt": "2026-07-20T00:00:00Z"
+  },
+  {
+    "id": 4,
+    "name": "Linux-VPS-Hardening-Scripts",
+    "url": "https://github.com/zyekhabdul",
+    "description": "Automated Bash & sysctl security hardening scripts for Debian/Ubuntu production servers.",
+    "stars": 2,
+    "forks": 1,
+    "language": "Shell",
+    "updatedAt": "2026-07-15T00:00:00Z"
+  }
+]
