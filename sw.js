@@ -1,15 +1,12 @@
 /* zyekh.com Service Worker — Cache Strategy */
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const CACHE_NAME = `zyekh-${CACHE_VERSION}`;
 
 /* Assets to precache on install (shell) */
 const PRECACHE = [
   '/offline.html',
   '/assets/fonts/fonts.css',
-  '/assets/fonts/inter-400-normal.woff2',
-  '/assets/fonts/inter-500-normal.woff2',
-  '/assets/fonts/inter-600-normal.woff2',
-  '/assets/fonts/inter-700-normal.woff2',
+  '/assets/fonts/inter-variable-latin.woff2',
   '/assets/fonts/outfit-600-normal.woff2',
   '/assets/fonts/outfit-700-normal.woff2',
   '/assets/fonts/outfit-800-normal.woff2',
