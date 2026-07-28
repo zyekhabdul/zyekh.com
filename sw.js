@@ -15,6 +15,8 @@ const PRECACHE = [
   '/assets/fonts/outfit-800-normal.woff2',
   '/assets/fonts/fira-code-400-normal.woff2',
   '/assets/fonts/fira-code-600-normal.woff2',
+  '/gpg-key.asc',
+  '/api/v1/profile.json'
 ];
 
 /* ── Install: precache font shell ── */
