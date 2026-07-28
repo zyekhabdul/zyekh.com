@@ -1,0 +1,398 @@
+/*
+ * zyekh.com — Shared Stylesheet
+ * Single source of truth untuk nav, base, forms, buttons, footer.
+ * Tools-specific CSS tetap inline di masing-masing file.
+ * 2026 — CSS native, no @layer needed (spesifisitas cukup clean tanpa PureCSS !important).
+ */
+
+/* ===================== CSS Custom Properties ===================== */
+:root {
+  /* Colors */
+  --bg-dark:           #09090b;
+  --bg-card:           #141417;
+  --bg-card-hover:     #1f1f23;
+  --border-color:      #27272a;
+  --border-hover:      #52525b;
+  --text-main:         #fafafa;
+  --text-muted:        #a1a1aa;
+  --accent-white:      #ffffff;
+
+  /* Spacing */
+  --space-xs:   0.25rem;
+  --space-sm:   0.5rem;
+  --space-md:   1rem;
+  --space-lg:   1.5rem;
+  --space-xl:   2.5rem;
+
+  /* Radius */
+  --radius-sm:  4px;
+  --radius-md:  6px;
+  --radius-lg:  8px;
+
+  /* Transitions */
+  --transition: 0.2s ease;
+}
+
+/* ===================== Reset & Base ===================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 64px;
+  overflow-x: clip; /* clip ≠ hidden — tidak break position:fixed/sticky */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  overflow-x: clip;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-main);
+  margin-top: 0;
+  letter-spacing: -0.02em;
+}
+
+a { color: var(--text-main); }
+
+img, svg, video, canvas { max-width: 100%; height: auto; }
+
+pre, code {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ===================== View Transitions (2026) ===================== */
+@view-transition {
+  navigation: auto;
+}
+
+/* ===================== Navigation ===================== */
+.header-nav {
+  background-color: rgba(9, 9, 11, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0.75rem var(--space-lg);
+  height: 60px;
+}
+
+.nav-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-logo {
+  font-family: 'Fira Code', monospace;
+  font-weight: 700;
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 1.1rem;
+  letter-spacing: -0.05em;
+  z-index: 1001;
+  position: relative;
+}
+
+/* Hamburger button */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  transition: border-color var(--transition);
+}
+.nav-toggle:hover { border-color: var(--border-hover); }
+
+.hamburger-bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--text-main);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* Desktop nav */
+.nav-menu { display: flex; align-items: center; }
+
+.nav-list {
+  display: flex;
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.925rem;
+  font-weight: 500;
+  transition: color var(--transition);
+}
+.nav-link:hover,
+.nav-link:focus    { color: var(--text-main); }
+.nav-link.highlight { color: var(--text-main); font-weight: 600; }
+.nav-link.active    { color: var(--text-main); font-weight: 700; }
+
+/* Backdrop overlay */
+.nav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.nav-backdrop.active { display: block; opacity: 1; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .nav-toggle { display: flex; }
+
+  .nav-menu {
+    position: fixed;
+    top: 60px;
+    right: -280px;
+    width: 260px;
+    height: calc(100dvh - 60px);
+    background: rgba(9, 9, 11, 0.97);
+    backdrop-filter: blur(12px);
+    border-left: 1px solid var(--border-color);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-lg);
+    z-index: 1000;
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+  }
+  .nav-menu.open { right: 0; }
+
+  .nav-list {
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .nav-list li { width: 100%; }
+
+  .nav-link {
+    display: block;
+    padding: 0.75rem 0;
+    width: 100%;
+    font-size: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: color var(--transition), padding-left var(--transition);
+  }
+  .nav-link:hover,
+  .nav-link:focus  { padding-left: 6px; color: var(--text-main); }
+  .nav-link.active { padding-left: 8px; border-left: 2px solid #fff; font-weight: 700; }
+}
+
+/* ===================== Layout ===================== */
+.main-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg);
+}
+
+section[id] { scroll-margin-top: 72px; }
+
+.section-padding {
+  padding: 3.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+.section-title    { font-size: 1.8rem; margin-bottom: 0.4rem; }
+.section-subtitle { color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; }
+
+/* Badge */
+.badge {
+  display: inline-block;
+  padding: var(--space-xs) 0.6rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-family: 'Fira Code', monospace;
+  font-weight: 600;
+  background: #18181b;
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+}
+
+/* ===================== Buttons ===================== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background-color: var(--text-main);
+  color: var(--bg-dark);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  padding: 0.65rem var(--space-lg);
+  border: 1px solid var(--accent-white);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--transition);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.95rem;
+}
+.btn-primary:hover { background-color: #e4e4e7; }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  font-weight: 500;
+  border-radius: var(--radius-md);
+  padding: 0.65rem var(--space-lg);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color var(--transition);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.95rem;
+}
+.btn-secondary:hover { border-color: var(--border-hover); }
+
+/* Tools pages: override pure-button to match design system */
+.pure-button {
+  background-color: var(--text-main) !important;
+  color: var(--bg-dark) !important;
+  font-weight: 600 !important;
+  border-radius: var(--radius-md) !important;
+  border: 1px solid var(--accent-white) !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+  transition: background-color var(--transition) !important;
+}
+.pure-button:hover { background-color: #e4e4e7 !important; }
+.pure-button-primary { background-color: var(--text-main) !important; color: var(--bg-dark) !important; }
+
+/* ===================== Cards ===================== */
+.custom-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  height: 100%;
+  transition: border-color var(--transition), transform var(--transition);
+}
+.custom-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+.card-grid-gap { padding: var(--space-sm); }
+
+/* ===================== Forms (tools pages) ===================== */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="datetime-local"],
+select,
+textarea {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0.6rem 0.9rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  width: 100%;
+  font-family: 'Inter', system-ui, sans-serif;
+  margin-bottom: 0.8rem;
+  transition: border-color var(--transition);
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--border-hover);
+  outline: none;
+}
+label {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+button {
+  background-color: var(--text-main);
+  color: var(--bg-dark);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  padding: 0.55rem 1.2rem;
+  border: 1px solid var(--accent-white);
+  cursor: pointer;
+  font-family: 'Inter', system-ui, sans-serif;
+  margin-right: 0.4rem;
+  margin-bottom: 0.4rem;
+  transition: background-color var(--transition);
+}
+button:hover { background-color: #e4e4e7; }
+
+/* ===================== Table ===================== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  background: var(--bg-dark);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+th, td { padding: 0.75rem var(--space-md); border-bottom: 1px solid var(--border-color); text-align: left; }
+th { background: var(--bg-card); color: var(--text-muted); font-weight: 600; font-size: 0.88rem; }
+td { color: var(--text-main); }
+
+/* ===================== Footer ===================== */
+.footer {
+  padding: var(--space-xl) 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--border-color);
+}
+.footer a { color: var(--text-main); text-decoration: none; }
+
+/* ===================== Tool Box (tools pages) ===================== */
+.tool-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+}
+
+/* ===================== Mobile Safeguards ===================== */
+@media (max-width: 768px) {
+  .main-container { padding: 1.25rem var(--space-md); }
+  h1 { font-size: 1.65rem; line-height: 1.25; word-break: break-word; }
+  h2 { font-size: 1.35rem; }
+  p  { font-size: 0.95rem; }
+  .custom-card, .tool-box { padding: var(--space-md); }
+}

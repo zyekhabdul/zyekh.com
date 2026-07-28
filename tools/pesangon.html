@@ -98,63 +98,26 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
   <!-- Self-hosted Fonts -->
-  <link rel="preconnect" href="/">
   <link rel="preload" href="/assets/fonts/inter-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/fonts/fonts.css">
+  <link rel="stylesheet" href="/assets/css/shared.css">
 
   <style>
-    :root {
-      --bg-dark: #09090b;
-      --bg-card: #141417;
-      --border-color: #27272a;
-      --border-color-hover: #52525b;
-      --text-main: #fafafa;
-      --text-muted: #a1a1aa;
-      --accent: #22c55e;
-      --accent-dim: #15803d;
-      --warn: #f59e0b;
-      --danger: #ef4444;
-    }
-
     * { box-sizing: border-box; }
 
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      margin: 0; padding: 0; line-height: 1.6;
-    }
-    h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; color: var(--text-main); margin-top: 0; }
+    
+    
 
-    .header-nav {
-      background-color: rgba(9, 9, 11, 0.95);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border-color);
-      position: sticky; top: 0; z-index: 1000;
-      padding: 0.75rem 1.5rem;
-    }
-    .nav-container {
-      max-width: 1100px; margin: 0 auto;
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
-    }
-    .brand-logo {
-      font-family: 'Fira Code', monospace; font-weight: 700;
-      color: var(--text-main); text-decoration: none; font-size: 1.1rem; letter-spacing: -0.05em;
-    }
-    .pure-menu-link { color: var(--text-muted) !important; font-weight: 500; transition: color 0.2s ease; }
-    .pure-menu-link:hover, .pure-menu-link:focus { color: var(--text-main) !important; background: transparent !important; }
+    
+    
+    
+    
+    
 
-    .main-container { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+    
 
     .page-header { margin-bottom: 2rem; }
-    .badge {
-      display: inline-block;
-      background: rgba(34,197,94,0.15); color: var(--accent);
-      border: 1px solid rgba(34,197,94,0.3); border-radius: 4px;
-      padding: 0.2rem 0.6rem; font-size: 0.78rem; font-weight: 600;
-      font-family: 'Fira Code', monospace; letter-spacing: 0.05em;
-      margin-bottom: 0.75rem;
-    }
+    
     .page-header h1 { font-size: 1.9rem; margin-bottom: 0.5rem; }
     .page-header p { color: var(--text-muted); margin: 0; }
 
@@ -170,24 +133,12 @@
 
     .form-group { margin-bottom: 0; }
 
-    label {
-      color: var(--text-muted); font-size: 0.88rem;
-      display: block; margin-bottom: 0.4rem;
-    }
+    
 
-    input[type="number"], select {
-      background: #09090b !important;
-      border: 1px solid var(--border-color) !important;
-      color: #fff !important;
-      padding: 0.6rem 0.9rem !important;
-      border-radius: 6px !important;
-      font-size: 0.95rem; width: 100%;
-      font-family: 'Inter', system-ui, sans-serif;
-      margin-bottom: 0;
-    }
-    input:focus, select:focus { border-color: var(--border-color-hover) !important; outline: none; }
+    
+    input:focus, 
 
-    .full-width { grid-column: 1 / -1; }
+    .full-wid
 
     .toggle-row {
       display: flex; align-items: center; gap: 0.75rem; margin-top: 0.25rem;
@@ -208,7 +159,7 @@
     }
     .toggle-switch input:checked + .slider { background: var(--accent); }
     .toggle-switch input:checked + .slider:before { transform: translateX(20px); }
-    .toggle-label { font-size: 0.9rem; color: var(--text-muted); cursor: pointer; user-select: none; }
+    .toggle-
 
     .calc-btn {
       background-color: #fafafa !important; color: #09090b !important;
@@ -235,20 +186,20 @@
       background: #09090b; border: 1px solid var(--border-color);
       border-radius: 8px; padding: 1.25rem;
     }
-    .result-card .label { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+    .result-card .
     .result-card .value { font-family: 'Fira Code', monospace; font-size: 1.15rem; font-weight: 700; color: var(--text-main); }
     .result-card.total { border-color: var(--accent); }
     .result-card.total .value { color: var(--accent); font-size: 1.35rem; }
     .result-card.tax { border-color: var(--warn); }
     .result-card.tax .value { color: var(--warn); }
 
-    table { width: 100%; border-collapse: collapse; margin: 0; background: #09090b; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color); }
-    th, td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--border-color); text-align: left; font-size: 0.92rem; }
-    th { background: #141417; color: var(--text-muted); font-weight: 600; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; }
-    td { color: var(--text-main); }
-    tr:last-child td { border-bottom: none; }
+    
+    
+    
+    
+    tr:last-child 
     .td-right { text-align: right; font-family: 'Fira Code', monospace; }
-    .tr-total td { background: rgba(34,197,94,0.08); font-weight: 700; color: var(--accent); }
+    .tr-total 
 
     .note-box {
       background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25);
@@ -270,11 +221,11 @@
     summary::-webkit-details-marker { display: none; }
     summary::after { content: '+'; font-size: 1.2rem; color: var(--text-muted); transition: transform 0.2s; }
     details[open] summary::after { content: '−'; }
-    .faq-body { padding: 0 1.25rem 1.25rem; color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; border-top: 1px solid var(--border-color); margin-top: 0; padding-top: 1rem; }
+    .faq-
 
-    a { color: var(--text-main); text-decoration: underline; }
-    .footer { padding: 2.5rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border-color); }
-    .footer a { color: var(--text-muted); }
+    
+    
+    .footer
   </style>
 
   <!-- Speculation Rules API -->
@@ -299,16 +250,7 @@
 
 <body>
   <!-- Navigation -->
-  <nav class="header-nav" role="navigation" aria-label="Navigasi utama">
-    <div class="nav-container">
-      <a href="/" class="brand-logo" aria-label="Zyekh – Halaman Utama">zyekh.com</a>
-      <ul class="pure-menu-list" style="display:flex;gap:0.25rem;list-style:none;margin:0;padding:0;">
-        <li class="pure-menu-item"><a href="/" class="pure-menu-link">Home</a></li>
-        <li class="pure-menu-item"><a href="/tools/" class="pure-menu-link">Tools</a></li>
-        <li class="pure-menu-item"><a href="/blog/" class="pure-menu-link">Blog</a></li>
-      </ul>
-    </div>
-  </nav>
+  <site-nav active="tools"></site-nav>
 
   <main class="main-container" id="main-content">
 
@@ -721,5 +663,6 @@ document.getElementById('jenisKontrak').addEventListener('change', function() {
   document.getElementById('alasan-group').style.display = this.value === 'pkwt' ? 'none' : 'block';
 });
 </script>
+  <script src="/assets/js/site-nav.js" defer></script>
 </body>
 </html>
