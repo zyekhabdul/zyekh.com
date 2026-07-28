@@ -249,7 +249,7 @@
     .footer { padding: 2.5rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border-color); }
     .footer a { color: var(--text-muted); }
   
-    /* Navigation Bar */
+    /* Unified Navigation Bar & Active States */
     .header-nav {
       position: sticky; top: 0; z-index: 100;
       background: rgba(9,9,11,0.95);
@@ -283,16 +283,35 @@
     .nav-list {
       display: flex; gap: 0.25rem;
       list-style: none; margin: 0; padding: 0;
+      align-items: center;
     }
     .nav-link {
-      display: block; padding: 0.4rem 0.7rem;
+      display: block; padding: 0.4rem 0.75rem;
       color: var(--text-muted); text-decoration: none;
       font-size: 0.9rem; border-radius: 6px;
-      transition: color 0.2s, background 0.2s;
+      transition: all 0.2s ease;
     }
-    .nav-link:hover, .nav-link:focus { color: #fff; background: rgba(255,255,255,0.07); }
-    .nav-link.highlight { color: #fff; font-weight: 600; }
-    .nav-link.active { color: #fff; font-weight: 700; }
+    .nav-link:hover, .nav-link:focus {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    /* Distinct Emerald Active State */
+    .nav-link.active {
+      color: #22c55e !important;
+      background: rgba(34, 197, 94, 0.12) !important;
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      font-weight: 600;
+    }
+    /* CTA Pill Buttons */
+    .nav-link.cta-pill {
+      color: #e5e7eb;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .nav-link.cta-pill:hover {
+      border-color: rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.1);
+    }
     @media (max-width: 768px) {
       .nav-toggle { display: flex; }
       .nav-menu {
@@ -303,9 +322,9 @@
         padding: 0.75rem 1.5rem;
       }
       .nav-menu.open { display: block; }
-      .nav-list { flex-direction: column; gap: 0; }
+      .nav-list { flex-direction: column; gap: 0; align-items: stretch; }
       .nav-list li { border-bottom: 1px solid var(--border-color); }
-      .nav-link { padding: 0.65rem 0; border-radius: 0; }
+      .nav-link { padding: 0.65rem 0.5rem; border-radius: 4px; margin: 0.2rem 0; }
     }
   </style>
 
@@ -346,8 +365,8 @@
           <li><a href="/#about" class="nav-link">About</a></li>
           <li><a href="/#skills" class="nav-link">Skills</a></li>
           <li><a href="/#projects" class="nav-link">Projects</a></li>
-          <li><a href="/tools/" class="nav-link highlight active">🧰 Tools Hub</a></li>
-          <li><a href="/blog/" class="nav-link highlight">📰 Articles</a></li>
+          <li><a href="/tools/" class="nav-link cta-pill active">🧰 Tools Hub</a></li>
+          <li><a href="/blog/" class="nav-link cta-pill">📰 Articles</a></li>
           <li><a href="/#contact" class="nav-link">Contact</a></li>
         </ul>
       </nav>
