@@ -593,7 +593,8 @@
           <div class="terminal-line" style="margin-bottom:1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
             <button class="badge" style="cursor:pointer;" onclick="runCommand('whoami')">[whoami]</button>
             <button class="badge" style="cursor:pointer;" onclick="runCommand('tools')">[tools]</button>
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('blog')">[blog]</button>            <button class="badge" style="cursor:pointer;" onclick="runCommand('contact')">[contact]</button>
+            <button class="badge" style="cursor:pointer;" onclick="runCommand('blog')">[blog]</button>            <button class="badge" style="cursor:pointer;" onclick="runCommand('gpg')">[gpg]</button>
+            <button class="badge" style="cursor:pointer;" onclick="runCommand('contact')">[contact]</button>
             <button class="badge" style="cursor:pointer;" onclick="runCommand('clear')">[clear]</button>
           </div>
           <div class="terminal-input-line">
@@ -895,7 +896,8 @@
       'tools': 'Loading Web Utility Tools Hub...',
       'blog': 'Loading Security & VPS Articles...',
       'contact': 'Navigating to contact section...',
-      'help': 'Available commands: whoami, tools, blog, contact, help, clear'
+      'gpg': '$ curl -sL zyekh.com/gpg-key.asc | gpg --import  # Fingerprint: 9EAA B320 BF1C 9D50 9ACE B688 BFFA BE3C E859 08AA',
+      'help': 'Available commands: whoami, tools, blog, gpg, contact, help, clear'
     };
 
     function runCommand(cmdStr) {
