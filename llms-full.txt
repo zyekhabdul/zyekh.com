@@ -28,8 +28,6 @@
 - Penetration testing & vulnerability research
 
 **Open Source:** All source code at https://github.com/zyekhabdul/zyekh.com (FOSS)
-**PGP Public Key:** https://zyekh.com/gpg-key.asc
-**Import PGP:** `curl -sL zyekh.com/gpg-key.asc | gpg --import`
 **Resume (ATS):** https://zyekh.com/assets/docs/CV-ATS-Zyekh-Abdul.docx
 **Public API:** https://zyekh.com/api/v1/profile.json
 
@@ -199,7 +197,6 @@ URL: https://zyekh.com/blog/
 - **Fonts:** Self-hosted WOFF2 (Inter, Outfit, Fira Code) via /assets/fonts/
 - **Performance:** Service Worker (cache-first fonts, network-first HTML), Speculation Rules API (conservative eagerness), Navigation Preload
 - **SEO:** Schema.org JSON-LD (Person, WebApplication, FAQPage, BreadcrumbList), Open Graph, Twitter Cards, sitemap.xml, feed.xml, IndexNow
-- **Security:** CSP headers, FOSS codebase, PGP-signed identity
 - **Privacy:** All tools 100% client-side, zero analytics, zero tracking
 
 ---

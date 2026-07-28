@@ -2,7 +2,6 @@
 # Reporting security vulnerabilities and contact information for security researchers.
 
 Contact: mailto:zyekhabdulqadirjailani@gmail.com
-Encryption: https://zyekh.com/gpg-key.asc
 Preferred-Languages: en, id
 Canonical: https://zyekh.com/.well-known/security.txt
 Expires: 2027-07-28T00:00:00z

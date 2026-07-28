@@ -39,7 +39,6 @@
         "sameAs": [
           "https://github.com/zyekhabdul",
           "https://zyekh.com/.well-known/security.txt",
-          "https://zyekh.com/gpg-key.asc",
           "https://zyekh.com/api/v1/profile.json"
         ],
         "worksFor": {
@@ -594,9 +593,7 @@
           <div class="terminal-line" style="margin-bottom:1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
             <button class="badge" style="cursor:pointer;" onclick="runCommand('whoami')">[whoami]</button>
             <button class="badge" style="cursor:pointer;" onclick="runCommand('tools')">[tools]</button>
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('blog')">[blog]</button>
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('gpg')">[gpg]</button>
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('contact')">[contact]</button>
+            <button class="badge" style="cursor:pointer;" onclick="runCommand('blog')">[blog]</button>            <button class="badge" style="cursor:pointer;" onclick="runCommand('contact')">[contact]</button>
             <button class="badge" style="cursor:pointer;" onclick="runCommand('clear')">[clear]</button>
           </div>
           <div class="terminal-input-line">
@@ -812,12 +809,7 @@
             <h3 style="margin-top:0;">Contact Information</h3>
             <p style="color:var(--text-muted); font-size:0.95rem; line-height: 1.8;">
               <strong>Primary Email:</strong> <a href="mailto:zyekhabdulqadirjailani@gmail.com" style="color:#ffffff; font-weight:600;">zyekhabdulqadirjailani@gmail.com</a><br>
-              <strong>GitHub:</strong> <a href="https://github.com/zyekhabdul" target="_blank" style="color:#ffffff; font-weight:600;">github.com/zyekhabdul</a><br>
-              <strong>GPG Key:</strong> <a href="/gpg-key.asc" target="_blank" style="color:#ffffff; font-weight:600;">/gpg-key.asc</a>
-            </p>
-            <div style="background:#000; border:1px solid var(--border-color); padding:0.8rem; border-radius:6px; margin-top:1rem; cursor:pointer; transition: border-color 0.2s ease;" onclick="navigator.clipboard.writeText('curl -sL zyekh.com/gpg-key.asc | gpg --import'); this.style.borderColor='#4ade80'; setTimeout(()=>this.style.borderColor='var(--border-color)', 1500);" title="Click to copy">
-              <div style="font-family:'Fira Code', monospace; font-size:0.85rem; color:#fff;">$ curl -sL zyekh.com/gpg-key.asc | gpg --import</div>
-              <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem;">Click to copy one-click import command</div>
+              <strong>GitHub:</strong> <a href="https://github.com/zyekhabdul" target="_blank" style="color:#ffffff; font-weight:600;">github.com/zyekhabdul</a><br></div>
             </div>
           </div>
         </div>
@@ -902,9 +894,8 @@
       'whoami': 'Zyekh Abdul Qadir Jailani - Full Stack Developer & Security Researcher.',
       'tools': 'Loading Web Utility Tools Hub...',
       'blog': 'Loading Security & VPS Articles...',
-      'gpg': '$ curl -sL zyekh.com/gpg-key.asc | gpg --import',
       'contact': 'Navigating to contact section...',
-      'help': 'Available commands: whoami, tools, blog, gpg, contact, help, clear'
+      'help': 'Available commands: whoami, tools, blog, contact, help, clear'
     };
 
     function runCommand(cmdStr) {

@@ -14,7 +14,6 @@ Zyekh Abdul Qadir Jailani is a Full Stack Developer & Security Researcher specia
 - GitHub: https://github.com/zyekhabdul
 - Email: aqz220309@gmail.com
 - Public API: https://zyekh.com/api/v1/profile.json
-- PGP Key: https://zyekh.com/gpg-key.asc (Import: `curl -sL zyekh.com/gpg-key.asc | gpg --import`)
 - Resume (ATS): https://zyekh.com/assets/docs/CV-ATS-Zyekh-Abdul.docx
 
 ## Credentials & Certifications
