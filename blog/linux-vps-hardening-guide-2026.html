@@ -529,6 +529,21 @@
 
   </style>
   <link rel="image_src" href="https://zyekh.com/assets/img/vps-hardening.jpg">
+  <!-- Speculation Rules API: instant navigation (Chrome 109+) -->
+  <script type="speculationrules">
+  {
+    "prerender": [{
+      "source": "document",
+      "where": {
+        "and": [
+          { "href_matches": "/*" },
+          { "not": { "href_matches": "/assets/*" } }
+        ]
+      },
+      "eagerness": "moderate"
+    }]
+  }
+  </script>
 </head>
 <body>
     <!-- Header Navigation -->
@@ -699,6 +714,16 @@ sudo ufw enable</code></pre>
         link.addEventListener('click', () => {
           navMenu.classList.remove('open');
         });
+      });
+    }
+  </script>
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => reg.update())
+          .catch(() => {});
       });
     }
   </script>

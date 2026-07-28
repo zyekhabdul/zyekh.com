@@ -17,11 +17,10 @@
   <!-- Pure.css CDN & Responsive Grids -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
-  
-  <!-- Google Fonts: Outfit & Inter & Fira Code -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
+  <link rel="preconnect" href="/">
+  <link rel="preload" href="/../assets/fonts/inter-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/../assets/fonts/fonts.css">
 
   <style>
     :root {
@@ -405,6 +404,21 @@
   ]
 }
 </script>
+  <!-- Speculation Rules API: instant navigation (Chrome 109+) -->
+  <script type="speculationrules">
+  {
+    "prerender": [{
+      "source": "document",
+      "where": {
+        "and": [
+          { "href_matches": "/*" },
+          { "not": { "href_matches": "/assets/*" } }
+        ]
+      },
+      "eagerness": "moderate"
+    }]
+  }
+  </script>
 </head>
 <body>
     <!-- Header Navigation -->
@@ -520,6 +534,16 @@
     }
 
     reset();
+  </script>
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => reg.update())
+          .catch(() => {});
+      });
+    }
   </script>
 </body>
 </html>
