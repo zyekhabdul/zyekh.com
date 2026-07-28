@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anda sedang Offline 📶 | zyekh.com</title>
+  <meta name="description" content="Koneksi internet Anda terputus.">
+  
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+  
+  <link rel="preconnect" href="/">
+  <link rel="preload" href="/assets/fonts/inter-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css">
+
+  <style>
+    :root {
+      --bg-dark: #09090b;
+      --bg-card: #141417;
+      --border-color: #27272a;
+      --border-color-hover: #52525b;
+      --text-main: #fafafa;
+      --text-muted: #a1a1aa;
+      --accent: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--text-main);
+    }
+
+    .main-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .icon-offline {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .title {
+      font-size: 2.5rem;
+      margin: 0 0 1rem 0;
+    }
+
+    .desc {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn:hover {
+      border-color: var(--border-color-hover);
+      background: #1a1a1e;
+    }
+  </style>
+
+  <!-- Structured Data JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Offline - zyekh.com",
+    "description": "Koneksi internet Anda terputus."
+  }
+  </script>
+</head>
+<body>
+
+  <main class="main-container">
+    <div class="icon-offline">📶</div>
+    <h1 class="title">Anda sedang Offline</h1>
+    <p class="desc">
+      Koneksi internet Anda sepertinya terputus. Tenang saja! Tools di zyekh.com menggunakan teknologi client-side. Beberapa tool yang pernah Anda buka mungkin masih tetap bisa berjalan tanpa internet.
+    </p>
+    <div class="btn-group">
+      <a href="/" class="btn">Kembali ke Home</a>
+      <a href="/tools/" class="btn">Buka Tools Hub</a>
+    </div>
+  </main>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
+  </script>
+</body>
+</html>

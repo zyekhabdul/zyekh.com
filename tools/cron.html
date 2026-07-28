@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cron Expression Generator & Explainer Bahasa Indonesia | Zyekh</title>
+  <meta name="description" content="Tool penerjemah & pembuat cron expression ke Bahasa Indonesia secara gratis, instant, dan client-side.">
+  <meta name="keywords" content="cron generator, cron explainer, cron expression bahasa indonesia, pembuat cron, penjadwalan cron, cron job, crontab">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/cron.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cron Expression Generator & Explainer Bahasa Indonesia">
+  <meta property="og:description" content="Tool penerjemah & pembuat cron expression ke Bahasa Indonesia secara gratis, instant, dan client-side.">
+  <meta property="og:url" content="https://zyekh.com/tools/cron.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-tools.png">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/cron.html#app",
+        "name": "Cron Expression Generator & Explainer Bahasa Indonesia",
+        "description": "Tool penerjemah & pembuat cron expression ke Bahasa Indonesia secara gratis, instant, dan client-side.",
+        "url": "https://zyekh.com/tools/cron.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/cron.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Cron Generator", "item": "https://zyekh.com/tools/cron.html" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://zyekh.com/tools/cron.html#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Apa itu Cron Expression?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Cron expression adalah string yang terdiri dari lima atau enam kolom, yang mewakili waktu eksekusi rutin pada sistem operasi seperti Linux (menggunakan daemon cron) atau sistem penjadwalan lainnya." }
+          },
+          {
+            "@type": "Question",
+            "name": "Bagaimana format penulisan cron 5-field?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Formatnya adalah: Menit (0-59), Jam (0-23), Hari Bulan (1-31), Bulan (1-12), dan Hari Minggu (0-6 dengan 0 adalah Minggu). Kolom dipisahkan oleh spasi." }
+          },
+          {
+            "@type": "Question",
+            "name": "Apa arti simbol bintang (*) di cron?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Bintang (*) berarti 'setiap' atau nilai apa saja untuk bidang tersebut. Misalnya, jika * berada pada bidang jam, artinya tugas akan berjalan pada setiap jam." }
+          },
+          {
+            "@type": "Question",
+            "name": "Apa contoh cron untuk setiap 15 menit?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Gunakan */15 * * * * untuk menjalankan tugas setiap 15 menit." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Pure.css CDN & Responsive Grids -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+  <!-- Self-hosted Fonts -->
+  <link rel="preconnect" href="/">
+  <link rel="preload" href="/assets/fonts/inter-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css">
+
+  <style>
+    :root {
+      --bg-dark: #09090b;
+      --bg-card: #141417;
+      --border-color: #27272a;
+      --border-color-hover: #52525b;
+      --text-main: #fafafa;
+      --text-muted: #a1a1aa;
+      --accent: #22c55e;
+      --accent-dim: #15803d;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0; padding: 0; line-height: 1.6;
+    }
+    h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; color: var(--text-main); margin-top: 0; }
+
+    .header-nav {
+      background-color: rgba(9, 9, 11, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky; top: 0; z-index: 1000;
+      padding: 0.75rem 1.5rem;
+    }
+    .nav-container {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+    }
+    .brand-logo {
+      font-family: 'Fira Code', monospace; font-weight: 700;
+      color: var(--text-main); text-decoration: none; font-size: 1.1rem; letter-spacing: -0.05em;
+    }
+    .pure-menu-link { color: var(--text-muted) !important; font-weight: 500; transition: color 0.2s ease; }
+    .pure-menu-link:hover, .pure-menu-link:focus { color: var(--text-main) !important; background: transparent !important; }
+
+    .main-container { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+    .page-header { margin-bottom: 2rem; }
+    .badge {
+      display: inline-block;
+      background: rgba(34,197,94,0.15); color: var(--accent);
+      border: 1px solid rgba(34,197,94,0.3); border-radius: 4px;
+      padding: 0.2rem 0.6rem; font-size: 0.78rem; font-weight: 600;
+      font-family: 'Fira Code', monospace; letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+    .page-header h1 { font-size: 1.9rem; margin-bottom: 0.5rem; }
+    .page-header p { color: var(--text-muted); margin: 0; }
+
+    .tool-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 2rem; border-radius: 8px; margin-bottom: 1.5rem;
+    }
+    .tool-box h2 { font-size: 1.1rem; margin-bottom: 1.25rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; font-size: 0.8rem; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    
+    label {
+      color: var(--text-muted); font-size: 0.88rem;
+      display: block; margin-bottom: 0.4rem;
+    }
+
+    input[type="text"], select {
+      background: #09090b !important;
+      border: 1px solid var(--border-color) !important;
+      color: #fff !important;
+      padding: 0.8rem 1rem !important;
+      border-radius: 6px !important;
+      font-size: 1.1rem; width: 100%;
+      font-family: 'Fira Code', monospace;
+      margin-bottom: 0;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+    input:focus, select:focus { border-color: var(--border-color-hover) !important; outline: none; }
+
+    .calc-btn {
+      background-color: #fafafa !important; color: #09090b !important;
+      font-weight: 700; border-radius: 6px;
+      padding: 0.7rem 2rem; border: none !important; cursor: pointer;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.95rem; margin-top: 1.25rem;
+      transition: background-color 0.2s ease;
+      display: inline-block;
+    }
+    .calc-btn:hover { background-color: #e4e4e7 !important; }
+
+    .preset-btn {
+      background-color: transparent !important; color: var(--text-muted) !important;
+      border: 1px solid var(--border-color) !important; border-radius: 6px;
+      padding: 0.4rem 0.8rem; cursor: pointer;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.8rem; margin-right: 0.5rem; margin-bottom: 0.5rem;
+      transition: all 0.2s ease;
+    }
+    .preset-btn:hover { background-color: var(--border-color) !important; color: var(--text-main) !important; }
+
+    .cron-explanation {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.25);
+      border-radius: 6px;
+      text-align: center;
+    }
+
+    .error-msg {
+      color: var(--danger);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      display: none;
+      text-align: center;
+    }
+
+    .next-executions {
+      margin-top: 1.5rem;
+    }
+    
+    .next-executions h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-muted);
+    }
+    
+    .next-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .next-list li {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.95rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed var(--border-color);
+    }
+    
+    .next-list li:last-child {
+      border-bottom: none;
+    }
+
+    .faq-section { margin-top: 2rem; }
+    .faq-section h2 { font-size: 1.2rem; margin-bottom: 1rem; }
+    details {
+      border: 1px solid var(--border-color); border-radius: 6px;
+      padding: 0; margin-bottom: 0.5rem; background: var(--bg-card);
+    }
+    summary {
+      padding: 1rem 1.25rem; cursor: pointer; font-weight: 500;
+      list-style: none; display: flex; justify-content: space-between; align-items: center;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; font-size: 1.2rem; color: var(--text-muted); transition: transform 0.2s; }
+    details[open] summary::after { content: '−'; }
+    .faq-body { padding: 0 1.25rem 1.25rem; color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; border-top: 1px solid var(--border-color); margin-top: 0; padding-top: 1rem; }
+
+    a { color: var(--text-main); text-decoration: underline; }
+    .footer { padding: 2.5rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border-color); }
+    .footer a { color: var(--text-muted); }
+
+    /* Toast */
+    #toast {
+      visibility: hidden; min-width: 250px; background-color: var(--accent); color: #000;
+      text-align: center; border-radius: 4px; padding: 12px; position: fixed; z-index: 1000;
+      left: 50%; bottom: 30px; transform: translateX(-50%); font-weight: 600; font-size: 0.9rem;
+    }
+    #toast.show {
+      visibility: visible;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+    @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+    @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+  </style>
+
+  <!-- Speculation Rules API -->
+  <script type="speculationrules">
+  {
+    "prerender": [{
+      "source": "document",
+      "where": { "and": [{ "href_matches": "/*" }, { "not": { "href_matches": "/assets/*" } }] },
+      "eagerness": "moderate"
+    }]
+  }
+  </script>
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(reg => reg.update()).catch(() => {});
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="header-nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-container">
+      <a href="/" class="brand-logo" aria-label="Zyekh – Halaman Utama">zyekh.com</a>
+      <ul class="pure-menu-list" style="display:flex;gap:0.25rem;list-style:none;margin:0;padding:0;">
+        <li class="pure-menu-item"><a href="/" class="pure-menu-link">Home</a></li>
+        <li class="pure-menu-item"><a href="/tools/" class="pure-menu-link">Tools</a></li>
+        <li class="pure-menu-item"><a href="/blog/" class="pure-menu-link">Blog</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main-container" id="main-content">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" style="margin-bottom:1.5rem;">
+      <ol style="list-style:none;padding:0;margin:0;display:flex;gap:0.5rem;font-size:0.85rem;color:var(--text-muted);">
+        <li><a href="/" style="color:var(--text-muted);text-decoration:none;">Home</a></li>
+        <li aria-hidden="true" style="color:var(--border-color-hover);">/</li>
+        <li><a href="/tools/" style="color:var(--text-muted);text-decoration:none;">Tools</a></li>
+        <li aria-hidden="true" style="color:var(--border-color-hover);">/</li>
+        <li aria-current="page" style="color:var(--text-main);">Cron Generator</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">Developer Utilities</span>
+      <h1>Cron Expression Generator & Explainer</h1>
+      <p>Terjemahkan cron expression ke Bahasa Indonesia, buat cron dengan mudah, dan lihat estimasi jadwal eksekusi selanjutnya secara gratis dan berjalan client-side.</p>
+    </header>
+
+    <section class="tool-box">
+      <h2>Penerjemah Cron (Cron Explainer)</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <input type="text" id="cronInput" value="*/5 * * * *" placeholder="* * * * *" oninput="processCron()">
+          <div id="cronError" class="error-msg">Format cron tidak valid. Harap gunakan 5 bagian (misal: * * * * *).</div>
+        </div>
+        
+        <div id="cronExplanation" class="cron-explanation">
+          Setiap 5 menit
+        </div>
+        
+        <div style="text-align: center;">
+          <button class="calc-btn" type="button" onclick="copyCron()">📋 Salin Cron</button>
+        </div>
+      </div>
+      
+      <div class="next-executions">
+        <h3>5 Jadwal Eksekusi Berikutnya (WIB):</h3>
+        <ul id="nextList" class="next-list">
+          <!-- Diisi via JS -->
+        </ul>
+      </div>
+    </section>
+
+    <section class="tool-box">
+      <h2>Cron Generator (Preset Umum)</h2>
+      <div id="presets">
+        <button class="preset-btn" onclick="setPreset('* * * * *')">Setiap Menit</button>
+        <button class="preset-btn" onclick="setPreset('*/5 * * * *')">Setiap 5 Menit</button>
+        <button class="preset-btn" onclick="setPreset('*/15 * * * *')">Setiap 15 Menit</button>
+        <button class="preset-btn" onclick="setPreset('30 * * * *')">Setiap Jam di Menit 30</button>
+        <button class="preset-btn" onclick="setPreset('0 * * * *')">Setiap Jam (Tepat)</button>
+        <button class="preset-btn" onclick="setPreset('0 0 * * *')">Setiap Tengah Malam</button>
+        <button class="preset-btn" onclick="setPreset('0 9 * * *')">Setiap Hari Jam 09:00</button>
+        <button class="preset-btn" onclick="setPreset('0 9 * * 1-5')">Hari Kerja Jam 09:00 (Sen-Jum)</button>
+        <button class="preset-btn" onclick="setPreset('0 0 1 * *')">Tiap Tanggal 1 (Tengah Malam)</button>
+        <button class="preset-btn" onclick="setPreset('0 0 1 1 *')">Tahun Baru (1 Januari)</button>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">❓ Penjelasan Sintaks Cron (FAQ)</h2>
+      
+      <div style="margin-bottom: 1.5rem;">
+        <table aria-label="Format Cron">
+          <thead>
+            <tr>
+              <th style="background:#141417;padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);text-align:left;font-size:0.82rem;color:var(--text-muted);">Bidang</th>
+              <th style="background:#141417;padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);text-align:left;font-size:0.82rem;color:var(--text-muted);">Nilai yang Diizinkan</th>
+              <th style="background:#141417;padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);text-align:left;font-size:0.82rem;color:var(--text-muted);">Simbol Khusus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">1. Menit (Minute)</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">0 - 59</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">* , - /</td></tr>
+            <tr><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">2. Jam (Hour)</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">0 - 23</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">* , - /</td></tr>
+            <tr><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">3. Hari Bulan (Day of Month)</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">1 - 31</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">* , - /</td></tr>
+            <tr><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">4. Bulan (Month)</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">1 - 12</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">* , - /</td></tr>
+            <tr><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">5. Hari Minggu (Day of Week)</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">0 - 6 (0 = Minggu)</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">* , - /</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <details>
+        <summary>Apa arti simbol * (Bintang)?</summary>
+        <div class="faq-body">
+          Simbol <strong>*</strong> berarti "setiap". Jika diletakkan di bagian Menit, artinya setiap menit. Jika di bagian Jam, berarti setiap jam.
+        </div>
+      </details>
+
+      <details>
+        <summary>Bagaimana cara menggunakan simbol / (Slash)?</summary>
+        <div class="faq-body">
+          Simbol <strong>/</strong> digunakan untuk menentukan kenaikan (step). Contoh: <code>*/15</code> di bagian menit berarti mengeksekusi perintah setiap 15 menit. 
+        </div>
+      </details>
+
+      <details>
+        <summary>Bagaimana cara mengatur rentang waktu tertentu dengan - (Strip)?</summary>
+        <div class="faq-body">
+          Simbol <strong>-</strong> menentukan rentang nilai. Contoh: <code>1-5</code> di bagian Hari Minggu berarti jadwal dieksekusi dari Senin hingga Jumat.
+        </div>
+      </details>
+      
+      <details>
+        <summary>Bagaimana cara mengatur lebih dari satu waktu spesifik dengan , (Koma)?</summary>
+        <div class="faq-body">
+          Simbol <strong>,</strong> digunakan untuk mendaftar nilai secara spesifik. Contoh: <code>0,30</code> di bagian Menit berarti perintah dieksekusi tepat di menit ke-0 dan ke-30.
+        </div>
+      </details>
+    </section>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>
+      Dibuat oleh <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> ·
+      <a href="/tools/" style="color:var(--text-muted);">Semua Tools</a>
+    </p>
+  </footer>
+
+  <div id="toast">Disalin ke clipboard</div>
+
+<script>
+// --- Cron Parser (Bahasa Indonesia) ---
+const daysIndo = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+const monthsIndo = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+function parseField(field, type) {
+  if (field === '*') {
+    if (type === 'min') return 'setiap menit';
+    if (type === 'hour') return 'setiap jam';
+    if (type === 'dom') return 'setiap hari';
+    if (type === 'mon') return 'setiap bulan';
+    if (type === 'dow') return 'setiap hari';
+    return '';
+  }
+  
+  if (field.includes('/')) {
+    const parts = field.split('/');
+    const step = parts[1];
+    if (type === 'min') return `setiap ${step} menit`;
+    if (type === 'hour') return `setiap ${step} jam`;
+    if (type === 'dom') return `setiap ${step} hari`;
+    if (type === 'mon') return `setiap ${step} bulan`;
+    if (type === 'dow') return `setiap ${step} hari (mingguan)`;
+  }
+  
+  if (field.includes('-') || field.includes(',')) {
+    // simplified text for lists and ranges
+    if (type === 'min') return `pada menit ke-${field}`;
+    if (type === 'hour') return `pada jam ${field}`;
+    if (type === 'dom') return `pada tanggal ${field}`;
+    if (type === 'mon') {
+      return `di bulan ${field.split(/[,-]/).map(x => monthsIndo[parseInt(x)] || x).join('/')}`;
+    }
+    if (type === 'dow') {
+      return `pada hari ${field.split(/[,-]/).map(x => daysIndo[parseInt(x)] || x).join('/')}`;
+    }
+  }
+
+  // Exact values
+  if (type === 'min') return `pada menit ke-${field}`;
+  if (type === 'hour') return `pada jam ${field.padStart(2, '0')}:00`;
+  if (type === 'dom') return `pada tanggal ${field}`;
+  if (type === 'mon') return `di bulan ${monthsIndo[parseInt(field)] || field}`;
+  if (type === 'dow') return `pada hari ${daysIndo[parseInt(field)] || field}`;
+
+  return field;
+}
+
+function explainCron(cronStr) {
+  const parts = cronStr.trim().split(/\s+/);
+  if (parts.length !== 5) return null;
+  
+  const [min, hour, dom, mon, dow] = parts;
+  
+  let result = "";
+  
+  // Custom smart templates
+  if (min === '0' && hour === '0' && dom === '*' && mon === '*' && dow === '*') {
+    return "Setiap tengah malam (00:00)";
+  }
+  if (min === '0' && dom === '*' && mon === '*' && dow === '*') {
+    return `Setiap hari jam ${hour.padStart(2, '0')}:00`;
+  }
+  if (hour === '*' && dom === '*' && mon === '*' && dow === '*') {
+    return `Setiap jam ${parseField(min, 'min')}`;
+  }
+  if (min.includes('/') && hour === '*' && dom === '*' && mon === '*' && dow === '*') {
+    return `${parseField(min, 'min').replace('s', 'S')}`;
+  }
+
+  // Compose general explanation
+  let timeStr = "";
+  if (min === '*' && hour === '*') {
+    timeStr = "Setiap menit";
+  } else if (min !== '*' && hour === '*') {
+    timeStr = `Setiap jam, ${parseField(min, 'min')}`;
+  } else if (min === '*' && hour !== '*') {
+    timeStr = `Setiap menit, ${parseField(hour, 'hour')}`;
+  } else {
+    // Both set
+    if (!min.includes(',') && !min.includes('-') && !min.includes('/') && 
+        !hour.includes(',') && !hour.includes('-') && !hour.includes('/')) {
+      timeStr = `Pada jam ${hour.padStart(2,'0')}:${min.padStart(2,'0')}`;
+    } else {
+      timeStr = `${parseField(hour, 'hour')} ${parseField(min, 'min')}`;
+    }
+  }
+
+  let dateStr = "";
+  if (dom === '*' && mon === '*' && dow === '*') {
+    dateStr = "setiap hari";
+  } else if (dom !== '*' && mon === '*' && dow === '*') {
+    dateStr = `tiap bulan ${parseField(dom, 'dom')}`;
+  } else if (dom === '*' && mon !== '*' && dow === '*') {
+    dateStr = `setiap hari ${parseField(mon, 'mon')}`;
+  } else if (dom === '*' && mon === '*' && dow !== '*') {
+    dateStr = `${parseField(dow, 'dow')}`;
+  } else {
+    let components = [];
+    if (dom !== '*') components.push(parseField(dom, 'dom'));
+    if (mon !== '*') components.push(parseField(mon, 'mon'));
+    if (dow !== '*') components.push(parseField(dow, 'dow'));
+    dateStr = components.join(', ');
+  }
+
+  // Capitalize first letter
+  const finalStr = `${timeStr}, ${dateStr}`.trim();
+  return finalStr.charAt(0).toUpperCase() + finalStr.slice(1);
+}
+
+// Minimal Cron Matcher for Next Executions
+function matchField(value, fieldDef) {
+  if (fieldDef === '*') return true;
+  
+  if (fieldDef.includes('/')) {
+    const parts = fieldDef.split('/');
+    if (parts[0] !== '*') {
+      const start = parseInt(parts[0]);
+      const step = parseInt(parts[1]);
+      if (value < start) return false;
+      return (value - start) % step === 0;
+    }
+    const step = parseInt(parts[1]);
+    return value % step === 0;
+  }
+  
+  if (fieldDef.includes(',')) {
+    const arr = fieldDef.split(',').map(Number);
+    return arr.includes(value);
+  }
+  
+  if (fieldDef.includes('-')) {
+    const [start, end] = fieldDef.split('-').map(Number);
+    return value >= start && value <= end;
+  }
+  
+  return value === parseInt(fieldDef);
+}
+
+function getNextExecutions(cronStr) {
+  const parts = cronStr.trim().split(/\s+/);
+  if (parts.length !== 5) return [];
+  const [minDef, hourDef, domDef, monDef, dowDef] = parts;
+  
+  let executions = [];
+  let current = new Date();
+  current.setSeconds(0, 0); // start at current minute
+  current.setMinutes(current.getMinutes() + 1); // next minute
+  
+  // Safety cap to prevent infinite loop
+  let iterations = 0;
+  const MAX_ITERATIONS = 500000; 
+
+  while (executions.length < 5 && iterations < MAX_ITERATIONS) {
+    const min = current.getMinutes();
+    const hour = current.getHours();
+    const dom = current.getDate();
+    const mon = current.getMonth() + 1; // 1-12
+    const dow = current.getDay(); // 0-6
+
+    const matchMin = matchField(min, minDef);
+    const matchHour = matchField(hour, hourDef);
+    const matchMon = matchField(mon, monDef);
+    
+    // Cron logic: If both dom and dow are restricted (not *), it's an OR condition in standard cron
+    // If one is *, the other must match.
+    let matchDay = false;
+    if (domDef === '*' && dowDef === '*') {
+      matchDay = true;
+    } else if (domDef !== '*' && dowDef !== '*') {
+      matchDay = matchField(dom, domDef) || matchField(dow, dowDef);
+    } else if (domDef !== '*') {
+      matchDay = matchField(dom, domDef);
+    } else {
+      matchDay = matchField(dow, dowDef);
+    }
+
+    if (matchMin && matchHour && matchDay && matchMon) {
+      // Format time
+      const dateStr = current.toLocaleDateString('id-ID', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      });
+      const timeStr = current.toLocaleTimeString('id-ID', {
+        hour: '2-digit', minute: '2-digit'
+      });
+      executions.push(`${dateStr} - ${timeStr} WIB`);
+    }
+
+    // Skip ahead optimally based on mismatch
+    if (!matchMon) {
+      current.setMonth(current.getMonth() + 1);
+      current.setDate(1);
+      current.setHours(0, 0);
+    } else if (!matchDay) {
+      current.setDate(current.getDate() + 1);
+      current.setHours(0, 0);
+    } else if (!matchHour) {
+      current.setHours(current.getHours() + 1);
+      current.setMinutes(0);
+    } else {
+      current.setMinutes(current.getMinutes() + 1);
+    }
+    
+    iterations++;
+  }
+  
+  if (executions.length === 0) {
+    return ["Tidak ditemukan jadwal dalam waktu dekat"];
+  }
+  return executions;
+}
+
+function processCron() {
+  const cronStr = document.getElementById('cronInput').value;
+  const expDiv = document.getElementById('cronExplanation');
+  const errDiv = document.getElementById('cronError');
+  const nextList = document.getElementById('nextList');
+  
+  const explanation = explainCron(cronStr);
+  
+  if (!explanation) {
+    expDiv.style.display = 'none';
+    errDiv.style.display = 'block';
+    nextList.innerHTML = '<li>-</li>';
+  } else {
+    errDiv.style.display = 'none';
+    expDiv.style.display = 'block';
+    expDiv.innerText = explanation;
+    
+    const nextTimes = getNextExecutions(cronStr);
+    nextList.innerHTML = nextTimes.map(t => `<li>📅 ${t}</li>`).join('');
+  }
+}
+
+function setPreset(val) {
+  document.getElementById('cronInput').value = val;
+  processCron();
+}
+
+function copyCron() {
+  const cronStr = document.getElementById('cronInput').value;
+  navigator.clipboard.writeText(cronStr).then(() => {
+    const toast = document.getElementById('toast');
+    toast.className = 'show';
+    setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 3000);
+  });
+}
+
+// Init on load
+document.addEventListener('DOMContentLoaded', processCron);
+</script>
+</body>
+</html>

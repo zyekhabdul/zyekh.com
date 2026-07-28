@@ -32,6 +32,7 @@ Zyekh Abdul Qadir Jailani is a Full Stack Developer & Security Researcher specia
 - [Kalkulator Pesangon PHK](https://zyekh.com/tools/pesangon.html): Hitung estimasi uang pesangon PHK, UPMK, UPH, dan kompensasi PKWT sesuai UU Cipta Kerja (PP 35/2021).
 - [Kalkulator JHT BPJS](https://zyekh.com/tools/jht.html): Hitung estimasi saldo & pencairan Jaminan Hari Tua (JHT) BPJS Ketenagakerjaan.
 - [Kalkulator JKP BPJS](https://zyekh.com/tools/jkp.html): Simulasi perhitungan manfaat uang tunai Jaminan Kehilangan Pekerjaan (JKP) bagi korban PHK sesuai PP 37/2021.
+- [Cron Expression Generator](https://zyekh.com/tools/cron.html): Tool penerjemah & pembuat cron expression ke Bahasa Indonesia secara gratis dan client-side.
 - [Web Tools Hub](https://zyekh.com/tools/): Access all 20+ client-side web utilities.
 
 ## Articles & Research

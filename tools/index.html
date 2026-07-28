@@ -322,11 +322,15 @@
 
     <!-- Filter & Search -->
     <div class="search-filter-box">
-      <input type="text" id="searchInput" class="search-input" placeholder="Search web tools (e.g., Zakat, QR, Password, KPR, Diff)...">
+      <input type="text" id="searchInput" class="search-input" placeholder="🔍 Cari 23+ tool (contoh: zakat, pph21, qr, pesangon)...">
+      <p id="searchCounter" style="margin-top: 0.75rem; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0;">Menampilkan 23 dari 23 tools</p>
     </div>
 
     <!-- Tools Grid Container -->
     <div id="toolsGrid" class="pure-g">
+      <div id="noResultsMsg" style="display: none; width: 100%; padding: 2rem; text-align: center; color: var(--text-muted); background: var(--bg-card); border-radius: 8px; border: 1px dashed var(--border-color); margin: 0.5rem;">
+        Tool tidak ditemukan. Coba kata kunci lain.
+      </div>
 
       <!-- Financial Calculators -->
       <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3 card-grid-gap tool-item" data-title="Zakat Calculator Maal Income Nisab 2.5%">
@@ -573,6 +577,17 @@
         </a>
       </div>
 
+      <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-1-3 card-grid-gap tool-item" data-title="Cron Expression Generator Explainer Bahasa Indonesia">
+        <a href="/tools/cron.html" class="tool-card">
+          <div>
+            <span class="tool-category">DEVELOPER UTILITIES</span>
+            <h3 class="tool-title">Cron Expression Generator</h3>
+            <p class="tool-desc">Translate &amp; generate cron expressions to Indonesian with next execution times.</p>
+          </div>
+          <span style="color:#ffffff; font-size:0.85rem; font-weight:600;">Open Tool →</span>
+        </a>
+      </div>
+
     </div>
   </main>
 
@@ -584,17 +599,35 @@
   <script>
     const searchInput = document.getElementById('searchInput');
     const toolItems = document.querySelectorAll('.tool-item');
+    const searchCounter = document.getElementById('searchCounter');
+    const noResultsMsg = document.getElementById('noResultsMsg');
+    const totalTools = toolItems.length;
+
+    if (searchCounter) {
+      searchCounter.textContent = `Menampilkan ${totalTools} dari ${totalTools} tools`;
+    }
 
     searchInput.addEventListener('input', function() {
       const q = this.value.toLowerCase().trim();
+      let visibleCount = 0;
+
       toolItems.forEach(item => {
-        const text = item.getAttribute('data-title').toLowerCase();
+        const text = (item.getAttribute('data-title') || '').toLowerCase() + ' ' + item.innerText.toLowerCase();
         if (!q || text.includes(q)) {
           item.style.display = '';
+          visibleCount++;
         } else {
           item.style.display = 'none';
         }
       });
+
+      if (searchCounter) {
+        searchCounter.textContent = `Menampilkan ${visibleCount} dari ${totalTools} tools`;
+      }
+
+      if (noResultsMsg) {
+        noResultsMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
     });
 
     // Mobile Navigation Toggle

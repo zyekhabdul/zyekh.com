@@ -4,6 +4,7 @@ const CACHE_NAME = `zyekh-${CACHE_VERSION}`;
 
 /* Assets to precache on install (shell) */
 const PRECACHE = [
+  '/offline.html',
   '/assets/fonts/fonts.css',
   '/assets/fonts/inter-400-normal.woff2',
   '/assets/fonts/inter-500-normal.woff2',
@@ -104,10 +105,7 @@ async function networkFirstNav(event) {
     return response;
   } catch {
     const cached = await caches.match(event.request);
-    return cached || new Response('<h1>Offline</h1>', {
-      status: 503,
-      headers: { 'Content-Type': 'text/html' }
-    });
+    return cached || await caches.match('/offline.html');
   }
 }
 
