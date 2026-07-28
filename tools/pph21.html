@@ -319,6 +319,34 @@
       }
     }
 
+  
+    /* Global Mobile & Overflow Safeguards */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { max-width: 100vw; overflow-x: hidden; }
+    body { max-width: 100vw; overflow-x: hidden; position: relative; }
+    img, svg, video, canvas { max-width: 100%; height: auto; }
+    pre, code { max-width: 100%; overflow-x: auto; white-space: pre-wrap; word-break: break-word; }
+    table { width: 100%; border-collapse: collapse; }
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 1.5rem;
+      border-radius: 6px;
+    }
+    input, select, textarea, button { max-width: 100%; }
+
+    @media (max-width: 768px) {
+      .main-container { padding: 1.25rem 1rem !important; }
+      .pure-g { flex-direction: column; }
+      .pure-u-1, [class*="pure-u-"] { width: 100% !important; margin-left: 0 !important; margin-right: 0 !important; }
+      h1, .hero-title { font-size: 1.65rem !important; line-height: 1.25 !important; word-break: break-word; }
+      h2, .section-title { font-size: 1.35rem !important; }
+      p, .hero-desc { font-size: 0.95rem !important; }
+      .terminal-window { margin: 1rem 0 !important; }
+      .terminal-input { font-size: 0.85rem !important; }
+      .card, .custom-card, .tool-item { padding: 1rem !important; }
+    }
   </style>
   <!-- SEO & Social Meta Tags -->
   <link rel="canonical" href="https://zyekh.com/tools/pph21.html">
@@ -581,15 +609,15 @@
     <label for="pensiun">Iuran pensiun per bulan (Rp, opsional)</label><br>
     <input type="number" id="pensiun" min="0" step="50000" value="0" oninput="calc()">
   </p>
-
-  <table>
+<div class=table-responsive><table>
     <tr><th>Penghasilan bruto/tahun</th><td id="brutoTahun">—</td></tr>
     <tr><th>Biaya jabatan/tahun</th><td id="bj">—</td></tr>
     <tr><th>PKP (Penghasilan Kena Pajak)</th><td id="pkp">—</td></tr>
     <tr><th>PPh 21/tahun</th><td id="pphTahun">—</td></tr>
     <tr><th>PPh 21/bulan</th><td id="pphBulan">—</td></tr>
     <tr><th id="resultLabel">Take-home pay</th><td id="resultOut"><strong>—</strong></td></tr>
-  </table>
+  </table></div>
+
 
   <p><small>Estimasi PPh 21 tarif progresif UU HPP (5%–35%), biaya jabatan 5% max Rp 6 jt/tahun. Tidak termasuk tunjangan tidak tetap, BPJS, atau pemotongan lain.</small></p>
     </div>
