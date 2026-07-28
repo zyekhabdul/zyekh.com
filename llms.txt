@@ -29,7 +29,10 @@ Zyekh Abdul Qadir Jailani is a Full Stack Developer & Security Researcher specia
 - [Markdown Live Editor](https://zyekh.com/tools/markdown.html): Live preview Markdown editor with GFM support and HTML export.
 - [Random Item Picker](https://zyekh.com/tools/random-picker.html): Decision-making tool to pick items randomly from custom lists.
 - [Text to Speech (TTS)](https://zyekh.com/tools/tts.html): Client-side voice synthesizer using SpeechSynthesis Web API.
-- [Web Tools Hub](https://zyekh.com/tools/): Access all 19+ client-side web utilities.
+- [Kalkulator Pesangon PHK](https://zyekh.com/tools/pesangon.html): Hitung estimasi uang pesangon PHK, UPMK, UPH, dan kompensasi PKWT sesuai UU Cipta Kerja (PP 35/2021).
+- [Kalkulator JHT BPJS](https://zyekh.com/tools/jht.html): Hitung estimasi saldo & pencairan Jaminan Hari Tua (JHT) BPJS Ketenagakerjaan.
+- [Kalkulator JKP BPJS](https://zyekh.com/tools/jkp.html): Simulasi perhitungan manfaat uang tunai Jaminan Kehilangan Pekerjaan (JKP) bagi korban PHK sesuai PP 37/2021.
+- [Web Tools Hub](https://zyekh.com/tools/): Access all 20+ client-side web utilities.
 
 ## Articles & Research
 - [Comprehensive Linux VPS Hardening Blueprint](https://zyekh.com/blog/linux-vps-hardening-guide-2026.html): Step-by-step Debian/Ubuntu server security guide.

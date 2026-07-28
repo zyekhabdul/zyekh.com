@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kalkulator JKP BPJS 2026 — Hitung Manfaat Uang Tunai PHK | Zyekh</title>
+  <meta name="description" content="Simulasi perhitungan uang tunai JKP BPJS (45% & 25% upah maks 5 juta) selama 6 bulan untuk korban PHK.">
+  <meta name="keywords" content="kalkulator jkp, hitung jkp bpjs, uang tunai jkp, bpjs ketenagakerjaan phk, manfaat jkp, jkp online">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/jkp.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kalkulator JKP BPJS 2026 — Hitung Manfaat Uang Tunai PHK | Zyekh">
+  <meta property="og:description" content="Simulasi perhitungan uang tunai JKP BPJS (45% & 25% upah maks 5 juta) selama 6 bulan untuk korban PHK.">
+  <meta property="og:url" content="https://zyekh.com/tools/jkp.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-tools.png">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/jkp.html#app",
+        "name": "Kalkulator JKP BPJS 2026 — Hitung Manfaat Uang Tunai PHK",
+        "description": "Simulasi perhitungan uang tunai JKP BPJS (45% & 25% upah maks 5 juta) selama 6 bulan untuk korban PHK.",
+        "url": "https://zyekh.com/tools/jkp.html",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/jkp.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home",      "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Kalkulator JKP", "item": "https://zyekh.com/tools/jkp.html" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://zyekh.com/tools/jkp.html#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Berapa maksimal upah yang diperhitungkan untuk JKP?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Berdasarkan PP Nomor 37 Tahun 2021, batas maksimal upah (gaji pokok + tunjangan tetap) yang diperhitungkan untuk manfaat JKP adalah Rp5.000.000 per bulan." }
+          },
+          {
+            "@type": "Question",
+            "name": "Siapa yang berhak mendapatkan JKP?",
+            "acceptedAnswer": { "@type": "Answer", "text": "JKP hanya diberikan kepada pekerja yang mengalami Pemutusan Hubungan Kerja (PHK). Pekerja yang mengundurkan diri (resign), pensiun, atau cacat total tetap tidak berhak mendapatkan JKP." }
+          },
+          {
+            "@type": "Question",
+            "name": "Berapa lama manfaat uang tunai JKP diberikan?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Manfaat uang tunai diberikan maksimal 6 bulan dengan rincian: 45% dari upah untuk 3 bulan pertama, dan 25% dari upah untuk 3 bulan berikutnya." }
+          },
+          {
+            "@type": "Question",
+            "name": "Apa syarat masa kepesertaan untuk klaim JKP?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Peserta harus memiliki masa kepesertaan BPJS Ketenagakerjaan minimal 12 bulan dalam 24 bulan terakhir, dan telah membayar iuran minimal 6 bulan berturut-turut sebelum terjadi PHK." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Pure.css CDN & Responsive Grids -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css">
+  <!-- Self-hosted Fonts -->
+  <link rel="preconnect" href="/">
+  <link rel="preload" href="/assets/fonts/inter-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css">
+
+  <style>
+    :root {
+      --bg-dark: #09090b;
+      --bg-card: #141417;
+      --border-color: #27272a;
+      --border-color-hover: #52525b;
+      --text-main: #fafafa;
+      --text-muted: #a1a1aa;
+      --accent: #22c55e;
+      --accent-dim: #15803d;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --info: #3b82f6;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0; padding: 0; line-height: 1.6;
+    }
+    h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; color: var(--text-main); margin-top: 0; }
+
+    .header-nav {
+      background-color: rgba(9, 9, 11, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky; top: 0; z-index: 1000;
+      padding: 0.75rem 1.5rem;
+    }
+    .nav-container {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+    }
+    .brand-logo {
+      font-family: 'Fira Code', monospace; font-weight: 700;
+      color: var(--text-main); text-decoration: none; font-size: 1.1rem; letter-spacing: -0.05em;
+    }
+    .pure-menu-link { color: var(--text-muted) !important; font-weight: 500; transition: color 0.2s ease; }
+    .pure-menu-link:hover, .pure-menu-link:focus { color: var(--text-main) !important; background: transparent !important; }
+
+    .main-container { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+
+    .page-header { margin-bottom: 2rem; }
+    .badge {
+      display: inline-block;
+      background: rgba(59,130,246,0.15); color: var(--info);
+      border: 1px solid rgba(59,130,246,0.3); border-radius: 4px;
+      padding: 0.2rem 0.6rem; font-size: 0.78rem; font-weight: 600;
+      font-family: 'Fira Code', monospace; letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+    .page-header h1 { font-size: 1.9rem; margin-bottom: 0.5rem; }
+    .page-header p { color: var(--text-muted); margin: 0; }
+
+    .tool-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 2rem; border-radius: 8px; margin-bottom: 1.5rem;
+    }
+    .tool-box h2 { font-size: 1.1rem; margin-bottom: 1.25rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; font-size: 0.8rem; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+
+    .form-group { margin-bottom: 0; }
+
+    label {
+      color: var(--text-muted); font-size: 0.88rem;
+      display: block; margin-bottom: 0.4rem;
+    }
+
+    input[type="number"], select {
+      background: #09090b !important;
+      border: 1px solid var(--border-color) !important;
+      color: #fff !important;
+      padding: 0.6rem 0.9rem !important;
+      border-radius: 6px !important;
+      font-size: 0.95rem; width: 100%;
+      font-family: 'Inter', system-ui, sans-serif;
+      margin-bottom: 0;
+    }
+    input:focus, select:focus { border-color: var(--border-color-hover) !important; outline: none; }
+
+    .calc-btn {
+      background-color: #fafafa !important; color: #09090b !important;
+      font-weight: 700; border-radius: 6px;
+      padding: 0.7rem 2rem; border: none !important; cursor: pointer;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.95rem; width: 100%; margin-top: 1.25rem;
+      transition: background-color 0.2s ease;
+    }
+    .calc-btn:hover { background-color: #e4e4e7 !important; }
+
+    .result-box {
+      display: none;
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem;
+    }
+    .result-box.visible { display: block; }
+
+    .result-summary {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem; margin-bottom: 1.5rem;
+    }
+    .result-card {
+      background: #09090b; border: 1px solid var(--border-color);
+      border-radius: 8px; padding: 1.25rem;
+    }
+    .result-card .label { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+    .result-card .value { font-family: 'Fira Code', monospace; font-size: 1.15rem; font-weight: 700; color: var(--text-main); }
+    .result-card.total { border-color: var(--accent); }
+    .result-card.total .value { color: var(--accent); font-size: 1.35rem; }
+    .result-card.company { border-color: var(--info); }
+    .result-card.company .value { color: var(--info); }
+    .result-card.warn { border-color: var(--warn); }
+    .result-card.warn .value { color: var(--warn); }
+
+    table { width: 100%; border-collapse: collapse; margin: 0; background: #09090b; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color); }
+    th, td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--border-color); text-align: left; font-size: 0.92rem; }
+    th { background: #141417; color: var(--text-muted); font-weight: 600; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    td { color: var(--text-main); }
+    tr:last-child td { border-bottom: none; }
+    .td-right { text-align: right; font-family: 'Fira Code', monospace; }
+    .tr-total td { background: rgba(34,197,94,0.08); font-weight: 700; color: var(--accent); }
+
+    .note-box {
+      background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.25);
+      border-radius: 6px; padding: 1rem 1.25rem; margin-top: 1rem;
+      font-size: 0.88rem; color: #60a5fa;
+    }
+    .note-box strong { color: var(--info); }
+
+    .faq-section { margin-top: 2rem; }
+    .faq-section h2 { font-size: 1.2rem; margin-bottom: 1rem; }
+    details {
+      border: 1px solid var(--border-color); border-radius: 6px;
+      padding: 0; margin-bottom: 0.5rem; background: var(--bg-card);
+    }
+    summary {
+      padding: 1rem 1.25rem; cursor: pointer; font-weight: 500;
+      list-style: none; display: flex; justify-content: space-between; align-items: center;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; font-size: 1.2rem; color: var(--text-muted); transition: transform 0.2s; }
+    details[open] summary::after { content: '−'; }
+    .faq-body { padding: 0 1.25rem 1.25rem; color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; border-top: 1px solid var(--border-color); margin-top: 0; padding-top: 1rem; }
+
+    a { color: var(--text-main); text-decoration: underline; }
+    .footer { padding: 2.5rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid var(--border-color); }
+    .footer a { color: var(--text-muted); }
+  </style>
+
+  <!-- Speculation Rules API -->
+  <script type="speculationrules">
+  {
+    "prerender": [{
+      "source": "document",
+      "where": { "and": [{ "href_matches": "/*" }, { "not": { "href_matches": "/assets/*" } }] },
+      "eagerness": "moderate"
+    }]
+  }
+  </script>
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(reg => reg.update()).catch(() => {});
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="header-nav" role="navigation" aria-label="Navigasi utama">
+    <div class="nav-container">
+      <a href="/" class="brand-logo" aria-label="Zyekh – Halaman Utama">zyekh.com</a>
+      <ul class="pure-menu-list" style="display:flex;gap:0.25rem;list-style:none;margin:0;padding:0;">
+        <li class="pure-menu-item"><a href="/" class="pure-menu-link">Home</a></li>
+        <li class="pure-menu-item"><a href="/tools/" class="pure-menu-link">Tools</a></li>
+        <li class="pure-menu-item"><a href="/blog/" class="pure-menu-link">Blog</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main-container" id="main-content">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="Breadcrumb" style="margin-bottom:1.5rem;">
+      <ol style="list-style:none;padding:0;margin:0;display:flex;gap:0.5rem;font-size:0.85rem;color:var(--text-muted);">
+        <li><a href="/" style="color:var(--text-muted);text-decoration:none;">Home</a></li>
+        <li aria-hidden="true" style="color:var(--border-color-hover);">/</li>
+        <li><a href="/tools/" style="color:var(--text-muted);text-decoration:none;">Tools</a></li>
+        <li aria-hidden="true" style="color:var(--border-color-hover);">/</li>
+        <li aria-current="page" style="color:var(--text-main);">Kalkulator JKP</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">BPJS Ketenagakerjaan</span>
+      <h1>Kalkulator JKP 2026</h1>
+      <p>Hitung simulasi pencairan Jaminan Kehilangan Pekerjaan (JKP) selama 6 bulan untuk korban PHK sesuai PP 37/2021.</p>
+    </header>
+
+    <!-- Input Form -->
+    <section class="tool-box" aria-labelledby="form-heading">
+      <h2 id="form-heading">Data Upah &amp; Kepesertaan</h2>
+      <div class="form-grid">
+
+        <!-- Gaji Pokok -->
+        <div class="form-group">
+          <label for="gajiPokok">Gaji Pokok Terakhir (Rp)</label>
+          <input type="number" id="gajiPokok" min="0" step="100000" placeholder="Contoh: 5000000" aria-describedby="gaji-hint">
+          <span id="gaji-hint" style="font-size:0.78rem;color:var(--text-muted);">Dasar perhitungan: Gaji Pokok + Tunjangan Tetap</span>
+        </div>
+
+        <!-- Tunjangan Tetap -->
+        <div class="form-group">
+          <label for="tunjanganTetap">Tunjangan Tetap (Rp) <span style="color:var(--text-muted);font-size:0.8rem;">— opsional</span></label>
+          <input type="number" id="tunjanganTetap" min="0" step="50000" placeholder="Contoh: 1000000" value="0">
+        </div>
+
+        <!-- Masa Kepesertaan -->
+        <div class="form-group">
+          <label for="masaKerjaBulan">Masa Kepesertaan BPJS (Bulan)</label>
+          <input type="number" id="masaKerjaBulan" min="0" step="1" placeholder="Min. 12 bulan" value="12">
+        </div>
+
+        <!-- Opsi Status PHK -->
+        <div class="form-group">
+          <label for="statusPekerjaan">Status Berhenti Kerja</label>
+          <select id="statusPekerjaan">
+            <option value="phk">PHK Resmi (Memenuhi Syarat)</option>
+            <option value="resign">Mengundurkan Diri (Resign)</option>
+            <option value="pensiun">Pensiun / Cacat Total</option>
+          </select>
+        </div>
+
+      </div>
+      <button class="calc-btn" id="hitungBtn" type="button" onclick="hitung()">📊 Hitung Manfaat JKP</button>
+    </section>
+
+    <!-- Result -->
+    <section class="result-box" id="resultBox" aria-live="polite" aria-label="Hasil Perhitungan">
+      <h2 style="margin-bottom:1.5rem;">📋 Rincian Manfaat Uang Tunai JKP</h2>
+
+      <!-- Summary Cards -->
+      <div class="result-summary" id="resultCards"></div>
+
+      <!-- Breakdown Table -->
+      <table id="breakdownTable" aria-label="Tabel rincian pencairan JKP">
+        <thead>
+          <tr>
+            <th>Bulan Ke-</th>
+            <th>Persentase</th>
+            <th class="td-right">Pencairan (Rp)</th>
+          </tr>
+        </thead>
+        <tbody id="breakdownBody"></tbody>
+      </table>
+
+      <div class="note-box" id="noteBox"></div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">❓ Pertanyaan Umum (FAQ)</h2>
+
+      <details>
+        <summary>Berapa maksimal upah yang diperhitungkan untuk JKP?</summary>
+        <div class="faq-body">
+          Berdasarkan PP Nomor 37 Tahun 2021, batas maksimal upah (gaji pokok + tunjangan tetap) yang diperhitungkan untuk manfaat JKP adalah <strong>Rp5.000.000</strong> per bulan.
+        </div>
+      </details>
+
+      <details>
+        <summary>Siapa yang berhak mendapatkan JKP?</summary>
+        <div class="faq-body">
+          JKP hanya diberikan kepada pekerja yang mengalami Pemutusan Hubungan Kerja (PHK). Pekerja yang mengundurkan diri (resign), pensiun, atau cacat total tetap <strong>tidak berhak</strong> mendapatkan JKP.
+        </div>
+      </details>
+
+      <details>
+        <summary>Berapa lama manfaat uang tunai JKP diberikan?</summary>
+        <div class="faq-body">
+          Manfaat uang tunai diberikan maksimal <strong>6 bulan</strong> dengan rincian: 45% dari upah untuk 3 bulan pertama, dan 25% dari upah untuk 3 bulan berikutnya.
+        </div>
+      </details>
+
+      <details>
+        <summary>Apa syarat masa kepesertaan untuk klaim JKP?</summary>
+        <div class="faq-body">
+          Peserta harus memiliki masa kepesertaan BPJS Ketenagakerjaan minimal <strong>12 bulan</strong> dalam 24 bulan terakhir, dan telah membayar iuran minimal 6 bulan berturut-turut sebelum terjadi PHK.
+        </div>
+      </details>
+    </section>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>
+      Dibuat oleh <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> ·
+      <a href="/tools/" style="color:var(--text-muted);">Semua Tools</a>
+    </p>
+    <p style="font-size:0.8rem;margin-top:0.5rem;">
+      ⚠️ Ini adalah simulasi berdasarkan PP No. 37 Tahun 2021. Realisasi manfaat tunai tergantung pada verifikasi persyaratan oleh BPJS Ketenagakerjaan.
+    </p>
+  </footer>
+
+<script>
+const fmt = (n) => 'Rp ' + Math.round(n).toLocaleString('id-ID');
+
+function hitung() {
+  const gajiPokok = parseFloat(document.getElementById('gajiPokok').value) || 0;
+  const tunjanganTetap = parseFloat(document.getElementById('tunjanganTetap').value) || 0;
+  const masaKerja = parseInt(document.getElementById('masaKerjaBulan').value) || 0;
+  const statusPekerjaan = document.getElementById('statusPekerjaan').value;
+
+  if (gajiPokok <= 0) {
+    alert('Masukkan Gaji Pokok terlebih dahulu.');
+    return;
+  }
+  
+  if (masaKerja < 12) {
+    alert('Syarat JKP adalah masa kepesertaan minimal 12 bulan dalam 24 bulan terakhir.');
+    return;
+  }
+  
+  if (statusPekerjaan !== 'phk') {
+    alert('Manfaat JKP hanya diberikan kepada pekerja yang mengalami Pemutusan Hubungan Kerja (PHK). Resign, pensiun, atau cacat total tetap tidak memenuhi syarat.');
+    return;
+  }
+
+  let upahAsli = gajiPokok + tunjanganTetap;
+  // Batas Maksimum Upah yang Diperhitungkan: Rp5.000.000/bulan (sesuai PP 37/2021).
+  let upahDasar = upahAsli > 5000000 ? 5000000 : upahAsli;
+
+  const manfaatBulan13 = upahDasar * 0.45;
+  const manfaatBulan46 = upahDasar * 0.25;
+
+  const totalBulan13 = manfaatBulan13 * 3;
+  const totalBulan46 = manfaatBulan46 * 3;
+  const totalManfaat = totalBulan13 + totalBulan46;
+
+  // Render cards
+  const cards = document.getElementById('resultCards');
+  cards.innerHTML = \`
+    <div class="result-card warn">
+      <div class="label">Upah Dasar Diperhitungkan</div>
+      <div class="value">\${fmt(upahDasar)}</div>
+    </div>
+    <div class="result-card company">
+      <div class="label">Manfaat Bln 1-3 (45%)</div>
+      <div class="value">\${fmt(manfaatBulan13)}/bln</div>
+    </div>
+    <div class="result-card">
+      <div class="label">Manfaat Bln 4-6 (25%)</div>
+      <div class="value">\${fmt(manfaatBulan46)}/bln</div>
+    </div>
+    <div class="result-card total">
+      <div class="label">Total Manfaat (6 Bulan)</div>
+      <div class="value">\${fmt(totalManfaat)}</div>
+    </div>
+  \`;
+
+  // Render table
+  const tbody = document.getElementById('breakdownBody');
+  tbody.innerHTML = \`
+    <tr>
+      <td>Bulan 1</td>
+      <td>45% × \${fmt(upahDasar)}</td>
+      <td class="td-right">\${fmt(manfaatBulan13)}</td>
+    </tr>
+    <tr>
+      <td>Bulan 2</td>
+      <td>45% × \${fmt(upahDasar)}</td>
+      <td class="td-right">\${fmt(manfaatBulan13)}</td>
+    </tr>
+    <tr>
+      <td>Bulan 3</td>
+      <td>45% × \${fmt(upahDasar)}</td>
+      <td class="td-right">\${fmt(manfaatBulan13)}</td>
+    </tr>
+    <tr>
+      <td>Bulan 4</td>
+      <td>25% × \${fmt(upahDasar)}</td>
+      <td class="td-right">\${fmt(manfaatBulan46)}</td>
+    </tr>
+    <tr>
+      <td>Bulan 5</td>
+      <td>25% × \${fmt(upahDasar)}</td>
+      <td class="td-right">\${fmt(manfaatBulan46)}</td>
+    </tr>
+    <tr>
+      <td>Bulan 6</td>
+      <td>25% × \${fmt(upahDasar)}</td>
+      <td class="td-right">\${fmt(manfaatBulan46)}</td>
+    </tr>
+    <tr class="tr-total">
+      <td colspan="2"><strong>Total Maksimal Manfaat Uang Tunai</strong></td>
+      <td class="td-right"><strong>\${fmt(totalManfaat)}</strong></td>
+    </tr>
+  \`;
+
+  document.getElementById('noteBox').innerHTML = \`<strong>Informasi Tambahan:</strong> Selain manfaat uang tunai, peserta JKP yang sah juga berhak mendapatkan <strong>Akses Informasi Pasar Kerja</strong> (bimbingan jabatan dan penempatan kerja) serta <strong>Pelatihan Kerja</strong> berbasis kompetensi.\`;
+  
+  const box = document.getElementById('resultBox');
+  box.classList.add('visible');
+  box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
+</body>
+</html>
