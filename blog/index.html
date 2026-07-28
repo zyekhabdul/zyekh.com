@@ -22,9 +22,6 @@
   <link rel="manifest" href="/manifest.json">
 
   <!-- Fonts & Styles -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     .container {
@@ -171,7 +168,22 @@
     }]
   }
   </script>
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/shared.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Zyekh Technical Research Blog",
+    "description": "Technical articles on Linux kernel hardening, eBPF security monitoring, strict CSP, and static architecture.",
+    "url": "https://zyekh.com/blog/",
+    "publisher": {
+      "@type": "Person",
+      "name": "Zyekh Abdul Qadir Jailani",
+      "url": "https://zyekh.com/"
+    }
+  }
+  </script>
 </head>
 <body>
     <!-- Header Navigation -->

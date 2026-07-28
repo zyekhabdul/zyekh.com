@@ -88,9 +88,6 @@
   <link rel="manifest" href="/manifest.json">
 
   <!-- Fonts & Styles -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     .container {
@@ -100,20 +97,6 @@
     }
 
     /* Navigation Bar */
-    .nav-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid var(--border-color);
-      margin-bottom: 3rem;
-    }
-    .brand-title {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--text-main);
-      text-decoration: none;
-    }
     .back-link {
       color: var(--text-muted);
       text-decoration: none;
@@ -282,6 +265,7 @@
     }]
   }
   </script>
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/shared.css">
 </head>
 <body>
