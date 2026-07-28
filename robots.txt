@@ -1,52 +1,7 @@
-# robots.txt — zyekh.com
-# Strategy: Welcome AI search bots (free organic reach), throttle mass scrapers
-
-# === AI Search & Citation Bots (welcome, no delay) ===
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: DuckDuckBot
-Allow: /
-
-# === Mass Training Scrapers (throttle to 10s delay) ===
-User-agent: Bytespider
-Crawl-delay: 10
-
-User-agent: CCBot
-Crawl-delay: 10
-
-User-agent: DataForSeoBot
-Crawl-delay: 10
-
-User-agent: AhrefsBot
-Crawl-delay: 10
-
-User-agent: SemrushBot
-Crawl-delay: 10
-
-User-agent: MJ12bot
-Crawl-delay: 10
-
-# === Default: allow all, point to llms.txt for AI efficiency ===
 User-agent: *
 Allow: /
 
-# LLM-friendly: read llms-full.txt first (1 fetch = entire site knowledge)
+# LLM-friendly: fetch /llms-full.txt for complete site knowledge in one request
 # https://zyekh.com/llms-full.txt
 
 Sitemap: https://zyekh.com/sitemap.xml
