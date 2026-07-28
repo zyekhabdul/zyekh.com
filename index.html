@@ -170,24 +170,22 @@
       background: #fff; border-radius: 2px;
       transition: all 0.3s ease;
     }
-    .nav-toggle.open .hamburger-bar:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
-    }
-    .nav-toggle.open .hamburger-bar:nth-child(2) {
-      opacity: 0;
-    }
-    .nav-toggle.open .hamburger-bar:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
-    }
+    .nav-toggle.open .hamburger-bar:nth-child(1),
     .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(1) {
       transform: translateY(6px) rotate(45deg);
     }
+    .nav-toggle.open .hamburger-bar:nth-child(2),
     .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(2) {
       opacity: 0;
     }
+    .nav-toggle.open .hamburger-bar:nth-child(3),
     .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3) {
       transform: translateY(-6px) rotate(-45deg);
     }
+
+
+
+
 
     .nav-menu {
       display: flex;
@@ -898,13 +896,16 @@
     const navMenu = document.getElementById('navMenu');
 
     if (navToggle && navMenu) {
-      const closeMenu = () => {
-        navMenu.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
+      const toggleNav = (open) => {
+        const isExpanded = open !== undefined ? open : !navMenu.classList.contains('open');
+        navMenu.classList.toggle('open', isExpanded);
+        navToggle.classList.toggle('open', isExpanded);
+        navToggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
       };
 
       navToggle.addEventListener('click', (e) => {
         e.stopPropagation();
+        toggleNav();
       });
 
       document.querySelectorAll('.nav-link').forEach(link => {
@@ -923,6 +924,31 @@
         }
       });
     }
+
+    // ScrollSpy Active Link Update
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+
+    if (sections.length && navLinks.length) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              const href = link.getAttribute('href');
+              if (href === `#${id}`) {
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+              }
+            });
+          }
+        });
+      }, { threshold: 0.3 });
+
+      sections.forEach(section => observer.observe(section));
+    }
+
+    
 
     // Lightbox Logic
     const lightbox = document.getElementById('certLightbox');

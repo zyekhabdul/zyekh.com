@@ -150,15 +150,22 @@
       background: #fff; border-radius: 2px;
       transition: all 0.3s ease;
     }
-    .nav-toggle.open .hamburger-bar:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
+    .nav-toggle.open .hamburger-bar:nth-child(1),
+    .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
     }
-    .nav-toggle.open .hamburger-bar:nth-child(2) {
+    .nav-toggle.open .hamburger-bar:nth-child(2),
+    .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(2) {
       opacity: 0;
     }
-    .nav-toggle.open .hamburger-bar:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
+    .nav-toggle.open .hamburger-bar:nth-child(3),
+    .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
     }
+
+
+
+
     .nav-menu { display: flex; }
     .nav-list {
       display: flex; gap: 0.25rem;
@@ -354,7 +361,7 @@
   <header class="header-nav">
     <div class="nav-container">
       <a href="/" class="brand-logo">zyekh.com</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
         <span class="hamburger-bar"></span>
         <span class="hamburger-bar"></span>
         <span class="hamburger-bar"></span>
@@ -442,18 +449,41 @@
 
   </article>
 
-  <script>
-    const navToggle = document.getElementById("navToggle");
-    const navMenu = document.getElementById("navMenu");
+  <script>// Mobile Navigation Toggle
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+
     if (navToggle && navMenu) {
-      navToggle.addEventListener("click", () => {
-        navMenu.classList.toggle("open");
+      const toggleNav = (open) => {
+        const isExpanded = open !== undefined ? open : !navMenu.classList.contains('open');
+        navMenu.classList.toggle('open', isExpanded);
+        navToggle.classList.toggle('open', isExpanded);
+        navToggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+      };
+
+      navToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleNav();
       });
-      document.querySelectorAll(".nav-link").forEach(link => {
-        link.addEventListener("click", () => navMenu.classList.remove("open"));
+
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => toggleNav(false));
+      });
+
+      document.addEventListener('click', (e) => {
+        if (navMenu.classList.contains('open') && !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+          toggleNav(false);
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+          toggleNav(false);
+        }
       });
     }
-  </script>
+
+    </script>
 
   <!-- Service Worker Registration -->
   <script>

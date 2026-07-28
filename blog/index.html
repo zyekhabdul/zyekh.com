@@ -94,21 +94,26 @@
       align-items: center;
     }
     .hamburger-bar {
-      display: block;
-      width: 18px;
-      height: 2px;
-      background-color: var(--text-main);
-      transition: transform 0.2s ease, opacity 0.2s ease;
+      width: 22px; height: 2px;
+      background: #fff; border-radius: 2px;
+      transition: all 0.3s ease;
     }
-    .nav-toggle.open .hamburger-bar:nth-child(1) {
+    .nav-toggle.open .hamburger-bar:nth-child(1),
+    .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(1) {
       transform: translateY(6px) rotate(45deg);
     }
-    .nav-toggle.open .hamburger-bar:nth-child(2) {
+    .nav-toggle.open .hamburger-bar:nth-child(2),
+    .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(2) {
       opacity: 0;
     }
-    .nav-toggle.open .hamburger-bar:nth-child(3) {
+    .nav-toggle.open .hamburger-bar:nth-child(3),
+    .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3) {
       transform: translateY(-6px) rotate(-45deg);
     }
+
+
+
+
 
     .nav-menu {
       display: flex;
@@ -363,7 +368,7 @@
   <header class="header-nav">
     <div class="nav-container">
       <a href="/" class="brand-logo">zyekh.com</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
         <span class="hamburger-bar"></span>
         <span class="hamburger-bar"></span>
         <span class="hamburger-bar"></span>
@@ -568,9 +573,9 @@
           toggleNav(false);
         }
       });
-    });
     }
-  </script>
+
+    </script>
   <!-- Service Worker Registration -->
   <script>
     if ('serviceWorker' in navigator) {
