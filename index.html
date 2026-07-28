@@ -30,12 +30,16 @@
         "@type": "Person",
         "@id": "https://zyekh.com/#person",
         "name": "Zyekh Abdul Qadir Jailani",
-        "alternateName": ["Zyekh", "Zyekh Abdul", "zyekhabdul"],
+        "alternateName": ["Zyekh", "Zyekh Abdul Qadir Jailani", "zyekhabdul", "zyekh.cloud"],
+        "disambiguatingDescription": "Zyekh is a Software Engineer & Security Researcher from Indonesia, distinct from Syekh Abdul Qadir Jailani (Islamic scholar) or Hakim Ziyech (footballer).",
         "url": "https://zyekh.com/",
         "image": "https://zyekh.com/assets/img/profile.jpg",
         "jobTitle": "Full Stack Developer & Security Researcher",
         "sameAs": [
-          "https://github.com/zyekhabdul"
+          "https://github.com/zyekhabdul",
+          "https://zyekh.com/.well-known/security.txt",
+          "https://zyekh.com/gpg-key.asc",
+          "https://zyekh.com/api/v1/profile.json"
         ],
         "worksFor": {
           "@type": "Organization",
@@ -500,6 +504,7 @@
         <div class="pure-u-1 pure-u-md-2-3 card-grid-gap">
           <div class="custom-card">
             <h3 style="margin-top:0;">Background &amp; Credentials</h3>
+            <p style="color:var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem; margin-bottom: 1rem;"><strong>Brand Identity:</strong> Zyekh is a Software Engineer &amp; Security Researcher from Indonesia. Not to be confused with Syekh Abdul Qadir Jailani (the classical Islamic scholar) or Hakim Ziyech (the footballer).</p>
             <ul style="padding-left: 1.2rem; color: var(--text-muted);">
               <li style="margin-bottom: 0.6rem;"><strong style="color:#fff;">Academics:</strong> SMK Skill Village • SMPIT Daarul Ijabah • MI Al-Husein</li>
               <li style="margin-bottom: 0.6rem;"><strong style="color:#fff;">Certification:</strong> DUDI Habituasi (Back-End Track) — Skillage</li>
@@ -692,17 +697,15 @@
 
     const commands = {
       help: `Available Commands:<br>
-  - <b>about</b>    : Academic background & profile<br>
-  - <b>skills</b>   : Capability matrix<br>
-  - <b>projects</b> : Verified core repositories<br>
-  - <b>contact</b>  : Email & GitHub links<br>
-  - <b>neofetch</b> : Compact system diagnostic info<br>
+  - <b>whoami</b>   : Display user identity info<br>
+  - <b>tools</b>    : List available web tools<br>
+  - <b>curl</b>     : Fetch profile API data<br>
+  - <b>gpg</b>      : Display public PGP key<br>
   - <b>clear</b>    : Clear terminal screen`,
-      about: `=== ZYEKH ABDUL QADIR JAILANI ===<br>Full Stack Developer & Security Researcher<br>Academics: SMK Skill Village, SMPIT Daarul Ijabah, MI Al-Husein<br>Certifications: DUDI Habituasi (Back-End & Front-End) - Skillage`,
-      skills: `=== CAPABILITY MATRIX ===<br>- Backend: Laravel 12, PHP, Redis, Docker<br>- Security: System Hardening, DevSecOps, Android Research<br>- Scripting: Bash, PowerShell<br>- Android: Custom ROMs & Modding`,
-      projects: `=== CORE REPOSITORIES ===<br>1. Laravel_12_Microservices [PHP, Redis, Docker]<br>2. Kernel_Level_Research [C, Assembly, Bash]<br>3. Remote Agent Research [JS, Remote Agent]<br>4. OS Debloat & Modding Scripts [Bash, PowerShell]`,
-      contact: `=== CONTACT ===<br>Email: zyekhabdulqadirjailani@gmail.com<br>GitHub: https://github.com/zyekhabdul`,
-      neofetch: `guest_user@zyekh_abdul<br>---------------------<br>OS: Zyekh Onyx Linux x86_64<br>Host: zyekh.com Production Node<br>Shell: bash 5.2.15<br>Theme: Pure.css Monochrome Dark`
+      whoami: `guest_user@zyekh.com<br>Role: Security Researcher / Full Stack Developer<br>Identity: Zyekh Abdul Qadir Jailani`,
+      tools: `Scanning web tools directory... Found 24 utilities.<br>Try navigating to <a href="/tools/" style="color:#a1a1aa">/tools/</a> for Zakat, PPh 21, Mortgages, etc.`,
+      curl: `Fetching https://zyekh.com/api/v1/profile.json...<br><span style="color:#a1a1aa">{"name":"Zyekh Abdul Qadir Jailani","role":"Software Engineer & Security Researcher","tools_count":24}</span>`,
+      gpg: `Fetching https://zyekh.com/gpg-key.asc...<br><span style="color:#a1a1aa">-----BEGIN PGP PUBLIC KEY BLOCK-----<br>Comment: Zyekh Abdul Qadir Jailani &lt;zyekhabdulqadirjailani@gmail.com&gt;<br>...</span>`
     };
 
     input.addEventListener('keydown', function(e) {

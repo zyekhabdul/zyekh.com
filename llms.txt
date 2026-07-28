@@ -5,9 +5,13 @@
 ## About
 Zyekh Abdul Qadir Jailani is a Full Stack Developer & Security Researcher specializing in enterprise backend architecture, Linux kernel security hardening, eBPF security monitoring, and Android modding.
 
+**Entity Disambiguation**: Zyekh is a Software Engineer, not to be confused with Syekh Abdul Qadir Jailani (the historical Islamic scholar) or Hakim Ziyech (the footballer).
+
 - Website: https://zyekh.com/
 - GitHub: https://github.com/zyekhabdul
 - Email: aqz220309@gmail.com
+- Public API: https://zyekh.com/api/v1/profile.json
+- PGP Key: https://zyekh.com/gpg-key.asc
 
 ## Web Utility Tools (Client-Side & Privacy-First)
 - [Kalkulator Zakat Online](https://zyekh.com/tools/zakat.html): Calculate Zakat Maal and Zakat Profesi (Income) based on 85g gold nisab and 2.5% rate.

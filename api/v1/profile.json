@@ -1,0 +1,18 @@
+{
+  "name": "Zyekh Abdul Qadir Jailani",
+  "username": "zyekhabdul",
+  "role": "Software Engineer & Security Researcher",
+  "disambiguation": "Zyekh is a Software Engineer & Security Researcher from Indonesia, distinct from Syekh Abdul Qadir Jailani (Islamic scholar) or Hakim Ziyech (footballer).",
+  "links": {
+    "website": "https://zyekh.com",
+    "github": "https://github.com/zyekhabdul",
+    "gpg": "https://zyekh.com/gpg-key.asc"
+  },
+  "tools_count": 24,
+  "blog_articles": [
+    "Comprehensive Linux VPS Hardening Blueprint",
+    "Understanding eBPF Security Monitoring",
+    "Strict Content Security Policy (CSP) & Headers",
+    "Minimalist Static Hosting Architecture"
+  ]
+}
