@@ -226,6 +226,15 @@
       background-color: var(--text-main);
       transition: transform 0.2s ease, opacity 0.2s ease;
     }
+    .nav-toggle.open .hamburger-bar:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+    .nav-toggle.open .hamburger-bar:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle.open .hamburger-bar:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
 
     .nav-menu {
       display: flex;
@@ -576,6 +585,37 @@
           .catch(() => {});
       });
     }
+  </script>
+  <script>
+    (function() {
+      const navToggle = document.getElementById('navToggle');
+      const navMenu = document.getElementById('navMenu');
+      if (navToggle && navMenu) {
+        const toggleNav = (open) => {
+          const isExpanded = open !== undefined ? open : !navMenu.classList.contains('open');
+          navMenu.classList.toggle('open', isExpanded);
+          navToggle.classList.toggle('open', isExpanded);
+          navToggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        };
+        navToggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleNav();
+        });
+        document.querySelectorAll('.nav-link').forEach(link => {
+          link.addEventListener('click', () => toggleNav(false));
+        });
+        document.addEventListener('click', (e) => {
+          if (navMenu.classList.contains('open') && !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+            toggleNav(false);
+          }
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+            toggleNav(false);
+          }
+        });
+      }
+    })();
   </script>
 </body>
 </html>

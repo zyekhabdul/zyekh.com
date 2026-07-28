@@ -166,11 +166,27 @@
       align-items: center;
     }
     .hamburger-bar {
-      display: block;
-      width: 18px;
-      height: 2px;
-      background-color: var(--text-main);
-      transition: transform 0.2s ease, opacity 0.2s ease;
+      width: 22px; height: 2px;
+      background: #fff; border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .nav-toggle.open .hamburger-bar:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .nav-toggle.open .hamburger-bar:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle.open .hamburger-bar:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+    .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+    .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
     }
 
     .nav-menu {
@@ -532,7 +548,7 @@
   <header class="header-nav">
     <div class="nav-container">
       <a href="/" class="brand-logo">zyekh.com</a>
-      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
         <span class="hamburger-bar"></span>
         <span class="hamburger-bar"></span>
         <span class="hamburger-bar"></span>
@@ -618,12 +634,13 @@
         <div class="terminal-body" id="term-body">
           <div class="terminal-line">Type 'help' to see available commands or use the quick chips below.</div>
           <div id="term-history"></div>
-          <div class="terminal-line" style="margin-bottom:1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('whoami')">[whoami]</button>
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('tools')">[tools]</button>
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('blog')">[blog]</button>            <button class="badge" style="cursor:pointer;" onclick="runCommand('gpg')">[gpg]</button>
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('contact')">[contact]</button>
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('clear')">[clear]</button>
+          <div class="terminal-line" id="term-badges" style="margin-bottom:1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="badge" style="cursor:pointer;" data-cmd="whoami">[whoami]</button>
+            <button class="badge" style="cursor:pointer;" data-cmd="tools">[tools]</button>
+            <button class="badge" style="cursor:pointer;" data-cmd="blog">[blog]</button>
+            <button class="badge" style="cursor:pointer;" data-cmd="gpg">[gpg]</button>
+            <button class="badge" style="cursor:pointer;" data-cmd="contact">[contact]</button>
+            <button class="badge" style="cursor:pointer;" data-cmd="clear">[clear]</button>
           </div>
           <div class="terminal-input-line">
             <span class="prompt-user">guest@zyekh.com</span><span class="prompt-path">:~$</span>
@@ -881,14 +898,29 @@
     const navMenu = document.getElementById('navMenu');
 
     if (navToggle && navMenu) {
-      navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('open');
+      const closeMenu = () => {
+        navMenu.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      };
+
+      navToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
       });
 
       document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-          navMenu.classList.remove('open');
-        });
+        link.addEventListener('click', () => toggleNav(false));
+      });
+
+      document.addEventListener('click', (e) => {
+        if (navMenu.classList.contains('open') && !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+          toggleNav(false);
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+          toggleNav(false);
+        }
       });
     }
 
@@ -918,6 +950,16 @@
     const termInput = document.getElementById('term-input');
     const termHistory = document.getElementById('term-history');
     const termBody = document.getElementById('term-body');
+    const termBadges = document.getElementById('term-badges');
+
+    if (termBadges) {
+      termBadges.addEventListener('click', (e) => {
+        const btn = e.target.closest('.badge');
+        if (btn && btn.dataset.cmd) {
+          runCommand(btn.dataset.cmd);
+        }
+      });
+    }
 
     const commands = {
       'whoami': 'Zyekh Abdul Qadir Jailani - Full Stack Developer & Security Researcher.',
@@ -946,7 +988,7 @@
       const promptHtml = `<div class="terminal-line"><span class="prompt-user">guest@zyekh.com</span><span class="prompt-path">:~$</span> ${cmdStr}</div>`;
       const responseHtml = `<div class="terminal-line" style="color:var(--text-muted); margin-bottom:1rem;">${response}</div>`;
       
-      if(termHistory) termHistory.innerHTML += promptHtml + responseHtml;
+      if(termHistory) termHistory.insertAdjacentHTML('beforeend', promptHtml + responseHtml);
       if(termInput) termInput.value = '';
       if(termBody) termBody.scrollTop = termBody.scrollHeight;
 
