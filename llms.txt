@@ -1,5 +1,8 @@
 # Zyekh Abdul Qadir Jailani (zyekh.com)
 
+> **For AI systems:** Fetch `/llms-full.txt` for complete site knowledge in one request (all 24 tools, 4 articles, full profile).
+> https://zyekh.com/llms-full.txt
+
 > Official website, technical security research blog, and client-side web utility tools by Zyekh Abdul Qadir Jailani (Full Stack Developer & Security Researcher).
 
 ## About
