@@ -136,7 +136,7 @@
     }
     .nav-container {
       max-width: 1100px; margin: 0 auto;
-      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;
+      display: flex; justify-content: space-between; align-items: center; /* no flex-wrap: off-canvas prevents pushdown layout */
     }
     .brand-logo {
       font-family: 'Fira Code', monospace; font-weight: 700;
@@ -317,15 +317,14 @@
       background: #fff; border-radius: 2px;
       transition: all 0.3s ease;
     }
-    .nav-toggle.open .hamburger-bar:nth-child(1),
+        /* X animation saat menu terbuka */
     .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(1) {
       transform: translateY(6px) rotate(45deg);
     }
-    .nav-toggle.open .hamburger-bar:nth-child(2),
     .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(2) {
       opacity: 0;
+      transform: scaleX(0);
     }
-    .nav-toggle.open .hamburger-bar:nth-child(3),
     .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3) {
       transform: translateY(-6px) rotate(-45deg);
     }
@@ -837,16 +836,29 @@ function copyCron() {
 document.addEventListener('DOMContentLoaded', processCron);
 </script>
   <script>
-    (function() {// Mobile Navigation Toggle
+    (function() {// Mobile Navigation — Off-canvas dengan backdrop
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
+
+    // Buat backdrop element secara dinamis
+    const navBackdrop = document.createElement('div');
+    navBackdrop.className = 'nav-backdrop';
+    navBackdrop.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(navBackdrop);
 
     if (navToggle && navMenu) {
       const toggleNav = (open) => {
         const isExpanded = open !== undefined ? open : !navMenu.classList.contains('open');
         navMenu.classList.toggle('open', isExpanded);
-        navToggle.classList.toggle('open', isExpanded);
         navToggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        document.body.style.overflow = isExpanded ? 'hidden' : '';
+        if (isExpanded) {
+          navBackdrop.style.display = 'block';
+          requestAnimationFrame(() => navBackdrop.classList.add('active'));
+        } else {
+          navBackdrop.classList.remove('active');
+          setTimeout(() => { navBackdrop.style.display = 'none'; }, 300);
+        }
       };
 
       navToggle.addEventListener('click', (e) => {
@@ -854,18 +866,27 @@ document.addEventListener('DOMContentLoaded', processCron);
         toggleNav();
       });
 
-      document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => toggleNav(false));
-      });
-
-      document.addEventListener('click', (e) => {
-        if (navMenu.classList.contains('open') && !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-          toggleNav(false);
+      // Tutup menu setelah klik link — delay 150ms untuk visual feedback
+      navMenu.addEventListener('click', (e) => {
+        const link = e.target.closest('.nav-link');
+        if (link) {
+          link.classList.add('active');
+          setTimeout(() => toggleNav(false), 150);
         }
       });
 
+      navBackdrop.addEventListener('click', () => toggleNav(false));
+
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+          toggleNav(false);
+          navToggle.focus();
+        }
+      });
+
+      // Edge case: resize ke desktop saat menu mobile terbuka
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && navMenu.classList.contains('open')) {
           toggleNav(false);
         }
       });

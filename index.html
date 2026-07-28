@@ -124,7 +124,16 @@
       letter-spacing: -0.02em;
     }
 
-        /* Header & Navigation */
+    /* Smooth Scroll */
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 72px; /* offset fixed header */
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+
+    /* Header & Navigation */
     .header-nav {
       background-color: rgba(9, 9, 11, 0.95);
       backdrop-filter: blur(10px);
@@ -136,6 +145,7 @@
       width: 100%;
       z-index: 1000;
       padding: 0.75rem 1.5rem;
+      height: 60px;
     }
 
     .nav-container {
@@ -144,7 +154,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
+      /* NO flex-wrap: tidak lagi pushdown layout */
     }
 
     .brand-logo {
@@ -154,8 +164,11 @@
       text-decoration: none;
       font-size: 1.1rem;
       letter-spacing: -0.05em;
+      z-index: 1001;
+      position: relative;
     }
 
+    /* Hamburger toggle button */
     .nav-toggle {
       display: none;
       background: transparent;
@@ -168,29 +181,49 @@
       gap: 4px;
       justify-content: center;
       align-items: center;
+      z-index: 1001;
+      position: relative;
+      transition: border-color 0.2s ease;
+    }
+    .nav-toggle:hover {
+      border-color: var(--border-color-hover);
     }
     .hamburger-bar {
-      width: 22px; height: 2px;
-      background: #fff; border-radius: 2px;
-      transition: all 0.3s ease;
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
     }
-    .nav-toggle.open .hamburger-bar:nth-child(1),
+    /* X animation saat menu terbuka */
     .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(1) {
       transform: translateY(6px) rotate(45deg);
     }
-    .nav-toggle.open .hamburger-bar:nth-child(2),
     .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(2) {
       opacity: 0;
+      transform: scaleX(0);
     }
-    .nav-toggle.open .hamburger-bar:nth-child(3),
     .nav-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3) {
       transform: translateY(-6px) rotate(-45deg);
     }
 
+    /* Nav overlay backdrop */
+    .nav-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .nav-backdrop.active {
+      display: block;
+      opacity: 1;
+    }
 
-
-
-
+    /* Desktop nav */
     .nav-menu {
       display: flex;
       align-items: center;
@@ -227,34 +260,66 @@
       font-weight: 700;
     }
 
+    /* Mobile: off-canvas panel dari kanan */
     @media (max-width: 768px) {
       .nav-toggle {
         display: flex;
       }
+
       .nav-menu {
-        display: none;
-        width: 100%;
-        margin-top: 0.75rem;
-        padding-top: 0.75rem;
-        border-top: 1px solid var(--border-color);
+        /* Off-canvas: panel tetap di luar flow header */
+        position: fixed;
+        top: 60px;
+        right: -280px;
+        width: 260px;
+        height: calc(100dvh - 60px);
+        background: rgba(9, 9, 11, 0.97);
+        backdrop-filter: blur(12px);
+        border-left: 1px solid var(--border-color);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.25rem 1.5rem;
+        z-index: 1000;
+        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+        /* Tidak pakai visibility:hidden agar transisi tetap mulus */
       }
+
       .nav-menu.open {
-        display: flex;
+        right: 0;
       }
+
       .nav-list {
         flex-direction: column;
         width: 100%;
         align-items: flex-start;
-        gap: 0.5rem;
+        gap: 0;
       }
+
       .nav-list li {
         width: 100%;
       }
+
       .nav-link {
         display: block;
-        padding: 0.5rem 0;
+        padding: 0.75rem 0;
         width: 100%;
-        border-bottom: 1px dashed rgba(255,255,255,0.05);
+        font-size: 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        transition: color 0.2s ease, padding-left 0.2s ease;
+      }
+
+      .nav-link:hover, .nav-link:focus {
+        padding-left: 6px;
+        color: var(--text-main);
+      }
+
+      .nav-link.active {
+        color: #ffffff;
+        font-weight: 700;
+        padding-left: 4px;
+        border-left: 2px solid #fff;
+        padding-left: 8px;
       }
     }
 
@@ -501,14 +566,11 @@
   
     /* Global Mobile & Overflow Safeguards */
     *, *::before, *::after { box-sizing: border-box; }
-    html { max-width: 100vw; overflow-x: hidden; }
-html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+    body { max-width: 100vw; overflow-x: clip; position: relative; }
     section[id] {
       scroll-margin-top: 80px;
     }
-    body { max-width: 100vw; overflow-x: hidden; position: relative; }
     img, svg, video, canvas { max-width: 100%; height: auto; }
     pre, code { max-width: 100%; overflow-x: auto; white-space: pre-wrap; word-break: break-word; }
     table { width: 100%; border-collapse: collapse; }
@@ -587,7 +649,7 @@ html {
           <p class="hero-desc">
             Indonesian Security Researcher building zero-telemetry, 100% client-side tools &amp; deep security guides. No backend. No tracking. Open source.
           </p>
-          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <div style="display: flex; gap: 0.75rem; /* no flex-wrap: off-canvas prevents pushdown layout */">
             <a href="#projects" class="pure-button pure-button-primary">View Repositories</a>
             <a href="/tools/" class="pure-button button-secondary">Explore Web Tools (24+)</a>
             <a href="#contact" class="pure-button button-secondary">Contact Me</a>
@@ -642,7 +704,7 @@ html {
         <div class="terminal-body" id="term-body">
           <div class="terminal-line">Type 'help' to see available commands or use the quick chips below.</div>
           <div id="term-history"></div>
-          <div class="terminal-line" id="term-badges" style="margin-bottom:1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <div class="terminal-line" id="term-badges" style="margin-bottom:1rem; display: flex; gap: 0.5rem; /* no flex-wrap: off-canvas prevents pushdown layout */">
             <button class="badge" style="cursor:pointer;" data-cmd="whoami">[whoami]</button>
             <button class="badge" style="cursor:pointer;" data-cmd="tools">[tools]</button>
             <button class="badge" style="cursor:pointer;" data-cmd="blog">[blog]</button>
@@ -901,16 +963,30 @@ html {
 
   <!-- Scripts -->
   <script>
-    // Mobile Navigation Toggle
+    // Mobile Navigation — Off-canvas dengan backdrop
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
+
+    // Buat backdrop element secara dinamis
+    const navBackdrop = document.createElement('div');
+    navBackdrop.className = 'nav-backdrop';
+    navBackdrop.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(navBackdrop);
 
     if (navToggle && navMenu) {
       const toggleNav = (open) => {
         const isExpanded = open !== undefined ? open : !navMenu.classList.contains('open');
         navMenu.classList.toggle('open', isExpanded);
-        navToggle.classList.toggle('open', isExpanded);
         navToggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        document.body.style.overflow = isExpanded ? 'hidden' : '';
+        // Backdrop: fade in/out dengan sedikit delay agar animasi panel dahulu
+        if (isExpanded) {
+          navBackdrop.style.display = 'block';
+          requestAnimationFrame(() => navBackdrop.classList.add('active'));
+        } else {
+          navBackdrop.classList.remove('active');
+          setTimeout(() => { navBackdrop.style.display = 'none'; }, 300);
+        }
       };
 
       navToggle.addEventListener('click', (e) => {
@@ -918,18 +994,29 @@ html {
         toggleNav();
       });
 
-      document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => toggleNav(false));
-      });
-
-      document.addEventListener('click', (e) => {
-        if (navMenu.classList.contains('open') && !navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-          toggleNav(false);
+      // Tutup menu setelah klik link — beri delay 150ms untuk feedback visual
+      navMenu.addEventListener('click', (e) => {
+        const link = e.target.closest('.nav-link');
+        if (link) {
+          // Flash active class singkat sebagai visual feedback
+          link.classList.add('active');
+          setTimeout(() => toggleNav(false), 150);
         }
       });
 
+      // Klik backdrop menutup menu
+      navBackdrop.addEventListener('click', () => toggleNav(false));
+
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+          toggleNav(false);
+          navToggle.focus(); // kembalikan fokus ke tombol
+        }
+      });
+
+      // Edge case: resize ke desktop saat menu mobile terbuka → tutup & bebaskan scroll
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && navMenu.classList.contains('open')) {
           toggleNav(false);
         }
       });
