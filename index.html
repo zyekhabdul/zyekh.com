@@ -369,7 +369,7 @@
 
     /* Terminal Component */
     .terminal-window {
-      background-color: #000000;
+      background-color: #09090b;
       border: 1px solid var(--border-color);
       border-radius: 8px;
       overflow: hidden;
@@ -575,9 +575,40 @@
       </div>
     </section>
 
+    <!-- Developer Console Section -->
+    <section id="console" class="section-padding">
+      <h2 class="section-title">02. Developer Console</h2>
+      <p class="section-subtitle">Interactive bash-like interface for quick navigation</p>
+      
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <span class="terminal-dot" style="background:#ef4444;"></span>
+          <span class="terminal-dot" style="background:#eab308;"></span>
+          <span class="terminal-dot" style="background:#22c55e;"></span>
+          <span class="terminal-title">guest@zyekh.com: ~$ [bash v2.6]</span>
+        </div>
+        <div class="terminal-body" id="term-body">
+          <div class="terminal-line">Type 'help' to see available commands or use the quick chips below.</div>
+          <div id="term-history"></div>
+          <div class="terminal-line" style="margin-bottom:1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button class="badge" style="cursor:pointer;" onclick="runCommand('whoami')">[whoami]</button>
+            <button class="badge" style="cursor:pointer;" onclick="runCommand('tools')">[tools]</button>
+            <button class="badge" style="cursor:pointer;" onclick="runCommand('blog')">[blog]</button>
+            <button class="badge" style="cursor:pointer;" onclick="runCommand('gpg')">[gpg]</button>
+            <button class="badge" style="cursor:pointer;" onclick="runCommand('contact')">[contact]</button>
+            <button class="badge" style="cursor:pointer;" onclick="runCommand('clear')">[clear]</button>
+          </div>
+          <div class="terminal-input-line">
+            <span class="prompt-user">guest@zyekh.com</span><span class="prompt-path">:~$</span>
+            <input type="text" id="term-input" class="terminal-input" autocomplete="off" spellcheck="false" aria-label="Terminal input" onfocus="this.placeholder=''" placeholder="Enter command...">
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Skills Matrix -->
     <section id="skills" class="section-padding">
-      <h2 class="section-title">02. Key Focus &amp; Specialization</h2>
+      <h2 class="section-title">03. Key Focus &amp; Specialization</h2>
       <p class="section-subtitle">Primary technology focus and system research</p>
 
       <div class="pure-g">
@@ -610,7 +641,7 @@
 
     <!-- Projects Repository -->
     <section id="projects" class="section-padding">
-      <h2 class="section-title">03. Featured Technical Research</h2>
+      <h2 class="section-title">04. Featured Technical Research</h2>
       <p class="section-subtitle">Verified research archive and open-source projects</p>
 
       <div class="pure-g">
@@ -663,7 +694,7 @@
     <!-- Verified Credentials & Certifications Section -->
     <section id="credentials" class="section-padding">
       <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.4rem;">
-        <h2 class="section-title" style="margin-bottom: 0;">04. Verified Credentials &amp; Certifications</h2>
+        <h2 class="section-title" style="margin-bottom: 0;">05. Verified Credentials &amp; Certifications</h2>
         <span class="badge">[ VERIFIED_CREDENTIALS ]</span>
       </div>
       <p class="section-subtitle">Professional certifications, competency validations, and official curriculum vitae</p>
@@ -752,7 +783,7 @@
 
     <!-- Web Tools Hub Feature Highlight -->
     <section class="section-padding">
-      <h2 class="section-title">05. Web Utility Tools Hub</h2>
+      <h2 class="section-title">06. Web Utility Tools Hub</h2>
       <p class="section-subtitle">Client-side web utilities for quick everyday tasks</p>
       <div class="custom-card" style="border: 1px solid var(--border-color-hover);">
         <div class="pure-g" style="align-items:center;">
@@ -771,7 +802,7 @@
 
     <!-- Contact Section -->
     <section id="contact" class="section-padding" style="border-bottom:none;">
-      <h2 class="section-title">06. Primary Contact</h2>
+      <h2 class="section-title">07. Primary Contact</h2>
       <p class="section-subtitle">Send a direct message or connect (Messages are delivered to <strong style="color:#fff;">zyekhabdulqadirjailani@gmail.com</strong>)</p>
 
       <div class="pure-g">
@@ -861,6 +892,54 @@
       }
     });
 
+    // Terminal Logic
+    const termInput = document.getElementById('term-input');
+    const termHistory = document.getElementById('term-history');
+    const termBody = document.getElementById('term-body');
+
+    const commands = {
+      'whoami': 'Zyekh Abdul Qadir Jailani - Full Stack Developer & Security Researcher.',
+      'tools': 'Loading Web Utility Tools Hub...',
+      'blog': 'Loading Security & VPS Articles...',
+      'gpg': '$ curl -sL zyekh.com/gpg-key.asc | gpg --import',
+      'contact': 'Navigating to contact section...',
+      'help': 'Available commands: whoami, tools, blog, gpg, contact, help, clear'
+    };
+
+    function runCommand(cmdStr) {
+      const cmd = cmdStr.trim().toLowerCase();
+      if (!cmd) return;
+
+      if (cmd === 'clear') {
+        if(termHistory) termHistory.innerHTML = '';
+        if(termInput) termInput.value = '';
+        return;
+      }
+
+      let response = `bash: ${cmd}: command not found`;
+      if (commands[cmd]) {
+        response = commands[cmd];
+      }
+
+      const promptHtml = `<div class="terminal-line"><span class="prompt-user">guest@zyekh.com</span><span class="prompt-path">:~$</span> ${cmdStr}</div>`;
+      const responseHtml = `<div class="terminal-line" style="color:var(--text-muted); margin-bottom:1rem;">${response}</div>`;
+      
+      if(termHistory) termHistory.innerHTML += promptHtml + responseHtml;
+      if(termInput) termInput.value = '';
+      if(termBody) termBody.scrollTop = termBody.scrollHeight;
+
+      if (cmd === 'tools') setTimeout(() => window.location.href = '/tools/', 600);
+      else if (cmd === 'blog') setTimeout(() => window.location.href = '/blog/', 600);
+      else if (cmd === 'contact') setTimeout(() => { window.location.hash = '#contact'; }, 400);
+    }
+
+    if (termInput) {
+      termInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          runCommand(this.value);
+        }
+      });
+    }
 
   </script>
   <!-- Service Worker Registration -->
