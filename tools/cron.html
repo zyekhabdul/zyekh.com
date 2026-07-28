@@ -280,6 +280,65 @@
     }
     @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
     @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+  
+    /* Navigation Bar */
+    .header-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(9,9,11,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .nav-container {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      height: 3.5rem;
+    }
+    .brand-logo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem; font-weight: 700;
+      color: #fff; text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-toggle {
+      display: none; flex-direction: column;
+      gap: 5px; background: none; border: none;
+      cursor: pointer; padding: 4px;
+    }
+    .hamburger-bar {
+      width: 22px; height: 2px;
+      background: #fff; border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .nav-menu { display: flex; }
+    .nav-list {
+      display: flex; gap: 0.25rem;
+      list-style: none; margin: 0; padding: 0;
+    }
+    .nav-link {
+      display: block; padding: 0.4rem 0.7rem;
+      color: var(--text-muted); text-decoration: none;
+      font-size: 0.9rem; border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-link:hover, .nav-link:focus { color: #fff; background: rgba(255,255,255,0.07); }
+    .nav-link.highlight { color: #fff; font-weight: 600; }
+    .nav-link.active { color: #fff; font-weight: 700; }
+    @media (max-width: 768px) {
+      .nav-toggle { display: flex; }
+      .nav-menu {
+        display: none; position: absolute;
+        top: 3.5rem; left: 0; right: 0;
+        background: rgba(9,9,11,0.98);
+        border-bottom: 1px solid var(--border-color);
+        padding: 0.75rem 1.5rem;
+      }
+      .nav-menu.open { display: block; }
+      .nav-list { flex-direction: column; gap: 0; }
+      .nav-list li { border-bottom: 1px solid var(--border-color); }
+      .nav-link { padding: 0.65rem 0; border-radius: 0; }
+    }
   </style>
 
   <!-- Speculation Rules API -->
@@ -304,18 +363,30 @@
 
 <body>
   <!-- Navigation -->
-  <nav class="header-nav" role="navigation" aria-label="Navigasi utama">
+  <!-- Header Navigation -->
+  <header class="header-nav">
     <div class="nav-container">
-      <a href="/" class="brand-logo" aria-label="Zyekh – Halaman Utama">zyekh.com</a>
-      <ul class="pure-menu-list" style="display:flex;gap:0.25rem;list-style:none;margin:0;padding:0;">
-        <li class="pure-menu-item"><a href="/" class="pure-menu-link">Home</a></li>
-        <li class="pure-menu-item"><a href="/tools/" class="pure-menu-link">Tools</a></li>
-        <li class="pure-menu-item"><a href="/blog/" class="pure-menu-link">Blog</a></li>
-      </ul>
+      <a href="/" class="brand-logo">zyekh.com</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <nav class="nav-menu" id="navMenu">
+        <ul class="nav-list">
+          <li><a href="/" class="nav-link">Home</a></li>
+          <li><a href="/#about" class="nav-link">About</a></li>
+          <li><a href="/#skills" class="nav-link">Skills</a></li>
+          <li><a href="/#projects" class="nav-link">Projects</a></li>
+          <li><a href="/tools/" class="nav-link highlight active">🧰 Tools Hub</a></li>
+          <li><a href="/blog/" class="nav-link highlight">📰 Articles</a></li>
+          <li><a href="/#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
     </div>
-  </nav>
+  </header>
 
-  <main class="main-container" id="main-content">
+<main class="main-container" id="main-content">
 
     <!-- Breadcrumb -->
     <nav aria-label="Breadcrumb" style="margin-bottom:1.5rem;">
