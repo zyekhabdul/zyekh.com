@@ -11,10 +11,16 @@
   --bg-dark:           #09090b;
   --bg-card:           #141417;
   --border-color:      #27272a;
+  --border-color-hover:#52525b;
   --border-hover:      #52525b;
   --text-main:         #fafafa;
   --text-muted:        #a1a1aa;
   --accent-white:      #ffffff;
+  --accent:            #22c55e;
+  --info:              #3b82f6;
+  --warn:              #f59e0b;
+  --danger:            #ef4444;
+  --code-bg:           #000000;
 
   /* Spacing */
   --space-xs:   0.25rem;
@@ -644,3 +650,42 @@ details[open] summary::after { content: '\2212'; }
 .portfolio-thumb { width: 100%; height: 160px; object-fit: cover; border-radius: 4px; margin-bottom: 0.75rem; display: block; }
 .portfolio-card  { padding: 1rem; cursor: pointer; text-align: center; }
 
+
+/* ===================== Recovered: Classes missing from :root refactor ===================== */
+
+/* Tools — FAQ accordion wrapper */
+.faq-accordion { display: flex; flex-direction: column; gap: 0; }
+
+/* Tools — FAQ body (legal tools: jht, jkp, pesangon, cron) */
+.faq-body { padding: 0 1.25rem 1.25rem; color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; border-top: 1px solid var(--border-color); }
+
+/* Tools — table total row */
+.tr-total td { font-weight: 700; border-top: 2px solid var(--border-color); background: var(--bg-card); padding: 0.75rem 1rem; }
+
+/* Tools — full-width grid span (pesangon) */
+.full-width { grid-column: 1 / -1; }
+
+/* Tools — toggle label (pesangon) */
+.toggle-label { font-size: 0.9rem; color: var(--text-muted); cursor: pointer; user-select: none; }
+
+/* Tools — tool-item (tools/index.html grid items) */
+.tool-item { padding: 1rem; }
+
+/* Tools — SEO content block (alias for seo-block with section semantics) */
+.seo-content-block { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); }
+
+/* Blog — article metadata row */
+.article-meta { display: flex; gap: 1.5rem; font-size: 0.875rem; color: var(--text-muted); border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+
+/* Blog — card thumbnail wrapper */
+.card-thumb-wrapper { margin-bottom: 1rem; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
+
+/* Blog — article grid item */
+.article-item { display: flex; flex-direction: column; }
+
+/* Blog — cross-links section (inherits callout-card, extra styles) */
+.article-cross-links { margin-top: 2rem; }
+
+/* Blog — page title/subtitle (blog/index.html header) */
+.page-title    { font-size: 2.2rem; font-weight: 700; margin-top: 0; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+.page-subtitle { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0; }
