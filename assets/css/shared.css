@@ -629,3 +629,8 @@ details[open] summary::after { content: '\2212'; }
 .container-article { max-width: 840px; margin: 0 auto; padding: 2rem 1.5rem; }
 .td-row--alt { padding: 0.65rem 1rem; border-bottom: 1px solid var(--border-color); background: #141417; text-align: left; font-size: 0.82rem; color: var(--text-muted); }
 
+/* FAQ / SEO Block — Tool Pages (19 simple tools, uniform boilerplate) */
+.seo-block    { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); }
+.faq-card     { margin-bottom: 0.75rem; padding: 0.75rem 1rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); }
+.faq-answer   { margin-top: 0.5rem; color: var(--text-muted); font-size: 0.925rem; }
+
