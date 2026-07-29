@@ -590,7 +590,8 @@ input.search-input {
 .faq-section h2 { font-size: 1.2rem; margin-bottom: 1rem; }
 
 details { border: 1px solid var(--border-color); border-radius: 6px; padding: 0; margin-bottom: 0.5rem; }
-summary { padding: 1rem 1.25rem; cursor: pointer; font-weight: 500; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+summary,
+.faq-summary { padding: 1rem 1.25rem; cursor: pointer; font-weight: 500; list-style: none; display: flex; justify-content: space-between; align-items: center; }
 summary::-webkit-details-marker { display: none; }
 summary::after { content: '+'; font-size: 1.2rem; color: var(--text-muted); transition: transform 0.2s; }
 details[open] summary::after { content: '\2212'; }
