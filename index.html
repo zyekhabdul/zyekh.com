@@ -316,7 +316,7 @@
     }]
   }
   </script>
-  <link rel="preload" href="/assets/img/profile.jpg" as="image" fetchpriority="high">
+  <link rel="preload" href="/assets/img/profile.webp" as="image" type="image/webp" fetchpriority="high">
 </head>
 <body>
 
@@ -353,7 +353,10 @@
         <!-- Profile Picture Column -->
         <div class="grid-cell card-grid-gap" style="display: flex; justify-content: center; margin-bottom: 1.5rem;">
           <div class="profile-img-container">
-            <img src="/assets/img/profile.jpg" alt="Zyekh Abdul Qadir Jailani" class="profile-img" width="220" height="220" loading="eager" fetchpriority="high">
+            <picture>
+              <source srcset="/assets/img/profile.webp" type="image/webp">
+              <img src="/assets/img/profile.jpg" alt="Zyekh Abdul Qadir Jailani" class="profile-img" width="220" height="220" loading="eager" fetchpriority="high">
+            </picture>
           </div>
         </div>
 

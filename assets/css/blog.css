@@ -138,3 +138,9 @@ pre code {
 .article-body ul,
 .article-body ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e4e4e7; }
 
+/* Blog article inline style extractions */
+.blog-badge { color: #ffffff; font-weight: 600; }
+.callout-card { margin-top: 2.5rem; padding: 1.25rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); }
+.heading-reset { margin-top: 0; margin-bottom: 0.5rem; color: var(--text-main); }
+.note-sm { margin-bottom: 0; font-size: 0.9rem; color: var(--text-muted); }
+
