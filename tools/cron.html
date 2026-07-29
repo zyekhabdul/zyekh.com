@@ -108,19 +108,15 @@
 
     
 
-    .page-header { margin-bottom: 2rem; }
     
-    .page-header h1 { font-size: 1.9rem; margin-bottom: 0.5rem; }
-    .page-header p { color: var(--text-muted); margin: 0; }
+    
+    
+    
 
-    .tool-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      padding: 2rem; border-radius: 8px; margin-bottom: 1.5rem;
-    }
-    .tool-box h2 { font-size: 1.1rem; margin-bottom: 1.25rem; color: var(--text-muted); font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; font-size: 0.8rem; }
+    
+    
 
-    .form-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    
     
     
 
@@ -184,19 +180,13 @@
       border-bottom: none;
     }
 
-    .faq-section { margin-top: 2rem; }
-    .faq-section h2 { font-size: 1.2rem; margin-bottom: 1rem; }
-    details {
-      border: 1px solid var(--border-color); border-radius: 6px;
-      padding: 0; margin-bottom: 0.5rem; background: var(--bg-card);
-    }
-    summary {
-      padding: 1rem 1.25rem; cursor: pointer; font-weight: 500;
-      list-style: none; display: flex; justify-content: space-between; align-items: center;
-    }
-    summary::-webkit-details-marker { display: none; }
-    summary::after { content: '+'; font-size: 1.2rem; color: var(--text-muted); transition: transform 0.2s; }
-    details[open] summary::after { content: '−'; }
+    
+    
+    
+    
+    
+    
+    details[open] 
     .faq-
 
     
@@ -309,17 +299,17 @@
         <table aria-label="Format Cron">
           <thead>
             <tr>
-              <th style="background:#141417;padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);text-align:left;font-size:0.82rem;color:var(--text-muted);">Bidang</th>
-              <th style="background:#141417;padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);text-align:left;font-size:0.82rem;color:var(--text-muted);">Nilai yang Diizinkan</th>
-              <th style="background:#141417;padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);text-align:left;font-size:0.82rem;color:var(--text-muted);">Simbol Khusus</th>
+              <th class="td-row">Bidang</th>
+              <th class="td-row">Nilai yang Diizinkan</th>
+              <th class="td-row">Simbol Khusus</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">1. Menit (Minute)</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">0 - 59</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">* , - /</td></tr>
-            <tr><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">2. Jam (Hour)</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">0 - 23</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">* , - /</td></tr>
-            <tr><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">3. Hari Bulan (Day of Month)</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">1 - 31</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">* , - /</td></tr>
-            <tr><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">4. Bulan (Month)</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">1 - 12</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">* , - /</td></tr>
-            <tr><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">5. Hari Minggu (Day of Week)</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">0 - 6 (0 = Minggu)</td><td style="padding:0.65rem 1rem;border-bottom:1px solid var(--border-color);">* , - /</td></tr>
+            <tr><td class="td-row">1. Menit (Minute)</td><td class="td-row">0 - 59</td><td class="td-row">* , - /</td></tr>
+            <tr><td class="td-row">2. Jam (Hour)</td><td class="td-row">0 - 23</td><td class="td-row">* , - /</td></tr>
+            <tr><td class="td-row">3. Hari Bulan (Day of Month)</td><td class="td-row">1 - 31</td><td class="td-row">* , - /</td></tr>
+            <tr><td class="td-row">4. Bulan (Month)</td><td class="td-row">1 - 12</td><td class="td-row">* , - /</td></tr>
+            <tr><td class="td-row">5. Hari Minggu (Day of Week)</td><td class="td-row">0 - 6 (0 = Minggu)</td><td class="td-row">* , - /</td></tr>
           </tbody>
         </table>
       </div>
