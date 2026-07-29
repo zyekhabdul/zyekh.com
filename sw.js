@@ -30,21 +30,17 @@ self.addEventListener('install', event => {
   self.skipWaiting();
 });
 
-/* ── Activate: clean old caches ── */
+/* ── Activate: clean old caches & enable navigation preload ── */
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
-    )
+    Promise.all([
+      caches.keys().then(keys =>
+        Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+      ),
+      self.registration.navigationPreload?.enable() ?? Promise.resolve()
+    ])
   );
   self.clients.claim();
-});
-
-/* Enable Navigation Preload (Flash advice) */
-self.addEventListener('activate', event => {
-  if (self.registration.navigationPreload) {
-    event.waitUntil(self.registration.navigationPreload.enable());
-  }
 });
 
 /* ── Fetch: route by resource type ── */
@@ -93,8 +89,10 @@ async function networkFirstNav(event) {
   try {
     const preloadResponse = await event.preloadResponse;
     if (preloadResponse) {
-      const cache = await caches.open(CACHE_NAME);
-      cache.put(event.request, preloadResponse.clone());
+      if (preloadResponse.ok) {
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(event.request, preloadResponse.clone());
+      }
       return preloadResponse;
     }
     const response = await fetch(event.request);
