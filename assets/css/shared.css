@@ -62,7 +62,14 @@ h1, h2, h3, h4 {
   letter-spacing: -0.02em;
 }
 
-a { color: var(--text-main); }
+a { color: var(--text-main); text-decoration: none; }
+/* WCAG 1.4.1 — underline links in article body text */
+.article-body a,
+.article-content a { text-decoration: underline; }
+
+.article-body a:hover,
+.article-content a:hover,
+.footer a:hover { text-decoration: underline; }
 
 img, svg, video, canvas { max-width: 100%; height: auto; }
 
@@ -367,6 +374,13 @@ td { color: var(--text-main); }
   border-top: 1px solid var(--border-color);
 }
 .footer a { color: var(--text-main); text-decoration: none; }
+/* WCAG 1.4.1 — underline links in article body text */
+.article-body a,
+.article-content a { text-decoration: underline; }
+
+.article-body a:hover,
+.article-content a:hover,
+.footer a:hover { text-decoration: underline; }
 
 /* ===================== Tool Box (tools pages) ===================== */
 .tool-box {
@@ -502,6 +516,62 @@ td { color: var(--text-main); }
 
 /* Width full */
 .w-full { width: 100%; }
+
+
+/* ===================== Tools Hub ===================== */
+.search-filter-box {
+  margin-bottom: 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 1.25rem;
+  border-radius: var(--radius-lg);
+}
+input.search-input {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  width: 100%;
+}
+.tool-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform var(--transition), border-color var(--transition);
+  text-decoration: none;
+  color: inherit;
+}
+.tool-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+.tool-title {
+  font-size: 1.1rem;
+  margin: 0 0 0.4rem 0;
+  color: var(--text-main);
+}
+.tool-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem 0;
+}
+.tool-category {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  margin-bottom: 0.6rem;
+}
 
 /* ===================== Accessibility ===================== */
 :focus-visible {
