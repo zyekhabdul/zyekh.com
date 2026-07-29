@@ -689,3 +689,9 @@ details[open] summary::after { content: '\2212'; }
 /* Blog — page title/subtitle (blog/index.html header) */
 .page-title    { font-size: 2.2rem; font-weight: 700; margin-top: 0; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
 .page-subtitle { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0; }
+
+/* Tools — stats table (counter.html) replaces deprecated border="1" */
+.stats-table { border-collapse: collapse; width: 100%; margin-top: var(--space-md); }
+.stats-table th,
+.stats-table td { border: 1px solid var(--border-color); padding: 0.5rem 0.75rem; text-align: left; }
+.stats-table th { color: var(--text-muted); font-weight: 600; background: var(--bg-card); }
