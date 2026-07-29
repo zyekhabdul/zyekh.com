@@ -374,13 +374,6 @@ td { color: var(--text-main); }
   border-top: 1px solid var(--border-color);
 }
 .footer a { color: var(--text-main); text-decoration: none; }
-/* WCAG 1.4.1 — underline links in article body text */
-.article-body a,
-.article-content a { text-decoration: underline; }
-
-.article-body a:hover,
-.article-content a:hover,
-.footer a:hover { text-decoration: underline; }
 
 /* ===================== Tool Box (tools pages) ===================== */
 .tool-box {
