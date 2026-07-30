@@ -12,17 +12,16 @@ class SiteNav extends HTMLElement {
       { href: '/#about',   label: 'About',        key: 'about' },
       { href: '/#skills',  label: 'Skills',       key: 'skills' },
       { href: '/#projects',label: 'Projects',     key: 'projects' },
-      { href: '/tools/',   label: '🧰 Tools Hub', key: 'tools', highlight: true },
-      { href: '/blog/',    label: '📰 Articles',  key: 'blog',  highlight: true },
+      { href: '/tools/',   label: '🧰 Tools Hub', key: 'tools' },
+      { href: '/blog/',    label: '📰 Articles',  key: 'blog' },
       { href: '/#contact', label: 'Contact',      key: 'contact' },
     ];
 
     const listItems = links.map(l => {
       const cls = ['nav-link',
-        l.highlight ? 'highlight' : '',
         l.key === active ? 'active' : ''
       ].filter(Boolean).join(' ');
-      return `<li><a href="${l.href}" class="${cls}">${l.label}</a></li>`;
+      return `<li><a href="${l.href}" class="${cls}" data-nav="${l.key}">${l.label}</a></li>`;
     }).join('');
 
     this.innerHTML = `
@@ -41,6 +40,9 @@ class SiteNav extends HTMLElement {
       </header>`;
 
     this._initNav();
+    if (active === 'home' || location.pathname === '/' || location.pathname === '/index.html') {
+      this._initScrollSpy();
+    }
   }
 
   _initNav() {
@@ -92,6 +94,44 @@ class SiteNav extends HTMLElement {
         setOpen(false);
       }
     });
+  }
+
+  _initScrollSpy() {
+    const sections = ['about', 'skills', 'projects', 'contact'];
+    const navLinks = this.querySelectorAll('.nav-link[data-nav]');
+
+    const setActive = (key) => {
+      navLinks.forEach(link => {
+        if (link.dataset.nav === key) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+    };
+
+    // IntersectionObserver for section scrollspy
+    const sectionElements = sections.map(id => document.getElementById(id)).filter(Boolean);
+    if (!sectionElements.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        }
+      });
+    }, {
+      rootMargin: '-20% 0px -60% 0px'
+    });
+
+    sectionElements.forEach(sec => observer.observe(sec));
+
+    // Top of page (Hero section) -> Home
+    window.addEventListener('scroll', () => {
+      if (window.scrollY < 200) {
+        setActive('home');
+      }
+    }, { passive: true });
   }
 }
 

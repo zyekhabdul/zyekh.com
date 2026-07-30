@@ -169,14 +169,15 @@ pre, code {
 .nav-link {
   color: var(--text-muted);
   text-decoration: none;
-  font-size: 0.925rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  transition: color var(--transition);
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition);
 }
 .nav-link:hover,
-.nav-link:focus    { color: var(--text-main); }
-.nav-link.highlight { color: var(--text-main); font-weight: 600; }
-.nav-link.active    { color: var(--text-main); font-weight: 700; }
+.nav-link:focus    { color: var(--text-main); background: rgba(255, 255, 255, 0.06); }
+.nav-link.active    { color: #ffffff; background: rgba(255, 255, 255, 0.12); font-weight: 600; }
 
 /* Backdrop overlay */
 .nav-backdrop {
