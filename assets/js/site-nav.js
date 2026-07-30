@@ -98,7 +98,7 @@ class SiteNav extends HTMLElement {
     });
 
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 768 && menu.classList.contains('open')) {
+      if (window.innerWidth > 960 && menu.classList.contains('open')) {
         setOpen(false);
       }
     });
