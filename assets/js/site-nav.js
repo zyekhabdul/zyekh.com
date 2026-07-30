@@ -8,7 +8,11 @@ class SiteNav extends HTMLElement {
     let active = this.getAttribute('active') || '';
 
     // Check if page loaded with a hash anchor on homepage
-    if (location.pathname === '/' || location.pathname === '/index.html' || location.pathname.endsWith('/zyekh.com/')) {
+    const isHomepage = location.pathname === '/' || 
+                       location.pathname.endsWith('/index.html') || 
+                       location.pathname.endsWith('/zyekh.com/');
+
+    if (isHomepage) {
       const hashKey = location.hash.replace('#', '');
       if (['about', 'skills', 'projects', 'contact'].includes(hashKey)) {
         active = hashKey;
@@ -57,10 +61,13 @@ class SiteNav extends HTMLElement {
     if (!toggle || !menu) return;
 
     // Backdrop
-    const backdrop = document.createElement('div');
-    backdrop.className = 'nav-backdrop';
-    backdrop.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(backdrop);
+    let backdrop = document.querySelector('.nav-backdrop');
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.className = 'nav-backdrop';
+      backdrop.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(backdrop);
+    }
 
     const setOpen = (open) => {
       menu.classList.toggle('open', open);
@@ -126,7 +133,7 @@ class SiteNav extends HTMLElement {
           setActive(key);
           isClicking = true;
           clearTimeout(clickTimeout);
-          clickTimeout = setTimeout(() => { isClicking = false; }, 900);
+          clickTimeout = setTimeout(() => { isClicking = false; }, 1000);
         }
       });
     });
@@ -138,12 +145,15 @@ class SiteNav extends HTMLElement {
         setActive(hashKey);
         isClicking = true;
         clearTimeout(clickTimeout);
-        clickTimeout = setTimeout(() => { isClicking = false; }, 900);
+        clickTimeout = setTimeout(() => { isClicking = false; }, 1000);
       }
     });
 
     // 3. Precision Viewport BoundingRect ScrollSpy for Homepage
-    const isHomepage = location.pathname === '/' || location.pathname === '/index.html' || location.pathname.endsWith('/zyekh.com/');
+    const isHomepage = location.pathname === '/' || 
+                       location.pathname.endsWith('/index.html') || 
+                       location.pathname.endsWith('/zyekh.com/');
+
     if (isHomepage) {
       const sectionIds = ['about', 'skills', 'projects', 'contact'];
       const sectionElements = sectionIds
@@ -154,7 +164,14 @@ class SiteNav extends HTMLElement {
         const handleScroll = () => {
           if (isClicking) return; // Prevent scroll observer from overwriting explicit user click
 
-          // If at top of page (scrollY < 120) -> Home active
+          // Bottom of page check -> Contact active
+          const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
+          if (isAtBottom) {
+            setActive('contact');
+            return;
+          }
+
+          // Top of page (scrollY < 120) -> Home active
           if (window.scrollY < 120) {
             setActive('home');
             return;
@@ -166,7 +183,6 @@ class SiteNav extends HTMLElement {
 
           for (const sec of sectionElements) {
             const rect = sec.getBoundingClientRect();
-            // Section top is above or near upper viewport threshold, and section bottom is below upper threshold
             if (rect.top <= viewportThreshold && rect.bottom >= 100) {
               activeSection = sec.id;
             }
@@ -180,7 +196,11 @@ class SiteNav extends HTMLElement {
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll();
+
+        // Run initial check only if scroll position is non-zero
+        if (window.scrollY > 120) {
+          handleScroll();
+        }
       }
     }
   }
