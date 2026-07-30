@@ -21,11 +21,13 @@ const PRECACHE = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(PRECACHE.filter(u => {
-        // Only precache files that exist (skip missing variants)
-        return true;
-      })))
-      .catch(err => console.warn('[SW] Precache partial failure:', err))
+      .then(cache =>
+        Promise.allSettled(
+          PRECACHE.map(u => cache.add(u).catch(err =>
+            console.warn('[SW] Precache skip (not found):', u, err)
+          ))
+        )
+      )
   );
   self.skipWaiting();
 });

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090b">
+  <meta name="robots" content="noindex, nofollow">
+  <title>404 — Halaman Tidak Ditemukan | zyekh.com</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css">
+  <link rel="stylesheet" href="/assets/css/shared.css">
+  <style>
+    .error-page {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--space-xl);
+      gap: var(--space-md);
+    }
+    .error-code {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(5rem, 20vw, 10rem);
+      font-weight: 800;
+      line-height: 1;
+      color: var(--accent);
+      letter-spacing: -0.04em;
+    }
+    .error-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.25rem, 4vw, 1.75rem);
+      font-weight: 700;
+      color: var(--text-main);
+      margin: 0;
+    }
+    .error-desc {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 40ch;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .error-actions {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: var(--space-sm);
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1.4rem;
+      background: var(--accent);
+      color: #000;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.6rem 1.4rem;
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      border: 1px solid var(--border-color);
+      transition: border-color 0.15s;
+    }
+    .btn-secondary:hover { border-color: var(--border-color-hover); }
+  </style>
+</head>
+<body>
+  <site-nav active=""></site-nav>
+
+  <main class="error-page">
+    <div class="error-code">404</div>
+    <h1 class="error-title">Halaman Tidak Ditemukan</h1>
+    <p class="error-desc">URL yang kamu kunjungi tidak ada atau sudah dipindahkan. Cek kembali alamatnya, atau kembali ke halaman utama.</p>
+    <div class="error-actions">
+      <a href="/" class="btn-primary">← Ke Beranda</a>
+      <a href="/tools/" class="btn-secondary">Tools</a>
+      <a href="/blog/" class="btn-secondary">Blog</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p class="text-muted-xs">© 2026 zyekh.com</p>
+  </footer>
+
+  <script src="/assets/js/site-nav.js" defer></script>
+</body>
+</html>
