@@ -34,7 +34,18 @@
   color: #fff;
 }
 
-/* ── Blog Index: Equal Height Article Cards ── */
+/* ── Blog Index: Grid & Card Equalization ── */
+#articlesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 640px) {
+  #articlesGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .article-item {
   display: flex;
   flex-direction: column;
