@@ -149,13 +149,22 @@ class SiteNav extends HTMLElement {
       }
     });
 
-    // 3. Precision Viewport BoundingRect ScrollSpy for Homepage
+    // 3. Gapless Precision Viewport BoundingRect ScrollSpy for Homepage
     const isHomepage = location.pathname === '/' || 
                        location.pathname.endsWith('/index.html') || 
                        location.pathname.endsWith('/zyekh.com/');
 
     if (isHomepage) {
-      const sectionIds = ['about', 'skills', 'projects', 'contact'];
+      const sectionNavMap = {
+        'about': 'about',
+        'console': 'about',
+        'skills': 'skills',
+        'projects': 'projects',
+        'credentials': 'projects',
+        'contact': 'contact'
+      };
+
+      const sectionIds = Object.keys(sectionNavMap);
       const sectionElements = sectionIds
         .map(id => document.getElementById(id))
         .filter(Boolean);
@@ -178,18 +187,18 @@ class SiteNav extends HTMLElement {
           }
 
           // Check viewport bounding rect for active section
-          let activeSection = null;
+          let activeKey = null;
           const viewportThreshold = window.innerHeight * 0.35; // 35% from top
 
           for (const sec of sectionElements) {
             const rect = sec.getBoundingClientRect();
-            if (rect.top <= viewportThreshold && rect.bottom >= 100) {
-              activeSection = sec.id;
+            if (rect.top <= viewportThreshold && rect.bottom >= 50) {
+              activeKey = sectionNavMap[sec.id];
             }
           }
 
-          if (activeSection) {
-            setActive(activeSection);
+          if (activeKey) {
+            setActive(activeKey);
           } else if (window.scrollY < 300) {
             setActive('home');
           }
@@ -197,7 +206,7 @@ class SiteNav extends HTMLElement {
 
         window.addEventListener('scroll', handleScroll, { passive: true });
 
-        // Run initial check only if scroll position is non-zero
+        // Initial check if scroll position > 120
         if (window.scrollY > 120) {
           handleScroll();
         }
