@@ -48,9 +48,7 @@ class SiteNav extends HTMLElement {
       </header>`;
 
     this._initNav();
-    if (active === 'home' || ['about','skills','projects','contact'].includes(active) || location.pathname === '/' || location.pathname === '/index.html') {
-      this._initScrollSpy();
-    }
+    this._initActiveTracker(active);
   }
 
   _initNav() {
@@ -104,11 +102,11 @@ class SiteNav extends HTMLElement {
     });
   }
 
-  _initScrollSpy() {
-    const sections = ['about', 'skills', 'projects', 'contact'];
+  _initActiveTracker(initialActive) {
     const navLinks = this.querySelectorAll('.nav-link[data-nav]');
 
     const setActive = (key) => {
+      if (!key) return;
       navLinks.forEach(link => {
         if (link.dataset.nav === key) {
           link.classList.add('active');
@@ -118,36 +116,56 @@ class SiteNav extends HTMLElement {
       });
     };
 
-    // IntersectionObserver for section scrollspy
-    const sectionElements = sections.map(id => document.getElementById(id)).filter(Boolean);
-    if (!sectionElements.length) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActive(entry.target.id);
-        }
+    // 1. Instant Active Highlight on Link Click
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        const key = link.dataset.nav;
+        if (key) setActive(key);
       });
-    }, {
-      rootMargin: '-20% 0px -60% 0px'
     });
 
-    sectionElements.forEach(sec => observer.observe(sec));
-
-    // Listen for hashchange events
+    // 2. Hashchange Listener (direct visits / anchor navigation)
     window.addEventListener('hashchange', () => {
       const hashKey = location.hash.replace('#', '');
-      if (sections.includes(hashKey)) {
+      if (hashKey && ['about', 'skills', 'projects', 'contact'].includes(hashKey)) {
         setActive(hashKey);
       }
     });
 
-    // Top of page (Hero section) -> Home
-    window.addEventListener('scroll', () => {
-      if (window.scrollY < 200) {
-        setActive('home');
+    // 3. Homepage ScrollSpy for Sections
+    const isHomepage = location.pathname === '/' || location.pathname === '/index.html' || location.pathname.endsWith('/zyekh.com/');
+    if (isHomepage) {
+      const sectionIds = ['about', 'skills', 'projects', 'contact'];
+      const sectionElements = sectionIds
+        .map(id => document.getElementById(id))
+        .filter(Boolean);
+
+      if (sectionElements.length) {
+        const handleScroll = () => {
+          const scrollPos = window.scrollY + 180;
+
+          // If near top of page -> Home active
+          if (window.scrollY < 200) {
+            setActive('home');
+            return;
+          }
+
+          // Check sections bottom to top for active section
+          let currentSection = 'home';
+          for (let i = sectionElements.length - 1; i >= 0; i--) {
+            const sec = sectionElements[i];
+            if (sec.offsetTop <= scrollPos) {
+              currentSection = sec.id;
+              break;
+            }
+          }
+          setActive(currentSection);
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
       }
-    }, { passive: true });
+    }
   }
 }
 
