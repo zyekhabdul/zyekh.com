@@ -106,6 +106,7 @@
 }
 .card-title,
 .card-title a {
+  font-family: 'Outfit', sans-serif;
   font-size: 1.15rem;
   font-weight: 600;
   line-height: 1.35;
