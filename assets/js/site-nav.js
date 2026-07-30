@@ -8,7 +8,7 @@ class SiteNav extends HTMLElement {
     let active = this.getAttribute('active') || '';
 
     // Check if page loaded with a hash anchor on homepage
-    if (location.pathname === '/' || location.pathname === '/index.html') {
+    if (location.pathname === '/' || location.pathname === '/index.html' || location.pathname.endsWith('/zyekh.com/')) {
       const hashKey = location.hash.replace('#', '');
       if (['about', 'skills', 'projects', 'contact'].includes(hashKey)) {
         active = hashKey;
@@ -104,6 +104,8 @@ class SiteNav extends HTMLElement {
 
   _initActiveTracker(initialActive) {
     const navLinks = this.querySelectorAll('.nav-link[data-nav]');
+    let isClicking = false;
+    let clickTimeout = null;
 
     const setActive = (key) => {
       if (!key) return;
@@ -120,7 +122,12 @@ class SiteNav extends HTMLElement {
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
         const key = link.dataset.nav;
-        if (key) setActive(key);
+        if (key) {
+          setActive(key);
+          isClicking = true;
+          clearTimeout(clickTimeout);
+          clickTimeout = setTimeout(() => { isClicking = false; }, 900);
+        }
       });
     });
 
@@ -129,10 +136,13 @@ class SiteNav extends HTMLElement {
       const hashKey = location.hash.replace('#', '');
       if (hashKey && ['about', 'skills', 'projects', 'contact'].includes(hashKey)) {
         setActive(hashKey);
+        isClicking = true;
+        clearTimeout(clickTimeout);
+        clickTimeout = setTimeout(() => { isClicking = false; }, 900);
       }
     });
 
-    // 3. Homepage ScrollSpy for Sections
+    // 3. Precision Viewport BoundingRect ScrollSpy for Homepage
     const isHomepage = location.pathname === '/' || location.pathname === '/index.html' || location.pathname.endsWith('/zyekh.com/');
     if (isHomepage) {
       const sectionIds = ['about', 'skills', 'projects', 'contact'];
@@ -142,24 +152,31 @@ class SiteNav extends HTMLElement {
 
       if (sectionElements.length) {
         const handleScroll = () => {
-          const scrollPos = window.scrollY + 180;
+          if (isClicking) return; // Prevent scroll observer from overwriting explicit user click
 
-          // If near top of page -> Home active
-          if (window.scrollY < 200) {
+          // If at top of page (scrollY < 120) -> Home active
+          if (window.scrollY < 120) {
             setActive('home');
             return;
           }
 
-          // Check sections bottom to top for active section
-          let currentSection = 'home';
-          for (let i = sectionElements.length - 1; i >= 0; i--) {
-            const sec = sectionElements[i];
-            if (sec.offsetTop <= scrollPos) {
-              currentSection = sec.id;
-              break;
+          // Check viewport bounding rect for active section
+          let activeSection = null;
+          const viewportThreshold = window.innerHeight * 0.35; // 35% from top
+
+          for (const sec of sectionElements) {
+            const rect = sec.getBoundingClientRect();
+            // Section top is above or near upper viewport threshold, and section bottom is below upper threshold
+            if (rect.top <= viewportThreshold && rect.bottom >= 100) {
+              activeSection = sec.id;
             }
           }
-          setActive(currentSection);
+
+          if (activeSection) {
+            setActive(activeSection);
+          } else if (window.scrollY < 300) {
+            setActive('home');
+          }
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
