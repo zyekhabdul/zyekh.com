@@ -153,17 +153,21 @@
   </footer>
 
   <script>
-    function lcs(a, b) {
+    /* ── Line-level LCS — O(L²) where L = number of lines, not characters ── */
+    function lcsLines(a, b) {
       const m = a.length, n = b.length;
-      const dp = Array.from({ length: m + 1 }, () => new Uint16Array(n + 1));
+      // Use flat Uint32Array for speed (max 65535 lines supported)
+      const dp = new Uint32Array((m + 1) * (n + 1));
       for (let i = 1; i <= m; i++)
         for (let j = 1; j <= n; j++)
-          dp[i][j] = a[i - 1] === b[j - 1] ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1]);
+          dp[i * (n + 1) + j] = a[i - 1] === b[j - 1]
+            ? dp[(i - 1) * (n + 1) + (j - 1)] + 1
+            : Math.max(dp[(i - 1) * (n + 1) + j], dp[i * (n + 1) + (j - 1)]);
       const out = [];
       let i = m, j = n;
       while (i > 0 && j > 0) {
         if (a[i - 1] === b[j - 1]) { out.unshift({ t: 'same', c: a[i - 1] }); i--; j--; }
-        else if (dp[i - 1][j] >= dp[i][j - 1]) { out.unshift({ t: 'del', c: a[i - 1] }); i--; }
+        else if (dp[(i - 1) * (n + 1) + j] >= dp[i * (n + 1) + (j - 1)]) { out.unshift({ t: 'del', c: a[i - 1] }); i--; }
         else { out.unshift({ t: 'add', c: b[j - 1] }); j--; }
       }
       while (i > 0) { out.unshift({ t: 'del', c: a[i - 1] }); i--; }
@@ -171,37 +175,32 @@
       return out;
     }
 
+    let _diffTimer = null;
     function diff() {
+      // Debounce: skip rapid repeated calls (e.g. from button spam)
+      clearTimeout(_diffTimer);
+      _diffTimer = setTimeout(_runDiff, 0);
+    }
+
+    function _runDiff() {
       const a = document.getElementById('a').value;
       const b = document.getElementById('b').value;
       const result = document.getElementById('result');
       if (!a && !b) { result.textContent = ''; return; }
       if (a === b) { result.textContent = 'Teks identik.'; return; }
-      const parts = lcs(a, b);
-      let line = '';
+
+      // Line-level diff: split by newline first → far fewer LCS units
+      const aLines = a.split('\n');
+      const bLines = b.split('\n');
+      const parts = lcsLines(aLines, bLines);
+
       const lines = [];
-      function flush() {
-        if (line) { lines.push(line); line = ''; }
-      }
       for (const p of parts) {
-        const ch = p.c;
-        if (ch === '\n') {
-          flush();
-          continue;
-        }
-        if (p.t === 'same') {
-          if (line.startsWith('−') || line.startsWith('+')) flush();
-          line += ch;
-        } else if (p.t === 'del') {
-          if (!line.startsWith('−')) flush();
-          line = (line.startsWith('−') ? line : '−') + ch;
-        } else {
-          if (!line.startsWith('+')) flush();
-          line = (line.startsWith('+') ? line : '+') + ch;
-        }
+        if (p.t === 'same') lines.push(p.c);
+        else if (p.t === 'del') lines.push('− ' + p.c);
+        else lines.push('+ ' + p.c);
       }
-      flush();
-      result.textContent = lines.join('\n') || '(tidak ada perbedaan karakter)';
+      result.textContent = lines.join('\n') || '(tidak ada perbedaan)';
     }
   </script>
   <!-- Service Worker Registration -->
