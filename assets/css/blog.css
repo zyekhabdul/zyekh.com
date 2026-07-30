@@ -93,6 +93,7 @@
   margin-bottom: 0.4rem;
   display: inline-block;
 }
+h2.article-title,
 .article-title {
   font-size: 1.15rem;
   font-weight: 600;
@@ -100,10 +101,13 @@
   margin-top: 0.35rem;
   margin-bottom: 0.75rem;
 }
+h2.article-title a,
 .article-title a {
+  font-size: inherit;
   color: var(--text-main);
   text-decoration: none;
 }
+h2.article-title a:hover,
 .article-title a:hover {
   text-decoration: underline;
 }
