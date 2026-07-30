@@ -34,11 +34,21 @@
   color: #fff;
 }
 
-/* ── Blog Index: Article Cards ── */
+/* ── Blog Index: Equal Height Article Cards ── */
+.article-item {
+  display: flex;
+  flex-direction: column;
+}
 .article-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 12px;
+  padding: 1.5rem;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   overflow: hidden;
   transition: border-color 0.2s, transform 0.2s;
 }
@@ -46,8 +56,20 @@
   border-color: var(--border-color-hover);
   transform: translateY(-2px);
 }
+.article-card > div:first-child {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card Thumbnail Styling */
+.card-thumb-wrapper,
 .card-thumb {
+  margin-bottom: 1rem;
+  border-radius: 8px;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #1e293b;
   aspect-ratio: 16 / 9;
 }
 .card-thumb-img {
@@ -60,17 +82,49 @@
 .article-card:hover .card-thumb-img {
   transform: scale(1.04);
 }
+
+/* Meta Tag & Title Sizing */
+.meta-tag {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+  display: inline-block;
+}
+.article-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-top: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+.article-title a {
+  color: var(--text-main);
+  text-decoration: none;
+}
+.article-title a:hover {
+  text-decoration: underline;
+}
+
+/* Excerpt & Footer Equalization */
 .article-excerpt {
   color: var(--text-muted);
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
+  font-size: 0.925rem;
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+  flex: 1;
 }
 .article-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
+  border-top: 1px solid var(--border-color);
+  padding-top: 1rem;
+  margin-top: auto;
 }
 
 /* ── Article Pages: Content Typography ── */
@@ -131,9 +185,6 @@ pre code {
   font-size: 0.9rem;
 }
 
-/* Article title link hover (blog index) */
-.article-title a:hover { text-decoration: underline; }
-
 /* Article body lists */
 .article-body ul,
 .article-body ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: #e4e4e7; }
@@ -143,4 +194,3 @@ pre code {
 .callout-card { margin-top: 2.5rem; padding: 1.25rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); }
 .heading-reset { margin-top: 0; margin-bottom: 0.5rem; color: var(--text-main); }
 .note-sm { margin-bottom: 0; font-size: 0.9rem; color: var(--text-muted); }
-
