@@ -655,21 +655,6 @@
 
   <!-- Scripts -->
   <script>
-    // Mobile Navigation Toggle
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navMenu');
-
-    if (navToggle && navMenu) {
-      navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('open');
-      });
-
-      document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-          navMenu.classList.remove('open');
-        });
-      });
-    }
 
     // Lightbox Logic
     const lightbox = document.getElementById('certLightbox');
