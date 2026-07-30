@@ -145,6 +145,52 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
+  <script>
+    let _qrCanvas = null;
+
+    function update() {
+      const val = document.getElementById('in').value.trim();
+      const container = document.getElementById('qr');
+      const dlBtn = document.getElementById('dl');
+
+      if (!val) {
+        container.innerHTML = '';
+        _qrCanvas = null;
+        dlBtn.disabled = true;
+        return;
+      }
+
+      // Create fresh canvas each time
+      const canvas = document.createElement('canvas');
+      QRCode.toCanvas(canvas, val, {
+        width: 256,
+        margin: 2,
+        color: { dark: '#000000', light: '#ffffff' }
+      }, function(err) {
+        if (err) {
+          container.textContent = 'Error: ' + err.message;
+          dlBtn.disabled = true;
+          return;
+        }
+        container.innerHTML = '';
+        container.appendChild(canvas);
+        _qrCanvas = canvas;
+        dlBtn.disabled = false;
+      });
+    }
+
+    function download() {
+      if (!_qrCanvas) return;
+      _qrCanvas.toBlob(function(blob) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'qrcode.png';
+        a.click();
+        URL.revokeObjectURL(url);
+      }, 'image/png');
+    }
+  </script>
   <!-- Service Worker Registration -->
   <script>
     if ('serviceWorker' in navigator) {
