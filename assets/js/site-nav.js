@@ -5,7 +5,15 @@
  */
 class SiteNav extends HTMLElement {
   connectedCallback() {
-    const active = this.getAttribute('active') || '';
+    let active = this.getAttribute('active') || '';
+
+    // Check if page loaded with a hash anchor on homepage
+    if (location.pathname === '/' || location.pathname === '/index.html') {
+      const hashKey = location.hash.replace('#', '');
+      if (['about', 'skills', 'projects', 'contact'].includes(hashKey)) {
+        active = hashKey;
+      }
+    }
 
     const links = [
       { href: '/',         label: 'Home',         key: 'home' },
@@ -40,7 +48,7 @@ class SiteNav extends HTMLElement {
       </header>`;
 
     this._initNav();
-    if (active === 'home' || location.pathname === '/' || location.pathname === '/index.html') {
+    if (active === 'home' || ['about','skills','projects','contact'].includes(active) || location.pathname === '/' || location.pathname === '/index.html') {
       this._initScrollSpy();
     }
   }
@@ -125,6 +133,14 @@ class SiteNav extends HTMLElement {
     });
 
     sectionElements.forEach(sec => observer.observe(sec));
+
+    // Listen for hashchange events
+    window.addEventListener('hashchange', () => {
+      const hashKey = location.hash.replace('#', '');
+      if (sections.includes(hashKey)) {
+        setActive(hashKey);
+      }
+    });
 
     // Top of page (Hero section) -> Home
     window.addEventListener('scroll', () => {
