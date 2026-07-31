@@ -5,100 +5,289 @@
   <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#09090b">
-  <meta name="robots" content="noindex, nofollow">
-  <title>404 — Halaman Tidak Ditemukan | zyekh.com</title>
+  <meta name="robots" content="noindex, follow">
+  <title>404 — Terminal & Resource Finder | zyekh.com</title>
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v5">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v5">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v6">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v6">
   <style>
-    .error-page {
-      min-height: 80vh;
+    .error-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem 1.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      gap: 2rem;
+    }
+
+    .error-header {
       text-align: center;
-      padding: var(--space-xl);
-      gap: var(--space-md);
     }
-    .error-code {
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(5rem, 20vw, 10rem);
-      font-weight: 800;
-      line-height: 1;
-      color: var(--accent);
-      letter-spacing: -0.04em;
+
+    .error-code-badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
     }
+
     .error-title {
       font-family: 'Outfit', sans-serif;
-      font-size: clamp(1.25rem, 4vw, 1.75rem);
-      font-weight: 700;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 800;
       color: var(--text-main);
-      margin: 0;
+      margin: 0 0 0.5rem 0;
+      letter-spacing: -0.03em;
     }
+
     .error-desc {
       color: var(--text-muted);
-      font-size: 1rem;
-      max-width: 40ch;
+      font-size: 1.05rem;
+      max-width: 500px;
+      margin: 0 auto;
       line-height: 1.6;
-      margin: 0;
     }
-    .error-actions {
-      display: flex;
-      gap: var(--space-sm);
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: var(--space-sm);
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.6rem 1.4rem;
-      background: var(--accent);
-      color: #000;
-      font-weight: 600;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: opacity 0.15s;
-    }
-    .btn-primary:hover { opacity: 0.85; }
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.6rem 1.4rem;
-      background: var(--bg-card);
-      color: var(--text-main);
-      font-weight: 600;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 0.95rem;
+
+    /* Interactive 404 Terminal Card */
+    .terminal-card {
+      width: 100%;
+      background: #09090b;
       border: 1px solid var(--border-color);
-      transition: border-color 0.15s;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     }
-    .btn-secondary:hover { border-color: var(--border-color-hover); }
+
+    .terminal-topbar {
+      background: #141417;
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #eab308; }
+    .dot-green { background: #22c55e; }
+
+    .terminal-title-text {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .terminal-body {
+      padding: 1.25rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9rem;
+      color: #fafafa;
+      min-height: 140px;
+      line-height: 1.6;
+    }
+
+    .prompt-line {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .prompt-symbol {
+      color: #22c55e;
+      font-weight: 700;
+    }
+
+    .term-input {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9rem;
+      outline: none;
+      flex: 1;
+    }
+
+    /* Quick Discovery Grid */
+    .discovery-section {
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .discovery-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .discovery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .discovery-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.2s ease;
+    }
+
+    .discovery-card:hover {
+      border-color: var(--border-color-hover);
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+      color: var(--text-main);
+    }
+
+    .card-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
+
   <site-nav active=""></site-nav>
 
-  <main class="error-page">
-    <div class="error-code">404</div>
-    <h1 class="error-title">Halaman Tidak Ditemukan</h1>
-    <p class="error-desc">URL yang kamu kunjungi tidak ada atau sudah dipindahkan. Cek kembali alamatnya, atau kembali ke halaman utama.</p>
-    <div class="error-actions">
-      <a href="/" class="btn-primary">← Ke Beranda</a>
-      <a href="/tools/" class="btn-secondary">Tools</a>
-      <a href="/blog/" class="btn-secondary">Blog</a>
+  <main class="main-container">
+    <div class="error-container">
+      
+      <div class="error-header">
+        <div class="error-code-badge">HTTP 404 // NOT_FOUND</div>
+        <h1 class="error-title">Jalur Tidak Ditemukan</h1>
+        <p class="error-desc">
+          Halaman yang kamu cari mungkin telah dipindahkan atau tidak pernah ada. Coba gunakan konsol terminal di bawah atau jelajahi fitur populer lainnya.
+        </p>
+      </div>
+
+      <!-- Interactive 404 Console -->
+      <div class="terminal-card">
+        <div class="terminal-topbar">
+          <div class="terminal-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <span class="terminal-title-text">zyekh-sh — 404 recovery</span>
+        </div>
+        <div class="terminal-body" id="termBody">
+          <div><span style="color:#ef4444;">error:</span> path <script>document.write('"' + location.pathname + '"');</script> not resolved.</div>
+          <div>Ketik <span style="color:#eab308;">help</span> atau klik salah satu pintasan di bawah untuk navigasi cepat:</div>
+          <div id="termOutput"></div>
+          <div class="prompt-line">
+            <span class="prompt-symbol">visitor@zyekh:~$</span>
+            <input type="text" id="termInput" class="term-input" autocomplete="off" spellcheck="false" placeholder="ketik 'help', 'tools', 'home'...">
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Discovery Grid -->
+      <div class="discovery-section">
+        <h2 class="discovery-heading">⚡ Rekomendasi Fitur Populer</h2>
+        <div class="discovery-grid">
+          <a href="/tools/" class="discovery-card">
+            <div class="card-icon">🧰</div>
+            <div class="card-name">Web Utility Tools Hub</div>
+            <div class="card-desc">24+ Web tools instan tanpa tracking &amp; tanpa register.</div>
+          </a>
+          <a href="/blog/" class="discovery-card">
+            <div class="card-icon">📰</div>
+            <div class="card-name">Artikel &amp; Riset Teknikal</div>
+            <div class="card-desc">Panduan Linux VPS, eBPF security, &amp; arsitektur server.</div>
+          </a>
+          <a href="/#projects" class="discovery-card">
+            <div class="card-icon">🧪</div>
+            <div class="card-name">Featured Technical Projects</div>
+            <div class="card-desc">Repositori riset sistem dan eksperimen open-source.</div>
+          </a>
+        </div>
+      </div>
+
     </div>
   </main>
 
   <footer class="site-footer">
-    <p class="text-muted-xs">© 2026 zyekh.com</p>
+    <p class="text-muted-xs">© 2026 zyekh.com — Open-source static site portfolio</p>
   </footer>
 
-  <script src="/assets/js/site-nav.js?v=20260731_v5" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260731_v6" defer></script>
+  <script>
+    const termInput = document.getElementById('termInput');
+    const termOutput = document.getElementById('termOutput');
+
+    if (termInput && termOutput) {
+      termInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const cmd = termInput.value.trim().toLowerCase();
+          termInput.value = '';
+
+          let response = '';
+          if (cmd === 'help') {
+            response = 'Perintah tersedia: <span style="color:#22c55e;">home</span>, <span style="color:#22c55e;">tools</span>, <span style="color:#22c55e;">blog</span>, <span style="color:#22c55e;">clear</span>';
+          } else if (cmd === 'home') {
+            location.href = '/';
+            return;
+          } else if (cmd === 'tools') {
+            location.href = '/tools/';
+            return;
+          } else if (cmd === 'blog') {
+            location.href = '/blog/';
+            return;
+          } else if (cmd === 'clear') {
+            termOutput.innerHTML = '';
+            return;
+          } else if (cmd !== '') {
+            response = `<span style="color:#ef4444;">command not found:</span> ${cmd}. Ketik <span style="color:#eab308;">help</span> untuk bantuan.`;
+          }
+
+          if (response) {
+            const line = document.createElement('div');
+            line.innerHTML = `<span style="color:#22c55e;">$ ${cmd}</span><br>${response}`;
+            line.style.marginBottom = '0.5rem';
+            termOutput.appendChild(line);
+          }
+        }
+      });
+    }
+  </script>
 </body>
 </html>
