@@ -8,8 +8,8 @@
   <meta name="robots" content="noindex, follow">
   <title>404 — Terminal & Resource Finder | zyekh.com</title>
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v13">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v13">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v19">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v19">
   <style>
     .error-container {
       max-width: 900px;
@@ -85,9 +85,9 @@
       border-radius: 50%;
     }
 
-    .dot-red { background: #ef4444; }
-    .dot-yellow { background: #eab308; }
-    .dot-green { background: #22c55e; }
+    .dot-red, .dot-1 { background: #fafafa; }
+    .dot-yellow, .dot-2 { background: #a1a1aa; }
+    .dot-green, .dot-3 { background: #52525b; }
 
     .terminal-title-text {
       font-family: 'Fira Code', monospace;
@@ -210,8 +210,8 @@
           <span class="terminal-title-text">zyekh-sh — 404 recovery</span>
         </div>
         <div class="terminal-body" id="termBody">
-          <div><span style="color:#ef4444;">error:</span> path <script>document.write('"' + location.pathname + '"');</script> not resolved.</div>
-          <div>Ketik <span style="color:#eab308;">help</span> atau klik salah satu pintasan di bawah untuk navigasi cepat:</div>
+          <div><span style="color:#fafafa; font-weight:600;">error:</span> path <script>document.write('"' + location.pathname + '"');</script> not resolved.</div>
+          <div>Ketik <span style="color:#fafafa; font-weight:600;">help</span> atau klik salah satu pintasan di bawah untuk navigasi cepat:</div>
           <div id="termOutput"></div>
           <div class="prompt-line">
             <span class="prompt-symbol">visitor@zyekh:~$</span>
@@ -249,7 +249,7 @@
     <p class="text-muted-xs">© 2026 zyekh.com — Open-source static site portfolio</p>
   </footer>
 
-  <script src="/assets/js/site-nav.js?v=20260731_v13" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260731_v19" defer></script>
   <script>
     const termInput = document.getElementById('termInput');
     const termOutput = document.getElementById('termOutput');
@@ -276,12 +276,12 @@
             termOutput.innerHTML = '';
             return;
           } else if (cmd !== '') {
-            response = `<span style="color:#ef4444;">command not found:</span> ${cmd}. Ketik <span style="color:#eab308;">help</span> untuk bantuan.`;
+            response = `<span style="color:#a1a1aa;">command not found:</span> ${cmd}. Ketik <span style="color:#fafafa; font-weight:600;">help</span> untuk bantuan.`;
           }
 
           if (response) {
             const line = document.createElement('div');
-            line.innerHTML = `<span style="color:#22c55e;">$ ${cmd}</span><br>${response}`;
+            line.innerHTML = `<span style="color:#fafafa; font-weight:600;">$ ${cmd}</span><br>${response}`;
             line.style.marginBottom = '0.5rem';
             termOutput.appendChild(line);
           }

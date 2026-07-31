@@ -23,27 +23,10 @@
   <link rel="manifest" href="/manifest.json">
 
   <!-- Fonts & Styles -->
-
-  
-  <!-- Speculation Rules API: instant navigation (Chrome 109+) -->
-  <script type="speculationrules">
-  {
-    "prerender": [{
-      "source": "document",
-      "where": {
-        "and": [
-          { "href_matches": "/*" },
-          { "not": { "href_matches": "/assets/*" } }
-        ]
-      },
-      "eagerness": "moderate"
-    }]
-  }
-  </script>
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v13">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v13">
-  <link rel="stylesheet" href="/assets/css/blog.css?v=20260731_v13">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v19">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v19">
+  <link rel="stylesheet" href="/assets/css/blog.css?v=20260731_v19">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -75,11 +58,11 @@
 
     <!-- Categories Filter Bar -->
     <div class="filter-bar">
-      <button type="button" class="filter-btn active" onclick="filterArticles('all', this)">All Articles</button>
-      <button type="button" class="filter-btn" onclick="filterArticles('security', this)">Cyber Security</button>
-      <button type="button" class="filter-btn" onclick="filterArticles('linux', this)">Linux Kernel &amp; SysAdmin</button>
-      <button type="button" class="filter-btn" onclick="filterArticles('hardening', this)">System Hardening</button>
-      <button type="button" class="filter-btn" onclick="filterArticles('research', this)">Research &amp; Exploitation</button>
+      <button type="button" class="filter-btn active" data-filter="all">All Articles</button>
+      <button type="button" class="filter-btn" data-filter="security">Cyber Security</button>
+      <button type="button" class="filter-btn" data-filter="linux">Linux Kernel &amp; SysAdmin</button>
+      <button type="button" class="filter-btn" data-filter="hardening">System Hardening</button>
+      <button type="button" class="filter-btn" data-filter="research">Research &amp; Exploitation</button>
     </div>
 
     <!-- Articles Grid -->
@@ -203,32 +186,19 @@
   </main>
 
   <script>
-    function filterArticles(category, btn) {
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-filter]');
+      if (!btn) return;
+      const category = btn.dataset.filter;
+
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      const items = document.querySelectorAll('.article-item');
-      items.forEach(item => {
-        if (category === 'all' || item.dataset.category.includes(category)) {
-          item.style.display = 'block';
-        } else {
-          item.style.display = 'none';
-        }
+      document.querySelectorAll('.article-item').forEach(item => {
+        item.style.display = (category === 'all' || item.dataset.category.includes(category)) ? 'block' : 'none';
       });
-    }
-
-
+    });
   </script>
-  <!-- Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(reg => reg.update())
-          .catch(() => {});
-      });
-    }
-  </script>
-  <script src="/assets/js/site-nav.js?v=20260731_v13" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260731_v19" defer></script>
 </body>
 </html>

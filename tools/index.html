@@ -17,8 +17,8 @@
 
   <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v13">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v13">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v19">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v19">
 
   
   <!-- SEO & Social Meta Tags -->
@@ -53,21 +53,6 @@
         }
       }
     ]
-  }
-  </script>
-  <!-- Speculation Rules API: instant navigation (Chrome 109+) -->
-  <script type="speculationrules">
-  {
-    "prerender": [{
-      "source": "document",
-      "where": {
-        "and": [
-          { "href_matches": "/*" },
-          { "not": { "href_matches": "/assets/*" } }
-        ]
-      },
-      "eagerness": "moderate"
-    }]
   }
   </script>
 </head>
@@ -395,16 +380,6 @@
 
 
   </script>
-  <!-- Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(reg => reg.update())
-          .catch(() => {});
-      });
-    }
-  </script>
-  <script src="/assets/js/site-nav.js?v=20260731_v13" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260731_v19" defer></script>
 </body>
 </html>

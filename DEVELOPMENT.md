@@ -57,7 +57,26 @@ Setiap kali melakukan perubahan pada kode JavaScript (`assets/js/*.js`) atau CSS
 
 ---
 
-## ✅ 5. EMPIRICAL VERIFICATION PROTOCOL (SEBELUM MENYATAKAN SELESAI)
+## ⚡ 6. MODERN SYNTAX STANDARDS PROTOCOL (BASELINE 2024+)
+
+1. **Centralized Service Worker Registration**:
+   - Registrasi Service Worker WAJIB dikelola secara terpusat di dalam komponen `<site-nav>` (`assets/js/site-nav.js`).
+   - DILARANG menyisipkan blok tag `<script>` registrasi Service Worker secara manual/terduplikasi di file HTML individual.
+
+2. **Native CSS `:has()` Selector for UI States**:
+   - Gunakan CSS `:has()` (seperti `body:has(#navMenu.open) { overflow: hidden; }`) di `assets/css/shared.css` untuk mengunci scroll body.
+   - DILARANG memutasi `document.body.style.overflow` secara langsung di JavaScript.
+
+3. **Native HTML5 `<dialog>` & Backdrop Styling**:
+   - Modal wajib menggunakan elemen `<dialog>` dengan metode native `.showModal()` dan `.close()`.
+   - Latar belakang modal wajib diatur menggunakan CSS `dialog::backdrop`. DILARANG menambah `display:none` inline atau event listener `keydown` (Escape key) manual.
+
+4. **Web Crypto API Buffer Batching**:
+   - Pengacakan berbasis kriptografi wajib mengalokasikan memori sekaligus via `crypto.getRandomValues(new Uint32Array(count))` dalam 1 kali panggilan per operasi.
+
+---
+
+## ✅ 7. EMPIRICAL VERIFICATION PROTOCOL (SEBELUM MENYATAKAN SELESAI)
 
 Sebelum mengklaim tugas selesai atau mengirimkan laporan ke pengguna, AI WAJIB menjalankan skrip audit di terminal:
 

@@ -7,6 +7,10 @@
 
 /* ===================== CSS Custom Properties ===================== */
 :root {
+  /* Modern Web Standards (Baseline 2024+) */
+  color-scheme: dark;
+  accent-color: var(--accent);
+
   /* Colors */
   --bg-dark:           #09090b;
   --bg-card:           #141417;
@@ -17,6 +21,7 @@
   --text-muted:        #a1a1aa;
   --accent-white:      #ffffff;
   --accent:            #22c55e;
+  --accent-glow:       color-mix(in srgb, var(--accent) 15%, transparent);
   --info:              #3b82f6;
   --warn:              #f59e0b;
   --danger:            #ef4444;
@@ -34,8 +39,8 @@
   --radius-md:  6px;
   --radius-lg:  8px;
 
-  /* Transitions */
-  --transition: 0.2s ease;
+  /* Transitions — Modern Apple/iOS Fluid Spring Curve */
+  --transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ===================== Reset & Base ===================== */
@@ -63,6 +68,30 @@ body {
   overflow-x: clip;
 }
 
+/* Native CSS :has() Body Overflow Lock (Baseline 2023+) */
+body:has(#navMenu.open),
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
+/* Native HTML5 Dialog & Lightbox Modal */
+dialog.lightbox-modal {
+  padding: 0;
+  border: none;
+  background: transparent;
+  width: auto;
+  height: auto;
+  max-width: 90vw;
+  max-height: 90vh;
+  margin: auto;
+  overflow: visible;
+}
+
+dialog.lightbox-modal::backdrop {
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+}
+
 h1, h2, h3, h4 {
   font-family: 'Outfit', sans-serif;
   color: var(--text-main);
@@ -73,12 +102,8 @@ h1, h2, h3, h4 {
 
 a { color: var(--text-main); text-decoration: none; }
 /* WCAG 1.4.1 — underline links in article body text */
-.article-body a,
-.article-content a { text-decoration: underline; }
-
-.article-body a:hover,
-.article-content a:hover,
-.footer a:hover { text-decoration: underline; }
+:is(.article-body, .article-content) a { text-decoration: underline; }
+:is(.article-body, .article-content, .footer) a:hover { text-decoration: underline; }
 
 img, svg, video, canvas { max-width: 100%; height: auto; }
 
@@ -826,3 +851,21 @@ details[open] summary::after { content: '\2212'; }
 .stats-table th,
 .stats-table td { border: 1px solid var(--border-color); padding: 0.5rem 0.75rem; text-align: left; }
 .stats-table th { color: var(--text-muted); font-weight: 600; background: var(--bg-card); }
+
+/* Utility Classes */
+.flex-wrap-gap { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.flex-center { display: flex; justify-content: center; align-items: center; }
+.items-center { align-items: center; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.w-full { width: 100%; }
+.mt-0 { margin-top: 0; }
+.mb-0 { margin-bottom: 0; }
+.mb-sm { margin-bottom: 0.5rem; }
+.mb-md { margin-bottom: 1rem; }
+.mb-lg { margin-bottom: 1.5rem; }
+.text-muted { color: var(--text-muted); }
+.text-sm { font-size: 0.88rem; }
+.dot-red, .dot-1 { background: #fafafa !important; }
+.dot-yellow, .dot-2 { background: #a1a1aa !important; }
+.dot-green, .dot-3 { background: #52525b !important; }

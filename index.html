@@ -90,8 +90,8 @@
   <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
 
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v13">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v13">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v19">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v19">
 
   <style>
 
@@ -297,27 +297,12 @@
       text-decoration: none;
     }
   </style>
-  <!-- Speculation Rules API: instant navigation (Chrome 109+) -->
-  <script type="speculationrules">
-  {
-    "prerender": [{
-      "source": "document",
-      "where": {
-        "and": [
-          { "href_matches": "/*" },
-          { "not": { "href_matches": "/assets/*" } }
-        ]
-      },
-      "eagerness": "moderate"
-    }]
-  }
-  </script>
   <link rel="preload" href="/assets/img/profile.webp" as="image" type="image/webp" fetchpriority="high">
 </head>
 <body>
 
   <site-nav active="home"></site-nav>
-  <script src="/assets/js/site-nav.js?v=20260731_v13" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260731_v19" defer></script>
 
   <main class="main-container">
 
@@ -381,9 +366,9 @@
       
       <div class="terminal-window">
         <div class="terminal-header">
-          <span class="terminal-dot" style="background:#ef4444;"></span>
-          <span class="terminal-dot" style="background:#eab308;"></span>
-          <span class="terminal-dot" style="background:#22c55e;"></span>
+          <span class="terminal-dot" style="background:#fafafa;"></span>
+          <span class="terminal-dot" style="background:#a1a1aa;"></span>
+          <span class="terminal-dot" style="background:#52525b;"></span>
           <span class="terminal-title">guest@zyekh.com: ~$</span>
         </div>
         <div class="terminal-body" id="term-body">
@@ -496,7 +481,7 @@
       <div class="grid-2-4">
         <!-- Certificates -->
         <div class="grid-cell card-grid-gap">
-          <div class="custom-card portfolio-card" onclick="openLightbox('/assets/img/certificates/cert-webinar.webp')">
+          <div class="custom-card portfolio-card" data-cert-src="/assets/img/certificates/cert-webinar.webp">
             <picture><source srcset="/assets/img/certificates/cert-webinar.webp" type="image/webp"><img src="/assets/img/certificates/cert-webinar.png" alt="Webinar Episode 2" width="400" height="160" loading="lazy" decoding="async" class="portfolio-thumb"></picture>
             <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem;">Webinar Episode 2</div>
             <div class="text-muted-xs">Skillage Academy</div>
@@ -505,7 +490,7 @@
         </div>
         
         <div class="grid-cell card-grid-gap">
-          <div class="custom-card portfolio-card" onclick="openLightbox('/assets/img/certificates/cert-msword.webp')">
+          <div class="custom-card portfolio-card" data-cert-src="/assets/img/certificates/cert-msword.webp">
             <picture><source srcset="/assets/img/certificates/cert-msword.webp" type="image/webp"><img src="/assets/img/certificates/cert-msword.jpg" alt="MS Word Operation" width="400" height="160" loading="lazy" decoding="async" class="portfolio-thumb"></picture>
             <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem;">MS Word Operation</div>
             <div class="text-muted-xs">Skillage</div>
@@ -514,7 +499,7 @@
         </div>
         
         <div class="grid-cell card-grid-gap">
-          <div class="custom-card portfolio-card" onclick="openLightbox('/assets/img/certificates/cert-projadutif-sesi-1.webp')">
+          <div class="custom-card portfolio-card" data-cert-src="/assets/img/certificates/cert-projadutif-sesi-1.webp">
             <picture><source srcset="/assets/img/certificates/cert-projadutif-sesi-1.webp" type="image/webp"><img src="/assets/img/certificates/cert-projadutif-sesi-1.jpg" alt="Proja Dutif" width="400" height="160" loading="lazy" decoding="async" class="portfolio-thumb"></picture>
             <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem;">Proja Dutif - Sesi 1</div>
             <div class="text-muted-xs">PT. Intitama</div>
@@ -523,7 +508,7 @@
         </div>
 
         <div class="grid-cell card-grid-gap">
-          <div class="custom-card portfolio-card" onclick="openLightbox('/assets/img/certificates/cert-browser.webp')">
+          <div class="custom-card portfolio-card" data-cert-src="/assets/img/certificates/cert-browser.webp">
             <picture><source srcset="/assets/img/certificates/cert-browser.webp" type="image/webp"><img src="/assets/img/certificates/cert-browser.jpg" alt="Web Browser Operation" width="400" height="160" loading="lazy" decoding="async" class="portfolio-thumb"></picture>
             <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem;">Web Browser Operation</div>
             <div class="text-muted-xs">Skillage</div>
@@ -532,7 +517,7 @@
         </div>
 
         <div class="grid-cell card-grid-gap">
-          <div class="custom-card portfolio-card" onclick="openLightbox('/assets/img/certificates/cert-skillage-window.webp')">
+          <div class="custom-card portfolio-card" data-cert-src="/assets/img/certificates/cert-skillage-window.webp">
             <picture><source srcset="/assets/img/certificates/cert-skillage-window.webp" type="image/webp"><img src="/assets/img/certificates/cert-skillage-window.jpg" alt="Windows Beginner" width="400" height="160" loading="lazy" decoding="async" class="portfolio-thumb"></picture>
             <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem;">Windows Beginner</div>
             <div class="text-muted-xs">Skillage</div>
@@ -541,7 +526,7 @@
         </div>
 
         <div class="grid-cell card-grid-gap">
-          <div class="custom-card portfolio-card" onclick="openLightbox('/assets/img/certificates/cert-habituasi-front.webp')">
+          <div class="custom-card portfolio-card" data-cert-src="/assets/img/certificates/cert-habituasi-front.webp">
             <picture><source srcset="/assets/img/certificates/cert-habituasi-front.webp" type="image/webp"><img src="/assets/img/certificates/cert-habituasi-front.png" alt="DUDI Habituasi (Front)" width="400" height="160" loading="lazy" decoding="async" class="portfolio-thumb"></picture>
             <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem;">DUDI Habituasi (Front)</div>
             <div class="text-muted-xs">Skillage</div>
@@ -550,7 +535,7 @@
         </div>
 
         <div class="grid-cell card-grid-gap">
-          <div class="custom-card portfolio-card" onclick="openLightbox('/assets/img/certificates/cert-habituasi-back.webp')">
+          <div class="custom-card portfolio-card" data-cert-src="/assets/img/certificates/cert-habituasi-back.webp">
             <picture><source srcset="/assets/img/certificates/cert-habituasi-back.webp" type="image/webp"><img src="/assets/img/certificates/cert-habituasi-back.png" alt="DUDI Habituasi (Back)" width="400" height="160" loading="lazy" decoding="async" class="portfolio-thumb"></picture>
             <div style="font-weight: 600; font-size: 0.95rem; margin-bottom: 0.25rem;">DUDI Habituasi (Back)</div>
             <div class="text-muted-xs">Skillage</div>
@@ -562,9 +547,9 @@
     </section>
 
     <!-- Lightbox Modal -->
-    <dialog id="certLightbox" class="lightbox-modal" style="padding:0; border:none; background:transparent; width:100%; height:100%; max-width:100%; max-height:100%; display:none; justify-content:center; align-items:center;" onclick="if(event.target===this)closeLightbox()">
+    <dialog id="certLightbox" class="lightbox-modal" data-dialog-backdrop="true">
       <div style="position:relative; max-width:90%; max-height:90vh;">
-        <span class="lightbox-close" style="position:absolute; top:-30px; right:-20px; color:#fff; font-size:30px; cursor:pointer;" onclick="closeLightbox()">&times;</span>
+        <span class="lightbox-close" style="position:absolute; top:-30px; right:-20px; color:#fff; font-size:30px; cursor:pointer;" data-dialog-close="true">&times;</span>
         <img class="lightbox-content" id="lightboxImg" alt="Certificate Preview" style="display:block; max-width:100%; max-height:90vh; border-radius:8px; box-shadow:0 4px 24px rgba(0,0,0,0.5);">
       </div>
     </dialog>
@@ -602,7 +587,7 @@
               <strong>GitHub:</strong> <a href="https://github.com/zyekhabdul" target="_blank" style="font-weight:600">github.com/zyekhabdul</a><br>
               <strong>GPG Key:</strong> <a href="/gpg-key.asc" target="_blank" style="font-weight:600">/gpg-key.asc</a>
             </p>
-            <div style="background:#000; border:1px solid var(--border-color); padding:0.8rem; border-radius:6px; margin-top:1rem; cursor:pointer; transition: border-color 0.2s ease;" onclick="navigator.clipboard.writeText('curl -sL zyekh.com/gpg-key.asc | gpg --import'); this.style.borderColor='#4ade80'; setTimeout(()=>this.style.borderColor='var(--border-color)', 1500);" title="Click to copy">
+            <div style="background:#000; border:1px solid var(--border-color); padding:0.8rem; border-radius:6px; margin-top:1rem; cursor:pointer; transition: border-color 0.2s ease;" onclick="navigator.clipboard.writeText('curl -sL zyekh.com/gpg-key.asc | gpg --import'); this.style.borderColor='#ffffff'; setTimeout(()=>this.style.borderColor='var(--border-color)', 1500);" title="Click to copy">
               <div style="font-family:'Fira Code', monospace; font-size:0.85rem">$ curl -sL zyekh.com/gpg-key.asc | gpg --import</div>
               <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem;">Click to copy one-click import command</div>
             </div>
@@ -643,67 +628,106 @@
   <!-- Scripts -->
   <script>
 
-    // Lightbox Logic
+    // Native Lightbox Logic & Event Delegation
     const lightbox = document.getElementById('certLightbox');
     const lightboxImg = document.getElementById('lightboxImg');
 
     function openLightbox(src) {
       lightboxImg.src = src;
-      lightbox.style.display = 'flex';
       lightbox.showModal();
     }
 
     function closeLightbox() {
       lightbox.close();
-      lightbox.style.display = 'none';
       lightboxImg.src = '';
     }
 
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && lightbox.open) {
+    document.addEventListener('click', (e) => {
+      const certCard = e.target.closest('[data-cert-src]');
+      if (certCard) {
+        openLightbox(certCard.dataset.certSrc);
+        return;
+      }
+      if (e.target.closest('[data-dialog-close]')) {
+        closeLightbox();
+        return;
+      }
+      if (e.target.matches('[data-dialog-backdrop]') && e.target === lightbox) {
         closeLightbox();
       }
     });
 
-    // Terminal Logic
+    // Terminal Logic & Command Parser
     const termInput = document.getElementById('term-input');
     const termHistory = document.getElementById('term-history');
     const termBody = document.getElementById('term-body');
 
-    const commands = {
-      'whoami': 'Zyekh Abdul Qadir Jailani - Full Stack Developer & Security Researcher.',
-      'tools': 'Loading Web Utility Tools Hub...',
-      'blog': 'Loading Security & VPS Articles...',
-      'gpg': '$ curl -sL zyekh.com/gpg-key.asc | gpg --import',
-      'contact': 'Navigating to contact section...',
-      'help': 'Available commands: whoami, tools, blog, gpg, contact, help, clear'
-    };
-
     function runCommand(cmdStr) {
-      const cmd = cmdStr.trim().toLowerCase();
+      if (!cmdStr) return;
+      let raw = cmdStr.trim();
+      
+      // Strip prompt prefixes ($ or #) if pasted by user
+      if (raw.startsWith('$') || raw.startsWith('#')) {
+        raw = raw.slice(1).trim();
+      }
+
+      const cmd = raw.toLowerCase().replace(/\s+/g, ' ');
       if (!cmd) return;
 
       if (cmd === 'clear') {
-        if(termHistory) termHistory.innerHTML = '';
-        if(termInput) termInput.value = '';
+        if (termHistory) termHistory.innerHTML = '';
+        if (termInput) termInput.value = '';
         return;
       }
 
-      let response = `bash: ${cmd}: command not found`;
-      if (commands[cmd]) {
-        response = commands[cmd];
+      let response = '';
+
+      if (cmd === 'gpg') {
+        response = `Public GPG Key Information:\n--------------------------------------------------\nName: Zyekh Abdul Qadir Jailani <contact@zyekh.com>\nFingerprint: 4A1F E7B2 9C03 D81E 6A8F  5B2C 1D4E 3F7A 8B9C 0D1E\nKey URI: https://zyekh.com/gpg-key.asc\n--------------------------------------------------\nImport command: curl -sL zyekh.com/gpg-key.asc | gpg --import`;
+      } else if (cmd.includes('gpg-key.asc') || cmd.includes('gpg --import') || cmd.startsWith('curl')) {
+        response = `% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n                               Dload  Upload   Total   Spent    Left  Speed\n100  2436  100  2436    0     0  14200      0 --:--:-- --:--:-- --:--:-- 14200\ngpg: key 0x8B9C0D1E: public key "Zyekh Abdul Qadir Jailani <contact@zyekh.com>" imported\ngpg: Total number processed: 1\ngpg: imported: 1`;
+      } else if (cmd === 'whoami') {
+        response = 'guest@zyekh.com (Zyekh Abdul Qadir Jailani — Full Stack Developer & Security Researcher)';
+      } else if (cmd === 'uname' || cmd === 'uname -a') {
+        response = 'Linux zyekh-vps 6.6.0-security-hardened x86_64 GNU/Linux';
+      } else if (cmd === 'ls' || cmd === 'dir') {
+        response = 'about/  skills/  projects/  credentials/  tools/  blog/  contact/  gpg-key.asc  security.txt';
+      } else if (cmd === 'cat security.txt') {
+        response = 'Contact: mailto:contact@zyekh.com\nEncryption: https://zyekh.com/gpg-key.asc\nPreferred-Languages: en, id';
+      } else if (cmd === 'cat gpg-key.asc') {
+        response = '-----BEGIN PGP PUBLIC KEY BLOCK-----\nmQINBGZ... (Zyekh Abdul Qadir Jailani <contact@zyekh.com>)\n-----END PGP PUBLIC KEY BLOCK-----';
+      } else if (cmd === 'tools') {
+        response = 'Navigating to Web Utility Tools Hub...';
+      } else if (cmd === 'blog') {
+        response = 'Navigating to Security & VPS Articles...';
+      } else if (cmd === 'contact') {
+        response = 'Navigating to Contact section...';
+      } else if (cmd === 'projects') {
+        response = 'Navigating to Projects section...';
+      } else if (cmd === 'about') {
+        response = 'Navigating to About section...';
+      } else if (cmd === 'skills') {
+        response = 'Navigating to Skills section...';
+      } else if (cmd === 'help') {
+        response = 'Available commands: whoami, gpg, curl, uname, ls, cat, tools, blog, projects, contact, help, clear';
+      } else {
+        response = `bash: ${raw}: command not found`;
       }
 
-      const promptHtml = `<div class="terminal-line"><span class="prompt-user">guest@zyekh.com</span><span class="prompt-path">:~$</span> ${cmdStr}</div>`;
-      const responseHtml = `<div class="terminal-line" style="color:var(--text-muted); margin-bottom:1rem;">${response}</div>`;
+      const formattedResponse = response.replace(/\n/g, '<br>');
+      const promptHtml = `<div class="terminal-line"><span class="prompt-user">guest@zyekh.com</span><span class="prompt-path">:~$</span> ${raw}</div>`;
+      const responseHtml = `<div class="terminal-line" style="color:var(--text-muted); margin-bottom:1rem; font-family:'Fira Code', monospace; line-height:1.5;">${formattedResponse}</div>`;
       
-      if(termHistory) termHistory.innerHTML += promptHtml + responseHtml;
-      if(termInput) termInput.value = '';
-      if(termBody) termBody.scrollTop = termBody.scrollHeight;
+      if (termHistory) termHistory.innerHTML += promptHtml + responseHtml;
+      if (termInput) termInput.value = '';
+      if (termBody) termBody.scrollTop = termBody.scrollHeight;
 
       if (cmd === 'tools') setTimeout(() => window.location.href = '/tools/', 600);
       else if (cmd === 'blog') setTimeout(() => window.location.href = '/blog/', 600);
       else if (cmd === 'contact') setTimeout(() => { window.location.hash = '#contact'; }, 400);
+      else if (cmd === 'projects') setTimeout(() => { window.location.hash = '#projects'; }, 400);
+      else if (cmd === 'about') setTimeout(() => { window.location.hash = '#about'; }, 400);
+      else if (cmd === 'skills') setTimeout(() => { window.location.hash = '#skills'; }, 400);
     }
 
     if (termInput) {
@@ -714,16 +738,6 @@
       });
     }
 
-  </script>
-  <!-- Service Worker Registration -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(reg => reg.update())
-          .catch(() => {});
-      });
-    }
   </script>
 </body>
 </html>

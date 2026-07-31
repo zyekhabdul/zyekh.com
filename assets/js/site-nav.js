@@ -56,6 +56,34 @@ class SiteNav extends HTMLElement {
   }
 
   _initNav() {
+    // Centralized Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(reg => reg.update()).catch(() => {});
+      });
+    }
+
+    // Centralized Speculation Rules API Injection (Chrome 109+)
+    if (typeof HTMLScriptElement !== 'undefined' && HTMLScriptElement.supports && HTMLScriptElement.supports('speculationrules')) {
+      if (!document.querySelector('script[type="speculationrules"]')) {
+        const specScript = document.createElement('script');
+        specScript.type = 'speculationrules';
+        specScript.textContent = JSON.stringify({
+          prerender: [{
+            source: 'document',
+            where: {
+              and: [
+                { href_matches: '/*' },
+                { not: { href_matches: '/assets/*' } }
+              ]
+            },
+            eagerness: 'moderate'
+          }]
+        });
+        document.head.appendChild(specScript);
+      }
+    }
+
     const toggle = this.querySelector('#navToggle');
     const menu   = this.querySelector('#navMenu');
     if (!toggle || !menu) return;
@@ -72,7 +100,6 @@ class SiteNav extends HTMLElement {
     const setOpen = (open) => {
       menu.classList.toggle('open', open);
       toggle.setAttribute('aria-expanded', String(open));
-      document.body.style.overflow = open ? 'hidden' : '';
       if (open) {
         backdrop.style.display = 'block';
         requestAnimationFrame(() => backdrop.classList.add('active'));
