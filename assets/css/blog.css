@@ -208,8 +208,8 @@ pre code {
 /* Blog article inline style extractions */
 .blog-badge { color: #ffffff; font-weight: 600; }
 .callout-card { margin-top: 2.5rem; padding: 1.25rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); }
-.heading-reset { margin-top: 0; margin-bottom: 0.5rem; color: var(--text-main); }
-.note-sm { margin-bottom: 0; font-size: 0.9rem; color: var(--text-muted); }
+.heading-reset { margin-top: 0; margin-bottom: 0.6rem; color: var(--text-main); font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 700; line-height: 1.3; }
+.note-sm { margin-bottom: 0; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
 
 /* ── Executive Summary & TOC ── */
 .exec-summary {
