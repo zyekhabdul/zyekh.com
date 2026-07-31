@@ -24,8 +24,8 @@ class SiteNav extends HTMLElement {
       { href: '/#about',   label: 'About',        key: 'about' },
       { href: '/#skills',  label: 'Skills',       key: 'skills' },
       { href: '/#projects',label: 'Projects',     key: 'projects' },
-      { href: '/tools/',   label: '🧰 Tools Hub', key: 'tools' },
-      { href: '/blog/',    label: '📰 Articles',  key: 'blog' },
+      { href: '/tools/',   label: 'Tools Hub', key: 'tools' },
+      { href: '/blog/',    label: 'Articles',  key: 'blog' },
       { href: '/#contact', label: 'Contact',      key: 'contact' },
     ];
 

@@ -415,12 +415,13 @@ td { color: var(--text-main); }
   border-radius: var(--radius-lg);
 }
 
-/* ===================== Mobile Safeguards ===================== */
+/* ===================== Mobile Safeguards & Responsive Typography ===================== */
 @media (max-width: 768px) {
   .main-container { padding: 1.25rem var(--space-md); }
-  h1 { font-size: 1.65rem; line-height: 1.25; word-break: break-word; }
-  h2 { font-size: 1.35rem; }
-  p  { font-size: 0.95rem; }
+  .page-title { font-size: clamp(1.65rem, 6vw, 2.1rem); line-height: 1.2; word-break: break-word; }
+  .section-title { font-size: clamp(1.3rem, 4.5vw, 1.6rem); line-height: 1.25; }
+  .card-title, .tool-title { font-size: clamp(1.05rem, 3.5vw, 1.15rem); }
+  p  { font-size: 0.95rem; line-height: 1.55; }
   .custom-card, .tool-box { padding: var(--space-md); }
 }
 
