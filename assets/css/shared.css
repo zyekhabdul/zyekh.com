@@ -759,7 +759,24 @@ details[open] summary::after { content: '\2212'; }
 .seo-content-block { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); }
 
 /* Blog — article metadata row */
-.article-meta { display: flex; gap: 1.5rem; font-size: 0.875rem; color: var(--text-muted); border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.article-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem 0.85rem;
+  font-size: 0.825rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.85rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  line-height: 1.4;
+}
+.article-meta span { display: inline-flex; align-items: center; }
+.article-meta span:not(:last-child)::after {
+  content: "•";
+  margin-left: 0.85rem;
+  color: rgba(255, 255, 255, 0.25);
+}
 
 /* Blog — card thumbnail wrapper */
 .card-thumb-wrapper { margin-bottom: 1rem; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
