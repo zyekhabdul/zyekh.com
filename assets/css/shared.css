@@ -714,6 +714,43 @@ details[open] summary::after { content: '\2212'; }
 
 /* Tools — stats table (counter.html) replaces deprecated border="1" */
 .stats-table { border-collapse: collapse; width: 100%; margin-top: var(--space-md); }
+
+/* ===================== Terminal Quick Actions ===================== */
+.terminal-quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin: 0.75rem 0 0.85rem 0;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.quick-label {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-right: 0.25rem;
+}
+
+.term-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.78rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.term-chip:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--border-color-hover);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
 .stats-table th,
 .stats-table td { border: 1px solid var(--border-color); padding: 0.5rem 0.75rem; text-align: left; }
 .stats-table th { color: var(--text-muted); font-weight: 600; background: var(--bg-card); }

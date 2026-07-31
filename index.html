@@ -90,8 +90,8 @@
   <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
 
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v6">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v6">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v7">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v7">
 
   <style>
 
@@ -317,7 +317,7 @@
 <body>
 
   <site-nav active="home"></site-nav>
-  <script src="/assets/js/site-nav.js?v=20260731_v6" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260731_v7" defer></script>
 
   <main class="main-container">
 
@@ -387,15 +387,16 @@
           <span class="terminal-title">guest@zyekh.com: ~$ [bash v2.6]</span>
         </div>
         <div class="terminal-body" id="term-body">
-          <div class="terminal-line">Type 'help' to see available commands or use the quick chips below.</div>
+          <div class="terminal-line">Type 'help' to see available commands or click quick actions:</div>
           <div id="term-history"></div>
-          <div class="terminal-line" style="margin-bottom:1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('whoami')">[whoami]</button>
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('tools')">[tools]</button>
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('blog')">[blog]</button>
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('gpg')">[gpg]</button>
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('contact')">[contact]</button>
-            <button class="badge" style="cursor:pointer;" onclick="runCommand('clear')">[clear]</button>
+          <div class="terminal-quick-actions">
+            <span class="quick-label">Quick Commands:</span>
+            <button class="term-chip" onclick="runCommand('whoami')">whoami</button>
+            <button class="term-chip" onclick="runCommand('tools')">tools</button>
+            <button class="term-chip" onclick="runCommand('blog')">blog</button>
+            <button class="term-chip" onclick="runCommand('gpg')">gpg</button>
+            <button class="term-chip" onclick="runCommand('contact')">contact</button>
+            <button class="term-chip" onclick="runCommand('clear')">clear</button>
           </div>
           <div class="terminal-input-line">
             <span class="prompt-user">guest@zyekh.com</span><span class="prompt-path">:~$</span>
