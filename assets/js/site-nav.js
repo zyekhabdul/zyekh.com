@@ -243,3 +243,36 @@ class SiteNav extends HTMLElement {
 }
 
 customElements.define('site-nav', SiteNav);
+
+// Native Zero-Dependency Copy Code Button Listener
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('pre').forEach(pre => {
+    if (pre.querySelector('.copy-code-btn')) return;
+    const btn = document.createElement('button');
+    btn.className = 'copy-code-btn';
+    btn.textContent = 'Copy';
+    btn.setAttribute('aria-label', 'Copy code to clipboard');
+    btn.style.cssText = 'position:absolute; top:0.5rem; right:0.5rem; background:var(--bg-card); color:var(--text-muted); border:1px solid var(--border-color); font-size:0.75rem; padding:0.2rem 0.55rem; border-radius:4px; cursor:pointer; font-family:sans-serif; transition:all 0.2s; z-index:2;';
+    
+    pre.style.position = 'relative';
+    pre.appendChild(btn);
+
+    btn.addEventListener('click', async () => {
+      const codeElement = pre.querySelector('code');
+      const codeText = codeElement ? codeElement.innerText : pre.innerText;
+      try {
+        await navigator.clipboard.writeText(codeText.trim());
+        btn.textContent = 'Copied!';
+        btn.style.borderColor = 'var(--text-main)';
+        btn.style.color = 'var(--text-main)';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.style.borderColor = 'var(--border-color)';
+          btn.style.color = 'var(--text-muted)';
+        }, 1800);
+      } catch (err) {
+        btn.textContent = 'Failed';
+      }
+    });
+  });
+});
