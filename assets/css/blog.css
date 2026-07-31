@@ -140,21 +140,24 @@
 
 /* ── Article Pages: Content Typography ── */
 .article-content h3 {
-  font-size: 1.2rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
   font-weight: 600;
   margin-top: 1.75rem;
   margin-bottom: 0.75rem;
+  line-height: 1.35;
 }
 .article-content p {
-  font-size: 1.05rem;
+  font-size: clamp(0.95rem, 1.5vw + 0.5rem, 1.05rem);
   color: #e4e4e7;
+  line-height: 1.65;
   margin-bottom: 1.25rem;
 }
 .article-content ul,
 .article-content ol {
   color: #e4e4e7;
-  font-size: 1.05rem;
-  padding-left: 1.5rem;
+  font-size: clamp(0.95rem, 1.5vw + 0.5rem, 1.05rem);
+  padding-left: 1.25rem;
   margin-bottom: 1.5rem;
 }
 .article-content li { margin-bottom: 0.5rem; }
@@ -164,11 +167,13 @@ pre {
   background-color: var(--code-bg);
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 1.25rem 1.5rem;
+  padding: 1rem;
   overflow-x: auto;
-  font-size: 0.9rem;
+  font-family: 'Fira Code', monospace;
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
   line-height: 1.6;
   margin-bottom: 1.5rem;
+  -webkit-overflow-scrolling: touch;
 }
 pre code {
   background: transparent;
