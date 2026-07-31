@@ -578,9 +578,13 @@ input.search-input {
   transform: translateY(-2px);
 }
 .tool-title {
-  font-size: 1.1rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
   margin: 0 0 0.4rem 0;
   color: var(--text-main);
+  letter-spacing: -0.015em;
+  line-height: 1.35;
 }
 .tool-desc {
   font-size: 0.88rem;
@@ -708,9 +712,10 @@ details[open] summary::after { content: '\2212'; }
 /* Blog — cross-links section (inherits callout-card, extra styles) */
 .article-cross-links { margin-top: 2rem; }
 
-/* Blog — page title/subtitle (blog/index.html header) */
-.page-title    { font-size: 2.2rem; font-weight: 700; margin-top: 0; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
-.page-subtitle { color: var(--text-muted); font-size: 1.1rem; max-width: 700px; margin: 0; }
+/* Page — header container, title & subtitle typography */
+.page-header   { margin-bottom: 2rem; }
+.page-title    { font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 5vw, 2.2rem); font-weight: 800; margin-top: 0; margin-bottom: 0.5rem; letter-spacing: -0.025em; line-height: 1.25; color: var(--text-main); }
+.page-subtitle { color: var(--text-muted); font-size: 1.05rem; max-width: 700px; margin: 0; line-height: 1.6; }
 
 /* Tools — stats table (counter.html) replaces deprecated border="1" */
 .stats-table { border-collapse: collapse; width: 100%; margin-top: var(--space-md); }
