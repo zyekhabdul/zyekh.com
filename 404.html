@@ -8,8 +8,8 @@
   <meta name="robots" content="noindex, follow">
   <title>404 — Terminal & Resource Finder | zyekh.com</title>
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v19">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v19">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v20">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v20">
   <style>
     .error-container {
       max-width: 900px;
@@ -29,9 +29,9 @@
       display: inline-block;
       font-family: 'Fira Code', monospace;
       font-size: 0.85rem;
-      color: #ef4444;
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: var(--text-main);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color-hover);
       padding: 0.25rem 0.75rem;
       border-radius: 999px;
       margin-bottom: 0.75rem;
@@ -112,7 +112,7 @@
     }
 
     .prompt-symbol {
-      color: #22c55e;
+      color: #fafafa;
       font-weight: 700;
     }
 
@@ -222,20 +222,17 @@
 
       <!-- Quick Discovery Grid -->
       <div class="discovery-section">
-        <h2 class="discovery-heading">⚡ Rekomendasi Fitur Populer</h2>
+        <h2 class="discovery-heading">Rekomendasi Fitur Populer</h2>
         <div class="discovery-grid">
           <a href="/tools/" class="discovery-card">
-            <div class="card-icon">🧰</div>
             <div class="card-name">Web Utility Tools Hub</div>
             <div class="card-desc">24+ Web tools instan tanpa tracking &amp; tanpa register.</div>
           </a>
           <a href="/blog/" class="discovery-card">
-            <div class="card-icon">📰</div>
             <div class="card-name">Artikel &amp; Riset Teknikal</div>
             <div class="card-desc">Panduan Linux VPS, eBPF security, &amp; arsitektur server.</div>
           </a>
           <a href="/#projects" class="discovery-card">
-            <div class="card-icon">🧪</div>
             <div class="card-name">Featured Technical Projects</div>
             <div class="card-desc">Repositori riset sistem dan eksperimen open-source.</div>
           </a>
@@ -249,7 +246,7 @@
     <p class="text-muted-xs">© 2026 zyekh.com — Open-source static site portfolio</p>
   </footer>
 
-  <script src="/assets/js/site-nav.js?v=20260731_v19" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260731_v20" defer></script>
   <script>
     const termInput = document.getElementById('termInput');
     const termOutput = document.getElementById('termOutput');
