@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#09090b">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kalkulator Pesangon PHK Online 2026 — Sesuai PP 35/2021 | Zyekh</title>
   <meta name="description" content="Hitung estimasi uang pesangon PHK, UPMK, UPH, dan kompensasi PKWT sesuai UU Cipta Kerja (PP 35/2021) secara gratis, akurat, dan privasi terjaga.">
@@ -98,8 +98,8 @@
 
   <!-- Self-hosted Fonts -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v20">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v20">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v21">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v21">
 
   <style>
     * { box-sizing: border-box; }
@@ -519,7 +519,7 @@ function hitung() {
   if (showPPh && upBruto > 0) {
     taxDiv.style.display = 'block';
     taxDiv.innerHTML = `
-      <div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);border-radius:6px;padding:1rem 1.25rem;">
+      <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:1rem 1.25rem;">
         <strong style="color:var(--warn);">Estimasi PPh 21 Pesangon (Pasal 21 Final — PP 68/2009)</strong>
         <p style="font-size:0.85rem;color:var(--text-muted);margin:0.5rem 0 0;">
           Base kena pajak (UP+UPMK): ${fmt(upBruto)}<br>
@@ -543,6 +543,6 @@ document.getElementById('jenisKontrak').addEventListener('change', function() {
   document.getElementById('alasan-group').style.display = this.value === 'pkwt' ? 'none' : 'block';
 });
 </script>
-  <script src="/assets/js/site-nav.js?v=20260731_v20" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260731_v21" defer></script>
 </body>
 </html>

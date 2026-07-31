@@ -11,7 +11,7 @@
   color-scheme: dark;
   accent-color: var(--accent);
 
-  /* Colors */
+  /* Colors — 100% Pure Monochrome System */
   --bg-dark:           #09090b;
   --bg-card:           #141417;
   --border-color:      #27272a;
@@ -20,11 +20,11 @@
   --text-main:         #fafafa;
   --text-muted:        #a1a1aa;
   --accent-white:      #ffffff;
-  --accent:            #22c55e;
-  --accent-glow:       color-mix(in srgb, var(--accent) 15%, transparent);
-  --info:              #3b82f6;
-  --warn:              #f59e0b;
-  --danger:            #ef4444;
+  --accent:            #ffffff;
+  --accent-glow:       rgba(255, 255, 255, 0.1);
+  --info:              #e4e4e7;
+  --warn:              #a1a1aa;
+  --danger:            #71717a;
   --code-bg:           #000000;
 
   /* Spacing */
@@ -733,7 +733,7 @@ details[open] summary::after { content: '\2212'; }
 .meta-tag { font-family: 'Fira Code', monospace; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
 .article-hero-wrapper { margin: 1.5rem 0 2rem 0; border-radius: 12px; overflow: hidden; }
 .article-hero-img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; display: block; }
-.hero-caption { text-align: center; font-size: 0.85rem; color: #94a3b8; padding: 0.5rem 1rem; background: var(--bg-card); }
+.hero-caption { text-align: center; font-size: 0.85rem; color: var(--text-muted); padding: 0.5rem 1rem; background: var(--bg-card); }
 
 .article-body h2 {
   font-family: 'Outfit', sans-serif;

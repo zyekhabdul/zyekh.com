@@ -31,7 +31,7 @@
 .filter-btn.active {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: #09090b;
 }
 
 /* ── Blog Index: Grid & Card Equalization ── */
@@ -80,7 +80,7 @@
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background-color: #1e293b;
+  background-color: var(--bg-card);
   aspect-ratio: 16 / 9;
 }
 .card-thumb-img {
