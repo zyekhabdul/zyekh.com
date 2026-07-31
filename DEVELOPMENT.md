@@ -1,0 +1,75 @@
+# BINDING DEVELOPMENT PROTOCOL — ZYEKH.COM
+> Standard Operational Protocol (SOP) untuk AI Coding Assistant & Developer dalam mengubah kode di zyekh.com.
+
+---
+
+## 🛑 1. SERVICE WORKER & ASSET CACHING PROTOCOL (WAJIB)
+
+Setiap kali melakukan perubahan pada kode JavaScript (`assets/js/*.js`) atau CSS (`assets/css/*.css`):
+
+1. **Bump Service Worker Version**:
+   - Wajib menaikkan versi `CACHE_VERSION` di `sw.js` (contoh: `v3` ➔ `v4`).
+   - *Alasan*: Tanpa menaikkan `CACHE_VERSION`, Service Worker akan terus menyajikan file lama dari `CacheStorage` browser pengguna.
+
+2. **Update Cache-Buster Query Parameters di Seluruh File HTML**:
+   - Seluruh tag `<script src="/assets/js/site-nav.js?v=...">` dan `<link rel="stylesheet" href="/assets/css/shared.css?v=...">` di **seluruh 32 file HTML** wajib diperbarui query versi-nya (contoh: `?v=20260731_v4`).
+   - Gunakan skrip Python untuk memperbarui secara otomatis ke 32 file HTML:
+     ```python
+     import glob, re
+     for f in glob.glob('**/*.html', recursive=True):
+         c = open(f).read()
+         c = re.sub(r'site-nav\.js(\?v=[^\"]*)?', 'site-nav.js?v=VERSION', c)
+         c = re.sub(r'shared\.css(\?v=[^\"]*)?', 'shared.css?v=VERSION', c)
+         open(f, 'w').write(c)
+     ```
+
+---
+
+## 📐 2. CONTAINER WIDTH & LAYOUT STANDARDIZATION PROTOCOL
+
+1. **Lebar Kontainer Seragam**:
+   - Seluruh kontainer utama di semua halaman (`index.html`, `/tools/*`, `/blog/*`) WAJIB menggunakan `max-width: 1280px`.
+2. **Dilarang Restriksi Inline Style di HTML**:
+   - DILARANG keras memasukkan *inline style override* seperti `.main-container { max-width: 1100px; }` atau `.main-container { max-width: 1080px; }` di dalam tag `<style>` internal file HTML individual.
+   - Semua aturan layout dasar WAJIB menginduk pada `assets/css/shared.css`.
+
+---
+
+## 🧩 3. NAVIGATION BAR & RESPONSIVE BREAKPOINT PROTOCOL
+
+1. **Pencegahan Teks Patah (Multi-line Wrapping)**:
+   - Aturan `.brand-logo` dan `.nav-link` WAJIB memiliki `white-space: nowrap;` dan `flex-shrink: 0;`.
+2. **Fleksibilitas Tinggi Header**:
+   - Header `.header-nav` DILARANG menggunakan `height` kaku (seperti `height: 60px`), melainkan wajib `min-height: 60px; padding: 0.65rem 0; box-sizing: border-box;`.
+3. **Breakpoint Menu Seluler**:
+   - Breakpoint Off-Canvas Drawer seluler diset seragam pada `@media (max-width: 960px)` baik di `assets/css/shared.css` maupun listener resize window di `assets/js/site-nav.js`.
+
+---
+
+## 🎯 4. GAPLESS SCROLLSPY & ACTIVE HIGHLIGHT PROTOCOL
+
+1. **Viewport BoundingRect Position Calculation**:
+   - ScrollSpy pada homepage (`index.html`) WAJIB menggunakan `sec.getBoundingClientRect()` untuk menghitung posisi riil elemen di layar secara *real-time*.
+2. **Click Guard Timeout**:
+   - Saat link navigasi diklik (`About`, `Skills`, `Projects`, `Contact`), flag `isClicking` WAJIB diset selama `1000ms` untuk mencegah handler scroll membatalkan status aktif secara tidak sengaja selama proses *smooth scrolling*.
+3. **Bottom-of-Page Contact Trigger**:
+   - Wajib menyertakan pengecekan terbawah halaman `(window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60)` untuk mengaktifkan link `Contact`.
+
+---
+
+## ✅ 5. EMPIRICAL VERIFICATION PROTOCOL (SEBELUM MENYATAKAN SELESAI)
+
+Sebelum mengklaim tugas selesai atau mengirimkan laporan ke pengguna, AI WAJIB menjalankan skrip audit di terminal:
+
+```bash
+python3 -c "
+import glob, os
+from bs4 import BeautifulSoup
+html_files = glob.glob('**/*.html', recursive=True)
+print(f'Auditing {len(html_files)} files...')
+for f in html_files:
+    soup = BeautifulSoup(open(f).read(), 'html.parser')
+    assert soup.find('site-nav'), f'Missing <site-nav> in {f}'
+print('✅ ALL 32 HTML FILES VERIFIED COMPLIANT!')
+"
+```
