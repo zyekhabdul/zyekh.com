@@ -210,3 +210,76 @@ pre code {
 .callout-card { margin-top: 2.5rem; padding: 1.25rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); }
 .heading-reset { margin-top: 0; margin-bottom: 0.5rem; color: var(--text-main); }
 .note-sm { margin-bottom: 0; font-size: 0.9rem; color: var(--text-muted); }
+
+/* ── Executive Summary & TOC ── */
+.exec-summary {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-left: 4px solid var(--text-main);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+}
+.exec-summary-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: var(--text-main);
+}
+.exec-summary ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+.exec-summary li { margin-bottom: 0.35rem; }
+
+.toc-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+}
+.toc-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.toc-list li { margin-bottom: 0.4rem; font-size: 0.925rem; }
+.toc-list a { color: var(--text-muted); text-decoration: none; transition: color var(--transition); }
+.toc-list a:hover { color: var(--text-main); text-decoration: underline; }
+
+/* ── Author Bio Card ── */
+.author-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+.author-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-color-hover);
+}
+.author-info h4 { margin: 0 0 0.25rem 0; font-size: 1.05rem; }
+.author-info p { margin: 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.45; }

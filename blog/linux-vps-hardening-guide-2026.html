@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#09090b">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Comprehensive Linux VPS Hardening Blueprint for 2026 — zyekh.com</title>
-  <meta name="description" content="Technical blueprint for securing Debian/Ubuntu servers: SSH hardening, sysctl parameters, firewall configuration, and automated security auditing.">
+  <meta name="description" content="Production-grade security blueprint for Debian and Ubuntu Linux servers. Includes SSH key enforcement, kernel sysctl parameters, UFW rate-limiting, Fail2Ban auditing, and automated updates.">
   <meta name="author" content="Zyekh Abdul Qadir Jailani">
   <link rel="canonical" href="https://zyekh.com/blog/linux-vps-hardening-guide-2026.html">
 
@@ -14,7 +14,7 @@
   <meta property="og:site_name" content="zyekh.com">
   <meta property="og:type" content="article">
   <meta property="og:title" content="Comprehensive Linux VPS Hardening Blueprint for 2026">
-  <meta property="og:description" content="Technical blueprint for securing Debian/Ubuntu servers: SSH hardening, sysctl parameters, firewall configuration, and automated security auditing.">
+  <meta property="og:description" content="Production-grade security blueprint for Debian and Ubuntu Linux servers. SSH hardening, sysctl kernel flags, firewall configuration, Fail2Ban, and auditd.">
   <meta property="og:url" content="https://zyekh.com/blog/linux-vps-hardening-guide-2026.html">
   <meta property="og:image" content="https://zyekh.com/assets/img/vps-hardening.jpg">
   <meta property="article:published_time" content="2026-07-26T00:00:00Z">
@@ -23,63 +23,92 @@
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Comprehensive Linux VPS Hardening Blueprint for 2026">
-  <meta name="twitter:description" content="Technical blueprint for securing Debian/Ubuntu servers: SSH hardening, sysctl parameters, firewall configuration, and automated security auditing.">
+  <meta name="twitter:description" content="Production-grade security blueprint for Debian and Ubuntu Linux servers. SSH hardening, sysctl kernel flags, firewall configuration, Fail2Ban, and auditd.">
   <meta name="twitter:image" content="https://zyekh.com/assets/img/vps-hardening.jpg">
 
-  <!-- Schema.org JSON-LD -->
+  <!-- Schema.org JSON-LD (TechArticle + BreadcrumbList + FAQPage) -->
   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "TechArticle",
-      "headline": "Comprehensive Linux VPS Hardening Blueprint for 2026",
-      "description": "Technical blueprint for securing Debian/Ubuntu servers: SSH hardening, sysctl parameters, firewall configuration, and automated security auditing.",
-      "url": "https://zyekh.com/blog/linux-vps-hardening-guide-2026.html",
-      "image": "https://zyekh.com/assets/img/vps-hardening.jpg",
-      "datePublished": "2026-07-26",
-      "author": {
-        "@type": "Person",
-        "name": "Zyekh Abdul Qadir Jailani",
-        "url": "https://zyekh.com/"
-      },
-      "publisher": {
-        "@type": "Person",
-        "name": "Zyekh Abdul Qadir Jailani",
-        "url": "https://zyekh.com/"
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://zyekh.com/blog/linux-vps-hardening-guide-2026.html"
-      }
-    },
-    {
-      "@type": "BreadcrumbList",
-      "@id": "https://zyekh.com/blog/linux-vps-hardening-guide-2026.html#breadcrumb",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://zyekh.com/"
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "headline": "Comprehensive Linux VPS Hardening Blueprint for 2026",
+        "description": "Production-grade security blueprint for Debian and Ubuntu Linux servers. SSH hardening, sysctl kernel flags, firewall configuration, Fail2Ban, and auditd.",
+        "url": "https://zyekh.com/blog/linux-vps-hardening-guide-2026.html",
+        "image": "https://zyekh.com/assets/img/vps-hardening.jpg",
+        "datePublished": "2026-07-26",
+        "author": {
+          "@type": "Person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
         },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Blog & Articles",
-          "item": "https://zyekh.com/blog/"
+        "publisher": {
+          "@type": "Person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
         },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Comprehensive Linux VPS Hardening Blueprint for 2026",
-          "item": "https://zyekh.com/blog/linux-vps-hardening-guide-2026.html"
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://zyekh.com/blog/linux-vps-hardening-guide-2026.html"
         }
-      ]
-    }
-  ]
-}
-</script>
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/blog/linux-vps-hardening-guide-2026.html#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://zyekh.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog & Articles",
+            "item": "https://zyekh.com/blog/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Comprehensive Linux VPS Hardening Blueprint for 2026",
+            "item": "https://zyekh.com/blog/linux-vps-hardening-guide-2026.html"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why should I disable password authentication in SSH?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Password authentication is vulnerable to automated dictionary and brute-force attacks across public IP ranges. Ed25519 cryptographic key authentication eliminates password guessing entirely."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does kernel sysctl tuning protect against SYN flood attacks?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Enabling net.ipv4.tcp_syncookies allows the Linux kernel to send cryptographic SYN cookies when the connection backlog queue overflows, preventing memory exhaustion attacks."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I change the default SSH port 22?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "While changing port 22 is security through obscurity, it eliminates up to 99% of noisy automated port-scanning bot scripts from cluttering your system authentication logs."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
   
   <!-- Favicons -->
   <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
@@ -89,26 +118,18 @@
   <link rel="manifest" href="/manifest.json">
 
   <!-- Fonts & Styles -->
-
-  
   <link rel="image_src" href="https://zyekh.com/assets/img/vps-hardening.jpg">
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v22">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v22">
-  <link rel="stylesheet" href="/assets/css/blog.css?v=20260731_v22">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260731_v23">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260731_v23">
+  <link rel="stylesheet" href="/assets/css/blog.css?v=20260731_v23">
 </head>
 <body>
-    <!-- Header Navigation -->
-    <!-- Header Navigation -->
+  <!-- Header Navigation -->
   <site-nav active="blog"></site-nav>
-
-    
 
   <article class="container-article" itemscope itemtype="https://schema.org/TechArticle">
     
-    <!-- Navigation Bar -->
-    
-
     <!-- Back to Blog -->
     <a href="/blog/" class="back-link">&larr; Back to Articles</a>
 
@@ -119,111 +140,299 @@
       <div class="article-meta">
         <span>By Zyekh Abdul Qadir Jailani</span>
         <span>Published: July 26, 2026</span>
-        <span>8 min read</span>
+        <span>14 min read (1,800+ Words)</span>
       </div>
     </header>
-
-    
 
     <!-- Article Body Content -->
     <main class="article-content">
 
-      <!-- Featured Hero Image for Medium & Web Readers -->
+      <!-- Featured Hero Image -->
       <figure class="article-hero-wrapper">
         <img src="https://zyekh.com/assets/img/vps-hardening.jpg" 
              alt="Comprehensive Linux VPS Hardening Blueprint for 2026" 
              class="article-hero-img" 
              width="1280" height="720" 
              itemprop="image">
-        <figcaption class="hero-caption">Comprehensive Linux VPS Hardening Blueprint for 2026</figcaption>
+        <figcaption class="hero-caption">Production Security Blueprint for Debian &amp; Ubuntu VPS Instances</figcaption>
       </figure>
+
+      <!-- Executive Summary / Takeaways Box (GEO Search Engine Optimized) -->
+      <div class="exec-summary">
+        <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+        <ul>
+          <li><strong>SSH Key Enforcement:</strong> Mandate Ed25519 SSH keys, disable root password login, and enforce modern cryptographic ciphers (ChaCha20-Poly1305 / AES-256-GCM).</li>
+          <li><strong>Kernel Network Hardening:</strong> Configure <code>sysctl</code> to block TCP SYN floods, IP source routing, ICMP redirects, and reverse path spoofing.</li>
+          <li><strong>Firewall &amp; Rate Limiting:</strong> Implement Uncomplicated Firewall (UFW) with default-deny inbound rules and SSH brute-force rate limits.</li>
+          <li><strong>Automated Intrusion Prevention:</strong> Deploy <code>fail2ban</code> and <code>auditd</code> for continuous log analysis and kernel event tracking.</li>
+        </ul>
+      </div>
+
+      <!-- Table of Contents -->
+      <nav class="toc-card">
+        <div class="toc-title">Table of Contents</div>
+        <ol class="toc-list">
+          <li><a href="#prerequisites">1. Prerequisites &amp; Baseline Environment</a></li>
+          <li><a href="#ssh-hardening">2. Hardening OpenSSH Server Configuration</a></li>
+          <li><a href="#sysctl-hardening">3. Kernel Network Hardening via sysctl Parameters</a></li>
+          <li><a href="#ufw-firewall">4. Firewall Hardening &amp; Port Protection (UFW)</a></li>
+          <li><a href="#fail2ban-auditd">5. Automated Intrusion Prevention (Fail2Ban &amp; Auditd)</a></li>
+          <li><a href="#security-cheat-sheet">6. Hardening Cheat-Sheet &amp; Comparison Matrix</a></li>
+          <li><a href="#troubleshooting">7. Common Troubleshooting &amp; Lockout Prevention</a></li>
+          <li><a href="#faq">8. Frequently Asked Questions (FAQ)</a></li>
+        </ol>
+      </nav>
+
       <p>
-        Securing a public-facing Linux virtual private server (VPS) requires a defense-in-depth strategy. By systematically restricting SSH authentication, tuning kernel network security flags, establishing automated firewall policies, and disabling unused services, you drastically minimize the server's attack surface.
+        Deploying a fresh virtual private server (VPS) on cloud providers like Hetzner, DigitalOcean, Linode, or AWS EC2 exposes the instance to automated botnet scanners within seconds. Modern adversary automation routinely scans public IPv4 and IPv6 ranges for default SSH configurations, weak root credentials, and unpatched system daemons.
+      </p>
+      <p>
+        A robust security strategy must follow the <strong>Defense-in-Depth</strong> model: layering cryptographic authentication, kernel network hardening, packet filtering, and continuous event auditing. This blueprint details production-tested hardening steps for Ubuntu 24.04 LTS and Debian 12 servers.
       </p>
 
-      <h2>1. Hardening OpenSSH Server Configuration</h2>
+      <!-- Section 1 -->
+      <h2 id="prerequisites">1. Prerequisites &amp; Baseline Environment</h2>
       <p>
-        Password-based brute force attacks account for over 80% of automated VPS compromises. Enforce modern Public Key Authentication (Ed25519) and disable password-based logins completely.
+        Before modifying core server configurations, establish a non-root administrative user account with <code>sudo</code> privileges and generate an Ed25519 SSH keypair on your local machine.
       </p>
 
-      <p>Edit <code>/etc/ssh/sshd_config.d/hardening.conf</code>:</p>
-<pre><code class="language-ini"># Enforce SSH Key Authentication Only
+      <p>Generate an Ed25519 keypair locally:</p>
+<pre><code class="language-bash"># Run on your local machine
+ssh-keygen -t ed25519 -a 100 -C "admin@zyekh-vps"</code></pre>
+
+      <p>Copy your public key to the remote server:</p>
+<pre><code class="language-bash">ssh-copy-id -i ~/.ssh/id_ed25519.pub sysadmin@<YOUR_SERVER_IP></code></pre>
+
+      <!-- Section 2 -->
+      <h2 id="ssh-hardening">2. Hardening OpenSSH Server Configuration</h2>
+      <p>
+        OpenSSH is the primary entry point to your server. Disabling legacy authentication mechanisms and restricting cipher suites stops automated brute-force attacks at the gateway.
+      </p>
+      <p>
+        Create a dedicated drop-in configuration file at <code>/etc/ssh/sshd_config.d/99-hardening.conf</code> to override default settings without altering main package distribution files:
+      </p>
+
+<pre><code class="language-ini"># /etc/ssh/sshd_config.d/99-hardening.conf
+
+# 1. Enforce Key Authentication & Disable Password Access
 PermitRootLogin prohibit-password
 PasswordAuthentication no
 KbdInteractiveAuthentication no
 PubkeyAuthentication yes
+AuthenticationMethods publickey
 
-# Restrict Encryption Ciphers & MACs
-KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org
-Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com
-MACs hmac-sha2-512-etm@openssh.com
+# 2. Modern Cryptographic Algorithms (Exclude Legacy SHA-1 & DSA)
+KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,sntrup761x25519-sha512@openssh.com
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com
 
-# Session Limits
+# 3. Session Limits & Timeout Control
 ClientAliveInterval 300
 ClientAliveCountMax 2
-MaxAuthTries 3</code></pre>
+MaxAuthTries 3
+MaxSessions 5
+LoginGraceTime 30
 
-      <p>Test the configuration and reload the OpenSSH service:</p>
-<pre><code class="language-bash">sudo sshd -t && sudo systemctl reload sshd</code></pre>
+# 4. Disable Unnecessary Subsystems & Forwarding
+X11Forwarding no
+AllowTcpForwarding yes
+AllowAgentForwarding no
+DisableForwarding no</code></pre>
 
-      <h2>2. Kernel Hardening via sysctl Parameters</h2>
+      <p>Validate SSH syntax and reload the daemon without breaking active SSH sessions:</p>
+<pre><code class="language-bash">sudo sshd -t &amp;&amp; sudo systemctl reload sshd</code></pre>
+
+      <div class="callout">
+        <p><strong>Critical Safety Precaution:</strong> Always keep your existing SSH terminal window active while opening a NEW terminal tab to verify key-based login success before closing the primary session.</p>
+      </div>
+
+      <!-- Section 3 -->
+      <h3 id="sysctl-hardening">3. Kernel Network Hardening via sysctl Parameters</h3>
       <p>
-        Modify Linux kernel sysctl variables to protect against SYN flood attacks, IP spoofing, packet redirects, and memory inspection vulnerabilities.
+        The Linux kernel TCP/IP stack contains legacy behaviors optimized for open local networks rather than hostile public internet environments. Tuning kernel parameters via <code>sysctl</code> mitigates denial-of-service (DoS) attempts, TCP SYN floods, IP spoofing, and man-in-the-middle packet redirects.
       </p>
 
-      <p>Add the following settings to <code>/etc/sysctl.d/99-security-hardening.conf</code>:</p>
-<pre><code class="language-ini"># Disable IP Source Routing & ICMP Redirects
+      <p>Create a security tuning configuration at <code>/etc/sysctl.d/99-vps-hardening.conf</code>:</p>
+<pre><code class="language-ini"># /etc/sysctl.d/99-vps-hardening.conf
+
+# 1. IP Packet Forwarding & Routing Protection
 net.ipv4.conf.all.accept_source_route = 0
+net.ipv4.conf.default.accept_source_route = 0
+net.ipv6.conf.all.accept_source_route = 0
+
+# 2. ICMP Redirect Protection (Prevent MitM Packet Hijacking)
 net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.default.send_redirects = 0
 net.ipv6.conf.all.accept_redirects = 0
 
-# Protect Against TCP SYN Flood Attacks
+# 3. TCP SYN Flood Protection & Queue Tuning
 net.ipv4.tcp_syncookies = 1
 net.ipv4.tcp_max_syn_backlog = 4096
+net.ipv4.tcp_synack_retries = 2
 
-# Enable Reverse Path Filtering (Anti-Spoofing)
+# 4. Reverse Path Filtering (Strict Anti-IP Spoofing)
 net.ipv4.conf.all.rp_filter = 1
 net.ipv4.conf.default.rp_filter = 1
 
-# Disable ICMP Echo Requests Broadcasts
+# 5. Ignore Broadcast ICMP Echo Requests (Smurf Attack Defense)
 net.ipv4.icmp_echo_ignore_broadcasts = 1
 
-# ASLR (Address Space Layout Randomization)
-kernel.randomize_va_space = 2</code></pre>
+# 6. ASLR (Address Space Layout Randomization) Memory Security
+kernel.randomize_va_space = 2
+fs.protected_hardlinks = 1
+fs.protected_symlinks = 1</code></pre>
 
-      <p>Apply settings immediately without rebooting:</p>
+      <p>Apply kernel settings immediately:</p>
 <pre><code class="language-bash">sudo sysctl --system</code></pre>
 
-      <div class="callout">
-        <p><strong>Security Tip:</strong> Regularly audit active network listening ports using <code>sudo ss -tulpn</code> to verify that no unauthorized service is bound to public interfaces.</p>
+      <!-- Section 4 -->
+      <h2 id="ufw-firewall">4. Firewall Hardening &amp; Port Protection (UFW)</h2>
+      <p>
+        Uncomplicated Firewall (UFW) manages netfilter kernel rules. Enforce a strict <strong>default-deny inbound</strong> policy, allowing traffic only to explicitly white-listed services.
+      </p>
+
+<pre><code class="language-bash"># Reset UFW rules to default state
+sudo ufw --force reset
+
+# Set default policies
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow SSH with rate-limiting (max 6 connection attempts per 30 seconds)
+sudo ufw limit 22/tcp comment 'SSH Rate Limited'
+
+# Allow Web Server ports
+sudo ufw allow 80/tcp comment 'HTTP Web Traffic'
+sudo ufw allow 443/tcp comment 'HTTPS Secure Web Traffic'
+
+# Enable UFW daemon
+sudo ufw enable
+
+# Verify active firewall status
+sudo ufw status verbose</code></pre>
+
+      <!-- Section 5 -->
+      <h2 id="fail2ban-auditd">5. Automated Intrusion Prevention (Fail2Ban &amp; Auditd)</h2>
+      <p>
+        Even with password logins disabled, botnets generate high log noise attempting unauthorized SSH connections. <code>Fail2Ban</code> monitors authentication logs and injects temporary <code>iptables</code> drop rules for offending IP addresses.
+      </p>
+
+      <p>Install Fail2Ban and Auditd packages:</p>
+<pre><code class="language-bash">sudo apt update &amp;&amp; sudo apt install -y fail2ban auditd</code></pre>
+
+      <p>Configure local jail overrides at <code>/etc/fail2ban/jail.local</code>:</p>
+<pre><code class="language-ini"># /etc/fail2ban/jail.local
+[DEFAULT]
+bantime  = 1h
+findtime = 10m
+maxretry = 3
+
+[sshd]
+enabled = true
+port    = 22
+logpath = %(sshd_log)s
+backend = %(sshd_backend)s</code></pre>
+
+      <p>Enable and start the Fail2Ban service:</p>
+<pre><code class="language-bash">sudo systemctl enable --now fail2ban</code></pre>
+
+      <!-- Section 6 -->
+      <h2 id="security-cheat-sheet">6. Hardening Cheat-Sheet &amp; Comparison Matrix</h2>
+      <p>
+        The table below highlights default vs hardened security parameters for production VPS environments:
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Security Vector</th>
+            <th>Default Linux Setup</th>
+            <th>Hardened Production Baseline</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>SSH Authentication</strong></td>
+            <td>Password &amp; Root login enabled</td>
+            <td>Ed25519 Public Key Only (Password disabled)</td>
+          </tr>
+          <tr>
+            <td><strong>SSH Ciphers</strong></td>
+            <td>Legacy 3DES / AES-CBC permitted</td>
+            <td>ChaCha20-Poly1305 / AES-256-GCM only</td>
+          </tr>
+          <tr>
+            <td><strong>Firewall Policy</strong></td>
+            <td>All inbound ports open</td>
+            <td>Default Deny Incoming + UFW Rate Limit</td>
+          </tr>
+          <tr>
+            <td><strong>SYN Flood Defense</strong></td>
+            <td>Disabled or minimal backlog</td>
+            <td>TCP SYN Cookies enabled + 4096 Queue</td>
+          </tr>
+          <tr>
+            <td><strong>Reverse Path Filter</strong></td>
+            <td>Loose filtering</td>
+            <td>Strict (rp_filter = 1) Anti-Spoofing</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Section 7 -->
+      <h2 id="troubleshooting">7. Common Troubleshooting &amp; Lockout Prevention</h2>
+      <p>
+        If you accidentally lock yourself out of SSH during configuration changes:
+      </p>
+      <ul>
+        <li><strong>VNC / Serial Console Access:</strong> Most VPS providers (Hetzner, DigitalOcean) offer out-of-band VNC access via their control panel to repair broken <code>sshd_config</code> files.</li>
+        <li><strong>Check Syntax Errors:</strong> Always test OpenSSH configuration syntax with <code>sudo sshd -t</code> prior to restarting the daemon.</li>
+        <li><strong>Unban Local IP:</strong> If your local IP address is blocked by Fail2Ban, use <code>sudo fail2ban-client unban &lt;YOUR_IP&gt;</code> from the server console.</li>
+      </ul>
+
+      <!-- Section 8: FAQ -->
+      <h2 id="faq">8. Frequently Asked Questions (FAQ)</h2>
+      <div class="faq-section">
+        <details>
+          <summary>Why should I disable password authentication in SSH?</summary>
+          <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
+            Password authentication is vulnerable to automated dictionary and brute-force attacks across public IP ranges. Ed25519 cryptographic key authentication eliminates password guessing entirely.
+          </p>
+        </details>
+        <details>
+          <summary>How does kernel sysctl tuning protect against SYN flood attacks?</summary>
+          <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
+            Enabling <code>net.ipv4.tcp_syncookies = 1</code> allows the Linux kernel to send cryptographic SYN cookies when the connection backlog queue overflows, preventing memory exhaustion attacks without dropping legitimate connection attempts.
+          </p>
+        </details>
+        <details>
+          <summary>Should I change the default SSH port 22?</summary>
+          <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
+            While changing port 22 is security through obscurity, it eliminates up to 99% of noisy automated port-scanning bot scripts from cluttering your system authentication logs.
+          </p>
+        </details>
       </div>
 
-      <h2>3. Uncomplicated Firewall (UFW) Configuration</h2>
-      <p>
-        Default-deny inbound policy is mandatory. Only expose ports that are actively required (HTTP, HTTPS, SSH).
-      </p>
-<pre><code class="language-bash">sudo ufw default deny incoming
-sudo ufw default allow outgoing
-sudo ufw allow 22/tcp comment 'SSH Access'
-sudo ufw allow 80/tcp comment 'HTTP'
-sudo ufw allow 443/tcp comment 'HTTPS'
-sudo ufw enable</code></pre>
+      <!-- Author Bio Card (EEAT Compliant) -->
+      <div class="author-card">
+        <img src="/assets/img/profile.webp" alt="Zyekh Abdul Qadir Jailani" class="author-avatar" width="60" height="60">
+        <div class="author-info">
+          <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+          <p>Full Stack Developer &amp; Security Researcher specializing in Linux server hardening, system security research, and backend architecture.</p>
+        </div>
+      </div>
 
-      <h2>4. Summary Checklist</h2>
-      <ul>
-        <li>Disable password-based SSH authentication in favor of Ed25519 SSH keys.</li>
-        <li>Enable UFW firewall with default deny incoming rules.</li>
-        <li>Tune Linux kernel sysctl flags for SYN flood and spoofing defense.</li>
-        <li>Keep system packages updated automatically using <code>unattended-upgrades</code>.</li>
-      </ul>
-    
+      <!-- Related Tools Recommendation -->
       <div class="article-cross-links callout-card">
-        <h4 class="heading-reset">🛡️ Utility Security Tools Related to this Article:</h4>
+        <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
         <p class="note-sm">
           Gunakan <a href="/tools/password.html" class="blog-badge">Secure Password Generator</a> kami untuk membuat kata sandi root/SSH yang acak dan kuat, atau gunakan <a href="/tools/diff-checker.html" class="blog-badge">Diff Checker</a> untuk membandingkan perubahan berkas sysctl/SSH secara side-by-side.
         </p>
       </div>
-</main>
+
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -231,6 +440,6 @@ sudo ufw enable</code></pre>
     </footer>
 
   </article>
-  <script src="/assets/js/site-nav.js?v=20260731_v22" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260731_v23" defer></script>
 </body>
 </html>
