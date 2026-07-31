@@ -14,7 +14,7 @@ zyekh.com/
 ├── blog/                   # Technical Articles & Hardening Guides
 │   ├── index.html          # Blog Directory Page
 │   └── linux-vps-hardening-guide-2026.html
-├── tools/                  # 19+ Client-side Privacy Web Utilities
+├── tools/                  # Client-side Privacy Web Utilities
 │   ├── index.html          # Tools Directory Page
 │   ├── zakat.html          # Zakat Calculator
 │   ├── pph21.html          # PPh 21 Tax Calculator
