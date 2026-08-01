@@ -1,5 +1,5 @@
 # Canonical Security Policy & Contact Standard (RFC 9116)
-# https://zyekh.com/.well-known/security.txt
+# https://zyekh.com/security.txt
 
 Contact: mailto:zyekhabdulqadirjailani@gmail.com
 Encryption: https://zyekh.com/gpg-key.asc

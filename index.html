@@ -35,9 +35,11 @@
         "disambiguatingDescription": "Zyekh is a Software Engineer & Security Researcher from Indonesia, distinct from Syekh Abdul Qadir Jailani (Islamic scholar) or Hakim Ziyech (footballer).",
         "url": "https://zyekh.com/",
         "image": "https://zyekh.com/assets/img/profile.jpg",
-        "jobTitle": "Full Stack Developer & Security Researcher",
+        "jobTitle": "Digital Forensics & Incident Response (DFIR) Specialist & Security Researcher",
         "sameAs": [
+          "https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/",
           "https://github.com/zyekhabdul",
+          "https://discord.gg/jDmerBugvu",
           "https://zyekh.com/.well-known/security.txt",
           "https://zyekh.com/gpg-key.asc",
           "https://zyekh.com/api/v1/profile.json"
@@ -90,8 +92,8 @@
   <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
 
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260801_v32">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260801_v32">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260801_v33">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260801_v33">
 
   <style>
 
@@ -302,7 +304,7 @@
 <body>
 
   <site-nav active="home"></site-nav>
-  <script src="/assets/js/site-nav.js?v=20260801_v32" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260801_v33" defer></script>
 
   <main class="main-container">
 
@@ -581,11 +583,14 @@
       <div class="grid-2">
         <div class="grid-cell card-grid-gap">
           <div class="custom-card">
-            <h3 style="margin-top:0;">Contact Information</h3>
-            <p style="color:var(--text-muted); font-size:0.95rem; line-height: 1.8;">
+            <h3 style="margin-top:0;">Contact &amp; Verification Channels</h3>
+            <p style="color:var(--text-muted); font-size:0.95rem; line-height: 1.8; margin-bottom: 1rem;">
+              <strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" target="_blank" rel="noopener" style="font-weight:600">linkedin.com/in/zyekh-abdul-qadir-jailani</a><br>
+              <strong>GitHub:</strong> <a href="https://github.com/zyekhabdul" target="_blank" rel="noopener" style="font-weight:600">github.com/zyekhabdul</a><br>
+              <strong>Discord Community:</strong> <a href="https://discord.gg/jDmerBugvu" target="_blank" rel="noopener" style="font-weight:600">discord.gg/jDmerBugvu</a><br>
               <strong>Primary Email:</strong> <a href="mailto:zyekhabdulqadirjailani@gmail.com" style="font-weight:600">zyekhabdulqadirjailani@gmail.com</a><br>
-              <strong>GitHub:</strong> <a href="https://github.com/zyekhabdul" target="_blank" style="font-weight:600">github.com/zyekhabdul</a><br>
-              <strong>GPG Key:</strong> <a href="/gpg-key.asc" target="_blank" style="font-weight:600">/gpg-key.asc</a>
+              <strong>PGP Public Key:</strong> <a href="/gpg-key.asc" target="_blank" style="font-weight:600">/gpg-key.asc</a><br>
+              <strong>Security Policy:</strong> <a href="/.well-known/security.txt" target="_blank" style="font-weight:600">/.well-known/security.txt</a> (RFC 9116)
             </p>
             <div style="background:#000; border:1px solid var(--border-color); padding:0.8rem; border-radius:6px; margin-top:1rem; cursor:pointer; transition: border-color 0.2s ease;" onclick="navigator.clipboard.writeText('curl -sL zyekh.com/gpg-key.asc | gpg --import'); this.style.borderColor='#ffffff'; setTimeout(()=>this.style.borderColor='var(--border-color)', 1500);" title="Click to copy">
               <div style="font-family:'Fira Code', monospace; font-size:0.85rem">$ curl -sL zyekh.com/gpg-key.asc | gpg --import</div>
