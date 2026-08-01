@@ -296,3 +296,14 @@ pre code {
 }
 .author-info h4 { margin: 0 0 0.25rem 0; font-size: 1.05rem; }
 .author-info p { margin: 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.45; }
+
+/* ── Render Performance Optimization (Baseline 2024+) ── */
+.article-content > h2,
+.article-content > .exec-summary,
+.article-content > .toc-card,
+.article-content > .callout-card,
+.article-content > table,
+.article-content > .faq-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 300px;
+}

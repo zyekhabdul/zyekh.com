@@ -276,16 +276,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Universal Passive Reading Progress Bar Listener
+  // Universal Passive Reading Progress Bar Listener (Throttled via rAF for zero CPU churn)
   const bar = document.querySelector('.reading-progress-bar');
   if (bar) {
+    let ticking = false;
     const updateProgress = () => {
       const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
       const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
       bar.style.width = Math.min(100, Math.max(0, scrolled)) + '%';
+      ticking = false;
     };
-    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateProgress);
+        ticking = true;
+      }
+    }, { passive: true });
     updateProgress();
   }
 });
