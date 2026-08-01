@@ -275,4 +275,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // Universal Passive Reading Progress Bar Listener
+  const bar = document.querySelector('.reading-progress-bar');
+  if (bar) {
+    const updateProgress = () => {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      bar.style.width = Math.min(100, Math.max(0, scrolled)) + '%';
+    };
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
 });
