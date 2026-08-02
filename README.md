@@ -1,8 +1,27 @@
 # Zyekh.com
 
-Official website, portfolio, technical blog, and client-side web utility tools for **Zyekh Abdul Qadir Jailani** (Full Stack Developer & Security Researcher).
+<p align="center">
+  <a href="https://zyekh.com">
+    <img src="https://img.shields.io/website?url=https%3A%2F%2Fzyekh.com&up_message=online&up_color=brightgreen&down_message=offline&down_color=red&logo=github&label=Website" alt="Website Status">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT">
+  </a>
+  <a href="https://zyekh.com/manifest.json">
+    <img src="https://img.shields.io/badge/PWA-Supported-blueviolet.svg" alt="PWA Ready">
+  </a>
+  <a href="https://zyekh.com/security.txt">
+    <img src="https://img.shields.io/badge/Security.txt-Compliant-brightgreen.svg" alt="Security.txt">
+  </a>
+  <a href="https://zyekh.com/sitemap.xml">
+    <img src="https://img.shields.io/badge/SEO-Optimized-blue.svg" alt="SEO Optimized">
+  </a>
+</p>
 
-Hosted directly on **GitHub Pages** with custom domain `zyekh.com`.
+> **Official website, portfolio, technical blog, and client-side web utility tools for Zyekh Abdul Qadir Jailani (Full Stack Developer & Security Researcher).**
+
+Hosted directly on **GitHub Pages** with custom domain [`zyekh.com`](https://zyekh.com).
+
 
 ---
 
