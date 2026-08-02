@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RegEx Live Tester & Match Inspector — Offline Tool | Zyekh</title>
+  <meta name="description" content="Test Regular Expressions (RegEx) in real-time with pattern flags, match highlighting, and group extraction 100% client-side.">
+  <meta name="keywords" content="regex tester, regex online, regular expression checker, regex live preview, regex pattern tester, javascript regex, developer tool">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/regex.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="RegEx Live Tester & Match Inspector — Offline Tool | Zyekh">
+  <meta property="og:description" content="Test Regular Expressions (RegEx) in real-time with pattern flags, match highlighting, and group extraction 100% client-side.">
+  <meta property="og:url" content="https://zyekh.com/tools/regex.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/regex.html#app",
+        "name": "RegEx Live Tester & Match Inspector",
+        "description": "Test Regular Expressions (RegEx) in real-time with pattern flags, match highlighting, and group extraction 100% client-side.",
+        "url": "https://zyekh.com/tools/regex.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/regex.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "RegEx Tester", "item": "https://zyekh.com/tools/regex.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v43">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v43">
+
+  <style>
+    .regex-input-wrapper { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem; }
+    input.regex-pattern { font-family: 'Fira Code', monospace; font-size: 0.95rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.65rem 1rem; flex: 1; }
+    input.regex-flags { font-family: 'Fira Code', monospace; font-size: 0.95rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.65rem 0.75rem; width: 80px; text-align: center; }
+    textarea.regex-test { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; min-height: 140px; width: 100%; resize: vertical; margin-bottom: 1rem; }
+    .match-highlight-box { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; min-height: 140px; white-space: pre-wrap; word-break: break-all; color: var(--text-main); line-height: 1.5; }
+    .match-highlight-box mark { background: rgba(56, 189, 248, 0.3); color: #38bdf8; border-radius: 2px; padding: 0 2px; font-weight: 600; border: 1px solid rgba(56, 189, 248, 0.5); }
+    .match-stats { font-family: 'Fira Code', monospace; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">RegEx Tester</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">DEVELOPER UTILITY · REGEX</span>
+      <h1 class="page-title">RegEx Live Tester & Match Inspector</h1>
+      <p class="page-subtitle">Test Regular Expression patterns against sample text with real-time match highlighting, flags, and group extraction.</p>
+    </header>
+
+    <section class="tool-box">
+      <label for="regexPattern" style="font-weight:600;display:block;margin-bottom:0.4rem;">Regular Expression & Flags</label>
+      <div class="regex-input-wrapper">
+        <span style="font-family:'Fira Code',monospace;font-size:1.1rem;color:var(--text-muted);">/</span>
+        <input type="text" id="regexPattern" class="regex-pattern" placeholder="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" oninput="testRegEx()">
+        <span style="font-family:'Fira Code',monospace;font-size:1.1rem;color:var(--text-muted);">/</span>
+        <input type="text" id="regexFlags" class="regex-flags" value="g" placeholder="gi" oninput="testRegEx()">
+      </div>
+
+      <label for="regexTestText" style="font-weight:600;display:block;margin-bottom:0.4rem;">Test String</label>
+      <textarea id="regexTestText" class="regex-test" placeholder="Type or paste sample text here..." oninput="testRegEx()">Contact support at admin@zyekh.com or contact@security.org for assistance. Invalid email: user@domain.</textarea>
+
+      <div class="match-stats" id="matchStats">Matches: 0</div>
+      
+      <label style="font-weight:600;display:block;margin-bottom:0.4rem;">Match Highlighting Preview</label>
+      <div id="matchHighlight" class="match-highlight-box"></div>
+    </section>
+
+    <section class="seo-content-block seo-block" style="margin-top:2rem;">
+      <h2>Tentang Penguji RegEx (Regular Expression)</h2>
+      <p>Regular Expression (RegEx) adalah urutan karakter yang membentuk pola pencarian teks. Digunakan dalam validasi formulir, *text scraping*, pemrosesan log, dan penggantian substring kompleks secara presisi.</p>
+
+      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+      <div class="faq-accordion">
+        <details class="faq-card">
+          <summary class="faq-summary">Apa arti flag `g`, `i`, `m` pada RegEx?</summary>
+          <p class="faq-answer"><code>g</code> (global): Mencari seluruh kecocokan dalam teks, tidak berhenti pada kecocokan pertama. <code>i</code> (case-insensitive): Mengabaikan perbedaan huruf besar/kecil. <code>m</code> (multiline): Mengubah karakter <code>^</code> dan <code>$</code> agar mencocokkan awal dan akhir setiap baris.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+  </footer>
+
+  <script>
+    function testRegEx() {
+      const patternStr = document.getElementById('regexPattern').value;
+      const flagsStr = document.getElementById('regexFlags').value;
+      const text = document.getElementById('regexTestText').value;
+      const highlightBox = document.getElementById('matchHighlight');
+      const statsBox = document.getElementById('matchStats');
+
+      if (!patternStr || !text) {
+        highlightBox.textContent = text || 'Highlight preview will appear here...';
+        statsBox.textContent = 'Matches: 0';
+        return;
+      }
+
+      try {
+        const re = new RegExp(patternStr, flagsStr);
+        let matchesCount = 0;
+        let highlightedHTML = '';
+
+        if (flagsStr.includes('g')) {
+          let lastIndex = 0;
+          let match;
+          while ((match = re.exec(text)) !== null) {
+            matchesCount++;
+            highlightedHTML += escapeHTML(text.substring(lastIndex, match.index));
+            highlightedHTML += '<mark>' + escapeHTML(match[0]) + '</mark>';
+            lastIndex = re.lastIndex;
+            if (match.index === re.lastIndex) re.lastIndex++; // Prevent infinite loop on 0-width match
+          }
+          highlightedHTML += escapeHTML(text.substring(lastIndex));
+        } else {
+          const match = re.exec(text);
+          if (match) {
+            matchesCount = 1;
+            highlightedHTML = escapeHTML(text.substring(0, match.index)) +
+                              '<mark>' + escapeHTML(match[0]) + '</mark>' +
+                              escapeHTML(text.substring(match.index + match[0].length));
+          } else {
+            highlightedHTML = escapeHTML(text);
+          }
+        }
+
+        statsBox.textContent = '[ VERIFIED ] Total Matches Found: ' + matchesCount;
+        highlightBox.innerHTML = highlightedHTML;
+      } catch (err) {
+        statsBox.textContent = '[ ERROR ] Invalid RegEx: ' + err.message;
+        highlightBox.innerHTML = '<span style="color:#f87171;">RegEx Syntax Error: ' + escapeHTML(err.message) + '</span>';
+      }
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, tag => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'}[tag]));
+    }
+
+    // Auto run on load
+    document.addEventListener('DOMContentLoaded', testRegEx);
+  </script>
+  <script src="/assets/js/site-nav.js?v=20260802_v43" defer></script>
+</body>
+</html>

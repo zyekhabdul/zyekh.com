@@ -17,8 +17,8 @@
 
   <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v42">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v42">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v43">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v43">
 
   
   <!-- SEO & Social Meta Tags -->
@@ -76,11 +76,11 @@
 
     <!-- Category Pill Filters -->
     <div class="filter-bar" id="categoryFilterBar">
-      <button type="button" class="filter-btn active" data-category="all">Semua (23)</button>
-      <button type="button" class="filter-btn" data-category="FINANCIAL UTILITIES">Finansial &amp; Pajak</button>
-      <button type="button" class="filter-btn" data-category="DEVELOPER UTILITIES">Developer Utilities</button>
-      <button type="button" class="filter-btn" data-category="PRODUCTIVITY">Produktivitas</button>
-      <button type="button" class="filter-btn" data-category="GENERATORS &amp; RANDOM">Generators &amp; Random</button>
+      <button type="button" class="filter-btn active" onclick="filterCategory('all')">[ Semua (27) ]</button>
+      <button type="button" class="filter-btn" onclick="filterCategory('financial')">[ Finansial &amp; Pajak (8) ]</button>
+      <button type="button" class="filter-btn" onclick="filterCategory('developer')">[ Developer Utilities (9) ]</button>
+      <button type="button" class="filter-btn" onclick="filterCategory('productivity')">[ Produktivitas (5) ]</button>
+      <button type="button" class="filter-btn" onclick="filterCategory('generators')">[ Generators &amp; Random (5) ]</button>
     </div>
 
 
@@ -243,6 +243,50 @@
             <p class="tool-desc">Indonesian &amp; Latin placeholder dummy text generator.</p>
           </div>
           <span class="tool-badge">Open Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="JSON Formatter Validator Tree Viewer Beautify Minify Parse">
+        <a href="/tools/json.html" class="tool-card">
+          <div>
+            <span class="tool-category">DEVELOPER UTILITIES</span>
+            <h3 class="tool-title">JSON Formatter &amp; Tree Viewer</h3>
+            <p class="tool-desc">Beautify, minify, validate, and inspect JSON structure interactively 100% offline.</p>
+          </div>
+          <span class="tool-badge">Buka Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="JWT Token Decoder Inspector Claims Expiration Security">
+        <a href="/tools/jwt.html" class="tool-card">
+          <div>
+            <span class="tool-category">DEVELOPER UTILITIES</span>
+            <h3 class="tool-title">JWT Token Decoder</h3>
+            <p class="tool-desc">Decode header, claims payload, and check token expiration status safely client-side.</p>
+          </div>
+          <span class="tool-badge">Buka Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="Base64 Encoder Decoder Image Converter Data URI">
+        <a href="/tools/base64.html" class="tool-card">
+          <div>
+            <span class="tool-category">DEVELOPER UTILITIES</span>
+            <h3 class="tool-title">Base64 Converter</h3>
+            <p class="tool-desc">Convert text or image files to Base64 strings and decode back 100% offline.</p>
+          </div>
+          <span class="tool-badge">Buka Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="RegEx Live Tester Match Inspector Pattern Flags Validator">
+        <a href="/tools/regex.html" class="tool-card">
+          <div>
+            <span class="tool-category">DEVELOPER UTILITIES</span>
+            <h3 class="tool-title">RegEx Live Tester</h3>
+            <p class="tool-desc">Test Regular Expression patterns with real-time match highlighting and flags.</p>
+          </div>
+          <span class="tool-badge">Buka Tool →</span>
         </a>
       </div>
 
@@ -409,6 +453,6 @@
     });
   </script>
 
-  <script src="/assets/js/site-nav.js?v=20260802_v42" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v43" defer></script>
 </body>
 </html>

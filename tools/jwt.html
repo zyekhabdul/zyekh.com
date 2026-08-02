@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JWT Token Decoder & Inspector — Safe Client-Side Utility | Zyekh</title>
+  <meta name="description" content="Decode JSON Web Tokens (JWT) headers, claims payload, and expiration status 100% offline & safe client-side in browser.">
+  <meta name="keywords" content="jwt decoder, jwt inspector, json web token decode, jwt claims, jwt expiry check, offline jwt tool, security utility">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/jwt.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="JWT Token Decoder & Inspector — Safe Client-Side Utility | Zyekh">
+  <meta property="og:description" content="Decode JSON Web Tokens (JWT) headers, claims payload, and expiration status 100% offline & safe client-side in browser.">
+  <meta property="og:url" content="https://zyekh.com/tools/jwt.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/jwt.html#app",
+        "name": "JWT Token Decoder & Inspector",
+        "description": "Decode JSON Web Tokens (JWT) headers, claims payload, and expiration status 100% offline & safe client-side in browser.",
+        "url": "https://zyekh.com/tools/jwt.html",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/jwt.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "JWT Decoder", "item": "https://zyekh.com/tools/jwt.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v43">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v43">
+
+  <style>
+    textarea.jwt-input { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; width: 100%; min-height: 110px; resize: vertical; margin-bottom: 1rem; word-break: break-all; }
+    .jwt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+    @media (max-width: 768px) { .jwt-grid { grid-template-columns: 1fr; } }
+    .jwt-card { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; }
+    .jwt-card h3 { font-size: 0.95rem; font-weight: 700; margin: 0 0 0.5rem 0; color: var(--text-muted); }
+    .jwt-card h3.header-color { color: #f43f5e; }
+    .jwt-card h3.payload-color { color: #c084fc; }
+    pre.code-block { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--text-main); margin: 0; white-space: pre-wrap; word-break: break-all; }
+    .expiry-badge { display: inline-block; padding: 0.3rem 0.6rem; border-radius: 4px; font-family: 'Fira Code', monospace; font-size: 0.8rem; font-weight: 600; margin-top: 0.75rem; }
+    .expiry-badge.active { background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); color: #4ade80; }
+    .expiry-badge.expired { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">JWT Decoder</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">KEAMANAN & DEV UTILITY</span>
+      <h1 class="page-title">JWT Token Decoder & Inspector</h1>
+      <p class="page-subtitle">Decode header, claims payload, signature, and expiration timestamps of JSON Web Tokens 100% offline & safe.</p>
+    </header>
+
+    <section class="tool-box">
+      <label for="jwtInput" style="font-weight:600;">Encoded JWT Token</label>
+      <textarea id="jwtInput" class="jwt-input" placeholder="Paste your JWT token here (eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...)" oninput="decodeJWT()"></textarea>
+
+      <div id="jwtExpiry" class="expiry-badge" style="display:none;"></div>
+
+      <div class="jwt-grid">
+        <div class="jwt-card">
+          <h3 class="header-color">[ HEADER ] Algorithm & Token Type</h3>
+          <pre id="jwtHeader" class="code-block">Header claims will appear here...</pre>
+        </div>
+        <div class="jwt-card">
+          <h3 class="payload-color">[ PAYLOAD ] Data Claims & Timestamps</h3>
+          <pre id="jwtPayload" class="code-block">Payload claims will appear here...</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="seo-content-block seo-block" style="margin-top:2rem;">
+      <h2>Keamanan Token & Penguraian JWT Offline</h2>
+      <p>JSON Web Token (JWT) adalah standar terbuka (RFC 7519) yang digunakan untuk transmisi klaim klaim keamanan antar pihak. Menguraikan token di utilitas ini 100% aman karena dekode dilakukan sepenuhnya di browser menggunakan fungsi <code>atob()</code> lokal tanpa pengiriman jaringan.</p>
+
+      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+      <div class="faq-accordion">
+        <details class="faq-card">
+          <summary class="faq-summary">Apakah secret key atau token saya dikirim ke internet?</summary>
+          <p class="faq-answer">Tidak sama sekali. Dekoder ini berjalan murni di JavaScript lokal browser Anda tanpa koneksi API pihak ketiga.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+  </footer>
+
+  <script>
+    function decodeJWT() {
+      const token = document.getElementById('jwtInput').value.trim();
+      const headerElem = document.getElementById('jwtHeader');
+      const payloadElem = document.getElementById('jwtPayload');
+      const expiryElem = document.getElementById('jwtExpiry');
+
+      if (!token) {
+        headerElem.textContent = 'Header claims will appear here...';
+        payloadElem.textContent = 'Payload claims will appear here...';
+        expiryElem.style.display = 'none';
+        return;
+      }
+
+      const parts = token.split('.');
+      if (parts.length !== 3) {
+        headerElem.textContent = '[ ERROR ] Invalid JWT format. Token must consist of 3 dot-separated parts.';
+        payloadElem.textContent = '[ ERROR ] Invalid JWT format.';
+        expiryElem.style.display = 'none';
+        return;
+      }
+
+      try {
+        const header = JSON.parse(base64UrlDecode(parts[0]));
+        const payload = JSON.parse(base64UrlDecode(parts[1]));
+
+        headerElem.textContent = JSON.stringify(header, null, 2);
+        payloadElem.textContent = JSON.stringify(payload, null, 2);
+
+        if (payload.exp) {
+          const expMs = payload.exp * 1000;
+          const nowMs = Date.now();
+          const expDate = new Date(expMs).toLocaleString('id-ID');
+
+          if (nowMs < expMs) {
+            const diffMin = Math.round((expMs - nowMs) / 60000);
+            expiryElem.className = 'expiry-badge active';
+            expiryElem.textContent = '[ ACTIVE ] Token Expiration: ' + expDate + ' (Expires in ~' + diffMin + ' minutes)';
+          } else {
+            expiryElem.className = 'expiry-badge expired';
+            expiryElem.textContent = '[ EXPIRED ] Token Expired on: ' + expDate;
+          }
+          expiryElem.style.display = 'inline-block';
+        } else {
+          expiryElem.style.display = 'none';
+        }
+      } catch (err) {
+        headerElem.textContent = '[ ERROR ] Could not parse Base64URL token payload: ' + err.message;
+        payloadElem.textContent = '[ ERROR ] Invalid encoding.';
+        expiryElem.style.display = 'none';
+      }
+    }
+
+    function base64UrlDecode(str) {
+      let base64 = str.replace(/-/g, '+').replace(/_/g, '/');
+      while (base64.length % 4) {
+        base64 += '=';
+      }
+      return decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+    }
+  </script>
+  <script src="/assets/js/site-nav.js?v=20260802_v43" defer></script>
+</body>
+</html>

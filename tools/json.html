@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JSON Formatter, Validator & Tree Viewer — Offline Utility | Zyekh</title>
+  <meta name="description" content="Format, beautify, minify, validate, and inspect JSON structure interactively 100% client-side in browser. Safe, offline, zero data upload.">
+  <meta name="keywords" content="json formatter, json validator, json beautify, json minify, json tree viewer, json parser online, offline json tool">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/json.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="JSON Formatter, Validator & Tree Viewer — Offline Utility | Zyekh">
+  <meta property="og:description" content="Format, beautify, minify, validate, and inspect JSON structure interactively 100% client-side in browser.">
+  <meta property="og:url" content="https://zyekh.com/tools/json.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/json.html#app",
+        "name": "JSON Formatter, Validator & Tree Viewer",
+        "description": "Format, beautify, minify, validate, and inspect JSON structure interactively 100% client-side in browser.",
+        "url": "https://zyekh.com/tools/json.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/json.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "JSON Formatter", "item": "https://zyekh.com/tools/json.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v43">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v43">
+
+  <style>
+    .json-editor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    @media (max-width: 768px) { .json-editor-grid { grid-template-columns: 1fr; } }
+    .editor-pane { display: flex; flex-direction: column; }
+    .editor-pane label { font-weight: 600; margin-bottom: 0.4rem; color: var(--text-main); }
+    textarea.json-input { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; min-height: 320px; resize: vertical; line-height: 1.45; }
+    .status-bar { font-family: 'Fira Code', monospace; font-size: 0.8rem; padding: 0.5rem 0.75rem; border-radius: 4px; margin-bottom: 1rem; display: none; }
+    .status-bar.valid { display: block; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); color: #4ade80; }
+    .status-bar.invalid { display: block; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; }
+    .tree-viewer { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; min-height: 320px; overflow-x: auto; color: var(--text-main); }
+    .tree-node { margin-left: 1.2rem; }
+    .tree-key { color: #38bdf8; font-weight: 600; }
+    .tree-string { color: #4ade80; }
+    .tree-number { color: #fbbf24; }
+    .tree-boolean { color: #c084fc; }
+    .tree-null { color: #94a3b8; font-style: italic; }
+    .btn-group { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">JSON Formatter</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">DEVELOPER UTILITY · DATA</span>
+      <h1 class="page-title">JSON Formatter, Validator & Tree Viewer</h1>
+      <p class="page-subtitle">Beautify, minify, validate, and inspect JSON structure interactively 100% client-side in browser.</p>
+    </header>
+
+    <section class="tool-box">
+      <div class="btn-group">
+        <button type="button" onclick="formatJSON(2)">Beautify (2 Spaces)</button>
+        <button type="button" onclick="formatJSON(4)">Beautify (4 Spaces)</button>
+        <button type="button" onclick="minifyJSON()">Minify</button>
+        <button type="button" onclick="clearAll()" style="background:#27272a;color:var(--text-muted);border-color:var(--border-color);">Clear</button>
+        <button type="button" onclick="copyResult()" id="btnCopyJSON">Copy Output</button>
+      </div>
+
+      <div id="statusBar" class="status-bar"></div>
+
+      <div class="json-editor-grid">
+        <div class="editor-pane">
+          <label for="jsonInput">Input JSON</label>
+          <textarea id="jsonInput" class="json-input" placeholder='{"name": "Zyekh", "role": "Security Engineer", "skills": ["eBPF", "Rust", "Linux"], "active": true}' oninput="validateLive()"></textarea>
+        </div>
+        <div class="editor-pane">
+          <label>Interactive Tree / Clean Output</label>
+          <div id="jsonOutputTree" class="tree-viewer">Input valid JSON on the left to inspect tree hierarchy...</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="seo-content-block seo-block" style="margin-top:2rem;">
+      <h2>Tentang JSON Formatter & Validator Offline</h2>
+      <p>Tool ini berfungsi untuk merapikan (beautify), mengompresi (minify), dan mengecek keabsahan sintaksis struktur JSON secara 100% client-side tanpa mengirim data sensitif Anda ke server manapun.</p>
+
+      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+      <div class="faq-accordion">
+        <details class="faq-card">
+          <summary class="faq-summary">Apakah data JSON saya aman saat di-format di sini?</summary>
+          <p class="faq-answer">100% Aman. Seluruh proses parsing dan rendering dilakukan secara lokal di browser Anda menggunakan JavaScript native Web Browser.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+  </footer>
+
+  <script>
+    function validateLive() {
+      const input = document.getElementById('jsonInput').value.trim();
+      const status = document.getElementById('statusBar');
+      const tree = document.getElementById('jsonOutputTree');
+
+      if (!input) {
+        status.style.display = 'none';
+        tree.innerHTML = 'Input valid JSON on the left to inspect tree hierarchy...';
+        return;
+      }
+
+      try {
+        const parsed = JSON.parse(input);
+        status.className = 'status-bar valid';
+        status.textContent = '[ VERIFIED ] Valid JSON Structure';
+        renderTree(parsed, tree);
+      } catch (err) {
+        status.className = 'status-bar invalid';
+        status.textContent = '[ ERROR ] Invalid JSON: ' + err.message;
+        tree.innerHTML = '<span style="color:#f87171;">Syntax Error: ' + escapeHTML(err.message) + '</span>';
+      }
+    }
+
+    function formatJSON(indent) {
+      const input = document.getElementById('jsonInput').value.trim();
+      if (!input) return;
+      try {
+        const parsed = JSON.parse(input);
+        document.getElementById('jsonInput').value = JSON.stringify(parsed, null, indent);
+        validateLive();
+      } catch (err) {
+        validateLive();
+      }
+    }
+
+    function minifyJSON() {
+      const input = document.getElementById('jsonInput').value.trim();
+      if (!input) return;
+      try {
+        const parsed = JSON.parse(input);
+        document.getElementById('jsonInput').value = JSON.stringify(parsed);
+        validateLive();
+      } catch (err) {
+        validateLive();
+      }
+    }
+
+    function clearAll() {
+      document.getElementById('jsonInput').value = '';
+      validateLive();
+    }
+
+    async function copyResult() {
+      const input = document.getElementById('jsonInput').value;
+      if (!input) return;
+      try {
+        await navigator.clipboard.writeText(input);
+        const btn = document.getElementById('btnCopyJSON');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy Output'; }, 1800);
+      } catch (err) {}
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, tag => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'}[tag]));
+    }
+
+    function renderTree(obj, container) {
+      container.innerHTML = '';
+      container.appendChild(buildTreeNode(obj, 'root'));
+    }
+
+    function buildTreeNode(val, key) {
+      const div = document.createElement('div');
+      div.className = 'tree-node';
+
+      if (val === null) {
+        div.innerHTML = `<span class="tree-key">${escapeHTML(String(key))}:</span> <span class="tree-null">null</span>`;
+      } else if (typeof val === 'boolean') {
+        div.innerHTML = `<span class="tree-key">${escapeHTML(String(key))}:</span> <span class="tree-boolean">${val}</span>`;
+      } else if (typeof val === 'number') {
+        div.innerHTML = `<span class="tree-key">${escapeHTML(String(key))}:</span> <span class="tree-number">${val}</span>`;
+      } else if (typeof val === 'string') {
+        div.innerHTML = `<span class="tree-key">${escapeHTML(String(key))}:</span> <span class="tree-string">"${escapeHTML(val)}"</span>`;
+      } else if (Array.isArray(val)) {
+        div.innerHTML = `<span class="tree-key">${escapeHTML(String(key))}:</span> [Array(${val.length})]`;
+        val.forEach((item, idx) => div.appendChild(buildTreeNode(item, idx)));
+      } else if (typeof val === 'object') {
+        div.innerHTML = `<span class="tree-key">${escapeHTML(String(key))}:</span> {Object}`;
+        Object.keys(val).forEach(k => div.appendChild(buildTreeNode(val[k], k)));
+      }
+
+      return div;
+    }
+  </script>
+  <script src="/assets/js/site-nav.js?v=20260802_v43" defer></script>
+</body>
+</html>

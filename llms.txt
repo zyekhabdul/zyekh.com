@@ -43,7 +43,11 @@ Zyekh Abdul Qadir Jailani is a Full Stack Developer & Security Researcher specia
 - [Kalkulator JHT BPJS](https://zyekh.com/tools/jht.html): Hitung estimasi saldo & pencairan Jaminan Hari Tua (JHT) BPJS Ketenagakerjaan.
 - [Kalkulator JKP BPJS](https://zyekh.com/tools/jkp.html): Simulasi perhitungan manfaat uang tunai Jaminan Kehilangan Pekerjaan (JKP) bagi korban PHK sesuai PP 37/2021.
 - [Cron Expression Generator](https://zyekh.com/tools/cron.html): Tool penerjemah & pembuat cron expression ke Bahasa Indonesia secara gratis dan client-side.
-- [Web Tools Hub](https://zyekh.com/tools/): Access all 20+ client-side web utilities.
+- [JSON Formatter & Tree Viewer](https://zyekh.com/tools/json.html): Format, beautify, minify, validate, and inspect JSON structure interactively 100% offline.
+- [JWT Token Decoder & Inspector](https://zyekh.com/tools/jwt.html): Decode header, claims payload, and check token expiration status safely client-side.
+- [Base64 Encoder / Decoder](https://zyekh.com/tools/base64.html): Convert text or image files to Base64 strings and decode back 100% offline.
+- [RegEx Live Tester](https://zyekh.com/tools/regex.html): Test Regular Expression patterns with real-time match highlighting and flags.
+- [Web Tools Hub](https://zyekh.com/tools/): Access all 27 client-side web utilities.
 
 ## Open-Source Security Tools & Repositories
 - [vol3-ebpf-detector](https://github.com/zyekhabdul/vol3-ebpf-detector): Advanced Volatility 3 plugin & standalone memory carver for eBPF rootkit detection & Linux kernel forensics.
