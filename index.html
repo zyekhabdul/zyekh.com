@@ -53,8 +53,8 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v54">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v54">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v55">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v55">
 
   <style>
     .portal-hero { text-align: center; padding: 3rem 0 2rem 0; }
@@ -62,6 +62,8 @@
     .spotlight-input { width: 100%; padding: 0.9rem 1.25rem; font-size: 1rem; font-family: 'Inter', sans-serif; background: var(--bg-card); color: var(--text-main); border: 2px solid var(--border-color); border-radius: 10px; transition: border-color 0.2s, box-shadow 0.2s; }
     .spotlight-input:focus { border-color: var(--text-main); outline: none; box-shadow: 0 0 0 3px rgba(255,255,255,0.1); }
     .spotlight-shortcut { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--text-muted); background: var(--bg-dark); border: 1px solid var(--border-color); padding: 0.2rem 0.5rem; border-radius: 4px; pointer-events: none; }
+
+    .spotlight-dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 100; text-align: left; }
 
     /* Bento Grid Layout */
     .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.25rem; margin-bottom: 3rem; }
@@ -97,8 +99,12 @@
 
     <!-- Spotlight Search Bar (Ctrl + K) -->
     <div class="spotlight-box">
-      <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Search tools, articles, repositories (Press Ctrl+K)...">
+      <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Search tools, articles, repositories (Press Ctrl+K)..." autocomplete="off">
       <span class="spotlight-shortcut">Ctrl + K</span>
+      
+      <div id="spotlightDropdown" class="spotlight-dropdown">
+        <div id="spotlightResultsList"></div>
+      </div>
     </div>
 
     <!-- Bento Grid Container -->
@@ -206,10 +212,6 @@
   </footer>
 
   <!-- Spotlight Search & Keyboard Shortcut Listener -->
-  <div id="spotlightDropdown" class="spotlight-dropdown" style="display:none;max-width:680px;margin:-2rem auto 2.5rem auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:10px;padding:0.5rem;box-shadow:0 10px 25px rgba(0,0,0,0.5);z-index:100;position:relative;">
-    <div id="spotlightResultsList"></div>
-  </div>
-
   <script>
     const searchItems = [
       { title: 'cURL Command to Code Converter', url: '/tools/curl.html', category: 'Developer Utility' },
@@ -286,6 +288,6 @@
     });
   </script>
 
-  <script src="/assets/js/site-nav.js?v=20260802_v54" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v55" defer></script>
 </body>
 </html>
