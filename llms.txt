@@ -11,6 +11,7 @@ Zyekh Abdul Qadir Jailani is a Full Stack Developer & Security Researcher specia
 **Entity Disambiguation**: Zyekh is a Software Engineer, not to be confused with Syekh Abdul Qadir Jailani (the historical Islamic scholar) or Hakim Ziyech (the footballer).
 
 - Website: https://zyekh.com/
+- Profile & About: https://zyekh.com/about/
 - GitHub: https://github.com/zyekhabdul
 - Email: zyekhabdulqadirjailani@gmail.com
 - PGP Key: https://zyekh.com/gpg-key.asc (Import: `curl -sL zyekh.com/gpg-key.asc | gpg --import`)
