@@ -74,6 +74,16 @@
       <p id="searchCounter" style="margin-top: 0.75rem; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0;"></p>
     </div>
 
+    <!-- Category Pill Filters -->
+    <div class="filter-bar" id="categoryFilterBar">
+      <button type="button" class="filter-btn active" data-category="all">Semua (23)</button>
+      <button type="button" class="filter-btn" data-category="FINANCIAL UTILITIES">Finansial &amp; Pajak</button>
+      <button type="button" class="filter-btn" data-category="DEVELOPER UTILITIES">Developer Utilities</button>
+      <button type="button" class="filter-btn" data-category="PRODUCTIVITY">Produktivitas</button>
+      <button type="button" class="filter-btn" data-category="GENERATORS &amp; RANDOM">Generators &amp; Random</button>
+    </div>
+
+
     <!-- Tools Grid Container -->
     <div id="toolsGrid" class="grid-3">
       <div id="noResultsMsg" style="display: none; width: 100%; padding: 2rem; text-align: center; color: var(--text-muted); background: var(--bg-card); border-radius: 8px; border: 1px dashed var(--border-color); margin: 0.5rem;">
@@ -343,25 +353,30 @@
     <p>&copy; 2026 <strong>zyekh.com</strong> — Tools Hub. All tools run client-side locally in browser.</p>
   </footer>
 
-  <!-- Search Filter Script -->
+  <!-- Search & Category Filter Script -->
   <script>
     const searchInput = document.getElementById('searchInput');
     const toolItems = document.querySelectorAll('.tool-item');
     const searchCounter = document.getElementById('searchCounter');
     const noResultsMsg = document.getElementById('noResultsMsg');
+    const filterBtns = document.querySelectorAll('#categoryFilterBar .filter-btn');
     const totalTools = toolItems.length;
 
-    if (searchCounter) {
-      searchCounter.textContent = `Menampilkan ${totalTools} dari ${totalTools} tools`;
-    }
+    let activeCategory = 'all';
 
-    searchInput.addEventListener('input', function() {
-      const q = this.value.toLowerCase().trim();
+    function filterTools() {
+      const q = searchInput.value.toLowerCase().trim();
       let visibleCount = 0;
 
       toolItems.forEach(item => {
         const text = (item.getAttribute('data-title') || '').toLowerCase() + ' ' + item.innerText.toLowerCase();
-        if (!q || text.includes(q)) {
+        const catElem = item.querySelector('.tool-category');
+        const itemCat = catElem ? catElem.innerText.trim().toUpperCase() : '';
+
+        const matchesQuery = !q || text.includes(q);
+        const matchesCategory = activeCategory === 'all' || itemCat === activeCategory.toUpperCase();
+
+        if (matchesQuery && matchesCategory) {
           item.style.display = '';
           visibleCount++;
         } else {
@@ -376,10 +391,24 @@
       if (noResultsMsg) {
         noResultsMsg.style.display = visibleCount === 0 ? 'block' : 'none';
       }
+    }
+
+    if (searchCounter) {
+      searchCounter.textContent = `Menampilkan ${totalTools} dari ${totalTools} tools`;
+    }
+
+    searchInput.addEventListener('input', filterTools);
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        activeCategory = this.getAttribute('data-category');
+        filterTools();
+      });
     });
-
-
   </script>
+
   <script src="/assets/js/site-nav.js?v=20260801_v33" defer></script>
 </body>
 </html>

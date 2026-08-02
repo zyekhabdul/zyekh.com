@@ -869,3 +869,24 @@ details[open] summary::after { content: '\2212'; }
 .dot-red, .dot-1 { background: #fafafa !important; }
 .dot-yellow, .dot-2 { background: #a1a1aa !important; }
 .dot-green, .dot-3 { background: #52525b !important; }
+
+/* Filter Bar & Pill Buttons */
+.filter-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; margin-bottom: 1.5rem; }
+.filter-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--text-main);
+  border-color: var(--text-main);
+  color: #09090b;
+}
+
