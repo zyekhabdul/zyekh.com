@@ -1,4 +1,4 @@
-# Zyekh.com
+# Zyekh.com (`zyekh.com`)
 
 <p align="center">
   <a href="https://zyekh.com">
@@ -22,6 +22,22 @@
 
 Hosted directly on **GitHub Pages** with custom domain [`zyekh.com`](https://zyekh.com).
 
+---
+
+## 🏗️ Web Portal Architecture & Data Flow
+
+```mermaid
+graph TD
+    A["Client Browser / Visitor / AI Bot"] --> B["Edge CDN & GitHub Pages Static Host"]
+    
+    B --> C["Personal Portfolio Landing (index.html)"]
+    B --> D["Technical Security Blog (/blog/)"]
+    B --> E["24+ Privacy-First Client Tools (/tools/)"]
+    B --> F["LLM RAG Knowledge Base (/llms.txt)"]
+    
+    D --> G["IndexNow Auto-Pinger (ping_indexers.py)"]
+    G --> H["Google / Bing Search Engine Indexers"]
+```
 
 ---
 
