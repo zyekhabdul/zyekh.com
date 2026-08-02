@@ -49,8 +49,13 @@ Zyekh Abdul Qadir Jailani is a Full Stack Developer & Security Researcher specia
 - [Hash Generator & Checksum Inspector](https://zyekh.com/tools/hash.html): Generate SHA-256, SHA-512, SHA-1 cryptographic hashes and verify file checksums offline.
 - [URL Converter & Inspector](https://zyekh.com/tools/url.html): Encode, decode, parse query parameters, and strip tracking tags from URLs.
 - [Epoch Timestamp Converter](https://zyekh.com/tools/epoch.html): Convert Unix timestamps (seconds & ms) to human dates (ISO 8601, WIB, UTC) in real-time.
-- [CSS Minifier & Formatter](https://zyekh.com/tools/css-minifier.html): Compress CSS stylesheet files to save payload bandwidth or format minified CSS.
-- [Web Tools Hub](https://zyekh.com/tools/): Access all 31 client-side web utilities.
+- [UUID & ULID Bulk Generator](https://zyekh.com/tools/uuid.html): Generate cryptographically secure UUID v4, v1, and sortable ULIDs in bulk offline.
+- [HMAC Signer & Verifier](https://zyekh.com/tools/hmac.html): Generate and verify HMAC-SHA256, HMAC-SHA512, and HMAC-SHA1 signatures offline.
+- [CSV to JSON & SQL Converter](https://zyekh.com/tools/csv-json.html): Convert CSV and TSV tabular data into clean JSON arrays or SQL INSERT statements.
+- [IP Subnet & CIDR Calculator](https://zyekh.com/tools/subnet.html): Calculate IPv4 network ranges, subnet masks, broadcast addresses, and usable hosts.
+- [HTML Entity Encoder & Decoder](https://zyekh.com/tools/html-entity.html): Encode special characters to safe HTML entities or decode HTML entities back offline.
+- [SQL Query Formatter](https://zyekh.com/tools/sql.html): Format, clean, and beautify complex SQL queries with custom keyword casing offline.
+- [Web Tools Hub](https://zyekh.com/tools/): Access all 37 client-side web utilities.
 
 ## Open-Source Security Tools & Repositories
 - [vol3-ebpf-detector](https://github.com/zyekhabdul/vol3-ebpf-detector): Advanced Volatility 3 plugin & standalone memory carver for eBPF rootkit detection & Linux kernel forensics.

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTML Entity Encoder & Decoder — Offline Developer Tool | Zyekh</title>
+  <meta name="description" content="Encode special characters into safe HTML entities or decode HTML entities back to raw text 100% offline & client-side in browser.">
+  <meta name="keywords" content="html entity encoder, html entity decoder, encode html, escape html, html entities table, developer utility">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/html-entity.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="HTML Entity Encoder & Decoder — Offline Developer Tool | Zyekh">
+  <meta property="og:description" content="Encode special characters into safe HTML entities or decode HTML entities back to raw text 100% offline & client-side in browser.">
+  <meta property="og:url" content="https://zyekh.com/tools/html-entity.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/html-entity.html#app",
+        "name": "HTML Entity Encoder & Decoder",
+        "description": "Encode special characters into safe HTML entities or decode HTML entities back to raw text 100% offline & client-side in browser.",
+        "url": "https://zyekh.com/tools/html-entity.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/html-entity.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "HTML Entity", "item": "https://zyekh.com/tools/html-entity.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v49">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v49">
+
+  <style>
+    .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+    @media (max-width: 768px) { .grid-2-col { grid-template-columns: 1fr; } }
+    textarea.entity-box { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; min-height: 240px; width: 100%; resize: vertical; }
+    .btn-group { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">HTML Entity</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">DEVELOPER UTILITIES</span>
+      <h1 class="page-title">HTML Entity Encoder & Decoder</h1>
+      <p class="page-subtitle">Encode special characters to safe HTML entities or decode HTML entities back 100% offline.</p>
+    </header>
+
+    <section class="tool-box">
+      <div class="btn-group">
+        <button type="button" onclick="encodeEntities()">Encode HTML Entities</button>
+        <button type="button" onclick="decodeEntities()">Decode HTML Entities</button>
+        <button type="button" onclick="copyEntityResult()" id="btnCopyEntity">Copy Result</button>
+      </div>
+
+      <div class="grid-2-col">
+        <div>
+          <label for="entityInput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Plain Text Input</label>
+          <textarea id="entityInput" class="entity-box" placeholder="Type text with characters like <script>alert('xss')</script> & <div>..."></textarea>
+        </div>
+
+        <div>
+          <label for="entityOutput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Encoded / Decoded Result</label>
+          <textarea id="entityOutput" class="entity-box" placeholder="Result will appear here..." readonly></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="seo-content-block seo-block" style="margin-top:2rem;">
+      <h2>Tentang Pengodean Karakter HTML Entities</h2>
+      <p>HTML Entities mengganti karakter berisiko (seperti <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code>, <code>&quot;</code>) menjadi urutan karakter yang aman untuk ditampilkan oleh peramban tanpa memicu eksekusi kode markup atau kerentanan XSS (Cross-Site Scripting).</p>
+
+      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+      <div class="faq-accordion">
+        <details class="faq-card">
+          <summary class="faq-summary">Mengapa karakter &lt; dan &gt; harus di-encode?</summary>
+          <p class="faq-answer">Karena karakter tersebut digunakan oleh parser HTML untuk mengurai elemen tag. Meng-encode-nya menjadi <code>&amp;lt;</code> dan <code>&amp;gt;</code> memastikan teks ditampilkan sebagai string literal.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+  </footer>
+
+  <script>
+    function encodeEntities() {
+      const str = document.getElementById('entityInput').value;
+      if (!str) return;
+      const encoded = str.replace(/[\u00A0-\u9999<>&"']/g, function(i) {
+        return '&#' + i.charCodeAt(0) + ';';
+      });
+      document.getElementById('entityOutput').value = encoded;
+    }
+
+    function decodeEntities() {
+      const str = document.getElementById('entityInput').value;
+      if (!str) return;
+      const txt = document.createElement('textarea');
+      txt.innerHTML = str;
+      document.getElementById('entityOutput').value = txt.value;
+    }
+
+    async function copyEntityResult() {
+      const out = document.getElementById('entityOutput').value;
+      if (!out) return;
+      try {
+        await navigator.clipboard.writeText(out);
+        const btn = document.getElementById('btnCopyEntity');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy Result'; }, 1800);
+      } catch (err) {}
+    }
+  </script>
+  <script src="/assets/js/site-nav.js?v=20260802_v49" defer></script>
+</body>
+</html>

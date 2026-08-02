@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HMAC Signer & Signature Verifier — Offline Security Utility | Zyekh</title>
+  <meta name="description" content="Generate and verify HMAC-SHA256, HMAC-SHA512, and HMAC-SHA1 message signatures 100% offline & client-side in browser.">
+  <meta name="keywords" content="hmac generator, hmac sha256, hmac sha512, hmac signature verifier, api signature, crypto web api, security tool">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/hmac.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="HMAC Signer & Signature Verifier — Offline Security Utility | Zyekh">
+  <meta property="og:description" content="Generate and verify HMAC-SHA256, HMAC-SHA512, and HMAC-SHA1 message signatures 100% offline & client-side in browser.">
+  <meta property="og:url" content="https://zyekh.com/tools/hmac.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/hmac.html#app",
+        "name": "HMAC Signer & Signature Verifier",
+        "description": "Generate and verify HMAC-SHA256, HMAC-SHA512, and HMAC-SHA1 message signatures 100% offline & client-side in browser.",
+        "url": "https://zyekh.com/tools/hmac.html",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/hmac.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "HMAC Signer", "item": "https://zyekh.com/tools/hmac.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v49">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v49">
+
+  <style>
+    .form-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .form-item { flex: 1; min-width: 180px; }
+    textarea.hmac-box { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; width: 100%; min-height: 100px; resize: vertical; margin-bottom: 1rem; }
+    .hmac-result { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: #4ade80; background: var(--bg-dark); border: 1px solid var(--border-color); padding: 0.75rem; border-radius: var(--radius-md); word-break: break-all; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">HMAC Signer</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">DEVELOPER UTILITIES</span>
+      <h1 class="page-title">HMAC Signer & Signature Verifier</h1>
+      <p class="page-subtitle">Generate and verify HMAC-SHA256, HMAC-SHA512, and HMAC-SHA1 signatures 100% offline.</p>
+    </header>
+
+    <section class="tool-box">
+      <div class="form-row">
+        <div class="form-item">
+          <label for="hmacAlgo" style="font-weight:600;display:block;margin-bottom:0.4rem;">Hash Algorithm</label>
+          <select id="hmacAlgo" onchange="generateHMAC()" style="width:100%;">
+            <option value="SHA-256" selected>HMAC-SHA256</option>
+            <option value="SHA-512">HMAC-SHA512</option>
+            <option value="SHA-1">HMAC-SHA1</option>
+          </select>
+        </div>
+
+        <div class="form-item">
+          <label for="hmacFormat" style="font-weight:600;display:block;margin-bottom:0.4rem;">Output Format</label>
+          <select id="hmacFormat" onchange="generateHMAC()" style="width:100%;">
+            <option value="hex" selected>Hexadecimal (Lower)</option>
+            <option value="base64">Base64 String</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="hmacKey" style="font-weight:600;display:block;margin-bottom:0.4rem;">Secret Key (Kunci Rahasia)</label>
+      <input type="text" id="hmacKey" placeholder="Paste secret key here..." oninput="generateHMAC()" style="width:100%;font-family:'Fira Code',monospace;margin-bottom:1rem;">
+
+      <label for="hmacMessage" style="font-weight:600;display:block;margin-bottom:0.4rem;">Message Payload / Data String</label>
+      <textarea id="hmacMessage" class="hmac-box" placeholder="Type or paste payload string to sign..." oninput="generateHMAC()"></textarea>
+
+      <label style="font-weight:600;display:block;margin-bottom:0.4rem;">Generated HMAC Signature</label>
+      <div id="hmacResult" class="hmac-result">—</div>
+
+      <button type="button" onclick="copyHMAC()" id="btnCopyHMAC">Copy Signature</button>
+    </section>
+
+    <section class="seo-content-block seo-block" style="margin-top:2rem;">
+      <h2>Tentang Tanda Tangan HMAC (Hash-based Message Authentication Code)</h2>
+      <p>HMAC adalah mekanisme otentikasi pesan menggunakan fungsi hash kriptografi yang dikombinasikan dengan kunci rahasia bersama (shared secret key). Banyak digunakan pada verifikasi Webhook (GitHub, Stripe, Xendit), otentikasi API AWS, dan verifikasi integritas data transaksi.</p>
+
+      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+      <div class="faq-accordion">
+        <details class="faq-card">
+          <summary class="faq-summary">Apakah kunci rahasia HMAC saya dikirim ke server?</summary>
+          <p class="faq-answer">Sama sekali tidak. Proses signing HMAC dijalankan 100% lokal di browser Anda menggunakan <code>Web Crypto API</code> (<code>crypto.subtle.sign</code>).</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+  </footer>
+
+  <script>
+    async function generateHMAC() {
+      const algo = document.getElementById('hmacAlgo').value;
+      const format = document.getElementById('hmacFormat').value;
+      const keyStr = document.getElementById('hmacKey').value;
+      const msgStr = document.getElementById('hmacMessage').value;
+
+      const outElem = document.getElementById('hmacResult');
+
+      if (!keyStr || !msgStr) {
+        outElem.textContent = '—';
+        return;
+      }
+
+      try {
+        const enc = new TextEncoder();
+        const keyData = enc.encode(keyStr);
+        const msgData = enc.encode(msgStr);
+
+        const cryptoKey = await crypto.subtle.importKey(
+          'raw', keyData, { name: 'HMAC', hash: { name: algo } }, false, ['sign']
+        );
+
+        const sigBuf = await crypto.subtle.sign('HMAC', cryptoKey, msgData);
+
+        if (format === 'hex') {
+          outElem.textContent = Array.from(new Uint8Array(sigBuf)).map(b => b.toString(16).padStart(2, '0')).join('');
+        } else {
+          outElem.textContent = btoa(String.fromCharCode(...new Uint8Array(sigBuf)));
+        }
+      } catch (err) {
+        outElem.textContent = '[ ERROR ] HMAC calculation failed.';
+      }
+    }
+
+    async function copyHMAC() {
+      const out = document.getElementById('hmacResult').textContent;
+      if (!out || out === '—') return;
+      try {
+        await navigator.clipboard.writeText(out);
+        const btn = document.getElementById('btnCopyHMAC');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy Signature'; }, 1800);
+      } catch (err) {}
+    }
+  </script>
+  <script src="/assets/js/site-nav.js?v=20260802_v49" defer></script>
+</body>
+</html>

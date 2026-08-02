@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSV to JSON & SQL Converter — Offline Data Utility | Zyekh</title>
+  <meta name="description" content="Convert CSV and TSV tabular data into clean JSON arrays or SQL INSERT statements 100% offline & client-side in browser.">
+  <meta name="keywords" content="csv to json, csv to sql, tsv to json, csv converter, data converter, developer utility">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/csv-json.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CSV to JSON & SQL Converter — Offline Data Utility | Zyekh">
+  <meta property="og:description" content="Convert CSV and TSV tabular data into clean JSON arrays or SQL INSERT statements 100% offline & client-side in browser.">
+  <meta property="og:url" content="https://zyekh.com/tools/csv-json.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/csv-json.html#app",
+        "name": "CSV to JSON & SQL Converter",
+        "description": "Convert CSV and TSV tabular data into clean JSON arrays or SQL INSERT statements 100% offline & client-side in browser.",
+        "url": "https://zyekh.com/tools/csv-json.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/csv-json.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "CSV Converter", "item": "https://zyekh.com/tools/csv-json.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v49">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v49">
+
+  <style>
+    .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+    @media (max-width: 768px) { .grid-2-col { grid-template-columns: 1fr; } }
+    textarea.csv-box { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; min-height: 260px; width: 100%; resize: vertical; }
+    .form-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .form-item { flex: 1; min-width: 150px; }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">CSV Converter</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">DEVELOPER UTILITIES</span>
+      <h1 class="page-title">CSV to JSON & SQL Converter</h1>
+      <p class="page-subtitle">Convert CSV and TSV tabular data to clean JSON arrays or SQL INSERT statements 100% offline.</p>
+    </header>
+
+    <section class="tool-box">
+      <div class="form-row">
+        <div class="form-item">
+          <label for="csvMode" style="font-weight:600;display:block;margin-bottom:0.4rem;">Target Output Format</label>
+          <select id="csvMode" onchange="convertCSV()" style="width:100%;">
+            <option value="json" selected>JSON Array of Objects</option>
+            <option value="sql">SQL INSERT Statements</option>
+          </select>
+        </div>
+
+        <div class="form-item">
+          <label for="csvDelimiter" style="font-weight:600;display:block;margin-bottom:0.4rem;">Delimiter</label>
+          <select id="csvDelimiter" onchange="convertCSV()" style="width:100%;">
+            <option value="," selected>Comma (,)</option>
+            <option value=";">Semicolon (;)</option>
+            <option value="\t">Tab (TSV)</option>
+          </select>
+        </div>
+
+        <div class="form-item" id="tableNameGroup" style="display:none;">
+          <label for="tableName" style="font-weight:600;display:block;margin-bottom:0.4rem;">SQL Table Name</label>
+          <input type="text" id="tableName" value="users" oninput="convertCSV()" style="width:100%;">
+        </div>
+      </div>
+
+      <div class="grid-2-col">
+        <div>
+          <label for="csvInput" style="font-weight:600;display:block;margin-bottom:0.4rem;">CSV / TSV Input Data</label>
+          <textarea id="csvInput" class="csv-box" placeholder="id,name,role,email&#10;1,Zyekh,Developer,zyekh@example.com&#10;2,Alice,Security,alice@example.com" oninput="convertCSV()"></textarea>
+        </div>
+
+        <div>
+          <label for="csvOutput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Converted Result</label>
+          <textarea id="csvOutput" class="csv-box" placeholder="Result will appear here..." readonly></textarea>
+        </div>
+      </div>
+
+      <div style="margin-top:1rem;">
+        <button type="button" onclick="copyCSVOutput()" id="btnCopyCSV">Copy Converted Result</button>
+      </div>
+    </section>
+
+    <section class="seo-content-block seo-block" style="margin-top:2rem;">
+      <h2>Tentang Konversi CSV ke JSON & SQL</h2>
+      <p>CSV (Comma-Separated Values) adalah format pertukaran data standar spreadsheet. Konverter ini memetakan baris header CSV menjadi kunci objek JSON atau kolom pada kueri <code>INSERT INTO</code> SQL untuk memudahkan migrasi data ke basis data PostgreSQL, MySQL, atau SQLite.</p>
+
+      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+      <div class="faq-accordion">
+        <details class="faq-card">
+          <summary class="faq-summary">Apakah data tabel saya aman dari kebocoran?</summary>
+          <p class="faq-answer">Ya. Semua parsing baris dan pembuatan string JSON/SQL diproses 100% di browser lokal Anda tanpa jaringan backend.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+  </footer>
+
+  <script>
+    function parseCSV(text, delim) {
+      const lines = text.trim().split(/\r?\n/);
+      if (lines.length < 2) return null;
+      const headers = lines[0].split(delim).map(h => h.trim().replace(/^["']|["']$/g, ''));
+      const rows = [];
+
+      for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        const vals = lines[i].split(delim).map(v => v.trim().replace(/^["']|["']$/g, ''));
+        const rowObj = {};
+        headers.forEach((h, idx) => {
+          rowObj[h] = vals[idx] !== undefined ? vals[idx] : '';
+        });
+        rows.push(rowObj);
+      }
+      return { headers, rows };
+    }
+
+    function convertCSV() {
+      const input = document.getElementById('csvInput').value;
+      const mode = document.getElementById('csvMode').value;
+      let delim = document.getElementById('csvDelimiter').value;
+      if (delim === '\\t') delim = '\t';
+
+      const tableGroup = document.getElementById('tableNameGroup');
+      tableGroup.style.display = mode === 'sql' ? 'block' : 'none';
+
+      if (!input.trim()) {
+        document.getElementById('csvOutput').value = '';
+        return;
+      }
+
+      const parsed = parseCSV(input, delim);
+      if (!parsed) {
+        document.getElementById('csvOutput').value = '[ ERROR ] Invalid CSV input. Need at least 1 header line and 1 data row.';
+        return;
+      }
+
+      if (mode === 'json') {
+        document.getElementById('csvOutput').value = JSON.stringify(parsed.rows, null, 2);
+      } else if (mode === 'sql') {
+        const tbl = document.getElementById('tableName').value.trim() || 'table_name';
+        const cols = parsed.headers.join(', ');
+        const sqlStatements = parsed.rows.map(r => {
+          const vals = parsed.headers.map(h => `'${r[h].replace(/'/g, "''")}'`).join(', ');
+          return `INSERT INTO ${tbl} (${cols}) VALUES (${vals});`;
+        });
+        document.getElementById('csvOutput').value = sqlStatements.join('\n');
+      }
+    }
+
+    async function copyCSVOutput() {
+      const out = document.getElementById('csvOutput').value;
+      if (!out) return;
+      try {
+        await navigator.clipboard.writeText(out);
+        const btn = document.getElementById('btnCopyCSV');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy Converted Result'; }, 1800);
+      } catch (err) {}
+    }
+  </script>
+  <script src="/assets/js/site-nav.js?v=20260802_v49" defer></script>
+</body>
+</html>

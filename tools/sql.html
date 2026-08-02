@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SQL Query Formatter & Beautifier — Offline Developer Utility | Zyekh</title>
+  <meta name="description" content="Format, clean, and beautify complex SQL queries with standardized keyword indentation 100% offline & client-side in browser.">
+  <meta name="keywords" content="sql formatter, sql beautifier, format sql query, sql minifier, format postgresql, format mysql, developer utility">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/sql.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SQL Query Formatter & Beautifier — Offline Developer Utility | Zyekh">
+  <meta property="og:description" content="Format, clean, and beautify complex SQL queries with standardized keyword indentation 100% offline & client-side in browser.">
+  <meta property="og:url" content="https://zyekh.com/tools/sql.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/sql.html#app",
+        "name": "SQL Query Formatter & Beautifier",
+        "description": "Format, clean, and beautify complex SQL queries with standardized keyword indentation 100% offline & client-side in browser.",
+        "url": "https://zyekh.com/tools/sql.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/sql.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "SQL Formatter", "item": "https://zyekh.com/tools/sql.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v49">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v49">
+
+  <style>
+    .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+    @media (max-width: 768px) { .grid-2-col { grid-template-columns: 1fr; } }
+    textarea.sql-box { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; min-height: 260px; width: 100%; resize: vertical; }
+    .btn-group { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">SQL Formatter</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">DEVELOPER UTILITIES</span>
+      <h1 class="page-title">SQL Query Formatter & Beautifier</h1>
+      <p class="page-subtitle">Format, clean, and beautify complex SQL queries with custom keyword casing 100% offline.</p>
+    </header>
+
+    <section class="tool-box">
+      <div class="btn-group">
+        <button type="button" onclick="formatSQL()">Format / Beautify SQL</button>
+        <button type="button" onclick="minifySQL()">Minify SQL (Single Line)</button>
+        <button type="button" onclick="copySQLResult()" id="btnCopySQL">Copy Output</button>
+      </div>
+
+      <div class="grid-2-col">
+        <div>
+          <label for="sqlInput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Unformatted SQL Input</label>
+          <textarea id="sqlInput" class="sql-box" placeholder="select u.id, u.name, p.title from users u inner join posts p on u.id = p.user_id where u.active = 1 order by u.created_at desc"></textarea>
+        </div>
+
+        <div>
+          <label for="sqlOutput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Formatted SQL Result</label>
+          <textarea id="sqlOutput" class="sql-box" placeholder="Formatted SQL will appear here..." readonly></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="seo-content-block seo-block" style="margin-top:2rem;">
+      <h2>Tentang Format & Keindahan Kueri SQL</h2>
+      <p>Merapikan kueri SQL dengan membuat kata kunci kapital (<code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>JOIN</code>) dan penataan indentasi baris baru meningkatkan keterbacaan kode (*readability*), mempermudah proses debugging kueri basis data PostgreSQL, MySQL, dan SQLite.</p>
+
+      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+      <div class="faq-accordion">
+        <details class="faq-card">
+          <summary class="faq-summary">Apakah kueri basis data saya aman dari kebocoran skema?</summary>
+          <p class="faq-answer">Ya. Semua pemformatan kata kunci dan baris kueri dilakukan 100% di browser lokal Anda tanpa koneksi backend.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+  </footer>
+
+  <script>
+    function formatSQL() {
+      const input = document.getElementById('sqlInput').value;
+      if (!input.trim()) return;
+
+      const keywords = ['SELECT', 'FROM', 'WHERE', 'INNER JOIN', 'LEFT JOIN', 'RIGHT JOIN', 'JOIN', 'ON', 'GROUP BY', 'ORDER BY', 'HAVING', 'LIMIT', 'OFFSET', 'UNION', 'INSERT INTO', 'VALUES', 'UPDATE', 'SET', 'DELETE FROM', 'AND', 'OR'];
+
+      let clean = input.replace(/\s+/g, ' ').trim();
+
+      keywords.forEach(kw => {
+        const regex = new RegExp('\\b' + kw + '\\b', 'gi');
+        clean = clean.replace(regex, kw);
+      });
+
+      const majorKeywords = ['SELECT', 'FROM', 'WHERE', 'INNER JOIN', 'LEFT JOIN', 'RIGHT JOIN', 'JOIN', 'GROUP BY', 'ORDER BY', 'HAVING', 'LIMIT', 'OFFSET', 'UNION', 'INSERT INTO', 'VALUES', 'UPDATE', 'SET', 'DELETE FROM'];
+
+      majorKeywords.forEach(kw => {
+        const regex = new RegExp('\\b' + kw + '\\b', 'g');
+        clean = clean.replace(regex, '\n' + kw);
+      });
+
+      clean = clean.replace(/,/g, ',\n ');
+
+      document.getElementById('sqlOutput').value = clean.trim();
+    }
+
+    function minifySQL() {
+      const input = document.getElementById('sqlInput').value;
+      if (!input.trim()) return;
+      document.getElementById('sqlOutput').value = input.replace(/\s+/g, ' ').trim();
+    }
+
+    async function copySQLResult() {
+      const out = document.getElementById('sqlOutput').value;
+      if (!out) return;
+      try {
+        await navigator.clipboard.writeText(out);
+        const btn = document.getElementById('btnCopySQL');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy Output'; }, 1800);
+      } catch (err) {}
+    }
+  </script>
+  <script src="/assets/js/site-nav.js?v=20260802_v49" defer></script>
+</body>
+</html>

@@ -190,14 +190,39 @@ URL: https://zyekh.com/tools/epoch.html
 Description: Convert Unix timestamps (seconds & ms) to human-readable dates (ISO 8601, WIB, UTC) in real-time.
 Keywords: epoch converter, unix timestamp, timestamp to date, epoch to date, epoch seconds
 
-**CSS Minifier & Formatter**
-URL: https://zyekh.com/tools/css-minifier.html
-Description: Compress CSS stylesheet files to save payload bandwidth or format minified CSS 100% offline.
-Keywords: css minifier, css beautify, compress css, css formatter, unminify css
+**UUID & ULID Bulk Generator**
+URL: https://zyekh.com/tools/uuid.html
+Description: Generate cryptographically secure UUID v4, v1, and sortable ULIDs in bulk 100% offline.
+Keywords: uuid generator, ulid generator, bulk uuid, random uuid v4, sortable id generator
+
+**HMAC Signer & Signature Verifier**
+URL: https://zyekh.com/tools/hmac.html
+Description: Generate and verify HMAC-SHA256, HMAC-SHA512, and HMAC-SHA1 signatures 100% offline.
+Keywords: hmac generator, hmac sha256, hmac sha512, hmac signature verifier, api signature
+
+**CSV to JSON & SQL Converter**
+URL: https://zyekh.com/tools/csv-json.html
+Description: Convert CSV and TSV tabular data into clean JSON arrays or SQL INSERT statements 100% offline.
+Keywords: csv to json, csv to sql, tsv to json, csv converter, data converter
+
+**IP Subnet & CIDR Calculator**
+URL: https://zyekh.com/tools/subnet.html
+Description: Calculate IPv4 network ranges, subnet masks, broadcast addresses, and usable hosts 100% offline.
+Keywords: subnet calculator, cidr calculator, ip range, netmask calculator, broadcast address
+
+**HTML Entity Encoder & Decoder**
+URL: https://zyekh.com/tools/html-entity.html
+Description: Encode special characters to safe HTML entities or decode HTML entities back 100% offline.
+Keywords: html entity encoder, html entity decoder, encode html, escape html, html entities
+
+**SQL Query Formatter & Beautifier**
+URL: https://zyekh.com/tools/sql.html
+Description: Format, clean, and beautify complex SQL queries with custom keyword casing 100% offline.
+Keywords: sql formatter, sql beautifier, format sql query, sql minifier, format postgresql
 
 **Web Tools Hub**
 URL: https://zyekh.com/tools/
-Description: Halaman utama semua 31 web utility tools dengan pencarian instan.
+Description: Halaman utama semua 37 web utility tools dengan pencarian instan.
 
 ---
 

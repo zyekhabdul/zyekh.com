@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UUID & ULID Bulk Generator — Offline Developer Utility | Zyekh</title>
+  <meta name="description" content="Generate cryptographically secure UUID v4, v1, and lexicographically sortable ULIDs in bulk 100% offline & client-side in browser.">
+  <meta name="keywords" content="uuid generator, ulid generator, bulk uuid, random uuid v4, sortable id generator, crypto web api, developer tool">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/uuid.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="UUID & ULID Bulk Generator — Offline Developer Utility | Zyekh">
+  <meta property="og:description" content="Generate cryptographically secure UUID v4, v1, and lexicographically sortable ULIDs in bulk 100% offline & client-side in browser.">
+  <meta property="og:url" content="https://zyekh.com/tools/uuid.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/uuid.html#app",
+        "name": "UUID & ULID Bulk Generator",
+        "description": "Generate cryptographically secure UUID v4, v1, and lexicographically sortable ULIDs in bulk 100% offline & client-side in browser.",
+        "url": "https://zyekh.com/tools/uuid.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/uuid.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "UUID Generator", "item": "https://zyekh.com/tools/uuid.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v49">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v49">
+
+  <style>
+    .form-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .form-item { flex: 1; min-width: 160px; }
+    textarea.uuid-box { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; width: 100%; min-height: 240px; resize: vertical; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">UUID Generator</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">DEVELOPER UTILITIES</span>
+      <h1 class="page-title">UUID & ULID Bulk Generator</h1>
+      <p class="page-subtitle">Generate cryptographically secure UUID v4, v1, and sortable ULIDs in bulk 100% offline.</p>
+    </header>
+
+    <section class="tool-box">
+      <div class="form-row">
+        <div class="form-item">
+          <label for="idType" style="font-weight:600;display:block;margin-bottom:0.4rem;">Type / Standard</label>
+          <select id="idType" onchange="generateIDs()" style="width:100%;">
+            <option value="uuidv4" selected>UUID v4 (Random Crypto)</option>
+            <option value="ulid">ULID (Sortable Timestamp)</option>
+            <option value="uuidv1">UUID v1 (Timestamp-based)</option>
+          </select>
+        </div>
+
+        <div class="form-item">
+          <label for="idCount" style="font-weight:600;display:block;margin-bottom:0.4rem;">Quantity (Count)</label>
+          <input type="number" id="idCount" value="10" min="1" max="1000" oninput="generateIDs()" style="width:100%;">
+        </div>
+
+        <div class="form-item">
+          <label for="idCasing" style="font-weight:600;display:block;margin-bottom:0.4rem;">Letter Case</label>
+          <select id="idCasing" onchange="generateIDs()" style="width:100%;">
+            <option value="lowercase" selected>lowercase</option>
+            <option value="uppercase">UPPERCASE</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:1rem;">
+        <button type="button" onclick="generateIDs()">Re-generate</button>
+        <button type="button" onclick="copyIDs()" id="btnCopyIDs">Copy All</button>
+      </div>
+
+      <textarea id="uuidOutput" class="uuid-box" readonly placeholder="Generated IDs will appear here..."></textarea>
+    </section>
+
+    <section class="seo-content-block seo-block" style="margin-top:2rem;">
+      <h2>Tentang Standar Identifikasi UUID & ULID</h2>
+      <p>UUID (Universally Unique Identifier) adalah string 128-bit yang digunakan untuk mengidentifikasi objek secara unik dalam sistem terdistribusi tanpa memerlukan koordinasi terpusat. ULID (Universally Unique Lexicographically Sortable Identifier) menggabungkan timestamp dengan 80-bit nilai acak agar dapat diurutkan secara kronologis dalam indeks basis data.</p>
+
+      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+      <div class="faq-accordion">
+        <details class="faq-card">
+          <summary class="faq-summary">Mengapa memilih ULID dibanding UUID v4?</summary>
+          <p class="faq-answer">ULID dibuat dengan urutan timestamp di bagian depan, sehingga performa indeks B-Tree basis data (SQL/NoSQL) lebih tinggi dan tidak mengalami fragmentasi H-Index.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+  </footer>
+
+  <script>
+    function generateUUIDv4() {
+      if (crypto.randomUUID) {
+        return crypto.randomUUID();
+      }
+      return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+      );
+    }
+
+    function generateULID() {
+      const ENCODING = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+      const now = Date.now();
+      let timeStr = "";
+      let t = now;
+      for (let i = 9; i >= 0; i--) {
+        timeStr = ENCODING[t % 32] + timeStr;
+        t = Math.floor(t / 32);
+      }
+      let randStr = "";
+      const randBytes = crypto.getRandomValues(new Uint8Array(10));
+      for (let i = 0; i < 10; i++) {
+        randStr += ENCODING[randBytes[i] % 32];
+      }
+      return timeStr + randStr;
+    }
+
+    function generateUUIDv1() {
+      const now = Date.now();
+      const hex = now.toString(16).padStart(12, '0');
+      const rand = Array.from(crypto.getRandomValues(new Uint8Array(6)))
+        .map(b => b.toString(16).padStart(2, '0')).join('');
+      return `${hex.slice(4,12)}-${hex.slice(0,4)}-11e9-8000-${rand}`;
+    }
+
+    function generateIDs() {
+      const type = document.getElementById('idType').value;
+      const count = Math.min(Math.max(parseInt(document.getElementById('idCount').value, 10) || 1, 1), 1000);
+      const casing = document.getElementById('idCasing').value;
+
+      const list = [];
+      for (let i = 0; i < count; i++) {
+        let id = '';
+        if (type === 'uuidv4') id = generateUUIDv4();
+        else if (type === 'ulid') id = generateULID();
+        else if (type === 'uuidv1') id = generateUUIDv1();
+
+        if (casing === 'uppercase') id = id.toUpperCase();
+        else if (casing === 'lowercase') id = id.toLowerCase();
+        list.push(id);
+      }
+
+      document.getElementById('uuidOutput').value = list.join('\n');
+    }
+
+    async function copyIDs() {
+      const out = document.getElementById('uuidOutput').value;
+      if (!out) return;
+      try {
+        await navigator.clipboard.writeText(out);
+        const btn = document.getElementById('btnCopyIDs');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy All'; }, 1800);
+      } catch (err) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', generateIDs);
+  </script>
+  <script src="/assets/js/site-nav.js?v=20260802_v49" defer></script>
+</body>
+</html>
