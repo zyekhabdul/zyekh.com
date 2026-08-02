@@ -53,33 +53,89 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v55">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v55">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v56">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v56">
 
   <style>
     .portal-hero { text-align: center; padding: 3rem 0 2rem 0; }
+    
+    /* Spotlight Search Box & Clean Ctrl + K Badge */
     .spotlight-box { position: relative; max-width: 680px; margin: 1.5rem auto 2.5rem auto; }
-    .spotlight-input { width: 100%; padding: 0.9rem 1.25rem; font-size: 1rem; font-family: 'Inter', sans-serif; background: var(--bg-card); color: var(--text-main); border: 2px solid var(--border-color); border-radius: 10px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .spotlight-input { 
+      width: 100%; 
+      padding: 0.9rem 5rem 0.9rem 1.25rem; 
+      font-size: 1rem; 
+      font-family: 'Inter', sans-serif; 
+      background: var(--bg-card); 
+      color: var(--text-main); 
+      border: 2px solid var(--border-color); 
+      border-radius: 10px; 
+      transition: border-color 0.2s, box-shadow 0.2s; 
+    }
     .spotlight-input:focus { border-color: var(--text-main); outline: none; box-shadow: 0 0 0 3px rgba(255,255,255,0.1); }
-    .spotlight-shortcut { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--text-muted); background: var(--bg-dark); border: 1px solid var(--border-color); padding: 0.2rem 0.5rem; border-radius: 4px; pointer-events: none; }
+    
+    .spotlight-shortcut { 
+      position: absolute; 
+      right: 0.85rem; 
+      top: 50%; 
+      transform: translateY(-50%); 
+      font-family: 'Fira Code', monospace; 
+      font-size: 0.72rem; 
+      line-height: 1;
+      color: var(--text-muted); 
+      background: rgba(255, 255, 255, 0.05); 
+      border: 1px solid var(--border-color); 
+      padding: 0.3rem 0.6rem; 
+      border-radius: 6px; 
+      pointer-events: none; 
+      user-select: none;
+    }
 
     .spotlight-dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 100; text-align: left; }
 
-    /* Bento Grid Layout */
+    /* Bento Grid Layout & Clickable Link Cards */
     .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.25rem; margin-bottom: 3rem; }
     @media (max-width: 960px) { .bento-grid { display: flex; flex-direction: column; } }
-    .bento-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.2s, border-color 0.2s; }
-    .bento-card:hover { border-color: rgba(255,255,255,0.3); transform: translateY(-2px); }
+    
+    .bento-card { 
+      background: var(--bg-card); 
+      border: 1px solid var(--border-color); 
+      border-radius: 12px; 
+      padding: 1.5rem; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: space-between; 
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, border-color 0.2s, background-color 0.2s; 
+    }
+    .bento-card:hover { 
+      border-color: rgba(255,255,255,0.35); 
+      transform: translateY(-3px); 
+      background-color: #141417;
+    }
 
     .bento-main-tools { grid-column: span 8; }
     .bento-sidebar { grid-column: span 4; }
-    .bento-full { grid-column: span 12; }
     .bento-half { grid-column: span 6; }
 
     .quick-tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; margin-top: 1rem; }
-    .quick-tool-pill { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.65rem 0.85rem; color: var(--text-main); text-decoration: none; font-size: 0.88rem; font-weight: 500; display: block; transition: all 0.2s; }
-    .quick-tool-pill:hover { border-color: var(--text-main); background: #121215; }
+    .quick-tool-pill { 
+      background: var(--bg-dark); 
+      border: 1px solid var(--border-color); 
+      border-radius: 8px; 
+      padding: 0.65rem 0.85rem; 
+      color: var(--text-main); 
+      text-decoration: none; 
+      font-size: 0.88rem; 
+      font-weight: 500; 
+      display: block; 
+      transition: all 0.2s; 
+    }
+    .quick-tool-pill:hover { border-color: var(--text-main); background: #18181c; }
     .quick-tool-cat { font-size: 0.7rem; color: var(--text-muted); display: block; font-family: 'Fira Code', monospace; text-transform: uppercase; margin-bottom: 0.15rem; }
+    .cta-link-text { font-size: 0.85rem; color: var(--text-muted); text-decoration: none; font-weight: 600; transition: color 0.2s; }
+    .bento-card:hover .cta-link-text { color: #ffffff; }
   </style>
 </head>
 <body>
@@ -115,9 +171,9 @@
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <span class="badge">41 CLIENT-SIDE TOOLS</span>
-            <a href="/tools/" style="font-size:0.85rem;color:var(--text-muted);text-decoration:none;">View All 41 Tools →</a>
+            <a href="/tools/" class="cta-link-text">View All 41 Tools →</a>
           </div>
-          <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.4rem;">Web Utility Tools Hub</h2>
+          <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.4rem;"><a href="/tools/" style="color:inherit;text-decoration:none;">Web Utility Tools Hub</a></h2>
           <p style="color:var(--text-muted);font-size:0.9rem;">Fast, privacy-first developer &amp; financial calculators running 100% offline in browser.</p>
 
           <div class="quick-tools-grid">
@@ -158,7 +214,7 @@
       </div>
 
       <!-- Bento 2: Profile & About Card (Span 4) -->
-      <div class="bento-card bento-sidebar">
+      <a href="/about/" class="bento-card bento-sidebar">
         <div>
           <span class="badge">DEVELOPER PROFILE</span>
           <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.3rem;">Zyekh Abdul Qadir Jailani</h2>
@@ -172,37 +228,37 @@
           </div>
         </div>
         <div style="margin-top:1.25rem;">
-          <a href="/about/" class="quick-tool-pill" style="text-align:center;">Read Full Bio &amp; Profile →</a>
+          <span class="cta-link-text">Read Full Bio &amp; Profile →</span>
         </div>
-      </div>
+      </a>
 
       <!-- Bento 3: Technical Security Articles (Span 6) -->
-      <div class="bento-card bento-half">
+      <a href="/blog/linux-vps-hardening-guide-2026.html" class="bento-card bento-half">
         <div>
           <span class="badge">TECHNICAL ARTICLES</span>
-          <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.25rem;"><a href="/blog/linux-vps-hardening-guide-2026.html" style="color:inherit;text-decoration:none;">Linux VPS Hardening Blueprint 2026</a></h2>
+          <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.25rem;">Linux VPS Hardening Blueprint 2026</h2>
           <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.5;">
             Comprehensive guide for Debian/Ubuntu server security: SSH lockdown, nftables, fail2ban, auditd, and kernel parameters.
           </p>
         </div>
         <div style="margin-top:1rem;">
-          <a href="/blog/" style="font-size:0.85rem;color:var(--text-muted);text-decoration:none;">Browse All Security Articles →</a>
+          <span class="cta-link-text">Read Security Article →</span>
         </div>
-      </div>
+      </a>
 
       <!-- Bento 4: Open Source Repositories (Span 6) -->
-      <div class="bento-card bento-half">
+      <a href="https://github.com/zyekhabdul/vol3-ebpf-detector" target="_blank" rel="noopener" class="bento-card bento-half">
         <div>
           <span class="badge">OPEN SOURCE REPOS</span>
-          <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.25rem;"><a href="https://github.com/zyekhabdul/vol3-ebpf-detector" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">vol3-ebpf-detector</a></h2>
+          <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.25rem;">vol3-ebpf-detector</h2>
           <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.5;">
             Volatility 3 plugin &amp; standalone memory carver for eBPF rootkit detection and Linux kernel forensics.
           </p>
         </div>
         <div style="margin-top:1rem;">
-          <a href="https://github.com/zyekhabdul" target="_blank" rel="noopener" style="font-size:0.85rem;color:var(--text-muted);text-decoration:none;">Explore GitHub Repositories →</a>
+          <span class="cta-link-text">Explore GitHub Repository →</span>
         </div>
-      </div>
+      </a>
 
     </section>
   </main>
@@ -288,6 +344,6 @@
     });
   </script>
 
-  <script src="/assets/js/site-nav.js?v=20260802_v55" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v56" defer></script>
 </body>
 </html>
