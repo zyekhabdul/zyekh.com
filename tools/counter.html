@@ -18,8 +18,8 @@
 
   <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v39">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v39">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v40">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v40">
   <!-- SEO & Social Meta Tags -->
   <link rel="canonical" href="https://zyekh.com/tools/counter.html">
   <meta property="og:title" content="Word Counter & Character Counter Online — zyekh.com">
@@ -103,12 +103,12 @@
       <a href="/tools/" class="back-link">← Back to Tools Hub</a>
     </div>
     
-    <div class="tool-box">
-      <header class="page-header">
+    <header class="page-header">
       <h1 class="page-title">Word & Character Counter</h1>
       <p class="page-subtitle">Real-time word, character, sentence, paragraph, and reading time counter.</p>
     </header>
-  <p><textarea id="in" rows="10" cols="50" placeholder="Tempel atau ketik teks di sini…" oninput="update()"></textarea></p>
+  <div class="tool-box">
+      <p><textarea id="in" rows="10" cols="50" placeholder="Tempel atau ketik teks di sini…" oninput="update()"></textarea></p>
   <table class="stats-table">
     <tr><th>Kata</th><td id="words">0</td></tr>
     <tr><th>Karakter (dengan spasi)</th><td id="chars">0</td></tr>
@@ -160,6 +160,6 @@
     }
     update();
   </script>
-  <script src="/assets/js/site-nav.js?v=20260802_v39" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v40" defer></script>
 </body>
 </html>

@@ -18,8 +18,8 @@
 
   <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v39">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v39">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v40">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v40">
   <!-- SEO & Social Meta Tags -->
   <link rel="canonical" href="https://zyekh.com/tools/random-picker.html">
   <meta property="og:title" content="Random Picker & Winner Generator Online — zyekh.com">
@@ -103,12 +103,12 @@
       <a href="/tools/" class="back-link">← Back to Tools Hub</a>
     </div>
     
-    <div class="tool-box">
-      <header class="page-header">
+    <header class="page-header">
       <h1 class="page-title">Random Item Picker</h1>
       <p class="page-subtitle">Fairly pick winners or randomize sequences from custom text lists.</p>
     </header>
-  <p>
+  <div class="tool-box">
+      <p>
     <label for="list">Satu nama per baris</label><br>
     <textarea id="list" rows="8" cols="40" placeholder="Alice&#10;Bob&#10;Charlie" oninput="save()"></textarea>
   </p>
@@ -184,6 +184,6 @@
       document.getElementById('list').value = decodeURIComponent(location.hash.slice(1));
     }
   </script>
-  <script src="/assets/js/site-nav.js?v=20260802_v39" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v40" defer></script>
 </body>
 </html>
