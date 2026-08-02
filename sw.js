@@ -1,5 +1,5 @@
 /* zyekh.com Service Worker — Cache Strategy */
-const CACHE_VERSION = 'v41';
+const CACHE_VERSION = 'v42';
 const CACHE_NAME = `zyekh-${CACHE_VERSION}`;
 
 /* Assets to precache on install (shell) */
