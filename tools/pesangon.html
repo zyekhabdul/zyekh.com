@@ -98,8 +98,8 @@
 
   <!-- Self-hosted Fonts -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v40">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v40">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v41">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v41">
 
   <style>
     * { box-sizing: border-box; }
@@ -135,13 +135,13 @@
   <main class="main-container" id="main-content">
 
     <!-- Breadcrumb -->
-    <nav aria-label="Breadcrumb" style="margin-bottom:1.5rem;">
-      <ol style="list-style:none;padding:0;margin:0;display:flex;gap:0.5rem;font-size:0.85rem;color:var(--text-muted);">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
         <li><a href="/" class="breadcrumb-link">Home</a></li>
-        <li aria-hidden="true" style="color:var(--border-color-hover);">/</li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
         <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
-        <li aria-hidden="true" style="color:var(--border-color-hover);">/</li>
-        <li aria-current="page" style="color:var(--text-main);">Kalkulator Pesangon</li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">Kalkulator Pesangon PHK</li>
       </ol>
     </nav>
 
@@ -323,15 +323,8 @@
 
   </main>
 
-  <footer class="footer" role="contentinfo">
-    <p>
-      Dibuat oleh <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> ·
-      <a href="/tools/" style="color:var(--text-muted);">Semua Tools</a> ·
-      Dasar hukum: PP 35/2021 (UU No. 11/2020 Cipta Kerja)
-    </p>
-    <p style="font-size:0.8rem;margin-top:0.5rem;">
-      ️ Ini adalah estimasi kalkulasi. Untuk kepastian hukum, konsultasikan dengan konsultan ketenagakerjaan atau pengacara.
-    </p>
+    <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
   </footer>
 
 <script>
@@ -543,6 +536,6 @@ document.getElementById('jenisKontrak').addEventListener('change', function() {
   document.getElementById('alasan-group').style.display = this.value === 'pkwt' ? 'none' : 'block';
 });
 </script>
-  <script src="/assets/js/site-nav.js?v=20260802_v40" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v41" defer></script>
 </body>
 </html>

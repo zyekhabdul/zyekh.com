@@ -18,8 +18,8 @@
 
   <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v40">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v40">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v41">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v41">
   <!-- SEO & Social Meta Tags -->
   <link rel="canonical" href="https://zyekh.com/tools/split-bill.html">
   <meta property="og:title" content="Hitung Patungan & Split Bill Online — Bebas Biaya & Pajak | zyekh.com">
@@ -99,9 +99,15 @@
   <site-nav active="tools"></site-nav>
 
   <main class="main-container">
-    <div class="mb-md">
-      <a href="/tools/" class="back-link">← Back to Tools Hub</a>
-    </div>
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">Split Bill Calculator</li>
+      </ol>
+    </nav>
     
     <header class="page-header">
       <h1 class="page-title">Split Bill Calculator</h1>
@@ -155,8 +161,8 @@
 
 </main>
 
-  <footer class="footer">
-    <p>&copy; 2026 <strong>zyekh.com</strong> — Tools Hub. All tools run client-side locally in browser.</p>
+    <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
   </footer>
 
   <script>
@@ -185,6 +191,6 @@
     }
     calc();
   </script>
-  <script src="/assets/js/site-nav.js?v=20260802_v40" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v41" defer></script>
 </body>
 </html>
