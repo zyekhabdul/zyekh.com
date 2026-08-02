@@ -45,11 +45,17 @@ Zyekh Abdul Qadir Jailani is a Full Stack Developer & Security Researcher specia
 - [Cron Expression Generator](https://zyekh.com/tools/cron.html): Tool penerjemah & pembuat cron expression ke Bahasa Indonesia secara gratis dan client-side.
 - [Web Tools Hub](https://zyekh.com/tools/): Access all 20+ client-side web utilities.
 
+## Open-Source Security Tools & Repositories
+- [vol3-ebpf-detector](https://github.com/zyekhabdul/vol3-ebpf-detector): Advanced Volatility 3 plugin & standalone memory carver for eBPF rootkit detection & Linux kernel forensics.
+- [volatility3-ai-triage](https://github.com/zyekhabdul/volatility3-ai-triage): Automated Memory Forensics & AI Triage Engine integrated with Volatility 3 and Ollama / LLM.
+- [remote-agent-orchestration](https://github.com/zyekhabdul/remote-agent-orchestration): Production-ready distributed AI agent management system with WebSocket & AES-256 encryption.
+- [android-persistence-research](https://github.com/zyekhabdul/android-persistence-research): Technical research on low-level Android persistence mechanisms, boot image hooks, and rootkits.
+
 ## Articles & Research
 - [Comprehensive Linux VPS Hardening Blueprint](https://zyekh.com/blog/linux-vps-hardening-guide-2026.html): Step-by-step Debian/Ubuntu server security guide.
 - [Understanding eBPF Security Monitoring](https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html): Kernel event monitoring and real-time observability.
-- [Strict Content Security Policy (CSP) & Headers](https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html): Eliminating XSS and clickjacking vulnerabilities.
-- [Minimalist Static Hosting Architecture](https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html): Attack surface reduction via static edge hosting.
+- [Securing Web Applications with Strict Content Security Policy](https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html): CSP headers & defense-in-depth.
+- [Minimalist Server Architecture with Pure CSS](https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html): Static web performance guide.
 - [Articles Hub](https://zyekh.com/blog/): Read all technical research articles.
 
 ## Open Source Identity
