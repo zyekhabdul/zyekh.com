@@ -93,8 +93,8 @@
 
   <!-- Self-hosted Fonts -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v37">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v37">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v38">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v38">
 
   <style>
     * { box-sizing: border-box; }
@@ -310,53 +310,53 @@ function hitung() {
 
   // Render cards
   const cards = document.getElementById('resultCards');
-  cards.innerHTML = \`
+  cards.innerHTML = `
     <div class="result-card">
       <div class="label">Total Iuran Karyawan (2%)</div>
-      <div class="value">\${fmt(akumulasiIuranKaryawan)}</div>
+      <div class="value">${fmt(akumulasiIuranKaryawan)}</div>
     </div>
     <div class="result-card company">
       <div class="label">Total Iuran Perusahaan (3.7%)</div>
-      <div class="value">\${fmt(akumulasiIuranPerusahaan)}</div>
+      <div class="value">${fmt(akumulasiIuranPerusahaan)}</div>
     </div>
     <div class="result-card">
       <div class="label">Est. Hasil Pengembangan</div>
-      <div class="value">+\${fmt(hasilPengembangan)}</div>
+      <div class="value">+${fmt(hasilPengembangan)}</div>
     </div>
     <div class="result-card total">
       <div class="label">Estimasi Total Saldo</div>
-      <div class="value">\${fmt(totalSaldo)}</div>
+      <div class="value">${fmt(totalSaldo)}</div>
     </div>
-  \`;
+  `;
 
   // Render table
   const tbody = document.getElementById('breakdownBody');
-  tbody.innerHTML = \`
+  tbody.innerHTML = `
     <tr>
       <td>Akumulasi Iuran Karyawan (2% per bulan)</td>
-      <td class="td-right">\${fmt(akumulasiIuranKaryawan)}</td>
+      <td class="td-right">${fmt(akumulasiIuranKaryawan)}</td>
     </tr>
     <tr>
       <td>Akumulasi Iuran Perusahaan (3.7% per bulan)</td>
-      <td class="td-right">\${fmt(akumulasiIuranPerusahaan)}</td>
+      <td class="td-right">${fmt(akumulasiIuranPerusahaan)}</td>
     </tr>
     <tr>
       <td>Total Iuran Pokok disetor</td>
-      <td class="td-right"><strong>\${fmt(akumulasiIuranKaryawan + akumulasiIuranPerusahaan)}</strong></td>
+      <td class="td-right"><strong>${fmt(akumulasiIuranKaryawan + akumulasiIuranPerusahaan)}</strong></td>
     </tr>
     <tr>
-      <td>Estimasi Hasil Pengembangan (\${bungaTahun}% p.a.)</td>
-      <td class="td-right" style="color:var(--accent);">+\${fmt(hasilPengembangan)}</td>
+      <td>Estimasi Hasil Pengembangan (${bungaTahun}% p.a.)</td>
+      <td class="td-right" style="color:var(--accent);">+${fmt(hasilPengembangan)}</td>
     </tr>
     <tr class="tr-total">
       <td><strong>Total Saldo JHT</strong></td>
-      <td class="td-right"><strong>\${fmt(totalSaldo)}</strong></td>
+      <td class="td-right"><strong>${fmt(totalSaldo)}</strong></td>
     </tr>
     <tr style="background:rgba(255,255,255,0.03);">
-      <td><strong>Jumlah Dapat Dicairkan (\${opsiKlaim}%)</strong></td>
-      <td class="td-right" style="color:var(--info);"><strong>\${fmt(danaPencairan)}</strong></td>
+      <td><strong>Jumlah Dapat Dicairkan (${opsiKlaim}%)</strong></td>
+      <td class="td-right" style="color:var(--info);"><strong>${fmt(danaPencairan)}</strong></td>
     </tr>
-  \`;
+  `;
 
   document.getElementById('noteBox').innerHTML = noteText;
   
@@ -365,6 +365,6 @@ function hitung() {
   box.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 </script>
-  <script src="/assets/js/site-nav.js?v=20260802_v37" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v38" defer></script>
 </body>
 </html>

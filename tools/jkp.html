@@ -93,8 +93,8 @@
 
   <!-- Self-hosted Fonts -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v37">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v37">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v38">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v38">
 
   <style>
     * { box-sizing: border-box; }
@@ -271,71 +271,71 @@ function hitung() {
 
   // Render cards
   const cards = document.getElementById('resultCards');
-  cards.innerHTML = \`
+  cards.innerHTML = `
     <div class="result-card warn">
       <div class="label">Upah Dasar Diperhitungkan</div>
-      <div class="value">\${fmt(upahDasar)}</div>
+      <div class="value">${fmt(upahDasar)}</div>
     </div>
     <div class="result-card company">
       <div class="label">Manfaat Bln 1-3 (45%)</div>
-      <div class="value">\${fmt(manfaatBulan13)}/bln</div>
+      <div class="value">${fmt(manfaatBulan13)}/bln</div>
     </div>
     <div class="result-card">
       <div class="label">Manfaat Bln 4-6 (25%)</div>
-      <div class="value">\${fmt(manfaatBulan46)}/bln</div>
+      <div class="value">${fmt(manfaatBulan46)}/bln</div>
     </div>
     <div class="result-card total">
       <div class="label">Total Manfaat (6 Bulan)</div>
-      <div class="value">\${fmt(totalManfaat)}</div>
+      <div class="value">${fmt(totalManfaat)}</div>
     </div>
-  \`;
+  `;
 
   // Render table
   const tbody = document.getElementById('breakdownBody');
-  tbody.innerHTML = \`
+  tbody.innerHTML = `
     <tr>
       <td>Bulan 1</td>
-      <td>45% × \${fmt(upahDasar)}</td>
-      <td class="td-right">\${fmt(manfaatBulan13)}</td>
+      <td>45% × ${fmt(upahDasar)}</td>
+      <td class="td-right">${fmt(manfaatBulan13)}</td>
     </tr>
     <tr>
       <td>Bulan 2</td>
-      <td>45% × \${fmt(upahDasar)}</td>
-      <td class="td-right">\${fmt(manfaatBulan13)}</td>
+      <td>45% × ${fmt(upahDasar)}</td>
+      <td class="td-right">${fmt(manfaatBulan13)}</td>
     </tr>
     <tr>
       <td>Bulan 3</td>
-      <td>45% × \${fmt(upahDasar)}</td>
-      <td class="td-right">\${fmt(manfaatBulan13)}</td>
+      <td>45% × ${fmt(upahDasar)}</td>
+      <td class="td-right">${fmt(manfaatBulan13)}</td>
     </tr>
     <tr>
       <td>Bulan 4</td>
-      <td>25% × \${fmt(upahDasar)}</td>
-      <td class="td-right">\${fmt(manfaatBulan46)}</td>
+      <td>25% × ${fmt(upahDasar)}</td>
+      <td class="td-right">${fmt(manfaatBulan46)}</td>
     </tr>
     <tr>
       <td>Bulan 5</td>
-      <td>25% × \${fmt(upahDasar)}</td>
-      <td class="td-right">\${fmt(manfaatBulan46)}</td>
+      <td>25% × ${fmt(upahDasar)}</td>
+      <td class="td-right">${fmt(manfaatBulan46)}</td>
     </tr>
     <tr>
       <td>Bulan 6</td>
-      <td>25% × \${fmt(upahDasar)}</td>
-      <td class="td-right">\${fmt(manfaatBulan46)}</td>
+      <td>25% × ${fmt(upahDasar)}</td>
+      <td class="td-right">${fmt(manfaatBulan46)}</td>
     </tr>
     <tr class="tr-total">
       <td colspan="2"><strong>Total Maksimal Manfaat Uang Tunai</strong></td>
-      <td class="td-right"><strong>\${fmt(totalManfaat)}</strong></td>
+      <td class="td-right"><strong>${fmt(totalManfaat)}</strong></td>
     </tr>
-  \`;
+  `;
 
-  document.getElementById('noteBox').innerHTML = \`<strong>Informasi Tambahan:</strong> Selain manfaat uang tunai, peserta JKP yang sah juga berhak mendapatkan <strong>Akses Informasi Pasar Kerja</strong> (bimbingan jabatan dan penempatan kerja) serta <strong>Pelatihan Kerja</strong> berbasis kompetensi.\`;
+  document.getElementById('noteBox').innerHTML = `<strong>Informasi Tambahan:</strong> Selain manfaat uang tunai, peserta JKP yang sah juga berhak mendapatkan <strong>Akses Informasi Pasar Kerja</strong> (bimbingan jabatan dan penempatan kerja) serta <strong>Pelatihan Kerja</strong> berbasis kompetensi.`;
   
   const box = document.getElementById('resultBox');
   box.classList.add('visible');
   box.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 </script>
-  <script src="/assets/js/site-nav.js?v=20260802_v37" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v38" defer></script>
 </body>
 </html>
