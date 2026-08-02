@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>cURL Command to Code Converter — Offline Developer Tool | Zyekh</title>
+  <meta name="description" content="Convert cURL commands to JavaScript Fetch, Python Requests, Go, Node.js, and PHP code 100% offline & client-side in browser.">
+  <meta name="keywords" content="curl to code, curl to fetch, curl to python, curl to golang, curl converter, api client generator, developer tool">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/curl.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="cURL Command to Code Converter — Offline Developer Tool | Zyekh">
+  <meta property="og:description" content="Convert cURL commands to JavaScript Fetch, Python Requests, Go, Node.js, and PHP code 100% offline & client-side in browser.">
+  <meta property="og:url" content="https://zyekh.com/tools/curl.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/curl.html#app",
+        "name": "cURL Command to Code Converter",
+        "description": "Convert cURL commands to JavaScript Fetch, Python Requests, Go, Node.js, and PHP code 100% offline & client-side in browser.",
+        "url": "https://zyekh.com/tools/curl.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/curl.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "cURL Converter", "item": "https://zyekh.com/tools/curl.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v50">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v50">
+
+  <style>
+    .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+    @media (max-width: 768px) { .grid-2-col { grid-template-columns: 1fr; } }
+    textarea.curl-box { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; min-height: 260px; width: 100%; resize: vertical; }
+    .form-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .form-item { flex: 1; min-width: 180px; }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">cURL Converter</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">DEVELOPER UTILITIES</span>
+      <h1 class="page-title">cURL Command to Code Converter</h1>
+      <p class="page-subtitle">Convert cURL commands to JavaScript Fetch, Python Requests, Go, Node.js, and PHP code 100% offline.</p>
+    </header>
+
+    <section class="tool-box">
+      <div class="form-row">
+        <div class="form-item">
+          <label for="targetLang" style="font-weight:600;display:block;margin-bottom:0.4rem;">Target Programming Language</label>
+          <select id="targetLang" onchange="convertCurl()" style="width:100%;">
+            <option value="js" selected>JavaScript (Native fetch)</option>
+            <option value="python">Python (requests)</option>
+            <option value="node">Node.js (axios)</option>
+            <option value="go">Go (net/http)</option>
+            <option value="php">PHP (cURL)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid-2-col">
+        <div>
+          <label for="curlInput" style="font-weight:600;display:block;margin-bottom:0.4rem;">cURL Command Input</label>
+          <textarea id="curlInput" class="curl-box" placeholder="curl -X POST https://api.openai.com/v1/chat/completions \&#10;  -H 'Authorization: Bearer $API_KEY' \&#10;  -H 'Content-Type: application/json' \&#10;  -d '{&#34;model&#34;: &#34;gpt-4o&#34;, &#34;messages&#34;: [{&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: &#34;Hello!&#34;}]}'" oninput="convertCurl()"></textarea>
+        </div>
+
+        <div>
+          <label for="codeOutput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Generated Code Snippet</label>
+          <textarea id="codeOutput" class="curl-box" placeholder="Generated code snippet will appear here..." readonly></textarea>
+        </div>
+      </div>
+
+      <div style="margin-top:1rem;">
+        <button type="button" onclick="copyCodeOutput()" id="btnCopyCode">Copy Generated Code</button>
+      </div>
+    </section>
+
+    <section class="seo-content-block seo-block" style="margin-top:2rem;">
+      <h2>Tentang Konversi cURL ke Kode Pemrograman</h2>
+      <p>Perintah cURL adalah format standar yang disediakan dalam dokumentasi API publik. Alat ini mengurai method HTTP (GET/POST/PUT/DELETE), header otentikasi, serta body payload JSON menjadi potongan kode native yang siap ditempel ke proyek software Anda.</p>
+
+      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+      <div class="faq-accordion">
+        <details class="faq-card">
+          <summary class="faq-summary">Apakah API Token rahasia saya aman saat menggunakan konverter ini?</summary>
+          <p class="faq-answer">Sangat aman. Parsing sintaksis cURL dijalankan 100% di browser lokal Anda tanpa ada request HTTP yang dikirim ke server luar.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+  </footer>
+
+  <script>
+    function parseCurl(curlStr) {
+      let str = curlStr.replace(/\\\n/g, ' ').replace(/\s+/g, ' ').trim();
+      if (!str.startsWith('curl')) return null;
+
+      let method = 'GET';
+      let url = '';
+      const headers = {};
+      let body = '';
+
+      // Extract URL
+      const urlMatch = str.match(/curl\s+(?:-[A-Za-z0-9-]+\s+)*['"]?(https?:\/\/[^\s'"]+)['"]?/);
+      if (urlMatch) {
+        url = urlMatch[1];
+      } else {
+        const simpleUrl = str.match(/https?:\/\/[^\s'"]+/);
+        if (simpleUrl) url = simpleUrl[0];
+      }
+
+      // Extract Method
+      const methodMatch = str.match(/-X\s+([A-Z]+)/i) || str.match(/--request\s+([A-Z]+)/i);
+      if (methodMatch) {
+        method = methodMatch[1].toUpperCase();
+      }
+
+      // Extract Headers
+      const headerMatches = str.matchAll(/-H\s+['"]([^'"]+)['"]/g);
+      for (const m of headerMatches) {
+        const parts = m[1].split(':');
+        if (parts.length >= 2) {
+          headers[parts[0].trim()] = parts.slice(1).join(':').trim();
+        }
+      }
+
+      // Extract Data Body
+      const dataMatch = str.match(/-d\s+['"]([^'"]+)['"]/) || str.match(/--data\s+['"]([^'"]+)['"]/) || str.match(/--data-raw\s+['"]([^'"]+)['"]/);
+      if (dataMatch) {
+        body = dataMatch[1];
+        if (method === 'GET') method = 'POST';
+      }
+
+      return { method, url, headers, body };
+    }
+
+    function convertCurl() {
+      const input = document.getElementById('curlInput').value;
+      const lang = document.getElementById('targetLang').value;
+      const out = document.getElementById('codeOutput');
+
+      if (!input.trim()) {
+        out.value = '';
+        return;
+      }
+
+      const parsed = parseCurl(input);
+      if (!parsed || !parsed.url) {
+        out.value = '[ ERROR ] Could not parse cURL command. Ensure it starts with "curl http..."';
+        return;
+      }
+
+      if (lang === 'js') {
+        out.value = generateJSFetch(parsed);
+      } else if (lang === 'python') {
+        out.value = generatePythonRequests(parsed);
+      } else if (lang === 'node') {
+        out.value = generateNodeAxios(parsed);
+      } else if (lang === 'go') {
+        out.value = generateGoHttp(parsed);
+      } else if (lang === 'php') {
+        out.value = generatePHP(parsed);
+      }
+    }
+
+    function generateJSFetch(p) {
+      let code = `fetch("${p.url}", {\n  method: "${p.method}",\n`;
+      if (Object.keys(p.headers).length > 0) {
+        code += `  headers: ${JSON.stringify(p.headers, null, 4).replace(/\n/g, '\n  ')},\n`;
+      }
+      if (p.body) {
+        code += `  body: JSON.stringify(${p.body})\n`;
+      }
+      code += `})\n.then(response => response.json())\n.then(data => console.log(data))\n.catch(error => console.error('Error:', error));`;
+      return code;
+    }
+
+    function generatePythonRequests(p) {
+      let code = `import requests\n\nurl = "${p.url}"\n`;
+      if (Object.keys(p.headers).length > 0) {
+        code += `headers = ${JSON.stringify(p.headers, null, 4)}\n`;
+      }
+      if (p.body) {
+        code += `payload = ${p.body}\n\n`;
+        code += `response = requests.${p.method.toLowerCase()}(url, headers=headers, json=payload)\n`;
+      } else {
+        code += `\nresponse = requests.${p.method.toLowerCase()}(url, headers=headers)\n`;
+      }
+      code += `print(response.json())`;
+      return code;
+    }
+
+    function generateNodeAxios(p) {
+      let code = `const axios = require('axios');\n\naxios({\n  method: '${p.method.toLowerCase()}',\n  url: '${p.url}',\n`;
+      if (Object.keys(p.headers).length > 0) {
+        code += `  headers: ${JSON.stringify(p.headers, null, 4).replace(/\n/g, '\n  ')},\n`;
+      }
+      if (p.body) {
+        code += `  data: ${p.body}\n`;
+      }
+      code += `})\n.then(response => console.log(response.data))\n.catch(error => console.error(error));`;
+      return code;
+    }
+
+    function generateGoHttp(p) {
+      let code = `package main\n\nimport (\n\t"fmt"\n\t"io"\n\t"net/http"\n`;
+      if (p.body) code += `\t"strings"\n`;
+      code += `)\n\nfunc main() {\n`;
+      if (p.body) {
+        code += `\tpayload := strings.NewReader(\`${p.body}\`)\n`;
+        code += `\treq, _ := http.NewRequest("${p.method}", "${p.url}", payload)\n`;
+      } else {
+        code += `\treq, _ := http.NewRequest("${p.method}", "${p.url}", nil)\n`;
+      }
+      for (const [k, v] of Object.entries(p.headers)) {
+        code += `\treq.Header.Add("${k}", "${v}")\n`;
+      }
+      code += `\tres, _ := http.DefaultClient.Do(req)\n\tdefer res.Body.Close()\n\tbody, _ := io.ReadAll(res.Body)\n\tfmt.Println(string(body))\n}`;
+      return code;
+    }
+
+    function generatePHP(p) {
+      let code = `<?php\n$curl = curl_init();\ncurl_setopt_array($curl, [\n  CURLOPT_URL => "${p.url}",\n  CURLOPT_CUSTOMREQUEST => "${p.method}",\n  CURLOPT_RETURNTRANSFER => true,\n`;
+      if (p.body) {
+        code += `  CURLOPT_POSTFIELDS => '${p.body}',\n`;
+      }
+      if (Object.keys(p.headers).length > 0) {
+        const hArr = Object.entries(p.headers).map(([k, v]) => `    "${k}: ${v}"`);
+        code += `  CURLOPT_HTTPHEADER => [\n${hArr.join(',\n')}\n  ],\n`;
+      }
+      code += `]);\n$response = curl_exec($curl);\ncurl_close($curl);\necho $response;`;
+      return code;
+    }
+
+    async function copyCodeOutput() {
+      const out = document.getElementById('codeOutput').value;
+      if (!out) return;
+      try {
+        await navigator.clipboard.writeText(out);
+        const btn = document.getElementById('btnCopyCode');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy Generated Code'; }, 1800);
+      } catch (err) {}
+    }
+  </script>
+  <script src="/assets/js/site-nav.js?v=20260802_v50" defer></script>
+</body>
+</html>

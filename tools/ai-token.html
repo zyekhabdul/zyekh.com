@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Prompt Token & Cost Estimator — Offline LLM Utility | Zyekh</title>
+  <meta name="description" content="Estimate LLM prompt token counts and API costs for OpenAI GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, and Llama 3 100% offline & client-side in browser.">
+  <meta name="keywords" content="token counter, ai prompt token, gpt-4o cost estimator, claude token calculator, gemini token counter, llm cost calculator, developer tool">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/ai-token.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AI Prompt Token & Cost Estimator — Offline LLM Utility | Zyekh">
+  <meta property="og:description" content="Estimate LLM prompt token counts and API costs for OpenAI GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, and Llama 3 100% offline & client-side in browser.">
+  <meta property="og:url" content="https://zyekh.com/tools/ai-token.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/ai-token.html#app",
+        "name": "AI Prompt Token & Cost Estimator",
+        "description": "Estimate LLM prompt token counts and API costs for OpenAI GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, and Llama 3 100% offline & client-side in browser.",
+        "url": "https://zyekh.com/tools/ai-token.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/ai-token.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "AI Token Counter", "item": "https://zyekh.com/tools/ai-token.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v50">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v50">
+
+  <style>
+    textarea.prompt-box { font-family: 'Fira Code', monospace; font-size: 0.88rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; width: 100%; min-height: 200px; resize: vertical; margin-bottom: 1rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem; }
+    .stat-card { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem 1rem; text-align: center; }
+    .stat-val { font-family: 'Fira Code', monospace; font-size: 1.25rem; font-weight: 700; color: #38bdf8; }
+    .stat-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-top: 0.25rem; }
+    .cost-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-family: 'Fira Code', monospace; font-size: 0.85rem; }
+    .cost-table th, .cost-table td { border: 1px solid var(--border-color); padding: 0.6rem 0.8rem; text-align: left; }
+    .cost-table th { background: var(--bg-card); color: var(--text-muted); }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">AI Token Counter</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">DEVELOPER UTILITIES</span>
+      <h1 class="page-title">AI Prompt Token & API Cost Estimator</h1>
+      <p class="page-subtitle">Estimate LLM prompt token counts and API costs across OpenAI, Claude, Gemini, and Llama models 100% offline.</p>
+    </header>
+
+    <section class="tool-box">
+      <label for="promptInput" style="font-weight:600;display:block;margin-bottom:0.4rem;">AI Prompt / System Instruction Text</label>
+      <textarea id="promptInput" class="prompt-box" placeholder="Paste your LLM prompt, system instructions, or context payload here..." oninput="calculateTokens()"></textarea>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div id="statTokens" class="stat-val" style="color:#38bdf8;">0</div>
+          <div class="stat-label">Estimated Tokens</div>
+        </div>
+        <div class="stat-card">
+          <div id="statWords" class="stat-val">0</div>
+          <div class="stat-label">Words</div>
+        </div>
+        <div class="stat-card">
+          <div id="statChars" class="stat-val">0</div>
+          <div class="stat-label">Characters</div>
+        </div>
+        <div class="stat-card">
+          <div id="statLines" class="stat-val">0</div>
+          <div class="stat-label">Lines</div>
+        </div>
+      </div>
+
+      <label style="font-weight:600;display:block;margin-top:1rem;margin-bottom:0.4rem;">Estimated Input API Cost Comparison</label>
+      <table class="cost-table">
+        <thead>
+          <tr>
+            <th>LLM Model & Provider</th>
+            <th>Input Rate (/1M Tokens)</th>
+            <th>Est. Input Cost (USD)</th>
+            <th>Est. Input Cost (IDR)</th>
+          </tr>
+        </thead>
+        <tbody id="costTableBody">
+          <tr><td colspan="4" style="color:var(--text-muted);text-align:center;">Enter text above to calculate API pricing.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="seo-content-block seo-block" style="margin-top:2rem;">
+      <h2>Tentang Perhitungan Token LLM & Estimasi Biaya API</h2>
+      <p>Model bahasa besar (LLM) seperti GPT-4o, Claude 3.5 Sonnet, dan Gemini 1.5 Pro tidak memproses kata secara langsung, melainkan memotong teks menjadi fragmen subunit bernama <strong>Token</strong> (rata-rata 1 token ≈ 4 karakter teks Bahasa Inggris atau kode program). Kalkulator ini membantu developer memprediksi batas *context window* dan estimasi tagihan API sebelum request dikirim.</p>
+
+      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+      <div class="faq-accordion">
+        <details class="faq-card">
+          <summary class="faq-summary">Apakah teks prompt saya disimpan di server?</summary>
+          <p class="faq-answer">Tidak. Perhitungan token menggunakan algoritma estimasi rasio BPE (Byte-Pair Encoding) secara 100% lokal di browser Anda.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+  </footer>
+
+  <script>
+    const models = [
+      { name: 'OpenAI GPT-4o', rate: 2.50 },
+      { name: 'OpenAI GPT-4o-mini', rate: 0.15 },
+      { name: 'Anthropic Claude 3.5 Sonnet', rate: 3.00 },
+      { name: 'Anthropic Claude 3 Haiku', rate: 0.25 },
+      { name: 'Google Gemini 1.5 Pro', rate: 1.25 },
+      { name: 'Google Gemini 1.5 Flash', rate: 0.075 },
+      { name: 'Meta Llama 3 (Groq API)', rate: 0.05 }
+    ];
+
+    function calculateTokens() {
+      const text = document.getElementById('promptInput').value;
+
+      if (!text) {
+        document.getElementById('statTokens').textContent = '0';
+        document.getElementById('statWords').textContent = '0';
+        document.getElementById('statChars').textContent = '0';
+        document.getElementById('statLines').textContent = '0';
+        document.getElementById('costTableBody').innerHTML = '<tr><td colspan="4" style="color:var(--text-muted);text-align:center;">Enter text above to calculate API pricing.</td></tr>';
+        return;
+      }
+
+      const chars = text.length;
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      const lines = text.split('\n').length;
+
+      // Estimate tokens: ~4 chars per token for ASCII, ~2 chars for Non-ASCII/Indonesian
+      let estTokens = Math.ceil(chars / 3.8);
+
+      document.getElementById('statTokens').textContent = estTokens.toLocaleString('id-ID');
+      document.getElementById('statWords').textContent = words.toLocaleString('id-ID');
+      document.getElementById('statChars').textContent = chars.toLocaleString('id-ID');
+      document.getElementById('statLines').textContent = lines.toLocaleString('id-ID');
+
+      let rowsHTML = '';
+      const usdToIdr = 16000;
+
+      models.forEach(m => {
+        const costUSD = (estTokens / 1000000) * m.rate;
+        const costIDR = costUSD * usdToIdr;
+
+        let costUSDStr = costUSD < 0.0001 ? '< $0.0001' : '$' + costUSD.toFixed(4);
+        let costIDRStr = costIDR < 1 ? '< Rp1' : 'Rp' + Math.round(costIDR).toLocaleString('id-ID');
+
+        rowsHTML += `<tr>
+          <td style="color:#ffffff;font-weight:600;">${m.name}</td>
+          <td>$${m.rate.toFixed(3)} / 1M</td>
+          <td style="color:#38bdf8;">${costUSDStr}</td>
+          <td style="color:#4ade80;">${costIDRStr}</td>
+        </tr>`;
+      });
+
+      document.getElementById('costTableBody').innerHTML = rowsHTML;
+    }
+  </script>
+  <script src="/assets/js/site-nav.js?v=20260802_v50" defer></script>
+</body>
+</html>

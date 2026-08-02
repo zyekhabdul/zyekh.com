@@ -215,14 +215,29 @@ URL: https://zyekh.com/tools/html-entity.html
 Description: Encode special characters to safe HTML entities or decode HTML entities back 100% offline.
 Keywords: html entity encoder, html entity decoder, encode html, escape html, html entities
 
-**SQL Query Formatter & Beautifier**
-URL: https://zyekh.com/tools/sql.html
-Description: Format, clean, and beautify complex SQL queries with custom keyword casing 100% offline.
-Keywords: sql formatter, sql beautifier, format sql query, sql minifier, format postgresql
+**cURL Command to Code Converter**
+URL: https://zyekh.com/tools/curl.html
+Description: Convert cURL commands to JavaScript Fetch, Python Requests, Go, Node.js, and PHP code 100% offline.
+Keywords: curl to code, curl to fetch, curl to python, curl to golang, curl converter
+
+**AI Prompt Token & Cost Estimator**
+URL: https://zyekh.com/tools/ai-token.html
+Description: Estimate LLM prompt token counts and API costs for OpenAI GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, and Llama 3 100% offline.
+Keywords: token counter, ai prompt token, gpt-4o cost estimator, claude token calculator, gemini token counter
+
+**.env to JSON & Secret Redactor**
+URL: https://zyekh.com/tools/env.html
+Description: Convert environment variables (.env) to JSON objects or mask secret credentials 100% offline.
+Keywords: env to json, env redactor, mask api keys, environment variables converter
+
+**SVG Vector to CSS Data URI Converter**
+URL: https://zyekh.com/tools/svg-converter.html
+Description: Convert raw SVG vector markup into optimized CSS background Data URIs and Base64 strings 100% offline.
+Keywords: svg to data uri, svg to css, svg base64, svg background image
 
 **Web Tools Hub**
 URL: https://zyekh.com/tools/
-Description: Halaman utama semua 37 web utility tools dengan pencarian instan.
+Description: Halaman utama semua 41 web utility tools dengan pencarian instan.
 
 ---
 

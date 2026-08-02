@@ -54,8 +54,11 @@ Zyekh Abdul Qadir Jailani is a Full Stack Developer & Security Researcher specia
 - [CSV to JSON & SQL Converter](https://zyekh.com/tools/csv-json.html): Convert CSV and TSV tabular data into clean JSON arrays or SQL INSERT statements.
 - [IP Subnet & CIDR Calculator](https://zyekh.com/tools/subnet.html): Calculate IPv4 network ranges, subnet masks, broadcast addresses, and usable hosts.
 - [HTML Entity Encoder & Decoder](https://zyekh.com/tools/html-entity.html): Encode special characters to safe HTML entities or decode HTML entities back offline.
-- [SQL Query Formatter](https://zyekh.com/tools/sql.html): Format, clean, and beautify complex SQL queries with custom keyword casing offline.
-- [Web Tools Hub](https://zyekh.com/tools/): Access all 37 client-side web utilities.
+- [cURL Command to Code Converter](https://zyekh.com/tools/curl.html): Convert cURL commands to JS Fetch, Python Requests, Go, Node.js, and PHP code offline.
+- [AI Prompt Token & Cost Estimator](https://zyekh.com/tools/ai-token.html): Estimate LLM prompt tokens & API pricing for GPT-4o, Claude 3.5, Gemini 1.5, Llama 3.
+- [.env to JSON & Secret Redactor](https://zyekh.com/tools/env.html): Convert environment variables (.env) to JSON or mask API keys/passwords offline.
+- [SVG Vector to CSS Data URI](https://zyekh.com/tools/svg-converter.html): Convert raw SVG vector markup into clean CSS background Data URIs and Base64 strings.
+- [Web Tools Hub](https://zyekh.com/tools/): Access all 41 client-side web utilities.
 
 ## Open-Source Security Tools & Repositories
 - [vol3-ebpf-detector](https://github.com/zyekhabdul/vol3-ebpf-detector): Advanced Volatility 3 plugin & standalone memory carver for eBPF rootkit detection & Linux kernel forensics.
