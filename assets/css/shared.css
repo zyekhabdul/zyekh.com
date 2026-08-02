@@ -68,6 +68,11 @@ body {
   overflow-x: clip;
 }
 
+button, input, select, textarea {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+
 /* Native CSS :has() Body Overflow Lock (Baseline 2023+) */
 body:has(#navMenu.open),
 body:has(dialog[open]) {
@@ -871,22 +876,33 @@ details[open] summary::after { content: '\2212'; }
 .dot-green, .dot-3 { background: #52525b !important; }
 
 /* Filter Bar & Pill Buttons */
-.filter-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; margin-bottom: 1.5rem; }
+.filter-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; margin-bottom: 1.5rem; align-items: center; }
 .filter-btn {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   color: var(--text-muted);
-  padding: 0.4rem 1rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
   cursor: pointer;
   transition: all var(--transition);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
-.filter-btn:hover,
+.filter-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--border-color-hover);
+  color: var(--text-main);
+}
 .filter-btn.active {
   background: var(--text-main);
   border-color: var(--text-main);
   color: #09090b;
+  font-weight: 600;
 }
+
 
