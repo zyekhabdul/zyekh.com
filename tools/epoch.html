@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unix Epoch Timestamp Converter — Offline Developer Tool | Zyekh</title>
+  <meta name="description" content="Convert Unix epoch timestamps to human-readable date formats (ISO 8601, WIB, UTC) and date to epoch seconds 100% offline & client-side in browser.">
+  <meta name="keywords" content="epoch converter, unix timestamp, timestamp to date, epoch to date, epoch seconds, timezone converter, developer utility">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/epoch.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Unix Epoch Timestamp Converter — Offline Developer Tool | Zyekh">
+  <meta property="og:description" content="Convert Unix epoch timestamps to human-readable date formats (ISO 8601, WIB, UTC) and date to epoch seconds 100% offline & client-side in browser.">
+  <meta property="og:url" content="https://zyekh.com/tools/epoch.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/epoch.html#app",
+        "name": "Unix Epoch Timestamp Converter",
+        "description": "Convert Unix epoch timestamps to human-readable date formats (ISO 8601, WIB, UTC) and date to epoch seconds 100% offline & client-side in browser.",
+        "url": "https://zyekh.com/tools/epoch.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/epoch.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Epoch Converter", "item": "https://zyekh.com/tools/epoch.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v48">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v48">
+
+  <style>
+    .epoch-card { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1rem; }
+    .epoch-clock { font-family: 'Fira Code', monospace; font-size: 1.35rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
+    input.epoch-input { font-family: 'Fira Code', monospace; font-size: 0.95rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.65rem 1rem; width: 100%; margin-bottom: 0.75rem; }
+    .result-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-family: 'Fira Code', monospace; font-size: 0.85rem; }
+    .result-table th, .result-table td { border: 1px solid var(--border-color); padding: 0.6rem 0.8rem; text-align: left; }
+    .result-table th { background: var(--bg-card); color: var(--text-muted); width: 35%; }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">Epoch Converter</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">DEVELOPER UTILITIES</span>
+      <h1 class="page-title">Unix Epoch Timestamp Converter</h1>
+      <p class="page-subtitle">Convert Unix timestamps (seconds & milliseconds) to human-readable dates (ISO-8601, WIB, WITA, WIT, UTC) in real-time.</p>
+    </header>
+
+    <section class="tool-box">
+      <div class="epoch-card">
+        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.25rem;">Current Real-Time Unix Epoch (Seconds)</div>
+        <div id="liveEpoch" class="epoch-clock">Loading live timestamp...</div>
+      </div>
+
+      <div class="form-group">
+        <label for="epochInput" style="font-weight:600;">Unix Timestamp (Detik atau Milidetik)</label>
+        <input type="text" id="epochInput" class="epoch-input" placeholder="Masukkan Unix timestamp (contoh: 1775150400)" oninput="convertTimestamp()">
+      </div>
+
+      <table class="result-table">
+        <tbody>
+          <tr><th>GMT / UTC</th><td id="outUTC">—</td></tr>
+          <tr><th>WIB (UTC+7)</th><td id="outWIB">—</td></tr>
+          <tr><th>WITA (UTC+8)</th><td id="outWITA">—</td></tr>
+          <tr><th>WIT (UTC+9)</th><td id="outWIT">—</td></tr>
+          <tr><th>ISO 8601 Format</th><td id="outISO" style="color:#38bdf8;">—</td></tr>
+          <tr><th>Relative Time</th><td id="outRelative" style="color:#4ade80;">—</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="seo-content-block seo-block" style="margin-top:2rem;">
+      <h2>Tentang Unix Epoch Timestamp</h2>
+      <p>Unix Epoch Timestamp merepresentasikan jumlah detik yang telah berlalu sejak 1 Januari 1970 00:00:00 UTC (dikenal sebagai Epoch Unix). Sistem operasi berbasis POSIX dan basis data modern menggunakan format ini untuk pencatatan waktu yang konsisten tanpa masalah zona waktu.</p>
+
+      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+      <div class="faq-accordion">
+        <details class="faq-card">
+          <summary class="faq-summary">Bagaimana cara membedakan timestamp detik vs milidetik?</summary>
+          <p class="faq-answer">Timestamp detik biasanya terdiri dari 10 digit angka (contoh: <code>1775150400</code>), sedangkan timestamp milidetik (JavaScript <code>Date.now()</code>) terdiri dari 13 digit angka (contoh: <code>1775150400000</code>).</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+  </footer>
+
+  <script>
+    function updateLiveClock() {
+      const nowSec = Math.floor(Date.now() / 1000);
+      document.getElementById('liveEpoch').textContent = nowSec;
+    }
+    setInterval(updateLiveClock, 1000);
+    updateLiveClock();
+
+    function convertTimestamp() {
+      let raw = document.getElementById('epochInput').value.trim();
+      if (!raw) {
+        raw = Math.floor(Date.now() / 1000).toString();
+      }
+
+      let ts = parseInt(raw, 10);
+      if (isNaN(ts)) {
+        document.getElementById('outUTC').textContent = '[ ERROR ] Invalid number.';
+        document.getElementById('outWIB').textContent = '—';
+        document.getElementById('outWITA').textContent = '—';
+        document.getElementById('outWIT').textContent = '—';
+        document.getElementById('outISO').textContent = '—';
+        document.getElementById('outRelative').textContent = '—';
+        return;
+      }
+
+      // Detect milliseconds (13 digits) vs seconds (10 digits)
+      if (raw.length >= 13) {
+        ts = Math.floor(ts / 1000);
+      }
+
+      const d = new Date(ts * 1000);
+
+      document.getElementById('outUTC').textContent = d.toUTCString();
+      document.getElementById('outWIB').textContent = new Intl.DateTimeFormat('id-ID', { dateStyle: 'full', timeStyle: 'medium', timeZone: 'Asia/Jakarta' }).format(d) + ' (WIB)';
+      document.getElementById('outWITA').textContent = new Intl.DateTimeFormat('id-ID', { dateStyle: 'full', timeStyle: 'medium', timeZone: 'Asia/Makassar' }).format(d) + ' (WITA)';
+      document.getElementById('outWIT').textContent = new Intl.DateTimeFormat('id-ID', { dateStyle: 'full', timeStyle: 'medium', timeZone: 'Asia/Jayapura' }).format(d) + ' (WIT)';
+      document.getElementById('outISO').textContent = d.toISOString();
+      document.getElementById('outRelative').textContent = getRelativeTime(d);
+    }
+
+    function getRelativeTime(d) {
+      const diffSec = Math.round((d.getTime() - Date.now()) / 1000);
+      const absSec = Math.abs(diffSec);
+
+      if (absSec < 60) return diffSec >= 0 ? 'in a few seconds' : 'a few seconds ago';
+      if (absSec < 3600) {
+        const min = Math.round(absSec / 60);
+        return diffSec >= 0 ? `in ~${min} minutes` : `~${min} minutes ago`;
+      }
+      if (absSec < 86400) {
+        const hr = Math.round(absSec / 3600);
+        return diffSec >= 0 ? `in ~${hr} hours` : `~${hr} hours ago`;
+      }
+      const days = Math.round(absSec / 86400);
+      return diffSec >= 0 ? `in ~${days} days` : `~${days} days ago`;
+    }
+
+    // Auto convert default
+    document.addEventListener('DOMContentLoaded', convertTimestamp);
+  </script>
+  <script src="/assets/js/site-nav.js?v=20260802_v48" defer></script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hash Generator & Checksum Inspector — Offline Security Utility | Zyekh</title>
+  <meta name="description" content="Generate SHA-256, SHA-512, SHA-1 cryptographic hashes and verify file checksums 100% offline & client-side in browser.">
+  <meta name="keywords" content="hash generator, sha256 generator, sha512 generator, md5 hash, file checksum verifier, crypto web api, security tool">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/hash.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Hash Generator & Checksum Inspector — Offline Security Utility | Zyekh">
+  <meta property="og:description" content="Generate SHA-256, SHA-512, SHA-1 cryptographic hashes and verify file checksums 100% offline & client-side in browser.">
+  <meta property="og:url" content="https://zyekh.com/tools/hash.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/hash.html#app",
+        "name": "Hash Generator & Checksum Inspector",
+        "description": "Generate SHA-256, SHA-512, SHA-1 cryptographic hashes and verify file checksums 100% offline & client-side in browser.",
+        "url": "https://zyekh.com/tools/hash.html",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/hash.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Hash Generator", "item": "https://zyekh.com/tools/hash.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v48">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v48">
+
+  <style>
+    textarea.hash-input { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; width: 100%; min-height: 120px; resize: vertical; margin-bottom: 1rem; }
+    .hash-result-card { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.85rem 1rem; margin-bottom: 0.75rem; }
+    .hash-label { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.25rem; }
+    .hash-val { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--text-main); word-break: break-all; }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">Hash Generator</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">DEVELOPER UTILITIES</span>
+      <h1 class="page-title">Hash Generator & Checksum Inspector</h1>
+      <p class="page-subtitle">Generate SHA-256, SHA-512, SHA-1 cryptographic hashes and verify file checksums 100% offline in browser.</p>
+    </header>
+
+    <section class="tool-box">
+      <label for="hashText" style="font-weight:600;display:block;margin-bottom:0.4rem;">Text Input</label>
+      <textarea id="hashText" class="hash-input" placeholder="Type or paste text to generate cryptographic hashes..." oninput="generateHashes()"></textarea>
+
+      <div style="margin-bottom:1.5rem;">
+        <label for="fileChecksum" style="font-size:0.85rem;color:var(--text-muted);"> Atau Hitung File Checksum (Local File Hashing):</label>
+        <input type="file" id="fileChecksum" onchange="hashFile()" style="font-size:0.85rem;margin-top:0.3rem;">
+      </div>
+
+      <div class="hash-result-card">
+        <div class="hash-label">SHA-256</div>
+        <div id="sha256Out" class="hash-val">—</div>
+      </div>
+
+      <div class="hash-result-card">
+        <div class="hash-label">SHA-512</div>
+        <div id="sha512Out" class="hash-val">—</div>
+      </div>
+
+      <div class="hash-result-card">
+        <div class="hash-label">SHA-1</div>
+        <div id="sha1Out" class="hash-val">—</div>
+      </div>
+    </section>
+
+    <section class="seo-content-block seo-block" style="margin-top:2rem;">
+      <h2>Tentang Kriptografi Hash & Checksum</h2>
+      <p>Fungsi hash kriptografi adalah algoritma matematika yang memetakan data berukuran acak menjadi string berukuran tetap (digest). Digunakan secara luas untuk memverifikasi integritas berkas, menyimpan kata sandi aman, dan pembuatan tanda tangan digital.</p>
+
+      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+      <div class="faq-accordion">
+        <details class="faq-card">
+          <summary class="faq-summary">Apakah berkas saya diunggah ke server saat menghitung checksum?</summary>
+          <p class="faq-answer">Tidak. Seluruh perhitungan hash dilakukan secara lokal di perangkat Anda menggunakan standar <code>Web Crypto API</code> browser.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+  </footer>
+
+  <script>
+    async function hashString(algo, str) {
+      const buf = new TextEncoder().encode(str);
+      const hashBuf = await crypto.subtle.digest(algo, buf);
+      const hashArray = Array.from(new Uint8Array(hashBuf));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function generateHashes() {
+      const text = document.getElementById('hashText').value;
+      if (!text) {
+        document.getElementById('sha256Out').textContent = '—';
+        document.getElementById('sha512Out').textContent = '—';
+        document.getElementById('sha1Out').textContent = '—';
+        return;
+      }
+
+      document.getElementById('sha256Out').textContent = await hashString('SHA-256', text);
+      document.getElementById('sha512Out').textContent = await hashString('SHA-512', text);
+      document.getElementById('sha1Out').textContent = await hashString('SHA-1', text);
+    }
+
+    async function hashFile() {
+      const fileInput = document.getElementById('fileChecksum');
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      document.getElementById('sha256Out').textContent = 'Calculating SHA-256...';
+      document.getElementById('sha512Out').textContent = 'Calculating SHA-512...';
+      document.getElementById('sha1Out').textContent = 'Calculating SHA-1...';
+
+      const arrayBuffer = await file.arrayBuffer();
+      
+      const sha256Buf = await crypto.subtle.digest('SHA-256', arrayBuffer);
+      const sha512Buf = await crypto.subtle.digest('SHA-512', arrayBuffer);
+      const sha1Buf = await crypto.subtle.digest('SHA-1', arrayBuffer);
+
+      document.getElementById('sha256Out').textContent = bufToHex(sha256Buf);
+      document.getElementById('sha512Out').textContent = bufToHex(sha512Buf);
+      document.getElementById('sha1Out').textContent = bufToHex(sha1Buf);
+    }
+
+    function bufToHex(buffer) {
+      return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+  </script>
+  <script src="/assets/js/site-nav.js?v=20260802_v48" defer></script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>URL Encoder / Decoder & Query Inspector — Offline Developer Tool | Zyekh</title>
+  <meta name="description" content="Encode, decode, parse query string parameters, and strip tracking tags from URLs 100% offline & client-side in browser.">
+  <meta name="keywords" content="url encoder, url decoder, url parser, query string parser, strip tracking tags, utm cleaner, developer utility">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/url.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="URL Encoder / Decoder & Query Inspector — Offline Developer Tool | Zyekh">
+  <meta property="og:description" content="Encode, decode, parse query string parameters, and strip tracking tags from URLs 100% offline & client-side in browser.">
+  <meta property="og:url" content="https://zyekh.com/tools/url.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/url.html#app",
+        "name": "URL Encoder / Decoder & Query Inspector",
+        "description": "Encode, decode, parse query string parameters, and strip tracking tags from URLs 100% offline & client-side in browser.",
+        "url": "https://zyekh.com/tools/url.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/url.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "URL Converter", "item": "https://zyekh.com/tools/url.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v48">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v48">
+
+  <style>
+    textarea.url-box { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; width: 100%; min-height: 110px; resize: vertical; margin-bottom: 1rem; word-break: break-all; }
+    .btn-group { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .query-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-family: 'Fira Code', monospace; font-size: 0.85rem; }
+    .query-table th, .query-table td { border: 1px solid var(--border-color); padding: 0.55rem 0.75rem; text-align: left; }
+    .query-table th { background: var(--bg-card); color: var(--text-muted); }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">URL Converter</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">DEVELOPER UTILITIES</span>
+      <h1 class="page-title">URL Encoder / Decoder & Query Inspector</h1>
+      <p class="page-subtitle">Encode, decode, parse URL query parameters, and strip tracking tags 100% client-side.</p>
+    </header>
+
+    <section class="tool-box">
+      <label for="urlInput" style="font-weight:600;display:block;margin-bottom:0.4rem;">URL / String Input</label>
+      <textarea id="urlInput" class="url-box" placeholder="https://zyekh.com/tools/?search=security&utm_source=twitter&fbclid=12345" oninput="processURL()"></textarea>
+
+      <div class="btn-group">
+        <button type="button" onclick="encodeURL()">Encode URL</button>
+        <button type="button" onclick="decodeURL()">Decode URL</button>
+        <button type="button" onclick="cleanTracking()">Strip Tracking Tags (UTM/Fbclid)</button>
+        <button type="button" onclick="copyOutput()" id="btnCopyURL">Copy Output</button>
+      </div>
+
+      <label for="urlOutput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Output Result</label>
+      <textarea id="urlOutput" class="url-box" placeholder="Result will appear here..." readonly></textarea>
+
+      <label style="font-weight:600;display:block;margin-top:1rem;margin-bottom:0.4rem;">Parsed Query Parameters</label>
+      <table class="query-table">
+        <thead>
+          <tr>
+            <th style="width:35%;">Key (Parameter)</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody id="queryTableBody">
+          <tr><td colspan="2" style="color:var(--text-muted);text-align:center;">No query parameters detected.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="seo-content-block seo-block" style="margin-top:2rem;">
+      <h2>Tentang Pengodean URL & Pembersihan Tracking</h2>
+      <p>URL Encoding mengubah karakter tak aman menjadi representasi persen (<code>%20</code>, <code>%26</code>) agar dapat ditransmisikan secara aman melalui protokol HTTP. Alat ini juga mampu mengurai parameter query string serta membuang penanda pelacak iklan (UTM parameters, Facebook clid, Google clid) untuk menjaga privasi tautan.</p>
+
+      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+      <div class="faq-accordion">
+        <details class="faq-card">
+          <summary class="faq-summary">Mengapa perlu membersihkan parameter UTM atau fbclid?</summary>
+          <p class="faq-answer">Parameter pelacak digunakan oleh platform iklan untuk melacak aktivitas navigasi antar situs. Membersihkannya membuat URL lebih singkat, bersih, dan hemat privasi saat dibagikan.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+  </footer>
+
+  <script>
+    function encodeURL() {
+      const input = document.getElementById('urlInput').value;
+      if (!input) return;
+      document.getElementById('urlOutput').value = encodeURIComponent(input);
+    }
+
+    function decodeURL() {
+      const input = document.getElementById('urlInput').value.trim();
+      if (!input) return;
+      try {
+        document.getElementById('urlOutput').value = decodeURIComponent(input);
+      } catch (err) {
+        document.getElementById('urlOutput').value = '[ ERROR ] Invalid URL encoding.';
+      }
+    }
+
+    function cleanTracking() {
+      const input = document.getElementById('urlInput').value.trim();
+      if (!input) return;
+      try {
+        const u = new URL(input.startsWith('http') ? input : 'https://' + input);
+        const trackingKeys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid', 'ref', 'mc_eid'];
+        trackingKeys.forEach(k => u.searchParams.delete(k));
+        const cleaned = u.toString();
+        document.getElementById('urlOutput').value = cleaned;
+        processURL();
+      } catch (err) {
+        document.getElementById('urlOutput').value = '[ ERROR ] Could not parse URL structure.';
+      }
+    }
+
+    function processURL() {
+      const input = document.getElementById('urlInput').value.trim();
+      const tbody = document.getElementById('queryTableBody');
+
+      if (!input) {
+        tbody.innerHTML = '<tr><td colspan="2" style="color:var(--text-muted);text-align:center;">No query parameters detected.</td></tr>';
+        return;
+      }
+
+      try {
+        let queryString = input;
+        if (input.includes('?')) {
+          queryString = input.split('?')[1].split('#')[0];
+        }
+        const params = new URLSearchParams(queryString);
+        let rowsHTML = '';
+        let count = 0;
+
+        params.forEach((val, key) => {
+          count++;
+          rowsHTML += `<tr><td style="color:#38bdf8;font-weight:600;">${escapeHTML(key)}</td><td style="color:#4ade80;">${escapeHTML(val)}</td></tr>`;
+        });
+
+        if (count > 0) {
+          tbody.innerHTML = rowsHTML;
+        } else {
+          tbody.innerHTML = '<tr><td colspan="2" style="color:var(--text-muted);text-align:center;">No query parameters detected.</td></tr>';
+        }
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="2" style="color:var(--text-muted);text-align:center;">No query parameters detected.</td></tr>';
+      }
+    }
+
+    async function copyOutput() {
+      const out = document.getElementById('urlOutput').value;
+      if (!out) return;
+      try {
+        await navigator.clipboard.writeText(out);
+        const btn = document.getElementById('btnCopyURL');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy Output'; }, 1800);
+      } catch (err) {}
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, tag => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'}[tag]));
+    }
+  </script>
+  <script src="/assets/js/site-nav.js?v=20260802_v48" defer></script>
+</body>
+</html>

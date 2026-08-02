@@ -39,6 +39,10 @@
   <url><loc>https://zyekh.com/tools/jwt.html</loc><lastmod>2026-08-03</lastmod><priority>0.8</priority></url>
   <url><loc>https://zyekh.com/tools/base64.html</loc><lastmod>2026-08-03</lastmod><priority>0.8</priority></url>
   <url><loc>https://zyekh.com/tools/regex.html</loc><lastmod>2026-08-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/hash.html</loc><lastmod>2026-08-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/url.html</loc><lastmod>2026-08-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/epoch.html</loc><lastmod>2026-08-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://zyekh.com/tools/css-minifier.html</loc><lastmod>2026-08-03</lastmod><priority>0.8</priority></url>
   <url>
     <loc>https://zyekh.com/blog/</loc>
     <lastmod>2026-07-26</lastmod>

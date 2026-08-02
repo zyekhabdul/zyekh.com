@@ -175,14 +175,29 @@ URL: https://zyekh.com/tools/base64.html
 Description: Convert text or image files to Base64 data strings and decode back 100% offline.
 Keywords: base64 encoder, base64 decoder, image to base64, base64 data uri
 
-**RegEx Live Tester**
-URL: https://zyekh.com/tools/regex.html
-Description: Test Regular Expression patterns with real-time match highlighting and flags.
-Keywords: regex tester, regex pattern, regular expression online, regex live preview
+**Hash Generator & Checksum Inspector**
+URL: https://zyekh.com/tools/hash.html
+Description: Generate SHA-256, SHA-512, SHA-1 cryptographic hashes and verify file checksums 100% offline.
+Keywords: hash generator, sha256 generator, sha512 generator, md5 hash, file checksum verifier
+
+**URL Converter & Inspector**
+URL: https://zyekh.com/tools/url.html
+Description: Encode, decode, parse query parameters, and strip tracking tags from URLs 100% offline.
+Keywords: url encoder, url decoder, url parser, query string parser, strip tracking tags
+
+**Unix Epoch Timestamp Converter**
+URL: https://zyekh.com/tools/epoch.html
+Description: Convert Unix timestamps (seconds & ms) to human-readable dates (ISO 8601, WIB, UTC) in real-time.
+Keywords: epoch converter, unix timestamp, timestamp to date, epoch to date, epoch seconds
+
+**CSS Minifier & Formatter**
+URL: https://zyekh.com/tools/css-minifier.html
+Description: Compress CSS stylesheet files to save payload bandwidth or format minified CSS 100% offline.
+Keywords: css minifier, css beautify, compress css, css formatter, unminify css
 
 **Web Tools Hub**
 URL: https://zyekh.com/tools/
-Description: Halaman utama semua 27 web utility tools dengan pencarian instan.
+Description: Halaman utama semua 31 web utility tools dengan pencarian instan.
 
 ---
 

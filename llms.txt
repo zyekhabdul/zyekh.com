@@ -46,8 +46,11 @@ Zyekh Abdul Qadir Jailani is a Full Stack Developer & Security Researcher specia
 - [JSON Formatter & Tree Viewer](https://zyekh.com/tools/json.html): Format, beautify, minify, validate, and inspect JSON structure interactively 100% offline.
 - [JWT Token Decoder & Inspector](https://zyekh.com/tools/jwt.html): Decode header, claims payload, and check token expiration status safely client-side.
 - [Base64 Encoder / Decoder](https://zyekh.com/tools/base64.html): Convert text or image files to Base64 strings and decode back 100% offline.
-- [RegEx Live Tester](https://zyekh.com/tools/regex.html): Test Regular Expression patterns with real-time match highlighting and flags.
-- [Web Tools Hub](https://zyekh.com/tools/): Access all 27 client-side web utilities.
+- [Hash Generator & Checksum Inspector](https://zyekh.com/tools/hash.html): Generate SHA-256, SHA-512, SHA-1 cryptographic hashes and verify file checksums offline.
+- [URL Converter & Inspector](https://zyekh.com/tools/url.html): Encode, decode, parse query parameters, and strip tracking tags from URLs.
+- [Epoch Timestamp Converter](https://zyekh.com/tools/epoch.html): Convert Unix timestamps (seconds & ms) to human dates (ISO 8601, WIB, UTC) in real-time.
+- [CSS Minifier & Formatter](https://zyekh.com/tools/css-minifier.html): Compress CSS stylesheet files to save payload bandwidth or format minified CSS.
+- [Web Tools Hub](https://zyekh.com/tools/): Access all 31 client-side web utilities.
 
 ## Open-Source Security Tools & Repositories
 - [vol3-ebpf-detector](https://github.com/zyekhabdul/vol3-ebpf-detector): Advanced Volatility 3 plugin & standalone memory carver for eBPF rootkit detection & Linux kernel forensics.

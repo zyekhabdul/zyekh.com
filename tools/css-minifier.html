@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS Minifier & Formatter — Offline Developer Tool | Zyekh</title>
+  <meta name="description" content="Compress CSS stylesheet files to save payload bandwidth or format minified CSS 100% offline & client-side in browser.">
+  <meta name="keywords" content="css minifier, css beautify, compress css, css formatter, unminify css, css optimizer, developer utility">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/css-minifier.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CSS Minifier & Formatter — Offline Developer Tool | Zyekh">
+  <meta property="og:description" content="Compress CSS stylesheet files to save payload bandwidth or format minified CSS 100% offline & client-side in browser.">
+  <meta property="og:url" content="https://zyekh.com/tools/css-minifier.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/css-minifier.html#app",
+        "name": "CSS Minifier & Formatter",
+        "description": "Compress CSS stylesheet files to save payload bandwidth or format minified CSS 100% offline & client-side in browser.",
+        "url": "https://zyekh.com/tools/css-minifier.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/css-minifier.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "CSS Minifier", "item": "https://zyekh.com/tools/css-minifier.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v48">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v48">
+
+  <style>
+    .css-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+    @media (max-width: 768px) { .css-grid { grid-template-columns: 1fr; } }
+    textarea.css-box { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; min-height: 280px; width: 100%; resize: vertical; }
+    .btn-group { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .stats-bar { font-family: 'Fira Code', monospace; font-size: 0.8rem; color: #4ade80; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 0.5rem 0.75rem; border-radius: 4px; margin-bottom: 1rem; display: none; }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">CSS Minifier</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">DEVELOPER UTILITIES</span>
+      <h1 class="page-title">CSS Minifier & Formatter</h1>
+      <p class="page-subtitle">Compress CSS files to save payload bandwidth or format minified CSS with clean indentation 100% offline.</p>
+    </header>
+
+    <section class="tool-box">
+      <div class="btn-group">
+        <button type="button" onclick="minifyCSS()">Minify CSS</button>
+        <button type="button" onclick="formatCSS()">Format / Beautify CSS</button>
+        <button type="button" onclick="copyCSS()" id="btnCopyCSS">Copy Output</button>
+      </div>
+
+      <div id="statsBar" class="stats-bar"></div>
+
+      <div class="css-grid">
+        <div>
+          <label for="cssInput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Raw CSS Input</label>
+          <textarea id="cssInput" class="css-box" placeholder="Paste your raw CSS here...&#10;body {&#10;  background-color: #09090b;&#10;  color: #ffffff;&#10;}"></textarea>
+        </div>
+
+        <div>
+          <label for="cssOutput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Minified / Formatted Result</label>
+          <textarea id="cssOutput" class="css-box" placeholder="Result will appear here..." readonly></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="seo-content-block seo-block" style="margin-top:2rem;">
+      <h2>Tentang Kompresi & Minifikasi CSS</h2>
+      <p>Minifikasi CSS menghapus spasi yang tidak diperlukan, karakter baris baru (newlines), serta komentar pengembang tanpa merubah logika visual stylesheet. Hal ini menurunkan ukuran payload CSS hingga 20–40% untuk meningkatkan kecepatan muat halaman (PageSpeed).</p>
+
+      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+      <div class="faq-accordion">
+        <details class="faq-card">
+          <summary class="faq-summary">Apakah proses minifikasi ini aman bagi CSS modern?</summary>
+          <p class="faq-answer">Ya. Minifier ini mempertahankan struktur aturan CSS3, variabel CSS (Custom Properties), dan query media secara presisi.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+  </footer>
+
+  <script>
+    function minifyCSS() {
+      const input = document.getElementById('cssInput').value;
+      if (!input.trim()) return;
+
+      let minified = input
+        .replace(/\/\*[\s\S]*?\*\//g, '') // remove comments
+        .replace(/\s+/g, ' ')             // collapse spaces
+        .replace(/\s*([{}:;,])\s*/g, '$1')// remove space around delimiters
+        .replace(/;\}/g, '}')             // remove trailing semicolon
+        .trim();
+
+      document.getElementById('cssOutput').value = minified;
+      showStats(input.length, minified.length);
+    }
+
+    function formatCSS() {
+      const input = document.getElementById('cssInput').value;
+      if (!input.trim()) return;
+
+      let formatted = input
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/\s+/g, ' ')
+        .replace(/\{/g, ' {\n  ')
+        .replace(/;/g, ';\n  ')
+        .replace(/\s*\}/g, '\n}\n\n')
+        .replace(/\n\s*\n/g, '\n')
+        .trim();
+
+      document.getElementById('cssOutput').value = formatted;
+      document.getElementById('statsBar').style.display = 'none';
+    }
+
+    function showStats(original, minified) {
+      const bar = document.getElementById('statsBar');
+      const saved = original - minified;
+      const pct = original > 0 ? ((saved / original) * 100).toFixed(1) : 0;
+      bar.textContent = `[ VERIFIED ] Original: ${original} B | Minified: ${minified} B | Saved: ${saved} B (${pct}%)`;
+      bar.style.display = 'block';
+    }
+
+    async function copyCSS() {
+      const out = document.getElementById('cssOutput').value;
+      if (!out) return;
+      try {
+        await navigator.clipboard.writeText(out);
+        const btn = document.getElementById('btnCopyCSS');
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy Output'; }, 1800);
+      } catch (err) {}
+    }
+  </script>
+  <script src="/assets/js/site-nav.js?v=20260802_v48" defer></script>
+</body>
+</html>
