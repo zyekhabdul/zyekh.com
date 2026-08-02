@@ -53,8 +53,8 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v53">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v53">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v54">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v54">
 
   <style>
     .portal-hero { text-align: center; padding: 3rem 0 2rem 0; }
@@ -206,8 +206,35 @@
   </footer>
 
   <!-- Spotlight Search & Keyboard Shortcut Listener -->
+  <div id="spotlightDropdown" class="spotlight-dropdown" style="display:none;max-width:680px;margin:-2rem auto 2.5rem auto;background:var(--bg-card);border:1px solid var(--border-color);border-radius:10px;padding:0.5rem;box-shadow:0 10px 25px rgba(0,0,0,0.5);z-index:100;position:relative;">
+    <div id="spotlightResultsList"></div>
+  </div>
+
   <script>
+    const searchItems = [
+      { title: 'cURL Command to Code Converter', url: '/tools/curl.html', category: 'Developer Utility' },
+      { title: 'AI Prompt Token & API Cost Estimator', url: '/tools/ai-token.html', category: 'AI Utility' },
+      { title: '.env to JSON & Secret Redactor', url: '/tools/env.html', category: 'Developer Utility' },
+      { title: 'SVG Vector to CSS Data URI', url: '/tools/svg-converter.html', category: 'Developer Utility' },
+      { title: 'Hash Generator & Checksum Inspector', url: '/tools/hash.html', category: 'Security' },
+      { title: 'UUID & ULID Bulk Generator', url: '/tools/uuid.html', category: 'Developer Utility' },
+      { title: 'HMAC Signer & Signature Verifier', url: '/tools/hmac.html', category: 'Security' },
+      { title: 'IP Subnet & CIDR Calculator', url: '/tools/subnet.html', category: 'Networking' },
+      { title: 'SQL Query Formatter & Beautifier', url: '/tools/sql.html', category: 'Developer Utility' },
+      { title: 'Zakat Calculator Maal & Income', url: '/tools/zakat.html', category: 'Financial' },
+      { title: 'PPh 21 Income Tax Calculator', url: '/tools/pph21.html', category: 'Financial' },
+      { title: 'Kalkulator Pesangon PHK (PP 35/2021)', url: '/tools/pesangon.html', category: 'Labour Law' },
+      { title: 'JSON Formatter & Tree Viewer', url: '/tools/json.html', category: 'Developer Utility' },
+      { title: 'JWT Token Decoder & Inspector', url: '/tools/jwt.html', category: 'Security' },
+      { title: 'Base64 Encoder / Decoder', url: '/tools/base64.html', category: 'Developer Utility' },
+      { title: 'RegEx Live Tester & Match Inspector', url: '/tools/regex.html', category: 'Developer Utility' },
+      { title: 'Linux VPS Hardening Blueprint 2026', url: '/blog/linux-vps-hardening-guide-2026.html', category: 'Security Article' },
+      { title: 'About Zyekh Abdul Qadir Jailani', url: '/about/', category: 'Profile' }
+    ];
+
     const spotlightInput = document.getElementById('spotlightInput');
+    const dropdown = document.getElementById('spotlightDropdown');
+    const resultsList = document.getElementById('spotlightResultsList');
 
     document.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
@@ -215,19 +242,50 @@
         spotlightInput.focus();
         spotlightInput.select();
       }
+      if (e.key === 'Escape' && dropdown) {
+        dropdown.style.display = 'none';
+      }
     });
 
     spotlightInput.addEventListener('input', function() {
       const q = this.value.toLowerCase().trim();
-      if (!q) return;
+      if (!q) {
+        dropdown.style.display = 'none';
+        return;
+      }
 
-      // Redirect to tools hub with query if user types search
-      if (q.length > 2 && (q.includes('zakat') || q.includes('curl') || q.includes('hash') || q.includes('jwt') || q.includes('uuid'))) {
-        // Spotlight instant response
+      const matches = searchItems.filter(item => item.title.toLowerCase().includes(q) || item.category.toLowerCase().includes(q));
+
+      if (matches.length === 0) {
+        resultsList.innerHTML = '<div style="padding:0.75rem;color:var(--text-muted);font-size:0.88rem;text-align:center;">No matching tools or articles found.</div>';
+      } else {
+        resultsList.innerHTML = matches.slice(0, 6).map((item, idx) => `
+          <a href="${item.url}" style="display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0.85rem;color:var(--text-main);text-decoration:none;border-radius:6px;font-size:0.9rem;margin-bottom:0.25rem;transition:background 0.15s;" onmouseover="this.style.background='#18181b'" onmouseout="this.style.background='transparent'">
+            <span>${item.title}</span>
+            <span style="font-size:0.72rem;color:var(--text-muted);font-family:'Fira Code',monospace;text-transform:uppercase;background:var(--bg-dark);padding:0.15rem 0.4rem;border-radius:4px;">${item.category}</span>
+          </a>
+        `).join('');
+      }
+
+      dropdown.style.display = 'block';
+    });
+
+    spotlightInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        const firstItem = resultsList.querySelector('a');
+        if (firstItem) {
+          window.location.href = firstItem.href;
+        }
+      }
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!spotlightInput.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = 'none';
       }
     });
   </script>
 
-  <script src="/assets/js/site-nav.js?v=20260802_v53" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v54" defer></script>
 </body>
 </html>
