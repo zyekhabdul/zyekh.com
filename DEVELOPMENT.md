@@ -55,9 +55,18 @@ Setiap kali melakukan perubahan pada kode JavaScript (`assets/js/*.js`) atau CSS
 3. **Bottom-of-Page Contact Trigger**:
    - Wajib menyertakan pengecekan terbawah halaman `(window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60)` untuk mengaktifkan link `Contact`.
 
+## ⚡ 5. STRICT NO-EMOJI & MINIMALIST CODE PROTOCOL (WAJIB)
+
+1. **Dilarang Penggunaan Emoji di Kode & Dokumentasi**:
+   - DILARANG keras menyisipkan karakter emoji (seperti 📅, ⏱️, 🚀, 🛡️, 🧰, 📄, 🔓, dll.) ke dalam berkas HTML, CSS, JavaScript, maupun file dokumentasi di repositori ini.
+   - *Alasan*: Menjaga efisiensi token, kesederhanaan *Clean Minimalist FOSS Aesthetic*, dan performa *parsing*.
+2. **Gunakan Ikon Teks / SVG / Typography Standard**:
+   - Sebagai pengganti emoji, gunakan simbol teks ASCII/Unicode bersih (`•`, `->`, `[ VERIFIED ]`, `[ WARN ]`, `[ INFO ]`, `[ NOTE ]`) atau SVG vektor jika diperlukan.
+
 ---
 
 ## ⚡ 6. MODERN SYNTAX STANDARDS PROTOCOL (BASELINE 2024+)
+
 
 1. **Centralized Service Worker Registration**:
    - Registrasi Service Worker WAJIB dikelola secara terpusat di dalam komponen `<site-nav>` (`assets/js/site-nav.js`).

@@ -93,8 +93,8 @@
 
   <!-- Self-hosted Fonts -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v36">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v36">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v37">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v37">
 
   <style>
     * { box-sizing: border-box; }
@@ -246,7 +246,7 @@
         </div>
         
         <div style="text-align: center;">
-          <button class="btn-primary" type="button" onclick="copyCron()">📋 Salin Cron</button>
+          <button class="btn-primary" type="button" onclick="copyCron()">[ SUMMARY ] Salin Cron</button>
         </div>
       </div>
       
@@ -276,7 +276,7 @@
 
     <!-- FAQ -->
     <section class="faq-section" aria-labelledby="faq-heading">
-      <h2 id="faq-heading">❓ Penjelasan Sintaks Cron (FAQ)</h2>
+      <h2 id="faq-heading">[ FAQ ] Penjelasan Sintaks Cron (FAQ)</h2>
       
       <div style="margin-bottom: 1.5rem;">
         <table aria-label="Format Cron">
@@ -570,7 +570,7 @@ function processCron() {
     expDiv.innerText = explanation;
     
     const nextTimes = getNextExecutions(cronStr);
-    nextList.innerHTML = nextTimes.map(t => `<li>📅 ${t}</li>`).join('');
+    nextList.innerHTML = nextTimes.map(t => `<li>${t}</li>`).join('');
   }
 }
 
@@ -591,6 +591,6 @@ function copyCron() {
 // Init on load
 document.addEventListener('DOMContentLoaded', processCron);
 </script>
-  <script src="/assets/js/site-nav.js?v=20260802_v36" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v37" defer></script>
 </body>
 </html>
