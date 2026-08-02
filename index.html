@@ -53,42 +53,52 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v57">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v57">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v58">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v58">
 
   <style>
     .portal-hero { text-align: center; padding: 3rem 0 2rem 0; }
     
-    /* Spotlight Search Box & Clean Ctrl + K Badge */
-    .spotlight-box { position: relative; max-width: 680px; margin: 1.5rem auto 2.5rem auto; }
+    /* Spotlight Search Box & Clean KBD Badge */
+    .spotlight-box { position: relative; max-width: 680px; margin: 1.5rem auto 2.5rem auto; box-sizing: border-box; }
     .spotlight-input { 
       width: 100%; 
-      padding: 0.9rem 5rem 0.9rem 1.25rem; 
-      font-size: 1rem; 
+      box-sizing: border-box;
+      padding: 0.85rem 5.5rem 0.85rem 1.15rem; 
+      font-size: 0.95rem; 
       font-family: 'Inter', sans-serif; 
       background: var(--bg-card); 
       color: var(--text-main); 
-      border: 2px solid var(--border-color); 
-      border-radius: 10px; 
+      border: 1px solid var(--border-color); 
+      border-radius: 8px; 
       transition: border-color 0.2s, box-shadow 0.2s; 
     }
-    .spotlight-input:focus { border-color: var(--text-main); outline: none; box-shadow: 0 0 0 3px rgba(255,255,255,0.1); }
+    .spotlight-input:focus { border-color: var(--text-main); outline: none; box-shadow: 0 0 0 2px rgba(255,255,255,0.15); }
     
     .spotlight-shortcut { 
       position: absolute; 
-      right: 0.85rem; 
+      right: 0.75rem; 
       top: 50%; 
       transform: translateY(-50%); 
       font-family: 'Fira Code', monospace; 
-      font-size: 0.72rem; 
+      font-size: 0.7rem; 
+      font-weight: 500;
       line-height: 1;
       color: var(--text-muted); 
-      background: rgba(255, 255, 255, 0.05); 
+      background: #141417; 
       border: 1px solid var(--border-color); 
-      padding: 0.3rem 0.6rem; 
-      border-radius: 6px; 
+      padding: 0.35rem 0.55rem; 
+      border-radius: 5px; 
       pointer-events: none; 
       user-select: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 640px) {
+      .spotlight-shortcut { display: none; }
+      .spotlight-input { padding-right: 1.15rem; }
     }
 
     .spotlight-dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 100; text-align: left; }
@@ -157,8 +167,8 @@
 
     <!-- Spotlight Search Bar (Ctrl + K) -->
     <div class="spotlight-box">
-      <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Search tools, articles, repositories (Press Ctrl+K)..." autocomplete="off">
-      <span class="spotlight-shortcut">Ctrl + K</span>
+      <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Search 41 tools &amp; articles..." autocomplete="off">
+      <kbd class="spotlight-shortcut">Ctrl + K</kbd>
       
       <div id="spotlightDropdown" class="spotlight-dropdown">
         <div id="spotlightResultsList"></div>
@@ -346,6 +356,6 @@
     });
   </script>
 
-  <script src="/assets/js/site-nav.js?v=20260802_v57" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v58" defer></script>
 </body>
 </html>
