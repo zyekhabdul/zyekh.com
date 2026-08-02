@@ -17,10 +17,9 @@
 
   <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v45">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v45">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v46">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v46">
 
-  
   <!-- SEO & Social Meta Tags -->
   <link rel="canonical" href="https://zyekh.com/tools/">
   <meta property="og:title" content="Web Utility Tools Hub — Client-Side Privacy Tools | zyekh.com">
@@ -58,8 +57,7 @@
 </head>
 <body>
 
-  <!-- Navigation Bar matching index.html -->
-    <!-- Header Navigation -->
+  <!-- Navigation Bar -->
   <site-nav active="tools"></site-nav>
 
   <main class="main-container">
@@ -70,19 +68,18 @@
 
     <!-- Filter & Search -->
     <div class="search-filter-box">
-      <input type="text" id="searchInput" class="search-input" placeholder="Cari tool (contoh: zakat, pph21, qr, pesangon)...">
+      <input type="text" id="searchInput" class="search-input" placeholder="Cari tool (contoh: zakat, pph21, qr, pesangon, json, jwt)...">
       <p id="searchCounter" style="margin-top: 0.75rem; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0;"></p>
     </div>
 
     <!-- Category Pill Filters -->
     <div class="filter-bar" id="categoryFilterBar">
       <button type="button" class="filter-btn active" data-category="all">[ Semua (27) ]</button>
-      <button type="button" class="filter-btn" data-category="FINANCIAL UTILITIES">[ Finansial &amp; Pajak (9) ]</button>
-      <button type="button" class="filter-btn" data-category="DEVELOPER UTILITIES">[ Developer Utilities (5) ]</button>
+      <button type="button" class="filter-btn" data-category="FINANCIAL UTILITIES">[ Finansial &amp; Pajak (8) ]</button>
+      <button type="button" class="filter-btn" data-category="DEVELOPER UTILITIES">[ Developer Utilities (6) ]</button>
       <button type="button" class="filter-btn" data-category="TEXT &amp; FORMATTING">[ Teks &amp; Format (5) ]</button>
-      <button type="button" class="filter-btn" data-category="GENERATORS &amp; RANDOM">[ Generators &amp; Random (4) ]</button>
+      <button type="button" class="filter-btn" data-category="GENERATORS &amp; UTILITIES">[ Generators &amp; Utilities (8) ]</button>
     </div>
-
 
     <!-- Tools Grid Container -->
     <div id="toolsGrid" class="grid-3">
@@ -90,7 +87,7 @@
         Tool tidak ditemukan. Coba kata kunci lain.
       </div>
 
-      <!-- Financial Calculators -->
+      <!-- Financial Calculators (8) -->
       <div class="tool-item" data-title="Zakat Calculator Maal Income Nisab 2.5%">
         <a href="/tools/zakat.html" class="tool-card">
           <div>
@@ -179,73 +176,7 @@
         </a>
       </div>
 
-      <div class="tool-item" data-title="Unit Currency Converter IDR USD EUR Exchange Rate">
-        <a href="/tools/converter.html" class="tool-card">
-          <div>
-            <span class="tool-category">FINANCIAL UTILITIES</span>
-            <h3 class="tool-title">Unit &amp; Currency Converter</h3>
-            <p class="tool-desc">Convert length, weight, temperature, and manual currency exchange rates.</p>
-          </div>
-          <span class="tool-badge">Open Tool →</span>
-        </a>
-      </div>
-
-      <!-- Text & Formatting -->
-      <div class="tool-item" data-title="Word Counter Character Line Count Reading Time">
-        <a href="/tools/counter.html" class="tool-card">
-          <div>
-            <span class="tool-category">TEXT &amp; FORMATTING</span>
-            <h3 class="tool-title">Word Counter</h3>
-            <p class="tool-desc">Count words, characters, lines, and estimated reading time in real-time.</p>
-          </div>
-          <span class="tool-badge">Open Tool →</span>
-        </a>
-      </div>
-
-      <div class="tool-item" data-title="Case Converter UPPERCASE camelCase snake_case kebab-case">
-        <a href="/tools/case-converter.html" class="tool-card">
-          <div>
-            <span class="tool-category">TEXT &amp; FORMATTING</span>
-            <h3 class="tool-title">Case Converter</h3>
-            <p class="tool-desc">Convert text to UPPERCASE, lowercase, camelCase, snake_case, and kebab-case.</p>
-          </div>
-          <span class="tool-badge">Open Tool →</span>
-        </a>
-      </div>
-
-      <div class="tool-item" data-title="Diff Checker Compare Text Code Difference Line">
-        <a href="/tools/diff-checker.html" class="tool-card">
-          <div>
-            <span class="tool-category">TEXT &amp; FORMATTING</span>
-            <h3 class="tool-title">Diff Checker</h3>
-            <p class="tool-desc">Compare two texts or code blocks side-by-side for line-by-line differences.</p>
-          </div>
-          <span class="tool-badge">Open Tool →</span>
-        </a>
-      </div>
-
-      <div class="tool-item" data-title="Markdown Previewer Realtime Editor Renderer">
-        <a href="/tools/markdown.html" class="tool-card">
-          <div>
-            <span class="tool-category">TEXT &amp; FORMATTING</span>
-            <h3 class="tool-title">Markdown Previewer</h3>
-            <p class="tool-desc">Live browser-based Markdown editor and renderer with zero installation.</p>
-          </div>
-          <span class="tool-badge">Open Tool →</span>
-        </a>
-      </div>
-
-      <div class="tool-item" data-title="Lorem Ipsum Generator Placeholder Dummy Text">
-        <a href="/tools/lorem.html" class="tool-card">
-          <div>
-            <span class="tool-category">TEXT &amp; FORMATTING</span>
-            <h3 class="tool-title">Lorem Ipsum Generator</h3>
-            <p class="tool-desc">Indonesian &amp; Latin placeholder dummy text generator.</p>
-          </div>
-          <span class="tool-badge">Open Tool →</span>
-        </a>
-      </div>
-
+      <!-- Developer Utilities (6) -->
       <div class="tool-item" data-title="JSON Formatter Validator Tree Viewer Beautify Minify Parse">
         <a href="/tools/json.html" class="tool-card">
           <div>
@@ -290,90 +221,12 @@
         </a>
       </div>
 
-      <!-- Generators & Input -->
-      <div class="tool-item" data-title="QR Code Generator Create QR Code PNG Download">
-        <a href="/tools/qr.html" class="tool-card">
+      <div class="tool-item" data-title="Diff Checker Compare Text Code Difference Line">
+        <a href="/tools/diff-checker.html" class="tool-card">
           <div>
-            <span class="tool-category">GENERATORS &amp; RANDOM</span>
-            <h3 class="tool-title">QR Code Generator</h3>
-            <p class="tool-desc">Instantly generate QR codes from text or URL and download PNG images.</p>
-          </div>
-          <span class="tool-badge">Open Tool →</span>
-        </a>
-      </div>
-
-      <div class="tool-item" data-title="Password Generator Secure Random Password">
-        <a href="/tools/password.html" class="tool-card">
-          <div>
-            <span class="tool-category">GENERATORS &amp; RANDOM</span>
-            <h3 class="tool-title">Password Generator</h3>
-            <p class="tool-desc">Generate secure random passwords with custom length and character rules.</p>
-          </div>
-          <span class="tool-badge">Open Tool →</span>
-        </a>
-      </div>
-
-      <div class="tool-item" data-title="Color Inspector Hex RGB Code Preview Picker">
-        <a href="/tools/color.html" class="tool-card">
-          <div>
-            <span class="tool-category">INPUT &amp; MEDIA</span>
-            <h3 class="tool-title">Color Inspector</h3>
-            <p class="tool-desc">Visual preview of HEX/RGB color codes and shareable color scheme links.</p>
-          </div>
-          <span class="tool-badge">Open Tool →</span>
-        </a>
-      </div>
-
-      <div class="tool-item" data-title="Text to Speech TTS Voice Audio Synthesis">
-        <a href="/tools/tts.html" class="tool-card">
-          <div>
-            <span class="tool-category">INPUT &amp; MEDIA</span>
-            <h3 class="tool-title">Text to Speech (TTS)</h3>
-            <p class="tool-desc">Convert written text to spoken audio using native browser Speech Synthesis.</p>
-          </div>
-          <span class="tool-badge">Open Tool →</span>
-        </a>
-      </div>
-
-      <div class="tool-item" data-title="Countdown Timer Target Date Time Share">
-        <a href="/tools/countdown.html" class="tool-card">
-          <div>
-            <span class="tool-category">INPUT &amp; MEDIA</span>
-            <h3 class="tool-title">Countdown Timer</h3>
-            <p class="tool-desc">Countdown timer towards a specific date or time with shareable URL links.</p>
-          </div>
-          <span class="tool-badge">Open Tool →</span>
-        </a>
-      </div>
-
-      <div class="tool-item" data-title="Random Picker Winner Draw List Names">
-        <a href="/tools/random-picker.html" class="tool-card">
-          <div>
-            <span class="tool-category">GENERATORS &amp; RANDOM</span>
-            <h3 class="tool-title">Random Picker</h3>
-            <p class="tool-desc">Fairly pick winners or randomize sequences from a list of names.</p>
-          </div>
-          <span class="tool-badge">Open Tool →</span>
-        </a>
-      </div>
-
-      <div class="tool-item" data-title="Dice Coin Flip Random Dice Roll Coin Online">
-        <a href="/tools/dice.html" class="tool-card">
-          <div>
-            <span class="tool-category">GENERATORS &amp; RANDOM</span>
-            <h3 class="tool-title">Dice &amp; Coin Flip</h3>
-            <p class="tool-desc">Interactive custom dice rolling and coin flip (heads/tails) simulator.</p>
-          </div>
-          <span class="tool-badge">Open Tool →</span>
-        </a>
-      </div>
-
-      <div class="tool-item" data-title="Pomodoro Focus Timer Work Break Productivity">
-        <a href="/tools/pomodoro.html" class="tool-card">
-          <div>
-            <span class="tool-category">PRODUCTIVITY</span>
-            <h3 class="tool-title">Pomodoro Focus Timer</h3>
-            <p class="tool-desc">Pomodoro technique focus timer (25m work, 5m break) for time management.</p>
+            <span class="tool-category">DEVELOPER UTILITIES</span>
+            <h3 class="tool-title">Diff Checker</h3>
+            <p class="tool-desc">Compare two texts or code blocks side-by-side for line-by-line differences.</p>
           </div>
           <span class="tool-badge">Open Tool →</span>
         </a>
@@ -385,6 +238,151 @@
             <span class="tool-category">DEVELOPER UTILITIES</span>
             <h3 class="tool-title">Cron Expression Generator</h3>
             <p class="tool-desc">Translate &amp; generate cron expressions to Indonesian with next execution times.</p>
+          </div>
+          <span class="tool-badge">Open Tool →</span>
+        </a>
+      </div>
+
+      <!-- Text & Formatting (5) -->
+      <div class="tool-item" data-title="Word Counter Character Line Count Reading Time">
+        <a href="/tools/counter.html" class="tool-card">
+          <div>
+            <span class="tool-category">TEXT &amp; FORMATTING</span>
+            <h3 class="tool-title">Word Counter</h3>
+            <p class="tool-desc">Count words, characters, lines, and estimated reading time in real-time.</p>
+          </div>
+          <span class="tool-badge">Open Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="Case Converter UPPERCASE camelCase snake_case kebab-case">
+        <a href="/tools/case-converter.html" class="tool-card">
+          <div>
+            <span class="tool-category">TEXT &amp; FORMATTING</span>
+            <h3 class="tool-title">Case Converter</h3>
+            <p class="tool-desc">Convert text to UPPERCASE, lowercase, camelCase, snake_case, and kebab-case.</p>
+          </div>
+          <span class="tool-badge">Open Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="Markdown Previewer Realtime Editor Renderer">
+        <a href="/tools/markdown.html" class="tool-card">
+          <div>
+            <span class="tool-category">TEXT &amp; FORMATTING</span>
+            <h3 class="tool-title">Markdown Previewer</h3>
+            <p class="tool-desc">Live browser-based Markdown editor and renderer with zero installation.</p>
+          </div>
+          <span class="tool-badge">Open Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="Lorem Ipsum Generator Placeholder Dummy Text">
+        <a href="/tools/lorem.html" class="tool-card">
+          <div>
+            <span class="tool-category">TEXT &amp; FORMATTING</span>
+            <h3 class="tool-title">Lorem Ipsum Generator</h3>
+            <p class="tool-desc">Indonesian &amp; Latin placeholder dummy text generator.</p>
+          </div>
+          <span class="tool-badge">Open Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="Text to Speech Voice Synthesizer Audio Reader Browser">
+        <a href="/tools/tts.html" class="tool-card">
+          <div>
+            <span class="tool-category">TEXT &amp; FORMATTING</span>
+            <h3 class="tool-title">Text to Speech (TTS)</h3>
+            <p class="tool-desc">Client-side voice synthesizer using native SpeechSynthesis Web API.</p>
+          </div>
+          <span class="tool-badge">Open Tool →</span>
+        </a>
+      </div>
+
+      <!-- Generators & Utilities (8) -->
+      <div class="tool-item" data-title="QR Code Generator Create QR Code PNG Download">
+        <a href="/tools/qr.html" class="tool-card">
+          <div>
+            <span class="tool-category">GENERATORS &amp; UTILITIES</span>
+            <h3 class="tool-title">QR Code Generator</h3>
+            <p class="tool-desc">Instantly generate QR codes from text or URL and download PNG images.</p>
+          </div>
+          <span class="tool-badge">Open Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="Password Generator Secure Random Crypto API Strong">
+        <a href="/tools/password.html" class="tool-card">
+          <div>
+            <span class="tool-category">GENERATORS &amp; UTILITIES</span>
+            <h3 class="tool-title">Password Generator</h3>
+            <p class="tool-desc">Cryptographically secure random password generator using Web Crypto API.</p>
+          </div>
+          <span class="tool-badge">Open Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="Color Inspector Converter HEX RGB HSL Palette Picker">
+        <a href="/tools/color.html" class="tool-card">
+          <div>
+            <span class="tool-category">GENERATORS &amp; UTILITIES</span>
+            <h3 class="tool-title">Color Inspector</h3>
+            <p class="tool-desc">Inspect, pick, convert HEX/RGB/HSL, and generate color palettes.</p>
+          </div>
+          <span class="tool-badge">Open Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="Unit Currency Converter IDR USD EUR Exchange Rate">
+        <a href="/tools/converter.html" class="tool-card">
+          <div>
+            <span class="tool-category">GENERATORS &amp; UTILITIES</span>
+            <h3 class="tool-title">Unit &amp; Currency Converter</h3>
+            <p class="tool-desc">Convert length, weight, temperature, and manual currency exchange rates.</p>
+          </div>
+          <span class="tool-badge">Open Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="Countdown Timer Event Alert Interval Date">
+        <a href="/tools/countdown.html" class="tool-card">
+          <div>
+            <span class="tool-category">GENERATORS &amp; UTILITIES</span>
+            <h3 class="tool-title">Countdown Timer</h3>
+            <p class="tool-desc">Customizable event countdown timer with alert sounds and interval tracker.</p>
+          </div>
+          <span class="tool-badge">Open Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="Random Picker Decision Maker Winner Selection">
+        <a href="/tools/random-picker.html" class="tool-card">
+          <div>
+            <span class="tool-category">GENERATORS &amp; UTILITIES</span>
+            <h3 class="tool-title">Random Picker</h3>
+            <p class="tool-desc">Fairly pick winners or randomize sequences from a list of names.</p>
+          </div>
+          <span class="tool-badge">Open Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="Dice Coin Flip Random Dice Roll Coin Online">
+        <a href="/tools/dice.html" class="tool-card">
+          <div>
+            <span class="tool-category">GENERATORS &amp; UTILITIES</span>
+            <h3 class="tool-title">Dice &amp; Coin Flip</h3>
+            <p class="tool-desc">Interactive custom dice rolling and coin flip (heads/tails) simulator.</p>
+          </div>
+          <span class="tool-badge">Open Tool →</span>
+        </a>
+      </div>
+
+      <div class="tool-item" data-title="Pomodoro Focus Timer Work Break Productivity">
+        <a href="/tools/pomodoro.html" class="tool-card">
+          <div>
+            <span class="tool-category">GENERATORS &amp; UTILITIES</span>
+            <h3 class="tool-title">Pomodoro Focus Timer</h3>
+            <p class="tool-desc">Pomodoro technique focus timer (25m work, 5m break) for time management.</p>
           </div>
           <span class="tool-badge">Open Tool →</span>
         </a>
@@ -453,6 +451,6 @@
     });
   </script>
 
-  <script src="/assets/js/site-nav.js?v=20260802_v45" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v46" defer></script>
 </body>
 </html>
