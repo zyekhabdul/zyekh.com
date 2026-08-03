@@ -1,5 +1,5 @@
 /* zyekh.com Service Worker — Cache Strategy */
-const CACHE_VERSION = 'v73';
+const CACHE_VERSION = 'v74';
 const CACHE_NAME = `zyekh-${CACHE_VERSION}`;
 
 /* Assets to precache on install (shell) */
@@ -34,7 +34,7 @@ self.addEventListener('install', event => {
   self.skipWaiting();
 });
 
-/* ── Activate: clean old caches, claim & force-reload all clients ── */
+/* ── Activate: clean old caches & enable navigation preload ── */
 self.addEventListener('activate', event => {
   event.waitUntil(
     Promise.all([
@@ -43,10 +43,8 @@ self.addEventListener('activate', event => {
       ),
       self.registration.navigationPreload?.enable() ?? Promise.resolve()
     ])
-    .then(() => self.clients.claim())
-    .then(() => self.clients.matchAll({ type: 'window' }))
-    .then(clients => Promise.all(clients.map(c => c.navigate(c.url))))
   );
+  self.clients.claim();
 });
 
 /* ── Fetch: route by resource type ── */
