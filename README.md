@@ -24,7 +24,7 @@ Hosted directly on **GitHub Pages** with custom domain [`zyekh.com`](https://zye
 
 ---
 
-## 🏗️ Web Portal Architecture & Data Flow
+## ️ Web Portal Architecture & Data Flow
 
 ```mermaid
 graph TD
@@ -41,7 +41,7 @@ graph TD
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 zyekh.com/
@@ -73,7 +73,7 @@ zyekh.com/
 
 ---
 
-## 🛠️ Stack & Technologies
+## ️ Stack & Technologies
 
 - **Markup & Layout**: Semantic HTML5, [PureCSS](https://purecss.io/) Grid System
 - **Styling & Design**: Vanilla CSS Custom Properties (Dark Mode Theme)

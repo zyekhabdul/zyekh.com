@@ -3,7 +3,7 @@
 
 ---
 
-## 🛑 1. SERVICE WORKER & ASSET CACHING PROTOCOL (WAJIB)
+##  1. SERVICE WORKER & ASSET CACHING PROTOCOL (WAJIB)
 
 Setiap kali melakukan perubahan pada kode JavaScript (`assets/js/*.js`) atau CSS (`assets/css/*.css`):
 
@@ -25,7 +25,7 @@ Setiap kali melakukan perubahan pada kode JavaScript (`assets/js/*.js`) atau CSS
 
 ---
 
-## 📐 2. CONTAINER WIDTH & LAYOUT STANDARDIZATION PROTOCOL
+##  2. CONTAINER WIDTH & LAYOUT STANDARDIZATION PROTOCOL
 
 1. **Lebar Kontainer Seragam**:
    - Seluruh kontainer utama di semua halaman (`index.html`, `/tools/*`, `/blog/*`) WAJIB menggunakan `max-width: 1280px`.
@@ -46,7 +46,7 @@ Setiap kali melakukan perubahan pada kode JavaScript (`assets/js/*.js`) atau CSS
 
 ---
 
-## 🎯 4. GAPLESS SCROLLSPY & ACTIVE HIGHLIGHT PROTOCOL
+##  4. GAPLESS SCROLLSPY & ACTIVE HIGHLIGHT PROTOCOL
 
 1. **Viewport BoundingRect Position Calculation**:
    - ScrollSpy pada homepage (`index.html`) WAJIB menggunakan `sec.getBoundingClientRect()` untuk menghitung posisi riil elemen di layar secara *real-time*.
@@ -58,7 +58,7 @@ Setiap kali melakukan perubahan pada kode JavaScript (`assets/js/*.js`) atau CSS
 ## ⚡ 5. STRICT NO-EMOJI & MINIMALIST CODE PROTOCOL (WAJIB)
 
 1. **Dilarang Penggunaan Emoji di Kode & Dokumentasi**:
-   - DILARANG keras menyisipkan karakter emoji (seperti 📅, ⏱️, 🚀, 🛡️, 🧰, 📄, 🔓, dll.) ke dalam berkas HTML, CSS, JavaScript, maupun file dokumentasi di repositori ini.
+   - DILARANG keras menyisipkan karakter emoji (seperti , ⏱️, , ️, 🧰, , , dll.) ke dalam berkas HTML, CSS, JavaScript, maupun file dokumentasi di repositori ini.
    - *Alasan*: Menjaga efisiensi token, kesederhanaan *Clean Minimalist FOSS Aesthetic*, dan performa *parsing*.
 2. **Gunakan Ikon Teks / SVG / Typography Standard**:
    - Sebagai pengganti emoji, gunakan simbol teks ASCII/Unicode bersih (`•`, `->`, `[ VERIFIED ]`, `[ WARN ]`, `[ INFO ]`, `[ NOTE ]`) atau SVG vektor jika diperlukan.
@@ -85,7 +85,7 @@ Setiap kali melakukan perubahan pada kode JavaScript (`assets/js/*.js`) atau CSS
 
 ---
 
-## 🚀 5. PROGRAMMATIC ARTICLE BATCH PIPELINE PROTOCOL
+##  5. PROGRAMMATIC ARTICLE BATCH PIPELINE PROTOCOL
 
 Setiap kali membangkitkan batch artikel baru untuk `zyekh.com`, WAJIB mengikuti alur eksekusi terstandar berikut (referensi lengkap: `docs/batch_pipeline_sop.md`):
 
