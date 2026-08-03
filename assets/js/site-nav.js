@@ -123,7 +123,7 @@ class SiteNav extends HTMLElement {
 
 customElements.define('site-nav', SiteNav);
 
-// Native Zero-Dependency Copy Code Button Listener
+// Native Zero-Dependency Copy Code Button Injector & Event Delegation
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('pre').forEach(pre => {
     if (pre.querySelector('.copy-code-btn')) return;
@@ -135,24 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     pre.style.position = 'relative';
     pre.appendChild(btn);
-
-    btn.addEventListener('click', async () => {
-      const codeElement = pre.querySelector('code');
-      const codeText = codeElement ? codeElement.innerText : pre.innerText;
-      try {
-        await navigator.clipboard.writeText(codeText.trim());
-        btn.textContent = 'Copied!';
-        btn.style.borderColor = 'var(--text-main)';
-        btn.style.color = 'var(--text-main)';
-        setTimeout(() => {
-          btn.textContent = 'Copy';
-          btn.style.borderColor = 'var(--border-color)';
-          btn.style.color = 'var(--text-muted)';
-        }, 1800);
-      } catch (err) {
-        btn.textContent = 'Failed';
-      }
-    });
   });
 
   // Universal Passive Reading Progress Bar Listener (Throttled via rAF for zero CPU churn)
@@ -173,5 +155,51 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: true });
     updateProgress();
+  }
+});
+
+// Single Event Delegation listener for all copy buttons & native share buttons
+document.addEventListener('click', async (e) => {
+  // Share Button Delegation
+  const shareBtn = e.target.closest('#shareBtn, .btn-share');
+  if (shareBtn) {
+    const title = document.title;
+    const text = document.querySelector('meta[name="description"]')?.content || title;
+    const url = window.location.href;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, text, url });
+      } catch (err) {}
+    } else {
+      try {
+        await navigator.clipboard.writeText(url);
+        const origText = shareBtn.textContent;
+        shareBtn.textContent = '[ COPIED LINK! ]';
+        setTimeout(() => { shareBtn.textContent = origText; }, 2000);
+      } catch (err) {}
+    }
+    return;
+  }
+
+  // Copy Code Button Delegation
+  const btn = e.target.closest('.copy-code-btn');
+  if (!btn) return;
+  const pre = btn.closest('pre');
+  if (!pre) return;
+
+  const codeElement = pre.querySelector('code');
+  const codeText = codeElement ? codeElement.innerText : pre.innerText;
+  try {
+    await navigator.clipboard.writeText(codeText.trim());
+    btn.textContent = 'Copied!';
+    btn.style.borderColor = 'var(--text-main)';
+    btn.style.color = 'var(--text-main)';
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.style.borderColor = 'var(--border-color)';
+      btn.style.color = 'var(--text-muted)';
+    }, 1800);
+  } catch (err) {
+    btn.textContent = 'Failed';
   }
 });

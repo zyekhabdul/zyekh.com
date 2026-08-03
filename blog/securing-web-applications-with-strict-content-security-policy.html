@@ -1,37 +1,35 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <meta name="theme-color" content="#09090b">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Implementing Strict Content Security Policy (CSP) &amp; Security Headers — zyekh.com</title>
-  <meta name="description" content="Comprehensive technical guide for configuring strict Content Security Policy (CSP), HTTP Strict Transport Security (HSTS), X-Content-Type-Options, and Nginx security headers.">
-  <meta name="author" content="Zyekh Abdul Qadir Jailani">
-  <link rel="alternate" type="application/rss+xml" title="zyekh.com RSS Feed" href="https://zyekh.com/feed.xml">
-  <link rel="canonical" href="https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html">
-
-  <!-- Open Graph / Social Meta Tags -->
-  <meta property="og:site_name" content="zyekh.com">
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="Implementing Strict Content Security Policy (CSP) &amp; Security Headers">
-  <meta property="og:description" content="Technical guide for configuring strict Content Security Policy (CSP), HSTS, X-Frame-Options, and Nginx security headers.">
-  <meta property="og:url" content="https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html">
-  <meta property="og:image:width" content="1280">
-  <meta property="og:image:height" content="720">
-  <meta property="article:publisher" content="https://zyekh.com">
-  <meta property="og:image" content="https://zyekh.com/assets/img/csp-security.jpg">
-  <meta property="article:published_time" content="2026-07-15T00:00:00Z">
-  <meta property="article:author" content="Zyekh Abdul Qadir Jailani">
-
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Implementing Strict Content Security Policy (CSP) &amp; Security Headers">
-  <meta name="twitter:description" content="Technical guide for configuring strict Content Security Policy (CSP), HSTS, X-Frame-Options, and Nginx security headers.">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/csp-security.jpg">
-
-  <!-- Schema.org JSON-LD (TechArticle + BreadcrumbList + FAQPage) -->
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Implementing Strict Content Security Policy (CSP) &amp; Security Headers — zyekh.com</title>
+<meta content="Comprehensive technical guide for configuring strict Content Security Policy (CSP), HTTP Strict Transport Security (HSTS), X-Content-Type-Options, and Nginx security headers." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html" rel="canonical"/>
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="Implementing Strict Content Security Policy (CSP) &amp; Security Headers" property="og:title"/>
+<meta content="Technical guide for configuring strict Content Security Policy (CSP), HSTS, X-Frame-Options, and Nginx security headers." property="og:description"/>
+<meta content="https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html" property="og:url"/>
+<meta content="1280" property="og:image:width"/>
+<meta content="720" property="og:image:height"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="https://zyekh.com/assets/img/csp-security.jpg" property="og:image"/>
+<meta content="2026-07-15T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<!-- Twitter Card Meta Tags -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Implementing Strict Content Security Policy (CSP) &amp; Security Headers" name="twitter:title"/>
+<meta content="Technical guide for configuring strict Content Security Policy (CSP), HSTS, X-Frame-Options, and Nginx security headers." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/csp-security.jpg" name="twitter:image"/>
+<!-- Schema.org JSON-LD (TechArticle + BreadcrumbList + FAQPage) -->
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -105,134 +103,112 @@
     ]
   }
   </script>
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Fonts & Styles -->
-  <link rel="image_src" href="https://zyekh.com/assets/img/csp-security.jpg">
-  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75_v62">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260803_v75_v62">
-  <link rel="stylesheet" href="/assets/css/blog.css?v=20260803_v75_v62">
-</head>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Fonts & Styles -->
+<link href="https://zyekh.com/assets/img/csp-security.jpg" rel="image_src"/>
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.css?v=20260803_v75_v62" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260803_v84" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260803_v84" rel="stylesheet"/>
+<meta content="@zyekh" name="twitter:creator"/><meta content="@zyekh" name="twitter:site"/><meta content="https://zyekh.com/assets/img/csp-security.jpg" property="og:image:secure_url"/><meta content="image/jpeg" property="og:image:type"/><meta content="Implementing Strict Content Security Policy (CSP) &amp; Security Headers — zyekh.com" property="og:image:alt"/><meta content="Implementing Strict Content Security Policy (CSP) &amp; Security Headers — zyekh.com" name="twitter:image:alt"/></head>
 <body>
-  <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
-  <div class="reading-progress-bar"></div>
-
-  <!-- Header Navigation -->
-  <site-nav active="blog"></site-nav>
-
-  <article class="container-article" itemscope itemtype="https://schema.org/TechArticle">
-    
-    <!-- Back to Blog -->
-    <a href="/blog/" class="back-link">&larr; Back to Articles</a>
-
-    <!-- Article Header -->
-    <header class="article-header">
-      <span class="meta-tag">Web Security • Application Defense</span>
-      <h1 class="article-title">Implementing Strict Content Security Policy (CSP) &amp; Security Headers</h1>
-      <div class="article-meta">
-        <span>By Zyekh Abdul Qadir Jailani</span>
-        <span>Published: July 15, 2026</span>
-        <span>13 min read (1,300+ Words)</span>
-      </div>
-    </header>
-
-    <!-- Article Body Content -->
-    <main class="article-content">
-
-      <!-- Featured Hero Image -->
-      <figure class="article-hero-wrapper">
-        <img src="https://zyekh.com/assets/img/csp-security.jpg" 
-             alt="Implementing Strict Content Security Policy (CSP) &amp; Security Headers" 
-             class="article-hero-img" 
-             width="1280" height="720" 
-             itemprop="image">
-        <figcaption class="hero-caption">Defense-in-Depth Web Application Hardening with HTTP Security Headers</figcaption>
-      </figure>
-
-      <!-- Executive Summary -->
-      <div class="exec-summary">
-        <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
-        <ul>
-          <li><strong>XSS Mitigation:</strong> Content Security Policy (CSP) stops Cross-Site Scripting by restricting script execution to cryptographically nonced or hashed scripts.</li>
-          <li><strong>Clickjacking Defense:</strong> <code>X-Frame-Options: DENY</code> and <code>frame-ancestors 'none'</code> prevent malicious iframe embedding.</li>
-          <li><strong>Strict Transport Security:</strong> Enforce HTTPS and HSTS preloading with <code>max-age=63072000; includeSubDomains; preload</code>.</li>
-          <li><strong>MIME Sniffing Defense:</strong> <code>X-Content-Type-Options: nosniff</code> prevents browsers from misinterpreting non-executable files as executable scripts.</li>
-        </ul>
-      </div>
-
-      <!-- Table of Contents -->
-      <nav class="toc-card">
-        <div class="toc-title">Table of Contents</div>
-        <ol class="toc-list">
-          <li><a href="#understanding-csp">1. Understanding Content Security Policy (CSP)</a></li>
-          <li><a href="#nonce-hash-strict-csp">2. Strict CSP Directives: Nonce-Based &amp; Hash-Based Execution</a></li>
-          <li><a href="#nginx-security-headers">3. Configuring Nginx &amp; Apache Security Headers</a></li>
-          <li><a href="#csp-reporting">4. Automated CSP Violation Reporting (Report-To)</a></li>
-          <li><a href="#security-headers-matrix">5. Security Headers Comparison Matrix</a></li>
-          <li><a href="#faq">6. Frequently Asked Questions (FAQ)</a></li>
-        </ol>
-      </nav>
-
-      <p>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+<!-- Back to Blog -->
+<a class="back-link" href="/blog/">← Back to Articles</a>
+<!-- Article Header -->
+<header class="article-header">
+<span class="meta-tag">Web Security • Application Defense</span>
+<h1 class="article-title">Implementing Strict Content Security Policy (CSP) &amp; Security Headers</h1>
+<div class="article-meta">
+<span>By Zyekh Abdul Qadir Jailani</span>
+<time class="meta-item" datetime="2026-07-15T00:00:00Z">Published: July 15, 2026</time>
+<span>13 min read (1,300+ Words)</span>
+<button class="btn-share" id="shareBtn" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main); font-size: 0.75rem; padding: 0.15rem 0.6rem; border-radius: 4px; cursor: pointer; margin-left: auto; transition: all var(--transition);" type="button">[ SHARE ARTICLE ]</button></div>
+</header>
+<!-- Article Body Content -->
+<main class="article-content">
+<!-- Featured Hero Image -->
+<figure class="article-hero-wrapper">
+<img alt="Implementing Strict Content Security Policy (CSP) &amp; Security Headers" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="https://zyekh.com/assets/img/csp-security.jpg" width="1280"/>
+<figcaption class="hero-caption">Defense-in-Depth Web Application Hardening with HTTP Security Headers</figcaption>
+</figure>
+<!-- Executive Summary -->
+<div class="exec-summary">
+<div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+<ul>
+<li><strong>XSS Mitigation:</strong> Content Security Policy (CSP) stops Cross-Site Scripting by restricting script execution to cryptographically nonced or hashed scripts.</li>
+<li><strong>Clickjacking Defense:</strong> <code>X-Frame-Options: DENY</code> and <code>frame-ancestors 'none'</code> prevent malicious iframe embedding.</li>
+<li><strong>Strict Transport Security:</strong> Enforce HTTPS and HSTS preloading with <code>max-age=63072000; includeSubDomains; preload</code>.</li>
+<li><strong>MIME Sniffing Defense:</strong> <code>X-Content-Type-Options: nosniff</code> prevents browsers from misinterpreting non-executable files as executable scripts.</li>
+</ul>
+</div>
+<!-- Table of Contents -->
+<nav class="toc-card">
+<div class="toc-title">Table of Contents</div>
+<ol class="toc-list">
+<li><a href="#understanding-csp">1. Understanding Content Security Policy (CSP)</a></li>
+<li><a href="#nonce-hash-strict-csp">2. Strict CSP Directives: Nonce-Based &amp; Hash-Based Execution</a></li>
+<li><a href="#nginx-security-headers">3. Configuring Nginx &amp; Apache Security Headers</a></li>
+<li><a href="#csp-reporting">4. Automated CSP Violation Reporting (Report-To)</a></li>
+<li><a href="#security-headers-matrix">5. Security Headers Comparison Matrix</a></li>
+<li><a href="#faq">6. Frequently Asked Questions (FAQ)</a></li>
+</ol>
+</nav>
+<p>
         Cross-Site Scripting (XSS) remains one of the most pervasive vulnerabilities in modern web applications. Even with rigorous input sanitization and output encoding, application bugs can allow attackers to inject malicious JavaScript, steal session cookies, or intercept sensitive user data.
       </p>
-      <p>
+<p>
         A <strong>Strict Content Security Policy (CSP)</strong> serves as a critical secondary layer of defense, instructing the browser to reject unauthorized scripts, inline execution, and unauthorized network connections even if an XSS injection occurs.
       </p>
-
-      <!-- Section 1 -->
-      <h2 id="understanding-csp">1. Understanding Content Security Policy (CSP)</h2>
-      <p>
+<!-- Section 1 -->
+<h2 id="understanding-csp">1. Understanding Content Security Policy (CSP)</h2>
+<p>
         CSP is an HTTP response header that defines an explicit allowlist of trusted resource origins. Without a CSP, browsers execute any JavaScript present in the HTML document, including malicious payloads injected via DOM manipulation or reflected parameters. With a strict CSP, the browser enforces execution rules before running script blocks or executing dynamic fetches.
       </p>
-
-      <h2>2. Defense-in-Depth: Why Input Sanitization Alone Is Insufficient</h2>
-      <p>
+<h2 id="2-defense-in-depth-why-input-sanitization-alone-is-insufficient">2. Defense-in-Depth: Why Input Sanitization Alone Is Insufficient</h2>
+<p>
         While input sanitization (using tools like DOMPurify) and output encoding are essential first lines of defense, complex modern web applications with client-side templating frameworks frequently suffer from edge-case vulnerabilities:
       </p>
-      <ul>
-        <li><strong>DOM-based XSS:</strong> Unsafe handling of <code>location.hash</code> or <code>document.referrer</code> in client-side scripts.</li>
-        <li><strong>Dependency Vulnerabilities:</strong> Malicious or compromised third-party npm packages introducing backdoor execution scripts.</li>
-        <li><strong>Dangling Markup Injections:</strong> Exploiting unclosed HTML attributes to exfiltrate CSRF tokens or sensitive form data.</li>
-      </ul>
-      <p>
+<ul>
+<li><strong>DOM-based XSS:</strong> Unsafe handling of <code>location.hash</code> or <code>document.referrer</code> in client-side scripts.</li>
+<li><strong>Dependency Vulnerabilities:</strong> Malicious or compromised third-party npm packages introducing backdoor execution scripts.</li>
+<li><strong>Dangling Markup Injections:</strong> Exploiting unclosed HTML attributes to exfiltrate CSRF tokens or sensitive form data.</li>
+</ul>
+<p>
         A strict Content Security Policy acts as an independent safety net: even if an attacker successfully injects a <code>&lt;script src="https://evil.com/payload.js"&gt;</code> payload into the DOM, the browser refuses to fetch or execute the file because <code>evil.com</code> is not explicitly nonced or trusted.
       </p>
-
-      <!-- Section 2 -->
-      <h2 id="nonce-hash-strict-csp">3. Strict CSP Directives: Nonce-Based &amp; Hash-Based Execution</h2>
-      <p>
+<!-- Section 2 -->
+<h2 id="nonce-hash-strict-csp">3. Strict CSP Directives: Nonce-Based &amp; Hash-Based Execution</h2>
+<p>
         Legacy CSP configurations relied on domain allowlists (e.g., <code>script-src 'self' https://trustedcdn.com</code>). However, security research demonstrates that domain allowlists can often be bypassed via JSONP endpoints or open redirects on whitelisted domains.
       </p>
-      <p>
+<p>
         Modern security standards mandate a <strong>Strict Nonce-Based CSP</strong> or <strong>Strict Hash-Based CSP</strong>:
       </p>
-
 <pre><code class="language-http"># Recommended Strict Nonce-Based Content Security Policy Header
 Content-Security-Policy: default-src 'none'; script-src 'nonce-rAnd0mN0nc3vAlu3' 'strict-dynamic'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests;</code></pre>
-
-      <p>Key directives breakdown:</p>
-      <ul>
-        <li><code>default-src 'none'</code>: Fallback rule denying all resource loading unless explicitly allowed.</li>
-        <li><code>nonce-'&lt;random&gt;'</code>: Requires a unique 128-bit cryptographically secure random token per request for inline scripts.</li>
-        <li><code>'strict-dynamic'</code>: Enables trusted scripts (with a valid nonce) to dynamically load downstream scripts without explicit domain allowlisting.</li>
-        <li><code>frame-ancestors 'none'</code>: Prevents the page from being embedded in <code>&lt;iframe&gt;</code> tags, defending against Clickjacking.</li>
-        <li><code>base-uri 'none'</code>: Prevents attackers from injecting <code>&lt;base&gt;</code> tags to hijack relative URLs.</li>
-      </ul>
-
-      <!-- Section 3 -->
-      <h2 id="nginx-security-headers">3. Configuring Nginx &amp; Apache Security Headers</h2>
-      <p>
+<p>Key directives breakdown:</p>
+<ul>
+<li><code>default-src 'none'</code>: Fallback rule denying all resource loading unless explicitly allowed.</li>
+<li><code>nonce-'&lt;random&gt;'</code>: Requires a unique 128-bit cryptographically secure random token per request for inline scripts.</li>
+<li><code>'strict-dynamic'</code>: Enables trusted scripts (with a valid nonce) to dynamically load downstream scripts without explicit domain allowlisting.</li>
+<li><code>frame-ancestors 'none'</code>: Prevents the page from being embedded in <code>&lt;iframe&gt;</code> tags, defending against Clickjacking.</li>
+<li><code>base-uri 'none'</code>: Prevents attackers from injecting <code>&lt;base&gt;</code> tags to hijack relative URLs.</li>
+</ul>
+<!-- Section 3 -->
+<h2 id="nginx-security-headers">3. Configuring Nginx &amp; Apache Security Headers</h2>
+<p>
         To achieve maximum HTTP security ratings (A+ rating on SSL Labs and SecurityHeaders.com), configure Nginx to deliver a comprehensive suite of security headers:
       </p>
-
 <pre><code class="language-nginx"># /etc/nginx/conf.d/security-headers.conf
 
 # Content Security Policy (Strict Nonce/Self Baseline)
@@ -252,132 +228,118 @@ add_header Referrer-Policy "strict-origin-when-cross-origin" always;
 
 # Permissions Policy (Disable Unused Web APIs)
 add_header Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=()" always;</code></pre>
-
-      <h2>4. Trusted Types &amp; Subresource Integrity (SRI)</h2>
-      <p>
+<h2 id="4-trusted-types-subresource-integrity-sri">4. Trusted Types &amp; Subresource Integrity (SRI)</h2>
+<p>
         Modern web applications handling user-generated input can enforce <strong>Trusted Types</strong> via the <code>require-trusted-types-for 'script'</code> directive. Trusted Types prevents DOM-based XSS by requiring string inputs passed to dangerous sink functions (such as <code>innerHTML</code>, <code>document.write</code>, or <code>eval</code>) to be wrapped in a sanitizing TrustedHTML policy object.
       </p>
-
 <pre><code class="language-javascript">// Enforcing Trusted Types API in Client-Side Scripts
 if (window.trustedTypes &amp;&amp; trustedTypes.createPolicy) {
   const escapeHTMLPolicy = trustedTypes.createPolicy('myEscapePolicy', {
-    createHTML: string => DOMPurify.sanitize(string)
+    createHTML: string =&gt; DOMPurify.sanitize(string)
   });
   
   // Safe DOM assignment via TrustedHTML policy
   document.getElementById('output').innerHTML = escapeHTMLPolicy.createHTML(userInput);
 }</code></pre>
-
-      <p>
+<p>
         Combine Trusted Types with <strong>Subresource Integrity (SRI)</strong> hashes on external CDN scripts to guarantee that third-party library files have not been modified or compromised in transit:
       </p>
-
 <pre><code class="language-html">&lt;!-- Subresource Integrity (SRI) Cryptographic Hash Verification --&gt;
 &lt;script src="https://cdn.example.com/library.js" 
         integrity="sha384-oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/uxy9rx7HNQlGYl1kPzQho1wx4JwY8wC" 
         crossorigin="anonymous"&gt;&lt;/script&gt;</code></pre>
-
-      <!-- Section 4 -->
-      <h2 id="csp-reporting">5. Automated CSP Violation Reporting (Report-To)</h2>
-      <p>
+<!-- Section 4 -->
+<h2 id="csp-reporting">5. Automated CSP Violation Reporting (Report-To)</h2>
+<p>
         Deploying CSP in <code>Content-Security-Policy-Report-Only</code> mode allows you to monitor potential policy breaches without blocking legitimate scripts during testing:
       </p>
-
 <pre><code class="language-http">Content-Security-Policy-Report-Only: default-src 'none'; script-src 'self'; report-uri /api/csp-report;</code></pre>
-
-      <!-- Section 5 -->
-      <h2 id="security-headers-matrix">5. Security Headers Comparison Matrix</h2>
-      <p>
+<!-- Section 5 -->
+<h2 id="security-headers-matrix">5. Security Headers Comparison Matrix</h2>
+<p>
         Summary of mandatory HTTP security headers and their defense focus:
       </p>
-
-      <table>
-        <thead>
-          <tr>
-            <th>HTTP Header</th>
-            <th>Recommended Value</th>
-            <th>Primary Security Threat Prevented</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Content-Security-Policy</strong></td>
-            <td><code>default-src 'none'; script-src 'self'...</code></td>
-            <td>Cross-Site Scripting (XSS) &amp; Data Injection</td>
-          </tr>
-          <tr>
-            <td><strong>Strict-Transport-Security</strong></td>
-            <td><code>max-age=63072000; includeSubDomains; preload</code></td>
-            <td>SSL Stripping &amp; Man-in-the-Middle (MitM)</td>
-          </tr>
-          <tr>
-            <td><strong>X-Frame-Options</strong></td>
-            <td><code>DENY</code> or <code>SAMEORIGIN</code></td>
-            <td>Clickjacking &amp; UI Redress Attacks</td>
-          </tr>
-          <tr>
-            <td><strong>X-Content-Type-Options</strong></td>
-            <td><code>nosniff</code></td>
-            <td>MIME-Sniffing &amp; Content Spoofing</td>
-          </tr>
-          <tr>
-            <td><strong>Permissions-Policy</strong></td>
-            <td><code>geolocation=(), camera=()</code></td>
-            <td>Unauthorized Hardware API Access</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- Section 6: FAQ -->
-      <h2 id="faq">6. Frequently Asked Questions (FAQ)</h2>
-      <div class="faq-section">
-        <details>
-          <summary>What is Content Security Policy (CSP) and how does it prevent XSS?</summary>
-          <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
+<table>
+<thead>
+<tr>
+<th>HTTP Header</th>
+<th>Recommended Value</th>
+<th>Primary Security Threat Prevented</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Content-Security-Policy</strong></td>
+<td><code>default-src 'none'; script-src 'self'...</code></td>
+<td>Cross-Site Scripting (XSS) &amp; Data Injection</td>
+</tr>
+<tr>
+<td><strong>Strict-Transport-Security</strong></td>
+<td><code>max-age=63072000; includeSubDomains; preload</code></td>
+<td>SSL Stripping &amp; Man-in-the-Middle (MitM)</td>
+</tr>
+<tr>
+<td><strong>X-Frame-Options</strong></td>
+<td><code>DENY</code> or <code>SAMEORIGIN</code></td>
+<td>Clickjacking &amp; UI Redress Attacks</td>
+</tr>
+<tr>
+<td><strong>X-Content-Type-Options</strong></td>
+<td><code>nosniff</code></td>
+<td>MIME-Sniffing &amp; Content Spoofing</td>
+</tr>
+<tr>
+<td><strong>Permissions-Policy</strong></td>
+<td><code>geolocation=(), camera=()</code></td>
+<td>Unauthorized Hardware API Access</td>
+</tr>
+</tbody>
+</table>
+<!-- Section 6: FAQ -->
+<h2 id="faq">6. Frequently Asked Questions (FAQ)</h2>
+<div class="faq-section">
+<details>
+<summary>What is Content Security Policy (CSP) and how does it prevent XSS?</summary>
+<p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
             Content Security Policy (CSP) is an HTTP header that allows site operators to restrict the resources (such as JavaScript, CSS, Images) that the browser is allowed to load for a given page, blocking injected Cross-Site Scripting (XSS) scripts.
           </p>
-        </details>
-        <details>
-          <summary>What is the difference between CSP Nonce and CSP Hash?</summary>
-          <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
+</details>
+<details>
+<summary>What is the difference between CSP Nonce and CSP Hash?</summary>
+<p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
             A CSP Nonce is a cryptographically strong, single-use random string generated on every request for inline scripts. A CSP Hash is a cryptographic SHA-256 hash of a static inline script content.
           </p>
-        </details>
-      </div>
-
-      <!-- Author Bio Card -->
-            <!-- Author Bio Card (EEAT & DFIR Branding) -->
-      <div class="author-card">
-        <img src="/assets/img/profile.webp" alt="Zyekh Abdul Qadir Jailani" class="author-avatar" width="60" height="60">
-        <div class="author-info">
-          <h4>Written by Zyekh Abdul Qadir Jailani</h4>
-          <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
-          <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
-            <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" target="_blank" rel="noopener" style="font-weight:600">LinkedIn</a> •
-            <a href="https://github.com/zyekhabdul" target="_blank" rel="noopener" style="font-weight:600">GitHub</a> •
-            <a href="https://discord.gg/jDmerBugvu" target="_blank" rel="noopener" style="font-weight:600">Discord</a> •
+</details>
+</div>
+<!-- Author Bio Card -->
+<!-- Author Bio Card (EEAT & DFIR Branding) -->
+<div class="author-card">
+<img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+<div class="author-info">
+<h4>Written by Zyekh Abdul Qadir Jailani</h4>
+<p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+<div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+<a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
+            <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
+            <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
             <a href="mailto:zyekhabdulqadirjailani@gmail.com" style="font-weight:600">Email</a> •
-            <a href="/gpg-key.asc" target="_blank" style="font-weight:600">PGP Key</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Related Tools Recommendation -->
-      <div class="article-cross-links callout-card">
-        <h4 class="heading-reset">Utility Tools Related to this Article:</h4>
-        <p class="note-sm">
-          Buat kunci rahasia dan nonce aman menggunakan <a href="/tools/password.html" class="blog-badge">Secure Password Generator</a> atau validasi snippet header Anda dengan <a href="/tools/markdown.html" class="blog-badge">Markdown Editor</a>.
+            <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
+</div>
+</div>
+</div>
+<!-- Related Tools Recommendation -->
+<div class="article-cross-links callout-card">
+<h4 class="heading-reset">Utility Tools Related to this Article:</h4>
+<p class="note-sm">
+          Buat kunci rahasia dan nonce aman menggunakan <a class="blog-badge" href="/tools/password.html">Secure Password Generator</a> atau validasi snippet header Anda dengan <a class="blog-badge" href="/tools/markdown.html">Markdown Editor</a>.
         </p>
-      </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <p>&copy; 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
-    </footer>
-
-  </article>
-  <script src="/assets/js/site-nav.js?v=20260803_v75_v62" defer></script>
+</div>
+</main>
+<!-- Footer -->
+<footer class="footer">
+<p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+</footer>
+</article>
+<script defer="" src="/assets/js/site-nav.js?v=20260803_v84"></script>
 </body>
 </html>

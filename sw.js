@@ -1,5 +1,5 @@
 /* zyekh.com Service Worker — Cache Strategy */
-const CACHE_VERSION = 'v75';
+const CACHE_VERSION = 'v84';
 const CACHE_NAME = `zyekh-${CACHE_VERSION}`;
 
 /* Assets to precache on install (shell) */
@@ -7,6 +7,8 @@ const PRECACHE = [
   '/offline.html',
   '/assets/css/shared.css',
   '/assets/js/site-nav.js',
+  '/assets/js/marked.min.js',
+  '/assets/js/qrcode.min.js',
   '/assets/fonts/fonts.css',
   '/assets/fonts/inter-variable-latin.woff2',
   '/assets/fonts/outfit-600-normal.woff2',

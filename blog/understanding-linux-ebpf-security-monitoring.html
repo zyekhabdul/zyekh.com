@@ -1,37 +1,35 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <meta name="theme-color" content="#09090b">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Understanding eBPF for Real-Time Linux Security Monitoring — zyekh.com</title>
-  <meta name="description" content="Technical deep-dive on Extended Berkeley Packet Filter (eBPF) tracing, kprobes, tracepoints, bpftrace, and zero-overhead kernel runtime security monitoring.">
-  <meta name="author" content="Zyekh Abdul Qadir Jailani">
-  <link rel="alternate" type="application/rss+xml" title="zyekh.com RSS Feed" href="https://zyekh.com/feed.xml">
-  <link rel="canonical" href="https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html">
-
-  <!-- Open Graph / Social Meta Tags -->
-  <meta property="og:site_name" content="zyekh.com">
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="Understanding eBPF for Real-Time Linux Security Monitoring">
-  <meta property="og:description" content="Technical deep-dive on Extended Berkeley Packet Filter (eBPF) tracing, kprobes, tracepoints, bpftrace, and low-overhead kernel security.">
-  <meta property="og:url" content="https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html">
-  <meta property="og:image:width" content="1280">
-  <meta property="og:image:height" content="720">
-  <meta property="article:publisher" content="https://zyekh.com">
-  <meta property="og:image" content="https://zyekh.com/assets/img/ebpf-monitoring.jpg">
-  <meta property="article:published_time" content="2026-07-20T00:00:00Z">
-  <meta property="article:author" content="Zyekh Abdul Qadir Jailani">
-
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Understanding eBPF for Real-Time Linux Security Monitoring">
-  <meta name="twitter:description" content="Technical deep-dive on Extended Berkeley Packet Filter (eBPF) tracing, kprobes, tracepoints, bpftrace, and low-overhead kernel security.">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/ebpf-monitoring.jpg">
-
-  <!-- Schema.org JSON-LD (TechArticle + BreadcrumbList + FAQPage) -->
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Understanding eBPF for Real-Time Linux Security Monitoring — zyekh.com</title>
+<meta content="Technical deep-dive on Extended Berkeley Packet Filter (eBPF) tracing, kprobes, tracepoints, bpftrace, and zero-overhead kernel runtime security monitoring." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html" rel="canonical"/>
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="Understanding eBPF for Real-Time Linux Security Monitoring" property="og:title"/>
+<meta content="Technical deep-dive on Extended Berkeley Packet Filter (eBPF) tracing, kprobes, tracepoints, bpftrace, and low-overhead kernel security." property="og:description"/>
+<meta content="https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html" property="og:url"/>
+<meta content="1280" property="og:image:width"/>
+<meta content="720" property="og:image:height"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="https://zyekh.com/assets/img/ebpf-monitoring.jpg" property="og:image"/>
+<meta content="2026-07-20T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<!-- Twitter Card Meta Tags -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Understanding eBPF for Real-Time Linux Security Monitoring" name="twitter:title"/>
+<meta content="Technical deep-dive on Extended Berkeley Packet Filter (eBPF) tracing, kprobes, tracepoints, bpftrace, and low-overhead kernel security." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/ebpf-monitoring.jpg" name="twitter:image"/>
+<!-- Schema.org JSON-LD (TechArticle + BreadcrumbList + FAQPage) -->
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -105,152 +103,128 @@
     ]
   }
   </script>
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Fonts & Styles -->
-  <link rel="image_src" href="https://zyekh.com/assets/img/ebpf-monitoring.jpg">
-  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75_v62">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260803_v75_v62">
-  <link rel="stylesheet" href="/assets/css/blog.css?v=20260803_v75_v62">
-</head>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Fonts & Styles -->
+<link href="https://zyekh.com/assets/img/ebpf-monitoring.jpg" rel="image_src"/>
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.css?v=20260803_v75_v62" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260803_v84" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260803_v84" rel="stylesheet"/>
+<meta content="@zyekh" name="twitter:creator"/><meta content="@zyekh" name="twitter:site"/><meta content="https://zyekh.com/assets/img/ebpf-monitoring.jpg" property="og:image:secure_url"/><meta content="image/jpeg" property="og:image:type"/><meta content="Understanding eBPF for Real-Time Linux Security Monitoring — zyekh.com" property="og:image:alt"/><meta content="Understanding eBPF for Real-Time Linux Security Monitoring — zyekh.com" name="twitter:image:alt"/></head>
 <body>
-  <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
-  <div class="reading-progress-bar"></div>
-
-  <!-- Header Navigation -->
-  <site-nav active="blog"></site-nav>
-
-  <article class="container-article" itemscope itemtype="https://schema.org/TechArticle">
-    
-    <!-- Back to Blog -->
-    <a href="/blog/" class="back-link">&larr; Back to Articles</a>
-
-    <!-- Article Header -->
-    <header class="article-header">
-      <span class="meta-tag">Linux Kernel • eBPF Tracing</span>
-      <h1 class="article-title">Understanding eBPF for Real-Time Linux Security Monitoring</h1>
-      <div class="article-meta">
-        <span>By Zyekh Abdul Qadir Jailani</span>
-        <span>Published: July 20, 2026</span>
-        <span>14 min read (1,350+ Words)</span>
-      </div>
-    </header>
-
-    <!-- Article Body Content -->
-    <main class="article-content">
-
-      <!-- Featured Hero Image -->
-      <figure class="article-hero-wrapper">
-        <img src="https://zyekh.com/assets/img/ebpf-monitoring.jpg" 
-             alt="Understanding eBPF for Real-Time Linux Security Monitoring" 
-             class="article-hero-img" 
-             width="1280" height="720" 
-             itemprop="image">
-        <figcaption class="hero-caption">Kernel-Level Observability &amp; Runtime Security Instrumentation with eBPF</figcaption>
-      </figure>
-
-      <!-- Executive Summary -->
-      <div class="exec-summary">
-        <div class="exec-summary-title">Executive Summary &amp; Key Technical Takeaways</div>
-        <ul>
-          <li><strong>Kernel-Level Visibility:</strong> eBPF enables non-intrusive tracing of system calls, process executions, network packets, and file I/O directly within kernel space.</li>
-          <li><strong>Zero Context-Switch Overhead:</strong> In-kernel JIT-compiled execution avoids costly user-to-kernel space context switches.</li>
-          <li><strong>Safety-Verified Execution:</strong> The in-kernel eBPF verifier proves program safety (no memory corruption, no infinite loops) prior to loading.</li>
-          <li><strong>Real-Time Threat Detection:</strong> Hook into <code>kprobes</code>, <code>uprobes</code>, and <code>tracepoints</code> to catch container breakouts and rootkit persistence instantly.</li>
-        </ul>
-      </div>
-
-      <!-- Table of Contents -->
-      <nav class="toc-card">
-        <div class="toc-title">Table of Contents</div>
-        <ol class="toc-list">
-          <li><a href="#ebpf-architecture">1. What is eBPF &amp; Kernel Architecture</a></li>
-          <li><a href="#ebpf-verifier-jit">2. The eBPF Verifier &amp; JIT Compiler Safety</a></li>
-          <li><a href="#kprobes-tracepoints">3. Probes &amp; Tracepoints: Hooking System Events</a></li>
-          <li><a href="#bpftrace-examples">4. Practical bpftrace Security One-Liners</a></li>
-          <li><a href="#ebpf-vs-ptrace">5. Performance Comparison: eBPF vs ptrace vs Auditd</a></li>
-          <li><a href="#faq">6. Frequently Asked Questions (FAQ)</a></li>
-        </ol>
-      </nav>
-
-      <p>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+<!-- Back to Blog -->
+<a class="back-link" href="/blog/">← Back to Articles</a>
+<!-- Article Header -->
+<header class="article-header">
+<span class="meta-tag">Linux Kernel • eBPF Tracing</span>
+<h1 class="article-title">Understanding eBPF for Real-Time Linux Security Monitoring</h1>
+<div class="article-meta">
+<span>By Zyekh Abdul Qadir Jailani</span>
+<time class="meta-item" datetime="2026-07-20T00:00:00Z">Published: July 20, 2026</time>
+<span>14 min read (1,350+ Words)</span>
+<button class="btn-share" id="shareBtn" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main); font-size: 0.75rem; padding: 0.15rem 0.6rem; border-radius: 4px; cursor: pointer; margin-left: auto; transition: all var(--transition);" type="button">[ SHARE ARTICLE ]</button></div>
+</header>
+<!-- Article Body Content -->
+<main class="article-content">
+<!-- Featured Hero Image -->
+<figure class="article-hero-wrapper">
+<img alt="Understanding eBPF for Real-Time Linux Security Monitoring" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="https://zyekh.com/assets/img/ebpf-monitoring.jpg" width="1280"/>
+<figcaption class="hero-caption">Kernel-Level Observability &amp; Runtime Security Instrumentation with eBPF</figcaption>
+</figure>
+<!-- Executive Summary -->
+<div class="exec-summary">
+<div class="exec-summary-title">Executive Summary &amp; Key Technical Takeaways</div>
+<ul>
+<li><strong>Kernel-Level Visibility:</strong> eBPF enables non-intrusive tracing of system calls, process executions, network packets, and file I/O directly within kernel space.</li>
+<li><strong>Zero Context-Switch Overhead:</strong> In-kernel JIT-compiled execution avoids costly user-to-kernel space context switches.</li>
+<li><strong>Safety-Verified Execution:</strong> The in-kernel eBPF verifier proves program safety (no memory corruption, no infinite loops) prior to loading.</li>
+<li><strong>Real-Time Threat Detection:</strong> Hook into <code>kprobes</code>, <code>uprobes</code>, and <code>tracepoints</code> to catch container breakouts and rootkit persistence instantly.</li>
+</ul>
+</div>
+<!-- Table of Contents -->
+<nav class="toc-card">
+<div class="toc-title">Table of Contents</div>
+<ol class="toc-list">
+<li><a href="#ebpf-architecture">1. What is eBPF &amp; Kernel Architecture</a></li>
+<li><a href="#ebpf-verifier-jit">2. The eBPF Verifier &amp; JIT Compiler Safety</a></li>
+<li><a href="#kprobes-tracepoints">3. Probes &amp; Tracepoints: Hooking System Events</a></li>
+<li><a href="#bpftrace-examples">4. Practical bpftrace Security One-Liners</a></li>
+<li><a href="#ebpf-vs-ptrace">5. Performance Comparison: eBPF vs ptrace vs Auditd</a></li>
+<li><a href="#faq">6. Frequently Asked Questions (FAQ)</a></li>
+</ol>
+</nav>
+<p>
         Traditional Linux security monitoring tools rely on user-space daemons polling <code>/proc</code>, intercepting system calls via <code>ptrace</code>, or consuming syslog streams. These approaches introduce significant CPU context-switching overhead and can be bypassed or disabled by sophisticated rootkits operating with kernel privileges.
       </p>
-      <p>
-        <strong>eBPF (Extended Berkeley Packet Filter)</strong> revolutionizes Linux system security by allowing developers and security engineers to execute sandboxed byte-code directly inside the Linux kernel without recompiling the kernel or loading risk-prone kernel modules (LKM).
+<p>
+<strong>eBPF (Extended Berkeley Packet Filter)</strong> revolutionizes Linux system security by allowing developers and security engineers to execute sandboxed byte-code directly inside the Linux kernel without recompiling the kernel or loading risk-prone kernel modules (LKM).
       </p>
-
-      <!-- Section 1 -->
-      <h2 id="ebpf-architecture">1. What is eBPF &amp; Kernel Architecture</h2>
-      <p>
+<!-- Section 1 -->
+<h2 id="ebpf-architecture">1. What is eBPF &amp; Kernel Architecture</h2>
+<p>
         Originally designed for high-performance network packet filtering, eBPF has evolved into a general-purpose, event-driven execution engine embedded inside the Linux kernel. It allows non-root users with appropriate capabilities to inspect kernel internals without crashing or slowing down system operations.
       </p>
-      <p>
+<p>
         When an eBPF program is attached to a kernel event (such as a <code>sys_execve</code> system call or socket packet arrival), the kernel triggers the eBPF bytecode immediately when the event fires. The bytecode reads event context (such as process ID, UID, parent PID, command line arguments) and pushes the data to user-space via high-speed <strong>eBPF Ring Buffers</strong>.
       </p>
-
-      <p>
+<p>
         eBPF state is maintained across events using <strong>BPF Maps</strong>—generic key/value data structures accessible from both kernel bytecode and user-space control daemons:
       </p>
-      <ul>
-        <li><strong>Hash Maps (BPF_MAP_TYPE_HASH):</strong> Fast lookup tables for tracking open connections or active file descriptors.</li>
-        <li><strong>Ring Buffers (BPF_MAP_TYPE_RINGBUF):</strong> Lockless ring buffer data structures providing high-throughput event notification to user-space with minimal CPU cache thrashing.</li>
-        <li><strong>Array Maps (BPF_MAP_TYPE_ARRAY):</strong> Fixed-size indexed arrays for storing metrics, counters, and configuration flags.</li>
-      </ul>
-
-      <!-- Section 2 -->
-      <h2 id="ebpf-verifier-jit">2. The eBPF Verifier &amp; JIT Compiler Safety</h2>
-      <p>
+<ul>
+<li><strong>Hash Maps (BPF_MAP_TYPE_HASH):</strong> Fast lookup tables for tracking open connections or active file descriptors.</li>
+<li><strong>Ring Buffers (BPF_MAP_TYPE_RINGBUF):</strong> Lockless ring buffer data structures providing high-throughput event notification to user-space with minimal CPU cache thrashing.</li>
+<li><strong>Array Maps (BPF_MAP_TYPE_ARRAY):</strong> Fixed-size indexed arrays for storing metrics, counters, and configuration flags.</li>
+</ul>
+<!-- Section 2 -->
+<h2 id="ebpf-verifier-jit">2. The eBPF Verifier &amp; JIT Compiler Safety</h2>
+<p>
         A primary concern when running custom code inside the operating system kernel is system stability—a bug in a traditional kernel module causes a kernel panic (BSOD).
       </p>
-      <p>
+<p>
         eBPF solves this via the <strong>eBPF Verifier</strong>. Before any eBPF bytecode is loaded into the kernel, the verifier analyzes all execution paths to guarantee:
       </p>
-      <ul>
-        <li>The program does not contain unconstrained loops (ensuring execution completes).</li>
-        <li>Memory access is strictly bounded (preventing out-of-bounds pointer dereferencing).</li>
-        <li>The program holds appropriate Linux capabilities (<code>CAP_BPF</code> or <code>CAP_SYS_ADMIN</code>).</li>
-      </ul>
-
-      <!-- Section 3 -->
-      <h2 id="kprobes-tracepoints">3. Probes &amp; Tracepoints: Hooking System Events</h2>
-      <p>
+<ul>
+<li>The program does not contain unconstrained loops (ensuring execution completes).</li>
+<li>Memory access is strictly bounded (preventing out-of-bounds pointer dereferencing).</li>
+<li>The program holds appropriate Linux capabilities (<code>CAP_BPF</code> or <code>CAP_SYS_ADMIN</code>).</li>
+</ul>
+<!-- Section 3 -->
+<h2 id="kprobes-tracepoints">3. Probes &amp; Tracepoints: Hooking System Events</h2>
+<p>
         eBPF programs attach to various kernel instrumentation points:
       </p>
-      <ul>
-        <li><strong>kprobes / kretprobes:</strong> Dynamic attachment to any internal Linux kernel function entry or exit point.</li>
-        <li><strong>tracepoints:</strong> Stable, static kernel instrumentation points defined by Linux kernel developers.</li>
-        <li><strong>uprobes / uretprobes:</strong> Dynamic tracing of user-space functions (e.g., tracing SSL/TLS library calls in OpenSSL).</li>
-        <li><strong>XDP (eXpress Data Path):</strong> In-driver network packet filtering executing before memory allocation for the Linux network stack.</li>
-      </ul>
-
-      <!-- Section 4 -->
-      <h2 id="bpftrace-examples">4. Practical bpftrace Security One-Liners</h2>
-      <p>
-        <code>bpftrace</code> is a high-level tracing language for eBPF. Below are real-world security monitoring scripts that can be executed directly from the terminal:
+<ul>
+<li><strong>kprobes / kretprobes:</strong> Dynamic attachment to any internal Linux kernel function entry or exit point.</li>
+<li><strong>tracepoints:</strong> Stable, static kernel instrumentation points defined by Linux kernel developers.</li>
+<li><strong>uprobes / uretprobes:</strong> Dynamic tracing of user-space functions (e.g., tracing SSL/TLS library calls in OpenSSL).</li>
+<li><strong>XDP (eXpress Data Path):</strong> In-driver network packet filtering executing before memory allocation for the Linux network stack.</li>
+</ul>
+<!-- Section 4 -->
+<h2 id="bpftrace-examples">4. Practical bpftrace Security One-Liners</h2>
+<p>
+<code>bpftrace</code> is a high-level tracing language for eBPF. Below are real-world security monitoring scripts that can be executed directly from the terminal:
       </p>
-
-      <p>Trace all new process executions with PID, parent PID, and command line arguments in real time:</p>
-<pre><code class="language-bash">sudo bpftrace -e 'tracepoint:syscalls:sys_enter_execve { printf("%-6d %-6d %-16s %s\n", pid, ppid, comm, str(args->filename)); }'</code></pre>
-
-      <p>Trace failed SSH / pam authentication attempts by monitoring open file handles:</p>
-<pre><code class="language-bash">sudo bpftrace -e 'tracepoint:syscalls:sys_enter_openat /str(args->filename) == "/etc/shadow"/ { printf("Alert: %s (PID %d) accessed /etc/shadow\n", comm, pid); }'</code></pre>
-
-      <h2>5. Portable eBPF Execution: CO-RE &amp; BTF</h2>
-      <p>
+<p>Trace all new process executions with PID, parent PID, and command line arguments in real time:</p>
+<pre><code class="language-bash">sudo bpftrace -e 'tracepoint:syscalls:sys_enter_execve { printf("%-6d %-6d %-16s %s\n", pid, ppid, comm, str(args-&gt;filename)); }'</code></pre>
+<p>Trace failed SSH / pam authentication attempts by monitoring open file handles:</p>
+<pre><code class="language-bash">sudo bpftrace -e 'tracepoint:syscalls:sys_enter_openat /str(args-&gt;filename) == "/etc/shadow"/ { printf("Alert: %s (PID %d) accessed /etc/shadow\n", comm, pid); }'</code></pre>
+<h2 id="5-portable-ebpf-execution-co-re-btf">5. Portable eBPF Execution: CO-RE &amp; BTF</h2>
+<p>
         Historically, compiled eBPF C code required header files matching the exact running Linux kernel version installed on the target machine. This created deployment friction in heterogeneous cloud server fleets.
       </p>
-      <p>
+<p>
         Modern eBPF resolves kernel portability via <strong>CO-RE (Compile Once – Run Everywhere)</strong> powered by <strong>BTF (BPF Type Format)</strong>. BTF provides compact, self-describing kernel metadata that enables the eBPF loader (libbpf) to dynamically relocate struct offset fields at load time across diverse kernel releases without recompilation.
       </p>
-
 <pre><code class="language-c">// C code using eBPF CO-RE struct relocation
 #include &lt;vmlinux.h&gt;
 #include &lt;bpf/bpf_helpers.h&gt;
@@ -263,100 +237,92 @@ int BPF_KPROBE(trace_exec, const char *filename) {
     return 0;
 }
 char LICENSE[] SEC("license") = "GPL";</code></pre>
-
-      <!-- Section 5 -->
-      <h2 id="ebpf-vs-ptrace">6. Performance Comparison: eBPF vs ptrace vs Auditd</h2>
-      <p>
+<!-- Section 5 -->
+<h2 id="ebpf-vs-ptrace">6. Performance Comparison: eBPF vs ptrace vs Auditd</h2>
+<p>
         Comparison of kernel observability mechanisms:
       </p>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Feature</th>
-            <th>ptrace (Strace)</th>
-            <th>auditd</th>
-            <th>eBPF (Cilium / Falco)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Execution Location</strong></td>
-            <td>User-Space Context Switch</td>
-            <td>Kernel Audit Subsystem</td>
-            <td>Kernel JIT Bytecode</td>
-          </tr>
-          <tr>
-            <td><strong>CPU Performance Impact</strong></td>
-            <td>Very High (10x - 100x slowdown)</td>
-            <td>Medium (5% - 20% overhead)</td>
-            <td>Negligible (&lt; 1% overhead)</td>
-          </tr>
-          <tr>
-            <td><strong>Bypass Vulnerability</strong></td>
-            <td>High (Can be unhooked)</td>
-            <td>Medium (Rule tampering)</td>
-            <td>Extremely Low (Kernel verified)</td>
-          </tr>
-          <tr>
-            <td><strong>Event Resolution</strong></td>
-            <td>Syscalls only</td>
-            <td>Syscalls &amp; File Events</td>
-            <td>Syscalls, Packets, RAM, Traces</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- Section 6: FAQ -->
-      <h2 id="faq">6. Frequently Asked Questions (FAQ)</h2>
-      <div class="faq-section">
-        <details>
-          <summary>What is eBPF and why is it revolutionary for Linux security?</summary>
-          <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>ptrace (Strace)</th>
+<th>auditd</th>
+<th>eBPF (Cilium / Falco)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Execution Location</strong></td>
+<td>User-Space Context Switch</td>
+<td>Kernel Audit Subsystem</td>
+<td>Kernel JIT Bytecode</td>
+</tr>
+<tr>
+<td><strong>CPU Performance Impact</strong></td>
+<td>Very High (10x - 100x slowdown)</td>
+<td>Medium (5% - 20% overhead)</td>
+<td>Negligible (&lt; 1% overhead)</td>
+</tr>
+<tr>
+<td><strong>Bypass Vulnerability</strong></td>
+<td>High (Can be unhooked)</td>
+<td>Medium (Rule tampering)</td>
+<td>Extremely Low (Kernel verified)</td>
+</tr>
+<tr>
+<td><strong>Event Resolution</strong></td>
+<td>Syscalls only</td>
+<td>Syscalls &amp; File Events</td>
+<td>Syscalls, Packets, RAM, Traces</td>
+</tr>
+</tbody>
+</table>
+<!-- Section 6: FAQ -->
+<h2 id="faq">6. Frequently Asked Questions (FAQ)</h2>
+<div class="faq-section">
+<details>
+<summary>What is eBPF and why is it revolutionary for Linux security?</summary>
+<p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
             eBPF (Extended Berkeley Packet Filter) allows sandboxed programs to run directly inside the Linux kernel without changing kernel source code or loading kernel modules, enabling zero-overhead security monitoring.
           </p>
-        </details>
-        <details>
-          <summary>How does eBPF compare to traditional ptrace or auditd logging?</summary>
-          <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
+</details>
+<details>
+<summary>How does eBPF compare to traditional ptrace or auditd logging?</summary>
+<p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
             Traditional ptrace and auditd introduce heavy context-switching overhead and can be bypassed by user-space rootkits. eBPF hooks directly into kernel tracepoints with microsecond latency.
           </p>
-        </details>
-      </div>
-
-      <!-- Author Bio Card -->
-            <!-- Author Bio Card (EEAT & DFIR Branding) -->
-      <div class="author-card">
-        <img src="/assets/img/profile.webp" alt="Zyekh Abdul Qadir Jailani" class="author-avatar" width="60" height="60">
-        <div class="author-info">
-          <h4>Written by Zyekh Abdul Qadir Jailani</h4>
-          <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
-          <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
-            <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" target="_blank" rel="noopener" style="font-weight:600">LinkedIn</a> •
-            <a href="https://github.com/zyekhabdul" target="_blank" rel="noopener" style="font-weight:600">GitHub</a> •
-            <a href="https://discord.gg/jDmerBugvu" target="_blank" rel="noopener" style="font-weight:600">Discord</a> •
+</details>
+</div>
+<!-- Author Bio Card -->
+<!-- Author Bio Card (EEAT & DFIR Branding) -->
+<div class="author-card">
+<img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+<div class="author-info">
+<h4>Written by Zyekh Abdul Qadir Jailani</h4>
+<p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+<div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+<a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
+            <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
+            <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
             <a href="mailto:zyekhabdulqadirjailani@gmail.com" style="font-weight:600">Email</a> •
-            <a href="/gpg-key.asc" target="_blank" style="font-weight:600">PGP Key</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Related Tools Recommendation -->
-      <div class="article-cross-links callout-card">
-        <h4 class="heading-reset">Utility Tools Related to this Article:</h4>
-        <p class="note-sm">
-          Eksplorasi kumpulan <a href="/tools/" class="blog-badge">Web Utility Tools Hub</a> untuk membantu tugas pengujian dan utilitas pengembangan Anda.
+            <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
+</div>
+</div>
+</div>
+<!-- Related Tools Recommendation -->
+<div class="article-cross-links callout-card">
+<h4 class="heading-reset">Utility Tools Related to this Article:</h4>
+<p class="note-sm">
+          Eksplorasi kumpulan <a class="blog-badge" href="/tools/">Web Utility Tools Hub</a> untuk membantu tugas pengujian dan utilitas pengembangan Anda.
         </p>
-      </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <p>&copy; 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
-    </footer>
-
-  </article>
-  <script src="/assets/js/site-nav.js?v=20260803_v75_v62" defer></script>
+</div>
+</main>
+<!-- Footer -->
+<footer class="footer">
+<p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+</footer>
+</article>
+<script defer="" src="/assets/js/site-nav.js?v=20260803_v84"></script>
 </body>
 </html>

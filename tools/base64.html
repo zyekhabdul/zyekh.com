@@ -1,34 +1,32 @@
 <!DOCTYPE html>
+
 <html lang="id-ID">
 <head>
-  <meta charset="UTF-8">
-  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <meta name="theme-color" content="#09090b">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Base64 Encoder / Decoder & Image Base64 — Offline Tool | Zyekh</title>
-  <meta name="description" content="Convert text or image files to Base64 strings and decode Base64 back to plain text 100% offline & client-side in browser.">
-  <meta name="keywords" content="base64 encoder, base64 decoder, image to base64, base64 to text, base64 string, offline base64 converter, developer utility">
-  <meta name="author" content="Zyekh Abdul Qadir Jailani">
-  <link rel="canonical" href="https://zyekh.com/tools/base64.html">
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Open Graph -->
-  <meta property="og:site_name" content="zyekh.com">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Base64 Encoder / Decoder & Image Base64 — Offline Tool | Zyekh">
-  <meta property="og:description" content="Convert text or image files to Base64 strings and decode Base64 back to plain text 100% offline & client-side in browser.">
-  <meta property="og:url" content="https://zyekh.com/tools/base64.html">
-  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
-
-  <!-- Schema.org JSON-LD -->
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Base64 Encoder / Decoder &amp; Image Base64 — Offline Tool | Zyekh</title>
+<meta content="Convert text or image files to Base64 strings and decode Base64 back to plain text 100% offline &amp; client-side in browser." name="description"/>
+<meta content="base64 encoder, base64 decoder, image to base64, base64 to text, base64 string, offline base64 converter, developer utility" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/base64.html" rel="canonical"/>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Open Graph -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="website" property="og:type"/>
+<meta content="Base64 Encoder / Decoder &amp; Image Base64 — Offline Tool | Zyekh" property="og:title"/>
+<meta content="Convert text or image files to Base64 strings and decode Base64 back to plain text 100% offline &amp; client-side in browser." property="og:description"/>
+<meta content="https://zyekh.com/tools/base64.html" property="og:url"/>
+<meta content="https://zyekh.com/assets/img/og-card.jpg" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/og-card.jpg" name="twitter:image"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -64,13 +62,11 @@
     ]
   }
   </script>
-
-  <!-- Self-hosted Fonts & Styles -->
-  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260803_v75">
-
-  <style>
+<!-- Self-hosted Fonts & Styles -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.css?v=20260803_v75" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260803_v84" rel="stylesheet"/>
+<style>
     .base64-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
     @media (max-width: 768px) { .base64-grid { grid-template-columns: 1fr; } }
     textarea.b64-box { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; min-height: 240px; width: 100%; resize: vertical; }
@@ -79,70 +75,60 @@
   </style>
 </head>
 <body>
-  <site-nav active="tools"></site-nav>
-
-  <main class="main-container">
-    <nav aria-label="Breadcrumb">
-      <ol class="breadcrumb">
-        <li><a href="/" class="breadcrumb-link">Home</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li aria-current="page" style="color:var(--text-main);">Base64 Converter</li>
-      </ol>
-    </nav>
-
-    <header class="page-header">
-      <span class="badge">DEVELOPER UTILITIES</span>
-      <h1 class="page-title">Base64 Encoder / Decoder & Image Base64</h1>
-      <p class="page-subtitle">Convert text or image files to Base64 data strings and decode back 100% client-side.</p>
-    </header>
-
-    <section class="tool-box">
-      <div class="btn-group">
-        <button type="button" onclick="encodeText()">Encode Text to Base64</button>
-        <button type="button" onclick="decodeText()">Decode Base64 to Text</button>
-        <button type="button" onclick="copyOutput()" id="btnCopyB64">Copy Output</button>
-      </div>
-
-      <div class="base64-grid">
-        <div>
-          <label for="inputArea" style="font-weight:600;">Plain Text / Upload Image</label>
-          <textarea id="inputArea" class="b64-box" placeholder="Type text or paste data here..." oninput="autoProcess()"></textarea>
-          
-          <div style="margin-top:0.75rem;">
-            <label for="imgUpload" style="font-size:0.85rem;color:var(--text-muted);">Atau Upload Gambar (Image to Base64 Data URI):</label>
-            <input type="file" id="imgUpload" accept="image/*" onchange="convertImage()" style="font-size:0.85rem;margin-top:0.3rem;">
-          </div>
-        </div>
-
-        <div>
-          <label for="outputArea" style="font-weight:600;">Base64 Result</label>
-          <textarea id="outputArea" class="b64-box" placeholder="Result will appear here..." readonly></textarea>
-          <img id="imgPreview" class="img-preview" alt="Base64 Image Preview">
-        </div>
-      </div>
-    </section>
-
-    <section class="seo-content-block seo-block" style="margin-top:2rem;">
-      <h2>Tentang Konversi Base64 Offline</h2>
-      <p>Base64 adalah skema pengodean binary-to-text yang merepresentasikan data biner dalam format string ASCII. Digunakan secara luas dalam pengiriman media via email (MIME), penyertaan data gambar inline dalam CSS/HTML (Data URI), serta pengiriman data via API.</p>
-
-      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
-      <div class="faq-accordion">
-        <details class="faq-card">
-          <summary class="faq-summary">Apakah gambar yang saya konversi diunggah ke server?</summary>
-          <p class="faq-answer">Tidak. Gambar dibaca secara lokal menggunakan <code>FileReader API</code> browser Anda dan dikonversi secara instan menjadi Data URI tanpa jaringan.</p>
-        </details>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer" role="contentinfo">
-    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
-  </footer>
-
-  <script>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">Base64 Converter</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">DEVELOPER UTILITIES</span>
+<h1 class="page-title">Base64 Encoder / Decoder &amp; Image Base64</h1>
+<p class="page-subtitle">Convert text or image files to Base64 data strings and decode back 100% client-side.</p>
+</header>
+<section class="tool-box">
+<div class="btn-group">
+<button onclick="encodeText()" type="button">Encode Text to Base64</button>
+<button onclick="decodeText()" type="button">Decode Base64 to Text</button>
+<button id="btnCopyB64" onclick="copyOutput()" type="button">Copy Output</button>
+</div>
+<div class="base64-grid">
+<div>
+<label for="inputArea" style="font-weight:600;">Plain Text / Upload Image</label>
+<textarea class="b64-box" id="inputArea" oninput="autoProcess()" placeholder="Type text or paste data here..."></textarea>
+<div style="margin-top:0.75rem;">
+<label for="imgUpload" style="font-size:0.85rem;color:var(--text-muted);">Atau Upload Gambar (Image to Base64 Data URI):</label>
+<input accept="image/*" id="imgUpload" onchange="convertImage()" style="font-size:0.85rem;margin-top:0.3rem;" type="file"/>
+</div>
+</div>
+<div>
+<label for="outputArea" style="font-weight:600;">Base64 Result</label>
+<textarea class="b64-box" id="outputArea" placeholder="Result will appear here..." readonly=""></textarea>
+<img alt="Base64 Image Preview" class="img-preview" decoding="async" id="imgPreview" loading="lazy"/>
+</div>
+</div>
+</section>
+<section class="seo-content-block seo-block" style="margin-top:2rem;">
+<h2>Tentang Konversi Base64 Offline</h2>
+<p>Base64 adalah skema pengodean binary-to-text yang merepresentasikan data biner dalam format string ASCII. Digunakan secara luas dalam pengiriman media via email (MIME), penyertaan data gambar inline dalam CSS/HTML (Data URI), serta pengiriman data via API.</p>
+<h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+<div class="faq-accordion">
+<details class="faq-card">
+<summary class="faq-summary">Apakah gambar yang saya konversi diunggah ke server?</summary>
+<p class="faq-answer">Tidak. Gambar dibaca secara lokal menggunakan <code>FileReader API</code> browser Anda dan dikonversi secara instan menjadi Data URI tanpa jaringan.</p>
+</details>
+</div>
+</section>
+</main>
+<footer class="footer" role="contentinfo">
+<p>© 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+</footer>
+<script>
     function encodeText() {
       const input = document.getElementById('inputArea').value;
       try {
@@ -202,6 +188,6 @@
       } catch (err) {}
     }
   </script>
-  <script src="/assets/js/site-nav.js?v=20260803_v75" defer></script>
+<script defer="" src="/assets/js/site-nav.js?v=20260803_v84"></script>
 </body>
 </html>

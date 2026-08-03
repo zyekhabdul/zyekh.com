@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2004/08/atom">
   <channel>
-    <title>zyekh.com — Technical Articles &amp; Security Research</title>
+    <title>zyekh.com — Technical Articles &amp; Security Insights</title>
     <link>https://zyekh.com/blog/</link>
-    <description>Technical articles, Linux VPS hardening blueprints, eBPF security research, and minimalist server architecture by Zyekh Abdul Qadir Jailani.</description>
+    <description>Technical articles, Linux kernel news, system hardening guides, and cybersecurity research by Zyekh Abdul Qadir Jailani.</description>
     <language>en-us</language>
-    <pubDate>Sat, 01 Aug 2026 00:00:00 GMT</pubDate>
-    <lastBuildDate>Sat, 01 Aug 2026 00:00:00 GMT</lastBuildDate>
-    <atom:link href="https://zyekh.com/feed.xml" rel="self" type="application/rss+xml"/>
-
+    <atom:link href="https://zyekh.com/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Comprehensive Linux VPS Hardening Blueprint for 2026</title>
       <link>https://zyekh.com/blog/linux-vps-hardening-guide-2026.html</link>
       <guid>https://zyekh.com/blog/linux-vps-hardening-guide-2026.html</guid>
-      <pubDate>Sun, 26 Jul 2026 00:00:00 GMT</pubDate>
-      <description>Production-grade security blueprint for Debian and Ubuntu Linux servers: SSH Ed25519 key enforcement, sysctl kernel flags, UFW rate limiting, Fail2Ban, and auditd event monitoring.</description>
+      <description>Production-grade security blueprint for Debian and Ubuntu Linux servers. Includes SSH key enforcement, kernel sysctl parameters, UFW rate-limiting, Fail2Ban auditing, and automated updates.</description>
+      <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
     </item>
-
-    <item>
-      <title>Understanding eBPF for Real-Time Linux Security Monitoring</title>
-      <link>https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html</link>
-      <guid>https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html</guid>
-      <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
-      <description>Technical guide on Extended Berkeley Packet Filter (eBPF) tracing, kernel probe instrumentation, and low-overhead security monitoring in modern Linux systems.</description>
-    </item>
-
-    <item>
-      <title>Implementing Strict Content Security Policy (CSP) &amp; Security Headers</title>
-      <link>https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html</link>
-      <guid>https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html</guid>
-      <pubDate>Wed, 15 Jul 2026 00:00:00 GMT</pubDate>
-      <description>Step-by-step technical guide for configuring strict Content Security Policy (CSP), HTTP Strict Transport Security (HSTS), and defense-in-depth headers.</description>
-    </item>
-
     <item>
       <title>Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security</title>
       <link>https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html</link>
       <guid>https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html</guid>
-      <pubDate>Fri, 10 Jul 2026 00:00:00 GMT</pubDate>
-      <description>Architectural breakdown of zero-dependency static site hosting, pure CSS design systems, and eliminating attack surfaces by discarding heavy frameworks.</description>
+      <description>Architectural analysis comparing static edge hosting to monolithic server frameworks. Examines attack surface reduction, TTFB performance benchmarks, zero server maintenance, and pure CSS design systems.</description>
+      <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Implementing Strict Content Security Policy (CSP) & Security Headers</title>
+      <link>https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html</link>
+      <guid>https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html</guid>
+      <description>Comprehensive technical guide for configuring strict Content Security Policy (CSP), HTTP Strict Transport Security (HSTS), X-Content-Type-Options, and Nginx security headers.</description>
+      <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Understanding eBPF for Real-Time Linux Security Monitoring</title>
+      <link>https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html</link>
+      <guid>https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html</guid>
+      <description>Technical deep-dive on Extended Berkeley Packet Filter (eBPF) tracing, kprobes, tracepoints, bpftrace, and zero-overhead kernel runtime security monitoring.</description>
+      <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Zero-Trust SSH Access Blueprint: FIDO2 Hardware Keys & SSH Certificate Authority</title>
+      <link>https://zyekh.com/blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html</link>
+      <guid>https://zyekh.com/blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html</guid>
+      <description>Comprehensive technical blueprint for securing Linux SSH infrastructure using FIDO2/YubiKey hardware tokens, SSH Certificate Authority (SSH CA), and short-lived certificates.</description>
+      <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
     </item>
   </channel>
 </rss>

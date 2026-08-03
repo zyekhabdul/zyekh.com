@@ -1,37 +1,35 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <meta name="theme-color" content="#09090b">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security — zyekh.com</title>
-  <meta name="description" content="Architectural analysis comparing static edge hosting to monolithic server frameworks. Examines attack surface reduction, TTFB performance benchmarks, zero server maintenance, and pure CSS design systems.">
-  <meta name="author" content="Zyekh Abdul Qadir Jailani">
-  <link rel="alternate" type="application/rss+xml" title="zyekh.com RSS Feed" href="https://zyekh.com/feed.xml">
-  <link rel="canonical" href="https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html">
-
-  <!-- Open Graph / Social Meta Tags -->
-  <meta property="og:site_name" content="zyekh.com">
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security">
-  <meta property="og:description" content="Architectural analysis comparing static edge hosting to monolithic server frameworks: attack surface reduction, TTFB performance, and zero server maintenance.">
-  <meta property="og:url" content="https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html">
-  <meta property="og:image:width" content="1280">
-  <meta property="og:image:height" content="720">
-  <meta property="article:publisher" content="https://zyekh.com">
-  <meta property="og:image" content="https://zyekh.com/assets/img/static-architecture.jpg">
-  <meta property="article:published_time" content="2026-07-10T00:00:00Z">
-  <meta property="article:author" content="Zyekh Abdul Qadir Jailani">
-
-  <!-- Twitter Card Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security">
-  <meta name="twitter:description" content="Architectural analysis comparing static edge hosting to monolithic server frameworks: attack surface reduction, TTFB performance, and zero server maintenance.">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/static-architecture.jpg">
-
-  <!-- Schema.org JSON-LD (TechArticle + BreadcrumbList + FAQPage) -->
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security — zyekh.com</title>
+<meta content="Architectural analysis comparing static edge hosting to monolithic server frameworks. Examines attack surface reduction, TTFB performance benchmarks, zero server maintenance, and pure CSS design systems." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html" rel="canonical"/>
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security" property="og:title"/>
+<meta content="Architectural analysis comparing static edge hosting to monolithic server frameworks: attack surface reduction, TTFB performance, and zero server maintenance." property="og:description"/>
+<meta content="https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html" property="og:url"/>
+<meta content="1280" property="og:image:width"/>
+<meta content="720" property="og:image:height"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="https://zyekh.com/assets/img/static-architecture.jpg" property="og:image"/>
+<meta content="2026-07-10T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<!-- Twitter Card Meta Tags -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security" name="twitter:title"/>
+<meta content="Architectural analysis comparing static edge hosting to monolithic server frameworks: attack surface reduction, TTFB performance, and zero server maintenance." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/static-architecture.jpg" name="twitter:image"/>
+<!-- Schema.org JSON-LD (TechArticle + BreadcrumbList + FAQPage) -->
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -105,112 +103,92 @@
     ]
   }
   </script>
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Fonts & Styles -->
-  <link rel="image_src" href="https://zyekh.com/assets/img/static-architecture.jpg">
-  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75_v62">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260803_v75_v62">
-  <link rel="stylesheet" href="/assets/css/blog.css?v=20260803_v75_v62">
-</head>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Fonts & Styles -->
+<link href="https://zyekh.com/assets/img/static-architecture.jpg" rel="image_src"/>
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.css?v=20260803_v75_v62" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260803_v84" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260803_v84" rel="stylesheet"/>
+<meta content="@zyekh" name="twitter:creator"/><meta content="@zyekh" name="twitter:site"/><meta content="https://zyekh.com/assets/img/static-architecture.jpg" property="og:image:secure_url"/><meta content="image/jpeg" property="og:image:type"/><meta content="Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security — zyekh.com" property="og:image:alt"/><meta content="Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security — zyekh.com" name="twitter:image:alt"/></head>
 <body>
-  <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
-  <div class="reading-progress-bar"></div>
-
-  <!-- Header Navigation -->
-  <site-nav active="blog"></site-nav>
-
-  <article class="container-article" itemscope itemtype="https://schema.org/TechArticle">
-    
-    <!-- Back to Blog -->
-    <a href="/blog/" class="back-link">&larr; Back to Articles</a>
-
-    <!-- Article Header -->
-    <header class="article-header">
-      <span class="meta-tag">Architecture • Performance</span>
-      <h1 class="article-title">Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security</h1>
-      <div class="article-meta">
-        <span>By Zyekh Abdul Qadir Jailani</span>
-        <span>Published: July 10, 2026</span>
-        <span>12 min read (1,250+ Words)</span>
-      </div>
-    </header>
-
-    <!-- Article Body Content -->
-    <main class="article-content">
-
-      <!-- Featured Hero Image -->
-      <figure class="article-hero-wrapper">
-        <img src="https://zyekh.com/assets/img/static-architecture.jpg" 
-             alt="Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security" 
-             class="article-hero-img" 
-             width="1280" height="720" 
-             itemprop="image">
-        <figcaption class="hero-caption">Architectural Comparison: Static CDN Edge Hosting vs Monolithic Server Frameworks</figcaption>
-      </figure>
-
-      <!-- Executive Summary -->
-      <div class="exec-summary">
-        <div class="exec-summary-title">Executive Summary &amp; Key Architectural Insights</div>
-        <ul>
-          <li><strong>Zero Attack Surface:</strong> Eliminating server-side runtime engines (PHP, Node.js) and SQL databases removes SQLi, RCE, and session vulnerabilities.</li>
-          <li><strong>Sub-20ms TTFB:</strong> Serving pre-rendered HTML/CSS directly from CDN edge memory delivers instant global load times without backend processing delay.</li>
-          <li><strong>Zero Infrastructure Maintenance:</strong> No database patching, runtime updates, or server reboot cycles required.</li>
-          <li><strong>Extreme Sustainability &amp; Scalability:</strong> Static assets handle traffic surges effortlessly without autoscaling costs or server crashes.</li>
-        </ul>
-      </div>
-
-      <!-- Table of Contents -->
-      <nav class="toc-card">
-        <div class="toc-title">Table of Contents</div>
-        <ol class="toc-list">
-          <li><a href="#attack-surface-reduction">1. Attack Surface Reduction &amp; Vulnerability Elimination</a></li>
-          <li><a href="#performance-benchmarks">2. Performance Benchmarks: TTFB &amp; Core Web Vitals</a></li>
-          <li><a href="#pure-css-design">3. Pure Vanilla CSS &amp; Web Component Architecture</a></li>
-          <li><a href="#cdn-caching">4. Edge CDN Cache Invalidation &amp; Asset Fingerprinting</a></li>
-          <li><a href="#comparison-matrix">5. Architectural Comparison Matrix</a></li>
-          <li><a href="#faq">6. Frequently Asked Questions (FAQ)</a></li>
-        </ol>
-      </nav>
-
-      <p>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+<!-- Back to Blog -->
+<a class="back-link" href="/blog/">← Back to Articles</a>
+<!-- Article Header -->
+<header class="article-header">
+<span class="meta-tag">Architecture • Performance</span>
+<h1 class="article-title">Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security</h1>
+<div class="article-meta">
+<span>By Zyekh Abdul Qadir Jailani</span>
+<time class="meta-item" datetime="2026-07-10T00:00:00Z">Published: July 10, 2026</time>
+<span>12 min read (1,250+ Words)</span>
+<button class="btn-share" id="shareBtn" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main); font-size: 0.75rem; padding: 0.15rem 0.6rem; border-radius: 4px; cursor: pointer; margin-left: auto; transition: all var(--transition);" type="button">[ SHARE ARTICLE ]</button></div>
+</header>
+<!-- Article Body Content -->
+<main class="article-content">
+<!-- Featured Hero Image -->
+<figure class="article-hero-wrapper">
+<img alt="Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="https://zyekh.com/assets/img/static-architecture.jpg" width="1280"/>
+<figcaption class="hero-caption">Architectural Comparison: Static CDN Edge Hosting vs Monolithic Server Frameworks</figcaption>
+</figure>
+<!-- Executive Summary -->
+<div class="exec-summary">
+<div class="exec-summary-title">Executive Summary &amp; Key Architectural Insights</div>
+<ul>
+<li><strong>Zero Attack Surface:</strong> Eliminating server-side runtime engines (PHP, Node.js) and SQL databases removes SQLi, RCE, and session vulnerabilities.</li>
+<li><strong>Sub-20ms TTFB:</strong> Serving pre-rendered HTML/CSS directly from CDN edge memory delivers instant global load times without backend processing delay.</li>
+<li><strong>Zero Infrastructure Maintenance:</strong> No database patching, runtime updates, or server reboot cycles required.</li>
+<li><strong>Extreme Sustainability &amp; Scalability:</strong> Static assets handle traffic surges effortlessly without autoscaling costs or server crashes.</li>
+</ul>
+</div>
+<!-- Table of Contents -->
+<nav class="toc-card">
+<div class="toc-title">Table of Contents</div>
+<ol class="toc-list">
+<li><a href="#attack-surface-reduction">1. Attack Surface Reduction &amp; Vulnerability Elimination</a></li>
+<li><a href="#performance-benchmarks">2. Performance Benchmarks: TTFB &amp; Core Web Vitals</a></li>
+<li><a href="#pure-css-design">3. Pure Vanilla CSS &amp; Web Component Architecture</a></li>
+<li><a href="#cdn-caching">4. Edge CDN Cache Invalidation &amp; Asset Fingerprinting</a></li>
+<li><a href="#comparison-matrix">5. Architectural Comparison Matrix</a></li>
+<li><a href="#faq">6. Frequently Asked Questions (FAQ)</a></li>
+</ol>
+</nav>
+<p>
         In modern web development, the rush toward complex SSR (Server-Side Rendering) frameworks, heavy Node.js runtimes, and monolithic Content Management Systems (CMS) often introduces unnecessary complexity, security vulnerabilities, and performance degradation.
       </p>
-      <p>
+<p>
         For informational sites, technical documentation, and web utility tools, adopting a <strong>Minimalist Static Site Architecture</strong> built with native HTML5, Vanilla JavaScript ES6+, and Pure CSS provides unmatched security, lightning-fast performance, and zero server maintenance overhead.
       </p>
-
-      <!-- Section 1 -->
-      <h2 id="attack-surface-reduction">1. Attack Surface Reduction &amp; Vulnerability Elimination</h2>
-      <p>
+<!-- Section 1 -->
+<h2 id="attack-surface-reduction">1. Attack Surface Reduction &amp; Vulnerability Elimination</h2>
+<p>
         Every active background service, database query engine, and server-side script interpreter represents a potential vector for compromise. In a monolithic application (such as WordPress or custom Node.js/PHP applications), an attacker targets multiple vulnerabilities:
       </p>
-      <ul>
-        <li><strong>SQL Injection (SQLi):</strong> Malicious input manipulating database query parameters.</li>
-        <li><strong>Remote Code Execution (RCE):</strong> Unsanitized file uploads or deserialization bugs executing arbitrary shell code on the server.</li>
-        <li><strong>Database Credential Leaks:</strong> Exposed <code>.env</code> files or database connection strings revealing credentials.</li>
-        <li><strong>Third-Party Plugin Exploits:</strong> Outdated third-party packages introducing supply chain vulnerabilities.</li>
-      </ul>
-
-      <p>
+<ul>
+<li><strong>SQL Injection (SQLi):</strong> Malicious input manipulating database query parameters.</li>
+<li><strong>Remote Code Execution (RCE):</strong> Unsanitized file uploads or deserialization bugs executing arbitrary shell code on the server.</li>
+<li><strong>Database Credential Leaks:</strong> Exposed <code>.env</code> files or database connection strings revealing credentials.</li>
+<li><strong>Third-Party Plugin Exploits:</strong> Outdated third-party packages introducing supply chain vulnerabilities.</li>
+</ul>
+<p>
         By contrast, a pre-rendered static site hosted on edge networks (such as GitHub Pages or Cloudflare Pages) serves raw, immutable files over HTTPS. Because there is no underlying database or server-side interpreter processing incoming HTTP request payloads, dynamic injection and execution attacks become architecturally impossible.
       </p>
-
-      <!-- Section 2 -->
-      <h2 id="performance-benchmarks">2. Performance Benchmarks: TTFB &amp; Core Web Vitals</h2>
-      <p>
+<!-- Section 2 -->
+<h2 id="performance-benchmarks">2. Performance Benchmarks: TTFB &amp; Core Web Vitals</h2>
+<p>
         Performance is a critical ranking factor for Google and a key determinant of user retention. Monolithic applications require the server to execute runtime code, query a database, build the HTML response in memory, and send the result back over the wire. This processing loop introduces inherent Time to First Byte (TTFB) latency.
       </p>
-
-      <p>Static edge distribution completely eliminates server-side processing delay:</p>
-
+<p>Static edge distribution completely eliminates server-side processing delay:</p>
 <pre><code class="language-ini"># Typical Monolithic Response Pipeline
 Browser Request  Edge CDN  Origin Server  PHP/Node Runtime  SQL Database  HTML Render  CDN  Browser
 (TTFB: 250ms - 1200ms)
@@ -218,24 +196,20 @@ Browser Request  Edge CDN  Origin Server  PHP/Node Runtime  SQL Database  HTML R
 # Minimalist Static Edge Pipeline
 Browser Request  Edge CDN Node (In-Memory Pre-rendered Cache)  Browser
 (TTFB: 12ms - 35ms)</code></pre>
-
-      <p>
+<p>
         By serving pre-rendered static assets directly from edge memory close to the user's geolocation, your site achieves perfect 100/100 Lighthouse scores for Performance, Accessibility, and Best Practices.
       </p>
-
-      <!-- Section 3 -->
-      <h2 id="pure-css-design">3. Pure Vanilla CSS &amp; Web Component Architecture</h2>
-      <p>
+<!-- Section 3 -->
+<h2 id="pure-css-design">3. Pure Vanilla CSS &amp; Web Component Architecture</h2>
+<p>
         Heavy utility-first CSS frameworks (like Tailwind) and complex JavaScript frameworks (like React, Vue, or Next.js) often inflate bundle sizes with tens of thousands of lines of unused JavaScript and utility rules. In addition to client-side performance penalties, client-side rendering frameworks suffer from hydration delays, Search Engine Optimization (SEO) indexing hurdles, and vulnerabilities associated with third-party npm package supply chains.
       </p>
-      <p>
+<p>
         Using native browser standards—such as <strong>Native HTML5 Web Components</strong> (<code>&lt;site-nav&gt;</code>) and modern CSS features (fluid <code>clamp()</code> typography, <code>:has()</code> selectors, CSS Custom Properties)—delivers rich interactive interfaces without importing a single third-party npm dependency.
       </p>
-
-      <p>
+<p>
         Below is an example of an encapsulated, zero-dependency Native Web Component that encapsulates global navigation, automated Service Worker registration, and Speculation Rules API prefetching:
       </p>
-
 <pre><code class="language-javascript">// Native Web Component Architecture (Zero Dependencies)
 class SiteNav extends HTMLElement {
   connectedCallback() {
@@ -251,12 +225,11 @@ class SiteNav extends HTMLElement {
 
   _registerServiceWorker() {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').catch(() => {});
+      navigator.serviceWorker.register('/sw.js').catch(() =&gt; {});
     }
   }
 }
 customElements.define('site-nav', SiteNav);</code></pre>
-
 <pre><code class="language-css">/* Native CSS Fluid Typography &amp; Container Standardization */
 :root {
   --bg-dark: #09090b;
@@ -271,115 +244,106 @@ customElements.define('site-nav', SiteNav);</code></pre>
   line-height: 1.15;
   color: var(--text-main);
 }</code></pre>
-
-      <!-- Section 4 -->
-      <h2 id="cdn-caching">4. Edge CDN Cache Invalidation &amp; Asset Fingerprinting</h2>
-      <p>
-        To ensure users instantly receive updated stylesheet and JavaScript assets without stale browser caching issues, modern static architecture utilizes explicit query-string asset busters (e.g., <code>shared.css?v=20260803_v75_v62"language-javascript">// sw.js — Cache Storage Version Management
+<!-- Section 4 -->
+<h2 id="cdn-caching">4. Edge CDN Cache Invalidation &amp; Asset Fingerprinting</h2>
+<p>
+        To ensure users instantly receive updated stylesheet and JavaScript assets without stale browser caching issues, modern static architecture utilizes explicit query-string asset busters (e.g., <code>shared.css?v=20260803_v84"language-javascript"&gt;// sw.js — Cache Storage Version Management
 const CACHE_NAME = 'zyekh-v62';
 
-self.addEventListener('activate', event => {
+self.addEventListener('activate', event =&gt; {
   event.waitUntil(
-    caches.keys().then(keys => 
-      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+    caches.keys().then(keys =&gt; 
+      Promise.all(keys.filter(k =&gt; k !== CACHE_NAME).map(k =&gt; caches.delete(k)))
     )
   );
   self.clients.claim();
-});</code></pre>
-
-      <!-- Section 5 -->
-      <h2 id="comparison-matrix">5. Architectural Comparison Matrix</h2>
-      <p>
+});</code>
+<!-- Section 5 -->
+<h2 id="comparison-matrix">5. Architectural Comparison Matrix</h2>
+<p>
         Below is a comparison of static edge architecture versus traditional monolithic server stacks:
       </p>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Metric</th>
-            <th>Monolithic CMS / SSR Stack</th>
-            <th>Minimalist Static Architecture</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Attack Surface</strong></td>
-            <td>High (Database, Server Scripts, Plugins)</td>
-            <td>Zero (Immutable Pre-rendered Files)</td>
-          </tr>
-          <tr>
-            <td><strong>Average TTFB</strong></td>
-            <td>250ms – 1,200ms</td>
-            <td>12ms – 35ms (CDN Edge)</td>
-          </tr>
-          <tr>
-            <td><strong>Server Maintenance</strong></td>
-            <td>OS updates, DB backups, Patching</td>
-            <td>Zero (Managed CDN)</td>
-          </tr>
-          <tr>
-            <td><strong>Traffic Spikes</strong></td>
-            <td>Requires server autoscaling / Load balancer</td>
-            <td>Unlimited scale out-of-the-box</td>
-          </tr>
-          <tr>
-            <td><strong>Dependencies</strong></td>
-            <td>Hundreds of npm/composer packages</td>
-            <td>Zero external npm dependencies</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- Section 5: FAQ -->
-      <h2 id="faq">5. Frequently Asked Questions (FAQ)</h2>
-      <div class="faq-section">
-        <details>
-          <summary>Why is static site architecture fundamentally more secure than monolithic CMS?</summary>
-          <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Monolithic CMS / SSR Stack</th>
+<th>Minimalist Static Architecture</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Attack Surface</strong></td>
+<td>High (Database, Server Scripts, Plugins)</td>
+<td>Zero (Immutable Pre-rendered Files)</td>
+</tr>
+<tr>
+<td><strong>Average TTFB</strong></td>
+<td>250ms – 1,200ms</td>
+<td>12ms – 35ms (CDN Edge)</td>
+</tr>
+<tr>
+<td><strong>Server Maintenance</strong></td>
+<td>OS updates, DB backups, Patching</td>
+<td>Zero (Managed CDN)</td>
+</tr>
+<tr>
+<td><strong>Traffic Spikes</strong></td>
+<td>Requires server autoscaling / Load balancer</td>
+<td>Unlimited scale out-of-the-box</td>
+</tr>
+<tr>
+<td><strong>Dependencies</strong></td>
+<td>Hundreds of npm/composer packages</td>
+<td>Zero external npm dependencies</td>
+</tr>
+</tbody>
+</table>
+<!-- Section 5: FAQ -->
+<h2 id="faq">5. Frequently Asked Questions (FAQ)</h2>
+<div class="faq-section">
+<details>
+<summary>Why is static site architecture fundamentally more secure than monolithic CMS?</summary>
+<p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
             Static sites eliminate server-side code execution (PHP/Node.js), SQL database connections, and dynamic authentication systems, effectively removing SQL injection, Remote Code Execution (RCE), and session hijacking attack vectors.
           </p>
-        </details>
-        <details>
-          <summary>How does static edge hosting improve Time to First Byte (TTFB)?</summary>
-          <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
+</details>
+<details>
+<summary>How does static edge hosting improve Time to First Byte (TTFB)?</summary>
+<p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
             Pre-rendered HTML files are distributed across global Content Delivery Network (CDN) edge nodes. Requests are served directly from memory or SSD cache close to the user, achieving sub-20ms TTFB without database query latency.
           </p>
-        </details>
-      </div>
-
-      <!-- Author Bio Card -->
-            <!-- Author Bio Card (EEAT & DFIR Branding) -->
-      <div class="author-card">
-        <img src="/assets/img/profile.webp" alt="Zyekh Abdul Qadir Jailani" class="author-avatar" width="60" height="60">
-        <div class="author-info">
-          <h4>Written by Zyekh Abdul Qadir Jailani</h4>
-          <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
-          <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
-            <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" target="_blank" rel="noopener" style="font-weight:600">LinkedIn</a> •
-            <a href="https://github.com/zyekhabdul" target="_blank" rel="noopener" style="font-weight:600">GitHub</a> •
-            <a href="https://discord.gg/jDmerBugvu" target="_blank" rel="noopener" style="font-weight:600">Discord</a> •
+</details>
+</div>
+<!-- Author Bio Card -->
+<!-- Author Bio Card (EEAT & DFIR Branding) -->
+<div class="author-card">
+<img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+<div class="author-info">
+<h4>Written by Zyekh Abdul Qadir Jailani</h4>
+<p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+<div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+<a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
+            <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
+            <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
             <a href="mailto:zyekhabdulqadirjailani@gmail.com" style="font-weight:600">Email</a> •
-            <a href="/gpg-key.asc" target="_blank" style="font-weight:600">PGP Key</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Related Tools Recommendation -->
-      <div class="article-cross-links callout-card">
-        <h4 class="heading-reset">Utility Tools Related to this Article:</h4>
-        <p class="note-sm">
-          Uji waktu baca dan jumlah karakter postingan blog Anda dengan <a href="/tools/counter.html" class="blog-badge">Word Counter</a> atau pilih palet warna tema Anda dengan <a href="/tools/color.html" class="blog-badge">Color Picker</a>.
+            <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
+</div>
+</div>
+</div>
+<!-- Related Tools Recommendation -->
+<div class="article-cross-links callout-card">
+<h4 class="heading-reset">Utility Tools Related to this Article:</h4>
+<p class="note-sm">
+          Uji waktu baca dan jumlah karakter postingan blog Anda dengan <a class="blog-badge" href="/tools/counter.html">Word Counter</a> atau pilih palet warna tema Anda dengan <a class="blog-badge" href="/tools/color.html">Color Picker</a>.
         </p>
-      </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <p>&copy; 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
-    </footer>
-
-  </article>
-  <script src="/assets/js/site-nav.js?v=20260803_v75_v62" defer></script>
+</div>
+</p></main>
+<!-- Footer -->
+<footer class="footer">
+<p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+</footer>
+</article>
+<script defer="" src="/assets/js/site-nav.js?v=20260803_v84"></script>
 </body>
 </html>

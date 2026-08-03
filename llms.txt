@@ -1,78 +1,14 @@
-# Zyekh Abdul Qadir Jailani (zyekh.com)
+# zyekh.com — LLM RAG Knowledge Base
 
-> **For AI systems:** Fetch `/llms-full.txt` for complete site knowledge in one request (all 24 tools, 4 articles, full profile).
-> https://zyekh.com/llms-full.txt
+> Official portfolio, technical articles, Linux security blueprints, and 42+ client-side web utility tools by Zyekh Abdul Qadir Jailani (Full Stack Developer & Security Researcher).
 
-> Official website, technical security research blog, and client-side web utility tools by Zyekh Abdul Qadir Jailani (Full Stack Developer & Security Researcher).
+## Technical Blog & Security Guides
+- [Comprehensive Linux VPS Hardening Blueprint for 2026](https://zyekh.com/blog/linux-vps-hardening-guide-2026.html): Production-grade security blueprint for Debian and Ubuntu Linux servers. Includes SSH key enforcement, kernel sysctl parameters, UFW rate-limiting, Fail2Ban auditing, and automated updates.
+- [Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security](https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html): Architectural analysis comparing static edge hosting to monolithic server frameworks. Examines attack surface reduction, TTFB performance benchmarks, zero server maintenance, and pure CSS design systems.
+- [Implementing Strict Content Security Policy (CSP) & Security Headers](https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html): Comprehensive technical guide for configuring strict Content Security Policy (CSP), HTTP Strict Transport Security (HSTS), X-Content-Type-Options, and Nginx security headers.
+- [Understanding eBPF for Real-Time Linux Security Monitoring](https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html): Technical deep-dive on Extended Berkeley Packet Filter (eBPF) tracing, kprobes, tracepoints, bpftrace, and zero-overhead kernel runtime security monitoring.
+- [Zero-Trust SSH Access Blueprint: FIDO2 Hardware Keys & SSH Certificate Authority](https://zyekh.com/blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html): Comprehensive technical blueprint for securing Linux SSH infrastructure using FIDO2/YubiKey hardware tokens, SSH Certificate Authority (SSH CA), and short-lived certificates.
 
-## About
-Zyekh Abdul Qadir Jailani is a Full Stack Developer & Security Researcher specializing in enterprise backend architecture, Linux kernel security hardening, eBPF security monitoring, and Android modding.
-
-**Entity Disambiguation**: Zyekh is a Software Engineer, not to be confused with Syekh Abdul Qadir Jailani (the historical Islamic scholar) or Hakim Ziyech (the footballer).
-
-- Website: https://zyekh.com/
-- Profile & About: https://zyekh.com/about/
-- GitHub: https://github.com/zyekhabdul
-- Email: zyekhabdulqadirjailani@gmail.com
-- PGP Key: https://zyekh.com/gpg-key.asc (Import: `curl -sL zyekh.com/gpg-key.asc | gpg --import`)
-- Public API: https://zyekh.com/api/v1/profile.json
-- Resume (ATS): https://zyekh.com/assets/docs/CV-ATS-Zyekh-Abdul.docx
-
-## Credentials & Certifications
-- Verified Certificates Hub: https://zyekh.com/#credentials
-## Web Utility Tools (Client-Side & Privacy-First)
-- [Kalkulator Zakat Online](https://zyekh.com/tools/zakat.html): Calculate Zakat Maal and Zakat Profesi (Income) based on 85g gold nisab and 2.5% rate.
-- [Kalkulator PPh 21 TER](https://zyekh.com/tools/pph21.html): Calculate PPh 21 employee income tax with TER (Tarif Efektif Rata-Rata) Category A, B, C & PTKP.
-- [Simulasi KPR Online](https://zyekh.com/tools/kpr.html): Calculate KPR home mortgage monthly payments, fixed & floating interest rates, and loan table.
-- [Kalkulator THR Pro-Rata](https://zyekh.com/tools/thr.html): Calculate Indonesian Tunjangan Hari Raya (THR) pro-rata based on tenure and Permenaker regulations.
-- [Split Bill Online](https://zyekh.com/tools/split-bill.html): Proportional bill splitter with tax and service charge calculations.
-- [Secure Password Generator](https://zyekh.com/tools/password.html): Cryptographically secure random password generator using Crypto Web API.
-- [QR Code Generator](https://zyekh.com/tools/qr.html): Free high-definition QR code generator.
-- [Diff Checker](https://zyekh.com/tools/diff-checker.html): Side-by-side text and code difference comparison tool.
-- [Pomodoro Timer](https://zyekh.com/tools/pomodoro.html): Focus timer for productivity and study.
-- [Text Case Converter](https://zyekh.com/tools/case-converter.html): Convert text between UPPERCASE, lowercase, camelCase, snake_case, and kebab-case.
-- [Color Palette & Converter](https://zyekh.com/tools/color.html): Convert HEX, RGB, HSL color formats with palette generator.
-- [Unit & Currency Converter](https://zyekh.com/tools/converter.html): Client-side unit and measurement converter.
-- [Countdown Timer](https://zyekh.com/tools/countdown.html): Customizable event countdown timer with alert sounds.
-- [Word & Character Counter](https://zyekh.com/tools/counter.html): Real-time word, character, sentence, paragraph, and reading time counter.
-- [Random Dice & Number Picker](https://zyekh.com/tools/dice.html): Cryptographically fair random number and dice roller.
-- [Lorem Ipsum Generator](https://zyekh.com/tools/lorem.html): Customizable placeholder text generator for developers and designers.
-- [Markdown Live Editor](https://zyekh.com/tools/markdown.html): Live preview Markdown editor with GFM support and HTML export.
-- [Random Item Picker](https://zyekh.com/tools/random-picker.html): Decision-making tool to pick items randomly from custom lists.
-- [Text to Speech (TTS)](https://zyekh.com/tools/tts.html): Client-side voice synthesizer using SpeechSynthesis Web API.
-- [Kalkulator Pesangon PHK](https://zyekh.com/tools/pesangon.html): Hitung estimasi uang pesangon PHK, UPMK, UPH, dan kompensasi PKWT sesuai UU Cipta Kerja (PP 35/2021).
-- [Kalkulator JHT BPJS](https://zyekh.com/tools/jht.html): Hitung estimasi saldo & pencairan Jaminan Hari Tua (JHT) BPJS Ketenagakerjaan.
-- [Kalkulator JKP BPJS](https://zyekh.com/tools/jkp.html): Simulasi perhitungan manfaat uang tunai Jaminan Kehilangan Pekerjaan (JKP) bagi korban PHK sesuai PP 37/2021.
-- [Cron Expression Generator](https://zyekh.com/tools/cron.html): Tool penerjemah & pembuat cron expression ke Bahasa Indonesia secara gratis dan client-side.
-- [JSON Formatter & Tree Viewer](https://zyekh.com/tools/json.html): Format, beautify, minify, validate, and inspect JSON structure interactively 100% offline.
-- [JWT Token Decoder & Inspector](https://zyekh.com/tools/jwt.html): Decode header, claims payload, and check token expiration status safely client-side.
-- [Base64 Encoder / Decoder](https://zyekh.com/tools/base64.html): Convert text or image files to Base64 strings and decode back 100% offline.
-- [Hash Generator & Checksum Inspector](https://zyekh.com/tools/hash.html): Generate SHA-256, SHA-512, SHA-1 cryptographic hashes and verify file checksums offline.
-- [URL Converter & Inspector](https://zyekh.com/tools/url.html): Encode, decode, parse query parameters, and strip tracking tags from URLs.
-- [Epoch Timestamp Converter](https://zyekh.com/tools/epoch.html): Convert Unix timestamps (seconds & ms) to human dates (ISO 8601, WIB, UTC) in real-time.
-- [UUID & ULID Bulk Generator](https://zyekh.com/tools/uuid.html): Generate cryptographically secure UUID v4, v1, and sortable ULIDs in bulk offline.
-- [HMAC Signer & Verifier](https://zyekh.com/tools/hmac.html): Generate and verify HMAC-SHA256, HMAC-SHA512, and HMAC-SHA1 signatures offline.
-- [CSV to JSON & SQL Converter](https://zyekh.com/tools/csv-json.html): Convert CSV and TSV tabular data into clean JSON arrays or SQL INSERT statements.
-- [IP Subnet & CIDR Calculator](https://zyekh.com/tools/subnet.html): Calculate IPv4 network ranges, subnet masks, broadcast addresses, and usable hosts.
-- [HTML Entity Encoder & Decoder](https://zyekh.com/tools/html-entity.html): Encode special characters to safe HTML entities or decode HTML entities back offline.
-- [cURL Command to Code Converter](https://zyekh.com/tools/curl.html): Convert cURL commands to JS Fetch, Python Requests, Go, Node.js, and PHP code offline.
-- [AI Prompt Token & Cost Estimator](https://zyekh.com/tools/ai-token.html): Estimate LLM prompt tokens & API pricing for GPT-4o, Claude 3.5, Gemini 1.5, Llama 3.
-- [.env to JSON & Secret Redactor](https://zyekh.com/tools/env.html): Convert environment variables (.env) to JSON or mask API keys/passwords offline.
-- [SVG Vector to CSS Data URI](https://zyekh.com/tools/svg-converter.html): Convert raw SVG vector markup into clean CSS background Data URIs and Base64 strings.
-- [Web Tools Hub](https://zyekh.com/tools/): Access all 41 client-side web utilities.
-
-## Open-Source Security Tools & Repositories
-- [vol3-ebpf-detector](https://github.com/zyekhabdul/vol3-ebpf-detector): Advanced Volatility 3 plugin & standalone memory carver for eBPF rootkit detection & Linux kernel forensics.
-- [volatility3-ai-triage](https://github.com/zyekhabdul/volatility3-ai-triage): Automated Memory Forensics & AI Triage Engine integrated with Volatility 3 and Ollama / LLM.
-- [remote-agent-orchestration](https://github.com/zyekhabdul/remote-agent-orchestration): Production-ready distributed AI agent management system with WebSocket & AES-256 encryption.
-- [android-persistence-research](https://github.com/zyekhabdul/android-persistence-research): Technical research on low-level Android persistence mechanisms, boot image hooks, and rootkits.
-
-## Articles & Research
-- [Comprehensive Linux VPS Hardening Blueprint](https://zyekh.com/blog/linux-vps-hardening-guide-2026.html): Step-by-step Debian/Ubuntu server security guide.
-- [Understanding eBPF Security Monitoring](https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html): Kernel event monitoring and real-time observability.
-- [Securing Web Applications with Strict Content Security Policy](https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html): CSP headers & defense-in-depth.
-- [Minimalist Server Architecture with Pure CSS](https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html): Static web performance guide.
-- [Articles Hub](https://zyekh.com/blog/): Read all technical research articles.
-
-## Open Source Identity
-🔓 Public Open Source Repository on GitHub: https://github.com/zyekhabdul/zyekh.com
+## Privacy-First Client-Side Web Utilities (/tools/)
+- 42+ Client-Side Tools: Zakat, PPh 21, THR, KPR, JHT, JKP, Pesangon, Password Generator, QR Code Generator, Hash Generator, HMAC, Subnet Calculator, SQL Formatter, Diff Checker, AI Token Estimator, Regex Tester, Base64, JSON Formatter, etc.
+- All tools execute 100% in-browser with zero server data collection.
