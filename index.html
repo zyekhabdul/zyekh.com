@@ -53,8 +53,8 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v62">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v62">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v63">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v63">
 
   <style>
     .portal-hero { text-align: center; padding: 3rem 0 2rem 0; }
@@ -90,6 +90,7 @@
       right: 0.75rem; 
       top: 50%;
       transform: translateY(-50%);
+      margin-top: -2px; /* Optical 2px upward shift for Fira Code font baseline */
       font-family: 'Fira Code', monospace; 
       font-size: 0.7rem; 
       font-weight: 500;
@@ -97,11 +98,10 @@
       background: var(--bg-dark); 
       border: 1px solid var(--border-color); 
       border-radius: 4px; 
-      padding: 0.25rem 0.5rem;
+      padding: 0.2rem 0.45rem;
       pointer-events: none; 
       user-select: none;
       line-height: 1;
-      margin: 0;
     }
 
     @media (max-width: 640px) {
@@ -364,6 +364,6 @@
     });
   </script>
 
-  <script src="/assets/js/site-nav.js?v=20260802_v62" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v63" defer></script>
 </body>
 </html>
