@@ -53,20 +53,22 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v68">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260803_v68">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v69">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260803_v69">
 
   <style>
     .portal-hero { text-align: center; padding: 3rem 0 2rem 0; }
 
-    /* Spotlight Search — Single Box, Ctrl+K Overlay */
-    .spotlight-box {
-      position: relative;
+    /* Spotlight Search — CSS Grid Overlay (bulletproof centering) */
+    .spotlight-wrap {
+      display: grid;
       max-width: 680px;
       margin: 1.5rem auto 2.5rem auto;
+      position: relative;
     }
 
     .spotlight-input {
+      grid-area: 1 / 1;
       width: 100%;
       height: 48px;
       box-sizing: border-box;
@@ -87,15 +89,16 @@
     }
 
     .spotlight-shortcut {
-      position: absolute;
-      top: 50%;
-      right: 0.75rem;
-      transform: translateY(-50%);
+      grid-area: 1 / 1;
+      align-self: center;
+      justify-self: end;
+      margin-right: 0.75rem;
       display: flex;
       align-items: center;
       gap: 0.3rem;
       pointer-events: none;
       user-select: none;
+      z-index: 1;
     }
 
     .spotlight-shortcut .key {
@@ -182,8 +185,8 @@
       </p>
     </header>
 
-    <!-- Spotlight Search Bar — Single Box, Ctrl+K Overlay -->
-    <div class="spotlight-box">
+    <!-- Spotlight Search Bar — CSS Grid Overlay -->
+    <div class="spotlight-wrap">
       <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Search 41 tools & articles..." autocomplete="off">
       <div class="spotlight-shortcut" aria-hidden="true">
         <span class="key">Ctrl</span>
@@ -376,6 +379,6 @@
     });
   </script>
 
-  <script src="/assets/js/site-nav.js?v=20260803_v68" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260803_v69" defer></script>
 </body>
 </html>
