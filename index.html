@@ -53,30 +53,40 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v63">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v63">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v64">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v64">
 
   <style>
     .portal-hero { text-align: center; padding: 3rem 0 2rem 0; }
     
-    /* Single Clean Search Box & Floating Ctrl + K Badge */
+    /* Cloudflare-Style Clean Search Box & Dual KBD Keycaps */
     .spotlight-box { 
       position: relative; 
       max-width: 680px; 
       margin: 1.5rem auto 2.5rem auto; 
     }
+
+    .spotlight-icon {
+      position: absolute;
+      left: 1.15rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+      z-index: 2;
+    }
     
     .spotlight-input { 
       width: 100%; 
-      height: 48px;
+      height: 46px;
       box-sizing: border-box;
-      padding: 0 4.5rem 0 1.25rem; 
+      padding: 0 5.5rem 0 2.75rem; 
       font-size: 0.95rem; 
       font-family: 'Inter', sans-serif; 
       background: var(--bg-card); 
       color: var(--text-main); 
       border: 1px solid var(--border-color); 
-      border-radius: 8px; 
+      border-radius: 24px; 
       transition: border-color 0.2s, box-shadow 0.2s; 
     }
     .spotlight-input:focus { 
@@ -87,26 +97,37 @@
     
     .spotlight-shortcut { 
       position: absolute; 
-      right: 0.75rem; 
+      right: 0.85rem; 
       top: 50%;
       transform: translateY(-50%);
-      margin-top: -2px; /* Optical 2px upward shift for Fira Code font baseline */
-      font-family: 'Fira Code', monospace; 
-      font-size: 0.7rem; 
-      font-weight: 500;
-      color: var(--text-muted); 
-      background: var(--bg-dark); 
-      border: 1px solid var(--border-color); 
-      border-radius: 4px; 
-      padding: 0.2rem 0.45rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
       pointer-events: none; 
       user-select: none;
+      z-index: 2;
+    }
+
+    .spotlight-shortcut kbd {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--bg-dark);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      padding: 0.2rem 0.45rem;
       line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.3);
     }
 
     @media (max-width: 640px) {
       .spotlight-shortcut { display: none; }
-      .spotlight-input { padding-right: 1.25rem; }
+      .spotlight-input { padding-right: 1.15rem; }
     }
 
     .spotlight-dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 100; text-align: left; }
@@ -173,11 +194,20 @@
       </p>
     </header>
 
-    <!-- Spotlight Search Bar (Ctrl + K) -->
+    <!-- Spotlight Search Bar (Cloudflare Style) -->
     <div class="spotlight-box">
+      <svg class="spotlight-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+
       <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Search 41 tools &amp; articles..." autocomplete="off">
-      <kbd class="spotlight-shortcut">Ctrl + K</kbd>
       
+      <div class="spotlight-shortcut">
+        <kbd>Ctrl</kbd>
+        <kbd>K</kbd>
+      </div>
+
       <div id="spotlightDropdown" class="spotlight-dropdown">
         <div id="spotlightResultsList"></div>
       </div>
@@ -364,6 +394,6 @@
     });
   </script>
 
-  <script src="/assets/js/site-nav.js?v=20260802_v63" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v64" defer></script>
 </body>
 </html>

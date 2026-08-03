@@ -116,9 +116,9 @@
   <!-- Fonts & Styles -->
   <link rel="image_src" href="https://zyekh.com/assets/img/static-architecture.jpg">
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v63">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v63">
-  <link rel="stylesheet" href="/assets/css/blog.css?v=20260802_v63">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v64">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v64">
+  <link rel="stylesheet" href="/assets/css/blog.css?v=20260802_v64">
 </head>
 <body>
   <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
@@ -275,7 +275,7 @@ customElements.define('site-nav', SiteNav);</code></pre>
       <!-- Section 4 -->
       <h2 id="cdn-caching">4. Edge CDN Cache Invalidation &amp; Asset Fingerprinting</h2>
       <p>
-        To ensure users instantly receive updated stylesheet and JavaScript assets without stale browser caching issues, modern static architecture utilizes explicit query-string asset busters (e.g., <code>shared.css?v=20260802_v63"language-javascript">// sw.js — Cache Storage Version Management
+        To ensure users instantly receive updated stylesheet and JavaScript assets without stale browser caching issues, modern static architecture utilizes explicit query-string asset busters (e.g., <code>shared.css?v=20260802_v64"language-javascript">// sw.js — Cache Storage Version Management
 const CACHE_NAME = 'zyekh-v27';
 
 self.addEventListener('activate', event => {
@@ -380,6 +380,6 @@ self.addEventListener('activate', event => {
     </footer>
 
   </article>
-  <script src="/assets/js/site-nav.js?v=20260802_v63" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v64" defer></script>
 </body>
 </html>
