@@ -53,47 +53,53 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v60">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v60">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v61">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v61">
 
   <style>
     .portal-hero { text-align: center; padding: 3rem 0 2rem 0; }
     
-    /* Spotlight Search Box & Clean Minimalist KBD Badge */
+    /* Spotlight Search Box Flex Container */
     .spotlight-box { 
       position: relative; 
       max-width: 680px; 
       margin: 1.5rem auto 2.5rem auto; 
       box-sizing: border-box; 
     }
-    .spotlight-input { 
-      width: 100%; 
+    
+    .spotlight-input-wrapper {
+      position: relative;
+      width: 100%;
       height: 48px;
-      line-height: 48px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      padding: 0 0.75rem 0 1.15rem;
       box-sizing: border-box;
-      padding: 0 4.5rem 0 1.15rem; 
-      font-size: 0.95rem; 
-      font-family: 'Inter', sans-serif; 
-      background: var(--bg-card); 
-      color: var(--text-main); 
-      border: 1px solid var(--border-color); 
-      border-radius: 8px; 
-      transition: border-color 0.2s, box-shadow 0.2s; 
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .spotlight-input:focus { border-color: var(--text-main); outline: none; box-shadow: 0 0 0 2px rgba(255,255,255,0.15); }
+    .spotlight-input-wrapper:focus-within {
+      border-color: var(--text-main);
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.15);
+    }
+    
+    .spotlight-input { 
+      flex: 1;
+      height: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
     
     .spotlight-shortcut { 
-      position: absolute; 
-      right: 0.85rem; 
-      top: 0;
-      bottom: 0;
-      margin: auto 0;
-      height: 24px;
-      padding: 0 0.5rem;
-      box-sizing: border-box;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
       font-family: 'Fira Code', monospace; 
       font-size: 0.7rem; 
       font-weight: 500;
@@ -101,14 +107,16 @@
       background: var(--bg-dark); 
       border: 1px solid var(--border-color); 
       border-radius: 4px; 
+      padding: 0.25rem 0.55rem;
+      line-height: 1;
+      white-space: nowrap;
       pointer-events: none; 
       user-select: none;
-      line-height: 1;
+      margin-left: 0.5rem;
     }
 
     @media (max-width: 640px) {
       .spotlight-shortcut { display: none; }
-      .spotlight-input { padding-right: 1.15rem; }
     }
 
     .spotlight-dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 100; text-align: left; }
@@ -177,8 +185,10 @@
 
     <!-- Spotlight Search Bar (Ctrl + K) -->
     <div class="spotlight-box">
-      <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Search 41 tools &amp; articles..." autocomplete="off">
-      <kbd class="spotlight-shortcut">Ctrl + K</kbd>
+      <div class="spotlight-input-wrapper">
+        <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Search 41 tools &amp; articles..." autocomplete="off">
+        <kbd class="spotlight-shortcut">Ctrl + K</kbd>
+      </div>
       
       <div id="spotlightDropdown" class="spotlight-dropdown">
         <div id="spotlightResultsList"></div>
@@ -366,6 +376,6 @@
     });
   </script>
 
-  <script src="/assets/js/site-nav.js?v=20260802_v60" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v61" defer></script>
 </body>
 </html>
