@@ -206,7 +206,7 @@ def generate_article_html(article_data, current_cache_ver="20260803_v84"):
       <span>By Zyekh Abdul Qadir Jailani</span>
       <time class="meta-item" datetime="{date_pub}T00:00:00Z">Published: {date_pub}</time>
       <span>{read_time} min read ({word_count}+ Words)</span>
-      <button class="btn-share" id="shareBtn" style="background: transparent; border: 1px solid var(--border-color); color: var(--text-main); font-size: 0.75rem; padding: 0.15rem 0.6rem; border-radius: 4px; cursor: pointer; margin-left: auto; transition: all var(--transition);" type="button">[ SHARE ARTICLE ]</button>
+      <button class="btn-share" id="shareBtn" type="button">Share Article</button>
     </div>
   </header>
 

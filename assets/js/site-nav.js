@@ -169,15 +169,21 @@ document.addEventListener('click', async (e) => {
     if (navigator.share) {
       try {
         await navigator.share({ title, text, url });
-      } catch (err) {}
-    } else {
-      try {
-        await navigator.clipboard.writeText(url);
-        const origText = shareBtn.textContent;
-        shareBtn.textContent = '[ COPIED LINK! ]';
-        setTimeout(() => { shareBtn.textContent = origText; }, 2000);
-      } catch (err) {}
+        return;
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+      }
     }
+    try {
+      await navigator.clipboard.writeText(url);
+      const origText = shareBtn.textContent;
+      shareBtn.textContent = 'Link Copied!';
+      shareBtn.style.borderColor = 'var(--text-main)';
+      setTimeout(() => {
+        shareBtn.textContent = origText;
+        shareBtn.style.borderColor = 'var(--border-color)';
+      }, 2000);
+    } catch (err) {}
     return;
   }
 
