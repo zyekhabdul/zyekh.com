@@ -53,8 +53,8 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v59">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v59">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v60">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v60">
 
   <style>
     .portal-hero { text-align: center; padding: 3rem 0 2rem 0; }
@@ -65,12 +65,11 @@
       max-width: 680px; 
       margin: 1.5rem auto 2.5rem auto; 
       box-sizing: border-box; 
-      display: flex;
-      align-items: center;
     }
     .spotlight-input { 
       width: 100%; 
       height: 48px;
+      line-height: 48px;
       box-sizing: border-box;
       padding: 0 4.5rem 0 1.15rem; 
       font-size: 0.95rem; 
@@ -85,11 +84,12 @@
     
     .spotlight-shortcut { 
       position: absolute; 
-      right: 0.75rem; 
-      top: 50%; 
-      transform: translateY(-50%); 
-      height: 26px;
-      padding: 0 0.55rem;
+      right: 0.85rem; 
+      top: 0;
+      bottom: 0;
+      margin: auto 0;
+      height: 24px;
+      padding: 0 0.5rem;
       box-sizing: border-box;
       display: inline-flex;
       align-items: center;
@@ -104,7 +104,6 @@
       pointer-events: none; 
       user-select: none;
       line-height: 1;
-      margin: 0;
     }
 
     @media (max-width: 640px) {
@@ -367,6 +366,6 @@
     });
   </script>
 
-  <script src="/assets/js/site-nav.js?v=20260802_v59" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260802_v60" defer></script>
 </body>
 </html>
