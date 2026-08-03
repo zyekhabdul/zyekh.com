@@ -85,6 +85,31 @@ Setiap kali melakukan perubahan pada kode JavaScript (`assets/js/*.js`) atau CSS
 
 ---
 
+## 🚀 5. PROGRAMMATIC ARTICLE BATCH PIPELINE PROTOCOL
+
+Setiap kali membangkitkan batch artikel baru untuk `zyekh.com`, WAJIB mengikuti alur eksekusi terstandar berikut (referensi lengkap: `docs/batch_pipeline_sop.md`):
+
+```bash
+# 1. Isi materi artikel dalam format JSON terstruktur
+# File: batch_data.json
+
+# 2. Bangkitkan file HTML artikel 100% SOP-compliant
+python3 generate_batch.py
+
+# 3. Jalankan audit QA otomatis 10-axis
+python3 verify_batch.py
+
+# 4. Sinkronisasi sitemap.xml, feed.xml, llms.txt, sw.js CACHE_VERSION & query version HTML
+python3 sync_content.py
+
+# 5. Pinger IndexNow API (HTTP 200 OK)
+python3 ping_indexers.py
+```
+
+Seluruh artikel yang dihasilkan WAJIB mematuhi **10 Komponen Wajib SOP Gold Standard** (`TechArticle` Schema, OpenGraph Extended, Hero Image WebP/JPG, Exec Summary Box, ToC `nav.toc-card`, Heading IDs `h2[id]`, FAQ `<details>`, Author Bio Card, dan Cross-Links Tools Internal).
+
+---
+
 ## ✅ 7. EMPIRICAL VERIFICATION PROTOCOL (SEBELUM MENYATAKAN SELESAI)
 
 Sebelum mengklaim tugas selesai atau mengirimkan laporan ke pengguna, AI WAJIB menjalankan skrip audit di terminal:
