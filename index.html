@@ -53,52 +53,57 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v69">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260803_v69">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v70">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260803_v70">
 
   <style>
     .portal-hero { text-align: center; padding: 3rem 0 2rem 0; }
 
-    /* Spotlight Search — CSS Grid Overlay (bulletproof centering) */
+    /* Spotlight Search — Single Flex Container */
     .spotlight-wrap {
-      display: grid;
       max-width: 680px;
       margin: 1.5rem auto 2.5rem auto;
       position: relative;
     }
 
-    .spotlight-input {
-      grid-area: 1 / 1;
-      width: 100%;
+    .spotlight-inner {
+      display: flex;
+      align-items: center;
       height: 48px;
-      box-sizing: border-box;
-      padding: 0 7.5rem 0 1.25rem;
-      font-size: 0.95rem;
-      font-family: 'Inter', sans-serif;
+      padding: 0 0.75rem 0 1.25rem;
+      gap: 0.5rem;
       background: var(--bg-card);
-      color: var(--text-main);
       border: 1px solid var(--border-color);
       border-radius: 10px;
+      box-sizing: border-box;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
 
-    .spotlight-input:focus {
+    .spotlight-inner:focus-within {
       border-color: var(--text-main);
-      outline: none;
       box-shadow: 0 0 0 2px rgba(255,255,255,0.15);
     }
 
+    .spotlight-input {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 0;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-main);
+    }
+
     .spotlight-shortcut {
-      grid-area: 1 / 1;
-      align-self: center;
-      justify-self: end;
-      margin-right: 0.75rem;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       gap: 0.3rem;
-      pointer-events: none;
       user-select: none;
-      z-index: 1;
+      pointer-events: none;
     }
 
     .spotlight-shortcut .key {
@@ -118,7 +123,6 @@
 
     @media (max-width: 480px) {
       .spotlight-shortcut { display: none; }
-      .spotlight-input { padding-right: 1.25rem; }
     }
 
     .spotlight-dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 100; text-align: left; }
@@ -185,14 +189,15 @@
       </p>
     </header>
 
-    <!-- Spotlight Search Bar — CSS Grid Overlay -->
+    <!-- Spotlight Search Bar — Single Flex Container -->
     <div class="spotlight-wrap">
-      <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Search 41 tools & articles..." autocomplete="off">
-      <div class="spotlight-shortcut" aria-hidden="true">
-        <span class="key">Ctrl</span>
-        <span class="key">K</span>
+      <div class="spotlight-inner">
+        <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Search 41 tools &amp; articles..." autocomplete="off">
+        <div class="spotlight-shortcut" aria-hidden="true">
+          <span class="key">Ctrl</span>
+          <span class="key">K</span>
+        </div>
       </div>
-
       <div id="spotlightDropdown" class="spotlight-dropdown">
         <div id="spotlightResultsList"></div>
       </div>
