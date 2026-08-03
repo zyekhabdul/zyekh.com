@@ -18,7 +18,7 @@
   <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260803_v87">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260803_v90">
 
   <!-- SEO & Social Meta Tags -->
   <link rel="canonical" href="https://zyekh.com/tools/">
@@ -63,20 +63,20 @@
   <main class="main-container">
     <header class="page-header">
       <h1 class="page-title">Web Utility Tools Hub</h1>
-      <p class="page-subtitle">Collection of 41 fast, free, client-side web utility tools. Use directly in your browser with zero tracking and no account registration required.</p>
+      <p class="page-subtitle">Collection of 42 fast, free, client-side web utility tools. Use directly in your browser with zero tracking and no account registration required.</p>
     </header>
 
     <!-- Filter & Search -->
     <div class="search-filter-box">
-      <input type="text" id="searchInput" class="search-input" placeholder="Cari tool (contoh: zakat, curl, ai, env, svg, uuid, hmac, subnet, sql)...">
+      <input type="text" id="searchInput" class="search-input" placeholder="Cari tool (contoh: chmod, zakat, curl, ai, env, svg, uuid, hmac, subnet, sql)...">
       <p id="searchCounter" style="margin-top: 0.75rem; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0;"></p>
     </div>
 
     <!-- Category Pill Filters -->
     <div class="filter-bar" id="categoryFilterBar">
-      <button type="button" class="filter-btn active" data-category="all">Semua (41)</button>
+      <button type="button" class="filter-btn active" data-category="all">Semua (42)</button>
       <button type="button" class="filter-btn" data-category="FINANCIAL UTILITIES">Finansial &amp; Pajak (8)</button>
-      <button type="button" class="filter-btn" data-category="DEVELOPER UTILITIES">Developer Utilities (20)</button>
+      <button type="button" class="filter-btn" data-category="DEVELOPER UTILITIES">Developer Utilities (21)</button>
       <button type="button" class="filter-btn" data-category="TEXT &amp; FORMATTING">Teks &amp; Format (5)</button>
       <button type="button" class="filter-btn" data-category="GENERATORS &amp; UTILITIES">Generators &amp; Utilities (8)</button>
     </div>
@@ -85,6 +85,18 @@
     <div id="toolsGrid" class="grid-3">
       <div id="noResultsMsg" style="display: none; width: 100%; padding: 2rem; text-align: center; color: var(--text-muted); background: var(--bg-card); border-radius: 8px; border: 1px dashed var(--border-color); margin: 0.5rem;">
         Tool tidak ditemukan. Coba kata kunci lain.
+      </div>
+
+      <!-- Developer & Security Utilities -->
+      <div class="tool-item" data-title="Linux Permissions Chmod Calculator Octal SUID SGID Sticky Bit rwx">
+        <a href="/tools/chmod-calculator.html" class="tool-card">
+          <div>
+            <span class="tool-category">DEVELOPER UTILITIES</span>
+            <h3 class="tool-title">Chmod Calculator</h3>
+            <p class="tool-desc">Calculate Linux permissions, 3-digit and 4-digit octal notation (rwx, SUID, SGID, Sticky Bit) offline.</p>
+          </div>
+          <span class="tool-badge">Open Tool →</span>
+        </a>
       </div>
 
       <!-- Financial Calculators (8) -->
@@ -605,6 +617,6 @@
     });
   </script>
 
-  <script src="/assets/js/site-nav.js?v=20260803_v87" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260803_v90" defer></script>
 </body>
 </html>

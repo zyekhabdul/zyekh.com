@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <meta name="theme-color" content="#09090b">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Linux Permissions &amp; Chmod Calculator — Offline Security Utility | Zyekh</title>
+  <meta name="description" content="Interactive Linux file permission and chmod octal calculator. Calculate 3-digit and 4-digit octal permissions (rwx, SUID, SGID, Sticky Bit) 100% client-side in browser.">
+  <meta name="keywords" content="chmod calculator, linux permissions, octal chmod, suid sgid sticky bit, rwx calculator, file permissions, sysadmin tool">
+  <meta name="author" content="Zyekh Abdul Qadir Jailani">
+  <link rel="canonical" href="https://zyekh.com/tools/chmod-calculator.html">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="zyekh.com">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Linux Permissions &amp; Chmod Calculator — Offline Security Utility | Zyekh">
+  <meta property="og:description" content="Calculate Linux file permissions, 3-digit and 4-digit octal notation (rwx, SUID, SGID, Sticky Bit) 100% offline &amp; client-side in browser.">
+  <meta property="og:url" content="https://zyekh.com/tools/chmod-calculator.html">
+  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/chmod-calculator.html#app",
+        "name": "Linux Permissions & Chmod Calculator",
+        "description": "Calculate Linux file permissions, 3-digit and 4-digit octal notation (rwx, SUID, SGID, Sticky Bit) 100% offline & client-side in browser.",
+        "url": "https://zyekh.com/tools/chmod-calculator.html",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/chmod-calculator.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Chmod Calculator", "item": "https://zyekh.com/tools/chmod-calculator.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Self-hosted Fonts & Styles -->
+  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v87">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260803_v90">
+  <script defer src="/assets/js/site-nav.js?v=20260803_v90"></script>
+
+  <style>
+    .chmod-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+    .chmod-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.25rem; }
+    .chmod-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-main); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+    .perm-check { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.6rem; font-size: 0.9rem; cursor: pointer; color: var(--text-muted); }
+    .perm-check input { accent-color: var(--accent); cursor: pointer; }
+    .result-display { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; font-family: 'Fira Code', monospace; margin-top: 1.5rem; }
+    .result-row { display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 0; border-bottom: 1px dashed var(--border-color); }
+    .result-row:last-child { border-bottom: none; }
+    .result-label { color: var(--text-muted); font-size: 0.85rem; }
+    .result-val { color: var(--text-main); font-size: 1.1rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav aria-label="Breadcrumb">
+      <ol class="breadcrumb">
+        <li><a href="/" class="breadcrumb-link">Home</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+        <li class="breadcrumb-sep" aria-hidden="true">/</li>
+        <li aria-current="page" style="color:var(--text-main);">Chmod Calculator</li>
+      </ol>
+    </nav>
+
+    <header class="page-header">
+      <span class="badge">SECURITY UTILITIES</span>
+      <h1 class="page-title">Linux Permissions &amp; Chmod Calculator</h1>
+      <p class="page-subtitle">Interactive Linux permission matrix. Calculate 3-digit and 4-digit octal permissions (rwx, SUID, SGID, Sticky Bit) 100% offline &amp; client-side.</p>
+    </header>
+
+    <section class="tool-box">
+      <!-- Quick Presets -->
+      <div style="margin-bottom: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <span style="font-size:0.85rem; color:var(--text-muted); align-self:center; margin-right:0.5rem;">Presets:</span>
+        <button type="button" class="btn-action" onclick="setPreset('644')">644 (Standard File)</button>
+        <button type="button" class="btn-action" onclick="setPreset('755')">755 (Exec/Dir)</button>
+        <button type="button" class="btn-action" onclick="setPreset('600')">600 (Private Key)</button>
+        <button type="button" class="btn-action" onclick="setPreset('700')">700 (Private Dir)</button>
+        <button type="button" class="btn-action" onclick="setPreset('4755')">4755 (SUID Exec)</button>
+        <button type="button" class="btn-action" onclick="setPreset('1777')">1777 (Sticky /tmp)</button>
+      </div>
+
+      <!-- Interactive Checkbox Grid -->
+      <div class="chmod-grid">
+        <!-- Special Bits -->
+        <div class="chmod-card">
+          <div class="chmod-title">Special Flags</div>
+          <label class="perm-check"><input type="checkbox" id="suid" onchange="calculateChmod()"> SUID (Set User ID = 4)</label>
+          <label class="perm-check"><input type="checkbox" id="sgid" onchange="calculateChmod()"> SGID (Set Group ID = 2)</label>
+          <label class="perm-check"><input type="checkbox" id="sticky" onchange="calculateChmod()"> Sticky Bit (1)</label>
+        </div>
+
+        <!-- Owner -->
+        <div class="chmod-card">
+          <div class="chmod-title">Owner (User)</div>
+          <label class="perm-check"><input type="checkbox" id="u_r" checked onchange="calculateChmod()"> Read (r = 4)</label>
+          <label class="perm-check"><input type="checkbox" id="u_w" checked onchange="calculateChmod()"> Write (w = 2)</label>
+          <label class="perm-check"><input type="checkbox" id="u_x" onchange="calculateChmod()"> Execute (x = 1)</label>
+        </div>
+
+        <!-- Group -->
+        <div class="chmod-card">
+          <div class="chmod-title">Group</div>
+          <label class="perm-check"><input type="checkbox" id="g_r" checked onchange="calculateChmod()"> Read (r = 4)</label>
+          <label class="perm-check"><input type="checkbox" id="g_w" onchange="calculateChmod()"> Write (w = 2)</label>
+          <label class="perm-check"><input type="checkbox" id="g_x" onchange="calculateChmod()"> Execute (x = 1)</label>
+        </div>
+
+        <!-- Others -->
+        <div class="chmod-card">
+          <div class="chmod-title">Others (World)</div>
+          <label class="perm-check"><input type="checkbox" id="o_r" checked onchange="calculateChmod()"> Read (r = 4)</label>
+          <label class="perm-check"><input type="checkbox" id="o_w" onchange="calculateChmod()"> Write (w = 2)</label>
+          <label class="perm-check"><input type="checkbox" id="o_x" onchange="calculateChmod()"> Execute (x = 1)</label>
+        </div>
+      </div>
+
+      <!-- Calculated Results Box -->
+      <div class="result-display">
+        <div class="result-row">
+          <span class="result-label">Octal Notation (3-digit):</span>
+          <span class="result-val" id="octal3">644</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Octal Notation (4-digit):</span>
+          <span class="result-val" id="octal4">0644</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">Symbolic String (ls -l):</span>
+          <span class="result-val" id="symbolic">-rw-r--r--</span>
+        </div>
+        <div class="result-row">
+          <span class="result-label">CLI Command Example:</span>
+          <span class="result-val" id="command">chmod 644 filename</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" style="margin-top:2.5rem;">
+      <h2>Frequently Asked Questions (FAQ)</h2>
+      <details>
+        <summary>What is the difference between 3-digit and 4-digit chmod octal notation?</summary>
+        <p style="padding:1rem 1.25rem; margin:0; color:var(--text-muted);">
+          3-digit octal notation (e.g., 755) specifies permissions for Owner, Group, and Others. 4-digit octal notation (e.g., 0755 or 4755) includes the leading special bit (SUID=4, SGID=2, Sticky Bit=1).
+        </p>
+      </details>
+      <details>
+        <summary>What is SUID and SGID in Linux permissions?</summary>
+        <p style="padding:1rem 1.25rem; margin:0; color:var(--text-muted);">
+          SUID (Set User ID) allows a binary file to execute with the permissions of the file owner. SGID (Set Group ID) executes the binary with group permissions or enforces default group inheritance on directory contents.
+        </p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Zyekh Abdul Qadir Jailani. Built with zero-dependency native web standards.</p>
+    </div>
+  </footer>
+
+  <script>
+    function calculateChmod() {
+      // Special bits
+      const suid = document.getElementById('suid').checked ? 4 : 0;
+      const sgid = document.getElementById('sgid').checked ? 2 : 0;
+      const sticky = document.getElementById('sticky').checked ? 1 : 0;
+      const specialVal = suid + sgid + sticky;
+
+      // Owner
+      const ur = document.getElementById('u_r').checked ? 4 : 0;
+      const uw = document.getElementById('u_w').checked ? 2 : 0;
+      const ux = document.getElementById('u_x').checked ? 1 : 0;
+      const ownerVal = ur + uw + ux;
+
+      // Group
+      const gr = document.getElementById('g_r').checked ? 4 : 0;
+      const gw = document.getElementById('g_w').checked ? 2 : 0;
+      const gx = document.getElementById('g_x').checked ? 1 : 0;
+      const groupVal = gr + gw + gx;
+
+      // Others
+      const or = document.getElementById('o_r').checked ? 4 : 0;
+      const ow = document.getElementById('o_w').checked ? 2 : 0;
+      const ox = document.getElementById('o_x').checked ? 1 : 0;
+      const otherVal = or + ow + ox;
+
+      const oct3 = `${ownerVal}${groupVal}${otherVal}`;
+      const oct4 = `${specialVal}${ownerVal}${groupVal}${otherVal}`;
+
+      // Symbolic String
+      let u_sym = (ur ? 'r' : '-') + (uw ? 'w' : '-');
+      if (suid) { u_sym += (ux ? 's' : 'S'); } else { u_sym += (ux ? 'x' : '-'); }
+
+      let g_sym = (gr ? 'r' : '-') + (gw ? 'w' : '-');
+      if (sgid) { g_sym += (gx ? 's' : 'S'); } else { g_sym += (gx ? 'x' : '-'); }
+
+      let o_sym = (or ? 'r' : '-') + (ow ? 'w' : '-');
+      if (sticky) { o_sym += (ox ? 't' : 'T'); } else { o_sym += (ox ? 'x' : '-'); }
+
+      const symStr = `-${u_sym}${g_sym}${o_sym}`;
+
+      document.getElementById('octal3').textContent = oct3;
+      document.getElementById('octal4').textContent = oct4;
+      document.getElementById('symbolic').textContent = symStr;
+      document.getElementById('command').textContent = `chmod ${specialVal > 0 ? oct4 : oct3} filename`;
+    }
+
+    function setPreset(code) {
+      // Uncheck all
+      ['suid','sgid','sticky','u_r','u_w','u_x','g_r','g_w','g_x','o_r','o_w','o_x'].forEach(id => {
+        document.getElementById(id).checked = false;
+      });
+
+      let digits = code.length === 4 ? code.split('') : ['0', ...code.split('')];
+      const sp = parseInt(digits[0], 10);
+      const u = parseInt(digits[1], 10);
+      const g = parseInt(digits[2], 10);
+      const o = parseInt(digits[3], 10);
+
+      document.getElementById('suid').checked = (sp & 4) !== 0;
+      document.getElementById('sgid').checked = (sp & 2) !== 0;
+      document.getElementById('sticky').checked = (sp & 1) !== 0;
+
+      document.getElementById('u_r').checked = (u & 4) !== 0;
+      document.getElementById('u_w').checked = (u & 2) !== 0;
+      document.getElementById('u_x').checked = (u & 1) !== 0;
+
+      document.getElementById('g_r').checked = (g & 4) !== 0;
+      document.getElementById('g_w').checked = (g & 2) !== 0;
+      document.getElementById('g_x').checked = (g & 1) !== 0;
+
+      document.getElementById('o_r').checked = (o & 4) !== 0;
+      document.getElementById('o_w').checked = (o & 2) !== 0;
+      document.getElementById('o_x').checked = (o & 1) !== 0;
+
+      calculateChmod();
+    }
+
+    // Initial calculation
+    calculateChmod();
+  </script>
+</body>
+</html>
