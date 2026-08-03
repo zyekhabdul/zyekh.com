@@ -821,20 +821,28 @@ details[open] summary::after { content: '\2212'; }
 .article-meta {
   display: flex;
   align-items: center;
-  gap: 0.35rem 0.85rem;
-  font-size: 0.825rem;
-  color: var(--text-muted);
+  justify-content: space-between;
+  gap: 1rem;
   border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.85rem;
-  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.75rem;
   flex-wrap: wrap;
-  line-height: 1.4;
 }
-.article-meta span { display: inline-flex; align-items: center; }
-.article-meta span:not(:last-child)::after {
+.meta-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.2rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.meta-info > *:not(:last-child)::after {
   content: "•";
-  margin-left: 0.85rem;
-  color: rgba(255, 255, 255, 0.25);
+  margin-left: 0.65rem;
+  margin-right: 0.65rem;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: normal;
 }
 
 /* Blog — card thumbnail wrapper */

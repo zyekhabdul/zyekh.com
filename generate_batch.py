@@ -203,9 +203,11 @@ def generate_article_html(article_data, current_cache_ver="20260803_v84"):
     <span class="meta-tag">{category}</span>
     <h1 class="article-title">{title}</h1>
     <div class="article-meta">
-      <span>By Zyekh Abdul Qadir Jailani</span>
-      <time class="meta-item" datetime="{date_pub}T00:00:00Z">Published: {date_pub}</time>
-      <span>{read_time} min read ({word_count}+ Words)</span>
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="{date_pub}T00:00:00Z">Published: {date_pub}</time>
+        <span>{read_time} min read ({word_count}+ Words)</span>
+      </div>
       <button class="btn-share" id="shareBtn" type="button">Share Article</button>
     </div>
   </header>

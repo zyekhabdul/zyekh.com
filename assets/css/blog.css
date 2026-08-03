@@ -277,15 +277,6 @@ pre code {
 .author-info p { margin: 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.45; }
 
 /* ── Article Header & Meta Bar ── */
-.article-meta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-top: 0.75rem;
-}
 .btn-share {
   display: inline-flex;
   align-items: center;
@@ -295,7 +286,7 @@ pre code {
   color: var(--text-main);
   font-size: 0.82rem;
   font-weight: 600;
-  padding: 0.35rem 0.85rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -314,14 +305,13 @@ pre code {
 @media (max-width: 640px) {
   .article-meta {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    align-items: stretch;
+    gap: 0.75rem;
   }
   .btn-share {
-    margin-left: 0 !important;
     width: 100%;
     justify-content: center;
-    padding: 0.5rem 1rem;
+    padding: 0.55rem 1rem;
     margin-top: 0.25rem;
   }
 }
