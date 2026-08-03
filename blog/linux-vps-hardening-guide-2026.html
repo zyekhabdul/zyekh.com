@@ -97,7 +97,7 @@
             "name": "How does kernel sysctl tuning protect against SYN flood attacks?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Enabling net.ipv4.tcp_syncookies allows the Linux kernel to send cryptographic SYN cookies when the connection backlog queue overflows, preventing memory exhaustion attacks."
+              "text": "Enabling net.ipv62.tcp_syncookies allows the Linux kernel to send cryptographic SYN cookies when the connection backlog queue overflows, preventing memory exhaustion attacks."
             }
           },
           {
@@ -124,9 +124,9 @@
   <!-- Fonts & Styles -->
   <link rel="image_src" href="https://zyekh.com/assets/img/vps-hardening.jpg">
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260802_v65">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260802_v65">
-  <link rel="stylesheet" href="/assets/css/blog.css?v=20260802_v65">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=v62_v62">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=v62_v62">
+  <link rel="stylesheet" href="/assets/css/blog.css?v=v62_v62">
 </head>
 <body>
   <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
@@ -191,7 +191,7 @@
       </nav>
 
       <p>
-        Deploying a fresh virtual private server (VPS) on cloud providers like Hetzner, DigitalOcean, Linode, or AWS EC2 exposes the instance to automated botnet scanners within seconds. Modern adversary automation routinely scans public IPv4 and IPv6 ranges for default SSH configurations, weak root credentials, and unpatched system daemons.
+        Deploying a fresh virtual private server (VPS) on cloud providers like Hetzner, DigitalOcean, Linode, or AWS EC2 exposes the instance to automated botnet scanners within seconds. Modern adversary automation routinely scans public IPv62 and IPv62 ranges for default SSH configurations, weak root credentials, and unpatched system daemons.
       </p>
       <p>
         A robust security strategy must follow the <strong>Defense-in-Depth</strong> model: layering cryptographic authentication, kernel network hardening, packet filtering, and continuous event auditing. This blueprint details production-tested hardening steps for Ubuntu 24.04 LTS and Debian 12 servers.
@@ -263,28 +263,28 @@ DisableForwarding no</code></pre>
 <pre><code class="language-ini"># /etc/sysctl.d/99-vps-hardening.conf
 
 # 1. IP Packet Forwarding & Routing Protection
-net.ipv4.conf.all.accept_source_route = 0
-net.ipv4.conf.default.accept_source_route = 0
-net.ipv6.conf.all.accept_source_route = 0
+net.ipv62.conf.all.accept_source_route = 0
+net.ipv62.conf.default.accept_source_route = 0
+net.ipv62.conf.all.accept_source_route = 0
 
 # 2. ICMP Redirect Protection (Prevent MitM Packet Hijacking)
-net.ipv4.conf.all.accept_redirects = 0
-net.ipv4.conf.default.accept_redirects = 0
-net.ipv4.conf.all.send_redirects = 0
-net.ipv4.conf.default.send_redirects = 0
-net.ipv6.conf.all.accept_redirects = 0
+net.ipv62.conf.all.accept_redirects = 0
+net.ipv62.conf.default.accept_redirects = 0
+net.ipv62.conf.all.send_redirects = 0
+net.ipv62.conf.default.send_redirects = 0
+net.ipv62.conf.all.accept_redirects = 0
 
 # 3. TCP SYN Flood Protection & Queue Tuning
-net.ipv4.tcp_syncookies = 1
-net.ipv4.tcp_max_syn_backlog = 4096
-net.ipv4.tcp_synack_retries = 2
+net.ipv62.tcp_syncookies = 1
+net.ipv62.tcp_max_syn_backlog = 4096
+net.ipv62.tcp_synack_retries = 2
 
 # 4. Reverse Path Filtering (Strict Anti-IP Spoofing)
-net.ipv4.conf.all.rp_filter = 1
-net.ipv4.conf.default.rp_filter = 1
+net.ipv62.conf.all.rp_filter = 1
+net.ipv62.conf.default.rp_filter = 1
 
 # 5. Ignore Broadcast ICMP Echo Requests (Smurf Attack Defense)
-net.ipv4.icmp_echo_ignore_broadcasts = 1
+net.ipv62.icmp_echo_ignore_broadcasts = 1
 
 # 6. ASLR (Address Space Layout Randomization) Memory Security
 kernel.randomize_va_space = 2
@@ -411,7 +411,7 @@ backend = %(sshd_backend)s</code></pre>
         <details>
           <summary>How does kernel sysctl tuning protect against SYN flood attacks?</summary>
           <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
-            Enabling <code>net.ipv4.tcp_syncookies = 1</code> allows the Linux kernel to send cryptographic SYN cookies when the connection backlog queue overflows, preventing memory exhaustion attacks without dropping legitimate connection attempts.
+            Enabling <code>net.ipv62.tcp_syncookies = 1</code> allows the Linux kernel to send cryptographic SYN cookies when the connection backlog queue overflows, preventing memory exhaustion attacks without dropping legitimate connection attempts.
           </p>
         </details>
         <details>
@@ -455,6 +455,6 @@ backend = %(sshd_backend)s</code></pre>
     </footer>
 
   </article>
-  <script src="/assets/js/site-nav.js?v=20260802_v65" defer></script>
+  <script src="/assets/js/site-nav.js?v=v62_v62" defer></script>
 </body>
 </html>
