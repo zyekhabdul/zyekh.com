@@ -28,3 +28,22 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
 
 6. **EMPIRICAL VERIFICATION**:
    - Never declare a task complete without running a terminal verification script.
+
+7. **DIAGNOSE EMPIRICALLY BEFORE TOUCHING CODE**:
+   - ALWAYS test on localhost first: `python3 -m http.server 8080`. Localhost = ground truth (no CDN, no SW, no cache). If localhost is correct, the code is correct.
+   - Use browser DevTools -> Computed Styles -> measure actual pixel values before guessing at CSS fixes.
+   - Never diagnose CSS alignment issues from screenshots alone.
+
+8. **CSS VERTICAL CENTERING — PROVEN METHOD**:
+   - For absolute-positioned overlays inside a container: use `top:0; bottom:0; display:flex; align-items:center`. DO NOT use `top:50%; transform:translateY(-50%)` — unreliable due to font metric and sub-pixel rendering issues.
+   - For flex siblings: use `align-items:center` on the parent flex container. Never rely on `position:absolute` inside flex containers.
+
+9. **SERVICE WORKER CACHE — CRITICAL RULES**:
+   - sw.js and all HTML files MUST be served with `Cache-Control: no-cache` (set via Cloudflare Page Rules, not _headers — GitHub Pages ignores _headers).
+   - NEVER add `client.navigate()`, `controllerchange` auto-reload, or force-reload logic to sw.js without explicit user approval. These cause unpredictable page reloads for all visitors.
+   - When users report "no change after fix": FIRST check localhost. If localhost is correct, the issue is browser/CDN cache — NOT the code. Instruct user: DevTools -> Application -> Service Workers -> Unregister -> Clear site data.
+   - Cloudflare cache purge: use API with zone ID `1427afa77c5824ee0c34b514260e2e5d` after EVERY push.
+
+10. **ONE CHANGE PER COMMIT — STRICT**:
+    - Never change HTML structure + CSS + SW + JS in the same commit when debugging. Isolate each variable.
+    - If a fix does not work after 3 attempts, STOP and re-diagnose from first principles before trying again.
