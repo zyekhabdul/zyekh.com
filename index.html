@@ -53,36 +53,32 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v62">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260803_v62">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v63">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260803_v63">
 
   <style>
     .portal-hero { text-align: center; padding: 3rem 0 2rem 0; }
     
-    /* Clean Minimalist Single-Box Spotlight Search Bar */
+    /* Minimalist Side-by-Side Spotlight Search & Ctrl+K Box */
     .spotlight-box { 
       position: relative; 
       max-width: 680px; 
       margin: 1.5rem auto 2.5rem auto; 
     }
 
-    .spotlight-icon-wrapper {
-      position: absolute;
-      top: 50%;
-      left: 1rem;
-      transform: translateY(-50%);
+    .spotlight-row {
       display: flex;
       align-items: center;
-      color: var(--text-muted);
-      pointer-events: none;
-      z-index: 2;
+      gap: 0.65rem;
+      width: 100%;
     }
     
     .spotlight-input { 
-      width: 100%; 
+      flex: 1;
+      min-width: 0;
       height: 48px;
       box-sizing: border-box;
-      padding: 0 5.25rem 0 2.5rem; 
+      padding: 0 1.25rem; 
       font-size: 0.95rem; 
       font-family: 'Inter', sans-serif; 
       background: var(--bg-card); 
@@ -98,28 +94,30 @@
       box-shadow: 0 0 0 2px rgba(255,255,255,0.15); 
     }
     
-    .spotlight-shortcut { 
-      position: absolute; 
-      top: 50%;
-      right: 0.85rem;
-      transform: translateY(-50%);
+    .spotlight-shortcut-box { 
+      height: 48px;
+      box-sizing: border-box;
       display: flex;
       align-items: center;
-      gap: 0.25rem;
-      pointer-events: none; 
+      justify-content: center;
+      gap: 0.35rem;
+      padding: 0 0.85rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      flex-shrink: 0;
       user-select: none;
-      z-index: 2;
     }
 
-    .spotlight-shortcut kbd {
+    .spotlight-shortcut-box kbd {
       font-family: 'Fira Code', monospace;
-      font-size: 0.72rem;
-      font-weight: 500;
+      font-size: 0.75rem;
+      font-weight: 600;
       color: var(--text-muted);
-      background: rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.06);
       border: 1px solid var(--border-color);
-      border-radius: 4px;
-      padding: 0.2rem 0.45rem;
+      border-radius: 5px;
+      padding: 0.25rem 0.5rem;
       line-height: 1;
       display: inline-flex;
       align-items: center;
@@ -130,8 +128,7 @@
     }
 
     @media (max-width: 640px) {
-      .spotlight-shortcut { display: none; }
-      .spotlight-input { padding-right: 1.15rem; }
+      .spotlight-shortcut-box { display: none; }
     }
 
     .spotlight-dropdown { display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 0.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 100; text-align: left; }
@@ -198,20 +195,15 @@
       </p>
     </header>
 
-    <!-- Spotlight Search Bar -->
+    <!-- Minimalist Side-by-Side Spotlight Search Bar & Ctrl+K Box -->
     <div class="spotlight-box">
-      <div class="spotlight-icon-wrapper">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-      </div>
-
-      <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Search 41 tools &amp; articles..." autocomplete="off">
-      
-      <div class="spotlight-shortcut">
-        <kbd>Ctrl</kbd>
-        <kbd>K</kbd>
+      <div class="spotlight-row">
+        <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Search 41 tools &amp; articles..." autocomplete="off">
+        
+        <div class="spotlight-shortcut-box">
+          <kbd>Ctrl</kbd>
+          <kbd>K</kbd>
+        </div>
       </div>
 
       <div id="spotlightDropdown" class="spotlight-dropdown">
@@ -400,6 +392,6 @@
     });
   </script>
 
-  <script src="/assets/js/site-nav.js?v=20260803_v62" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260803_v63" defer></script>
 </body>
 </html>
