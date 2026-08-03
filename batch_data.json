@@ -1,0 +1,50 @@
+[
+  {
+    "slug": "nginx-reverse-proxy-security-hardening-blueprint-2026",
+    "title": "Nginx Reverse Proxy Security Hardening Blueprint for 2026",
+    "subtitle": "Production guide for hardening Nginx reverse proxies with TLS 1.3, rate limiting, buffer overflow defense, and security headers.",
+    "category": "Web Security • Nginx Hardening",
+    "date_published": "2026-08-03",
+    "read_time_mins": 10,
+    "word_count": 1400,
+    "hero_image": "https://zyekh.com/assets/img/vps-hardening.jpg",
+    "hero_caption": "Production Nginx Security Configuration Blueprint for Cloud Instances",
+    "exec_summary": [
+      "Disable Nginx Server Tokens: Suppress server version disclosure in HTTP headers.",
+      "Buffer Overflow Defense: Restrict client_body_buffer_size and client_max_body_size.",
+      "Rate Limiting: Implement limit_req_zone to mitigate HTTP flood attacks.",
+      "TLS 1.3 Strict Ciphers: Mandate ECDHE-ECDSA-AES128-GCM-SHA256 and modern TLS protocols."
+    ],
+    "sections": [
+      {
+        "id": "server-tokens-disabling",
+        "h2_title": "1. Disabling Server Tokens & Information Disclosure",
+        "content_paragraphs": [
+          "By default, Nginx broadcasts its exact version number in HTTP response headers and 40x/50x error pages (e.g., Server: nginx/1.24.0). Attackers use this version information to query public CVE databases for unpatched vulnerabilities.",
+          "Suppressing server tokens is the first step in reducing information leakage across public endpoints:"
+        ],
+        "code_block": "# Place inside /etc/nginx/nginx.conf http block\nserver_tokens off;\nmore_clear_headers Server;",
+        "code_language": "nginx"
+      },
+      {
+        "id": "rate-limiting-http-floods",
+        "h2_title": "2. Mitigating HTTP Floods via Rate Limiting Zones",
+        "content_paragraphs": [
+          "Layer 7 HTTP flood attacks attempt to exhaust Nginx worker connections. Configuring rate-limiting zones using limit_req_zone enforces request thresholds per IP address:"
+        ],
+        "code_block": "# Define rate limit zone in http context\nlimit_req_zone $binary_remote_addr zone=one:10m rate=10r/s;\n\n# Apply to server location context\nlocation / {\n    limit_req zone=one burst=20 nodelay;\n    proxy_pass http://127.0.0.1:8080;\n}",
+        "code_language": "nginx"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "What is the difference between limit_req and limit_conn in Nginx?",
+        "answer": "limit_req limits the rate of incoming HTTP requests per second, while limit_conn limits the total number of simultaneous active TCP connections per IP."
+      }
+    ],
+    "related_tools": [
+      {"name": "Secure Password Generator", "url": "/tools/password.html"},
+      {"name": "Diff Checker", "url": "/tools/diff-checker.html"}
+    ]
+  }
+]
