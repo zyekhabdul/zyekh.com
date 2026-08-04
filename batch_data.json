@@ -118,7 +118,7 @@
     "date_published": "2026-08-04",
     "read_time_mins": 12,
     "word_count": 1500,
-    "hero_image": "https://zyekh.com/assets/img/vps-hardening.jpg",
+    "hero_image": "https://zyekh.com/assets/img/ufw-firewall.jpg",
     "hero_caption": "UFW Firewall Traffic Isolation & Rate Limiting Blueprint",
     "exec_summary": [
       "Strict Default-Deny Rules: Block all unrequested incoming connections while permitting stateful outbound traffic.",
@@ -226,7 +226,7 @@
     "date_published": "2026-08-04",
     "read_time_mins": 14,
     "word_count": 1550,
-    "hero_image": "https://zyekh.com/assets/img/ssh-zero-trust.jpg",
+    "hero_image": "https://zyekh.com/assets/img/fail2ban-defense.jpg",
     "hero_caption": "Fail2ban Automated Intrusion Detection & IP Banning Architecture",
     "exec_summary": [
       "Jail Configuration: Override default settings safely using jail.local instead of jail.conf.",
@@ -335,7 +335,7 @@
     "date_published": "2026-08-04",
     "read_time_mins": 14,
     "word_count": 1600,
-    "hero_image": "https://zyekh.com/assets/img/ebpf-monitoring.jpg",
+    "hero_image": "https://zyekh.com/assets/img/sysctl-hardening.jpg",
     "hero_caption": "Linux Kernel Network Stack Parameter Hardening via /etc/sysctl.d/",
     "exec_summary": [
       "SYN Flood Protection: Enable tcp_syncookies and increase tcp_max_syn_backlog.",
@@ -449,7 +449,7 @@
     "date_published": "2026-08-04",
     "read_time_mins": 13,
     "word_count": 1500,
-    "hero_image": "https://zyekh.com/assets/img/static-architecture.jpg",
+    "hero_image": "https://zyekh.com/assets/img/systemd-sandboxing.jpg",
     "hero_caption": "Systemd Service Process Isolation & System Call Filtering",
     "exec_summary": [
       "FileSystem Protection: Set ProtectSystem=strict and ProtectHome=yes to enforce read-only mount namespaces.",
@@ -567,7 +567,7 @@
     "date_published": "2026-08-04",
     "read_time_mins": 14,
     "word_count": 1650,
-    "hero_image": "https://zyekh.com/assets/img/ebpf-monitoring.jpg",
+    "hero_image": "https://zyekh.com/assets/img/auditd-monitoring.jpg",
     "hero_caption": "Real-Time Linux Kernel Event Auditing & DFIR Ruleset Deployment",
     "exec_summary": [
       "Execve Process Auditing: Track all executed commands across system users.",
@@ -680,7 +680,7 @@
     "date_published": "2026-08-04",
     "read_time_mins": 14,
     "word_count": 1500,
-    "hero_image": "https://zyekh.com/assets/img/ssh-zero-trust.jpg",
+    "hero_image": "https://zyekh.com/assets/img/wireguard-mesh.jpg",
     "hero_caption": "WireGuard Encrypted Private Mesh Interconnect for Multi-Cloud Servers",
     "exec_summary": [
       "Kernel-Level Performance: WireGuard executes inside Linux kernel space with minimal latency.",
@@ -790,7 +790,7 @@
     "date_published": "2026-08-04",
     "read_time_mins": 15,
     "word_count": 1750,
-    "hero_image": "https://zyekh.com/assets/img/ebpf-monitoring.jpg",
+    "hero_image": "https://zyekh.com/assets/img/ebpf-xdp.jpg",
     "hero_caption": "eBPF/XDP Driver-Level Packet Ingestion & Ultra Fast Packet Dropping",
     "exec_summary": [
       "XDP_DROP Early Decision: Drop malicious UDP/SYN floods before allocating sk_buff memory.",
@@ -897,7 +897,7 @@
     "date_published": "2026-08-04",
     "read_time_mins": 13,
     "word_count": 1500,
-    "hero_image": "https://zyekh.com/assets/img/csp-security.jpg",
+    "hero_image": "https://zyekh.com/assets/img/pam-faillock.jpg",
     "hero_caption": "PAM Module Lockout Policy Configuration & Account Recovery",
     "exec_summary": [
       "Faillock Directory Storage: Store failed login tally files in /var/log/faillock/.",
@@ -1013,7 +1013,7 @@
     "date_published": "2026-08-04",
     "read_time_mins": 14,
     "word_count": 1500,
-    "hero_image": "https://zyekh.com/assets/img/static-architecture.jpg",
+    "hero_image": "https://zyekh.com/assets/img/chroot-isolation.jpg",
     "hero_caption": "Unprivileged User Namespace UID/GID Mapping & Chroot Jail Setup",
     "exec_summary": [
       "User Namespaces (CLONE_NEWUSER): Map unprivileged user IDs to root inside isolated namespaces.",
