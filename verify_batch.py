@@ -64,6 +64,22 @@ def verify_all_articles():
         if not soup.find('button', id='shareBtn'):
             errors.append("Missing share button (#shareBtn)")
             
+        # Check 11: Duplicate Element IDs Check
+        all_ids = [el['id'] for el in soup.find_all(id=True)]
+        seen_ids = set()
+        dups = set()
+        for i in all_ids:
+            if i in seen_ids:
+                dups.add(i)
+            seen_ids.add(i)
+        if dups:
+            errors.append(f"Duplicate element IDs found: {', '.join(dups)}")
+            
+        # Check 12: Single Site-Nav Script Tag Check
+        site_nav_scripts = [s for s in soup.find_all('script') if s.get('src') and 'site-nav.js' in s.get('src')]
+        if len(site_nav_scripts) > 1:
+            errors.append(f"Multiple ({len(site_nav_scripts)}) site-nav.js script tags detected")
+            
         if errors:
             failures += 1
             print(f"[FAIL] {filename}:")

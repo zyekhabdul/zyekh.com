@@ -3,6 +3,7 @@ import json
 import os
 import re
 import glob
+import datetime
 from bs4 import BeautifulSoup
 
 def slugify(text):
@@ -11,13 +12,32 @@ def slugify(text):
     slug = re.sub(r'[^a-z0-9]+', '-', text).strip('-')
     return slug or 'section'
 
-def generate_article_html(article_data, current_cache_ver="20260803_v84"):
+def get_current_cache_version():
+    """Get the active CACHE_VERSION from sw.js."""
+    today = datetime.date.today().strftime("%Y%m%d")
+    sw_ver = "v78"
+    if os.path.exists("sw.js"):
+        c = open("sw.js", encoding="utf-8").read()
+        m = re.search(r"CACHE_VERSION = '(v\d+)';", c)
+        if m:
+            sw_ver = m.group(1)
+    return f"{today}_{sw_ver}"
+
+def generate_article_html(article_data, current_cache_ver=None):
     """Generate 100% SOP Gold Standard Compliant HTML for a blog article."""
+    if not current_cache_ver:
+        current_cache_ver = get_current_cache_version()
     
     slug = article_data['slug']
     title = article_data['title']
     subtitle = article_data.get('subtitle', '')
     category = article_data.get('category', 'Cyber Security')
+    tags = article_data.get('tags', [])
+    if not tags:
+        parts = [p.strip() for p in re.split(r'[•,/|]+', category) if p.strip()]
+        tags = [f"#{re.sub(r'[^a-zA-Z0-9]', '', p)}" for p in parts if p]
+    tags_html = "\n".join([f'<span class="meta-tag">{t}</span>' for t in tags])
+    
     date_pub = article_data.get('date_published', '2026-08-03')
     read_time = article_data.get('read_time_mins', 10)
     word_count = article_data.get('word_count', 1200)
@@ -242,7 +262,7 @@ def generate_article_html(article_data, current_cache_ver="20260803_v84"):
 {sections_rendered}
 
     <!-- FAQ Section -->
-    <div class="faq-section" id="faq">
+    <div class="faq-section">
       <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
 {faq_rendered}
     </div>
@@ -277,7 +297,6 @@ def generate_article_html(article_data, current_cache_ver="20260803_v84"):
     <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
   </footer>
 </article>
-<script defer="" src="/assets/js/site-nav.js?v={current_cache_ver}"></script>
 </body>
 </html>"""
     

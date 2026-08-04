@@ -7,7 +7,7 @@
     "date_published": "2026-08-03",
     "read_time_mins": 10,
     "word_count": 1400,
-    "hero_image": "https://zyekh.com/assets/img/vps-hardening.jpg",
+    "hero_image": "https://zyekh.com/assets/img/nginx-security.jpg",
     "hero_caption": "Production Nginx Security Configuration Blueprint for Cloud Instances",
     "exec_summary": [
       "Disable Nginx Server Tokens: Suppress server version disclosure in HTTP headers.",

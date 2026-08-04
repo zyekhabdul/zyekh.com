@@ -95,6 +95,12 @@
 }
 
 /* Meta Tag & Title Sizing */
+.tags-container {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
 .meta-tag {
   font-family: 'Fira Code', monospace;
   font-size: 0.72rem;

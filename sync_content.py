@@ -80,8 +80,20 @@ def sync_all(bump_version=True):
         title = h1.text.strip() if h1 else b
         desc_meta = soup.find("meta", {"name": "description"})
         desc = desc_meta["content"].strip() if desc_meta else title
+        
+        time_tag = soup.find("time", class_="meta-item") or soup.find("meta", {"property": "article:published_time"})
+        pub_date_str = "Mon, 03 Aug 2026 00:00:00 GMT"
+        if time_tag:
+            raw_date = time_tag.get("datetime") or time_tag.get("content")
+            if raw_date and len(raw_date) >= 10:
+                try:
+                    dt = datetime.datetime.strptime(raw_date[:10], "%Y-%m-%d")
+                    pub_date_str = dt.strftime("%a, %d %b %Y 00:00:00 GMT")
+                except ValueError:
+                    pass
+
         rel_url = f"{base_url}/" + b.replace("\\", "/")
-        article_meta.append({"title": title, "url": rel_url, "desc": desc})
+        article_meta.append({"title": title, "url": rel_url, "desc": desc, "pub_date": pub_date_str})
 
     # Update feed.xml
     feed_items = []
@@ -91,7 +103,7 @@ def sync_all(bump_version=True):
       <link>{item['url']}</link>
       <guid>{item['url']}</guid>
       <description>{item['desc']}</description>
-      <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
+      <pubDate>{item['pub_date']}</pubDate>
     </item>""")
 
     feed_xml = f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -128,6 +140,39 @@ def sync_all(bump_version=True):
     with open("llms.txt", "w", encoding="utf-8") as f:
         f.write(llms_txt)
     print("[SYNC] Updated llms.txt RAG knowledge base.")
+
+    # 5. Harmonize blog/index.html card category hashtags from article sources
+    index_path = "blog/index.html"
+    if os.path.exists(index_path):
+        soup_index = BeautifulSoup(open(index_path, "r", encoding="utf-8").read(), "html.parser")
+        updated = False
+        for card in soup_index.find_all("article", class_="article-card"):
+            link = card.find("a", href=True)
+            if not link:
+                continue
+            href = link["href"].lstrip("/")
+            if not os.path.exists(href):
+                continue
+            art_soup = BeautifulSoup(open(href, "r", encoding="utf-8").read(), "html.parser")
+            meta_span = art_soup.find("span", class_="meta-tag")
+            if not meta_span:
+                continue
+            cat_text = meta_span.text.strip()
+            parts = [p.strip() for p in re.split(r'[•,/|]+', cat_text) if p.strip()]
+            hashtags = [f"#{re.sub(r'[^a-zA-Z0-9]', '', p)}" for p in parts if p]
+            tags_div = card.find("div", class_="tags-container")
+            if tags_div and hashtags:
+                new_tags_html = "\n".join([f'<span class="meta-tag">{h}</span>' for h in hashtags])
+                tags_div.clear()
+                for h in hashtags:
+                    tag_span = soup_index.new_tag("span", attrs={"class": "meta-tag"})
+                    tag_span.string = h
+                    tags_div.append(tag_span)
+                updated = True
+        if updated:
+            with open(index_path, "w", encoding="utf-8") as f:
+                f.write(str(soup_index))
+            print(f"[SYNC] Harmonized category hashtags in {index_path} from article sources.")
 
     print("[SYNC] Synchronization completed successfully!")
 
