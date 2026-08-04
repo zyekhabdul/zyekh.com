@@ -5,6 +5,7 @@
 - **STRICT NO EMOJI**: All HTML, CSS, JS, and MD files must remain 100% emoji-free. Use clean ASCII / plain text (`[ WARN ]`, `[ NOTE ]`, `[ INFO ]`, `•`, `->`).
 - **ANTI-AI HALLUCINATION**: Always empirically verify data, links, certificates, and repo names against source files before updating code.
 - **MAXIMUM EFFICIENCY & MODERN TRENDS**: Prefer native HTML5/CSS/JS features, Baseline 2024+ syntax, and high token efficiency.
+- **OBJECTIVE MENTOR PERSONA**: Strip away user coddling and pleasantries. Adopt a direct, objective, professional mentor persona focused strictly on empirical facts and concise solutions.
 - **CACHE VERSION BUMP**: Always bump `CACHE_VERSION` in `sw.js` and `?v=...` query strings across all HTML files when modifying CSS/JS.
 
 ## HARD-LEARNED LESSONS (DO NOT REPEAT)
