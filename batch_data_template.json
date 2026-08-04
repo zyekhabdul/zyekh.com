@@ -1,0 +1,80 @@
+[
+  {
+    "slug": "sample-article-url-slug-2026",
+    "title": "Comprehensive Technical Title Blueprint for 2026",
+    "subtitle": "Detailed meta description and subtitle for high-speed indexing (SEO/GEO).",
+    "category": "Topic Category • Sub-Category",
+    "tags": ["#TopicCategory", "#SubCategory"],
+    "date_published": "2026-08-05",
+    "read_time_mins": 12,
+    "word_count": 1400,
+    "hero_image": "https://zyekh.com/assets/img/article-banner.jpg",
+    "hero_caption": "Technical Banner Description for Cloud Instance Hardening",
+    "exec_summary": [
+      "Key Takeaway 1: Mandatory security principle or command.",
+      "Key Takeaway 2: Defense-in-depth parameter configuration.",
+      "Key Takeaway 3: Performance optimization and memory threshold.",
+      "Key Takeaway 4: Audit and verification checklist directive."
+    ],
+    "sections": [
+      {
+        "id": "section-1-slug",
+        "h2_title": "1. First Technical Section Heading",
+        "content_paragraphs": [
+          "Detailed technical explanation paragraph 1 explaining root cause and security principles.",
+          "Detailed technical explanation paragraph 2 detailing configuration parameters and kernel flags.",
+          "Detailed technical explanation paragraph 3 guiding production implementation best practices."
+        ],
+        "code_block": "# Command line or configuration file snippet\nsystemctl status example.service",
+        "code_language": "bash"
+      },
+      {
+        "id": "section-2-slug",
+        "h2_title": "2. Second Technical Section Heading",
+        "content_paragraphs": [
+          "Detailed technical explanation paragraph 1...",
+          "Detailed technical explanation paragraph 2...",
+          "Detailed technical explanation paragraph 3..."
+        ],
+        "code_block": "# Configuration snippet\n/etc/example/config.conf",
+        "code_language": "ini"
+      },
+      {
+        "id": "section-3-slug",
+        "h2_title": "3. Third Technical Section Heading",
+        "content_paragraphs": [
+          "Detailed technical explanation paragraph 1...",
+          "Detailed technical explanation paragraph 2...",
+          "Detailed technical explanation paragraph 3..."
+        ],
+        "code_block": "# Audit verification command\ncurl -I https://zyekh.com/",
+        "code_language": "bash"
+      },
+      {
+        "id": "section-4-slug",
+        "h2_title": "4. Fourth Technical Section Heading",
+        "content_paragraphs": [
+          "Detailed technical explanation paragraph 1...",
+          "Detailed technical explanation paragraph 2...",
+          "Detailed technical explanation paragraph 3..."
+        ],
+        "code_block": "# Verification command\nverify-command --status",
+        "code_language": "bash"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "What is the primary security benefit of this configuration?",
+        "answer": "Detailed answer explaining attack surface reduction and empirical verification."
+      },
+      {
+        "question": "How do I verify settings without restarting the daemon?",
+        "answer": "Detailed answer explaining live reloading commands."
+      }
+    ],
+    "related_tools": [
+      {"name": "Secure Password Generator", "url": "/tools/password.html"},
+      {"name": "Diff Checker", "url": "/tools/diff-checker.html"}
+    ]
+  }
+]

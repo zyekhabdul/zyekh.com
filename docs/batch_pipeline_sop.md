@@ -52,7 +52,9 @@ Every generated `.html` file inside `/blog/` MUST implement all 14 components:
 
 ---
 
-## 3. JSON INPUT DATA SCHEMA (`batch_data.json`)
+## 3. JSON INPUT DATA SCHEMA (`batch_data.json` & `batch_data_template.json`)
+
+To prepare Batch 2 or any future article batch, copy [`batch_data_template.json`](file:///home/fuckadmin/.git-clone/zyekh.com/batch_data_template.json) to `batch_data.json` and fill in the structured array:
 
 ```json
 [
@@ -61,8 +63,9 @@ Every generated `.html` file inside `/blog/` MUST implement all 14 components:
     "title": "Full Article Title Blueprint for 2026",
     "subtitle": "Comprehensive meta description and subtitle for search engines.",
     "category": "Topic Category • Sub-Category",
+    "tags": ["#TopicCategory", "#SubCategory"],
     "date_published": "YYYY-MM-DD",
-    "read_time_mins": 10,
+    "read_time_mins": 12,
     "word_count": 1400,
     "hero_image": "https://zyekh.com/assets/img/article-hero.jpg",
     "hero_caption": "Caption describing the hero image",
