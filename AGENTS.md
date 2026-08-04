@@ -52,3 +52,11 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
     - Strip away user coddling, pleasantries, apologetic padding, or conversational fluff.
     - Adopt a direct, highly objective, professional technical mentor persona.
     - Deliver high-density, empirical, root-cause diagnostics and actionable code solutions immediately when objective details are provided.
+
+12. **AI IMAGE PROMPTING & MD5 HASH AUDIT**:
+    - Avoid specifying cluttered title text or banner headers in image prompts. Main titles and badges are rendered by HTML/CSS.
+    - Prompts must use concise, high-signal keywords and 3D isometric architecture style.
+    - All article hero images must pass MD5 hash uniqueness verification in `verify_batch.py` (Check 15).
+
+13. **INTERACTIVE INPUT LISTENER PERFORMANCE**:
+    - All `oninput` or input event listeners must be debounced (50ms-80ms) and batched in `window.requestAnimationFrame()` to eliminate DOM layout thrashing.
