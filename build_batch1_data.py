@@ -1,13 +1,14 @@
-[
+#!/usr/bin/env python3
+import json
+import os
+
+batch_1_articles = [
   {
     "slug": "nginx-reverse-proxy-security-hardening-blueprint-2026",
     "title": "Nginx Reverse Proxy Security Hardening Blueprint for 2026",
     "subtitle": "Production guide for hardening Nginx reverse proxies with TLS 1.3, rate limiting, buffer overflow defense, and security headers.",
-    "category": "Web Security \u2022 Nginx Hardening",
-    "tags": [
-      "#WebSecurity",
-      "#NginxHardening"
-    ],
+    "category": "Web Security • Nginx Hardening",
+    "tags": ["#WebSecurity", "#NginxHardening"],
     "date_published": "2026-08-03",
     "read_time_mins": 10,
     "word_count": 1400,
@@ -47,25 +48,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Secure Password Generator",
-        "url": "/tools/password.html"
-      },
-      {
-        "name": "Diff Checker",
-        "url": "/tools/diff-checker.html"
-      }
+      {"name": "Secure Password Generator", "url": "/tools/password.html"},
+      {"name": "Diff Checker", "url": "/tools/diff-checker.html"}
     ]
   },
   {
     "slug": "ufw-firewall-hardening-and-rate-limiting-blueprint-2026",
     "title": "UFW Firewall Hardening: Advanced Rate Limiting & Default-Deny Security Blueprint",
     "subtitle": "Production guide for securing Linux servers using UFW with default-deny policies, custom application profiles, rate limiting, and interface isolation.",
-    "category": "System Hardening \u2022 UFW Firewall",
-    "tags": [
-      "#SystemHardening",
-      "#UFWFirewall"
-    ],
+    "category": "System Hardening • UFW Firewall",
+    "tags": ["#SystemHardening", "#UFWFirewall"],
     "date_published": "2026-08-04",
     "read_time_mins": 12,
     "word_count": 1500,
@@ -105,25 +97,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Linux Chmod Calculator",
-        "url": "/tools/chmod-calculator.html"
-      },
-      {
-        "name": "Subnet Calculator",
-        "url": "/tools/subnet.html"
-      }
+      {"name": "Linux Chmod Calculator", "url": "/tools/chmod-calculator.html"},
+      {"name": "Subnet Calculator", "url": "/tools/subnet.html"}
     ]
   },
   {
     "slug": "fail2ban-intrusion-prevention-and-ssh-abuse-mitigation",
     "title": "Automated Intrusion Prevention: Fail2ban Configuration for SSH & Nginx Protection",
     "subtitle": "Comprehensive blueprint for deploying Fail2ban to detect brute-force attacks, automate IP bans via iptables/nftables, and configure recidive long-term bans.",
-    "category": "Cyber Security \u2022 Fail2ban Defense",
-    "tags": [
-      "#CyberSecurity",
-      "#Fail2banDefense"
-    ],
+    "category": "Cyber Security • Fail2ban Defense",
+    "tags": ["#CyberSecurity", "#Fail2banDefense"],
     "date_published": "2026-08-04",
     "read_time_mins": 11,
     "word_count": 1450,
@@ -153,25 +136,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Secure Password Generator",
-        "url": "/tools/password.html"
-      },
-      {
-        "name": "Hash Generator",
-        "url": "/tools/hash.html"
-      }
+      {"name": "Secure Password Generator", "url": "/tools/password.html"},
+      {"name": "Hash Generator", "url": "/tools/hash.html"}
     ]
   },
   {
     "slug": "linux-kernel-sysctl-hardening-network-stack-security",
     "title": "Linux Kernel Sysctl Hardening: Securing TCP/IP Network Stack against SYN Floods",
     "subtitle": "Hardening guide for tuning Linux kernel sysctl parameters to defend against TCP SYN floods, IP spoofing, packet redirects, and memory exhaustion.",
-    "category": "Linux Kernel \u2022 Sysctl Hardening",
-    "tags": [
-      "#LinuxKernel",
-      "#SysctlHardening"
-    ],
+    "category": "Linux Kernel • Sysctl Hardening",
+    "tags": ["#LinuxKernel", "#SysctlHardening"],
     "date_published": "2026-08-04",
     "read_time_mins": 13,
     "word_count": 1600,
@@ -201,25 +175,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Epoch Timestamp Converter",
-        "url": "/tools/epoch.html"
-      },
-      {
-        "name": "Diff Checker",
-        "url": "/tools/diff-checker.html"
-      }
+      {"name": "Epoch Timestamp Converter", "url": "/tools/epoch.html"},
+      {"name": "Diff Checker", "url": "/tools/diff-checker.html"}
     ]
   },
   {
     "slug": "systemd-service-sandboxing-and-security-hardening",
     "title": "Systemd Service Sandboxing: Restricting Process Capability & System Calls",
     "subtitle": "Production guide for sandboxing Linux daemons using systemd security directives like ProtectSystem, SystemCallFilter, and CapabilityBoundingSet.",
-    "category": "System Hardening \u2022 Systemd Security",
-    "tags": [
-      "#SystemHardening",
-      "#SystemdSecurity"
-    ],
+    "category": "System Hardening • Systemd Security",
+    "tags": ["#SystemHardening", "#SystemdSecurity"],
     "date_published": "2026-08-04",
     "read_time_mins": 11,
     "word_count": 1400,
@@ -249,25 +214,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Environment Variables Formatter",
-        "url": "/tools/env.html"
-      },
-      {
-        "name": "Cron Expression Generator",
-        "url": "/tools/cron.html"
-      }
+      {"name": "Environment Variables Formatter", "url": "/tools/env.html"},
+      {"name": "Cron Expression Generator", "url": "/tools/cron.html"}
     ]
   },
   {
     "slug": "auditd-kernel-event-monitoring-and-dfir-logging",
     "title": "Linux Auditd Blueprint: Real-Time Kernel Event Tracking & Security Auditing",
     "subtitle": "Security guide for configuring Linux Audit Framework (auditd) to log execve system calls, file integrity changes, and privilege escalation events.",
-    "category": "Cyber Security \u2022 Auditd DFIR",
-    "tags": [
-      "#CyberSecurity",
-      "#AuditdDFIR"
-    ],
+    "category": "Cyber Security • Auditd DFIR",
+    "tags": ["#CyberSecurity", "#AuditdDFIR"],
     "date_published": "2026-08-04",
     "read_time_mins": 14,
     "word_count": 1650,
@@ -297,25 +253,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "SQL Query Formatter",
-        "url": "/tools/sql.html"
-      },
-      {
-        "name": "Diff Checker",
-        "url": "/tools/diff-checker.html"
-      }
+      {"name": "SQL Query Formatter", "url": "/tools/sql.html"},
+      {"name": "Diff Checker", "url": "/tools/diff-checker.html"}
     ]
   },
   {
     "slug": "wireguard-vpn-tunneling-for-secure-vps-mesh-networks",
     "title": "Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels & Strict Firewall Rules",
     "subtitle": "Step-by-step technical blueprint for creating encrypted private mesh networks between multi-cloud VPS nodes using WireGuard and UDP noise protocols.",
-    "category": "Web Security \u2022 WireGuard Mesh",
-    "tags": [
-      "#WebSecurity",
-      "#WireGuardMesh"
-    ],
+    "category": "Web Security • WireGuard Mesh",
+    "tags": ["#WebSecurity", "#WireGuardMesh"],
     "date_published": "2026-08-04",
     "read_time_mins": 12,
     "word_count": 1450,
@@ -345,25 +292,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Subnet Calculator",
-        "url": "/tools/subnet.html"
-      },
-      {
-        "name": "HMAC Generator",
-        "url": "/tools/hmac.html"
-      }
+      {"name": "Subnet Calculator", "url": "/tools/subnet.html"},
+      {"name": "HMAC Generator", "url": "/tools/hmac.html"}
     ]
   },
   {
     "slug": "ebpf-xdp-packet-filtering-and-ddos-mitigation",
     "title": "High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation",
     "subtitle": "Technical guide for writing eBPF eXpress Data Path (XDP) kernel programs to drop malicious DDoS traffic at the network driver level.",
-    "category": "Linux Kernel \u2022 XDP DDoS Defense",
-    "tags": [
-      "#LinuxKernel",
-      "#XDPDDoSDefense"
-    ],
+    "category": "Linux Kernel • XDP DDoS Defense",
+    "tags": ["#LinuxKernel", "#XDPDDoSDefense"],
     "date_published": "2026-08-04",
     "read_time_mins": 15,
     "word_count": 1750,
@@ -393,25 +331,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "AI Token Estimator",
-        "url": "/tools/ai-token.html"
-      },
-      {
-        "name": "cURL Command Builder",
-        "url": "/tools/curl.html"
-      }
+      {"name": "AI Token Estimator", "url": "/tools/ai-token.html"},
+      {"name": "cURL Command Builder", "url": "/tools/curl.html"}
     ]
   },
   {
     "slug": "pam-tally2-faillock-account-lockout-policy-guide",
     "title": "Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force",
     "subtitle": "Security guide for configuring pam_faillock to prevent SSH and console brute-force authentication attacks on RHEL, Debian, and Ubuntu systems.",
-    "category": "System Hardening \u2022 PAM Security",
-    "tags": [
-      "#SystemHardening",
-      "#PAMSecurity"
-    ],
+    "category": "System Hardening • PAM Security",
+    "tags": ["#SystemHardening", "#PAMSecurity"],
     "date_published": "2026-08-04",
     "read_time_mins": 10,
     "word_count": 1350,
@@ -441,25 +370,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Secure Password Generator",
-        "url": "/tools/password.html"
-      },
-      {
-        "name": "Base64 Encoder",
-        "url": "/tools/base64.html"
-      }
+      {"name": "Secure Password Generator", "url": "/tools/password.html"},
+      {"name": "Base64 Encoder", "url": "/tools/base64.html"}
     ]
   },
   {
     "slug": "chroot-jail-and-unprivileged-namespaces-isolation",
     "title": "Process Isolation on Linux: Unprivileged User Namespaces & Chroot Jails",
     "subtitle": "Technical blueprint for configuring unprivileged user namespaces and chroot jails to sandbox untrusted services without full container runtimes.",
-    "category": "System Hardening \u2022 Process Isolation",
-    "tags": [
-      "#SystemHardening",
-      "#ProcessIsolation"
-    ],
+    "category": "System Hardening • Process Isolation",
+    "tags": ["#SystemHardening", "#ProcessIsolation"],
     "date_published": "2026-08-04",
     "read_time_mins": 12,
     "word_count": 1400,
@@ -489,14 +409,13 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Linux Chmod Calculator",
-        "url": "/tools/chmod-calculator.html"
-      },
-      {
-        "name": "JSON Formatter",
-        "url": "/tools/json.html"
-      }
+      {"name": "Linux Chmod Calculator", "url": "/tools/chmod-calculator.html"},
+      {"name": "JSON Formatter", "url": "/tools/json.html"}
     ]
   }
 ]
+
+with open('batch_data.json', 'w', encoding='utf-8') as f:
+    json.dump(batch_1_articles, f, indent=2)
+
+print('[BUILD] Successfully written 10 articles to batch_data.json!')

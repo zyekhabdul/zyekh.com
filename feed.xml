@@ -7,6 +7,41 @@
     <language>en-us</language>
     <atom:link href="https://zyekh.com/feed.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Linux Auditd Blueprint: Real-Time Kernel Event Tracking & Security Auditing</title>
+      <link>https://zyekh.com/blog/auditd-kernel-event-monitoring-and-dfir-logging.html</link>
+      <guid>https://zyekh.com/blog/auditd-kernel-event-monitoring-and-dfir-logging.html</guid>
+      <description>Security guide for configuring Linux Audit Framework (auditd) to log execve system calls, file integrity changes, and privilege escalation events.</description>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Process Isolation on Linux: Unprivileged User Namespaces & Chroot Jails</title>
+      <link>https://zyekh.com/blog/chroot-jail-and-unprivileged-namespaces-isolation.html</link>
+      <guid>https://zyekh.com/blog/chroot-jail-and-unprivileged-namespaces-isolation.html</guid>
+      <description>Technical blueprint for configuring unprivileged user namespaces and chroot jails to sandbox untrusted services without full container runtimes.</description>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation</title>
+      <link>https://zyekh.com/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html</link>
+      <guid>https://zyekh.com/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html</guid>
+      <description>Technical guide for writing eBPF eXpress Data Path (XDP) kernel programs to drop malicious DDoS traffic at the network driver level.</description>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Automated Intrusion Prevention: Fail2ban Configuration for SSH & Nginx Protection</title>
+      <link>https://zyekh.com/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html</link>
+      <guid>https://zyekh.com/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html</guid>
+      <description>Comprehensive blueprint for deploying Fail2ban to detect brute-force attacks, automate IP bans via iptables/nftables, and configure recidive long-term bans.</description>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Linux Kernel Sysctl Hardening: Securing TCP/IP Network Stack against SYN Floods</title>
+      <link>https://zyekh.com/blog/linux-kernel-sysctl-hardening-network-stack-security.html</link>
+      <guid>https://zyekh.com/blog/linux-kernel-sysctl-hardening-network-stack-security.html</guid>
+      <description>Hardening guide for tuning Linux kernel sysctl parameters to defend against TCP SYN floods, IP spoofing, packet redirects, and memory exhaustion.</description>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Comprehensive Linux VPS Hardening Blueprint for 2026</title>
       <link>https://zyekh.com/blog/linux-vps-hardening-guide-2026.html</link>
       <guid>https://zyekh.com/blog/linux-vps-hardening-guide-2026.html</guid>
@@ -28,6 +63,13 @@
       <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
+      <title>Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force</title>
+      <link>https://zyekh.com/blog/pam-tally2-faillock-account-lockout-policy-guide.html</link>
+      <guid>https://zyekh.com/blog/pam-tally2-faillock-account-lockout-policy-guide.html</guid>
+      <description>Security guide for configuring pam_faillock to prevent SSH and console brute-force authentication attacks on RHEL, Debian, and Ubuntu systems.</description>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Implementing Strict Content Security Policy (CSP) & Security Headers</title>
       <link>https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html</link>
       <guid>https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html</guid>
@@ -35,11 +77,32 @@
       <pubDate>Wed, 15 Jul 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
+      <title>Systemd Service Sandboxing: Restricting Process Capability & System Calls</title>
+      <link>https://zyekh.com/blog/systemd-service-sandboxing-and-security-hardening.html</link>
+      <guid>https://zyekh.com/blog/systemd-service-sandboxing-and-security-hardening.html</guid>
+      <description>Production guide for sandboxing Linux daemons using systemd security directives like ProtectSystem, SystemCallFilter, and CapabilityBoundingSet.</description>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>UFW Firewall Hardening: Advanced Rate Limiting & Default-Deny Security Blueprint</title>
+      <link>https://zyekh.com/blog/ufw-firewall-hardening-and-rate-limiting-blueprint-2026.html</link>
+      <guid>https://zyekh.com/blog/ufw-firewall-hardening-and-rate-limiting-blueprint-2026.html</guid>
+      <description>Production guide for securing Linux servers using UFW with default-deny policies, custom application profiles, rate limiting, and interface isolation.</description>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Understanding eBPF for Real-Time Linux Security Monitoring</title>
       <link>https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html</link>
       <guid>https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html</guid>
       <description>Technical deep-dive on Extended Berkeley Packet Filter (eBPF) tracing, kprobes, tracepoints, bpftrace, and zero-overhead kernel runtime security monitoring.</description>
       <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels & Strict Firewall Rules</title>
+      <link>https://zyekh.com/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html</link>
+      <guid>https://zyekh.com/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html</guid>
+      <description>Step-by-step technical blueprint for creating encrypted private mesh networks between multi-cloud VPS nodes using WireGuard and UDP noise protocols.</description>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>Zero-Trust SSH Access Blueprint: FIDO2 Hardware Keys & SSH Certificate Authority</title>

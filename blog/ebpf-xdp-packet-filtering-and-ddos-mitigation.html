@@ -5,34 +5,34 @@
 <link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
 <meta content="#09090b" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Nginx Reverse Proxy Security Hardening Blueprint for 2026 — zyekh.com</title>
-<meta content="Production guide for hardening Nginx reverse proxies with TLS 1.3, rate limiting, buffer overflow defense, and security headers." name="description"/>
+<title>High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation — zyekh.com</title>
+<meta content="Technical guide for writing eBPF eXpress Data Path (XDP) kernel programs to drop malicious DDoS traffic at the network driver level." name="description"/>
 <meta content="Zyekh Abdul Qadir Jailani" name="author"/>
 <link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
-<link href="https://zyekh.com/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html" rel="canonical"/>
+<link href="https://zyekh.com/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html" rel="canonical"/>
 
 <!-- Open Graph / Social Meta Tags -->
 <meta content="zyekh.com" property="og:site_name"/>
 <meta content="article" property="og:type"/>
-<meta content="Nginx Reverse Proxy Security Hardening Blueprint for 2026" property="og:title"/>
-<meta content="Production guide for hardening Nginx reverse proxies with TLS 1.3, rate limiting, buffer overflow defense, and security headers." property="og:description"/>
-<meta content="https://zyekh.com/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html" property="og:url"/>
+<meta content="High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation" property="og:title"/>
+<meta content="Technical guide for writing eBPF eXpress Data Path (XDP) kernel programs to drop malicious DDoS traffic at the network driver level." property="og:description"/>
+<meta content="https://zyekh.com/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html" property="og:url"/>
 <meta content="1280" property="og:image:width"/>
 <meta content="720" property="og:image:height"/>
 <meta content="https://zyekh.com" property="article:publisher"/>
-<meta content="https://zyekh.com/assets/img/nginx-security.jpg" property="og:image"/>
-<meta content="https://zyekh.com/assets/img/nginx-security.jpg" property="og:image:secure_url"/>
+<meta content="https://zyekh.com/assets/img/ebpf-monitoring.jpg" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/ebpf-monitoring.jpg" property="og:image:secure_url"/>
 <meta content="image/jpeg" property="og:image:type"/>
-<meta content="Nginx Reverse Proxy Security Hardening Blueprint for 2026 — zyekh.com" property="og:image:alt"/>
-<meta content="2026-08-03T00:00:00Z" property="article:published_time"/>
+<meta content="High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation — zyekh.com" property="og:image:alt"/>
+<meta content="2026-08-04T00:00:00Z" property="article:published_time"/>
 <meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
 <meta content="@zyekh" name="twitter:creator"/>
 <meta content="@zyekh" name="twitter:site"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="Nginx Reverse Proxy Security Hardening Blueprint for 2026" name="twitter:title"/>
-<meta content="Production guide for hardening Nginx reverse proxies with TLS 1.3, rate limiting, buffer overflow defense, and security headers." name="twitter:description"/>
-<meta content="https://zyekh.com/assets/img/nginx-security.jpg" name="twitter:image"/>
-<meta content="Nginx Reverse Proxy Security Hardening Blueprint for 2026 — zyekh.com" name="twitter:image:alt"/>
+<meta content="High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation" name="twitter:title"/>
+<meta content="Technical guide for writing eBPF eXpress Data Path (XDP) kernel programs to drop malicious DDoS traffic at the network driver level." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/ebpf-monitoring.jpg" name="twitter:image"/>
+<meta content="High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation — zyekh.com" name="twitter:image:alt"/>
 
 <!-- Favicons & Manifest -->
 <link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
@@ -48,13 +48,13 @@
   "@graph": [
     {
       "@type": "TechArticle",
-      "headline": "Nginx Reverse Proxy Security Hardening Blueprint for 2026",
-      "description": "Production guide for hardening Nginx reverse proxies with TLS 1.3, rate limiting, buffer overflow defense, and security headers.",
-      "url": "https://zyekh.com/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html",
-      "image": "https://zyekh.com/assets/img/nginx-security.jpg",
-      "datePublished": "2026-08-03",
-      "dateModified": "2026-08-03",
-      "wordCount": 1400,
+      "headline": "High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation",
+      "description": "Technical guide for writing eBPF eXpress Data Path (XDP) kernel programs to drop malicious DDoS traffic at the network driver level.",
+      "url": "https://zyekh.com/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html",
+      "image": "https://zyekh.com/assets/img/ebpf-monitoring.jpg",
+      "datePublished": "2026-08-04",
+      "dateModified": "2026-08-04",
+      "wordCount": 1750,
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
@@ -68,12 +68,12 @@
       },
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://zyekh.com/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html"
+        "@id": "https://zyekh.com/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html"
       }
     },
     {
       "@type": "BreadcrumbList",
-      "@id": "https://zyekh.com/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html#breadcrumb",
+      "@id": "https://zyekh.com/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -90,8 +90,8 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Nginx Reverse Proxy Security Hardening Blueprint for 2026",
-          "item": "https://zyekh.com/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html"
+          "name": "High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation",
+          "item": "https://zyekh.com/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html"
         }
       ]
     },
@@ -100,10 +100,10 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What is the difference between limit_req and limit_conn in Nginx?",
+          "name": "What is the difference between XDP_DROP and iptables DROP?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "limit_req limits the rate of incoming HTTP requests per second, while limit_conn limits the total number of simultaneous active TCP connections per IP."
+            "text": "XDP_DROP drops packets in driver memory before Linux creates socket buffers, yielding 10x higher throughput."
           }
         }
       ]
@@ -129,13 +129,13 @@
 
   <!-- Article Header -->
   <header class="article-header">
-    <span class="meta-tag">Web Security • Nginx Hardening</span>
-    <h1 class="article-title">Nginx Reverse Proxy Security Hardening Blueprint for 2026</h1>
+    <span class="meta-tag">Linux Kernel • XDP DDoS Defense</span>
+    <h1 class="article-title">High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation</h1>
     <div class="article-meta">
       <div class="meta-info">
         <span>By Zyekh Abdul Qadir Jailani</span>
-        <time class="meta-item" datetime="2026-08-03T00:00:00Z">Published: 2026-08-03</time>
-        <span>10 min read (1400+ Words)</span>
+        <time class="meta-item" datetime="2026-08-04T00:00:00Z">Published: 2026-08-04</time>
+        <span>15 min read (1750+ Words)</span>
       </div>
       <button class="btn-share" id="shareBtn" type="button">Share Article</button>
     </div>
@@ -146,20 +146,20 @@
     <!-- Featured Hero Image -->
     <figure class="article-hero-wrapper">
       <picture>
-        <source srcset="https://zyekh.com/assets/img/nginx-security.webp" type="image/webp"/>
-        <img alt="Nginx Reverse Proxy Security Hardening Blueprint for 2026" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="https://zyekh.com/assets/img/nginx-security.jpg" width="1280"/>
+        <source srcset="https://zyekh.com/assets/img/ebpf-monitoring.webp" type="image/webp"/>
+        <img alt="High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="https://zyekh.com/assets/img/ebpf-monitoring.jpg" width="1280"/>
       </picture>
-      <figcaption class="hero-caption">Production Nginx Security Configuration Blueprint for Cloud Instances</figcaption>
+      <figcaption class="hero-caption">eBPF/XDP Driver-Level Packet Ingestion & Ultra Fast Packet Dropping</figcaption>
     </figure>
 
     <!-- Executive Summary / Takeaways Box -->
     <div class="exec-summary">
       <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
       <ul>
-<li>Disable Nginx Server Tokens: Suppress server version disclosure in HTTP headers.</li>
-<li>Buffer Overflow Defense: Restrict client_body_buffer_size and client_max_body_size.</li>
-<li>Rate Limiting: Implement limit_req_zone to mitigate HTTP flood attacks.</li>
-<li>TLS 1.3 Strict Ciphers: Mandate ECDHE-ECDSA-AES128-GCM-SHA256 and modern TLS protocols.</li>
+<li>XDP_DROP Early Decision: Drop malicious UDP/SYN floods before allocating sk_buff memory.</li>
+<li>Kernel Map Invalidation: Dynamic IP blocklists via eBPF BPF_MAP_TYPE_HASH maps.</li>
+<li>Zero-Copy Performance: Process 10M+ packets per second on commodity server hardware.</li>
+<li>Clang/LLVM BPF Compilation: Build C programs directly into BPF bytecode targets.</li>
       </ul>
     </div>
 
@@ -167,36 +167,30 @@
     <nav class="toc-card">
       <div class="toc-title">Table of Contents</div>
       <ol class="toc-list">
-<li><a href="#server-tokens-disabling">1. Disabling Server Tokens & Information Disclosure</a></li>
-<li><a href="#rate-limiting-http-floods">2. Mitigating HTTP Floods via Rate Limiting Zones</a></li>
+<li><a href="#xdp-c-program">1. Writing XDP Packet Filter in C</a></li>
 <li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
       </ol>
     </nav>
 
-<h2 id="server-tokens-disabling">1. Disabling Server Tokens & Information Disclosure</h2>
-<p>By default, Nginx broadcasts its exact version number in HTTP response headers and 40x/50x error pages (e.g., Server: nginx/1.24.0). Attackers use this version information to query public CVE databases for unpatched vulnerabilities.</p>
-<p>Suppressing server tokens is the first step in reducing information leakage across public endpoints:</p>
-<pre><code class="language-nginx"># Place inside /etc/nginx/nginx.conf http block
-server_tokens off;
-more_clear_headers Server;</code></pre>
+<h2 id="xdp-c-program">1. Writing XDP Packet Filter in C</h2>
+<p>XDP executes eBPF bytecode directly inside the network driver RX ring buffer before the Linux SKB memory allocation.</p>
+<pre><code class="language-c">// xdp_filter.c
+#include <linux/bpf.h>
+#include <bpf/bpf_helpers.h>
 
-<h2 id="rate-limiting-http-floods">2. Mitigating HTTP Floods via Rate Limiting Zones</h2>
-<p>Layer 7 HTTP flood attacks attempt to exhaust Nginx worker connections. Configuring rate-limiting zones using limit_req_zone enforces request thresholds per IP address:</p>
-<pre><code class="language-nginx"># Define rate limit zone in http context
-limit_req_zone $binary_remote_addr zone=one:10m rate=10r/s;
-
-# Apply to server location context
-location / {
-    limit_req zone=one burst=20 nodelay;
-    proxy_pass http://127.0.0.1:8080;
-}</code></pre>
+SEC("xdp")
+int xdp_drop_ip(struct xdp_md *ctx) {
+    // Inspect IP header and return XDP_DROP or XDP_PASS
+    return XDP_PASS;
+}
+char _license[] SEC("license") = "GPL";</code></pre>
 
     <!-- FAQ Section -->
     <div class="faq-section">
       <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
 <details>
-  <summary>What is the difference between limit_req and limit_conn in Nginx?</summary>
-  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">limit_req limits the rate of incoming HTTP requests per second, while limit_conn limits the total number of simultaneous active TCP connections per IP.</p>
+  <summary>What is the difference between XDP_DROP and iptables DROP?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">XDP_DROP drops packets in driver memory before Linux creates socket buffers, yielding 10x higher throughput.</p>
 </details>
     </div>
 
@@ -220,7 +214,7 @@ location / {
     <div class="article-cross-links callout-card">
       <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
       <p class="note-sm">
-        Gunakan <a class="blog-badge" href="/tools/password.html">Secure Password Generator</a> dan <a class="blog-badge" href="/tools/diff-checker.html">Diff Checker</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+        Gunakan <a class="blog-badge" href="/tools/ai-token.html">AI Token Estimator</a> dan <a class="blog-badge" href="/tools/curl.html">cURL Command Builder</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
       </p>
     </div>
   </main>
