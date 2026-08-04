@@ -147,18 +147,27 @@
     // Configure marked: GFM + safe HTML
     marked.setOptions({ gfm: true, breaks: true });
 
+    let _mdTimer = null;
     function render() {
+      clearTimeout(_mdTimer);
+      _mdTimer = setTimeout(_runRender, 50);
+    }
+
+    function _runRender() {
       const src = document.getElementById('md').value;
       const preview = document.getElementById('preview');
       if (!src.trim()) {
         preview.innerHTML = '<p style="color:var(--text-muted)">Preview akan muncul di sini…</p>';
         return;
       }
-      preview.innerHTML = marked.parse(src);
+      const html = marked.parse(src);
+      window.requestAnimationFrame(() => {
+        preview.innerHTML = html;
+      });
     }
 
     // Initial render on load if textarea has content
-    document.addEventListener('DOMContentLoaded', render);
+    document.addEventListener('DOMContentLoaded', _runRender);
   </script>
   <script src="/assets/js/site-nav.js?v=20260805_v124" defer></script>
 </body>

@@ -169,15 +169,23 @@
       { name: 'Meta Llama 3 (Groq API)', rate: 0.05 }
     ];
 
+    let _tokenTimer = null;
     function calculateTokens() {
+      clearTimeout(_tokenTimer);
+      _tokenTimer = setTimeout(_runCalculateTokens, 50);
+    }
+
+    function _runCalculateTokens() {
       const text = document.getElementById('promptInput').value;
 
       if (!text) {
-        document.getElementById('statTokens').textContent = '0';
-        document.getElementById('statWords').textContent = '0';
-        document.getElementById('statChars').textContent = '0';
-        document.getElementById('statLines').textContent = '0';
-        document.getElementById('costTableBody').innerHTML = '<tr><td colspan="4" style="color:var(--text-muted);text-align:center;">Enter text above to calculate API pricing.</td></tr>';
+        window.requestAnimationFrame(() => {
+          document.getElementById('statTokens').textContent = '0';
+          document.getElementById('statWords').textContent = '0';
+          document.getElementById('statChars').textContent = '0';
+          document.getElementById('statLines').textContent = '0';
+          document.getElementById('costTableBody').innerHTML = '<tr><td colspan="4" style="color:var(--text-muted);text-align:center;">Enter text above to calculate API pricing.</td></tr>';
+        });
         return;
       }
 
@@ -187,11 +195,6 @@
 
       // Estimate tokens: ~4 chars per token for ASCII, ~2 chars for Non-ASCII/Indonesian
       let estTokens = Math.ceil(chars / 3.8);
-
-      document.getElementById('statTokens').textContent = estTokens.toLocaleString('id-ID');
-      document.getElementById('statWords').textContent = words.toLocaleString('id-ID');
-      document.getElementById('statChars').textContent = chars.toLocaleString('id-ID');
-      document.getElementById('statLines').textContent = lines.toLocaleString('id-ID');
 
       let rowsHTML = '';
       const usdToIdr = 16000;
@@ -211,7 +214,13 @@
         </tr>`;
       });
 
-      document.getElementById('costTableBody').innerHTML = rowsHTML;
+      window.requestAnimationFrame(() => {
+        document.getElementById('statTokens').textContent = estTokens.toLocaleString('id-ID');
+        document.getElementById('statWords').textContent = words.toLocaleString('id-ID');
+        document.getElementById('statChars').textContent = chars.toLocaleString('id-ID');
+        document.getElementById('statLines').textContent = lines.toLocaleString('id-ID');
+        document.getElementById('costTableBody').innerHTML = rowsHTML;
+      });
     }
   </script>
   <script src="/assets/js/site-nav.js?v=20260805_v124" defer></script>
