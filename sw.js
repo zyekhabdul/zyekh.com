@@ -1,34 +1,24 @@
 /* zyekh.com Service Worker — Cache Strategy */
-const CACHE_VERSION = 'v122';
+const CACHE_VERSION = 'v124';
 const CACHE_NAME = `zyekh-${CACHE_VERSION}`;
 
-/* Assets to precache on install (shell) */
+/* Assets to precache on install (minimal core shell) */
 const PRECACHE = [
   '/offline.html',
   '/assets/css/shared.css',
   '/assets/js/site-nav.js',
-  '/assets/js/marked.min.js',
-  '/assets/js/qrcode.min.js',
   '/assets/fonts/fonts.css',
-  '/assets/fonts/inter-variable-latin.woff2',
-  '/assets/fonts/outfit-600-normal.woff2',
-  '/assets/fonts/outfit-700-normal.woff2',
-  '/assets/fonts/outfit-800-normal.woff2',
-  '/assets/fonts/fira-code-400-normal.woff2',
-  '/assets/fonts/fira-code-600-normal.woff2',
-  '/gpg-key.asc',
-  '/api/v1/profile.json',
-  '/llms-full.txt'
+  '/assets/fonts/inter-variable-latin.woff2'
 ];
 
-/* ── Install: precache font shell ── */
+/* ── Install: precache core shell ── */
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache =>
         Promise.allSettled(
           PRECACHE.map(u => cache.add(u).catch(err =>
-            console.warn('[SW] Precache skip (not found):', u, err)
+            console.warn('[SW] Precache skip:', u, err)
           ))
         )
       )
@@ -57,9 +47,8 @@ self.addEventListener('fetch', event => {
   /* Skip non-GET and cross-origin requests */
   if (request.method !== 'GET' || url.origin !== self.location.origin) return;
 
-  /* Fonts & icons → Cache-First (immutable assets) */
-  if (url.pathname.startsWith('/assets/fonts/') ||
-      url.pathname.startsWith('/assets/icons/')) {
+  /* Static Assets (CSS, JS, Fonts, Images) → Cache-First */
+  if (url.pathname.startsWith('/assets/')) {
     event.respondWith(cacheFirst(request));
     return;
   }
@@ -70,8 +59,8 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  /* Everything else → Stale-While-Revalidate */
-  event.respondWith(staleWhileRevalidate(request));
+  /* Everything else → Cache-First */
+  event.respondWith(cacheFirst(request));
 });
 
 /* Cache-First: serve from cache, fallback to network then cache */
@@ -111,15 +100,4 @@ async function networkFirstNav(event) {
     const cached = await caches.match(event.request);
     return cached || await caches.match('/offline.html');
   }
-}
-
-/* Stale-While-Revalidate for CSS, images, etc. */
-async function staleWhileRevalidate(request) {
-  const cache = await caches.open(CACHE_NAME);
-  const cached = await cache.match(request);
-  const fetchPromise = fetch(request).then(response => {
-    if (response.ok) cache.put(request, response.clone());
-    return response;
-  }).catch(() => cached);
-  return cached || fetchPromise;
 }

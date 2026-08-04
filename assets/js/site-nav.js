@@ -40,32 +40,11 @@ class SiteNav extends HTMLElement {
   }
 
   _initNav() {
-    // Centralized Service Worker Registration
+    // Centralized Service Worker Registration (Clean & Lightweight)
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').then(reg => reg.update()).catch(() => {});
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
       });
-    }
-
-    // Centralized Speculation Rules API Injection (Chrome 109+)
-    if (typeof HTMLScriptElement !== 'undefined' && HTMLScriptElement.supports && HTMLScriptElement.supports('speculationrules')) {
-      if (!document.querySelector('script[type="speculationrules"]')) {
-        const specScript = document.createElement('script');
-        specScript.type = 'speculationrules';
-        specScript.textContent = JSON.stringify({
-          prerender: [{
-            source: 'document',
-            where: {
-              and: [
-                { href_matches: '/*' },
-                { not: { href_matches: '/assets/*' } }
-              ]
-            },
-            eagerness: 'moderate'
-          }]
-        });
-        document.head.appendChild(specScript);
-      }
     }
 
     const toggle = this.querySelector('#navToggle');
