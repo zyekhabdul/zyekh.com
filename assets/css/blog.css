@@ -48,6 +48,8 @@
 .article-item {
   display: flex;
   flex-direction: column;
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 320px;
 }
 .article-card {
   background: var(--bg-card);
@@ -61,6 +63,8 @@
   justify-content: space-between;
   overflow: hidden;
   transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  will-change: transform;
+  transform: translateZ(0);
 }
 .article-card:hover {
   border-color: var(--border-color-hover);
@@ -89,6 +93,8 @@
   object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 .article-card:hover .card-thumb-img {
   transform: scale(1.03);

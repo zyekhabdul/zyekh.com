@@ -450,8 +450,11 @@
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      document.querySelectorAll('.article-item').forEach(item => {
-        item.style.display = (category === 'all' || item.dataset.category.includes(category)) ? 'block' : 'none';
+      window.requestAnimationFrame(() => {
+        document.querySelectorAll('.article-item').forEach(item => {
+          const cat = item.dataset.category || '';
+          item.style.display = (category === 'all' || cat.includes(category)) ? '' : 'none';
+        });
       });
     });
   </script>
