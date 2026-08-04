@@ -14,6 +14,6 @@
 - **SW cache issues**: if user sees stale content, it is browser cache — NOT the code. Do NOT modify sw.js activate/fetch logic without explicit approval.
 - **One commit per fix**: never bundle HTML + CSS + SW + JS changes when debugging.
 - **Cloudflare purge**: always purge after push via API (zone: `1427afa77c5824ee0c34b514260e2e5d`).
-- **AI Image Prompts**: Never specify object details, visual metaphors, or lighting schemes (e.g. no "shield inside core", no "laser lighting"). Use standardized theme keywords (`3D cyber architecture visual representing [TOPIC], dark background, clean developer aesthetic, 8k render --ar 16:9`) and state ONLY the topic to prevent repetitive composition patterns.
+- **AI Image Prompts**: Prompts must visually represent the core technical mechanism of the article (e.g. eBPF packet bypass, Wasm memory sandbox). Use rich 3D isometric cyber architecture styling with custom HSL lighting to ensure engaging, informative thumbnails. All images must pass Check 15 MD5 uniqueness audit.
 - **MD5 Image Uniqueness**: All article hero images must have 100% unique MD5 hashes. Enforced via `verify_batch.py` (Check 15).
 - **Input Listener Debouncing**: Always debounce `oninput` handlers (50ms-80ms) and batch DOM writes in `window.requestAnimationFrame()` to eliminate layout thrashing and typing lag.

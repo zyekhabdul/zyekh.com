@@ -54,8 +54,8 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
     - Deliver high-density, empirical, root-cause diagnostics and actionable code solutions immediately when objective details are provided.
 
 12. **AI IMAGE PROMPTING & MD5 HASH AUDIT**:
-   - Never specify object details, visual metaphors, or custom lighting schemes in image prompts (e.g. no "shield inside core", no "laser lighting").
-   - Prompts must use standardized theme keywords (`3D cyber architecture visual representing [TOPIC], dark background, clean developer aesthetic, 8k render --ar 16:9`) and state ONLY the core article topic so AI generates composition naturally without repetitive object patterns.
+   - Prompts must visually represent the core technical mechanism of the article (e.g. eBPF packet bypass, Wasm linear memory bounds, Vault CA cert issuance).
+   - Use rich 3D isometric cyber architecture styling with custom HSL lighting to ensure engaging, highly informative thumbnails.
    - All article hero images must pass MD5 hash uniqueness verification in `verify_batch.py` (Check 15).
 
 13. **INTERACTIVE INPUT LISTENER PERFORMANCE**:
