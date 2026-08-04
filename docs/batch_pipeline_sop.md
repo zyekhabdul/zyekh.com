@@ -38,7 +38,7 @@ Every generated `.html` file inside `/blog/` MUST implement all 10 components:
 6. **Executive Summary Box**: `<div class="exec-summary">` containing key takeaways.
 7. **Table of Contents (ToC)**: `<nav class="toc-card"><ol class="toc-list">` linking to `#heading-id`.
 8. **Article Sections**: Every `<h2>` MUST have a unique, slugified `id="..."` and code snippets wrapped in `<pre><code class="language-bash">`.
-9. **FAQ Section**: `<div class="faq-section" id="faq"><h2 id="faq">` with `<details><summary>`.
+9. **FAQ Section**: `<div class="faq-section"><h2 id="faq">` with `<details><summary>`.
 10. **Author Bio & Cross-Links**: `<div class="author-card">` (EEAT/DFIR branding) and `<div class="article-cross-links callout-card">` (valid links to `/tools/*.html`).
 
 ---
