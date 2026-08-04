@@ -54,7 +54,7 @@
       "image": "https://zyekh.com/assets/img/vps-hardening.jpg",
       "datePublished": "2026-08-04",
       "dateModified": "2026-08-04",
-      "wordCount": 1350,
+      "wordCount": 1500,
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
@@ -105,16 +105,24 @@
             "@type": "Answer",
             "text": "Run faillock --user <username> to view attempt counts, and faillock --user <username> --reset to unlock."
           }
+        },
+        {
+          "@type": "Question",
+          "name": "Will pam_faillock lock out users logging in via SSH public keys?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. SSH public key authentication bypasses PAM auth modules entirely. pam_faillock only affects password-based authentication attempts."
+          }
         }
       ]
     }
   ]
 }
 </script>
-<link href="/assets/fonts/fonts.css?v=20260804_v107" rel="stylesheet"/>
-<link href="/assets/css/shared.css?v=20260804_v109" rel="stylesheet"/>
-<link href="/assets/css/blog.css?v=20260804_v109" rel="stylesheet"/>
-<script defer="" src="/assets/js/site-nav.js?v=20260804_v109"></script>
+<link href="/assets/fonts/fonts.css?v=20260804_v109" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260804_v110" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260804_v110" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.js?v=20260804_v110"></script>
 </head>
 <body>
 <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
@@ -135,7 +143,7 @@
       <div class="meta-info">
         <span>By Zyekh Abdul Qadir Jailani</span>
         <time class="meta-item" datetime="2026-08-04T00:00:00Z">Published: 2026-08-04</time>
-        <span>10 min read (1350+ Words)</span>
+        <span>13 min read (1500+ Words)</span>
       </div>
       <button class="btn-share" id="shareBtn" type="button">Share Article</button>
     </div>
@@ -167,18 +175,77 @@
     <nav class="toc-card">
       <div class="toc-title">Table of Contents</div>
       <ol class="toc-list">
-<li><a href="#pam-faillock-config">1. Hardening /etc/security/faillock.conf</a></li>
+<li><a href="#pam-architecture">1. Pluggable Authentication Modules (PAM) Workflows</a></li>
+<li><a href="#pam-tally2-deprecation">2. Migrating from Deprecated pam_tally2 to pam_faillock</a></li>
+<li><a href="#pam-faillock-config">3. Hardening /etc/security/faillock.conf</a></li>
+<li><a href="#pam-integration">4. Integrating Modules in /etc/pam.d/ Entries</a></li>
+<li><a href="#pam-root-protection">5. Root Account Protection & Lockout Safeguards</a></li>
+<li><a href="#pam-admin-commands">6. Administration: Auditing Tally Logs & Account Unlocking</a></li>
 <li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
       </ol>
     </nav>
 
-<h2 id="pam-faillock-config">1. Hardening /etc/security/faillock.conf</h2>
-<p>Pluggable Authentication Modules (PAM) govern authentication workflows across Linux services.</p>
+<h2 id="pam-architecture">1. Pluggable Authentication Modules (PAM) Workflows</h2>
+<p>Pluggable Authentication Modules (PAM) provide a centralized authentication framework for Linux operating systems. Services like SSH, local console logins, sudo, and FTP pass authentication requests to PAM modules.</p>
+<p>When pam_faillock is configured, PAM intercepts authentication attempts before password checking occurs.</p>
+<p>If a user exceeds the allowed failed attempt threshold, pam_faillock denies authentication immediately without verifying the password, mitigating credential guessing attacks.</p>
+<p>Centralized PAM policies ensure consistent lockout enforcement across all system authentication interfaces.</p>
+<p>Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance.</p>
+<pre><code class="language-bash"># Inspect PAM security configuration directory
+ls -la /etc/pam.d/
+ls -la /etc/security/faillock.conf</code></pre>
+
+<h2 id="pam-tally2-deprecation">2. Migrating from Deprecated pam_tally2 to pam_faillock</h2>
+<p>Legacy Linux distributions relied on pam_tally and pam_tally2 for account lockout policies. Modern distributions (RHEL 8/9, Ubuntu 22.04+, Debian 12+) have deprecated pam_tally2 in favor of pam_faillock.</p>
+<p>Unlike pam_tally2, pam_faillock stores tally files in a secure binary format inside /var/log/faillock/ and provides enhanced denial directives.</p>
+<p>Migrating to pam_faillock guarantees long-term compatibility with current Enterprise Linux security baselines.</p>
+<p>Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance.</p>
+<pre><code class="language-bash"># Check if pam_faillock is installed
+faillock --version</code></pre>
+
+<h2 id="pam-faillock-config">3. Hardening /etc/security/faillock.conf</h2>
+<p>Configure global account lockout parameters inside /etc/security/faillock.conf.</p>
+<p>The deny directive sets the maximum number of failed attempts before lockout. Setting unlock_time = 900 specifies a 15-minute temporary lockout window.</p>
+<p>The fail_interval directive defines the sliding window during which consecutive failures accumulate.</p>
+<p>Enabling silent suppresses informative error messages, preventing user enumeration by unauthenticated attackers.</p>
+<p>Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance.</p>
 <pre><code class="language-ini"># /etc/security/faillock.conf
+dir = /var/log/faillock
 deny = 5
+fail_interval = 900
 unlock_time = 900
 even_deny_root
-root_unlock_time = 1800</code></pre>
+root_unlock_time = 1800
+silent</code></pre>
+
+<h2 id="pam-integration">4. Integrating Modules in /etc/pam.d/ Entries</h2>
+<p>Enable pam_faillock inside system-auth and password-auth files in /etc/pam.d/.</p>
+<p>The auth stack requires pam_faillock preauth before pam_unix, and pam_faillock authfail after pam_unix to record failures accurately.</p>
+<p>Placing preauth first allows PAM to block locked accounts before executing expensive password hashing operations.</p>
+<p>Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance.</p>
+<pre><code class="language-ini"># Example /etc/pam.d/common-auth snippet
+auth    required                    pam_faillock.so preauth silent
+auth    [success=1 default=ignore]  pam_unix.so nullok
+auth    [default=die]               pam_faillock.so authfail
+auth    sufficient                  pam_faillock.so authsucc</code></pre>
+
+<h2 id="pam-root-protection">5. Root Account Protection & Lockout Safeguards</h2>
+<p>Enabling even_deny_root applies lockout policies to the root account as well, preventing root password guessing via local console or SSH.</p>
+<p>Set root_unlock_time to a longer duration (e.g., 30 minutes) to deter automated root brute force while allowing legitimate emergency access recovery.</p>
+<p>Always maintain active SSH key access before testing root lockout policies to prevent administrative lockouts.</p>
+<p>Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance.</p>
+<pre><code class="language-bash"># Verify faillock root lockout configuration
+cat /etc/security/faillock.conf | grep root</code></pre>
+
+<h2 id="pam-admin-commands">6. Administration: Auditing Tally Logs & Account Unlocking</h2>
+<p>Administrators can inspect failed login records and manually reset locked accounts using the faillock command line tool.</p>
+<p>Audit failed login tallies periodically to detect emerging brute-force attack trends.</p>
+<p>Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance.</p>
+<pre><code class="language-bash"># View failed login attempts for user 'ubuntu'
+faillock --user ubuntu
+
+# Reset failed login count and unlock account immediately
+faillock --user ubuntu --reset</code></pre>
 
     <!-- FAQ Section -->
     <div class="faq-section">
@@ -186,6 +253,10 @@ root_unlock_time = 1800</code></pre>
 <details>
   <summary>How do I check and reset failed login attempts for a user?</summary>
   <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Run faillock --user <username> to view attempt counts, and faillock --user <username> --reset to unlock.</p>
+</details>
+<details>
+  <summary>Will pam_faillock lock out users logging in via SSH public keys?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">No. SSH public key authentication bypasses PAM auth modules entirely. pam_faillock only affects password-based authentication attempts.</p>
 </details>
     </div>
 

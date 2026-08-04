@@ -1,13 +1,13 @@
-[
+#!/usr/bin/env python3
+import json
+
+b1 = [
   {
     "slug": "nginx-reverse-proxy-security-hardening-blueprint-2026",
     "title": "Nginx Reverse Proxy Security Hardening Blueprint for 2026",
     "subtitle": "Production guide for hardening Nginx reverse proxies with TLS 1.3, rate limiting, buffer overflow defense, and security headers.",
-    "category": "Web Security \u2022 Nginx Hardening",
-    "tags": [
-      "#WebSecurity",
-      "#NginxHardening"
-    ],
+    "category": "Web Security • Nginx Hardening",
+    "tags": ["#WebSecurity", "#NginxHardening"],
     "date_published": "2026-08-03",
     "read_time_mins": 10,
     "word_count": 1400,
@@ -96,25 +96,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Secure Password Generator",
-        "url": "/tools/password.html"
-      },
-      {
-        "name": "Diff Checker",
-        "url": "/tools/diff-checker.html"
-      }
+      {"name": "Secure Password Generator", "url": "/tools/password.html"},
+      {"name": "Diff Checker", "url": "/tools/diff-checker.html"}
     ]
   },
   {
     "slug": "ufw-firewall-hardening-and-rate-limiting-blueprint-2026",
     "title": "UFW Firewall Hardening: Advanced Rate Limiting & Default-Deny Security Blueprint",
     "subtitle": "Production guide for securing Linux servers using UFW with default-deny policies, custom application profiles, rate limiting, and interface isolation.",
-    "category": "System Hardening \u2022 UFW Firewall",
-    "tags": [
-      "#SystemHardening",
-      "#UFWFirewall"
-    ],
+    "category": "System Hardening • UFW Firewall",
+    "tags": ["#SystemHardening", "#UFWFirewall"],
     "date_published": "2026-08-04",
     "read_time_mins": 12,
     "word_count": 1500,
@@ -204,25 +195,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Linux Chmod Calculator",
-        "url": "/tools/chmod-calculator.html"
-      },
-      {
-        "name": "Subnet Calculator",
-        "url": "/tools/subnet.html"
-      }
+      {"name": "Linux Chmod Calculator", "url": "/tools/chmod-calculator.html"},
+      {"name": "Subnet Calculator", "url": "/tools/subnet.html"}
     ]
   },
   {
     "slug": "fail2ban-intrusion-prevention-and-ssh-abuse-mitigation",
     "title": "Automated Intrusion Prevention: Fail2ban Configuration for SSH & Nginx Protection",
     "subtitle": "Comprehensive blueprint for deploying Fail2ban to detect brute-force attacks, automate IP bans via iptables/nftables, and configure recidive long-term bans.",
-    "category": "Cyber Security \u2022 Fail2ban Defense",
-    "tags": [
-      "#CyberSecurity",
-      "#Fail2banDefense"
-    ],
+    "category": "Cyber Security • Fail2ban Defense",
+    "tags": ["#CyberSecurity", "#Fail2banDefense"],
     "date_published": "2026-08-04",
     "read_time_mins": 14,
     "word_count": 1550,
@@ -313,25 +295,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Secure Password Generator",
-        "url": "/tools/password.html"
-      },
-      {
-        "name": "Hash Generator",
-        "url": "/tools/hash.html"
-      }
+      {"name": "Secure Password Generator", "url": "/tools/password.html"},
+      {"name": "Hash Generator", "url": "/tools/hash.html"}
     ]
   },
   {
     "slug": "linux-kernel-sysctl-hardening-network-stack-security",
     "title": "Linux Kernel Sysctl Hardening: Securing TCP/IP Network Stack against SYN Floods",
     "subtitle": "Hardening guide for tuning Linux kernel sysctl parameters to defend against TCP SYN floods, IP spoofing, packet redirects, and memory exhaustion.",
-    "category": "Linux Kernel \u2022 Sysctl Hardening",
-    "tags": [
-      "#LinuxKernel",
-      "#SysctlHardening"
-    ],
+    "category": "Linux Kernel • Sysctl Hardening",
+    "tags": ["#LinuxKernel", "#SysctlHardening"],
     "date_published": "2026-08-04",
     "read_time_mins": 14,
     "word_count": 1600,
@@ -427,25 +400,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Epoch Timestamp Converter",
-        "url": "/tools/epoch.html"
-      },
-      {
-        "name": "Diff Checker",
-        "url": "/tools/diff-checker.html"
-      }
+      {"name": "Epoch Timestamp Converter", "url": "/tools/epoch.html"},
+      {"name": "Diff Checker", "url": "/tools/diff-checker.html"}
     ]
   },
   {
     "slug": "systemd-service-sandboxing-and-security-hardening",
     "title": "Systemd Service Sandboxing: Restricting Process Capability & System Calls",
     "subtitle": "Production guide for sandboxing Linux daemons using systemd security directives like ProtectSystem, SystemCallFilter, and CapabilityBoundingSet.",
-    "category": "System Hardening \u2022 Systemd Security",
-    "tags": [
-      "#SystemHardening",
-      "#SystemdSecurity"
-    ],
+    "category": "System Hardening • Systemd Security",
+    "tags": ["#SystemHardening", "#SystemdSecurity"],
     "date_published": "2026-08-04",
     "read_time_mins": 13,
     "word_count": 1500,
@@ -465,8 +429,7 @@
           "Traditional Linux daemons running as system services often possess full access to the entire root file system, user home directories, and kernel syscall interfaces.",
           "If an application vulnerability (such as a remote code execution in web application gateways) is exploited, the attacker inherits the full permissions of the daemon, allowing them to read sensitive files in /etc/ or modify system binaries.",
           "Systemd provides built-in process isolation directives using Linux kernel namespaces, cgroups, and seccomp filters without needing Docker or heavy container runtimes.",
-          "Sandboxing services at the systemd layer creates isolated execution environments, preventing lateral movement during security incidents.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Sandboxing services at the systemd layer creates isolated execution environments, preventing lateral movement during security incidents."
         ],
         "code_block": "# Inspect security score of an active service unit\nsystemd-analyze security nginx.service",
         "code_language": "bash"
@@ -478,8 +441,7 @@
           "The ProtectSystem directive creates a private mount namespace for the service, mounting system directories as read-only.",
           "Setting ProtectSystem=strict mounts the entire file system hierarchy as read-only for the process, except for explicit paths specified in ReadWritePaths=.",
           "Setting ProtectHome=yes makes /home, /root, and /run/user inaccessible and invisible to the daemon.",
-          "PrivateTmp=yes allocates isolated /tmp and /var/tmp directories, preventing symlink attacks and inter-process temporary file snooping.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "PrivateTmp=yes allocates isolated /tmp and /var/tmp directories, preventing symlink attacks and inter-process temporary file snooping."
         ],
         "code_block": "# /etc/systemd/system/myapp.service.d/override.conf\n[Service]\nProtectSystem=strict\nProtectHome=yes\nReadWritePaths=/var/log/myapp /var/lib/myapp\nPrivateTmp=yes\nProtectKernelTunables=yes\nProtectKernelModules=yes",
         "code_language": "ini"
@@ -491,8 +453,7 @@
           "Attacker payloads often attempt privilege escalation by executing SUID binaries (like sudo or pkexec) from within compromised service processes.",
           "Setting NoNewPrivileges=yes ensures that the process and any child processes it spawns can never gain new privileges through setuid/setgid bits or file capabilities.",
           "This single directive neutralizes an entire class of SUID exploit primitives across all Linux service processes.",
-          "Combine with ProtectControlGroups=yes to prevent daemons from altering cgroup resource constraints.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Combine with ProtectControlGroups=yes to prevent daemons from altering cgroup resource constraints."
         ],
         "code_block": "# Block SUID privilege escalation\n[Service]\nNoNewPrivileges=yes\nProtectKernelTunables=yes\nProtectKernelModules=yes\nProtectControlGroups=yes\nMemoryDenyWriteExecute=yes",
         "code_language": "ini"
@@ -503,8 +464,7 @@
         "content_paragraphs": [
           "Linux divides root privileges into distinct capabilities (e.g., CAP_NET_ADMIN, CAP_SYS_ADMIN, CAP_NET_BIND_SERVICE). Unrestricted daemons retain all capabilities.",
           "The CapabilityBoundingSet directive defines an explicit whitelist of capabilities allowed for the service process. All other capabilities are dropped permanently during process startup.",
-          "Dropping unnecessary root capabilities ensures that compromised daemons cannot load kernel modules, manipulate network routing tables, or mount raw file systems.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Dropping unnecessary root capabilities ensures that compromised daemons cannot load kernel modules, manipulate network routing tables, or mount raw file systems."
         ],
         "code_block": "# Allow binding low ports (<1024) but drop all other root capabilities\n[Service]\nCapabilityBoundingSet=CAP_NET_BIND_SERVICE\nAmbientCapabilities=CAP_NET_BIND_SERVICE",
         "code_language": "ini"
@@ -515,8 +475,7 @@
         "content_paragraphs": [
           "Linux exposes over 300 kernel system calls. Most web applications and background services require fewer than 40 syscalls.",
           "The SystemCallFilter directive uses seccomp to block dangerous syscalls like ptrace, reboot, or kexec_load. Systemd provides predefined syscall groups like @system-service and @sandbox.",
-          "Restricting available system calls reduces kernel attack surface against zero-day kernel privilege escalation exploits.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Restricting available system calls reduces kernel attack surface against zero-day kernel privilege escalation exploits."
         ],
         "code_block": "# Enforce Seccomp System Call Filtering\n[Service]\nSystemCallFilter=@system-service\nSystemCallFilter=~@privileged @resources\nSystemCallErrorNumber=EPERM",
         "code_language": "ini"
@@ -527,8 +486,7 @@
         "content_paragraphs": [
           "Systemd includes an automated security analyzer that evaluates unit file directives against security best practices and outputs an audit score.",
           "Run systemd-analyze security to inspect all active services on the system and identify unhardened daemons needing isolation overrides.",
-          "Apply unit overrides safely using systemctl edit without modifying vendor service files.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Apply unit overrides safely using systemctl edit without modifying vendor service files."
         ],
         "code_block": "# Audit all active services\nsystemd-analyze security\n\n# Reload systemd daemon to apply unit overrides\nsystemctl daemon-reload\nsystemctl restart myapp.service",
         "code_language": "bash"
@@ -545,25 +503,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Environment Variables Formatter",
-        "url": "/tools/env.html"
-      },
-      {
-        "name": "Cron Expression Generator",
-        "url": "/tools/cron.html"
-      }
+      {"name": "Environment Variables Formatter", "url": "/tools/env.html"},
+      {"name": "Cron Expression Generator", "url": "/tools/cron.html"}
     ]
   },
   {
     "slug": "auditd-kernel-event-monitoring-and-dfir-logging",
     "title": "Linux Auditd Blueprint: Real-Time Kernel Event Tracking & Security Auditing",
     "subtitle": "Security guide for configuring Linux Audit Framework (auditd) to log execve system calls, file integrity changes, and privilege escalation events.",
-    "category": "Cyber Security \u2022 Auditd DFIR",
-    "tags": [
-      "#CyberSecurity",
-      "#AuditdDFIR"
-    ],
+    "category": "Cyber Security • Auditd DFIR",
+    "tags": ["#CyberSecurity", "#AuditdDFIR"],
     "date_published": "2026-08-04",
     "read_time_mins": 14,
     "word_count": 1650,
@@ -658,25 +607,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "SQL Query Formatter",
-        "url": "/tools/sql.html"
-      },
-      {
-        "name": "Diff Checker",
-        "url": "/tools/diff-checker.html"
-      }
+      {"name": "SQL Query Formatter", "url": "/tools/sql.html"},
+      {"name": "Diff Checker", "url": "/tools/diff-checker.html"}
     ]
   },
   {
     "slug": "wireguard-vpn-tunneling-for-secure-vps-mesh-networks",
     "title": "Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels & Strict Firewall Rules",
     "subtitle": "Step-by-step technical blueprint for creating encrypted private mesh networks between multi-cloud VPS nodes using WireGuard and UDP noise protocols.",
-    "category": "Web Security \u2022 WireGuard Mesh",
-    "tags": [
-      "#WebSecurity",
-      "#WireGuardMesh"
-    ],
+    "category": "Web Security • WireGuard Mesh",
+    "tags": ["#WebSecurity", "#WireGuardMesh"],
     "date_published": "2026-08-04",
     "read_time_mins": 14,
     "word_count": 1500,
@@ -768,25 +708,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Subnet Calculator",
-        "url": "/tools/subnet.html"
-      },
-      {
-        "name": "HMAC Generator",
-        "url": "/tools/hmac.html"
-      }
+      {"name": "Subnet Calculator", "url": "/tools/subnet.html"},
+      {"name": "HMAC Generator", "url": "/tools/hmac.html"}
     ]
   },
   {
     "slug": "ebpf-xdp-packet-filtering-and-ddos-mitigation",
     "title": "High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation",
     "subtitle": "Technical guide for writing eBPF eXpress Data Path (XDP) kernel programs to drop malicious DDoS traffic at the network driver level.",
-    "category": "Linux Kernel \u2022 XDP DDoS Defense",
-    "tags": [
-      "#LinuxKernel",
-      "#XDPDDoSDefense"
-    ],
+    "category": "Linux Kernel • XDP DDoS Defense",
+    "tags": ["#LinuxKernel", "#XDPDDoSDefense"],
     "date_published": "2026-08-04",
     "read_time_mins": 15,
     "word_count": 1750,
@@ -875,25 +806,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "AI Token Estimator",
-        "url": "/tools/ai-token.html"
-      },
-      {
-        "name": "cURL Command Builder",
-        "url": "/tools/curl.html"
-      }
+      {"name": "AI Token Estimator", "url": "/tools/ai-token.html"},
+      {"name": "cURL Command Builder", "url": "/tools/curl.html"}
     ]
   },
   {
     "slug": "pam-tally2-faillock-account-lockout-policy-guide",
     "title": "Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force",
     "subtitle": "Security guide for configuring pam_faillock to prevent SSH and console brute-force authentication attacks on RHEL, Debian, and Ubuntu systems.",
-    "category": "System Hardening \u2022 PAM Security",
-    "tags": [
-      "#SystemHardening",
-      "#PAMSecurity"
-    ],
+    "category": "System Hardening • PAM Security",
+    "tags": ["#SystemHardening", "#PAMSecurity"],
     "date_published": "2026-08-04",
     "read_time_mins": 13,
     "word_count": 1500,
@@ -913,8 +835,7 @@
           "Pluggable Authentication Modules (PAM) provide a centralized authentication framework for Linux operating systems. Services like SSH, local console logins, sudo, and FTP pass authentication requests to PAM modules.",
           "When pam_faillock is configured, PAM intercepts authentication attempts before password checking occurs.",
           "If a user exceeds the allowed failed attempt threshold, pam_faillock denies authentication immediately without verifying the password, mitigating credential guessing attacks.",
-          "Centralized PAM policies ensure consistent lockout enforcement across all system authentication interfaces.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Centralized PAM policies ensure consistent lockout enforcement across all system authentication interfaces."
         ],
         "code_block": "# Inspect PAM security configuration directory\nls -la /etc/pam.d/\nls -la /etc/security/faillock.conf",
         "code_language": "bash"
@@ -925,8 +846,7 @@
         "content_paragraphs": [
           "Legacy Linux distributions relied on pam_tally and pam_tally2 for account lockout policies. Modern distributions (RHEL 8/9, Ubuntu 22.04+, Debian 12+) have deprecated pam_tally2 in favor of pam_faillock.",
           "Unlike pam_tally2, pam_faillock stores tally files in a secure binary format inside /var/log/faillock/ and provides enhanced denial directives.",
-          "Migrating to pam_faillock guarantees long-term compatibility with current Enterprise Linux security baselines.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Migrating to pam_faillock guarantees long-term compatibility with current Enterprise Linux security baselines."
         ],
         "code_block": "# Check if pam_faillock is installed\nfaillock --version",
         "code_language": "bash"
@@ -938,8 +858,7 @@
           "Configure global account lockout parameters inside /etc/security/faillock.conf.",
           "The deny directive sets the maximum number of failed attempts before lockout. Setting unlock_time = 900 specifies a 15-minute temporary lockout window.",
           "The fail_interval directive defines the sliding window during which consecutive failures accumulate.",
-          "Enabling silent suppresses informative error messages, preventing user enumeration by unauthenticated attackers.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Enabling silent suppresses informative error messages, preventing user enumeration by unauthenticated attackers."
         ],
         "code_block": "# /etc/security/faillock.conf\ndir = /var/log/faillock\ndeny = 5\nfail_interval = 900\nunlock_time = 900\neven_deny_root\nroot_unlock_time = 1800\nsilent",
         "code_language": "ini"
@@ -950,8 +869,7 @@
         "content_paragraphs": [
           "Enable pam_faillock inside system-auth and password-auth files in /etc/pam.d/.",
           "The auth stack requires pam_faillock preauth before pam_unix, and pam_faillock authfail after pam_unix to record failures accurately.",
-          "Placing preauth first allows PAM to block locked accounts before executing expensive password hashing operations.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Placing preauth first allows PAM to block locked accounts before executing expensive password hashing operations."
         ],
         "code_block": "# Example /etc/pam.d/common-auth snippet\nauth    required                    pam_faillock.so preauth silent\nauth    [success=1 default=ignore]  pam_unix.so nullok\nauth    [default=die]               pam_faillock.so authfail\nauth    sufficient                  pam_faillock.so authsucc",
         "code_language": "ini"
@@ -962,8 +880,7 @@
         "content_paragraphs": [
           "Enabling even_deny_root applies lockout policies to the root account as well, preventing root password guessing via local console or SSH.",
           "Set root_unlock_time to a longer duration (e.g., 30 minutes) to deter automated root brute force while allowing legitimate emergency access recovery.",
-          "Always maintain active SSH key access before testing root lockout policies to prevent administrative lockouts.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Always maintain active SSH key access before testing root lockout policies to prevent administrative lockouts."
         ],
         "code_block": "# Verify faillock root lockout configuration\ncat /etc/security/faillock.conf | grep root",
         "code_language": "bash"
@@ -973,8 +890,7 @@
         "h2_title": "6. Administration: Auditing Tally Logs & Account Unlocking",
         "content_paragraphs": [
           "Administrators can inspect failed login records and manually reset locked accounts using the faillock command line tool.",
-          "Audit failed login tallies periodically to detect emerging brute-force attack trends.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Audit failed login tallies periodically to detect emerging brute-force attack trends."
         ],
         "code_block": "# View failed login attempts for user 'ubuntu'\nfaillock --user ubuntu\n\n# Reset failed login count and unlock account immediately\nfaillock --user ubuntu --reset",
         "code_language": "bash"
@@ -991,25 +907,16 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Secure Password Generator",
-        "url": "/tools/password.html"
-      },
-      {
-        "name": "Base64 Encoder",
-        "url": "/tools/base64.html"
-      }
+      {"name": "Secure Password Generator", "url": "/tools/password.html"},
+      {"name": "Base64 Encoder", "url": "/tools/base64.html"}
     ]
   },
   {
     "slug": "chroot-jail-and-unprivileged-namespaces-isolation",
     "title": "Process Isolation on Linux: Unprivileged User Namespaces & Chroot Jails",
     "subtitle": "Technical blueprint for configuring unprivileged user namespaces and chroot jails to sandbox untrusted services without full container runtimes.",
-    "category": "System Hardening \u2022 Process Isolation",
-    "tags": [
-      "#SystemHardening",
-      "#ProcessIsolation"
-    ],
+    "category": "System Hardening • Process Isolation",
+    "tags": ["#SystemHardening", "#ProcessIsolation"],
     "date_published": "2026-08-04",
     "read_time_mins": 14,
     "word_count": 1500,
@@ -1029,8 +936,7 @@
           "Linux process isolation relies on kernel namespaces (PID, Mount, Network, IPC, UTS, User) to virtualize system resources.",
           "When a process is isolated inside dedicated namespaces, it operates in a restricted view of the operating system without visibility into processes, network interfaces, or file system mounts belonging to host OS instances.",
           "Unprivileged User Namespaces allow standard unprivileged users to create isolated container environments without requiring root privileges.",
-          "Understanding namespace boundaries is essential for deploying lightweight micro-service sandboxes on Linux servers.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Understanding namespace boundaries is essential for deploying lightweight micro-service sandboxes on Linux servers."
         ],
         "code_block": "# Inspect active process namespaces via /proc\nls -l /proc/self/ns/",
         "code_language": "bash"
@@ -1041,8 +947,7 @@
         "content_paragraphs": [
           "The CLONE_NEWUSER flag allows a standard user process to establish a new user namespace where the unprivileged UID (e.g. 1000) is mapped to UID 0 (root) inside the namespace.",
           "Even though the process acts as root inside its user namespace, it retains zero root privileges on the host system, neutralizing container breakout primitives.",
-          "This capability allows developers to run unprivileged containers without requiring setuid binaries or Docker daemon privileges.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "This capability allows developers to run unprivileged containers without requiring setuid binaries or Docker daemon privileges."
         ],
         "code_block": "# Launch isolated user and mount namespace\nunshare --user --map-root-user --mount --fork /bin/bash\n\n# Verify UID inside namespace\nid",
         "code_language": "bash"
@@ -1053,8 +958,7 @@
         "content_paragraphs": [
           "The chroot system call changes the apparent root directory for the current process and its children.",
           "Create a minimal directory hierarchy (/srv/jail) containing only the necessary shared libraries and binary executables required by the target application.",
-          "Using minimal file system trees prevents attackers from accessing host compilers (gcc), shell utilities, or system configurations if the application is compromised.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Using minimal file system trees prevents attackers from accessing host compilers (gcc), shell utilities, or system configurations if the application is compromised."
         ],
         "code_block": "# Create jail directory structure\nmkdir -p /srv/jail/{bin,lib64,dev,etc}\n\n# Copy binary and required shared libraries using ldd\ncp /bin/bash /srv/jail/bin/\nldd /bin/bash",
         "code_language": "bash"
@@ -1065,8 +969,7 @@
         "content_paragraphs": [
           "Applications inside chroot jails often require basic character devices like /dev/null, /dev/zero, and /dev/urandom.",
           "Create character devices using mknod or bind-mount host device nodes with restrictive mount flags (nodev, nosuid, noexec).",
-          "Enforcing nodev and nosuid flags on mount points blocks device manipulation and setuid privilege escalation.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Enforcing nodev and nosuid flags on mount points blocks device manipulation and setuid privilege escalation."
         ],
         "code_block": "# Create essential character devices inside jail\nmknod -m 666 /srv/jail/dev/null c 1 3\nmknod -m 666 /srv/jail/dev/zero c 1 5\nmknod -m 666 /srv/jail/dev/urandom c 1 9",
         "code_language": "bash"
@@ -1077,8 +980,7 @@
         "content_paragraphs": [
           "Processes running as root inside a standard chroot jail can break out of the jail if they retain CAP_SYS_CHROOT or capability to create device nodes.",
           "Combine chroot with chroot-drop-privileges scripts or systemd sandboxing (RootDirectory=) to drop all capabilities before executing application code.",
-          "Running jailed processes as unprivileged user 'nobody' neutralizes chroot escape techniques.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Running jailed processes as unprivileged user 'nobody' neutralizes chroot escape techniques."
         ],
         "code_block": "# Example systemd service with RootDirectory chroot\n[Service]\nRootDirectory=/srv/jail\nExecStart=/bin/myapp\nUser=nobody\nGroup=nogroup",
         "code_language": "ini"
@@ -1089,8 +991,7 @@
         "content_paragraphs": [
           "Test jail isolation by attempting to access host file paths outside the chroot root.",
           "Verify that process listing (ps aux) inside PID namespaces reveals only jailed process trees.",
-          "Confirm that jailed processes cannot read sensitive host files like /etc/shadow.",
-          "Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance."
+          "Confirm that jailed processes cannot read sensitive host files like /etc/shadow."
         ],
         "code_block": "# Execute sandboxed command inside jail\nchroot /srv/jail /bin/bash\n\n# Verify root directory boundary\nls -la /",
         "code_language": "bash"
@@ -1107,14 +1008,13 @@
       }
     ],
     "related_tools": [
-      {
-        "name": "Linux Chmod Calculator",
-        "url": "/tools/chmod-calculator.html"
-      },
-      {
-        "name": "JSON Formatter",
-        "url": "/tools/json.html"
-      }
+      {"name": "Linux Chmod Calculator", "url": "/tools/chmod-calculator.html"},
+      {"name": "JSON Formatter", "url": "/tools/json.html"}
     ]
   }
 ]
+
+with open('batch_data.json', 'w', encoding='utf-8') as f:
+    json.dump(b1, f, indent=2)
+
+print('[BUILD DEEP] Successfully written 10 expanded deep-dive articles to batch_data.json!')

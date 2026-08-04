@@ -80,6 +80,20 @@ def verify_all_articles():
         if len(site_nav_scripts) > 1:
             errors.append(f"Multiple ({len(site_nav_scripts)}) site-nav.js script tags detected")
             
+        # Check 13: Minimum Technical Word Count Threshold (>= 800 Words)
+        main_el = soup.find('main', class_='article-content')
+        if main_el:
+            import re
+            words = len(re.findall(r'\w+', main_el.text))
+            if words < 800:
+                errors.append(f"Article length deficit: {words} words (Minimum required: 800 words)")
+                
+        # Check 14: Minimum Section Depth (>= 4 H2 Headings)
+        if main_el:
+            h2_count = len(main_el.find_all('h2'))
+            if h2_count < 4:
+                errors.append(f"Section depth deficit: {h2_count} H2 headings (Minimum required: 4 sections)")
+            
         if errors:
             failures += 1
             print(f"[FAIL] {filename}:")

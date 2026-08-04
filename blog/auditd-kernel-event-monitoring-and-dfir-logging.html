@@ -105,16 +105,24 @@
             "@type": "Answer",
             "text": "With optimized filter rules (-F arch=b64), auditd overhead is less than 1-2% CPU under heavy workloads."
           }
+        },
+        {
+          "@type": "Question",
+          "name": "What does -e 2 mean in audit rules?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "-e 2 locks the audit configuration permanently until system reboot, preventing an attacker who gains root from disabling audit logging."
+          }
         }
       ]
     }
   ]
 }
 </script>
-<link href="/assets/fonts/fonts.css?v=20260804_v107" rel="stylesheet"/>
-<link href="/assets/css/shared.css?v=20260804_v109" rel="stylesheet"/>
-<link href="/assets/css/blog.css?v=20260804_v109" rel="stylesheet"/>
-<script defer="" src="/assets/js/site-nav.js?v=20260804_v109"></script>
+<link href="/assets/fonts/fonts.css?v=20260804_v109" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260804_v110" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260804_v110" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.js?v=20260804_v110"></script>
 </head>
 <body>
 <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
@@ -167,17 +175,78 @@
     <nav class="toc-card">
       <div class="toc-title">Table of Contents</div>
       <ol class="toc-list">
-<li><a href="#auditd-rules-setup">1. Writing Production Audit Rules</a></li>
+<li><a href="#auditd-architecture">1. Auditd Framework Architecture & Kernel Interception</a></li>
+<li><a href="#auditd-execve-monitoring">2. Auditing Process Execution (execve) across All Users</a></li>
+<li><a href="#auditd-file-integrity">3. File Integrity Monitoring (FIM) for Critical System Files</a></li>
+<li><a href="#auditd-rules-structure">4. Structuring Modular Audit Rules in /etc/audit/rules.d/</a></li>
+<li><a href="#auditd-performance-tuning">5. Performance Tuning & Buffer Backlog Management</a></li>
+<li><a href="#auditd-log-analysis">6. Incident Response & Log Querying via ausearch & aureport</a></li>
 <li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
       </ol>
     </nav>
 
-<h2 id="auditd-rules-setup">1. Writing Production Audit Rules</h2>
-<p>The Linux Audit Framework intercepts kernel syscalls to log critical security events before processes terminate.</p>
-<pre><code class="language-bash"># /etc/audit/rules.d/audit.rules
+<h2 id="auditd-architecture">1. Auditd Framework Architecture & Kernel Interception</h2>
+<p>The Linux Audit Subsystem is embedded directly inside the Linux kernel. It hooks system calls at the kernel boundary, capturing process executions, file access attempts, network socket creations, and user authentication events before processes complete.</p>
+<p>Unlike standard syslog daemons (which depend on applications choosing to log messages), auditd intercepts events unconditionally at the system call level, making it tamper-resistant against user-space log manipulation.</p>
+<p>The user-space auditd daemon collects events from kernel netfilter buffers and writes them to /var/log/audit/audit.log.</p>
+<p>This granular logging capability forms the core foundation of Digital Forensics and Incident Response (DFIR) on Linux servers.</p>
+<pre><code class="language-bash"># Install auditd on Debian/Ubuntu
+systemctl enable --now auditd
+
+# Verify audit daemon status
+auditctl -s</code></pre>
+
+<h2 id="auditd-execve-monitoring">2. Auditing Process Execution (execve) across All Users</h2>
+<p>Attackers who gain initial shell access execute reconnaissance commands (such as whoami, id, uname -a, netstat). Standard bash history can be deleted or bypassed by executing binaries directly.</p>
+<p>Adding execve audit rules records every single binary execution across the entire system, capturing exact command-line arguments, working directories, parent PIDs, and effective user IDs (EUID).</p>
+<p>Filter by arch=b64 to capture 64-bit system calls efficiently.</p>
+<p>Capturing full command-line arguments provides immutable forensic evidence during post-compromise investigations.</p>
+<pre><code class="language-bash"># Track 64-bit and 32-bit execve system calls
+-a always,exit -F arch=b64 -S execve -k process_exec
+-a always,exit -F arch=b32 -S execve -k process_exec</code></pre>
+
+<h2 id="auditd-file-integrity">3. File Integrity Monitoring (FIM) for Critical System Files</h2>
+<p>File Integrity Monitoring (FIM) rules watch critical system configuration files for write (w), read (r), execute (x), or attribute change (a) operations.</p>
+<p>Configure file watches on /etc/passwd, /etc/shadow, /etc/sudoers, and /etc/pam.d/ to alert DFIR incident responders immediately if account credentials or privilege policies are modified.</p>
+<p>Assign custom key tags (-k <tag_name>) to audit rules to facilitate rapid filtering in log analysis tools.</p>
+<p>Monitoring permissions changes on SSH configuration files (/etc/ssh/sshd_config) prevents unauthorized backdoor insertion.</p>
+<pre><code class="language-bash"># File Integrity Watch Rules
 -w /etc/passwd -p wa -k identity_changes
+-w /etc/shadow -p wa -k identity_changes
 -w /etc/sudoers -p wa -k privilege_changes
--a always,exit -F arch=b64 -S execve -k process_execution</code></pre>
+-w /etc/sudoers.d/ -p wa -k privilege_changes
+-w /var/log/tallylog -p wa -k auth_logs</code></pre>
+
+<h2 id="auditd-rules-structure">4. Structuring Modular Audit Rules in /etc/audit/rules.d/</h2>
+<p>Modern Linux distributions manage audit rules through modular files in /etc/audit/rules.d/*.rules, which augments auditctl when auditd starts.</p>
+<p>Organize rules into numbered files (e.g., 10-base.rules, 30-fim.rules, 90-finalize.rules) to maintain clear rule precedence.</p>
+<p>Enforce rule immutability by appending -e 2 as the final directive, preventing attackers from disabling audit rules without a reboot.</p>
+<p>Immutable rules guarantee log integrity even if an attacker achieves temporary root privileges.</p>
+<pre><code class="language-bash"># /etc/audit/rules.d/99-finalize.rules
+# Lock audit rules until next reboot
+-e 2</code></pre>
+
+<h2 id="auditd-performance-tuning">5. Performance Tuning & Buffer Backlog Management</h2>
+<p>Under high system load, kernel audit buffers can overflow if the auditd daemon cannot write to disk fast enough, causing kernel event drops.</p>
+<p>Tune kernel backlog buffer limits (-b) and set failure response actions (-f) in /etc/audit/rules.d/10-base.rules to handle burst traffic gracefully.</p>
+<p>Configuring backlog buffers to 8192 prevents event drops during bursty web application workloads.</p>
+<pre><code class="language-bash"># /etc/audit/rules.d/10-base.rules
+-D
+-b 8192
+-f 1</code></pre>
+
+<h2 id="auditd-log-analysis">6. Incident Response & Log Querying via ausearch & aureport</h2>
+<p>The audit log file (/var/log/audit/audit.log) contains dense key-value pairs. Use built-in utilities ausearch and aureport for forensic queries.</p>
+<p>Use aureport --summary to generate high-level executive reports on failed authentications, executable events, and file access violations.</p>
+<p>Combine ausearch with jq or SIEM log forwarders (Elastic Filebeat, Vector) to stream structured audit events to central security operating centers.</p>
+<pre><code class="language-bash"># Query process execution events by key tag
+ausearch -k process_exec -i
+
+# Generate summary report of failed login attempts
+aureport -l --failed
+
+# Query modifications to /etc/sudoers
+ausearch -k privilege_changes -i</code></pre>
 
     <!-- FAQ Section -->
     <div class="faq-section">
@@ -185,6 +254,10 @@
 <details>
   <summary>Does auditd affect system CPU performance?</summary>
   <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">With optimized filter rules (-F arch=b64), auditd overhead is less than 1-2% CPU under heavy workloads.</p>
+</details>
+<details>
+  <summary>What does -e 2 mean in audit rules?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">-e 2 locks the audit configuration permanently until system reboot, preventing an attacker who gains root from disabling audit logging.</p>
 </details>
     </div>
 

@@ -105,16 +105,24 @@
             "@type": "Answer",
             "text": "limit_req limits the rate of incoming HTTP requests per second, while limit_conn limits the total number of simultaneous active TCP connections per IP."
           }
+        },
+        {
+          "@type": "Question",
+          "name": "Why use ssl_prefer_server_ciphers off in TLS 1.3?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In TLS 1.3, cipher negotiation is simplified and setting ssl_prefer_server_ciphers off allows clients to choose their most optimized cipher suite safely."
+          }
         }
       ]
     }
   ]
 }
 </script>
-<link href="/assets/fonts/fonts.css?v=20260804_v107" rel="stylesheet"/>
-<link href="/assets/css/shared.css?v=20260804_v109" rel="stylesheet"/>
-<link href="/assets/css/blog.css?v=20260804_v109" rel="stylesheet"/>
-<script defer="" src="/assets/js/site-nav.js?v=20260804_v109"></script>
+<link href="/assets/fonts/fonts.css?v=20260804_v109" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260804_v110" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260804_v110" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.js?v=20260804_v110"></script>
 </head>
 <body>
 <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
@@ -168,20 +176,39 @@
       <div class="toc-title">Table of Contents</div>
       <ol class="toc-list">
 <li><a href="#server-tokens-disabling">1. Disabling Server Tokens & Information Disclosure</a></li>
-<li><a href="#rate-limiting-http-floods">2. Mitigating HTTP Floods via Rate Limiting Zones</a></li>
+<li><a href="#buffer-overflow-defense">2. Buffer Size Allocation & HTTP Request Body Limits</a></li>
+<li><a href="#rate-limiting-http-floods">3. Mitigating HTTP Floods via Rate Limiting Zones</a></li>
+<li><a href="#tls-hardening-ciphers">4. TLS 1.3 Enforcement & Cipher Suite Hardening</a></li>
+<li><a href="#security-headers-setup">5. Injecting Mandatory HTTP Security Headers</a></li>
+<li><a href="#verification-and-audit">6. Verification & Security Audit Checklist</a></li>
 <li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
       </ol>
     </nav>
 
 <h2 id="server-tokens-disabling">1. Disabling Server Tokens & Information Disclosure</h2>
 <p>By default, Nginx broadcasts its exact version number in HTTP response headers and 40x/50x error pages (e.g., Server: nginx/1.24.0). Attackers use this version information to query public CVE databases for unpatched vulnerabilities.</p>
-<p>Suppressing server tokens is the first step in reducing information leakage across public endpoints:</p>
+<p>Suppressing server tokens is the first step in reducing information leakage across public endpoints. When server_tokens is disabled, Nginx strips the version number from all HTTP response headers and standard error pages.</p>
+<p>In production environments with headers-more-nginx-module installed, you can also completely purge the 'Server' header string to prevent fingerprinting.</p>
 <pre><code class="language-nginx"># Place inside /etc/nginx/nginx.conf http block
-server_tokens off;
-more_clear_headers Server;</code></pre>
+http {
+    server_tokens off;
+    more_clear_headers Server;
+}</code></pre>
 
-<h2 id="rate-limiting-http-floods">2. Mitigating HTTP Floods via Rate Limiting Zones</h2>
-<p>Layer 7 HTTP flood attacks attempt to exhaust Nginx worker connections. Configuring rate-limiting zones using limit_req_zone enforces request thresholds per IP address:</p>
+<h2 id="buffer-overflow-defense">2. Buffer Size Allocation & HTTP Request Body Limits</h2>
+<p>Unrestricted buffer sizes expose Nginx worker processes to memory exhaustion and buffer overflow exploits. Excessive client payload sizes allow attackers to fill RAM buffers, triggering kernel OOM (Out Of Memory) killers.</p>
+<p>To defend against large payload POST attacks and slowloris attempts, enforce explicit limits on client body buffers, header buffers, and max payload sizes.</p>
+<p>If a client sends a request larger than client_max_body_size, Nginx immediately returns HTTP status 413 (Payload Too Large) without attempting to buffer data to disk.</p>
+<pre><code class="language-nginx"># Restrict request sizes in http or server block
+client_body_buffer_size 16k;
+client_header_buffer_size 1k;
+client_max_body_size 8M;
+large_client_header_buffers 2 1k;</code></pre>
+
+<h2 id="rate-limiting-http-floods">3. Mitigating HTTP Floods via Rate Limiting Zones</h2>
+<p>Layer 7 HTTP flood attacks attempt to exhaust Nginx worker connections by sending thousands of requests per second. Configuring rate-limiting zones using limit_req_zone enforces request thresholds per IP address.</p>
+<p>The limit_req_zone directive uses the leaky bucket algorithm. Requests exceeding the defined rate are buffered up to the burst limit; additional requests above burst are dropped immediately with HTTP status 503 (Service Unavailable).</p>
+<p>Using $binary_remote_addr instead of $remote_addr saves memory, requiring only 64 bytes per IP address in shared memory storage.</p>
 <pre><code class="language-nginx"># Define rate limit zone in http context
 limit_req_zone $binary_remote_addr zone=one:10m rate=10r/s;
 
@@ -191,12 +218,48 @@ location / {
     proxy_pass http://127.0.0.1:8080;
 }</code></pre>
 
+<h2 id="tls-hardening-ciphers">4. TLS 1.3 Enforcement & Cipher Suite Hardening</h2>
+<p>Legacy TLS protocols (TLS 1.0 and TLS 1.1) and weak ciphers (RC4, 3DES) contain cryptographic flaws vulnerable to POODLE, BEAST, and SWEET32 attacks. Production reverse proxies must enforce TLS 1.2 and TLS 1.3 exclusively.</p>
+<p>Mandating modern ciphers ensures Perfect Forward Secrecy (PFS), protecting intercepted traffic from decryption even if the server's private key is compromised in the future.</p>
+<p>Configure strict session caching and enable OCSP stapling to minimize TLS handshake latency for mobile clients.</p>
+<pre><code class="language-nginx"># Strict TLS 1.2 / TLS 1.3 configuration
+ssl_protocols TLSv1.2 TLSv1.3;
+ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;
+ssl_prefer_server_ciphers off;
+ssl_session_timeout 1d;
+ssl_session_cache shared:SSL:10m;
+ssl_stapling on;
+ssl_stapling_verify on;</code></pre>
+
+<h2 id="security-headers-setup">5. Injecting Mandatory HTTP Security Headers</h2>
+<p>HTTP security headers instruct client browsers to enforce strict security policies, blocking XSS, clickjacking, MIME-sniffing, and credential interception.</p>
+<p>Add strict headers across all server blocks using the add_header directive with the always flag to ensure headers are sent on error responses as well.</p>
+<pre><code class="language-nginx"># Mandatory Security Headers
+add_header X-Frame-Options "DENY" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
+add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;</code></pre>
+
+<h2 id="verification-and-audit">6. Verification & Security Audit Checklist</h2>
+<p>After applying Nginx security hardening configurations, verify syntax correctness using nginx -t before reloading the daemon.</p>
+<p>Use cURL to audit response headers and SSL Labs to verify TLS cipher suite compliance.</p>
+<pre><code class="language-bash"># Test configuration syntax and reload Nginx
+systemctl reload nginx
+
+# Audit HTTP response headers with cURL
+curl -I https://zyekh.com/</code></pre>
+
     <!-- FAQ Section -->
     <div class="faq-section">
       <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
 <details>
   <summary>What is the difference between limit_req and limit_conn in Nginx?</summary>
   <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">limit_req limits the rate of incoming HTTP requests per second, while limit_conn limits the total number of simultaneous active TCP connections per IP.</p>
+</details>
+<details>
+  <summary>Why use ssl_prefer_server_ciphers off in TLS 1.3?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">In TLS 1.3, cipher negotiation is simplified and setting ssl_prefer_server_ciphers off allows clients to choose their most optimized cipher suite safely.</p>
 </details>
     </div>
 
