@@ -101,10 +101,33 @@ def verify_all_articles():
                 print(f"       - {err}")
         else:
             print(f"[PASS] {filename} (100% SOP Compliant)")
-            
+
+    # Check 15: Global MD5 Image Uniqueness Audit across all article hero images
+    import hashlib
+    print("\n[AUDIT] Running Check 15: Image MD5 Hash Uniqueness Audit...")
+    image_hashes = {}
+    img_failures = 0
+    for a in articles:
+        content = open(a, encoding='utf-8', errors='ignore').read()
+        soup = BeautifulSoup(content, 'html.parser')
+        hero_img = soup.find('img', class_='article-hero-img') or soup.find('img', class_='card-thumb-img')
+        if hero_img and hero_img.get('src'):
+            src = hero_img['src'].replace('https://zyekh.com/', '').lstrip('/')
+            if os.path.exists(src):
+                h = hashlib.md5(open(src, 'rb').read()).hexdigest()
+                if h in image_hashes:
+                    print(f"[FAIL] Duplicate Hero Image MD5 Hash detected in {os.path.basename(a)}:")
+                    print(f"       - Shared MD5 ({h}) with {image_hashes[h]} ({src})")
+                    img_failures += 1
+                else:
+                    image_hashes[h] = os.path.basename(a)
+
+    if img_failures > 0:
+        failures += img_failures
+
     print("\n============================================================")
     if failures > 0:
-        print(f"FAILED: {failures}/{len(articles)} articles did not pass QA audit.")
+        print(f"FAILED: {failures} QA audit violations detected across articles/images.")
         sys.exit(1)
     else:
         print(f"SUCCESS: All {len(articles)} articles passed 100% QA audit!")
