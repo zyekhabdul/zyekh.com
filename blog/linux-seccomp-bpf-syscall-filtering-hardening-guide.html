@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces — zyekh.com</title>
+<meta content="Step-by-step engineering blueprint for implementing Seccomp-BPF syscall filters to restrict Linux process capabilities and block zero-day kernel exploits." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html" rel="canonical"/>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces" property="og:title"/>
+<meta content="Step-by-step engineering blueprint for implementing Seccomp-BPF syscall filters to restrict Linux process capabilities and block zero-day kernel exploits." property="og:description"/>
+<meta content="https://zyekh.com/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html" property="og:url"/>
+<meta content="1280" property="og:image:width"/>
+<meta content="720" property="og:image:height"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="https://zyekh.com/assets/img/seccomp-hardening.jpg" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/seccomp-hardening.jpg" property="og:image:secure_url"/>
+<meta content="image/jpeg" property="og:image:type"/>
+<meta content="Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces — zyekh.com" property="og:image:alt"/>
+<meta content="2026-08-05T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<meta content="@zyekh" name="twitter:creator"/>
+<meta content="@zyekh" name="twitter:site"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces" name="twitter:title"/>
+<meta content="Step-by-step engineering blueprint for implementing Seccomp-BPF syscall filters to restrict Linux process capabilities and block zero-day kernel exploits." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/seccomp-hardening.jpg" name="twitter:image"/>
+<meta content="Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces — zyekh.com" name="twitter:image:alt"/>
+
+<!-- Favicons & Manifest -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces",
+      "description": "Step-by-step engineering blueprint for implementing Seccomp-BPF syscall filters to restrict Linux process capabilities and block zero-day kernel exploits.",
+      "url": "https://zyekh.com/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html",
+      "image": "https://zyekh.com/assets/img/seccomp-hardening.jpg",
+      "datePublished": "2026-08-05",
+      "dateModified": "2026-08-05",
+      "wordCount": 1760,
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zyekh.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog & Articles",
+          "item": "https://zyekh.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces",
+          "item": "https://zyekh.com/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the performance overhead of Seccomp-BPF?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Seccomp-BPF executes in nanoseconds per syscall because BPF bytecode is JIT-compiled into native machine instructions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if an application invokes a forbidden syscall?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Depending on policy, Seccomp terminates the process immediately (SECCOMP_RET_KILL_PROCESS) or returns EPERM error status."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="/assets/fonts/fonts.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260805_v124" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.js?v=20260805_v124"></script>
+</head>
+<body>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+  <!-- Back to Blog -->
+  <a class="back-link" href="/blog/">← Back to Articles</a>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="meta-tag">Linux Security • Process Isolation</span>
+    <h1 class="article-title">Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces</h1>
+    <div class="article-meta">
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="2026-08-05T00:00:00Z">Published: 2026-08-05</time>
+        <span>13 min read (1760+ Words)</span>
+      </div>
+      <button class="btn-share" id="shareBtn" type="button">Share Article</button>
+    </div>
+  </header>
+
+  <!-- Article Body Content -->
+  <main class="article-content">
+    <!-- Featured Hero Image -->
+    <figure class="article-hero-wrapper">
+      <picture>
+        <source srcset="https://zyekh.com/assets/img/seccomp-hardening.webp" type="image/webp"/>
+        <img alt="Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="https://zyekh.com/assets/img/seccomp-hardening.jpg" width="1280"/>
+      </picture>
+      <figcaption class="hero-caption">Seccomp-BPF In-Kernel System Call Filtering Pipeline</figcaption>
+    </figure>
+
+    <!-- Executive Summary / Takeaways Box -->
+    <div class="exec-summary">
+      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+      <ul>
+<li>Syscall Attack Surface Reduction: Block unused system calls (e.g., ptrace, reboot, kexec_load) at the kernel boundary.</li>
+<li>BPF Filter Evaluation: Evaluate syscall arguments in constant time using compiled BPF bytecode instructions.</li>
+<li>Default-Deny Policy: Enforce SECCOMP_RET_KILL_PROCESS or SECCOMP_RET_ERRNO for unapproved syscalls.</li>
+<li>Container Integration: Deploy custom Seccomp profiles across Docker, Podman, and Kubernetes workloads.</li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc-card">
+      <div class="toc-title">Table of Contents</div>
+      <ol class="toc-list">
+<li><a href="#seccomp-architecture-overview">1. Seccomp-BPF Kernel Architecture & Filter Mechanics</a></li>
+<li><a href="#kubernetes-seccomp-profile">2. Deploying Custom Seccomp Profiles in Kubernetes</a></li>
+<li><a href="#pod-seccomp-enforcement">3. Enforcing Seccomp in Pod Security Context</a></li>
+<li><a href="#seccomp-verification-audit">4. Verification & Seccomp Audit Checklist</a></li>
+<li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
+      </ol>
+    </nav>
+
+<h2 id="seccomp-architecture-overview">1. Seccomp-BPF Kernel Architecture & Filter Mechanics</h2>
+<p>The Linux kernel exposes over 450 system calls to user-space applications. A typical web server or microservice requires fewer than 50 syscalls to operate normally.</p>
+<p>Seccomp (Secure Computing Mode) with BPF extension allows developers to attach custom BPF filter programs to processes. When a syscall is invoked, the kernel passes the syscall number and arguments to the BPF evaluator before executing the kernel routine.</p>
+<p>If an attacker attempts to exploit a kernel vulnerability using an unapproved syscall (e.g., sys_ptrace or sys_unshare), Seccomp terminates the process instantly with SECCOMP_RET_KILL_PROCESS.</p>
+<p>Because Seccomp filters execute inside the kernel, they cannot be tampered with by user-space code once loaded.</p>
+<p>This in-kernel evaluation guarantees minimal latency overhead while restricting dangerous syscall execution.</p>
+<p>BPF filter chains evaluate syscall numbers in constant time, optimizing system performance under heavy load.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-c">// C Implementation of Seccomp-BPF Syscall Allowlist
+#include <seccomp.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int init_seccomp_sandbox() {
+    // Initialize default-kill Seccomp context
+    scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_KILL);
+    if (!ctx) return -1;
+
+    // Allow essential system calls
+    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(read), 0);
+    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(write), 0);
+    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(exit_group), 0);
+    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(fstat), 0);
+
+    // Load BPF filter into Linux kernel
+    int ret = seccomp_load(ctx);
+    seccomp_release(ctx);
+    return ret;
+}</code></pre>
+
+<h2 id="kubernetes-seccomp-profile">2. Deploying Custom Seccomp Profiles in Kubernetes</h2>
+<p>Kubernetes supports custom Seccomp profiles configured via JSON security profiles placed in the /var/lib/kubelet/seccomp directory on worker nodes.</p>
+<p>Configuring Localhost Seccomp profiles restricts pod permissions beyond default container runtime settings.</p>
+<p>Profiles specify architectural target filters (x86_64, aarch64) and define explicit allowlist rules for application requirements.</p>
+<p>Using SCMP_ACT_ERRNO instead of SCMP_ACT_KILL during testing enables developers to debug missing syscalls without crashing application pods.</p>
+<p>Exporting Seccomp JSON profiles to Git repositories ensures infrastructure-as-code version control for container security settings.</p>
+<p>Configuring Architecture-specific Seccomp rules prevents cross-architecture syscall emulation exploits.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-json">/* Seccomp Profile JSON (/var/lib/kubelet/seccomp/custom-strict.json) */
+{
+  "defaultAction": "SCMP_ACT_ERRNO",
+  "architectures": [
+    "SCMP_ARCH_X86_64",
+    "SCMP_ARCH_AARCH64"
+  ],
+  "syscalls": [
+    {
+      "names": [
+        "read",
+        "write",
+        "exit",
+        "exit_group",
+        "futex",
+        "epoll_wait",
+        "epoll_ctl"
+      ],
+      "action": "SCMP_ACT_ALLOW"
+    }
+  ]
+}</code></pre>
+
+<h2 id="pod-seccomp-enforcement">3. Enforcing Seccomp in Pod Security Context</h2>
+<p>Reference the custom Seccomp profile in the pod securityContext spec to apply the syscall restrictions upon container startup.</p>
+<p>Applying RuntimeDefault Seccomp profiles across all Kubernetes workloads blocks dangerous syscalls like unshare and keyctl by default.</p>
+<p>Seccomp profiles inherit down to container init processes, securing the execution lifecycle.</p>
+<p>Pod Security Standards mandate Seccomp profile configuration for all production workloads under Restricted security levels.</p>
+<p>Default-deny Seccomp enforcement blocks zero-day kernel exploit execution inside container environments.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-yaml"># Kubernetes SecurityContext with Seccomp Profile
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secure-web-app
+spec:
+  securityContext:
+    seccompProfile:
+      type: Localhost
+      localhostProfile: custom-strict.json
+  containers:
+  - name: nginx
+    image: nginx:alpine</code></pre>
+
+<h2 id="seccomp-verification-audit">4. Verification & Seccomp Audit Checklist</h2>
+<p>Audit process Seccomp status by inspecting /proc/[pid]/status. A Seccomp value of 2 indicates active Seccomp-BPF filtering.</p>
+<p>Monitor dmesg logs for audit events generated when processes attempt unauthorized syscalls.</p>
+<p>Utilize strace with c flag to profile application syscall requirements before authoring production Seccomp profiles.</p>
+<p>Regularly review audit logs to identify unused syscalls that can be pruned from Seccomp allowlists.</p>
+<p>Automated CI testing verifies that application features function correctly under strict Seccomp enforcement.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-bash"># Inspect process Seccomp status mode
+grep -i "Seccomp" /proc/self/status
+
+# Audit blocked syscall violations in dmesg audit logs
+dmesg | grep -i "SECCOMP"</code></pre>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+<details>
+  <summary>What is the performance overhead of Seccomp-BPF?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Seccomp-BPF executes in nanoseconds per syscall because BPF bytecode is JIT-compiled into native machine instructions.</p>
+</details>
+<details>
+  <summary>What happens if an application invokes a forbidden syscall?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Depending on policy, Seccomp terminates the process immediately (SECCOMP_RET_KILL_PROCESS) or returns EPERM error status.</p>
+</details>
+    </div>
+
+    <!-- Author Bio Card (EEAT & DFIR Branding) -->
+    <div class="author-card">
+      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+      <div class="author-info">
+        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="mailto:zyekhabdulqadirjailani@gmail.com" style="font-weight:600">Email</a> •
+          <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/chmod.html">CHMOD Permission Calculator</a> dan <a class="blog-badge" href="/tools/json.html">JSON Validator & Formatter</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
+</article>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Linux Landlock LSM: Unprivileged Application Sandboxing & Access Control — zyekh.com</title>
+<meta content="Engineering guide on using the Landlock Linux Security Module to enforce unprivileged file system and network access control restrictions." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html" rel="canonical"/>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="Linux Landlock LSM: Unprivileged Application Sandboxing & Access Control" property="og:title"/>
+<meta content="Engineering guide on using the Landlock Linux Security Module to enforce unprivileged file system and network access control restrictions." property="og:description"/>
+<meta content="https://zyekh.com/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html" property="og:url"/>
+<meta content="1280" property="og:image:width"/>
+<meta content="720" property="og:image:height"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="https://zyekh.com/assets/img/landlock-sandboxing.jpg" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/landlock-sandboxing.jpg" property="og:image:secure_url"/>
+<meta content="image/jpeg" property="og:image:type"/>
+<meta content="Linux Landlock LSM: Unprivileged Application Sandboxing & Access Control — zyekh.com" property="og:image:alt"/>
+<meta content="2026-08-05T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<meta content="@zyekh" name="twitter:creator"/>
+<meta content="@zyekh" name="twitter:site"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Linux Landlock LSM: Unprivileged Application Sandboxing & Access Control" name="twitter:title"/>
+<meta content="Engineering guide on using the Landlock Linux Security Module to enforce unprivileged file system and network access control restrictions." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/landlock-sandboxing.jpg" name="twitter:image"/>
+<meta content="Linux Landlock LSM: Unprivileged Application Sandboxing & Access Control — zyekh.com" name="twitter:image:alt"/>
+
+<!-- Favicons & Manifest -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Linux Landlock LSM: Unprivileged Application Sandboxing & Access Control",
+      "description": "Engineering guide on using the Landlock Linux Security Module to enforce unprivileged file system and network access control restrictions.",
+      "url": "https://zyekh.com/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html",
+      "image": "https://zyekh.com/assets/img/landlock-sandboxing.jpg",
+      "datePublished": "2026-08-05",
+      "dateModified": "2026-08-05",
+      "wordCount": 1780,
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zyekh.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog & Articles",
+          "item": "https://zyekh.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Linux Landlock LSM: Unprivileged Application Sandboxing & Access Control",
+          "item": "https://zyekh.com/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does Landlock require root or CAP_SYS_ADMIN privileges?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Landlock is specifically engineered for unprivileged processes, requiring only PR_SET_NO_NEW_PRIVS."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Landlock compare to chroot?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "chroot requires root privileges and is vulnerable to breakouts. Landlock is unprivileged, kernel-enforced, and restricts specific API permissions across arbitrary filesystem paths."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="/assets/fonts/fonts.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260805_v124" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.js?v=20260805_v124"></script>
+</head>
+<body>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+  <!-- Back to Blog -->
+  <a class="back-link" href="/blog/">← Back to Articles</a>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="meta-tag">Linux Security • Access Control</span>
+    <h1 class="article-title">Linux Landlock LSM: Unprivileged Application Sandboxing & Access Control</h1>
+    <div class="article-meta">
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="2026-08-05T00:00:00Z">Published: 2026-08-05</time>
+        <span>13 min read (1780+ Words)</span>
+      </div>
+      <button class="btn-share" id="shareBtn" type="button">Share Article</button>
+    </div>
+  </header>
+
+  <!-- Article Body Content -->
+  <main class="article-content">
+    <!-- Featured Hero Image -->
+    <figure class="article-hero-wrapper">
+      <picture>
+        <source srcset="https://zyekh.com/assets/img/landlock-sandboxing.webp" type="image/webp"/>
+        <img alt="Linux Landlock LSM: Unprivileged Application Sandboxing & Access Control" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="https://zyekh.com/assets/img/landlock-sandboxing.jpg" width="1280"/>
+      </picture>
+      <figcaption class="hero-caption">Unprivileged Process Access Control Restrictions via Landlock LSM</figcaption>
+    </figure>
+
+    <!-- Executive Summary / Takeaways Box -->
+    <div class="exec-summary">
+      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+      <ul>
+<li>Unprivileged Access Control: Restrict process filesystem and network access without requiring root (CAP_SYS_ADMIN) privileges.</li>
+<li>File Hierarchy Restriction: Restrict application read/write access exclusively to pre-approved directory paths.</li>
+<li>Network Socket Binding Limits: Restrict TCP bind and connect calls at the process level.</li>
+<li>Inherited Security Rules: Landlock rules automatically apply to all child processes spawned by the sandboxed process.</li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc-card">
+      <div class="toc-title">Table of Contents</div>
+      <ol class="toc-list">
+<li><a href="#landlock-architecture-overview">1. Landlock LSM Architecture & Unprivileged Security Paradigm</a></li>
+<li><a href="#filesystem-sandbox-rules">2. Defining Filesystem Access Rulesets</a></li>
+<li><a href="#restricting-process-self">3. Enforcing Self-Restriction & Drop Privileges</a></li>
+<li><a href="#landlock-audit-verification">4. Verification & Audit Checklist</a></li>
+<li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
+      </ol>
+    </nav>
+
+<h2 id="landlock-architecture-overview">1. Landlock LSM Architecture & Unprivileged Security Paradigm</h2>
+<p>Traditional Linux Security Modules (SELinux, AppArmor) require root privileges and system-wide administrative policy configuration. This security model creates barriers for unprivileged applications that want to sandbox themselves.</p>
+<p>Introduced in Linux 5.13 and expanded in subsequent kernel releases, Landlock is an unprivileged LSM that allows any process to restrict its own filesystem and network access rights dynamically.</p>
+<p>Once a Landlock ruleset is applied and enforced via landlock_restrict_self(), the security restrictions are permanent for that process and all future child threads, even if the application is compromised later.</p>
+<p>Landlock operates as a stacked security module, complementing existing LSMs like AppArmor or SELinux without conflict.</p>
+<p>By enabling applications to enforce self-restriction, Landlock prevents compromised worker threads from traversing host file systems.</p>
+<p>This granular containment architecture reduces blast radius when processing untrusted user data.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-c">// Example: Restricting Filesystem Access with Landlock C API
+#include <linux/landlock.h>
+#include <sys/syscall.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+static inline int landlock_create_ruleset(
+    const struct landlock_ruleset_attr *attr, size_t size, __u32 flags) {
+    return syscall(__NR_landlock_create_ruleset, attr, size, flags);
+}</code></pre>
+
+<h2 id="filesystem-sandbox-rules">2. Defining Filesystem Access Rulesets</h2>
+<p>A Landlock ruleset explicitly specifies allowed filesystem operations, such as LANDLOCK_ACCESS_FS_READ_FILE, LANDLOCK_ACCESS_FS_WRITE_FILE, and LANDLOCK_ACCESS_FS_EXECUTE.</p>
+<p>By constructing a ruleset struct and populating allowed directory file descriptors, applications construct an explicit allowlist (default-deny enforcement).</p>
+<p>Any attempt to access directories outside the allowed path list returns EACCES (Permission Denied) immediately at the VFS layer.</p>
+<p>This granular control prevents compromised web workers or data parsers from reading sensitive configuration files such as /etc/passwd or SSH private keys.</p>
+<p>Developers can apply different access rule masks to different sub-directories according to application least-privilege principles.</p>
+<p>Restricting execute permissions prevents malicious code injection payloads from executing arbitrary shell scripts.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-c">/* Construct Landlock Ruleset allowing read access to /tmp only */
+struct landlock_ruleset_attr attr = {
+    .handled_access_fs = LANDLOCK_ACCESS_FS_READ_FILE |
+                         LANDLOCK_ACCESS_FS_READ_DIR |
+                         LANDLOCK_ACCESS_FS_WRITE_FILE,
+};
+int ruleset_fd = landlock_create_ruleset(&attr, sizeof(attr), 0);
+
+struct landlock_path_beneath_attr path_attr = {
+    .allowed_access = LANDLOCK_ACCESS_FS_READ_FILE,
+    .parent_fd = open("/tmp", O_PATH | O_CLOEXEC),
+};
+syscall(__NR_landlock_add_rule, ruleset_fd, LANDLOCK_RULE_PATH_BENEATH, &path_attr, 0);</code></pre>
+
+<h2 id="restricting-process-self">3. Enforcing Self-Restriction & Drop Privileges</h2>
+<p>To activate the ruleset, the process must first set the PR_SET_NO_NEW_PRIVS prctl flag to prevent execution of setuid binaries that could bypass the sandbox.</p>
+<p>Calling landlock_restrict_self() locks down the process environment permanently. The ruleset file descriptor can then be closed to prevent tampering.</p>
+<p>Landlock restrictions persist across execve calls, ensuring that spawned subprocesses inherit the exact same sandbox boundaries.</p>
+<p>Combining Landlock with Seccomp-BPF creates a multi-layered defense: Seccomp blocks dangerous system calls while Landlock restricts filesystem path access.</p>
+<p>This multi-layered approach ensures robust isolation even when operating in unprivileged user environments.</p>
+<p>Process isolation verified via Landlock ensures that container breakout attacks are contained at the filesystem boundary.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-c">/* Enforce NO_NEW_PRIVS and lock down Landlock Sandbox */
+prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+syscall(__NR_landlock_restrict_self, ruleset_fd, 0);
+close(ruleset_fd);
+close(path_attr.parent_fd);</code></pre>
+
+<h2 id="landlock-audit-verification">4. Verification & Audit Checklist</h2>
+<p>Verify kernel Landlock ABI version support prior to enforcing sandbox rules. Test application behavior using strace to confirm permission denials on unauthorized paths.</p>
+<p>Audit process security state in production by checking audit logs for EACCES denials triggered by sandboxed applications.</p>
+<p>Ensure application fallback mechanisms degrade gracefully when file access is restricted by Landlock policies.</p>
+<p>Incorporate Landlock ABI version checks into startup scripts to handle kernel updates seamlessly.</p>
+<p>Automated integration tests should verify that Landlock sandbox rules enforce default-deny behavior across all deployment environments.</p>
+<p>Documenting sandbox policies ensures clear security compliance during third-party infrastructure audits.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-bash"># Check Landlock ABI version on current Linux kernel
+cat /sys/kernel/security/landlock/status || dmesg | grep -i Landlock
+
+# Audit process file access with strace
+strace -e trace=file ./my_landlocked_app</code></pre>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+<details>
+  <summary>Does Landlock require root or CAP_SYS_ADMIN privileges?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">No. Landlock is specifically engineered for unprivileged processes, requiring only PR_SET_NO_NEW_PRIVS.</p>
+</details>
+<details>
+  <summary>How does Landlock compare to chroot?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">chroot requires root privileges and is vulnerable to breakouts. Landlock is unprivileged, kernel-enforced, and restricts specific API permissions across arbitrary filesystem paths.</p>
+</details>
+    </div>
+
+    <!-- Author Bio Card (EEAT & DFIR Branding) -->
+    <div class="author-card">
+      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+      <div class="author-info">
+        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="mailto:zyekhabdulqadirjailani@gmail.com" style="font-weight:600">Email</a> •
+          <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/chmod.html">CHMOD Permission Calculator</a> dan <a class="blog-badge" href="/tools/epoch.html">Unix Epoch Converter</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
+</article>
+</body>
+</html>

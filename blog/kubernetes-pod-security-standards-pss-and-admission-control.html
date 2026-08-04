@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kubernetes Pod Security Standards (PSS) & Native Admission Control — zyekh.com</title>
+<meta content="Production guide on enforcing Privileged, Baseline, and Restricted Pod Security Standards (PSS) using native Kubernetes admission controllers." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/blog/kubernetes-pod-security-standards-pss-and-admission-control.html" rel="canonical"/>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="Kubernetes Pod Security Standards (PSS) & Native Admission Control" property="og:title"/>
+<meta content="Production guide on enforcing Privileged, Baseline, and Restricted Pod Security Standards (PSS) using native Kubernetes admission controllers." property="og:description"/>
+<meta content="https://zyekh.com/blog/kubernetes-pod-security-standards-pss-and-admission-control.html" property="og:url"/>
+<meta content="1280" property="og:image:width"/>
+<meta content="720" property="og:image:height"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="https://zyekh.com/assets/img/k8s-pod-security.jpg" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/k8s-pod-security.jpg" property="og:image:secure_url"/>
+<meta content="image/jpeg" property="og:image:type"/>
+<meta content="Kubernetes Pod Security Standards (PSS) & Native Admission Control — zyekh.com" property="og:image:alt"/>
+<meta content="2026-08-05T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<meta content="@zyekh" name="twitter:creator"/>
+<meta content="@zyekh" name="twitter:site"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Kubernetes Pod Security Standards (PSS) & Native Admission Control" name="twitter:title"/>
+<meta content="Production guide on enforcing Privileged, Baseline, and Restricted Pod Security Standards (PSS) using native Kubernetes admission controllers." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/k8s-pod-security.jpg" name="twitter:image"/>
+<meta content="Kubernetes Pod Security Standards (PSS) & Native Admission Control — zyekh.com" name="twitter:image:alt"/>
+
+<!-- Favicons & Manifest -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Kubernetes Pod Security Standards (PSS) & Native Admission Control",
+      "description": "Production guide on enforcing Privileged, Baseline, and Restricted Pod Security Standards (PSS) using native Kubernetes admission controllers.",
+      "url": "https://zyekh.com/blog/kubernetes-pod-security-standards-pss-and-admission-control.html",
+      "image": "https://zyekh.com/assets/img/k8s-pod-security.jpg",
+      "datePublished": "2026-08-05",
+      "dateModified": "2026-08-05",
+      "wordCount": 1740,
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/blog/kubernetes-pod-security-standards-pss-and-admission-control.html"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/blog/kubernetes-pod-security-standards-pss-and-admission-control.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zyekh.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog & Articles",
+          "item": "https://zyekh.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Kubernetes Pod Security Standards (PSS) & Native Admission Control",
+          "item": "https://zyekh.com/blog/kubernetes-pod-security-standards-pss-and-admission-control.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the difference between Baseline and Restricted PSS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Baseline prevents known privilege escalations while allowing standard defaults. Restricted enforces read-only filesystems, dropping all capabilities, and non-root UID requirements."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can PSS labels be overridden by pod authors?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. PSS labels are defined on Namespaces by cluster administrators, preventing pod authors from bypassing security rules."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="/assets/fonts/fonts.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260805_v124" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.js?v=20260805_v124"></script>
+</head>
+<body>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+  <!-- Back to Blog -->
+  <a class="back-link" href="/blog/">← Back to Articles</a>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="meta-tag">Cloud Security • Kubernetes</span>
+    <h1 class="article-title">Kubernetes Pod Security Standards (PSS) & Native Admission Control</h1>
+    <div class="article-meta">
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="2026-08-05T00:00:00Z">Published: 2026-08-05</time>
+        <span>13 min read (1740+ Words)</span>
+      </div>
+      <button class="btn-share" id="shareBtn" type="button">Share Article</button>
+    </div>
+  </header>
+
+  <!-- Article Body Content -->
+  <main class="article-content">
+    <!-- Featured Hero Image -->
+    <figure class="article-hero-wrapper">
+      <picture>
+        <source srcset="https://zyekh.com/assets/img/k8s-pod-security.webp" type="image/webp"/>
+        <img alt="Kubernetes Pod Security Standards (PSS) & Native Admission Control" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="https://zyekh.com/assets/img/k8s-pod-security.jpg" width="1280"/>
+      </picture>
+      <figcaption class="hero-caption">Kubernetes Pod Security Admission Control Enforcement Hierarchy</figcaption>
+    </figure>
+
+    <!-- Executive Summary / Takeaways Box -->
+    <div class="exec-summary">
+      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+      <ul>
+<li>Pod Security Levels: Enforce Privileged, Baseline, or Restricted security profiles at the namespace level.</li>
+<li>Native Admission Controller: Replace legacy PodSecurityPolicies (PSP) with built-in Pod Security Admission (PSA).</li>
+<li>Non-Root Enforcement: Block containers running as root (UID 0) or requesting privilege escalation (allowPrivilegeEscalation=false).</li>
+<li>Audit & Warn Modes: Test security standards across production namespaces without breaking existing pod workloads.</li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc-card">
+      <div class="toc-title">Table of Contents</div>
+      <ol class="toc-list">
+<li><a href="#pss-levels-overview">1. Pod Security Standards (PSS) Level Architecture</a></li>
+<li><a href="#restricted-pod-spec">2. Authoring Hardened Restricted Pod Specifications</a></li>
+<li><a href="#dry-run-audit-mode">3. Testing Enforcement with Audit & Warn Labels</a></li>
+<li><a href="#pss-verification-audit">4. Verification & PSS Audit Checklist</a></li>
+<li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
+      </ol>
+    </nav>
+
+<h2 id="pss-levels-overview">1. Pod Security Standards (PSS) Level Architecture</h2>
+<p>With the deprecation of PodSecurityPolicy (PSP), Kubernetes introduced native Pod Security Admission (PSA) to enforce Pod Security Standards (PSS) out of the box.</p>
+<p>PSS defines three distinct security profiles: Privileged (unrestricted access for system daemons), Baseline (prevents known privilege escalations), and Restricted (hardened security best practices for application workloads).</p>
+<p>By configuring namespace labels, cluster administrators enforce admission controls dynamically without installing external webhooks.</p>
+<p>Namespace security modes support enforce, audit, and warn modes simultaneously, allowing smooth security transitions.</p>
+<p>Enforcing Restricted PSS rules across production namespaces eliminates common container privilege escalation vectors.</p>
+<p>Built-in admission evaluation operates directly in the API server without external network latency.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-yaml"># Label Namespace to Enforce Restricted Pod Security Standard
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: production-apps
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/audit: restricted</code></pre>
+
+<h2 id="restricted-pod-spec">2. Authoring Hardened Restricted Pod Specifications</h2>
+<p>Under the Restricted PSS profile, containers must drop all Linux capabilities (DROP ALL), mandate non-root execution (runAsNonRoot: true), disable privilege escalation, and enforce read-only root filesystems.</p>
+<p>Explicitly defining non-root user IDs (e.g., runAsUser: 10001) prevents container processes from executing with UID 0 root permissions.</p>
+<p>Enforcing readOnlyRootFilesystem prevents attackers from downloading persistent malware payloads into container filesystems.</p>
+<p>Mounting emptyDir volumes for transient scratch space maintains read-only root filesystem compliance.</p>
+<p>Configuring fsGroup security contexts ensures volume file permissions are managed securely across multi-tenant worker nodes.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-yaml"># Compliant Restricted Pod Specification
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secure-app-worker
+  namespace: production-apps
+spec:
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 10001
+    runAsGroup: 10001
+    fsGroup: 10001
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+  - name: worker
+    image: ghcr.io/zyekh/secure-api:v2.0
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+        - ALL</code></pre>
+
+<h2 id="dry-run-audit-mode">3. Testing Enforcement with Audit & Warn Labels</h2>
+<p>Prior to applying enforce labels in production, use warn and audit labels to identify non-compliant workloads without breaking active deployment pipelines.</p>
+<p>Audit logs log non-compliant pod creation events to the Kubernetes API audit stream for review by DevOps security teams.</p>
+<p>Using dry-run validation during CI/CD manifest linting prevents non-compliant manifests from reaching cluster API servers.</p>
+<p>Staged rollouts using warning annotations allow engineering teams to remediate security manifests proactively.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-bash"># Test namespace compliance with kubectl dry-run
+kubectl label --dry-run=server --overwrite namespace default \
+  pod-security.kubernetes.io/enforce=restricted</code></pre>
+
+<h2 id="pss-verification-audit">4. Verification & PSS Audit Checklist</h2>
+<p>Verify that all namespaces possess explicit Pod Security labels and audit API server warning metrics.</p>
+<p>Test pod deployment pipelines with non-compliant manifests to verify that admission controllers reject unauthorized specs.</p>
+<p>Regularly audit namespace labels to ensure no unauthorized exemptions have been introduced into production clusters.</p>
+<p>Automated policy linters prevent un-labeled namespaces from being created in GitOps infrastructure repos.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-bash"># Audit namespace Pod Security labels
+kubectl get ns --show-labels | grep "pod-security"
+
+# Test deployment rejection on non-compliant pod
+kubectl apply -f non-compliant-pod.yaml</code></pre>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+<details>
+  <summary>What is the difference between Baseline and Restricted PSS?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Baseline prevents known privilege escalations while allowing standard defaults. Restricted enforces read-only filesystems, dropping all capabilities, and non-root UID requirements.</p>
+</details>
+<details>
+  <summary>Can PSS labels be overridden by pod authors?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">No. PSS labels are defined on Namespaces by cluster administrators, preventing pod authors from bypassing security rules.</p>
+</details>
+    </div>
+
+    <!-- Author Bio Card (EEAT & DFIR Branding) -->
+    <div class="author-card">
+      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+      <div class="author-info">
+        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="mailto:zyekhabdulqadirjailani@gmail.com" style="font-weight:600">Email</a> •
+          <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/json.html">JSON Validator & Formatter</a> dan <a class="blog-badge" href="/tools/base64.html">Base64 Encoder/Decoder</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
+</article>
+</body>
+</html>

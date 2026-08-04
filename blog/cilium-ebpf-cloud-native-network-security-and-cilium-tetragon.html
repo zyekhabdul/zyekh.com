@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cilium eBPF & Tetragon: Cloud-Native Runtime Security & Network Enforcement — zyekh.com</title>
+<meta content="Deep-dive guide on deploying Cilium eBPF for zero-trust network policy enforcement and Tetragon for real-time kernel event monitoring in Kubernetes." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html" rel="canonical"/>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="Cilium eBPF & Tetragon: Cloud-Native Runtime Security & Network Enforcement" property="og:title"/>
+<meta content="Deep-dive guide on deploying Cilium eBPF for zero-trust network policy enforcement and Tetragon for real-time kernel event monitoring in Kubernetes." property="og:description"/>
+<meta content="https://zyekh.com/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html" property="og:url"/>
+<meta content="1280" property="og:image:width"/>
+<meta content="720" property="og:image:height"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="https://zyekh.com/assets/img/cilium-ebpf-security.jpg" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/cilium-ebpf-security.jpg" property="og:image:secure_url"/>
+<meta content="image/jpeg" property="og:image:type"/>
+<meta content="Cilium eBPF & Tetragon: Cloud-Native Runtime Security & Network Enforcement — zyekh.com" property="og:image:alt"/>
+<meta content="2026-08-05T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<meta content="@zyekh" name="twitter:creator"/>
+<meta content="@zyekh" name="twitter:site"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Cilium eBPF & Tetragon: Cloud-Native Runtime Security & Network Enforcement" name="twitter:title"/>
+<meta content="Deep-dive guide on deploying Cilium eBPF for zero-trust network policy enforcement and Tetragon for real-time kernel event monitoring in Kubernetes." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/cilium-ebpf-security.jpg" name="twitter:image"/>
+<meta content="Cilium eBPF & Tetragon: Cloud-Native Runtime Security & Network Enforcement — zyekh.com" name="twitter:image:alt"/>
+
+<!-- Favicons & Manifest -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Cilium eBPF & Tetragon: Cloud-Native Runtime Security & Network Enforcement",
+      "description": "Deep-dive guide on deploying Cilium eBPF for zero-trust network policy enforcement and Tetragon for real-time kernel event monitoring in Kubernetes.",
+      "url": "https://zyekh.com/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html",
+      "image": "https://zyekh.com/assets/img/cilium-ebpf-security.jpg",
+      "datePublished": "2026-08-05",
+      "dateModified": "2026-08-05",
+      "wordCount": 1720,
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zyekh.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog & Articles",
+          "item": "https://zyekh.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Cilium eBPF & Tetragon: Cloud-Native Runtime Security & Network Enforcement",
+          "item": "https://zyekh.com/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does Cilium require custom Linux kernel modules?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Cilium relies entirely on standard native eBPF capabilities built into modern upstream Linux kernels."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the performance difference between Falco and Tetragon?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Falco inspects syscall events in user space via ring buffers, whereas Tetragon can enforce in-kernel inline process termination (Sigkill) synchronously."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="/assets/fonts/fonts.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260805_v124" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.js?v=20260805_v124"></script>
+</head>
+<body>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+  <!-- Back to Blog -->
+  <a class="back-link" href="/blog/">← Back to Articles</a>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="meta-tag">Cloud Security • Kubernetes & eBPF</span>
+    <h1 class="article-title">Cilium eBPF & Tetragon: Cloud-Native Runtime Security & Network Enforcement</h1>
+    <div class="article-meta">
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="2026-08-05T00:00:00Z">Published: 2026-08-05</time>
+        <span>13 min read (1720+ Words)</span>
+      </div>
+      <button class="btn-share" id="shareBtn" type="button">Share Article</button>
+    </div>
+  </header>
+
+  <!-- Article Body Content -->
+  <main class="article-content">
+    <!-- Featured Hero Image -->
+    <figure class="article-hero-wrapper">
+      <picture>
+        <source srcset="https://zyekh.com/assets/img/cilium-ebpf-security.webp" type="image/webp"/>
+        <img alt="Cilium eBPF & Tetragon: Cloud-Native Runtime Security & Network Enforcement" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="https://zyekh.com/assets/img/cilium-ebpf-security.jpg" width="1280"/>
+      </picture>
+      <figcaption class="hero-caption">Kernel-Level Packet Inspection and Runtime Enforcement with Cilium & Tetragon</figcaption>
+    </figure>
+
+    <!-- Executive Summary / Takeaways Box -->
+    <div class="exec-summary">
+      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+      <ul>
+<li>eBPF Network Bypass: Replace iptables overhead with socket-layer eBPF programs for microsecond latency.</li>
+<li>L3-L7 Zero-Trust Policies: Enforce API-level access rules (HTTP, gRPC, Kafka) directly at the kernel layer.</li>
+<li>Tetragon Security Tracing: Detect privilege escalations, file integrity violations, and namespace escapes in real-time.</li>
+<li>Kernel Observability: Export low-overhead Security Observability metrics to Prometheus and SIEM platforms.</li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc-card">
+      <div class="toc-title">Table of Contents</div>
+      <ol class="toc-list">
+<li><a href="#ebpf-networking-architecture">1. High-Performance eBPF Networking vs Legacy iptables</a></li>
+<li><a href="#tetragon-runtime-security">2. Runtime Security & Threat Detection with Tetragon</a></li>
+<li><a href="#deployment-verification">3. Installing Cilium & Tetragon in Production Kubernetes</a></li>
+<li><a href="#telemetry-audit">4. Security Observability & Prometheus Audit Checklist</a></li>
+<li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
+      </ol>
+    </nav>
+
+<h2 id="ebpf-networking-architecture">1. High-Performance eBPF Networking vs Legacy iptables</h2>
+<p>Traditional Kubernetes networking relies on kube-proxy and iptables rules to route service traffic. As cluster scale expands to thousands of pods and microservices, sequential iptables evaluation causes severe O(N) packet processing overhead, CPU throttling, and connection stalls.</p>
+<p>Cilium replaces iptables entirely with eBPF programs attached to Linux network interface hooks (tc, XDP, and socket layer). Packets are routed directly between pod veth pairs in kernel space using BPF map lookups, achieving O(1) constant time network latency.</p>
+<p>By operating below the TCP/IP stack overhead, Cilium reduces CPU utilization by up to 60% while providing transparent L7 protocol parsing for HTTP, gRPC, Kafka, and DNS traffic without requiring sidecar proxies.</p>
+<p>Furthermore, eBPF socket-layer enforcement short-circuits socket communication between co-located pods, passing data directly from socket buffer to socket buffer without entering the network stack.</p>
+<p>This architecture eliminates virtual ethernet interface packet processing latency, allowing microservices to communicate at near-bare-metal network throughput speeds across physical worker node interfaces.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-yaml"># Cilium NetworkPolicy enforcing L7 HTTP REST limits
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "secure-api-gateway"
+  namespace: production
+spec:
+  endpointSelector:
+    matchLabels:
+      app: payment-service
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        app: frontend-gateway
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP
+      rules:
+        http:
+        - method: "POST"
+          path: "/v1/charge"</code></pre>
+
+<h2 id="tetragon-runtime-security">2. Runtime Security & Threat Detection with Tetragon</h2>
+<p>Network policy enforcement alone cannot stop sophisticated attackers who exploit application-level vulnerabilities to execute arbitrary shell payloads or modify system binaries inside running containers.</p>
+<p>Cilium Tetragon delivers real-time runtime threat detection by attaching eBPF sensors directly to kernel tracepoints and kprobes (such as sys_execve, sys_do_sys_open, and security_file_permission).</p>
+<p>Unlike user-space security daemons that inspect audit logs asynchronously and can be bypassed or overwhelmed, Tetragon executes synchronously inside the Linux kernel, allowing it to kill malicious processes instantly before unauthorized write operations complete.</p>
+<p>Tetragon can monitor process execution, capability changes, namespace escapes, and file integrity modifications with near-zero performance overhead on production Kubernetes worker nodes.</p>
+<p>By binding process execution telemetry directly to Kubernetes pod labels, security teams obtain instantaneous context during live security incidents.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-yaml"># Tetragon TracingPolicy: Block Unauthorized Shell Execution
+apiVersion: cilium.io/v1alpha1
+kind: TracingPolicy
+metadata:
+  name: block-shell-execution
+spec:
+  kprobes:
+    - call: "sys_execve"
+      syscall: true
+      args:
+        - index: 0
+          type: "string"
+      selectors:
+        - matchArgs:
+            - index: 0
+              operator: "Prefix"
+              values:
+                - "/bin/sh"
+                - "/bin/bash"
+          matchActions:
+            - action: Sigkill</code></pre>
+
+<h2 id="deployment-verification">3. Installing Cilium & Tetragon in Production Kubernetes</h2>
+<p>Deploying Cilium via Helm replaces kube-proxy and enables eBPF host routing across multi-cloud cluster environments. Ensure host worker nodes run Linux kernel 5.10 or newer for full BPF ring buffer support.</p>
+<p>Use the Cilium CLI tool to run automated connectivity matrix audits and verify zero-trust network policy compliance across all node pools.</p>
+<p>Configuring Hubble Relay provides real-time service dependency graph visualization and security flow auditing across all Kubernetes namespaces.</p>
+<p>Integrating eBPF masquerading eliminates iptables NAT overhead for egress traffic, improving outbound API connection throughput.</p>
+<p>Properly sizing eBPF map limits ensures stable operation under burst traffic conditions across enterprise Kubernetes clusters.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-bash"># Install Cilium with eBPF Host Routing enabled
+helm install cilium cilium/cilium \
+  --namespace kube-system \
+  --set kubeProxyReplacement=strict \
+  --set bpf.masquerade=true
+
+# Audit Cilium eBPF status
+cilium status --wait</code></pre>
+
+<h2 id="telemetry-audit">4. Security Observability & Prometheus Audit Checklist</h2>
+<p>Cilium Hubble provides real-time service map visualization and Security Observability telemetry. Export flow logs to SIEM systems for forensic audit compliance.</p>
+<p>Monitor eBPF map memory utilization to ensure BPF map limits are tuned correctly for high-concurrency workloads.</p>
+<p>Set up alerting rules for dropped flows and Tetragon Sigkill events in Prometheus to detect active intrusion attempts immediately.</p>
+<p>Regularly inspect eBPF program attachment using bpftool to verify that security sensors remain attached to target kernel probes.</p>
+<p>Exporting granular L7 metrics enables DevOps engineers to pinpoint latent API dependencies across microservice architectures.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-bash"># Inspect Hubble Security Flows via CLI
+hubble observe --namespace production --type drop
+
+# Audit active eBPF maps on worker node
+bpftool map list</code></pre>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+<details>
+  <summary>Does Cilium require custom Linux kernel modules?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">No. Cilium relies entirely on standard native eBPF capabilities built into modern upstream Linux kernels.</p>
+</details>
+<details>
+  <summary>What is the performance difference between Falco and Tetragon?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Falco inspects syscall events in user space via ring buffers, whereas Tetragon can enforce in-kernel inline process termination (Sigkill) synchronously.</p>
+</details>
+    </div>
+
+    <!-- Author Bio Card (EEAT & DFIR Branding) -->
+    <div class="author-card">
+      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+      <div class="author-info">
+        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="mailto:zyekhabdulqadirjailani@gmail.com" style="font-weight:600">Email</a> •
+          <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/subnet.html">Subnet Calculator</a> dan <a class="blog-badge" href="/tools/json.html">JSON Validator & Formatter</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
+</article>
+</body>
+</html>

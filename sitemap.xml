@@ -6,18 +6,28 @@
   <url><loc>https://zyekh.com/blog/</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/auditd-kernel-event-monitoring-and-dfir-logging.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/chroot-jail-and-unprivileged-namespaces-isolation.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/container-image-signing-and-slsa-provenance-with-cosign.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/kubernetes-pod-security-standards-pss-and-admission-control.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/linux-audit-logging-with-vector-and-clickhouse-dfir.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/linux-kernel-sysctl-hardening-network-stack-security.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/linux-vps-hardening-guide-2026.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/pam-tally2-faillock-account-lockout-policy-guide.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/systemd-service-sandboxing-and-security-hardening.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/ufw-firewall-hardening-and-rate-limiting-blueprint-2026.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/zero-trust-microservices-with-wasm-runtime-sandboxing.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/tools/ai-token.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://zyekh.com/tools/base64.html</loc><lastmod>2026-08-03</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>

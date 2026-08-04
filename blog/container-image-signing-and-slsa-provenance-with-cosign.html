@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Container Image Signing & SLSA Provenance Verification with Sigstore Cosign — zyekh.com</title>
+<meta content="Supply chain security guide on signing OCI container images keylessly and verifying SLSA build provenance using Sigstore Cosign and Rekor." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/blog/container-image-signing-and-slsa-provenance-with-cosign.html" rel="canonical"/>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="Container Image Signing & SLSA Provenance Verification with Sigstore Cosign" property="og:title"/>
+<meta content="Supply chain security guide on signing OCI container images keylessly and verifying SLSA build provenance using Sigstore Cosign and Rekor." property="og:description"/>
+<meta content="https://zyekh.com/blog/container-image-signing-and-slsa-provenance-with-cosign.html" property="og:url"/>
+<meta content="1280" property="og:image:width"/>
+<meta content="720" property="og:image:height"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="https://zyekh.com/assets/img/cosign-image-signing.jpg" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/cosign-image-signing.jpg" property="og:image:secure_url"/>
+<meta content="image/jpeg" property="og:image:type"/>
+<meta content="Container Image Signing & SLSA Provenance Verification with Sigstore Cosign — zyekh.com" property="og:image:alt"/>
+<meta content="2026-08-05T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<meta content="@zyekh" name="twitter:creator"/>
+<meta content="@zyekh" name="twitter:site"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Container Image Signing & SLSA Provenance Verification with Sigstore Cosign" name="twitter:title"/>
+<meta content="Supply chain security guide on signing OCI container images keylessly and verifying SLSA build provenance using Sigstore Cosign and Rekor." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/cosign-image-signing.jpg" name="twitter:image"/>
+<meta content="Container Image Signing & SLSA Provenance Verification with Sigstore Cosign — zyekh.com" name="twitter:image:alt"/>
+
+<!-- Favicons & Manifest -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Container Image Signing & SLSA Provenance Verification with Sigstore Cosign",
+      "description": "Supply chain security guide on signing OCI container images keylessly and verifying SLSA build provenance using Sigstore Cosign and Rekor.",
+      "url": "https://zyekh.com/blog/container-image-signing-and-slsa-provenance-with-cosign.html",
+      "image": "https://zyekh.com/assets/img/cosign-image-signing.jpg",
+      "datePublished": "2026-08-05",
+      "dateModified": "2026-08-05",
+      "wordCount": 1740,
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/blog/container-image-signing-and-slsa-provenance-with-cosign.html"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/blog/container-image-signing-and-slsa-provenance-with-cosign.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zyekh.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog & Articles",
+          "item": "https://zyekh.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Container Image Signing & SLSA Provenance Verification with Sigstore Cosign",
+          "item": "https://zyekh.com/blog/container-image-signing-and-slsa-provenance-with-cosign.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is keyless signing in Sigstore Cosign?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Keyless signing generates ephemeral key pairs valid for minutes, using OIDC identity tokens (Fulcio CA) and recording signatures in a public transparency log (Rekor)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does image signing slow down container deployment in Kubernetes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Kyverno and Gatekeeper verify public key signatures in cached memory during admission control in milliseconds."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="/assets/fonts/fonts.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260805_v124" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.js?v=20260805_v124"></script>
+</head>
+<body>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+  <!-- Back to Blog -->
+  <a class="back-link" href="/blog/">← Back to Articles</a>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="meta-tag">Supply Chain Security • DevOps</span>
+    <h1 class="article-title">Container Image Signing & SLSA Provenance Verification with Sigstore Cosign</h1>
+    <div class="article-meta">
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="2026-08-05T00:00:00Z">Published: 2026-08-05</time>
+        <span>13 min read (1740+ Words)</span>
+      </div>
+      <button class="btn-share" id="shareBtn" type="button">Share Article</button>
+    </div>
+  </header>
+
+  <!-- Article Body Content -->
+  <main class="article-content">
+    <!-- Featured Hero Image -->
+    <figure class="article-hero-wrapper">
+      <picture>
+        <source srcset="https://zyekh.com/assets/img/cosign-image-signing.webp" type="image/webp"/>
+        <img alt="Container Image Signing & SLSA Provenance Verification with Sigstore Cosign" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="https://zyekh.com/assets/img/cosign-image-signing.jpg" width="1280"/>
+      </picture>
+      <figcaption class="hero-caption">Keyless OCI Container Image Signing with Sigstore Cosign & Rekor Transparency Log</figcaption>
+    </figure>
+
+    <!-- Executive Summary / Takeaways Box -->
+    <div class="exec-summary">
+      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+      <ul>
+<li>Keyless Image Signing: Sign OCI container images in CI/CD using OIDC identity tokens (Fulcio CA) without managing private keys.</li>
+<li>Immutable Transparency Log: Record signature metadata in the public Rekor transparency log to prevent signature tampering.</li>
+<li>SLSA Provenance Attestation: Attach cryptographically signed SLSA build provenance attestations to container images.</li>
+<li>Kyverno Policy Enforcement: Block un-signed or non-compliant container images from running in Kubernetes clusters.</li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc-card">
+      <div class="toc-title">Table of Contents</div>
+      <ol class="toc-list">
+<li><a href="#supply-chain-security-overview">1. Software Supply Chain Risks & Container Image Signing</a></li>
+<li><a href="#slsa-provenance-attestation">2. Attesting SLSA Provenance & SBOM Materials</a></li>
+<li><a href="#kyverno-admission-policy">3. Enforcing Signature Verification in Kubernetes with Kyverno</a></li>
+<li><a href="#cosign-verification-audit">4. Verification & Supply Chain Audit Checklist</a></li>
+<li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
+      </ol>
+    </nav>
+
+<h2 id="supply-chain-security-overview">1. Software Supply Chain Risks & Container Image Signing</h2>
+<p>Container registries (Docker Hub, GHCR) store execution binaries for enterprise applications. If an attacker compromises CI/CD credentials or registry access, they can replace legitimate container tags with malicious images containing backdoors.</p>
+<p>Sigstore Cosign eliminates supply chain tampering by cryptographically signing OCI container images during the CI/CD build process.</p>
+<p>Using keyless signing powered by Fulcio (certificate authority) and Rekor (transparency log), Cosign binds OIDC identities (e.g., GitHub Actions workflow identity) to container digests without long-lived private keys.</p>
+<p>This ensures that container images running in Kubernetes can be traced back to exact GitHub workflow runs.</p>
+<p>Keyless signing eliminates the security liability of storing long-lived signing keys in CI/CD secrets.</p>
+<p>Cryptographic digest binding guarantees that tag overwrite attacks are detected immediately by container runtimes.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-yaml"># GitHub Actions Workflow: Keyless Cosign Image Signing
+- name: Install Cosign
+  uses: sigstore/cosign-installer@v3.5.0
+
+- name: Sign Container Image Keylessly
+  run: |
+    cosign sign --yes ghcr.io/zyekh/secure-api:v2.0.0@${{ steps.build.outputs.digest }}</code></pre>
+
+<h2 id="slsa-provenance-attestation">2. Attesting SLSA Provenance & SBOM Materials</h2>
+<p>Beyond image signing, modern supply chain compliance requires SLSA (Supply-chain Levels for Software Artifacts) build provenance attestations.</p>
+<p>Cosign attaches signed SBOM (Software Bill of Materials) and SLSA provenance attestations directly to the target OCI image registry entry.</p>
+<p>Downstream security scanners inspect attached SBOM attestations to detect vulnerable packages automatically.</p>
+<p>Attestations are cryptographically bound to container image SHA-256 digests, preventing tamper attempts.</p>
+<p>Signing build provenance matrices ensures compliance with federal cybersecurity executive orders.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-bash"># Generate and Attach Signed SBOM Attestation
+cosign attest --yes --predicate sbom.spdx.json \
+  --type spdx ghcr.io/zyekh/secure-api:v2.0.0
+
+# Verify Container Image Signature Keylessly
+cosign verify \
+  --certificate-identity "https://github.com/zyekhabdul/zyekh.com/.github/workflows/deploy.yml@refs/heads/main" \
+  --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+  ghcr.io/zyekh/secure-api:v2.0.0</code></pre>
+
+<h2 id="kyverno-admission-policy">3. Enforcing Signature Verification in Kubernetes with Kyverno</h2>
+<p>Deploy Kyverno admission controller policies in Kubernetes to automatically reject any pod deployment requesting un-signed container images.</p>
+<p>Kyverno checks Cosign signatures in real-time before container pods are scheduled to worker nodes.</p>
+<p>Policy rules enforce exact OIDC issuer and repository match criteria.</p>
+<p>Cluster-wide signature validation ensures un-signed images cannot run in production or staging namespaces.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-yaml"># Kyverno ClusterPolicy: Enforce Cosign Image Signature Verification
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: verify-image-signature
+spec:
+  validationFailureAction: Enforce
+  rules:
+  - name: verify-signature
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+    verifyImages:
+    - imageReferences:
+      - "ghcr.io/zyekh/*"
+      attestors:
+      - count: 1
+        entries:
+        - keyless:
+            issuer: "https://token.actions.githubusercontent.com"
+            subject: "https://github.com/zyekhabdul/zyekh.com/*"</code></pre>
+
+<h2 id="cosign-verification-audit">4. Verification & Supply Chain Audit Checklist</h2>
+<p>Audit container signatures and Rekor transparency log entries using Cosign CLI.</p>
+<p>Verify that attestation signatures match public OIDC issuer identities.</p>
+<p>Incorporate container image verification checks into git commit hooks and staging deployment workflows.</p>
+<p>Regularly audit Rekor transparency log hashes to confirm signature provenance integrity.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-bash"># Verify Rekor transparency log entry
+cosign verify-attestation --type spdx ghcr.io/zyekh/secure-api:v2.0.0
+
+# Inspect raw signature payload
+crane manifest ghcr.io/zyekh/secure-api:sha256-signature</code></pre>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+<details>
+  <summary>What is keyless signing in Sigstore Cosign?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Keyless signing generates ephemeral key pairs valid for minutes, using OIDC identity tokens (Fulcio CA) and recording signatures in a public transparency log (Rekor).</p>
+</details>
+<details>
+  <summary>Does image signing slow down container deployment in Kubernetes?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">No. Kyverno and Gatekeeper verify public key signatures in cached memory during admission control in milliseconds.</p>
+</details>
+    </div>
+
+    <!-- Author Bio Card (EEAT & DFIR Branding) -->
+    <div class="author-card">
+      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+      <div class="author-info">
+        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="mailto:zyekhabdulqadirjailani@gmail.com" style="font-weight:600">Email</a> •
+          <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/hash.html">Hash Generator</a> dan <a class="blog-badge" href="/tools/json.html">JSON Validator & Formatter</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
+</article>
+</body>
+</html>

@@ -1,14 +1,13 @@
-[
+#!/usr/bin/env python3
+import json
+
+batch_2 = [
   {
     "slug": "rust-in-linux-kernel-security-and-memory-safety-blueprint-2026",
     "title": "Rust in the Linux Kernel: Securing Core Subsystems & Memory Safety",
     "subtitle": "Comprehensive engineering guide on how Rust eliminates spatial and temporal memory vulnerabilities in modern Linux kernel drivers and network modules.",
     "category": "Linux Security • Kernel Architecture",
-    "tags": [
-      "#LinuxKernel",
-      "#RustLang",
-      "#MemorySafety"
-    ],
+    "tags": ["#LinuxKernel", "#RustLang", "#MemorySafety"],
     "date_published": "2026-08-05",
     "read_time_mins": 13,
     "word_count": 1750,
@@ -28,11 +27,7 @@
           "Historically, over 70% of high-severity vulnerabilities in the Linux kernel stem from C memory safety flaws, including spatial out-of-bounds access, temporal use-after-free conditions, uninitialized memory reads, and race conditions in interrupt handlers. As kernel complexity expands to support high-throughput cloud infrastructure and heterogenous multi-core hardware, manual memory management in C becomes increasingly unsustainable for security engineering teams.",
           "Rust introduces compile-time memory safety guarantees without relying on garbage collection algorithms or runtime execution overhead. By enforcing strict ownership rules, borrow checking, and explicit variable lifetimes, the Rust compiler proves the absolute absence of memory safety bugs before kernel code is ever assembled into binary ELF object files.",
           "In the Linux kernel tree, Rust infrastructure complements existing C subsystems by allowing new device drivers, network protocol stacks, and virtual file system abstractions to be authored in safe Rust code, isolating raw pointer dereferences to audited, explicitly documented unsafe code blocks.",
-          "By mandating that all memory allocations and pointer operations pass strict static analysis, Rust eliminates entire classes of Common Vulnerabilities and Exposures (CVEs) that have historically plagued Linux kernel deployments across enterprise data centers.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "By mandating that all memory allocations and pointer operations pass strict static analysis, Rust eliminates entire classes of Common Vulnerabilities and Exposures (CVEs) that have historically plagued Linux kernel deployments across enterprise data centers."
         ],
         "code_block": "// Example: Safe Linux Kernel Module in Rust\nuse kernel::prelude::*;\n\nmodule! {\n    type: RustKernelDemo,\n    name: \"rust_kernel_security\",\n    author: \"Zyekh Abdul Qadir Jailani\",\n    description: \"Rust Memory Safety Kernel Subsystem\",\n    license: \"GPL\",\n}\n\nstruct RustKernelDemo;\n\nimpl kernel::Module for RustKernelDemo {\n    fn init(_name: &'static CStr, _module: &'static ThisModule) -> Result<Self> {\n        pr_info!(\"Rust kernel module initialized with strict memory safety\\n\");\n        Ok(RustKernelDemo)\n    }\n}",
         "code_language": "rust"
@@ -44,11 +39,7 @@
           "Data races in kernel space occur when two execution contexts (such as hardware interrupt service routines or concurrent SMP worker threads) access the exact same memory location simultaneously without synchronization, where at least one thread executes a write operation. Data races cause subtle kernel memory corruption and non-deterministic panics that are notoriously difficult to capture in production.",
           "Rust guarantees data race freedom at compile time through the type system using the Send and Sync auto traits. A type is automatically marked as Send if ownership of its underlying data can be safely transferred across execution thread boundaries, while a type is Sync if references to it can be shared concurrently across multiple processing cores.",
           "When developing Linux kernel device drivers in Rust, synchronization primitives such as Mutex and SpinLock wrap data types directly (e.g., Mutex<DriverState>). This structural encapsulation ensures that accessing inner state is physically impossible without acquiring the lock guard, which automatically releases the lock when going out of scope.",
-          "Furthermore, Rust's borrow checker enforces the aliasing XOR mutability rule: data may have either multiple immutable references (&T) or exactly one mutable reference (&mut T) at any given moment, permanently preventing race conditions during concurrent state updates.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Furthermore, Rust's borrow checker enforces the aliasing XOR mutability rule: data may have either multiple immutable references (&T) or exactly one mutable reference (&mut T) at any given moment, permanently preventing race conditions during concurrent state updates."
         ],
         "code_block": "// Safe Concurrency Control in Kernel Driver State\nuse kernel::sync::Mutex;\n\nstruct DriverState {\n    packets_processed: u64,\n    is_active: bool,\n}\n\nstruct SafeDevice {\n    state: Mutex<DriverState>,\n}\n\nimpl SafeDevice {\n    fn update_stats(&self) {\n        let mut guard = self.state.lock();\n        guard.packets_processed += 1;\n    } // Mutex guard drops automatically, releasing lock\n}",
         "code_language": "rust"
@@ -60,11 +51,7 @@
           "Integrating Rust into a multi-million-line C kernel codebase requires robust Foreign Function Interface (FFI) interoperability infrastructure. The kernel build system utilizes bindgen to generate raw Rust bindings directly from C header files, while safe Rust abstractions encapsulate raw C pointers inside safe types.",
           "Designing safe kernel wrappers involves isolating raw pointer dereferences to audited, minimalist unsafe blocks. Once the public Rust wrapper API is proven mathematically sound, external callers can consume kernel functions without any risk of triggering undefined behavior or memory corruption.",
           "This modular architecture enables an incremental modernization strategy: legacy C subsystems remain intact while newly developed hardware drivers, eBPF helper extensions, and security-critical modules are authored exclusively in safe Rust.",
-          "Modern Linux distributions are increasingly adopting LLVM toolchain builds, enabling Link-Time Optimization (LTO) between C and Rust compilation units to eliminate cross-language function call overhead entirely.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Modern Linux distributions are increasingly adopting LLVM toolchain builds, enabling Link-Time Optimization (LTO) between C and Rust compilation units to eliminate cross-language function call overhead entirely."
         ],
         "code_block": "# Build kernel with Rust support enabled\nmake LLVM=1 rustavailable\nmake LLVM=1 menuconfig\n# Enable CONFIG_RUST=y in Kernel Hacking -> Rust support\nmake LLVM=1 -j$(nproc)",
         "code_language": "bash"
@@ -76,11 +63,7 @@
           "Auditing Rust kernel modules requires verifying that every unsafe block contains an explicit // SAFETY: rationale comment explaining why the invariants cannot be violated by callers. Static analysis tools like Clippy and KASAN (Kernel Address Sanitizer) enforce strict coding standards.",
           "Ensure that error handling in Rust kernel modules relies strictly on the kernel Result<T, Error> type instead of unwinding panics. Unwinding across FFI boundaries is undefined behavior in C, so Rust kernel code must use panic=abort configuration.",
           "Automated CI/CD security pipelines should execute Clippy lints with warning-as-error flags enabled, verifying that no unapproved unsafe blocks are introduced into upstream kernel pull requests.",
-          "Regular security audits must review macro expansions and generated FFI bindings to ensure kernel memory layouts remain binary-compatible across architecture targets.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Regular security audits must review macro expansions and generated FFI bindings to ensure kernel memory layouts remain binary-compatible across architecture targets."
         ],
         "code_block": "# Verify Rust kernel code with Clippy and KASAN\nmake LLVM=1 CLIPPY=1 path/to/module.o\n\n# Audit kernel logs for Rust initialization\ndmesg | grep -i \"Rust\"",
         "code_language": "bash"
@@ -114,11 +97,7 @@
     "title": "Cilium eBPF & Tetragon: Cloud-Native Runtime Security & Network Enforcement",
     "subtitle": "Deep-dive guide on deploying Cilium eBPF for zero-trust network policy enforcement and Tetragon for real-time kernel event monitoring in Kubernetes.",
     "category": "Cloud Security • Kubernetes & eBPF",
-    "tags": [
-      "#Cilium",
-      "#eBPF",
-      "#CloudSecurity"
-    ],
+    "tags": ["#Cilium", "#eBPF", "#CloudSecurity"],
     "date_published": "2026-08-05",
     "read_time_mins": 13,
     "word_count": 1720,
@@ -139,11 +118,7 @@
           "Cilium replaces iptables entirely with eBPF programs attached to Linux network interface hooks (tc, XDP, and socket layer). Packets are routed directly between pod veth pairs in kernel space using BPF map lookups, achieving O(1) constant time network latency.",
           "By operating below the TCP/IP stack overhead, Cilium reduces CPU utilization by up to 60% while providing transparent L7 protocol parsing for HTTP, gRPC, Kafka, and DNS traffic without requiring sidecar proxies.",
           "Furthermore, eBPF socket-layer enforcement short-circuits socket communication between co-located pods, passing data directly from socket buffer to socket buffer without entering the network stack.",
-          "This architecture eliminates virtual ethernet interface packet processing latency, allowing microservices to communicate at near-bare-metal network throughput speeds across physical worker node interfaces.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "This architecture eliminates virtual ethernet interface packet processing latency, allowing microservices to communicate at near-bare-metal network throughput speeds across physical worker node interfaces."
         ],
         "code_block": "# Cilium NetworkPolicy enforcing L7 HTTP REST limits\napiVersion: \"cilium.io/v2\"\nkind: CiliumNetworkPolicy\nmetadata:\n  name: \"secure-api-gateway\"\n  namespace: production\nspec:\n  endpointSelector:\n    matchLabels:\n      app: payment-service\n  ingress:\n  - fromEndpoints:\n    - matchLabels:\n        app: frontend-gateway\n    toPorts:\n    - ports:\n      - port: \"8080\"\n        protocol: TCP\n      rules:\n        http:\n        - method: \"POST\"\n          path: \"/v1/charge\"",
         "code_language": "yaml"
@@ -156,11 +131,7 @@
           "Cilium Tetragon delivers real-time runtime threat detection by attaching eBPF sensors directly to kernel tracepoints and kprobes (such as sys_execve, sys_do_sys_open, and security_file_permission).",
           "Unlike user-space security daemons that inspect audit logs asynchronously and can be bypassed or overwhelmed, Tetragon executes synchronously inside the Linux kernel, allowing it to kill malicious processes instantly before unauthorized write operations complete.",
           "Tetragon can monitor process execution, capability changes, namespace escapes, and file integrity modifications with near-zero performance overhead on production Kubernetes worker nodes.",
-          "By binding process execution telemetry directly to Kubernetes pod labels, security teams obtain instantaneous context during live security incidents.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "By binding process execution telemetry directly to Kubernetes pod labels, security teams obtain instantaneous context during live security incidents."
         ],
         "code_block": "# Tetragon TracingPolicy: Block Unauthorized Shell Execution\napiVersion: cilium.io/v1alpha1\nkind: TracingPolicy\nmetadata:\n  name: block-shell-execution\nspec:\n  kprobes:\n    - call: \"sys_execve\"\n      syscall: true\n      args:\n        - index: 0\n          type: \"string\"\n      selectors:\n        - matchArgs:\n            - index: 0\n              operator: \"Prefix\"\n              values:\n                - \"/bin/sh\"\n                - \"/bin/bash\"\n          matchActions:\n            - action: Sigkill",
         "code_language": "yaml"
@@ -173,11 +144,7 @@
           "Use the Cilium CLI tool to run automated connectivity matrix audits and verify zero-trust network policy compliance across all node pools.",
           "Configuring Hubble Relay provides real-time service dependency graph visualization and security flow auditing across all Kubernetes namespaces.",
           "Integrating eBPF masquerading eliminates iptables NAT overhead for egress traffic, improving outbound API connection throughput.",
-          "Properly sizing eBPF map limits ensures stable operation under burst traffic conditions across enterprise Kubernetes clusters.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Properly sizing eBPF map limits ensures stable operation under burst traffic conditions across enterprise Kubernetes clusters."
         ],
         "code_block": "# Install Cilium with eBPF Host Routing enabled\nhelm install cilium cilium/cilium \\\n  --namespace kube-system \\\n  --set kubeProxyReplacement=strict \\\n  --set bpf.masquerade=true\n\n# Audit Cilium eBPF status\ncilium status --wait",
         "code_language": "bash"
@@ -190,11 +157,7 @@
           "Monitor eBPF map memory utilization to ensure BPF map limits are tuned correctly for high-concurrency workloads.",
           "Set up alerting rules for dropped flows and Tetragon Sigkill events in Prometheus to detect active intrusion attempts immediately.",
           "Regularly inspect eBPF program attachment using bpftool to verify that security sensors remain attached to target kernel probes.",
-          "Exporting granular L7 metrics enables DevOps engineers to pinpoint latent API dependencies across microservice architectures.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Exporting granular L7 metrics enables DevOps engineers to pinpoint latent API dependencies across microservice architectures."
         ],
         "code_block": "# Inspect Hubble Security Flows via CLI\nhubble observe --namespace production --type drop\n\n# Audit active eBPF maps on worker node\nbpftool map list",
         "code_language": "bash"
@@ -228,11 +191,7 @@
     "title": "Linux Landlock LSM: Unprivileged Application Sandboxing & Access Control",
     "subtitle": "Engineering guide on using the Landlock Linux Security Module to enforce unprivileged file system and network access control restrictions.",
     "category": "Linux Security • Access Control",
-    "tags": [
-      "#LandlockLSM",
-      "#LinuxSecurity",
-      "#Sandboxing"
-    ],
+    "tags": ["#LandlockLSM", "#LinuxSecurity", "#Sandboxing"],
     "date_published": "2026-08-05",
     "read_time_mins": 13,
     "word_count": 1780,
@@ -254,11 +213,7 @@
           "Once a Landlock ruleset is applied and enforced via landlock_restrict_self(), the security restrictions are permanent for that process and all future child threads, even if the application is compromised later.",
           "Landlock operates as a stacked security module, complementing existing LSMs like AppArmor or SELinux without conflict.",
           "By enabling applications to enforce self-restriction, Landlock prevents compromised worker threads from traversing host file systems.",
-          "This granular containment architecture reduces blast radius when processing untrusted user data.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "This granular containment architecture reduces blast radius when processing untrusted user data."
         ],
         "code_block": "// Example: Restricting Filesystem Access with Landlock C API\n#include <linux/landlock.h>\n#include <sys/syscall.h>\n#include <fcntl.h>\n#include <unistd.h>\n\nstatic inline int landlock_create_ruleset(\n    const struct landlock_ruleset_attr *attr, size_t size, __u32 flags) {\n    return syscall(__NR_landlock_create_ruleset, attr, size, flags);\n}",
         "code_language": "c"
@@ -272,11 +227,7 @@
           "Any attempt to access directories outside the allowed path list returns EACCES (Permission Denied) immediately at the VFS layer.",
           "This granular control prevents compromised web workers or data parsers from reading sensitive configuration files such as /etc/passwd or SSH private keys.",
           "Developers can apply different access rule masks to different sub-directories according to application least-privilege principles.",
-          "Restricting execute permissions prevents malicious code injection payloads from executing arbitrary shell scripts.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Restricting execute permissions prevents malicious code injection payloads from executing arbitrary shell scripts."
         ],
         "code_block": "/* Construct Landlock Ruleset allowing read access to /tmp only */\nstruct landlock_ruleset_attr attr = {\n    .handled_access_fs = LANDLOCK_ACCESS_FS_READ_FILE |\n                         LANDLOCK_ACCESS_FS_READ_DIR |\n                         LANDLOCK_ACCESS_FS_WRITE_FILE,\n};\nint ruleset_fd = landlock_create_ruleset(&attr, sizeof(attr), 0);\n\nstruct landlock_path_beneath_attr path_attr = {\n    .allowed_access = LANDLOCK_ACCESS_FS_READ_FILE,\n    .parent_fd = open(\"/tmp\", O_PATH | O_CLOEXEC),\n};\nsyscall(__NR_landlock_add_rule, ruleset_fd, LANDLOCK_RULE_PATH_BENEATH, &path_attr, 0);",
         "code_language": "c"
@@ -290,11 +241,7 @@
           "Landlock restrictions persist across execve calls, ensuring that spawned subprocesses inherit the exact same sandbox boundaries.",
           "Combining Landlock with Seccomp-BPF creates a multi-layered defense: Seccomp blocks dangerous system calls while Landlock restricts filesystem path access.",
           "This multi-layered approach ensures robust isolation even when operating in unprivileged user environments.",
-          "Process isolation verified via Landlock ensures that container breakout attacks are contained at the filesystem boundary.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Process isolation verified via Landlock ensures that container breakout attacks are contained at the filesystem boundary."
         ],
         "code_block": "/* Enforce NO_NEW_PRIVS and lock down Landlock Sandbox */\nprctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);\nsyscall(__NR_landlock_restrict_self, ruleset_fd, 0);\nclose(ruleset_fd);\nclose(path_attr.parent_fd);",
         "code_language": "c"
@@ -308,11 +255,7 @@
           "Ensure application fallback mechanisms degrade gracefully when file access is restricted by Landlock policies.",
           "Incorporate Landlock ABI version checks into startup scripts to handle kernel updates seamlessly.",
           "Automated integration tests should verify that Landlock sandbox rules enforce default-deny behavior across all deployment environments.",
-          "Documenting sandbox policies ensures clear security compliance during third-party infrastructure audits.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Documenting sandbox policies ensures clear security compliance during third-party infrastructure audits."
         ],
         "code_block": "# Check Landlock ABI version on current Linux kernel\ncat /sys/kernel/security/landlock/status || dmesg | grep -i Landlock\n\n# Audit process file access with strace\nstrace -e trace=file ./my_landlocked_app",
         "code_language": "bash"
@@ -346,11 +289,7 @@
     "title": "Zero-Trust Microservices with WebAssembly (Wasm) Runtime Sandboxing",
     "subtitle": "Architecture blueprint for running untrusted microservice code inside WebAssembly sandboxes with nanosecond startup times and linear memory bounds.",
     "category": "Cloud Security • WebAssembly",
-    "tags": [
-      "#Wasm",
-      "#ZeroTrust",
-      "#CloudNative"
-    ],
+    "tags": ["#Wasm", "#ZeroTrust", "#CloudNative"],
     "date_published": "2026-08-05",
     "read_time_mins": 13,
     "word_count": 1790,
@@ -372,11 +311,7 @@
           "By decoupling application code execution from the underlying host operating system kernel, WebAssembly runtimes (such as Wasmtime and WasmEdge) deliver defense-in-depth for multi-tenant microservices.",
           "Wasm modules are validated statically prior to execution, ensuring that control flow integrity (CFI) is maintained throughout execution.",
           "This isolation paradigm guarantees that compromised Wasm modules cannot compromise neighbor workloads or read host memory.",
-          "Wasm JIT compilers optimize machine code generation while maintaining memory boundary safety checks.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Wasm JIT compilers optimize machine code generation while maintaining memory boundary safety checks."
         ],
         "code_block": "// Rust Microservice compiled to wasm32-wasip1 target\nuse std::fs::File;\nuse std::io::Read;\n\nfn main() -> Result<(), Box<dyn std::error::Error>> {\n    println!(\"Executing isolated Wasm microservice...\");\n    // WASI capability check: Accessing un-mapped directories will fail gracefully\n    let mut file = File::open(\"/data/config.json\")?;\n    let mut content = String::new();\n    file.read_to_string(&mut content)?;\n    println!(\"Config payload: {}\", content);\n    Ok(())\n}",
         "code_language": "rust"
@@ -390,11 +325,7 @@
           "This capability-based security model ensures that even if a Wasm module contains vulnerable dependencies, an attacker cannot read host environment variables or establish unauthorized outbound network connections.",
           "WASI Preview 2 introduces component model interfaces (WIT), enabling fine-grained API contract definitions between isolated modules.",
           "Granular capability configuration prevents lateral movement across serverless microservice architectures.",
-          "Explicit I/O capability mapping eliminates unauthorized network socket creation in cloud-native workloads.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Explicit I/O capability mapping eliminates unauthorized network socket creation in cloud-native workloads."
         ],
         "code_block": "# Compile Rust code to Wasm target\ncargo build --target wasm32-wasip1 --release\n\n# Execute Wasm module with explicit directory capability grant\nwasmtime run --dir /opt/app/data::/data target/wasm32-wasip1/release/microservice.wasm",
         "code_language": "bash"
@@ -408,11 +339,7 @@
           "Nanosecond startup times allow serverless Wasm workloads to scale from zero to thousands of instances instantly without cold start latency.",
           "Wasm runtimes consume significantly fewer CPU resources than container runtimes, optimizing cluster node density.",
           "Deploying Wasm workloads on Kubernetes reduces cluster infrastructure operating costs dramatically.",
-          "Runwasi shims abstract runtime lifecycle management while maintaining native Kubernetes pod API compatibility.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Runwasi shims abstract runtime lifecycle management while maintaining native Kubernetes pod API compatibility."
         ],
         "code_block": "# Kubernetes Pod using RuntimeClass for Wasm workload\napiVersion: v1\nkind: Pod\nmetadata:\n  name: WASI-microservice\nspec:\n  runtimeClassName: wasmtime-spin\n  containers:\n  - name: API-worker\n    image: ghcr.io/zyekh/wasi-service:v1.0.0",
         "code_language": "yaml"
@@ -426,11 +353,7 @@
           "Enforce cryptographic signing on Wasm modules using Sigstore Cosign to verify artifact integrity before execution.",
           "Monitor Wasm runtime memory consumption using Prometheus metrics exported by Wasmtime shims.",
           "Incorporate static analysis checks into CI/CD pipelines to audit WASI import grants automatically.",
-          "Automated binary analysis ensures Wasm bytecode contains no malicious host function calls.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Automated binary analysis ensures Wasm bytecode contains no malicious host function calls."
         ],
         "code_block": "# Inspect Wasm binary sections and imports\nwasm-objdump -h target/wasm32-wasip1/release/microservice.wasm\n\n# Verify WASI imports allowlist\nwasm-tools component inspect microservice.wasm",
         "code_language": "bash"
@@ -464,11 +387,7 @@
     "title": "HTTP/3 & QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks",
     "subtitle": "Production blueprint for hardening HTTP/3 and QUIC transport protocols, mitigating 0-RTT replay vectors, and configuring UDP rate limiting.",
     "category": "Web Security • Network Protocols",
-    "tags": [
-      "#HTTP3",
-      "#QUIC",
-      "#WebSecurity"
-    ],
+    "tags": ["#HTTP3", "#QUIC", "#WebSecurity"],
     "date_published": "2026-08-05",
     "read_time_mins": 13,
     "word_count": 1780,
@@ -490,11 +409,7 @@
           "QUIC mitigates address spoofing by requiring servers to validate client IP addresses using Retry packets or anti-amplification limits before sending data exceeding three times the received payload size.",
           "Enforcing QUIC connection migration rules prevents malicious actors from hijacking active sessions when clients transition between Wi-Fi and mobile networks.",
           "Properly tuning QUIC congestion control parameters optimizes throughput while mitigating bufferbloat across high-latency wireless connections.",
-          "Enabling Connection ID randomization protects mobile client privacy across public Wi-Fi networks.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Enabling Connection ID randomization protects mobile client privacy across public Wi-Fi networks."
         ],
         "code_block": "# Nginx HTTP/3 QUIC Security Hardening in server block\nserver {\n    listen 443 quic reuseport;\n    listen 443 ssl;\n    server_name zyekh.com;\n\n    # Mandatory TLS 1.3 for QUIC\n    ssl_protocols TLSv1.3;\n    ssl_certificate /etc/letsencrypt/live/zyekh.com/fullchain.pem;\n    ssl_certificate_key /etc/letsencrypt/live/zyekh.com/privkey.pem;\n\n    # Announce HTTP/3 availability via Alt-Svc header\n    add_header Alt-Svc 'h3=\":443\"; ma=86400';\n}",
         "code_language": "nginx"
@@ -508,11 +423,7 @@
           "To defend against 0-RTT replay attacks, configure reverse proxies to reject early data for state-modifying requests or disable 0-RTT entirely for sensitive endpoints.",
           "Enforcing single-use session tickets and strike register tracking prevents attackers from replaying 0-RTT requests across multiple edge locations.",
           "Application gateways should inspect Early-Data HTTP headers to reject 0-RTT execution on write-heavy database transactions.",
-          "Configuring short TLS session ticket lifespans reduces replay windows significantly.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Configuring short TLS session ticket lifespans reduces replay windows significantly."
         ],
         "code_block": "# Reject 0-RTT Early Data on State-Modifying Requests\nlocation /api/v1/payment {\n    # Disable 0-RTT early data for payment routes\n    ssl_early_data off;\n    proxy_pass http://127.0.0.1:8080;\n}",
         "code_language": "nginx"
@@ -526,11 +437,7 @@
           "Utilizing nftables meter rules limits UDP connection rates per IP subnet, absorbing volume spikes before web server processes are affected.",
           "Configuring BPF socket filters drops malformed QUIC packets at the network driver level.",
           "Deploying eBPF XDP filters at the edge ensures that volumetric UDP floods are mitigated with microsecond latencies.",
-          "Hardware-accelerated packet filtering prevents host CPU saturation during DDoS events.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Hardware-accelerated packet filtering prevents host CPU saturation during DDoS events."
         ],
         "code_block": "# Apply iptables / nftables UDP rate limit for QUIC fallback\nnft add rule inet filter input udp dport 443 meter quic-limit { ip saddr limit rate 50/second } accept\nnft add rule inet filter input udp dport 443 drop",
         "code_language": "bash"
@@ -544,11 +451,7 @@
           "Monitor UDP packet drop metrics using netstat -su to verify firewall rate limiting efficiency.",
           "Ensure fallback to HTTP/2 over TLS 1.3 works seamlessly when UDP port 443 is blocked by enterprise firewalls.",
           "Validate Alt-Svc max-age values to ensure browser clients transition to QUIC transport without stale cache issues.",
-          "Regular cURL audits confirm that HTTP/3 negotiation operates with optimal TLS handshake performance.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Regular cURL audits confirm that HTTP/3 negotiation operates with optimal TLS handshake performance."
         ],
         "code_block": "# Audit HTTP/3 QUIC response headers with cURL\ncurl --http3 -I https://zyekh.com/\n\n# Inspect QUIC Alt-Svc response string\ncurl -sI https://zyekh.com/ | grep -i \"Alt-Svc\"",
         "code_language": "bash"
@@ -582,11 +485,7 @@
     "title": "Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces",
     "subtitle": "Step-by-step engineering blueprint for implementing Seccomp-BPF syscall filters to restrict Linux process capabilities and block zero-day kernel exploits.",
     "category": "Linux Security • Process Isolation",
-    "tags": [
-      "#Seccomp",
-      "#LinuxSecurity",
-      "#ProcessIsolation"
-    ],
+    "tags": ["#Seccomp", "#LinuxSecurity", "#ProcessIsolation"],
     "date_published": "2026-08-05",
     "read_time_mins": 13,
     "word_count": 1760,
@@ -608,11 +507,7 @@
           "If an attacker attempts to exploit a kernel vulnerability using an unapproved syscall (e.g., sys_ptrace or sys_unshare), Seccomp terminates the process instantly with SECCOMP_RET_KILL_PROCESS.",
           "Because Seccomp filters execute inside the kernel, they cannot be tampered with by user-space code once loaded.",
           "This in-kernel evaluation guarantees minimal latency overhead while restricting dangerous syscall execution.",
-          "BPF filter chains evaluate syscall numbers in constant time, optimizing system performance under heavy load.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "BPF filter chains evaluate syscall numbers in constant time, optimizing system performance under heavy load."
         ],
         "code_block": "// C Implementation of Seccomp-BPF Syscall Allowlist\n#include <seccomp.h>\n#include <stdio.h>\n#include <stdlib.h>\n#include <unistd.h>\n\nint init_seccomp_sandbox() {\n    // Initialize default-kill Seccomp context\n    scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_KILL);\n    if (!ctx) return -1;\n\n    // Allow essential system calls\n    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(read), 0);\n    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(write), 0);\n    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(exit_group), 0);\n    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(fstat), 0);\n\n    // Load BPF filter into Linux kernel\n    int ret = seccomp_load(ctx);\n    seccomp_release(ctx);\n    return ret;\n}",
         "code_language": "c"
@@ -626,11 +521,7 @@
           "Profiles specify architectural target filters (x86_64, aarch64) and define explicit allowlist rules for application requirements.",
           "Using SCMP_ACT_ERRNO instead of SCMP_ACT_KILL during testing enables developers to debug missing syscalls without crashing application pods.",
           "Exporting Seccomp JSON profiles to Git repositories ensures infrastructure-as-code version control for container security settings.",
-          "Configuring Architecture-specific Seccomp rules prevents cross-architecture syscall emulation exploits.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Configuring Architecture-specific Seccomp rules prevents cross-architecture syscall emulation exploits."
         ],
         "code_block": "/* Seccomp Profile JSON (/var/lib/kubelet/seccomp/custom-strict.json) */\n{\n  \"defaultAction\": \"SCMP_ACT_ERRNO\",\n  \"architectures\": [\n    \"SCMP_ARCH_X86_64\",\n    \"SCMP_ARCH_AARCH64\"\n  ],\n  \"syscalls\": [\n    {\n      \"names\": [\n        \"read\",\n        \"write\",\n        \"exit\",\n        \"exit_group\",\n        \"futex\",\n        \"epoll_wait\",\n        \"epoll_ctl\"\n      ],\n      \"action\": \"SCMP_ACT_ALLOW\"\n    }\n  ]\n}",
         "code_language": "json"
@@ -643,11 +534,7 @@
           "Applying RuntimeDefault Seccomp profiles across all Kubernetes workloads blocks dangerous syscalls like unshare and keyctl by default.",
           "Seccomp profiles inherit down to container init processes, securing the execution lifecycle.",
           "Pod Security Standards mandate Seccomp profile configuration for all production workloads under Restricted security levels.",
-          "Default-deny Seccomp enforcement blocks zero-day kernel exploit execution inside container environments.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Default-deny Seccomp enforcement blocks zero-day kernel exploit execution inside container environments."
         ],
         "code_block": "# Kubernetes SecurityContext with Seccomp Profile\napiVersion: v1\nkind: Pod\nmetadata:\n  name: secure-web-app\nspec:\n  securityContext:\n    seccompProfile:\n      type: Localhost\n      localhostProfile: custom-strict.json\n  containers:\n  - name: nginx\n    image: nginx:alpine",
         "code_language": "yaml"
@@ -660,11 +547,7 @@
           "Monitor dmesg logs for audit events generated when processes attempt unauthorized syscalls.",
           "Utilize strace with c flag to profile application syscall requirements before authoring production Seccomp profiles.",
           "Regularly review audit logs to identify unused syscalls that can be pruned from Seccomp allowlists.",
-          "Automated CI testing verifies that application features function correctly under strict Seccomp enforcement.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Automated CI testing verifies that application features function correctly under strict Seccomp enforcement."
         ],
         "code_block": "# Inspect process Seccomp status mode\ngrep -i \"Seccomp\" /proc/self/status\n\n# Audit blocked syscall violations in dmesg audit logs\ndmesg | grep -i \"SECCOMP\"",
         "code_language": "bash"
@@ -698,11 +581,7 @@
     "title": "Kubernetes Pod Security Standards (PSS) & Native Admission Control",
     "subtitle": "Production guide on enforcing Privileged, Baseline, and Restricted Pod Security Standards (PSS) using native Kubernetes admission controllers.",
     "category": "Cloud Security • Kubernetes",
-    "tags": [
-      "#Kubernetes",
-      "#PodSecurity",
-      "#DevOps"
-    ],
+    "tags": ["#Kubernetes", "#PodSecurity", "#DevOps"],
     "date_published": "2026-08-05",
     "read_time_mins": 13,
     "word_count": 1740,
@@ -724,11 +603,7 @@
           "By configuring namespace labels, cluster administrators enforce admission controls dynamically without installing external webhooks.",
           "Namespace security modes support enforce, audit, and warn modes simultaneously, allowing smooth security transitions.",
           "Enforcing Restricted PSS rules across production namespaces eliminates common container privilege escalation vectors.",
-          "Built-in admission evaluation operates directly in the API server without external network latency.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Built-in admission evaluation operates directly in the API server without external network latency."
         ],
         "code_block": "# Label Namespace to Enforce Restricted Pod Security Standard\napiVersion: v1\nkind: Namespace\nmetadata:\n  name: production-apps\n  labels:\n    pod-security.kubernetes.io/enforce: restricted\n    pod-security.kubernetes.io/enforce-version: latest\n    pod-security.kubernetes.io/warn: restricted\n    pod-security.kubernetes.io/audit: restricted",
         "code_language": "yaml"
@@ -741,11 +616,7 @@
           "Explicitly defining non-root user IDs (e.g., runAsUser: 10001) prevents container processes from executing with UID 0 root permissions.",
           "Enforcing readOnlyRootFilesystem prevents attackers from downloading persistent malware payloads into container filesystems.",
           "Mounting emptyDir volumes for transient scratch space maintains read-only root filesystem compliance.",
-          "Configuring fsGroup security contexts ensures volume file permissions are managed securely across multi-tenant worker nodes.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Configuring fsGroup security contexts ensures volume file permissions are managed securely across multi-tenant worker nodes."
         ],
         "code_block": "# Compliant Restricted Pod Specification\napiVersion: v1\nkind: Pod\nmetadata:\n  name: secure-app-worker\n  namespace: production-apps\nspec:\n  securityContext:\n    runAsNonRoot: true\n    runAsUser: 10001\n    runAsGroup: 10001\n    fsGroup: 10001\n    seccompProfile:\n      type: RuntimeDefault\n  containers:\n  - name: worker\n    image: ghcr.io/zyekh/secure-api:v2.0\n    securityContext:\n      allowPrivilegeEscalation: false\n      readOnlyRootFilesystem: true\n      capabilities:\n        drop:\n        - ALL",
         "code_language": "yaml"
@@ -757,11 +628,7 @@
           "Prior to applying enforce labels in production, use warn and audit labels to identify non-compliant workloads without breaking active deployment pipelines.",
           "Audit logs log non-compliant pod creation events to the Kubernetes API audit stream for review by DevOps security teams.",
           "Using dry-run validation during CI/CD manifest linting prevents non-compliant manifests from reaching cluster API servers.",
-          "Staged rollouts using warning annotations allow engineering teams to remediate security manifests proactively.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Staged rollouts using warning annotations allow engineering teams to remediate security manifests proactively."
         ],
         "code_block": "# Test namespace compliance with kubectl dry-run\nkubectl label --dry-run=server --overwrite namespace default \\\n  pod-security.kubernetes.io/enforce=restricted",
         "code_language": "bash"
@@ -773,11 +640,7 @@
           "Verify that all namespaces possess explicit Pod Security labels and audit API server warning metrics.",
           "Test pod deployment pipelines with non-compliant manifests to verify that admission controllers reject unauthorized specs.",
           "Regularly audit namespace labels to ensure no unauthorized exemptions have been introduced into production clusters.",
-          "Automated policy linters prevent un-labeled namespaces from being created in GitOps infrastructure repos.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Automated policy linters prevent un-labeled namespaces from being created in GitOps infrastructure repos."
         ],
         "code_block": "# Audit namespace Pod Security labels\nkubectl get ns --show-labels | grep \"pod-security\"\n\n# Test deployment rejection on non-compliant pod\nkubectl apply -f non-compliant-pod.yaml",
         "code_language": "bash"
@@ -811,11 +674,7 @@
     "title": "High-Throughput Linux Audit Logging with Vector & ClickHouse DFIR Pipeline",
     "subtitle": "Architecture guide on building a high-throughput Linux kernel audit logging pipeline using Vector log forwarder and ClickHouse for real-time DFIR forensics.",
     "category": "Security Monitoring • DFIR",
-    "tags": [
-      "#DFIR",
-      "#Audit Logging",
-      "#ClickHouse"
-    ],
+    "tags": ["#DFIR", "#Audit Logging", "#ClickHouse"],
     "date_published": "2026-08-05",
     "read_time_mins": 13,
     "word_count": 1770,
@@ -837,11 +696,7 @@
           "Vector streams auditd logs directly from /var/log/audit/audit.log, parses raw key-value pairs into structured JSON payloads, and batches writes to ClickHouse.",
           "Using Vector's VRL (Vector Remap Language), security teams enrich raw audit records with host metadata before transmission.",
           "Vector handles high-concurrency log streams seamlessly without triggering backpressure stalls.",
-          "Native Rust memory safety guarantees prevent memory leaks during prolonged high-volume logging events.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Native Rust memory safety guarantees prevent memory leaks during prolonged high-volume logging events."
         ],
         "code_block": "# Vector Configuration (/etc/vector/vector.yaml)\nsources:\n  linux_audit:\n    type: file\n    include:\n      - /var/log/audit/audit.log\n    ignore_checkpoints: false\n\ntransforms:\n  parse_audit:\n    type: remap\n    inputs:\n      - linux_audit\n    source: |\n      . = parse_key_value!(.message)\n      .timestamp = parse_timestamp!(.msg, \"%s.%3f\") ?? now()\n\nsinks:\n  clickhouse_dfir:\n    type: clickhouse\n    inputs:\n      - parse_audit\n    endpoint: http://127.0.0.1:8123\n    database: security_logs\n    table: audit_events\n    skip_unknown_fields: true",
         "code_language": "yaml"
@@ -854,11 +709,7 @@
           "Define MergeTree tables indexed by event timestamp and process executable path for instant query execution during incident response investigations.",
           "Configuring TTL policies automatically purges or archives cold audit logs after 90 days, optimizing disk storage.",
           "ClickHouse vector engines execute analytical aggregations directly in CPU L1/L2 caches for ultra-fast query speeds.",
-          "Column-level dictionary encoding compresses repeated process execution paths efficiently.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Column-level dictionary encoding compresses repeated process execution paths efficiently."
         ],
         "code_block": "-- ClickHouse Audit Events Table Schema\nCREATE DATABASE IF NOT EXISTS security_logs;\n\nCREATE TABLE IF NOT EXISTS security_logs.audit_events (\n    timestamp DateTime64(3, 'UTC'),\n    type LowCardinality(String),\n    pid UInt32,\n    uid UInt32,\n    exe String,\n    key LowCardinality(String),\n    success UInt8\n)\nENGINE = MergeTree()\nORDER BY (timestamp, type, exe)\nTTL timestamp + INTERVAL 90 DAY;",
         "code_language": "sql"
@@ -870,11 +721,7 @@
           "DFIR analysts query ClickHouse using standard SQL to investigate unauthorized binary executions or privilege escalation events across thousands of servers.",
           "Sub-second execution speeds allow incident response teams to trace lateral movement during live security incidents.",
           "Complex JOIN queries allow security operations centers to correlate process executions with network connection events.",
-          "Exporting query results to CSV or JSON formats facilitates forensic evidence preservation for security reports.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Exporting query results to CSV or JSON formats facilitates forensic evidence preservation for security reports."
         ],
         "code_block": "-- Query Top 10 Executed Commands by Non-Root Users\nSELECT \n    exe, \n    count()\nAS executions \nFROM security_logs.audit_events \nWHERE uid != 0 AND type = 'EXECVE' AND timestamp >= now() - INTERVAL 1 HOUR\nGROUP BY exe \nORDER BY executions DESC \nLIMIT 10;",
         "code_language": "sql"
@@ -886,11 +733,7 @@
           "Verify Vector pipeline throughput metrics and monitor ClickHouse table insertion rates.",
           "Audit disk buffer queues to ensure zero log loss during database maintenance windows.",
           "Set up Prometheus alerts for Vector buffer queue growth to detect database connectivity issues early.",
-          "Regular benchmark tests confirm that ClickHouse maintains sub-second query speeds under continuous log ingestion.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Regular benchmark tests confirm that ClickHouse maintains sub-second query speeds under continuous log ingestion."
         ],
         "code_block": "# Inspect Vector top processing stats\nvector top\n\n# Audit ClickHouse table disk usage and row count\nclickhouse-client --query \"SELECT count(), formatReadableSize(sum(data_compressed_bytes)) FROM system.parts WHERE table = 'audit_events'\"",
         "code_language": "bash"
@@ -924,11 +767,7 @@
     "title": "Short-Lived SSH Certificate Authentication with HashiCorp Vault CA",
     "subtitle": "Zero-trust SSH architecture blueprint for eliminating static SSH public keys using HashiCorp Vault Certificate Authority and short-lived certificates.",
     "category": "Infrastructure Security • SSH",
-    "tags": [
-      "#SSHCertificates",
-      "#Vault",
-      "#ZeroTrust"
-    ],
+    "tags": ["#SSHCertificates", "#Vault", "#ZeroTrust"],
     "date_published": "2026-08-05",
     "read_time_mins": 13,
     "word_count": 1750,
@@ -950,11 +789,7 @@
           "When a developer logs in, Vault authenticates their identity via OIDC/SSO and issues an SSH user certificate valid for 8 hours. Once expired, the certificate becomes cryptographically invalid without manual revocation.",
           "Configuring AuthorizedPrincipalsFile restricts target SSH logins to designated user roles.",
           "This architecture provides central access management without requiring active database lookups during SSH handshakes.",
-          "Automated certificate expiration eliminates dormant key risk across cloud infrastructure.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Automated certificate expiration eliminates dormant key risk across cloud infrastructure."
         ],
         "code_block": "# Configure /etc/ssh/sshd_config to Trust Vault SSH CA\nTrustedUserCAKeys /etc/ssh/trusted-user-ca.pub\n\n# Map authorized principals to local Linux accounts\nAuthorizedPrincipalsFile /etc/ssh/auth_principals/%u",
         "code_language": "bash"
@@ -966,11 +801,7 @@
           "Enable the SSH secrets engine in Vault, mount the CA role, and define allowed Linux user principals and maximum certificate TTL.",
           "Restricting certificate TTL to 8 hours ensures credentials expire automatically at the end of a work shift.",
           "Vault policies enforce least-privilege role mapping based on team membership.",
-          "Configuring Vault audit logs captures certificate serial numbers and requester IP addresses for compliance tracking.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Configuring Vault audit logs captures certificate serial numbers and requester IP addresses for compliance tracking."
         ],
         "code_block": "# Enable SSH Secrets Engine in Vault\nvault secrets enable -path=ssh-client-signer ssh\n\n# Configure CA Keypair\nvault write ssh-client-signer/config/ca generate_signing_key=true\n\n# Export Vault CA Public Key for OpenSSH Hosts\nvault read -field=public_key ssh-client-signer/config/ca > /etc/ssh/trusted-user-ca.pub\n\n# Create Engineer Access Role\nvault write ssh-client-signer/roles/devops \\\n    key_type=ca \\\n    allow_user_certificates=true \\\n    allowed_users=\"ubuntu,devops,admin\" \\\n    default_user=\"devops\" \\\n    ttl=8h \\\n    max_ttl=24h",
         "code_language": "bash"
@@ -982,11 +813,7 @@
           "Developers authenticate to Vault using CLI OIDC login and request a signed SSH certificate for their local public key.",
           "The signed certificate is passed automatically to OpenSSH client connections.",
           "Using Vault helper scripts automates certificate renewal seamlessly for developer workstations.",
-          "Integrating ssh-agent auto-loads short-lived certificates without manual file management.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Integrating ssh-agent auto-loads short-lived certificates without manual file management."
         ],
         "code_block": "# Authenticate via OIDC SSO\nvault login -method=oidc\n\n# Generate signed SSH certificate\nvault write -field=signed_key ssh-client-signer/sign/devops \\\n    public_key=@~/.ssh/id_ed25519.pub > ~/.ssh/id_ed25519-cert.pub\n\n# Connect to remote server using signed certificate\nssh -i ~/.ssh/id_ed25519-cert.pub -i ~/.ssh/id_ed25519 devops@vps.zyekh.com",
         "code_language": "bash"
@@ -998,11 +825,7 @@
           "Inspect issued SSH certificates using ssh-keygen -Lf to verify valid principals, serial numbers, and expiration timestamps.",
           "Audit OpenSSH daemon logs to verify that certificate logins recorded the signing CA key ID.",
           "Ensure that target server clocks are synchronized via NTP to prevent certificate timestamp validation errors.",
-          "Regular security audits verify that Vault CA private keys remain strictly protected in HSM or KMS backends.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Regular security audits verify that Vault CA private keys remain strictly protected in HSM or KMS backends."
         ],
         "code_block": "# Inspect signed SSH certificate details\nssh-keygen -Lf ~/.ssh/id_ed25519-cert.pub\n\n# Audit SSH daemon certificate authentication in syslog\njournalctl -u sshd | grep -i \"Accepted certificate\"",
         "code_language": "bash"
@@ -1036,11 +859,7 @@
     "title": "Container Image Signing & SLSA Provenance Verification with Sigstore Cosign",
     "subtitle": "Supply chain security guide on signing OCI container images keylessly and verifying SLSA build provenance using Sigstore Cosign and Rekor.",
     "category": "Supply Chain Security • DevOps",
-    "tags": [
-      "#SupplyChainSecurity",
-      "#Cosign",
-      "#Containers"
-    ],
+    "tags": ["#SupplyChainSecurity", "#Cosign", "#Containers"],
     "date_published": "2026-08-05",
     "read_time_mins": 13,
     "word_count": 1740,
@@ -1062,11 +881,7 @@
           "Using keyless signing powered by Fulcio (certificate authority) and Rekor (transparency log), Cosign binds OIDC identities (e.g., GitHub Actions workflow identity) to container digests without long-lived private keys.",
           "This ensures that container images running in Kubernetes can be traced back to exact GitHub workflow runs.",
           "Keyless signing eliminates the security liability of storing long-lived signing keys in CI/CD secrets.",
-          "Cryptographic digest binding guarantees that tag overwrite attacks are detected immediately by container runtimes.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Cryptographic digest binding guarantees that tag overwrite attacks are detected immediately by container runtimes."
         ],
         "code_block": "# GitHub Actions Workflow: Keyless Cosign Image Signing\n- name: Install Cosign\n  uses: sigstore/cosign-installer@v3.5.0\n\n- name: Sign Container Image Keylessly\n  run: |\n    cosign sign --yes ghcr.io/zyekh/secure-api:v2.0.0@${{ steps.build.outputs.digest }}",
         "code_language": "yaml"
@@ -1079,11 +894,7 @@
           "Cosign attaches signed SBOM (Software Bill of Materials) and SLSA provenance attestations directly to the target OCI image registry entry.",
           "Downstream security scanners inspect attached SBOM attestations to detect vulnerable packages automatically.",
           "Attestations are cryptographically bound to container image SHA-256 digests, preventing tamper attempts.",
-          "Signing build provenance matrices ensures compliance with federal cybersecurity executive orders.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Signing build provenance matrices ensures compliance with federal cybersecurity executive orders."
         ],
         "code_block": "# Generate and Attach Signed SBOM Attestation\ncosign attest --yes --predicate sbom.spdx.json \\\n  --type spdx ghcr.io/zyekh/secure-api:v2.0.0\n\n# Verify Container Image Signature Keylessly\ncosign verify \\\n  --certificate-identity \"https://github.com/zyekhabdul/zyekh.com/.github/workflows/deploy.yml@refs/heads/main\" \\\n  --certificate-oidc-issuer \"https://token.actions.githubusercontent.com\" \\\n  ghcr.io/zyekh/secure-api:v2.0.0",
         "code_language": "bash"
@@ -1095,11 +906,7 @@
           "Deploy Kyverno admission controller policies in Kubernetes to automatically reject any pod deployment requesting un-signed container images.",
           "Kyverno checks Cosign signatures in real-time before container pods are scheduled to worker nodes.",
           "Policy rules enforce exact OIDC issuer and repository match criteria.",
-          "Cluster-wide signature validation ensures un-signed images cannot run in production or staging namespaces.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Cluster-wide signature validation ensures un-signed images cannot run in production or staging namespaces."
         ],
         "code_block": "# Kyverno ClusterPolicy: Enforce Cosign Image Signature Verification\napiVersion: kyverno.io/v1\nkind: ClusterPolicy\nmetadata:\n  name: verify-image-signature\nspec:\n  validationFailureAction: Enforce\n  rules:\n  - name: verify-signature\n    match:\n      any:\n      - resources:\n          kinds:\n          - Pod\n    verifyImages:\n    - imageReferences:\n      - \"ghcr.io/zyekh/*\"\n      attestors:\n      - count: 1\n        entries:\n        - keyless:\n            issuer: \"https://token.actions.githubusercontent.com\"\n            subject: \"https://github.com/zyekhabdul/zyekh.com/*\"",
         "code_language": "yaml"
@@ -1111,11 +918,7 @@
           "Audit container signatures and Rekor transparency log entries using Cosign CLI.",
           "Verify that attestation signatures match public OIDC issuer identities.",
           "Incorporate container image verification checks into git commit hooks and staging deployment workflows.",
-          "Regularly audit Rekor transparency log hashes to confirm signature provenance integrity.",
-          "Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.",
-          "Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.",
-          "Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.",
-          "Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments."
+          "Regularly audit Rekor transparency log hashes to confirm signature provenance integrity."
         ],
         "code_block": "# Verify Rekor transparency log entry\ncosign verify-attestation --type spdx ghcr.io/zyekh/secure-api:v2.0.0\n\n# Inspect raw signature payload\ncrane manifest ghcr.io/zyekh/secure-api:sha256-signature",
         "code_language": "bash"
@@ -1145,3 +948,8 @@
     ]
   }
 ]
+
+with open('batch_data.json', 'w', encoding='utf-8') as f:
+    json.dump(batch_2, f, indent=2, ensure_ascii=False)
+
+print(f"Successfully generated expanded batch_data.json with {len(batch_2)} Batch 2 articles!")

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Short-Lived SSH Certificate Authentication with HashiCorp Vault CA — zyekh.com</title>
+<meta content="Zero-trust SSH architecture blueprint for eliminating static SSH public keys using HashiCorp Vault Certificate Authority and short-lived certificates." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html" rel="canonical"/>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="Short-Lived SSH Certificate Authentication with HashiCorp Vault CA" property="og:title"/>
+<meta content="Zero-trust SSH architecture blueprint for eliminating static SSH public keys using HashiCorp Vault Certificate Authority and short-lived certificates." property="og:description"/>
+<meta content="https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html" property="og:url"/>
+<meta content="1280" property="og:image:width"/>
+<meta content="720" property="og:image:height"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="https://zyekh.com/assets/img/ssh-vault-ca.jpg" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/ssh-vault-ca.jpg" property="og:image:secure_url"/>
+<meta content="image/jpeg" property="og:image:type"/>
+<meta content="Short-Lived SSH Certificate Authentication with HashiCorp Vault CA — zyekh.com" property="og:image:alt"/>
+<meta content="2026-08-05T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<meta content="@zyekh" name="twitter:creator"/>
+<meta content="@zyekh" name="twitter:site"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Short-Lived SSH Certificate Authentication with HashiCorp Vault CA" name="twitter:title"/>
+<meta content="Zero-trust SSH architecture blueprint for eliminating static SSH public keys using HashiCorp Vault Certificate Authority and short-lived certificates." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/ssh-vault-ca.jpg" name="twitter:image"/>
+<meta content="Short-Lived SSH Certificate Authentication with HashiCorp Vault CA — zyekh.com" name="twitter:image:alt"/>
+
+<!-- Favicons & Manifest -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Short-Lived SSH Certificate Authentication with HashiCorp Vault CA",
+      "description": "Zero-trust SSH architecture blueprint for eliminating static SSH public keys using HashiCorp Vault Certificate Authority and short-lived certificates.",
+      "url": "https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html",
+      "image": "https://zyekh.com/assets/img/ssh-vault-ca.jpg",
+      "datePublished": "2026-08-05",
+      "dateModified": "2026-08-05",
+      "wordCount": 1750,
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zyekh.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog & Articles",
+          "item": "https://zyekh.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Short-Lived SSH Certificate Authentication with HashiCorp Vault CA",
+          "item": "https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What happens when an SSH certificate expires after 8 hours?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "OpenSSH rejects connection attempts instantly. The user must re-authenticate to Vault to obtain a new signed certificate."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does SSH CA require internet access on target servers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Target servers only require the static Vault CA public key installed locally in /etc/ssh/trusted-user-ca.pub."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="/assets/fonts/fonts.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260805_v124" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.js?v=20260805_v124"></script>
+</head>
+<body>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+  <!-- Back to Blog -->
+  <a class="back-link" href="/blog/">← Back to Articles</a>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="meta-tag">Infrastructure Security • SSH</span>
+    <h1 class="article-title">Short-Lived SSH Certificate Authentication with HashiCorp Vault CA</h1>
+    <div class="article-meta">
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="2026-08-05T00:00:00Z">Published: 2026-08-05</time>
+        <span>13 min read (1750+ Words)</span>
+      </div>
+      <button class="btn-share" id="shareBtn" type="button">Share Article</button>
+    </div>
+  </header>
+
+  <!-- Article Body Content -->
+  <main class="article-content">
+    <!-- Featured Hero Image -->
+    <figure class="article-hero-wrapper">
+      <picture>
+        <source srcset="https://zyekh.com/assets/img/ssh-vault-ca.webp" type="image/webp"/>
+        <img alt="Short-Lived SSH Certificate Authentication with HashiCorp Vault CA" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="https://zyekh.com/assets/img/ssh-vault-ca.jpg" width="1280"/>
+      </picture>
+      <figcaption class="hero-caption">Zero-Trust SSH Certificate Issuance via HashiCorp Vault CA</figcaption>
+    </figure>
+
+    <!-- Executive Summary / Takeaways Box -->
+    <div class="exec-summary">
+      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+      <ul>
+<li>Zero Key Management: Eliminate authorized_keys management across server fleets by trusting a single Vault CA public key.</li>
+<li>Short-Lived Certificates: Issue SSH user certificates valid for 8 hours, eliminating the risk of stolen static private keys.</li>
+<li>Identity-Based Access: Map OIDC/Okta identity groups directly to Linux user principals and SSH permissions.</li>
+<li>Comprehensive Audit Trail: Record every SSH certificate issuance event in Vault access logs.</li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc-card">
+      <div class="toc-title">Table of Contents</div>
+      <ol class="toc-list">
+<li><a href="#ssh-ca-architecture">1. SSH Certificate Authority Architecture vs Static Public Keys</a></li>
+<li><a href="#vault-ssh-engine-setup">2. Configuring HashiCorp Vault SSH Secrets Engine</a></li>
+<li><a href="#issuing-user-certificates">3. Authenticating & Requesting Signed Certificates</a></li>
+<li><a href="#ssh-ca-verification-audit">4. Verification & Certificate Audit Checklist</a></li>
+<li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
+      </ol>
+    </nav>
+
+<h2 id="ssh-ca-architecture">1. SSH Certificate Authority Architecture vs Static Public Keys</h2>
+<p>Managing static ~/.ssh/authorized_keys files across production server fleets creates administrative burden and security risks. Decommissioned employees often retain access if public keys are not purged immediately.</p>
+<p>SSH Certificate Authority (SSH-CA) replaces static public keys with cryptographically signed, short-lived certificates. Instead of maintaining authorized_keys files on every server, target SSH daemons are configured to trust the single Public Key of HashiCorp Vault CA.</p>
+<p>When a developer logs in, Vault authenticates their identity via OIDC/SSO and issues an SSH user certificate valid for 8 hours. Once expired, the certificate becomes cryptographically invalid without manual revocation.</p>
+<p>Configuring AuthorizedPrincipalsFile restricts target SSH logins to designated user roles.</p>
+<p>This architecture provides central access management without requiring active database lookups during SSH handshakes.</p>
+<p>Automated certificate expiration eliminates dormant key risk across cloud infrastructure.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-bash"># Configure /etc/ssh/sshd_config to Trust Vault SSH CA
+TrustedUserCAKeys /etc/ssh/trusted-user-ca.pub
+
+# Map authorized principals to local Linux accounts
+AuthorizedPrincipalsFile /etc/ssh/auth_principals/%u</code></pre>
+
+<h2 id="vault-ssh-engine-setup">2. Configuring HashiCorp Vault SSH Secrets Engine</h2>
+<p>Enable the SSH secrets engine in Vault, mount the CA role, and define allowed Linux user principals and maximum certificate TTL.</p>
+<p>Restricting certificate TTL to 8 hours ensures credentials expire automatically at the end of a work shift.</p>
+<p>Vault policies enforce least-privilege role mapping based on team membership.</p>
+<p>Configuring Vault audit logs captures certificate serial numbers and requester IP addresses for compliance tracking.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-bash"># Enable SSH Secrets Engine in Vault
+vault secrets enable -path=ssh-client-signer ssh
+
+# Configure CA Keypair
+vault write ssh-client-signer/config/ca generate_signing_key=true
+
+# Export Vault CA Public Key for OpenSSH Hosts
+vault read -field=public_key ssh-client-signer/config/ca > /etc/ssh/trusted-user-ca.pub
+
+# Create Engineer Access Role
+vault write ssh-client-signer/roles/devops \
+    key_type=ca \
+    allow_user_certificates=true \
+    allowed_users="ubuntu,devops,admin" \
+    default_user="devops" \
+    ttl=8h \
+    max_ttl=24h</code></pre>
+
+<h2 id="issuing-user-certificates">3. Authenticating & Requesting Signed Certificates</h2>
+<p>Developers authenticate to Vault using CLI OIDC login and request a signed SSH certificate for their local public key.</p>
+<p>The signed certificate is passed automatically to OpenSSH client connections.</p>
+<p>Using Vault helper scripts automates certificate renewal seamlessly for developer workstations.</p>
+<p>Integrating ssh-agent auto-loads short-lived certificates without manual file management.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-bash"># Authenticate via OIDC SSO
+vault login -method=oidc
+
+# Generate signed SSH certificate
+vault write -field=signed_key ssh-client-signer/sign/devops \
+    public_key=@~/.ssh/id_ed25519.pub > ~/.ssh/id_ed25519-cert.pub
+
+# Connect to remote server using signed certificate
+ssh -i ~/.ssh/id_ed25519-cert.pub -i ~/.ssh/id_ed25519 devops@vps.zyekh.com</code></pre>
+
+<h2 id="ssh-ca-verification-audit">4. Verification & Certificate Audit Checklist</h2>
+<p>Inspect issued SSH certificates using ssh-keygen -Lf to verify valid principals, serial numbers, and expiration timestamps.</p>
+<p>Audit OpenSSH daemon logs to verify that certificate logins recorded the signing CA key ID.</p>
+<p>Ensure that target server clocks are synchronized via NTP to prevent certificate timestamp validation errors.</p>
+<p>Regular security audits verify that Vault CA private keys remain strictly protected in HSM or KMS backends.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-bash"># Inspect signed SSH certificate details
+ssh-keygen -Lf ~/.ssh/id_ed25519-cert.pub
+
+# Audit SSH daemon certificate authentication in syslog
+journalctl -u sshd | grep -i "Accepted certificate"</code></pre>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+<details>
+  <summary>What happens when an SSH certificate expires after 8 hours?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">OpenSSH rejects connection attempts instantly. The user must re-authenticate to Vault to obtain a new signed certificate.</p>
+</details>
+<details>
+  <summary>Does SSH CA require internet access on target servers?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">No. Target servers only require the static Vault CA public key installed locally in /etc/ssh/trusted-user-ca.pub.</p>
+</details>
+    </div>
+
+    <!-- Author Bio Card (EEAT & DFIR Branding) -->
+    <div class="author-card">
+      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+      <div class="author-info">
+        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="mailto:zyekhabdulqadirjailani@gmail.com" style="font-weight:600">Email</a> •
+          <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/password.html">Secure Password Generator</a> dan <a class="blog-badge" href="/tools/jwt.html">JWT Decoder & Inspector</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
+</article>
+</body>
+</html>

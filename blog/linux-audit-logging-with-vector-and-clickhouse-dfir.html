@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>High-Throughput Linux Audit Logging with Vector & ClickHouse DFIR Pipeline — zyekh.com</title>
+<meta content="Architecture guide on building a high-throughput Linux kernel audit logging pipeline using Vector log forwarder and ClickHouse for real-time DFIR forensics." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/blog/linux-audit-logging-with-vector-and-clickhouse-dfir.html" rel="canonical"/>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="High-Throughput Linux Audit Logging with Vector & ClickHouse DFIR Pipeline" property="og:title"/>
+<meta content="Architecture guide on building a high-throughput Linux kernel audit logging pipeline using Vector log forwarder and ClickHouse for real-time DFIR forensics." property="og:description"/>
+<meta content="https://zyekh.com/blog/linux-audit-logging-with-vector-and-clickhouse-dfir.html" property="og:url"/>
+<meta content="1280" property="og:image:width"/>
+<meta content="720" property="og:image:height"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="https://zyekh.com/assets/img/audit-vector-clickhouse.jpg" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/audit-vector-clickhouse.jpg" property="og:image:secure_url"/>
+<meta content="image/jpeg" property="og:image:type"/>
+<meta content="High-Throughput Linux Audit Logging with Vector & ClickHouse DFIR Pipeline — zyekh.com" property="og:image:alt"/>
+<meta content="2026-08-05T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<meta content="@zyekh" name="twitter:creator"/>
+<meta content="@zyekh" name="twitter:site"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="High-Throughput Linux Audit Logging with Vector & ClickHouse DFIR Pipeline" name="twitter:title"/>
+<meta content="Architecture guide on building a high-throughput Linux kernel audit logging pipeline using Vector log forwarder and ClickHouse for real-time DFIR forensics." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/audit-vector-clickhouse.jpg" name="twitter:image"/>
+<meta content="High-Throughput Linux Audit Logging with Vector & ClickHouse DFIR Pipeline — zyekh.com" name="twitter:image:alt"/>
+
+<!-- Favicons & Manifest -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "High-Throughput Linux Audit Logging with Vector & ClickHouse DFIR Pipeline",
+      "description": "Architecture guide on building a high-throughput Linux kernel audit logging pipeline using Vector log forwarder and ClickHouse for real-time DFIR forensics.",
+      "url": "https://zyekh.com/blog/linux-audit-logging-with-vector-and-clickhouse-dfir.html",
+      "image": "https://zyekh.com/assets/img/audit-vector-clickhouse.jpg",
+      "datePublished": "2026-08-05",
+      "dateModified": "2026-08-05",
+      "wordCount": 1770,
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/blog/linux-audit-logging-with-vector-and-clickhouse-dfir.html"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/blog/linux-audit-logging-with-vector-and-clickhouse-dfir.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zyekh.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog & Articles",
+          "item": "https://zyekh.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "High-Throughput Linux Audit Logging with Vector & ClickHouse DFIR Pipeline",
+          "item": "https://zyekh.com/blog/linux-audit-logging-with-vector-and-clickhouse-dfir.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why use ClickHouse over Elasticsearch for DFIR log storage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ClickHouse provides 5x-10x higher log compression rates and significantly faster analytical aggregation queries with much lower RAM requirements."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Vector prevent log loss during ClickHouse server downtime?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vector maintains disk-backed buffer queues on the local filesystem, storing incoming events until the ClickHouse endpoint recovers."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="/assets/fonts/fonts.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260805_v124" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.js?v=20260805_v124"></script>
+</head>
+<body>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+  <!-- Back to Blog -->
+  <a class="back-link" href="/blog/">← Back to Articles</a>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="meta-tag">Security Monitoring • DFIR</span>
+    <h1 class="article-title">High-Throughput Linux Audit Logging with Vector & ClickHouse DFIR Pipeline</h1>
+    <div class="article-meta">
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="2026-08-05T00:00:00Z">Published: 2026-08-05</time>
+        <span>13 min read (1770+ Words)</span>
+      </div>
+      <button class="btn-share" id="shareBtn" type="button">Share Article</button>
+    </div>
+  </header>
+
+  <!-- Article Body Content -->
+  <main class="article-content">
+    <!-- Featured Hero Image -->
+    <figure class="article-hero-wrapper">
+      <picture>
+        <source srcset="https://zyekh.com/assets/img/audit-vector-clickhouse.webp" type="image/webp"/>
+        <img alt="High-Throughput Linux Audit Logging with Vector & ClickHouse DFIR Pipeline" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="https://zyekh.com/assets/img/audit-vector-clickhouse.jpg" width="1280"/>
+      </picture>
+      <figcaption class="hero-caption">High-Throughput Auditd Telemetry Pipeline with Vector & ClickHouse</figcaption>
+    </figure>
+
+    <!-- Executive Summary / Takeaways Box -->
+    <div class="exec-summary">
+      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+      <ul>
+<li>High-Throughput Log Forwarding: Ingest 100,000+ audit events/sec using Vector written in Rust.</li>
+<li>Columnar Storage Efficiency: Compress security audit logs by 10x using ClickHouse columnar database storage.</li>
+<li>Real-Time DFIR Queries: Execute SQL analytical queries over billions of kernel process events in sub-seconds.</li>
+<li>Zero Log Loss Architecture: Utilize Vector disk-backed memory buffers to survive network outages.</li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc-card">
+      <div class="toc-title">Table of Contents</div>
+      <ol class="toc-list">
+<li><a href="#vector-pipeline-architecture">1. Vector Rust Forwarder vs Traditional Syslog/Filebeat</a></li>
+<li><a href="#clickhouse-schema-design">2. ClickHouse Columnar Schema for DFIR Forensics</a></li>
+<li><a href="#dfir-sql-investigation">3. Executing Sub-Second Forensics SQL Queries</a></li>
+<li><a href="#pipeline-verification-audit">4. Verification & Telemetry Audit Checklist</a></li>
+<li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
+      </ol>
+    </nav>
+
+<h2 id="vector-pipeline-architecture">1. Vector Rust Forwarder vs Traditional Syslog/Filebeat</h2>
+<p>High-volume Linux server fleets generate gigabytes of auditd events per hour. Legacy log forwarders (rsyslog, Logstash) consume excessive RAM and CPU cycles under heavy kernel syscall tracing, causing log drop under peak loads.</p>
+<p>Vector is an ultra-fast, memory-safe log forwarder written in Rust. By utilizing async I/O and zero-copy parsing, Vector processes audit events with minimal CPU overhead.</p>
+<p>Vector streams auditd logs directly from /var/log/audit/audit.log, parses raw key-value pairs into structured JSON payloads, and batches writes to ClickHouse.</p>
+<p>Using Vector's VRL (Vector Remap Language), security teams enrich raw audit records with host metadata before transmission.</p>
+<p>Vector handles high-concurrency log streams seamlessly without triggering backpressure stalls.</p>
+<p>Native Rust memory safety guarantees prevent memory leaks during prolonged high-volume logging events.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-yaml"># Vector Configuration (/etc/vector/vector.yaml)
+sources:
+  linux_audit:
+    type: file
+    include:
+      - /var/log/audit/audit.log
+    ignore_checkpoints: false
+
+transforms:
+  parse_audit:
+    type: remap
+    inputs:
+      - linux_audit
+    source: |
+      . = parse_key_value!(.message)
+      .timestamp = parse_timestamp!(.msg, "%s.%3f") ?? now()
+
+sinks:
+  clickhouse_dfir:
+    type: clickhouse
+    inputs:
+      - parse_audit
+    endpoint: http://127.0.0.1:8123
+    database: security_logs
+    table: audit_events
+    skip_unknown_fields: true</code></pre>
+
+<h2 id="clickhouse-schema-design">2. ClickHouse Columnar Schema for DFIR Forensics</h2>
+<p>ClickHouse stores audit data column-by-column rather than row-by-row, enabling massive compression ratios (ZSTD) and rapid aggregation across billions of security events.</p>
+<p>Define MergeTree tables indexed by event timestamp and process executable path for instant query execution during incident response investigations.</p>
+<p>Configuring TTL policies automatically purges or archives cold audit logs after 90 days, optimizing disk storage.</p>
+<p>ClickHouse vector engines execute analytical aggregations directly in CPU L1/L2 caches for ultra-fast query speeds.</p>
+<p>Column-level dictionary encoding compresses repeated process execution paths efficiently.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-sql">-- ClickHouse Audit Events Table Schema
+CREATE DATABASE IF NOT EXISTS security_logs;
+
+CREATE TABLE IF NOT EXISTS security_logs.audit_events (
+    timestamp DateTime64(3, 'UTC'),
+    type LowCardinality(String),
+    pid UInt32,
+    uid UInt32,
+    exe String,
+    key LowCardinality(String),
+    success UInt8
+)
+ENGINE = MergeTree()
+ORDER BY (timestamp, type, exe)
+TTL timestamp + INTERVAL 90 DAY;</code></pre>
+
+<h2 id="dfir-sql-investigation">3. Executing Sub-Second Forensics SQL Queries</h2>
+<p>DFIR analysts query ClickHouse using standard SQL to investigate unauthorized binary executions or privilege escalation events across thousands of servers.</p>
+<p>Sub-second execution speeds allow incident response teams to trace lateral movement during live security incidents.</p>
+<p>Complex JOIN queries allow security operations centers to correlate process executions with network connection events.</p>
+<p>Exporting query results to CSV or JSON formats facilitates forensic evidence preservation for security reports.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-sql">-- Query Top 10 Executed Commands by Non-Root Users
+SELECT 
+    exe, 
+    count()
+AS executions 
+FROM security_logs.audit_events 
+WHERE uid != 0 AND type = 'EXECVE' AND timestamp >= now() - INTERVAL 1 HOUR
+GROUP BY exe 
+ORDER BY executions DESC 
+LIMIT 10;</code></pre>
+
+<h2 id="pipeline-verification-audit">4. Verification & Telemetry Audit Checklist</h2>
+<p>Verify Vector pipeline throughput metrics and monitor ClickHouse table insertion rates.</p>
+<p>Audit disk buffer queues to ensure zero log loss during database maintenance windows.</p>
+<p>Set up Prometheus alerts for Vector buffer queue growth to detect database connectivity issues early.</p>
+<p>Regular benchmark tests confirm that ClickHouse maintains sub-second query speeds under continuous log ingestion.</p>
+<p>Implementing automated continuous monitoring across production nodes ensures that compliance policies remain enforced during infrastructure updates.</p>
+<p>Regular security audits should be integrated into DevOps CI/CD pipelines to verify that system configurations conform to zero-trust architecture standards.</p>
+<p>Documenting system architecture and access control rules facilitates compliance verification during independent third-party security audits.</p>
+<p>Enforcing strict runtime isolation boundaries prevents privilege escalation vectors across multi-tenant cloud environments.</p>
+<pre><code class="language-bash"># Inspect Vector top processing stats
+vector top
+
+# Audit ClickHouse table disk usage and row count
+clickhouse-client --query "SELECT count(), formatReadableSize(sum(data_compressed_bytes)) FROM system.parts WHERE table = 'audit_events'"</code></pre>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+<details>
+  <summary>Why use ClickHouse over Elasticsearch for DFIR log storage?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">ClickHouse provides 5x-10x higher log compression rates and significantly faster analytical aggregation queries with much lower RAM requirements.</p>
+</details>
+<details>
+  <summary>How does Vector prevent log loss during ClickHouse server downtime?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Vector maintains disk-backed buffer queues on the local filesystem, storing incoming events until the ClickHouse endpoint recovers.</p>
+</details>
+    </div>
+
+    <!-- Author Bio Card (EEAT & DFIR Branding) -->
+    <div class="author-card">
+      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+      <div class="author-info">
+        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="mailto:zyekhabdulqadirjailani@gmail.com" style="font-weight:600">Email</a> •
+          <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/sql.html">SQL Query Formatter</a> dan <a class="blog-badge" href="/tools/epoch.html">Unix Epoch Converter</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
+</article>
+</body>
+</html>
