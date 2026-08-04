@@ -645,7 +645,7 @@
       const promptHtml = `<div class="terminal-line"><span class="prompt-user">guest@zyekh.com</span><span class="prompt-path">:~$</span> ${raw}</div>`;
       const responseHtml = `<div class="terminal-line" style="color:var(--text-muted); margin-bottom:1rem; font-family:'Fira Code', monospace; line-height:1.5;">${formattedResponse}</div>`;
       
-      if (termHistory) termHistory.innerHTML += promptHtml + responseHtml;
+      if (termHistory) termHistory.insertAdjacentHTML('beforeend', promptHtml + responseHtml);
       if (termInput) termInput.value = '';
       if (termBody) termBody.scrollTop = termBody.scrollHeight;
 

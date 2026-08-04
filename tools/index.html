@@ -571,24 +571,34 @@
     const totalTools = toolItems.length;
 
     let activeCategory = 'all';
+    let filterDebounceTimer = null;
+
+    // Fast memory index (Zero DOM reflow during typing)
+    const toolCache = Array.from(toolItems).map(item => {
+      const title = item.getAttribute('data-title') || '';
+      const content = item.textContent || '';
+      const catElem = item.querySelector('.tool-category');
+      const category = catElem ? catElem.textContent.trim().toUpperCase() : '';
+      return {
+        element: item,
+        searchableText: (title + ' ' + content).toLowerCase(),
+        category: category
+      };
+    });
 
     function filterTools() {
       const q = searchInput.value.toLowerCase().trim();
       let visibleCount = 0;
 
-      toolItems.forEach(item => {
-        const text = (item.getAttribute('data-title') || '').toLowerCase() + ' ' + item.innerText.toLowerCase();
-        const catElem = item.querySelector('.tool-category');
-        const itemCat = catElem ? catElem.innerText.trim().toUpperCase() : '';
-
-        const matchesQuery = !q || text.includes(q);
-        const matchesCategory = activeCategory === 'all' || itemCat === activeCategory.toUpperCase();
+      toolCache.forEach(data => {
+        const matchesQuery = !q || data.searchableText.includes(q);
+        const matchesCategory = activeCategory === 'all' || data.category === activeCategory.toUpperCase();
 
         if (matchesQuery && matchesCategory) {
-          item.style.display = '';
+          data.element.style.display = '';
           visibleCount++;
         } else {
-          item.style.display = 'none';
+          data.element.style.display = 'none';
         }
       });
 
@@ -605,7 +615,10 @@
       searchCounter.textContent = `Menampilkan ${totalTools} dari ${totalTools} tools`;
     }
 
-    searchInput.addEventListener('input', filterTools);
+    searchInput.addEventListener('input', () => {
+      clearTimeout(filterDebounceTimer);
+      filterDebounceTimer = setTimeout(filterTools, 80);
+    });
 
     filterBtns.forEach(btn => {
       btn.addEventListener('click', function() {

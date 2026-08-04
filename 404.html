@@ -216,8 +216,7 @@
 </div>
 <span class="terminal-title-text">zyekh-sh — 404 recovery</span>
 </div>
-<div class="terminal-body" id="termBody">
-<div><span style="color:#fafafa; font-weight:600;">error:</span> path <script>document.write('"' + location.pathname + '"');</script> not resolved.</div>
+<div><span style="color:#fafafa; font-weight:600;">error:</span> path <span id="errPath"></span> not resolved.</div>
 <div>Ketik <span style="color:#fafafa; font-weight:600;">help</span> atau klik salah satu pintasan di bawah untuk navigasi cepat:</div>
 <div id="termOutput"></div>
 <div class="prompt-line">
@@ -251,6 +250,10 @@
 </footer>
 <script defer="" src="/assets/js/site-nav.js?v=20260804_v124"></script>
 <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const errEl = document.getElementById('errPath');
+      if (errEl) errEl.textContent = '"' + window.location.pathname + '"';
+    });
     const termInput = document.getElementById('termInput');
     const termOutput = document.getElementById('termOutput');
 

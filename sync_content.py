@@ -6,7 +6,7 @@ import datetime
 import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
 
-def sync_all(bump_version=True):
+def sync_all(bump_version=False):
     print("[SYNC] Starting automated RAG, Sitemap, RSS & Cache Version Synchronization...")
 
     sw_path = "sw.js"

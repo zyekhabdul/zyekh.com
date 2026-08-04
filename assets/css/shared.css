@@ -131,10 +131,8 @@ site-nav {
 }
 
 .header-nav {
-  background: rgba(9, 9, 11, 0.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: #09090b;
+  border-bottom: 1px solid var(--border-color);
   position: fixed;
   top: 0;
   left: 0;
@@ -143,7 +141,7 @@ site-nav {
   padding: 0.65rem 0;
   min-height: 60px;
   box-sizing: border-box;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+  transform: translateZ(0);
 }
 
 .nav-container {
