@@ -1,6 +1,6 @@
-# ARTICLE-CONTENT-DRIVEN AI IMAGE PROMPTS & FILE MAPPING
+# ARTICLE-CONTENT-DRIVEN AI IMAGE PROMPTS (KEYWORD-DRIVEN CONCISE STRATEGY)
 
-This document defines unique, content-driven AI image generation prompts and target image filenames for all technical articles on `zyekh.com`.
+This document defines unique, high-signal keyword prompts and target image filenames for all 15 technical articles on `zyekh.com`.
 
 ---
 
@@ -12,150 +12,150 @@ This document defines unique, content-driven AI image generation prompts and tar
 
 ---
 
-## CORE STRATEGY: RECOGNIZABLE VISUAL ARCHITECTURE (NO CLUTTERED TEXT)
+## CORE STRATEGY: KEYWORD-DRIVEN & MINIMALIST SPECIFICATION
 
-1. **Immediate Technical Recognition**: The image must clearly depict the specific technical mechanism (e.g. Nginx server proxying traffic to backend app servers, UFW firewall gate blocking IP probes, WireGuard mesh laser tunnels). A developer looking at the thumbnail must immediately understand the subject matter without guessing.
-2. **Minimal / Decorative Text Only**: Reject heavy title banners, text headers, or cluttered labels that distract the viewer. Text/symbols (if any) are minimal decorative accessories only (e.g. a subtle Nginx emblem, minor UI code accent, or small port number). Article titles and badges are rendered sharply by HTML/CSS on the web page.
-3. **High-Contrast Developer Aesthetic**: Sleek 3D isometric architecture renders, dark theme backdrop, vibrant accent lighting (emerald green for Nginx/security, orange for UFW, amber for WireGuard, etc.), and clean composition.
+1. **High-Signal Keywords**: Instead of micro-managing object layouts or exact positions, state the core technical subject keywords clearly. Let the AI generator interpret composition naturally.
+2. **Minimalist Aesthetic Guidelines**: Specify style guidelines consistently across all prompts: `3D isometric cyber architecture, dark theme, clean developer aesthetic, 8k render, 16:9 aspect ratio`.
+3. **No Heavy Title Banners**: Avoid wall-of-text title headers. Main titles and badges are rendered by HTML/CSS on the web page.
 4. **Aspect Ratio**: `16:9` (`--ar 16:9`).
 
 ---
 
-## COMPLETE ARTICLE IMAGE FILE MAPPING & PROMPT COLLECTION
+## CONCISE KEYWORD PROMPT COLLECTION & FILE MAPPING
 
 ### 1. Nginx Reverse Proxy Hardening
 - **Target Filenames**: `assets/img/nginx-security.jpg` & `assets/img/nginx-security.webp`
 - **Article**: `blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html`
-- **Topic**: TLS 1.3, Rate Limiting, & Buffer Overflow Defense.
+- **Keywords**: Nginx reverse proxy, TLS 1.3 encryption, WAF, rate limiting, traffic security shield.
 - **Prompt**:
 ```text
-3D isometric architecture visual of a central Nginx reverse proxy server node featuring a subtle Nginx emblem, positioned between incoming internet traffic streams on the left and protected backend app servers on the right. A glowing emerald green security barrier filters incoming data, dark cyber environment, sleek technical rendering, subtle decorative UI code accents, cinematic lighting, 8k --ar 16:9
+3D isometric cyber architecture visual of Nginx reverse proxy, WAF traffic filtering, TLS 1.3 encryption, emerald green accent lighting, dark theme background, clean developer aesthetic, 8k render --ar 16:9
 ```
 
 ### 2. UFW Firewall Hardening & Rate Limiting
 - **Target Filenames**: `assets/img/ufw-firewall.jpg` & `assets/img/ufw-firewall.webp`
 - **Article**: `blog/ufw-firewall-hardening-and-rate-limiting-blueprint-2026.html`
-- **Topic**: Default-Deny Policies & Native Port Rate Limiting.
+- **Keywords**: UFW firewall, Linux network security, default-deny policy, port rate limiting, connection defense.
 - **Prompt**:
 ```text
-3D isometric illustration of a glowing orange UFW network firewall gate protecting a Linux server rack cluster, blocking red unauthorized connection probes at port boundaries while allowing green data packets through, dark slate cyber setting, vibrant orange and electric blue lighting, clean technical detail --ar 16:9
+3D isometric illustration of UFW network firewall fortress, Linux server security defense, blocking unauthorized probes, vibrant orange and electric blue lighting, dark slate background, 8k render --ar 16:9
 ```
 
 ### 3. Fail2ban Intrusion Prevention & SSH Abuse
 - **Target Filenames**: `assets/img/fail2ban-defense.jpg` & `assets/img/fail2ban-defense.webp`
 - **Article**: `blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html`
-- **Topic**: Log-based IP Banning & Recidive Jails.
+- **Keywords**: Fail2ban intrusion prevention, SSH brute-force defense, IP banning, security lock vault.
 - **Prompt**:
 ```text
-3D isometric view of an automated Fail2ban security lock mechanism sealing an SSH port gate shut against glowing red brute-force login attempts, dark server infrastructure environment, glowing crimson red and gold security lock indicators, high-detail cyber defense --ar 16:9
+3D isometric view of Fail2ban automated security lock, blocking SSH brute-force attacks, glowing crimson red and gold indicators, dark cyber server background, 8k render --ar 16:9
 ```
 
 ### 4. Linux Kernel Sysctl Hardening
 - **Target Filenames**: `assets/img/sysctl-hardening.jpg` & `assets/img/sysctl-hardening.webp`
 - **Article**: `blog/linux-kernel-sysctl-hardening-network-stack-security.html`
-- **Topic**: TCP/IP Stack Security, SYN Cookies, & Reverse Path Filtering.
+- **Keywords**: Linux kernel sysctl, TCP/IP stack security, SYN cookies, network hardening.
 - **Prompt**:
 ```text
-3D isometric view of a central Linux kernel processor core with subtle Tux Linux symbol, managing blue TCP network data highways and absorbing SYN flood waves with glowing cryptographic energy barriers, dark metallic circuit grid, electric cyan and deep blue illumination --ar 16:9
+3D isometric view of Linux kernel processor core, TCP/IP network stack security, SYN cookie defense, electric cyan and deep blue lighting, dark metallic circuit background, 8k render --ar 16:9
 ```
 
 ### 5. Systemd Service Sandboxing
 - **Target Filenames**: `assets/img/systemd-sandboxing.jpg` & `assets/img/systemd-sandboxing.webp`
 - **Article**: `blog/systemd-service-sandboxing-and-security-hardening.html`
-- **Topic**: Seccomp Syscall Filtering & Read-Only Mount Namespaces.
+- **Keywords**: Systemd service sandboxing, seccomp syscall filtering, namespace isolation, container security.
 - **Prompt**:
 ```text
-3D isometric illustration of a transparent violet glass isolation container encapsulating a systemd service process core, blocking unauthorized system call rays from reaching the underlying host Linux kernel, dark cyber setting, neon purple and blue lighting --ar 16:9
+3D isometric illustration of systemd service process isolation, transparent violet glass containment, seccomp syscall filtering, neon purple lighting, dark cyber background, 8k render --ar 16:9
 ```
 
 ### 6. Linux Auditd Event Monitoring & DFIR Logging
 - **Target Filenames**: `assets/img/auditd-monitoring.jpg` & `assets/img/auditd-monitoring.webp`
 - **Article**: `blog/auditd-kernel-event-monitoring-and-dfir-logging.html`
-- **Topic**: Real-Time Execve Tracking & File Integrity Audit Rules.
+- **Keywords**: Linux auditd, real-time kernel logging, DFIR telemetry, process execution tracking.
 - **Prompt**:
 ```text
-3D isometric view of a holographic audit scanner beam tracing a Linux file system directory tree, capturing real-time process execution events onto a dark DFIR security monitoring console, navy blue and magenta security operations backdrop, ultra-crisp render --ar 16:9
+3D isometric view of Linux auditd holographic scanner, real-time kernel event monitoring, DFIR security telemetry, navy blue and magenta lighting, dark background, 8k render --ar 16:9
 ```
 
 ### 7. WireGuard Mesh VPN Tunnels
 - **Target Filenames**: `assets/img/wireguard-mesh.jpg` & `assets/img/wireguard-mesh.webp`
 - **Article**: `blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html`
-- **Topic**: Encrypted Multi-Cloud VPS Interconnect & Noise Protocol.
+- **Keywords**: WireGuard mesh VPN, encrypted VPS tunnel, Noise protocol, multi-cloud interconnect.
 - **Prompt**:
 ```text
-3D isometric view of glowing golden amber laser VPN tunnels connecting private VPS server nodes across a dark digital globe map, completely isolated from public internet traffic, dark space backdrop, amber and ruby red security lighting --ar 16:9
+3D isometric view of WireGuard mesh VPN tunnels, encrypted cloud server interconnect, golden amber laser connections, dark space background, 8k render --ar 16:9
 ```
 
 ### 8. eBPF / XDP High-Speed Packet Filtering
 - **Target Filenames**: `assets/img/ebpf-xdp.jpg` & `assets/img/ebpf-xdp.webp`
 - **Article**: `blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html`
-- **Topic**: Driver-Level Zero-Copy Packet Drop at Network RX Buffer.
+- **Keywords**: eBPF XDP packet filtering, driver ring buffer, DDoS mitigation, high-speed networking.
 - **Prompt**:
 ```text
-3D isometric illustration of a high-speed fiber optic network interface card (NIC) dropping malicious DDoS packet bursts directly at the hardware driver ring buffer, dark metallic circuit board, electric teal and cyan laser lighting --ar 16:9
+3D isometric illustration of eBPF XDP high-speed packet filtering, network driver ring buffer, DDoS mitigation, electric teal and cyan laser lighting, dark circuit board, 8k render --ar 16:9
 ```
 
 ### 9. PAM Faillock Lockout Policy
 - **Target Filenames**: `assets/img/pam-faillock.jpg` & `assets/img/pam-faillock.webp`
 - **Article**: `blog/pam-tally2-faillock-account-lockout-policy-guide.html`
-- **Topic**: Pluggable Authentication Account Lockout & Root Protection.
+- **Keywords**: PAM faillock, Linux account lockout policy, authentication security gate, brute-force protection.
 - **Prompt**:
 ```text
-3D isometric view of a futuristic Linux PAM authentication access portal locking down automatically with a red lockout indicator after failed password attempts, dark obsidian background, cyan and crimson neon indicator lights, high-detail security gate --ar 16:9
+3D isometric view of Linux PAM authentication security gate, automated account lockout indicator, cyan and crimson neon lighting, dark obsidian background, 8k render --ar 16:9
 ```
 
 ### 10. Process Isolation & Unprivileged User Namespaces
 - **Target Filenames**: `assets/img/chroot-isolation.jpg` & `assets/img/chroot-isolation.webp`
 - **Article**: `blog/chroot-jail-and-unprivileged-namespaces-isolation.html`
-- **Topic**: Namespace Resource Virtualization & Chroot Jail Sandboxing.
+- **Keywords**: Linux process isolation, user namespaces, chroot jail, sandbox container security.
 - **Prompt**:
 ```text
-3D isometric illustration of a multi-layered sandbox container isolating an unprivileged application process from host system root directories, virtualizing user namespaces, dark slate environment, emerald green and slate blue lighting, clean architectural render --ar 16:9
+3D isometric illustration of Linux user namespace isolation, layered sandbox container, chroot jail security, emerald green and slate blue lighting, dark background, 8k render --ar 16:9
 ```
 
 ### 11. Linux VPS Hardening Guide 2026
 - **Target Filenames**: `assets/img/vps-hardening.jpg` & `assets/img/vps-hardening.webp`
 - **Article**: `blog/linux-vps-hardening-guide-2026.html`
-- **Topic**: Comprehensive VPS Security Lockdown Blueprint.
+- **Keywords**: Linux VPS hardening, server security lockdown, cyber defense shield.
 - **Prompt**:
 ```text
-3D isometric architecture visual of a heavily fortified Linux VPS server node enclosed in glowing cyber security barriers, emerald green security indicators, dark cyber environment, cinematic lighting --ar 16:9
+3D isometric visual of fortified Linux VPS server node, cyber security shields, emerald green accent lighting, dark cyber background, 8k render --ar 16:9
 ```
 
 ### 12. Minimalist Server Architecture
 - **Target Filenames**: `assets/img/static-architecture.jpg` & `assets/img/static-architecture.webp`
 - **Article**: `blog/minimalist-server-architecture-pure-css-and-static-hosting.html`
-- **Topic**: Static Architecture vs Monolithic Server Security.
+- **Keywords**: Minimalist static server architecture, static site hosting security, clean infrastructure.
 - **Prompt**:
 ```text
-3D isometric illustration of a sleek minimalist static server architecture vs a complex monolithic stack, ultra-clean slate blue and neon white lighting, modern server visual --ar 16:9
+3D isometric illustration of minimalist static server architecture, clean infrastructure, slate blue and neon white lighting, dark background, 8k render --ar 16:9
 ```
 
 ### 13. Content Security Policy (CSP) & Headers
 - **Target Filenames**: `assets/img/csp-security.jpg` & `assets/img/csp-security.webp`
 - **Article**: `blog/securing-web-applications-with-strict-content-security-policy.html`
-- **Topic**: Strict Content Security Policy & Security Headers.
+- **Keywords**: Content Security Policy, CSP header security, XSS defense grid, web app security.
 - **Prompt**:
 ```text
-3D isometric view of a web application browser window protected by a glowing laser security grid blocking untrusted inline script injection, dark cyber backdrop, electric blue lighting --ar 16:9
+3D isometric view of web application Content Security Policy grid, XSS script injection defense, electric blue security lighting, dark cyber backdrop, 8k render --ar 16:9
 ```
 
 ### 14. Understanding Linux eBPF Security Monitoring
 - **Target Filenames**: `assets/img/ebpf-monitoring.jpg` & `assets/img/ebpf-monitoring.webp`
 - **Article**: `blog/understanding-linux-ebpf-security-monitoring.html`
-- **Topic**: eBPF Kernel Hooks & Real-Time Security Monitoring.
+- **Keywords**: Linux eBPF kernel hooks, security event monitoring, kernel telemetry.
 - **Prompt**:
 ```text
-3D isometric visual of eBPF bytecode probes attached to Linux kernel system call hooks, capturing security events in real-time, dark magenta and cyan cyber environment --ar 16:9
+3D isometric visual of eBPF kernel hooks, real-time Linux security event monitoring, magenta and cyan lighting, dark cyber setting, 8k render --ar 16:9
 ```
 
 ### 15. Zero-Trust SSH Access with FIDO2 & SSH CA
 - **Target Filenames**: `assets/img/ssh-zero-trust.jpg` & `assets/img/ssh-zero-trust.webp`
 - **Article**: `blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html`
-- **Topic**: FIDO2 Hardware Key Authentication & Short-Lived SSH Certificates.
+- **Keywords**: Zero-Trust SSH access, FIDO2 hardware token, SSH Certificate Authority security.
 - **Prompt**:
 ```text
-3D isometric view of a YubiKey FIDO2 hardware token authenticating short-lived SSH certificates at a secure server gateway, dark obsidian and gold security lighting --ar 16:9
+3D isometric view of FIDO2 hardware key SSH authentication, SSH Certificate Authority gateway, obsidian and gold security lighting, dark background, 8k render --ar 16:9
 ```
 
 ---
