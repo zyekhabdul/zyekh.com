@@ -24,8 +24,8 @@
 <!-- Fonts & Styles -->
 <link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
 <link href="/assets/fonts/fonts.css?v=20260803_v75_v62" rel="stylesheet"/>
-<link href="/assets/css/shared.css?v=20260804_v108" rel="stylesheet"/>
-<link href="/assets/css/blog.css?v=20260804_v108" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260804_v109" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260804_v109" rel="stylesheet"/>
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -60,67 +60,139 @@
 </div>
 <!-- Articles Grid -->
 <div class="grid-2" id="articlesGrid">
-<!-- Article Card (Nginx Reverse Proxy Hardening) -->
-<div class="article-item" data-category="security hardening web">
+<div class="article-item" data-category="security linux research">
 <article class="article-card">
 <div>
 <div class="card-thumb-wrapper">
-<a href="/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html">
+<a href="/blog/auditd-kernel-event-monitoring-and-dfir-logging.html">
 <picture>
-<source srcset="/assets/img/nginx-security.webp" type="image/webp"/>
-<img alt="Nginx Reverse Proxy Security Hardening" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/nginx-security.jpg" width="640"/>
+<source srcset="/assets/img/ebpf-monitoring.webp" type="image/webp"/>
+<img alt="Linux Auditd Blueprint: Real-Time Kernel Event Tracking &amp; Security Auditing" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/ebpf-monitoring.jpg" width="640"/>
 </picture>
 </a>
 </div>
-<div class="tags-container"><span class="meta-tag">#WebSecurity</span><span class="meta-tag">#NginxHardening</span></div>
+<div class="tags-container"><span class="meta-tag">#CyberSecurity</span><span class="meta-tag">#AuditdDFIR</span></div>
 <h2 class="card-title">
-<a href="/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html">Nginx Reverse Proxy Security Hardening Blueprint for 2026</a>
+<a href="/blog/auditd-kernel-event-monitoring-and-dfir-logging.html">Linux Auditd Blueprint: Real-Time Kernel Event Tracking &amp; Security Auditing</a>
 </h2>
 <p class="article-excerpt">
-              Production guide for hardening Nginx reverse proxies with TLS 1.3, rate limiting, buffer overflow defense, and security headers.
-            </p>
+  Security guide for configuring Linux Audit Framework (auditd) to log execve system calls, file integrity changes, and privilege escalation events.
+</p>
 </div>
 <div class="article-footer">
-<span>August 3, 2026</span>
-<span>10 min read</span>
+<span>2026-08-04</span>
+<span>14 min read</span>
 </div>
 </article>
 </div>
-<!-- Article Card 0 (Newest) -->
+<div class="article-item" data-category="hardening linux">
+<article class="article-card">
+<div>
+<div class="card-thumb-wrapper">
+<a href="/blog/chroot-jail-and-unprivileged-namespaces-isolation.html">
+<picture>
+<source srcset="/assets/img/static-architecture.webp" type="image/webp"/>
+<img alt="Process Isolation on Linux: Unprivileged User Namespaces &amp; Chroot Jails" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/static-architecture.jpg" width="640"/>
+</picture>
+</a>
+</div>
+<div class="tags-container"><span class="meta-tag">#SystemHardening</span><span class="meta-tag">#ProcessIsolation</span></div>
+<h2 class="card-title">
+<a href="/blog/chroot-jail-and-unprivileged-namespaces-isolation.html">Process Isolation on Linux: Unprivileged User Namespaces &amp; Chroot Jails</a>
+</h2>
+<p class="article-excerpt">
+  Technical blueprint for configuring unprivileged user namespaces and chroot jails to sandbox untrusted services without full container runtimes.
+</p>
+</div>
+<div class="article-footer">
+<span>2026-08-04</span>
+<span>12 min read</span>
+</div>
+</article>
+</div>
+<div class="article-item" data-category="linux research">
+<article class="article-card">
+<div>
+<div class="card-thumb-wrapper">
+<a href="/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html">
+<picture>
+<source srcset="/assets/img/ebpf-monitoring.webp" type="image/webp"/>
+<img alt="High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/ebpf-monitoring.jpg" width="640"/>
+</picture>
+</a>
+</div>
+<div class="tags-container"><span class="meta-tag">#LinuxKernel</span><span class="meta-tag">#XDPDDoSDefense</span></div>
+<h2 class="card-title">
+<a href="/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html">High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation</a>
+</h2>
+<p class="article-excerpt">
+  Technical guide for writing eBPF eXpress Data Path (XDP) kernel programs to drop malicious DDoS traffic at the network driver level.
+</p>
+</div>
+<div class="article-footer">
+<span>2026-08-04</span>
+<span>15 min read</span>
+</div>
+</article>
+</div>
+<div class="article-item" data-category="security hardening">
+<article class="article-card">
+<div>
+<div class="card-thumb-wrapper">
+<a href="/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html">
+<picture>
+<source srcset="/assets/img/ssh-zero-trust.webp" type="image/webp"/>
+<img alt="Automated Intrusion Prevention: Fail2ban Configuration for SSH &amp; Nginx Protection" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/ssh-zero-trust.jpg" width="640"/>
+</picture>
+</a>
+</div>
+<div class="tags-container"><span class="meta-tag">#CyberSecurity</span><span class="meta-tag">#Fail2banDefense</span></div>
+<h2 class="card-title">
+<a href="/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html">Automated Intrusion Prevention: Fail2ban Configuration for SSH &amp; Nginx Protection</a>
+</h2>
+<p class="article-excerpt">
+  Comprehensive blueprint for deploying Fail2ban to detect brute-force attacks, automate IP bans via iptables/nftables, and configure recidive long-term bans.
+</p>
+</div>
+<div class="article-footer">
+<span>2026-08-04</span>
+<span>11 min read</span>
+</div>
+</article>
+</div>
 <div class="article-item" data-category="security hardening linux">
 <article class="article-card">
 <div>
 <div class="card-thumb-wrapper">
-<a href="/blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html">
+<a href="/blog/linux-kernel-sysctl-hardening-network-stack-security.html">
 <picture>
-<source srcset="/assets/img/ssh-zero-trust.webp" type="image/webp"/>
-<img alt="Zero-Trust SSH Access Blueprint" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/ssh-zero-trust.jpg" width="640"/>
+<source srcset="/assets/img/ebpf-monitoring.webp" type="image/webp"/>
+<img alt="Linux Kernel Sysctl Hardening: Securing TCP/IP Network Stack against SYN Floods" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/ebpf-monitoring.jpg" width="640"/>
 </picture>
 </a>
 </div>
-<div class="tags-container"><span class="meta-tag">#CyberSecurity</span><span class="meta-tag">#ZeroTrustSSH</span></div>
+<div class="tags-container"><span class="meta-tag">#LinuxKernel</span><span class="meta-tag">#SysctlHardening</span></div>
 <h2 class="card-title">
-<a href="/blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html">Zero-Trust SSH Access Blueprint: FIDO2 Hardware Keys &amp; SSH Certificate Authority</a>
+<a href="/blog/linux-kernel-sysctl-hardening-network-stack-security.html">Linux Kernel Sysctl Hardening: Securing TCP/IP Network Stack against SYN Floods</a>
 </h2>
 <p class="article-excerpt">
-              Eliminate static SSH keys and credential sprawl using OpenSSH native FIDO2/YubiKey tokens, short-lived SSH certificates, and cryptographic verification.
-            </p>
+  Hardening guide for tuning Linux kernel sysctl parameters to defend against TCP SYN floods, IP spoofing, packet redirects, and memory exhaustion.
+</p>
 </div>
 <div class="article-footer">
-<span>August 3, 2026</span>
-<span>8 min read</span>
+<span>2026-08-04</span>
+<span>13 min read</span>
 </div>
 </article>
 </div>
-<!-- Article Card 1 -->
-<div class="article-item" data-category="hardening security">
+<div class="article-item" data-category="hardening linux">
 <article class="article-card">
 <div>
 <div class="card-thumb-wrapper">
 <a href="/blog/linux-vps-hardening-guide-2026.html">
 <picture>
 <source srcset="/assets/img/vps-hardening.webp" type="image/webp"/>
-<img alt="Comprehensive Linux VPS Hardening Blueprint" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/vps-hardening.jpg" width="640"/>
+<img alt="Comprehensive Linux VPS Hardening Blueprint for 2026" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/vps-hardening.jpg" width="640"/>
 </picture>
 </a>
 </div>
@@ -129,8 +201,8 @@
 <a href="/blog/linux-vps-hardening-guide-2026.html">Comprehensive Linux VPS Hardening Blueprint for 2026</a>
 </h2>
 <p class="article-excerpt">
-              A step-by-step technical guide to hardening Debian/Ubuntu production servers: SSH key-only auth, UFW/Nginx rate limiting, kernel sysctl parameters, and automated fail2ban configuration.
-            </p>
+  Production-grade security blueprint for Debian and Ubuntu Linux servers. Includes SSH key enforcement, kernel sysctl parameters, UFW rate-limiting, Fail2Ban auditing, and automated updates.
+</p>
 </div>
 <div class="article-footer">
 <span>July 26, 2026</span>
@@ -138,67 +210,14 @@
 </div>
 </article>
 </div>
-<!-- Article Card 2 -->
-<div class="article-item" data-category="linux research">
-<article class="article-card">
-<div>
-<div class="card-thumb-wrapper">
-<a href="/blog/understanding-linux-ebpf-security-monitoring.html">
-<picture>
-<source srcset="/assets/img/ebpf-monitoring.webp" type="image/webp"/>
-<img alt="Linux eBPF Monitoring" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/ebpf-monitoring.jpg" width="640"/>
-</picture>
-</a>
-</div>
-<div class="tags-container"><span class="meta-tag">#LinuxKernel</span><span class="meta-tag">#eBPFMonitoring</span></div>
-<h2 class="card-title">
-<a href="/blog/understanding-linux-ebpf-security-monitoring.html">Understanding eBPF for Real-Time Linux Security Monitoring</a>
-</h2>
-<p class="article-excerpt">
-              How Extended Berkeley Packet Filter (eBPF) transforms observability and security event detection in Linux environments without modifying kernel source code.
-            </p>
-</div>
-<div class="article-footer">
-<span>July 20, 2026</span>
-<span>14 min read</span>
-</div>
-</article>
-</div>
-<!-- Article Card 3 -->
-<div class="article-item" data-category="security">
-<article class="article-card">
-<div>
-<div class="card-thumb-wrapper">
-<a href="/blog/securing-web-applications-with-strict-content-security-policy.html">
-<picture>
-<source srcset="/assets/img/csp-security.webp" type="image/webp"/>
-<img alt="Strict CSP &amp; Security Headers" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/csp-security.jpg" width="640"/>
-</picture>
-</a>
-</div>
-<div class="tags-container"><span class="meta-tag">#WebSecurity</span><span class="meta-tag">#CSPHardening</span></div>
-<h2 class="card-title">
-<a href="/blog/securing-web-applications-with-strict-content-security-policy.html">Implementing Strict Content Security Policy (CSP) &amp; Security Headers</a>
-</h2>
-<p class="article-excerpt">
-              Eliminating Cross-Site Scripting (XSS) and clickjacking using strict CSP nonces, HSTS preloading, X-Content-Type-Options, and referrer policy configurations in Nginx.
-            </p>
-</div>
-<div class="article-footer">
-<span>July 15, 2026</span>
-<span>13 min read</span>
-</div>
-</article>
-</div>
-<!-- Article Card 4 -->
-<div class="article-item" data-category="linux hardening">
+<div class="article-item" data-category="security research">
 <article class="article-card">
 <div>
 <div class="card-thumb-wrapper">
 <a href="/blog/minimalist-server-architecture-pure-css-and-static-hosting.html">
 <picture>
 <source srcset="/assets/img/static-architecture.webp" type="image/webp"/>
-<img alt="Minimalist Static Hosting Architecture" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/static-architecture.jpg" width="640"/>
+<img alt="Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/static-architecture.jpg" width="640"/>
 </picture>
 </a>
 </div>
@@ -207,12 +226,212 @@
 <a href="/blog/minimalist-server-architecture-pure-css-and-static-hosting.html">Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security</a>
 </h2>
 <p class="article-excerpt">
-              An architectural breakdown of attack surface reduction by migrating static sites to global CDN edge nodes with GitHub Pages, Cloudflare, and pure CSS frameworks.
-            </p>
+  Architectural analysis comparing static edge hosting to monolithic server frameworks. Examines attack surface reduction, TTFB performance benchmarks, zero server maintenance, and pure CSS design systems.
+</p>
 </div>
 <div class="article-footer">
 <span>July 10, 2026</span>
 <span>12 min read</span>
+</div>
+</article>
+</div>
+<div class="article-item" data-category="security hardening">
+<article class="article-card">
+<div>
+<div class="card-thumb-wrapper">
+<a href="/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html">
+<picture>
+<source srcset="/assets/img/nginx-security.webp" type="image/webp"/>
+<img alt="Nginx Reverse Proxy Security Hardening Blueprint for 2026" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/nginx-security.jpg" width="640"/>
+</picture>
+</a>
+</div>
+<div class="tags-container"><span class="meta-tag">#WebSecurity</span><span class="meta-tag">#NginxHardening</span></div>
+<h2 class="card-title">
+<a href="/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html">Nginx Reverse Proxy Security Hardening Blueprint for 2026</a>
+</h2>
+<p class="article-excerpt">
+  Production guide for hardening Nginx reverse proxies with TLS 1.3, rate limiting, buffer overflow defense, and security headers.
+</p>
+</div>
+<div class="article-footer">
+<span>2026-08-03</span>
+<span>10 min read</span>
+</div>
+</article>
+</div>
+<div class="article-item" data-category="security hardening linux">
+<article class="article-card">
+<div>
+<div class="card-thumb-wrapper">
+<a href="/blog/pam-tally2-faillock-account-lockout-policy-guide.html">
+<picture>
+<source srcset="/assets/img/vps-hardening.webp" type="image/webp"/>
+<img alt="Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/vps-hardening.jpg" width="640"/>
+</picture>
+</a>
+</div>
+<div class="tags-container"><span class="meta-tag">#SystemHardening</span><span class="meta-tag">#PAMSecurity</span></div>
+<h2 class="card-title">
+<a href="/blog/pam-tally2-faillock-account-lockout-policy-guide.html">Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force</a>
+</h2>
+<p class="article-excerpt">
+  Security guide for configuring pam_faillock to prevent SSH and console brute-force authentication attacks on RHEL, Debian, and Ubuntu systems.
+</p>
+</div>
+<div class="article-footer">
+<span>2026-08-04</span>
+<span>10 min read</span>
+</div>
+</article>
+</div>
+<div class="article-item" data-category="security hardening">
+<article class="article-card">
+<div>
+<div class="card-thumb-wrapper">
+<a href="/blog/securing-web-applications-with-strict-content-security-policy.html">
+<picture>
+<source srcset="/assets/img/csp-security.webp" type="image/webp"/>
+<img alt="Implementing Strict Content Security Policy (CSP) &amp; Security Headers" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/csp-security.jpg" width="640"/>
+</picture>
+</a>
+</div>
+<div class="tags-container"><span class="meta-tag">#WebSecurity</span><span class="meta-tag">#CSPHardening</span></div>
+<h2 class="card-title">
+<a href="/blog/securing-web-applications-with-strict-content-security-policy.html">Implementing Strict Content Security Policy (CSP) &amp; Security Headers</a>
+</h2>
+<p class="article-excerpt">
+  Comprehensive technical guide for configuring strict Content Security Policy (CSP), HTTP Strict Transport Security (HSTS), X-Content-Type-Options, and Nginx security headers.
+</p>
+</div>
+<div class="article-footer">
+<span>July 15, 2026</span>
+<span>13 min read</span>
+</div>
+</article>
+</div>
+<div class="article-item" data-category="security hardening linux">
+<article class="article-card">
+<div>
+<div class="card-thumb-wrapper">
+<a href="/blog/systemd-service-sandboxing-and-security-hardening.html">
+<picture>
+<source srcset="/assets/img/static-architecture.webp" type="image/webp"/>
+<img alt="Systemd Service Sandboxing: Restricting Process Capability &amp; System Calls" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/static-architecture.jpg" width="640"/>
+</picture>
+</a>
+</div>
+<div class="tags-container"><span class="meta-tag">#SystemHardening</span><span class="meta-tag">#SystemdSecurity</span></div>
+<h2 class="card-title">
+<a href="/blog/systemd-service-sandboxing-and-security-hardening.html">Systemd Service Sandboxing: Restricting Process Capability &amp; System Calls</a>
+</h2>
+<p class="article-excerpt">
+  Production guide for sandboxing Linux daemons using systemd security directives like ProtectSystem, SystemCallFilter, and CapabilityBoundingSet.
+</p>
+</div>
+<div class="article-footer">
+<span>2026-08-04</span>
+<span>11 min read</span>
+</div>
+</article>
+</div>
+<div class="article-item" data-category="security hardening linux">
+<article class="article-card">
+<div>
+<div class="card-thumb-wrapper">
+<a href="/blog/ufw-firewall-hardening-and-rate-limiting-blueprint-2026.html">
+<picture>
+<source srcset="/assets/img/vps-hardening.webp" type="image/webp"/>
+<img alt="UFW Firewall Hardening: Advanced Rate Limiting &amp; Default-Deny Security Blueprint" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/vps-hardening.jpg" width="640"/>
+</picture>
+</a>
+</div>
+<div class="tags-container"><span class="meta-tag">#SystemHardening</span><span class="meta-tag">#UFWFirewall</span></div>
+<h2 class="card-title">
+<a href="/blog/ufw-firewall-hardening-and-rate-limiting-blueprint-2026.html">UFW Firewall Hardening: Advanced Rate Limiting &amp; Default-Deny Security Blueprint</a>
+</h2>
+<p class="article-excerpt">
+  Production guide for securing Linux servers using UFW with default-deny policies, custom application profiles, rate limiting, and interface isolation.
+</p>
+</div>
+<div class="article-footer">
+<span>2026-08-04</span>
+<span>12 min read</span>
+</div>
+</article>
+</div>
+<div class="article-item" data-category="security linux research">
+<article class="article-card">
+<div>
+<div class="card-thumb-wrapper">
+<a href="/blog/understanding-linux-ebpf-security-monitoring.html">
+<picture>
+<source srcset="/assets/img/ebpf-monitoring.webp" type="image/webp"/>
+<img alt="Understanding eBPF for Real-Time Linux Security Monitoring" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/ebpf-monitoring.jpg" width="640"/>
+</picture>
+</a>
+</div>
+<div class="tags-container"><span class="meta-tag">#LinuxKernel</span><span class="meta-tag">#eBPFMonitoring</span></div>
+<h2 class="card-title">
+<a href="/blog/understanding-linux-ebpf-security-monitoring.html">Understanding eBPF for Real-Time Linux Security Monitoring</a>
+</h2>
+<p class="article-excerpt">
+  Technical deep-dive on Extended Berkeley Packet Filter (eBPF) tracing, kprobes, tracepoints, bpftrace, and zero-overhead kernel runtime security monitoring.
+</p>
+</div>
+<div class="article-footer">
+<span>July 20, 2026</span>
+<span>14 min read</span>
+</div>
+</article>
+</div>
+<div class="article-item" data-category="security hardening">
+<article class="article-card">
+<div>
+<div class="card-thumb-wrapper">
+<a href="/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html">
+<picture>
+<source srcset="/assets/img/ssh-zero-trust.webp" type="image/webp"/>
+<img alt="Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels &amp; Strict Firewall Rules" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/ssh-zero-trust.jpg" width="640"/>
+</picture>
+</a>
+</div>
+<div class="tags-container"><span class="meta-tag">#WebSecurity</span><span class="meta-tag">#WireGuardMesh</span></div>
+<h2 class="card-title">
+<a href="/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html">Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels &amp; Strict Firewall Rules</a>
+</h2>
+<p class="article-excerpt">
+  Step-by-step technical blueprint for creating encrypted private mesh networks between multi-cloud VPS nodes using WireGuard and UDP noise protocols.
+</p>
+</div>
+<div class="article-footer">
+<span>2026-08-04</span>
+<span>12 min read</span>
+</div>
+</article>
+</div>
+<div class="article-item" data-category="security">
+<article class="article-card">
+<div>
+<div class="card-thumb-wrapper">
+<a href="/blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html">
+<picture>
+<source srcset="/assets/img/ssh-zero-trust.webp" type="image/webp"/>
+<img alt="Zero-Trust SSH Access Blueprint: FIDO2 Hardware Keys &amp; SSH Certificate Authority" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/ssh-zero-trust.jpg" width="640"/>
+</picture>
+</a>
+</div>
+<div class="tags-container"><span class="meta-tag">#CyberSecurity</span><span class="meta-tag">#ZeroTrustSSH</span></div>
+<h2 class="card-title">
+<a href="/blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html">Zero-Trust SSH Access Blueprint: FIDO2 Hardware Keys &amp; SSH Certificate Authority</a>
+</h2>
+<p class="article-excerpt">
+  Comprehensive technical blueprint for securing Linux SSH infrastructure using FIDO2/YubiKey hardware tokens, SSH Certificate Authority (SSH CA), and short-lived certificates.
+</p>
+</div>
+<div class="article-footer">
+<span>August 3, 2026</span>
+<span>8 min read</span>
 </div>
 </article>
 </div>
@@ -236,6 +455,6 @@
       });
     });
   </script>
-<script defer="" src="/assets/js/site-nav.js?v=20260804_v108"></script>
+<script defer="" src="/assets/js/site-nav.js?v=20260804_v109"></script>
 </body>
 </html>

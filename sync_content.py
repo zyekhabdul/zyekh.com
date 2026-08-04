@@ -141,38 +141,96 @@ def sync_all(bump_version=True):
         f.write(llms_txt)
     print("[SYNC] Updated llms.txt RAG knowledge base.")
 
-    # 5. Harmonize blog/index.html card category hashtags from article sources
+    # 5. Dynamically regenerate all blog article cards in blog/index.html
     index_path = "blog/index.html"
     if os.path.exists(index_path):
-        soup_index = BeautifulSoup(open(index_path, "r", encoding="utf-8").read(), "html.parser")
-        updated = False
-        for card in soup_index.find_all("article", class_="article-card"):
-            link = card.find("a", href=True)
-            if not link:
-                continue
-            href = link["href"].lstrip("/")
-            if not os.path.exists(href):
-                continue
-            art_soup = BeautifulSoup(open(href, "r", encoding="utf-8").read(), "html.parser")
-            meta_span = art_soup.find("span", class_="meta-tag")
-            if not meta_span:
-                continue
-            cat_text = meta_span.text.strip()
+        articles = sorted(glob.glob("blog/*.html"))
+        articles = [a for a in articles if a != "blog/index.html"]
+        card_blocks = []
+        for a in articles:
+            rel_path = "/" + a.replace("\\", "/")
+            soup = BeautifulSoup(open(a, encoding="utf-8").read(), "html.parser")
+            h1 = soup.find("h1")
+            title = h1.text.strip() if h1 else os.path.basename(a)
+            desc_meta = soup.find("meta", {"name": "description"})
+            desc = desc_meta["content"].strip() if desc_meta else title
+            time_tag = soup.find("time", class_="meta-item") or soup.find("time")
+            date_display = "August 4, 2026"
+            if time_tag:
+                date_text = time_tag.text.replace("Published:", "").strip()
+                if date_text:
+                    date_display = date_text
+            read_time = "10 min read"
+            meta_info = soup.find("div", class_="meta-info")
+            if meta_info:
+                for span in meta_info.find_all("span"):
+                    if "min read" in span.text:
+                        read_time = span.text.split("(")[0].strip()
+                        break
+            hero_img_tag = soup.find("img", class_="article-hero-img")
+            hero_jpg = "/assets/img/vps-hardening.jpg"
+            hero_webp = "/assets/img/vps-hardening.webp"
+            if hero_img_tag and hero_img_tag.get("src"):
+                src = hero_img_tag["src"]
+                if src.startswith("http"):
+                    src = "/" + "/".join(src.split("/")[3:])
+                hero_jpg = src
+                hero_webp = src.replace(".jpg", ".webp")
+            meta_span = soup.find("span", class_="meta-tag")
+            cat_text = meta_span.text.strip() if meta_span else "Cyber Security"
             parts = [p.strip() for p in re.split(r'[•,/|]+', cat_text) if p.strip()]
             hashtags = [f"#{re.sub(r'[^a-zA-Z0-9]', '', p)}" for p in parts if p]
-            tags_div = card.find("div", class_="tags-container")
-            if tags_div and hashtags:
-                new_tags_html = "\n".join([f'<span class="meta-tag">{h}</span>' for h in hashtags])
-                tags_div.clear()
-                for h in hashtags:
-                    tag_span = soup_index.new_tag("span", attrs={"class": "meta-tag"})
-                    tag_span.string = h
-                    tags_div.append(tag_span)
-                updated = True
-        if updated:
+            hashtags_html = "".join([f'<span class="meta-tag">{h}</span>' for h in hashtags])
+            data_cats = []
+            combined = (cat_text + " " + title + " " + a).lower()
+            if any(k in combined for k in ["security", "sec", "firewall", "ssh", "fail2ban", "pam", "waf"]):
+                data_cats.append("security")
+            if any(k in combined for k in ["hardening", "vps", "protect", "isolation", "jail"]):
+                data_cats.append("hardening")
+            if any(k in combined for k in ["linux", "kernel", "sys", "cron", "audit", "ebpf"]):
+                data_cats.append("linux")
+            if any(k in combined for k in ["research", "ebpf", "static", "audit"]):
+                data_cats.append("research")
+            if not data_cats:
+                data_cats = ["security", "linux"]
+            data_cat_str = " ".join(list(dict.fromkeys(data_cats)))
+            card_html = f'''<div class="article-item" data-category="{data_cat_str}">
+<article class="article-card">
+<div>
+<div class="card-thumb-wrapper">
+<a href="{rel_path}">
+<picture>
+<source srcset="{hero_webp}" type="image/webp"/>
+<img alt="{title}" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="{hero_jpg}" width="640"/>
+</picture>
+</a>
+</div>
+<div class="tags-container">{hashtags_html}</div>
+<h2 class="card-title">
+<a href="{rel_path}">{title}</a>
+</h2>
+<p class="article-excerpt">
+  {desc}
+</p>
+</div>
+<div class="article-footer">
+<span>{date_display}</span>
+<span>{read_time}</span>
+</div>
+</article>
+</div>'''
+            card_blocks.append(card_html)
+
+        soup_index = BeautifulSoup(open(index_path, "r", encoding="utf-8").read(), "html.parser")
+        grid_div = soup_index.find("div", id="articlesGrid")
+        if grid_div:
+            grid_div.clear()
+            grid_content = "\n".join(card_blocks)
+            new_grid = BeautifulSoup(f'<div class="grid-2" id="articlesGrid">\n{grid_content}\n</div>', "html.parser")
+            grid_div.replace_with(new_grid.div)
             with open(index_path, "w", encoding="utf-8") as f:
                 f.write(str(soup_index))
-            print(f"[SYNC] Harmonized category hashtags in {index_path} from article sources.")
+            print(f"[SYNC] Dynamically rendered {len(card_blocks)} article cards into {index_path}.")
 
     print("[SYNC] Synchronization completed successfully!")
 
