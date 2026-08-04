@@ -6,7 +6,7 @@ This document defines the permanent, binding blueprint for programmatically gene
 
 ## 1. PIPELINE CORE ARCHITECTURE
 
-The pipeline consists of 5 modular components:
+The pipeline consists of 5 modular components orchestrated by a master runner:
 
 ```
 [ batch_data.json ] 
@@ -15,20 +15,25 @@ The pipeline consists of 5 modular components:
 [ generate_batch.py ] -----> Produces 100% SOP-compliant HTML files in /blog/
         |
         v
-[ verify_batch.py ] -------> Runs 10-axis QA audit (Schema, Meta, Image, IDs, No-Emoji)
+[ verify_batch.py ] -------> Runs 14-axis QA audit (Word count >=800, H2 >=4, Schema, Meta, Image, IDs, No-Emoji)
         |
         v
-[ sync_content.py ] -------> Auto-bumps sw.js CACHE_VERSION, updates sitemap.xml, feed.xml, llms.txt
+[ sync_content.py ] -------> Renders blog/index.html cards, auto-bumps sw.js CACHE_VERSION, updates sitemap, feed.xml, llms.txt
         |
         v
 [ ping_indexers.py ] ------> Pings IndexNow API (Status 200 OK) + Git Push + Cloudflare Purge
 ```
 
+Master Orchestration Command:
+```bash
+python3 run_pipeline.py --deploy
+```
+
 ---
 
-## 2. THE 10 GOLD STANDARD HTML REQUIREMENTS
+## 2. THE 14 GOLD STANDARD QA AUDIT REQUIREMENTS
 
-Every generated `.html` file inside `/blog/` MUST implement all 10 components:
+Every generated `.html` file inside `/blog/` MUST implement all 14 components:
 
 1. **Meta & Social Media Tags**: Canonical URL, Meta Description, Author, RSS (`feed.xml`), Favicons, OpenGraph (`og:image:secure_url`, `og:image:alt`), Twitter Cards (`twitter:creator`, `twitter:site`).
 2. **Schema.org JSON-LD**: Multi-graph containing `@type: TechArticle`, `@type: BreadcrumbList`, and `@type: FAQPage`.
@@ -40,6 +45,10 @@ Every generated `.html` file inside `/blog/` MUST implement all 10 components:
 8. **Article Sections**: Every `<h2>` MUST have a unique, slugified `id="..."` and code snippets wrapped in `<pre><code class="language-bash">`.
 9. **FAQ Section**: `<div class="faq-section"><h2 id="faq">` with `<details><summary>`.
 10. **Author Bio & Cross-Links**: `<div class="author-card">` (EEAT/DFIR branding) and `<div class="article-cross-links callout-card">` (valid links to `/tools/*.html`).
+11. **Element ID Uniqueness**: 0 duplicate IDs allowed across document DOM trees.
+12. **Single Navigation Script Tag**: Exactly 1 `<script src="site-nav.js">` per page.
+13. **Minimum Technical Depth Threshold**: Word count MUST be >= 800 words (Target: 1,200 - 1,600+ words).
+14. **Minimum Section Depth**: Section H2 count MUST be >= 4 sections.
 
 ---
 
@@ -90,24 +99,16 @@ Every generated `.html` file inside `/blog/` MUST implement all 10 components:
 ## 4. THUMBNAIL IMAGE GENERATION POLICY
 
 - Each article MUST have a unique 16:9 banner image in `assets/img/` (`.jpg` and `.webp`).
-- If API capacity is unavailable, generate high-resolution banners locally using Pillow (`python3 -c "... create_tech_banner ..."`).
+- All WebP images must be compressed under 100 KB target payload.
 
 ---
 
-## 5. AUTOMATED VERIFICATION & PUBLISHING COMMANDS
+## 5. MASTER AUTOMATED VERIFICATION & PUBLISHING PIPELINE
+
+Execute all pipeline stages, audits, syncs, indexer pings, git push, and Cloudflare purge using a single command:
 
 ```bash
-# 1. Generate HTML files from batch_data.json
-python3 generate_batch.py
-
-# 2. Run QA verification script
-python3 verify_batch.py
-
-# 3. Synchronize sitemap, feed.xml, llms.txt, sw.js CACHE_VERSION, and HTML query strings
-python3 sync_content.py
-
-# 4. Trigger IndexNow API
-python3 ping_indexers.py
+python3 run_pipeline.py --deploy
 ```
 
 ---
