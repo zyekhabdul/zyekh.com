@@ -4,6 +4,14 @@ This document defines unique, content-driven AI image generation prompts derived
 
 ---
 
+## OPERATIONAL PROTOCOL (MANDATORY FOR GEMINI WEB)
+
+- **CRITICAL OPERATIONAL RULE**: **1 PROMPT = 1 NEW CHAT SESSION (NEW CHAT)**.
+- Never generate multiple article thumbnails within the *same* Gemini Web chat thread. In-session context causes Gemini to inherit layout biases and duplicate object angles across images.
+- Always open a **Fresh New Chat** (`New Chat`) in Gemini Web for each article prompt to guarantee 100% unique composition.
+
+---
+
 ## CORE STRATEGY & NO-TEXT RULES
 
 1. **Content-Driven Visual Metaphors**: Prompts are derived directly from the core technical mechanism of each article (e.g. eBPF kernel hooks, WireGuard laser tunnels, PAM access gates), avoiding repetitive template layouts.
