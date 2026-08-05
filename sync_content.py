@@ -10,7 +10,7 @@ def sync_all(bump_version=False):
     print("[SYNC] Starting automated RAG, Sitemap, RSS & Cache Version Synchronization...")
 
     sw_path = "sw.js"
-    sw_ver = "v78"
+    sw_ver = "v126"
     
     if os.path.exists(sw_path):
         sw_c = open(sw_path, "r", encoding="utf-8").read()
@@ -33,19 +33,21 @@ def sync_all(bump_version=False):
     html_files = sorted(glob.glob("**/*.html", recursive=True))
     for f in html_files:
         c = open(f, "r", encoding="utf-8").read()
-        c = re.sub(r"site-nav\.js(\?v=[^\"]*)?", f"site-nav.js?v={new_ver}", c)
-        c = re.sub(r"shared\.css(\?v=[^\"]*)?", f"shared.css?v={new_ver}", c)
-        c = re.sub(r"blog\.css(\?v=[^\"]*)?", f"blog.css?v={new_ver}", c)
+        c = re.sub(r"site-nav\.js(\?v=[^\"'>\s]*)?", f"site-nav.js?v={new_ver}", c)
+        c = re.sub(r"article-actions\.js(\?v=[^\"'>\s]*)?", f"article-actions.js?v={new_ver}", c)
+        c = re.sub(r"shared\.css(\?v=[^\"'>\s]*)?", f"shared.css?v={new_ver}", c)
+        c = re.sub(r"blog\.css(\?v=[^\"'>\s]*)?", f"blog.css?v={new_ver}", c)
+        c = re.sub(r"fonts\.css(\?v=[^\"'>\s]*)?", f"fonts.css?v={new_ver}", c)
         open(f, "w", encoding="utf-8").write(c)
     print(f"[SYNC] Updated query version ?v={new_ver} across {len(html_files)} HTML files.")
 
     # 3. Regenerate sitemap.xml dynamically
     urls_data = []
     # Static primary pages
-    urls_data.append((f"{base_url}/", "2026-08-03", "weekly", "1.0"))
-    urls_data.append((f"{base_url}/about/", "2026-08-03", "weekly", "0.9"))
-    urls_data.append((f"{base_url}/tools/", "2026-08-03", "weekly", "0.9"))
-    urls_data.append((f"{base_url}/blog/", "2026-08-03", "weekly", "0.9"))
+    urls_data.append((f"{base_url}/", "2026-08-05", "weekly", "1.0"))
+    urls_data.append((f"{base_url}/about/", "2026-08-05", "weekly", "0.9"))
+    urls_data.append((f"{base_url}/tools/", "2026-08-05", "weekly", "0.9"))
+    urls_data.append((f"{base_url}/blog/", "2026-08-05", "weekly", "0.9"))
     urls_data.append((f"{base_url}/blueprints/", "2026-08-05", "weekly", "0.9"))
 
     # Blog Articles
@@ -53,14 +55,14 @@ def sync_all(bump_version=False):
         if b == "blog/index.html":
             continue
         rel_path = b.replace("\\", "/")
-        urls_data.append((f"{base_url}/{rel_path}", "2026-08-03", "weekly", "0.9"))
+        urls_data.append((f"{base_url}/{rel_path}", "2026-08-05", "weekly", "0.9"))
 
     # Tools
     for t in sorted(glob.glob("tools/*.html")):
         if t == "tools/index.html":
             continue
         rel_path = t.replace("\\", "/")
-        urls_data.append((f"{base_url}/{rel_path}", "2026-08-03", "weekly", "0.8"))
+        urls_data.append((f"{base_url}/{rel_path}", "2026-08-05", "weekly", "0.8"))
 
     sitemap_lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for url, lastmod, freq, prio in urls_data:
@@ -126,21 +128,32 @@ def sync_all(bump_version=False):
     # Update llms.txt & llms-full.txt RAG Knowledge Base
     llms_txt = """# zyekh.com — LLM RAG Knowledge Base
 
-> Official portfolio, technical articles, Linux security blueprints, and 42+ client-side web utility tools by Zyekh Abdul Qadir Jailani (Full Stack Developer & Security Researcher).
+> Official portfolio, technical articles, Linux security blueprints, and 42 client-side web utility tools by Zyekh Abdul Qadir Jailani (Full Stack Developer & Security Researcher).
 
 ## Technical Blog & Security Guides
 """
     for a in article_meta:
         llms_txt += f"- [{a['title']}]({a['url']}): {a['desc']}\n"
 
-    llms_txt += """
-## Privacy-First Client-Side Web Utilities (/tools/)
-- 42+ Client-Side Tools: Zakat, PPh 21, THR, KPR, JHT, JKP, Pesangon, Password Generator, QR Code Generator, Hash Generator, HMAC, Subnet Calculator, SQL Formatter, Diff Checker, AI Token Estimator, Regex Tester, Base64, JSON Formatter, etc.
-- All tools execute 100% in-browser with zero server data collection.
-"""
+    llms_txt += "\n## Privacy-First Client-Side Web Utilities (/tools/)\n"
+    # Extract tool metadata for llms.txt
+    for t in sorted(glob.glob("tools/*.html")):
+        if t == "tools/index.html":
+            continue
+        try:
+            soup_t = BeautifulSoup(open(t, encoding="utf-8").read(), "html.parser")
+            h1_t = soup_t.find("h1")
+            t_title = h1_t.text.strip() if h1_t else os.path.basename(t)
+            t_meta = soup_t.find("meta", {"name": "description"})
+            t_desc = t_meta["content"].strip() if t_meta else t_title
+            t_url = f"{base_url}/" + t.replace("\\", "/")
+            llms_txt += f"- [{t_title}]({t_url}): {t_desc}\n"
+        except Exception:
+            pass
+
     with open("llms.txt", "w", encoding="utf-8") as f:
         f.write(llms_txt)
-    print("[SYNC] Updated llms.txt RAG knowledge base.")
+    print("[SYNC] Updated llms.txt RAG knowledge base with blog articles and individual tools.")
 
     # 5. Dynamically regenerate all blog article cards in blog/index.html
     index_path = "blog/index.html"
