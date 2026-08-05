@@ -332,7 +332,7 @@ site-nav {
 }
 .nav-backdrop.active { display: block; opacity: 1; }
 
-/* Mobile & Tablet (< 960px) */
+/* Mobile & Tablet (< 960px) Navigation Drawer */
 @media (max-width: 960px) {
   .nav-toggle { display: flex; }
 
@@ -342,7 +342,7 @@ site-nav {
     right: -280px;
     width: 260px;
     height: calc(100dvh - 60px);
-    background: rgba(9, 9, 11, 0.97);
+    background: var(--bg-card);
     backdrop-filter: blur(12px);
     border-left: 1px solid var(--border-color);
     flex-direction: column;
@@ -351,6 +351,7 @@ site-nav {
     z-index: 1000;
     transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.2);
   }
   .nav-menu.open { right: 0; }
 
@@ -364,17 +365,75 @@ site-nav {
 
   .nav-link {
     display: block;
-    padding: 0.75rem 0;
+    padding: 0.75rem 0.5rem;
     width: 100%;
     font-size: 1rem;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid var(--border-color);
     border-radius: 0;
     background: transparent !important;
+    color: var(--text-muted);
     transition: color var(--transition), padding-left var(--transition);
   }
   .nav-link:hover,
-  .nav-link:focus  { padding-left: 6px; color: var(--text-main); }
-  .nav-link.active { padding-left: 8px; border-left: 2px solid #fff; font-weight: 700; }
+  .nav-link:focus {
+    padding-left: 10px;
+    color: var(--text-main);
+  }
+  .nav-link.active {
+    padding-left: 10px;
+    color: var(--text-main);
+    font-weight: 700;
+    border-left: 3px solid var(--text-main);
+  }
+
+  /* Light Mode Specific Mobile Drawer Adjustments */
+  [data-theme="light"] .nav-menu {
+    background: #ffffff !important;
+    border-left: 1px solid #d4d4d8 !important;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.08);
+  }
+  [data-theme="light"] .nav-link {
+    color: #3f3f46 !important;
+    border-bottom: 1px solid #e4e4e7 !important;
+  }
+  [data-theme="light"] .nav-link:hover,
+  [data-theme="light"] .nav-link:focus {
+    color: #09090b !important;
+  }
+  [data-theme="light"] .nav-link.active {
+    color: #09090b !important;
+    border-left: 3px solid #09090b !important;
+    background: #f4f4f5 !important;
+  }
+
+  /* Dark Mode Specific Mobile Drawer Adjustments */
+  :root:not([data-theme="light"]) .nav-menu {
+    background: #09090b !important;
+    border-left: 1px solid #27272a !important;
+  }
+  :root:not([data-theme="light"]) .nav-link {
+    color: #a1a1aa !important;
+    border-bottom: 1px solid #27272a !important;
+  }
+  :root:not([data-theme="light"]) .nav-link:hover,
+  :root:not([data-theme="light"]) .nav-link:focus {
+    color: #fafafa !important;
+  }
+  :root:not([data-theme="light"]) .nav-link.active {
+    color: #ffffff !important;
+    border-left: 3px solid #ffffff !important;
+    background: #141417 !important;
+  }
+
+  .theme-toggle {
+    margin-top: 1.5rem;
+    margin-left: 0 !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 /* ===================== Layout ===================== */
