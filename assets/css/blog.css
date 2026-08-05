@@ -199,12 +199,12 @@
 [data-theme="light"] .toc-card *,
 [data-theme="light"] .callout,
 [data-theme="light"] .callout * {
-  color: #09090b;
+  color: #09090b !important;
 }
 
 [data-theme="light"] .article-content strong,
 [data-theme="light"] .article-content b {
-  color: #000000;
+  color: #000000 !important;
 }
 
 [data-theme="light"] .note-sm,
@@ -212,7 +212,7 @@
 [data-theme="light"] .text-muted-sm,
 [data-theme="light"] .text-muted-xs,
 [data-theme="light"] .faq-answer {
-  color: #09090b;
+  color: #09090b !important;
 }
 
 .faq-answer {

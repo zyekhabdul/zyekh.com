@@ -1000,32 +1000,35 @@ details[open] summary::after { content: '\2212'; }
 }
 
 /* Dark Mode Active Filter Pill (White button, Black text) */
-.filter-btn.active {
-  background: #fafafa;
-  border-color: #fafafa;
-  color: #09090b;
-  font-weight: 600;
+:root:not([data-theme="light"]) .filter-btn.active,
+:root:not([data-theme="light"]) .filter-btn.active:focus,
+:root:not([data-theme="light"]) .filter-btn.active:hover {
+  background: #fafafa !important;
+  border-color: #fafafa !important;
+  color: #09090b !important;
+  font-weight: 600 !important;
 }
 
-/* Light Mode Non-Active Filter Pill (White background, Black text, subtle border) */
-[data-theme="light"] .filter-btn {
-  background: #ffffff;
-  border: 1px solid #d4d4d8;
-  color: #09090b;
+/* Light Mode Non-Active Filter Pill (White background, Black text - matching /about Explore Web Tools Hub) */
+[data-theme="light"] .filter-btn:not(.active) {
+  background: #ffffff !important;
+  border: 1px solid #d4d4d8 !important;
+  color: #09090b !important;
 }
-[data-theme="light"] .filter-btn:hover {
-  border-color: #09090b;
-  background: #f4f4f5;
-  color: #09090b;
+[data-theme="light"] .filter-btn:not(.active):hover {
+  border-color: #71717a !important;
+  background: #f4f4f5 !important;
+  color: #09090b !important;
 }
 
-/* Light Mode Active Filter Pill (Crisp 2px black border, light background, bold black text) */
-[data-theme="light"] .filter-btn.active {
-  background: #f4f4f5;
-  border: 2px solid #09090b;
-  color: #09090b;
-  font-weight: 700;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+/* Light Mode Active Filter Pill (Solid Black background, White text - matching /about View Repositories) */
+[data-theme="light"] .filter-btn.active,
+[data-theme="light"] .filter-btn.active:focus,
+[data-theme="light"] .filter-btn.active:hover {
+  background: #09090b !important;
+  border: 1px solid #09090b !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
 }
 
 
