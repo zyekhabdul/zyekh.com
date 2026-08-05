@@ -970,12 +970,13 @@ details[open] summary::after { content: '\2212'; }
 
 /* Filter Bar & Pill Buttons */
 .filter-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; margin-bottom: 1.5rem; align-items: center; }
+
 .filter-btn {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  color: var(--text-muted);
-  padding: 0.4rem 0.9rem;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-main) !important;
+  padding: 0.45rem 1rem;
   border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 500;
@@ -987,21 +988,31 @@ details[open] summary::after { content: '\2212'; }
   -webkit-tap-highlight-color: transparent;
 }
 .filter-btn:hover {
-  background: var(--accent-glow);
-  border-color: var(--border-color-hover);
-  color: var(--text-main);
+  border-color: var(--border-color-hover) !important;
+  background: var(--accent-glow) !important;
 }
-/* Dark Mode Active Filter Button */
-.filter-btn.active,
-.filter-btn.active:focus,
-.filter-btn.active:hover {
+
+/* Dark Mode Active Filter Pill (White button, Black text) */
+:root:not([data-theme="light"]) .filter-btn.active,
+:root:not([data-theme="light"]) .filter-btn.active:focus,
+:root:not([data-theme="light"]) .filter-btn.active:hover {
   background: #fafafa !important;
   border-color: #fafafa !important;
   color: #09090b !important;
   font-weight: 600 !important;
 }
 
-/* Light Mode Active Filter Button */
+/* Light Mode Non-Active Filter Pill (White button, Black text) */
+[data-theme="light"] .filter-btn {
+  background: #ffffff !important;
+  border: 1px solid #d4d4d8 !important;
+  color: #09090b !important;
+}
+[data-theme="light"] .filter-btn:hover {
+  border-color: #71717a !important;
+}
+
+/* Light Mode Active Filter Pill (Black button, White text - matching /about View Repositories) */
 [data-theme="light"] .filter-btn.active,
 [data-theme="light"] .filter-btn.active:focus,
 [data-theme="light"] .filter-btn.active:hover {
