@@ -274,7 +274,7 @@ batch_2 = [
     "related_tools": [
       {
         "name": "CHMOD Permission Calculator",
-        "url": "/tools/chmod.html",
+        "url": "/tools/chmod-calculator.html",
         "desc": "Calculate Linux file permissions and octal mode masks."
       },
       {
@@ -566,7 +566,7 @@ batch_2 = [
     "related_tools": [
       {
         "name": "CHMOD Permission Calculator",
-        "url": "/tools/chmod.html",
+        "url": "/tools/chmod-calculator.html",
         "desc": "Calculate Linux permissions for Seccomp profile files."
       },
       {
