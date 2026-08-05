@@ -205,11 +205,14 @@ a { color: var(--text-main); text-decoration: none; }
 :is(.article-body, .article-content, .footer) a:hover { text-decoration: underline; }
 
 img, svg, video, canvas { max-width: 100%; height: auto; }
+:is(.article-body, .article-content) img { cursor: zoom-in; }
 
-pre, code {
+pre {
   max-width: 100%;
   overflow-x: auto;
-  white-space: pre-wrap;
+  white-space: pre;
+}
+code {
   word-break: break-word;
 }
 
@@ -553,6 +556,9 @@ textarea {
   margin-bottom: 0.8rem;
   transition: border-color var(--transition);
 }
+textarea {
+  resize: vertical;
+}
 input:focus, select:focus, textarea:focus {
   border-color: var(--border-hover);
   outline: none;
@@ -585,8 +591,9 @@ table {
   margin: 1.5rem 0;
   background: var(--bg-dark);
   border-radius: var(--radius-md);
-  overflow: hidden;
   border: 1px solid var(--border-color);
+  display: block;
+  overflow-x: auto;
 }
 th, td { padding: 0.75rem var(--space-md); border-bottom: 1px solid var(--border-color); text-align: left; }
 th { background: var(--bg-card); color: var(--text-muted); font-weight: 600; font-size: 0.88rem; }

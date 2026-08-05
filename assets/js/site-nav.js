@@ -161,8 +161,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Single Event Delegation listener for all copy buttons & native share buttons
+// Single Event Delegation listener for all copy buttons, share buttons & native lightboxes
 document.addEventListener('click', async (e) => {
+  // Lightbox Image Delegation
+  const img = e.target.closest('.article-body img, .article-content img');
+  if (img) {
+     let dialog = document.getElementById('nativeLightbox');
+     if (!dialog) {
+        dialog = document.createElement('dialog');
+        dialog.id = 'nativeLightbox';
+        dialog.className = 'lightbox-modal';
+        dialog.innerHTML = `<img src="" alt="" style="max-height: 90vh; max-width: 90vw; border-radius: var(--radius-md); object-fit: contain;">`;
+        document.body.appendChild(dialog);
+        dialog.addEventListener('click', (ev) => {
+          if (ev.target === dialog) dialog.close();
+        });
+     }
+     const lImg = dialog.querySelector('img');
+     lImg.src = img.src;
+     lImg.alt = img.alt || '';
+     dialog.showModal();
+     return;
+  }
+
   // Share Button Delegation
   const shareBtn = e.target.closest('#shareBtn, .btn-share');
   if (shareBtn) {
