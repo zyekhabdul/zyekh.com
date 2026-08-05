@@ -95,4 +95,32 @@ Use this for data items, tools, cheatsheets, and text-heavy lists.
 
 ---
 
-**FINAL DIRECTIVE TO AI**: Before generating any new page or UI component, cross-reference your structural plan with this document. If your design mutates an existing pattern or requires excessive scrolling, **you have failed the assignment and must redesign it to be identical to existing patterns.**
+## 5. THE FIVE UNWRITTEN LAWS OF ARCHITECTURE
+
+To prevent rogue AI mutations, the following structural components are strictly codified. Do not reinvent these wheels.
+
+### Law 1: Macro Layout Wrappers
+You must strictly separate Grid/Hub pages from Reading/Prose pages.
+- **Index/Hub Pages (Grid-heavy)**: Must be wrapped in `<main class="main-container">` and use `<header class="page-header">` (containing `.page-title` and `.page-subtitle`).
+- **Reading/Prose Pages (Text-heavy)**: Must be wrapped in `<div class="container-blog">` -> `<article class="article-wrapper">` -> `<div class="article-body">`. 
+
+### Law 2: The Navigation Component
+Never build a manual `<nav>` tag or unordered list `<ul>` for the top navigation bar. 
+- You must always inject the native Web Component: `<site-nav active="page_name"></site-nav>`.
+
+### Law 3: Search & Filter Architecture
+If a page requires a category filter system, you must clone the exact layout used in `/tools/index.html`.
+- Use `<div class="filter-bar">` containing `<button class="filter-btn">`.
+
+### Law 4: Prose Callouts & Alerts
+When writing technical articles or cheatsheets, do not invent custom inline styles for warnings or summaries.
+- **TL;DR / Executive Summary** at the top: `<div class="exec-summary">`.
+- **Inline Warnings / Notes**: `<div class="callout">`.
+
+### Law 5: Code Block Presentation
+Never apply custom background colors or inline styles to terminal outputs or code snippets. 
+- All code blocks must simply be wrapped in `<pre><code>`. The `blog.css` handles the `Fira Code` typography, overflow scroll, and Dark Mode syntax coloring automatically.
+
+---
+
+**FINAL DIRECTIVE TO AI**: Before generating any new page or UI component, cross-reference your structural plan with this document. If your design mutates an existing pattern, mixes up the wrapper classes, or requires excessive scrolling, **you have failed the assignment and must redesign it to be identical to existing patterns.**
