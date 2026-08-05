@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Ultimate Linux & Cloud Security Architecture Cheatsheet — zyekh.com</title>
+<meta content="A massive, zero-dependency pillar hub indexing 25 advanced blueprints for eBPF, Kernel Sandboxing, Zero-Trust, and Cloud-Native DFIR architectures." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/blueprints/the-ultimate-linux-and-cloud-security-architecture-cheatsheet.html" rel="canonical"/>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="The Ultimate Linux & Cloud Security Architecture Cheatsheet" property="og:title"/>
+<meta content="A massive, zero-dependency pillar hub indexing 25 advanced blueprints for eBPF, Kernel Sandboxing, Zero-Trust, and Cloud-Native DFIR architectures." property="og:description"/>
+<meta content="https://zyekh.com/blueprints/the-ultimate-linux-and-cloud-security-architecture-cheatsheet.html" property="og:url"/>
+<meta content="https://zyekh.com/assets/img/cilium-ebpf-security.jpg" property="og:image"/>
+
+<!-- Favicons & Manifest -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/manifest.json" rel="manifest"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "The Ultimate Linux & Cloud Security Architecture Cheatsheet",
+  "description": "A massive, zero-dependency pillar hub indexing 25 advanced blueprints for eBPF, Kernel Sandboxing, Zero-Trust, and Cloud-Native DFIR architectures.",
+  "url": "https://zyekh.com/blueprints/the-ultimate-linux-and-cloud-security-architecture-cheatsheet.html",
+  "author": {
+    "@type": "Person",
+    "name": "Zyekh Abdul Qadir Jailani",
+    "url": "https://zyekh.com/"
+  }
+}
+</script>
+<link href="/assets/fonts/fonts.css?v=20260805_v133" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260805_v133" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260805_v133" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.js?v=20260805_v133"></script>
+
+<style>
+.pillar-category {
+  margin-top: 3.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+  color: var(--text-main);
+  font-family: 'Outfit', sans-serif;
+}
+.pillar-item {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+}
+.pillar-item h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+.pillar-item h3 a {
+  color: var(--text-main);
+  text-decoration: none;
+}
+.pillar-item h3 a:hover {
+  text-decoration: underline;
+}
+.pillar-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+</style>
+</head>
+<body>
+
+<site-nav active="blueprints"></site-nav>
+
+<div class="container-blog">
+  <article class="article-wrapper">
+    <header class="article-header" style="text-align: center; border-bottom: none; margin-bottom: 1rem;">
+      <span class="meta-tag" style="margin: 0 auto 1rem auto; display: inline-block;">Pillar Hub / Master Index</span>
+      <h1 class="article-title">The Ultimate Linux & Cloud Security Architecture Cheatsheet (2026)</h1>
+      
+      <div class="article-meta" style="justify-content: center; margin-top: 1.5rem;">
+        <div class="meta-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Zero Dependencies
+        </div>
+        <div class="meta-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          25 Architecture Blueprints
+        </div>
+      </div>
+    </header>
+
+    <div class="exec-summary" style="margin-top: 0;">
+      <h3 style="margin-top:0;">Architectural Philosophy</h3>
+      <p>This master index contains 25 highly technical, production-ready blueprints for Linux and Cloud-Native security. From kernel-level eBPF routing to unprivileged Landlock sandboxing and zero-trust HashiCorp Vault SSH CA authentication. Bookmark this page as your ultimate zero-dependency reference hub.</p>
+    </div>
+
+    <div class="article-body">
+      
+      <!-- Category 1 -->
+      <h2 class="pillar-category">1. Kernel & eBPF Security (The Next-Gen)</h2>
+      
+      <div class="pillar-item">
+        <h3><a href="/blog/understanding-linux-ebpf-security-monitoring.html">Understanding Linux eBPF Security Monitoring</a></h3>
+        <p class="pillar-desc">The theoretical and practical foundation for transitioning from legacy kernel modules to eBPF for O(1) complexity observability and network routing.</p>
+      </div>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html">eBPF XDP Packet Filtering & DDoS Mitigation</a></h3>
+        <p class="pillar-desc">Drop malicious packets directly at the Network Interface Card (NIC) driver level before they even reach the Linux network stack (skb).</p>
+      </div>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html">Cilium eBPF Host Routing & Tetragon Tracing</a></h3>
+        <p class="pillar-desc">Completely bypass kube-proxy and iptables overhead using Cilium's eBPF host routing, coupled with Tetragon's in-kernel process enforcement.</p>
+      </div>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html">Rust in the Linux Kernel: Memory Safety Blueprint</a></h3>
+        <p class="pillar-desc">How the integration of Rust (`rust/kernel/`) eliminates use-after-free and buffer overflow vulnerabilities at compile-time within driver subsystems.</p>
+      </div>
+
+      <!-- Category 2 -->
+      <h2 class="pillar-category">2. System Isolation & Sandboxing</h2>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html">Linux Landlock LSM Unprivileged Sandboxing</a></h3>
+        <p class="pillar-desc">Implement filesystem access control policies without requiring root privileges (`CAP_SYS_ADMIN`), replacing legacy AppArmor/SELinux overhead.</p>
+      </div>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html">Linux Seccomp-BPF Syscall Filtering</a></h3>
+        <p class="pillar-desc">Dramatically reduce the attack surface of containerized workloads by filtering unneeded syscalls (e.g., `ptrace`, `unshare`) via BPF.</p>
+      </div>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/systemd-service-sandboxing-and-security-hardening.html">Systemd Service Sandboxing & Hardening</a></h3>
+        <p class="pillar-desc">Lock down system daemons using Native systemd directives like `ProtectSystem=strict`, `PrivateTmp=yes`, and `ProtectHome=yes`.</p>
+      </div>
+      
+      <div class="pillar-item">
+        <h3><a href="/blog/chroot-jail-and-unprivileged-namespaces-isolation.html">Chroot Jails & Unprivileged Namespaces Isolation</a></h3>
+        <p class="pillar-desc">The underlying primitives of Docker/Podman: utilizing user namespaces (`CLONE_NEWUSER`) and mount namespaces to isolate untrusted binaries.</p>
+      </div>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/zero-trust-microservices-with-wasm-runtime-sandboxing.html">Wasm (WebAssembly) WASI Runtime Sandboxing</a></h3>
+        <p class="pillar-desc">Execute backend microservices inside Wasm linear memory sandboxes with explicit WASI capability grants for ultimate zero-trust execution.</p>
+      </div>
+
+      <!-- Category 3 -->
+      <h2 class="pillar-category">3. Access Control & Zero-Trust Auth</h2>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/linux-vps-hardening-guide-2026.html">Linux VPS Hardening Guide (2026)</a></h3>
+        <p class="pillar-desc">The definitive day-zero baseline checklist: disabling root login, configuring chrony, unattended-upgrades, and locking down SSH.</p>
+      </div>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/ssh-certificates-vault-ca-short-lived-authentication.html">Vault SSH CA Short-Lived Certificates</a></h3>
+        <p class="pillar-desc">Eliminate static `authorized_keys` management. Use HashiCorp Vault to sign ephemeral SSH certificates that expire automatically after 8 hours.</p>
+      </div>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html">Zero-Trust SSH Access with FIDO2</a></h3>
+        <p class="pillar-desc">Require hardware-backed YubiKey authentication (`sk-ssh-ed25519@openssh.com`) for cryptographic proof of physical presence.</p>
+      </div>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/pam-tally2-faillock-account-lockout-policy-guide.html">PAM Faillock Account Lockout Policies</a></h3>
+        <p class="pillar-desc">Configure Pluggable Authentication Modules (PAM) to automatically lock user accounts after consecutive failed authentication attempts.</p>
+      </div>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html">Fail2Ban Intrusion Prevention Mitigations</a></h3>
+        <p class="pillar-desc">Automated log parsing and iptables blocking for brute-force SSH and web application attacks.</p>
+      </div>
+
+      <!-- Category 4 -->
+      <h2 class="pillar-category">4. Network & Web Architecture</h2>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/linux-kernel-sysctl-hardening-network-stack-security.html">Linux Kernel Sysctl Network Stack Hardening</a></h3>
+        <p class="pillar-desc">Mitigate SYN floods, ICMP smurf attacks, and IP spoofing by tweaking `/etc/sysctl.conf` networking parameters.</p>
+      </div>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/ufw-firewall-hardening-and-rate-limiting-blueprint-2026.html">UFW Firewall Hardening & Rate Limiting</a></h3>
+        <p class="pillar-desc">Establish strict default-deny ingress policies and implement application-level rate limiting (`ufw limit ssh/tcp`).</p>
+      </div>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html">WireGuard VPN Tunneling for VPS Mesh Networks</a></h3>
+        <p class="pillar-desc">Replace OpenVPN with WireGuard's stateless, cryptographically opinionated (ChaCha20-Poly1305) kernel-space VPN tunnels.</p>
+      </div>
+      
+      <div class="pillar-item">
+        <h3><a href="/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html">NGINX Reverse Proxy Security Hardening</a></h3>
+        <p class="pillar-desc">Stripping server headers, implementing TLS 1.3 exclusively, and optimizing proxy buffer sizes against Slowloris attacks.</p>
+      </div>
+      
+      <div class="pillar-item">
+        <h3><a href="/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html">HTTP/3 QUIC 0-RTT Replay Mitigations</a></h3>
+        <p class="pillar-desc">Understand the architectural risks of QUIC's 0-RTT early data and how to disable it on state-modifying API routes.</p>
+      </div>
+      
+      <div class="pillar-item">
+        <h3><a href="/blog/securing-web-applications-with-strict-content-security-policy.html">Strict Content Security Policy (CSP) Engineering</a></h3>
+        <p class="pillar-desc">Eradicate XSS entirely by enforcing strict nonce-based CSP headers and disabling inline execution.</p>
+      </div>
+
+      <!-- Category 5 -->
+      <h2 class="pillar-category">5. Cloud-Native & DFIR Pipeline</h2>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/kubernetes-pod-security-standards-pss-and-admission-control.html">Kubernetes Pod Security Standards (PSS)</a></h3>
+        <p class="pillar-desc">Enforce `Restricted` profiles via Admission Controllers to prevent container escapes and root privilege escalations inside clusters.</p>
+      </div>
+      
+      <div class="pillar-item">
+        <h3><a href="/blog/container-image-signing-and-slsa-provenance-with-cosign.html">Sigstore Cosign Keyless Image Signing (SLSA)</a></h3>
+        <p class="pillar-desc">Implement supply chain security by cryptographically signing OCI container images using GitHub Actions OIDC identity.</p>
+      </div>
+
+      <div class="pillar-item">
+        <h3><a href="/blog/auditd-kernel-event-monitoring-and-dfir-logging.html">Auditd Kernel Event Monitoring & DFIR</a></h3>
+        <p class="pillar-desc">Configure the Linux Audit daemon to track specific `execve` syscalls and file modifications for forensic investigations.</p>
+      </div>
+      
+      <div class="pillar-item">
+        <h3><a href="/blog/linux-audit-logging-with-vector-and-clickhouse-dfir.html">DFIR Pipelines with Vector & ClickHouse</a></h3>
+        <p class="pillar-desc">Stream raw audit logs efficiently using Vector (Rust) into a columnar ClickHouse database for ultra-fast SIEM queries.</p>
+      </div>
+      
+      <div class="pillar-item">
+        <h3><a href="/blog/minimalist-server-architecture-pure-css-and-static-hosting.html">Minimalist Architecture (Pure CSS & Static Hosting)</a></h3>
+        <p class="pillar-desc">Why reducing architectural complexity (removing Node/Python backends) is the ultimate security and performance posture.</p>
+      </div>
+
+    </div>
+  </article>
+</div>
+
+  <footer class="footer" role="contentinfo">
+    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Knowledge Hub</div>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="/about/" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">About / Contact</a>
+      <a href="/blog/" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Technical Blog</a>
+      <a href="/tools/" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">Web Utility Tools</a>
+    </div>
+  </footer>
+
+</body>
+</html>
