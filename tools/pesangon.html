@@ -99,8 +99,8 @@
 
   <!-- Self-hosted Fonts -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v130">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v130">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v131">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v131">
 
   <style>
     * { box-sizing: border-box; }
@@ -339,8 +339,19 @@ window.debounceRAF = function(fn, delay) {
 
   </main>
 
-    <footer class="footer" role="contentinfo">
-    <p>&copy; 2026 <strong>zyekh.com</strong> — <a href="/" style="color:var(--text-muted);">Zyekh Abdul Qadir Jailani</a> · <a href="/tools/" style="color:var(--text-muted);">Tools Hub</a> (100% Client-Side)</p>
+      <footer class="footer" role="contentinfo">
+    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+      <a href="/about/" class="text-muted text-sm">About</a>
+      <span class="text-muted text-sm">&middot;</span>
+      <a href="/tools/" class="text-muted text-sm">42 Web Tools</a>
+      <span class="text-muted text-sm">&middot;</span>
+      <a href="/blog/" class="text-muted text-sm">25 Articles</a>
+      <span class="text-muted text-sm">&middot;</span>
+      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
+      <span class="text-muted text-sm">&middot;</span>
+      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
+    </div>
   </footer>
 
 <script>
@@ -552,6 +563,6 @@ document.getElementById('jenisKontrak').addEventListener('change', function() {
   document.getElementById('alasan-group').style.display = this.value === 'pkwt' ? 'none' : 'block';
 });
 </script>
-  <script src="/assets/js/site-nav.js?v=20260805_v130" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260805_v131" defer></script>
 </body>
 </html>

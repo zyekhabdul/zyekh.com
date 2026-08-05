@@ -68,9 +68,9 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v130">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v130">
-  <script defer src="/assets/js/site-nav.js?v=20260805_v130"></script>
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v131">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v131">
+  <script defer src="/assets/js/site-nav.js?v=20260805_v131"></script>
 
   <style>
     .chmod-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
@@ -206,9 +206,18 @@ window.debounceRAF = function(fn, delay) {
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="footer-container">
-      <p>&copy; 2026 Zyekh Abdul Qadir Jailani. Built with zero-dependency native web standards.</p>
+    <footer class="footer" role="contentinfo">
+    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+      <a href="/about/" class="text-muted text-sm">About</a>
+      <span class="text-muted text-sm">&middot;</span>
+      <a href="/tools/" class="text-muted text-sm">42 Web Tools</a>
+      <span class="text-muted text-sm">&middot;</span>
+      <a href="/blog/" class="text-muted text-sm">25 Articles</a>
+      <span class="text-muted text-sm">&middot;</span>
+      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
+      <span class="text-muted text-sm">&middot;</span>
+      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
     </div>
   </footer>
 
