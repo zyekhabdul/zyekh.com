@@ -2,7 +2,7 @@
  * zyekh.com — Shared Stylesheet
  * Single source of truth untuk nav, base, forms, buttons, footer.
  * Tools-specific CSS tetap inline di masing-masing file.
- * 2026 — CSS native, no @layer needed (spesifisitas cukup clean tanpa PureCSS !important).
+ * 2026 — CSS native, no @layer needed (spesifisitas cukup clean tanpa PureCSS).
  */
 
 /* ===================== CSS Custom Properties ===================== */
@@ -370,7 +370,7 @@ site-nav {
     font-size: 1rem;
     border-bottom: 1px solid var(--border-color);
     border-radius: 0;
-    background: transparent !important;
+    background: transparent;
     color: var(--text-muted);
     transition: color var(--transition), padding-left var(--transition);
   }
@@ -388,49 +388,49 @@ site-nav {
 
   /* Light Mode Specific Mobile Drawer Adjustments */
   [data-theme="light"] .nav-menu {
-    background: #ffffff !important;
-    border-left: 1px solid #d4d4d8 !important;
+    background: #ffffff;
+    border-left: 1px solid #d4d4d8;
     box-shadow: -4px 0 20px rgba(0, 0, 0, 0.08);
   }
   [data-theme="light"] .nav-link {
-    color: #3f3f46 !important;
-    border-bottom: 1px solid #e4e4e7 !important;
+    color: #3f3f46;
+    border-bottom: 1px solid #e4e4e7;
   }
   [data-theme="light"] .nav-link:hover,
   [data-theme="light"] .nav-link:focus {
-    color: #09090b !important;
+    color: #09090b;
   }
   [data-theme="light"] .nav-link.active {
-    color: #09090b !important;
-    border-left: 3px solid #09090b !important;
-    background: #f4f4f5 !important;
+    color: #09090b;
+    border-left: 3px solid #09090b;
+    background: #f4f4f5;
   }
 
   /* Dark Mode Specific Mobile Drawer Adjustments */
   :root:not([data-theme="light"]) .nav-menu {
-    background: #09090b !important;
-    border-left: 1px solid #27272a !important;
+    background: #09090b;
+    border-left: 1px solid #27272a;
   }
   :root:not([data-theme="light"]) .nav-link {
-    color: #a1a1aa !important;
-    border-bottom: 1px solid #27272a !important;
+    color: #a1a1aa;
+    border-bottom: 1px solid #27272a;
   }
   :root:not([data-theme="light"]) .nav-link:hover,
   :root:not([data-theme="light"]) .nav-link:focus {
-    color: #fafafa !important;
+    color: #fafafa;
   }
   :root:not([data-theme="light"]) .nav-link.active {
-    color: #ffffff !important;
-    border-left: 3px solid #ffffff !important;
-    background: #141417 !important;
+    color: #ffffff;
+    border-left: 3px solid #ffffff;
+    background: #141417;
   }
 
   .theme-toggle {
     margin-top: 1.5rem;
-    margin-left: 0 !important;
-    width: 100% !important;
-    min-width: 100% !important;
-    display: flex !important;
+    margin-left: 0;
+    width: 100%;
+    min-width: 100%;
+    display: flex;
     align-items: center;
     justify-content: center;
   }
@@ -1030,9 +1030,9 @@ details[open] summary::after { content: '\2212'; }
 .mb-lg { margin-bottom: 1.5rem; }
 .text-muted { color: var(--text-muted); }
 .text-sm { font-size: 0.88rem; }
-.dot-red, .dot-1 { background: #fafafa !important; }
-.dot-yellow, .dot-2 { background: #a1a1aa !important; }
-.dot-green, .dot-3 { background: #52525b !important; }
+.dot-red, .dot-1 { background: #fafafa; }
+.dot-yellow, .dot-2 { background: #a1a1aa; }
+.dot-green, .dot-3 { background: #52525b; }
 
 /* Filter Bar & Pill Buttons */
 .filter-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; margin-bottom: 1.5rem; align-items: center; }
@@ -1062,32 +1062,32 @@ details[open] summary::after { content: '\2212'; }
 :root:not([data-theme="light"]) .filter-btn.active,
 :root:not([data-theme="light"]) .filter-btn.active:focus,
 :root:not([data-theme="light"]) .filter-btn.active:hover {
-  background: #fafafa !important;
-  border-color: #fafafa !important;
-  color: #09090b !important;
-  font-weight: 600 !important;
+  background: #fafafa;
+  border-color: #fafafa;
+  color: #09090b;
+  font-weight: 600;
 }
 
 /* Light Mode Non-Active Filter Pill (White background, Black text - matching /about Explore Web Tools Hub) */
 [data-theme="light"] .filter-btn:not(.active) {
-  background: #ffffff !important;
-  border: 1px solid #d4d4d8 !important;
-  color: #09090b !important;
+  background: #ffffff;
+  border: 1px solid #d4d4d8;
+  color: #09090b;
 }
 [data-theme="light"] .filter-btn:not(.active):hover {
-  border-color: #71717a !important;
-  background: #f4f4f5 !important;
-  color: #09090b !important;
+  border-color: #71717a;
+  background: #f4f4f5;
+  color: #09090b;
 }
 
 /* Light Mode Active Filter Pill (Solid Black background, White text - matching /about View Repositories) */
 [data-theme="light"] .filter-btn.active,
 [data-theme="light"] .filter-btn.active:focus,
 [data-theme="light"] .filter-btn.active:hover {
-  background: #09090b !important;
-  border: 1px solid #09090b !important;
-  color: #ffffff !important;
-  font-weight: 600 !important;
+  background: #09090b;
+  border: 1px solid #09090b;
+  color: #ffffff;
+  font-weight: 600;
 }
 
 

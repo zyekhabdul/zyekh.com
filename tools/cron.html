@@ -93,8 +93,8 @@
 
   <!-- Self-hosted Fonts -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v125">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v127">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v127">
 
   <style>
     * { box-sizing: border-box; }
@@ -126,14 +126,14 @@
     input:focus,
 
     .preset-btn {
-      background-color: transparent !important; color: var(--text-muted) !important;
-      border: 1px solid var(--border-color) !important; border-radius: 6px;
+      background-color: transparent; color: var(--text-muted);
+      border: 1px solid var(--border-color); border-radius: 6px;
       padding: 0.4rem 0.8rem; cursor: pointer;
       font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.8rem; margin-right: 0.5rem; margin-bottom: 0.5rem;
       transition: all 0.2s ease;
     }
-    .preset-btn:hover { background-color: var(--border-color) !important; color: var(--text-main) !important; }
+    .preset-btn:hover { background-color: var(--border-color); color: var(--text-main); }
 
     .cron-explanation {
       font-size: 1.2rem;
@@ -208,6 +208,21 @@
     @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
     @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
   </style>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 60;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+</script>
 </head>
 
 <body>
@@ -237,7 +252,7 @@
       <h2>Penerjemah Cron (Cron Explainer)</h2>
       <div class="form-grid">
         <div class="form-group">
-          <input type="text" id="cronInput" value="*/5 * * * *" placeholder="* * * * *" oninput="processCron()">
+          <input type="text" id="cronInput" value="*/5 * * * *" placeholder="* * * * *" oninput="if(!this._d)this._d=debounceRAF(function(){processCron()},60);this._d()">
           <div id="cronError" class="error-msg">Format cron tidak valid. Harap gunakan 5 bagian (misal: * * * * *).</div>
         </div>
         
@@ -588,6 +603,6 @@ function copyCron() {
 // Init on load
 document.addEventListener('DOMContentLoaded', processCron);
 </script>
-  <script src="/assets/js/site-nav.js?v=20260805_v125" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260805_v127" defer></script>
 </body>
 </html>
