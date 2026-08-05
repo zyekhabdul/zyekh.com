@@ -127,9 +127,10 @@
   color: var(--text-main);
   text-decoration: none;
 }
-.card-title a:hover {
-  color: var(--text-main);
+.article-card:hover .card-title {
   text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
 }
 
 /* Excerpt & Footer Equalization (Compact 2-line clamp) */

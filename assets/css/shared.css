@@ -781,6 +781,11 @@ input.search-input {
   border-color: var(--border-hover);
   transform: translateY(-2px);
 }
+.tool-card:hover .tool-title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
 .tool-title {
   font-family: 'Outfit', sans-serif;
   font-size: 1.05rem;
