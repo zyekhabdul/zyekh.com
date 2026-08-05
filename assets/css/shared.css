@@ -973,9 +973,9 @@ details[open] summary::after { content: '\2212'; }
 
 .filter-btn {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: var(--bg-card) !important;
-  border: 1px solid var(--border-color) !important;
-  color: var(--text-main) !important;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
   padding: 0.45rem 1rem;
   border-radius: 999px;
   font-size: 0.85rem;
@@ -988,34 +988,30 @@ details[open] summary::after { content: '\2212'; }
   -webkit-tap-highlight-color: transparent;
 }
 .filter-btn:hover {
-  border-color: var(--border-color-hover) !important;
-  background: var(--accent-glow) !important;
+  border-color: var(--border-color-hover);
+  background: var(--accent-glow);
 }
 
 /* Dark Mode Active Filter Pill (White button, Black text) */
-:root:not([data-theme="light"]) .filter-btn.active,
-:root:not([data-theme="light"]) .filter-btn.active:focus,
-:root:not([data-theme="light"]) .filter-btn.active:hover {
+:root:not([data-theme="light"]) .filter-btn.active {
   background: #fafafa !important;
   border-color: #fafafa !important;
   color: #09090b !important;
   font-weight: 600 !important;
 }
 
-/* Light Mode Non-Active Filter Pill (White button, Black text) */
-[data-theme="light"] .filter-btn {
+/* Light Mode Non-Active Filter Pill (White button, Black text - matching /about Explore Web Tools Hub) */
+[data-theme="light"] .filter-btn:not(.active) {
   background: #ffffff !important;
   border: 1px solid #d4d4d8 !important;
   color: #09090b !important;
 }
-[data-theme="light"] .filter-btn:hover {
+[data-theme="light"] .filter-btn:not(.active):hover {
   border-color: #71717a !important;
 }
 
 /* Light Mode Active Filter Pill (Black button, White text - matching /about View Repositories) */
-[data-theme="light"] .filter-btn.active,
-[data-theme="light"] .filter-btn.active:focus,
-[data-theme="light"] .filter-btn.active:hover {
+[data-theme="light"] .filter-btn.active {
   background: #09090b !important;
   border-color: #09090b !important;
   color: #ffffff !important;
