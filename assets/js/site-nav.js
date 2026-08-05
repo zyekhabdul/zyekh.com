@@ -44,8 +44,8 @@ class SiteNav extends HTMLElement {
           <nav class="nav-menu" id="navMenu">
             <ul class="nav-list">${listItems}</ul>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
-              <span class="theme-icon-light">[ LIGHT ]</span>
-              <span class="theme-icon-dark">[ DARK ]</span>
+              <span class="theme-icon-light">MODE: LIGHT</span>
+              <span class="theme-icon-dark">MODE: DARK</span>
             </button>
           </nav>
         </div>
