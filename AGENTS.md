@@ -60,3 +60,7 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
 
 13. **INTERACTIVE INPUT LISTENER PERFORMANCE**:
     - All `oninput` or input event listeners must be debounced (50ms-80ms) and batched in `window.requestAnimationFrame()` to eliminate DOM layout thrashing.
+
+14. **AUTONOMOUS INITIATIVE**: Always be highly proactive. Do not wait for the user to point out every problem. If you see a structural, UI/UX, or technical flaw, fix it immediately across all affected files without asking.
+
+15. **MODERNITY & CUTTING-EDGE METHODS**: Never use legacy or traditional methods (e.g. bash scripts for CI, float-based layouts). Always seek and implement the most modern, up-to-date, and optimal solutions (e.g. GitHub Actions, Flexbox/Grid, semantic HTML5, modern Web APIs).

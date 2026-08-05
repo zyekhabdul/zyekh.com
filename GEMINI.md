@@ -17,3 +17,6 @@
 - **AI Image Prompts**: Prompts must visually represent the core technical mechanism of the article (e.g. eBPF packet bypass, Wasm memory sandbox). Use rich 3D isometric cyber architecture styling with custom HSL lighting to ensure engaging, informative thumbnails. All images must pass Check 15 MD5 uniqueness audit.
 - **MD5 Image Uniqueness**: All article hero images must have 100% unique MD5 hashes. Enforced via `verify_batch.py` (Check 15).
 - **Input Listener Debouncing**: Always debounce `oninput` handlers (50ms-80ms) and batch DOM writes in `window.requestAnimationFrame()` to eliminate layout thrashing and typing lag.
+
+- **AUTONOMOUS INITIATIVE**: Always be highly proactive. Do not wait for the user to point out every problem. If you see a structural, UI/UX, or technical flaw, fix it immediately across all affected files without asking.
+- **MODERNITY & CUTTING-EDGE METHODS**: Never use legacy or traditional methods (e.g. bash scripts for CI, float-based layouts, var(--x) when native features exist). Always seek and implement the most modern, up-to-date, and optimal solutions (e.g. GitHub Actions, Flexbox/Grid, semantic HTML5, modern Web APIs).
