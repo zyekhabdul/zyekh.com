@@ -1,4 +1,10 @@
-# Zyekh.com (`zyekh.com`)
+<h1 align="center">
+  Zyekh's Zero-Dependency Web Hub
+</h1>
+
+<p align="center">
+  <strong>42 Local-First, Zero-Dependency Developer & Financial Tools. Built entirely with Vanilla JS/CSS.</strong>
+</p>
 
 <p align="center">
   <a href="https://zyekh.com">
@@ -10,72 +16,58 @@
   <a href="https://zyekh.com/manifest.json">
     <img src="https://img.shields.io/badge/PWA-Supported-blueviolet.svg" alt="PWA Ready">
   </a>
-  <a href="https://zyekh.com/security.txt">
-    <img src="https://img.shields.io/badge/Security.txt-Compliant-brightgreen.svg" alt="Security.txt">
-  </a>
-  <a href="https://zyekh.com/sitemap.xml">
-    <img src="https://img.shields.io/badge/SEO-Optimized-blue.svg" alt="SEO Optimized">
+  <a href="https://github.com/zyekhabdul/zyekh.com/actions">
+    <img src="https://img.shields.io/badge/CI%2FCD-Google_Indexing_API-success.svg" alt="CI/CD Google Indexing">
   </a>
 </p>
 
-> **Official website, portfolio, technical blog, and client-side web utility tools for Zyekh Abdul Qadir Jailani (Full Stack Developer & Security Researcher).**
-
-Hosted directly on **GitHub Pages** with custom domain [`zyekh.com`](https://zyekh.com).
-
 ---
 
-## ️ Web Portal Architecture & Data Flow
+## ⚡ The Philosophy
+
+Modern web development has become bloated. A simple password generator now requires a 200MB Node module folder, a bundler, and connects to 3 different telemetry servers. 
+
+This repository is a counter-movement:
+- **Zero Frameworks:** No React, No Vue, No Tailwind. Pure semantic HTML5 and Vanilla CSS variables.
+- **Zero Dependencies:** No NPM, no third-party libraries. Everything is written from scratch.
+- **Zero Tracking:** No Google Analytics, no telemetry. 
+- **100% Local Execution:** Every tool runs purely in your browser. Disconnect from the internet, and they still work via Service Worker caching (PWA).
+
+## 🛠️ The 42 Tools (`/tools/`)
+
+You can view the full suite at [zyekh.com/tools](https://zyekh.com/tools).
+
+**Security & Developer Utilities (Examples):**
+- **JSON Validator/Formatter:** Parses locally via AST, no data sent to external servers.
+- **Diff Checker:** Strict local character-by-character string comparison.
+- **Chmod Calculator:** 4-digit octal notation calculator (SUID, SGID, Sticky).
+- **JWT Decoder:** Decodes payload securely in-browser without sending tokens anywhere.
+- **Password Generator:** Uses `crypto.getRandomValues()` for cryptographically secure entropy.
+
+**Financial Calculators:**
+- Mortgage (KPR), PPh 21 Tax, Zakat, Auto Loan, Salary calculators—all executing math locally.
+
+## 🤖 AI-Optimized Knowledge Base (`/blog/`)
+
+This site isn't just optimized for human readers and Googlebot; it's optimized for LLMs. 
+We strictly implement `.well-known/llms.txt` and `llms-full.txt` routing, allowing Perplexity, ChatGPT, and Claude to instantly ingest the entire repository's knowledge base via Markdown.
+
+## 🏗️ Technical Architecture & CI/CD
 
 ```mermaid
 graph TD
-    A["Client Browser / Visitor / AI Bot"] --> B["Edge CDN & GitHub Pages Static Host"]
+    A["Developer (Git Push)"] --> B["GitHub Actions CI"]
+    B --> C["Node.js Git Diff Analyzer"]
+    C -->|Detects .html changes| D["Google Cloud Indexing API"]
+    D --> E["Instant Googlebot Crawl"]
     
-    B --> C["Personal Portfolio Landing (index.html)"]
-    B --> D["Technical Security Blog (/blog/)"]
-    B --> E["24+ Privacy-First Client Tools (/tools/)"]
-    B --> F["LLM RAG Knowledge Base (/llms.txt)"]
-    
-    D --> G["IndexNow Auto-Pinger (ping_indexers.py)"]
-    G --> H["Google / Bing Search Engine Indexers"]
+    F["Client Browser"] --> G["Cloudflare Edge Cache"]
+    G --> H["GitHub Pages"]
+    H --> I["Service Worker (Offline Capabilities)"]
 ```
 
----
+The repository features a state-of-the-art SEO pipeline. Pushing changes to `main` triggers a GitHub Action that calculates the diff, identifies modified `.html` files, and pings the **Google Indexing API** via a secure Service Account to force a crawl within minutes.
 
-##  Repository Structure
+## 📜 License
 
-```
-zyekh.com/
-├── index.html              # Main Portfolio & Homepage
-├── blog/                   # Technical Articles & Hardening Guides
-│   ├── index.html          # Blog Directory Page
-│   └── linux-vps-hardening-guide-2026.html
-├── tools/                  # Client-side Privacy Web Utilities
-│   ├── index.html          # Tools Directory Page
-│   ├── zakat.html          # Zakat Calculator
-│   ├── pph21.html          # PPh 21 Tax Calculator
-│   ├── thr.html            # THR Calculator
-│   ├── kpr.html            # Mortgage / KPR Simulator
-│   ├── split-bill.html     # Bill Splitter
-│   ├── password.html       # Secure Password Generator
-│   ├── qr.html             # QR Code Generator
-│   ├── diff-checker.html   # Side-by-Side Diff Checker
-│   ├── pomodoro.html       # Pomodoro Focus Timer
-│   └── ...                 # Additional utility tools
-├── assets/                 # Static Assets
-│   ├── icons/              # Favicons, Apple Touch Icons, PWA Icons
-│   └── img/                # Profile & Page Images
-├── CNAME                   # GitHub Pages Custom Domain Configuration
-├── manifest.json           # Web App Manifest
-├── browserconfig.xml       # Windows Tile Settings
-├── sitemap.xml             # XML Sitemap for Search Engines
-└── robots.txt              # Search Engine Crawler Directives
-```
-
----
-
-## ️ Stack & Technologies
-
-- **Markup & Layout**: Semantic HTML5, [PureCSS](https://purecss.io/) Grid System
-- **Styling & Design**: Vanilla CSS Custom Properties (Dark Mode Theme)
-- **Scripting**: Pure JavaScript (No Framework Overheads / Client-side execution)
-- **Deployment**: Static Site Hosting via GitHub Pages
+[MIT License](LICENSE) - Feel free to fork, dissect, and steal the code. That's the point of open source.
