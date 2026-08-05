@@ -1,0 +1,83 @@
+/* zyekh.com — Article Actions (Share, Download .md, Download .pdf) */
+document.addEventListener('DOMContentLoaded', function () {
+  var shareBtn = document.getElementById('shareBtn');
+  var downloadMdBtn = document.getElementById('downloadMdBtn');
+  var downloadPdfBtn = document.getElementById('downloadPdfBtn');
+
+  if (shareBtn) {
+    shareBtn.addEventListener('click', function () {
+      if (navigator.share) {
+        navigator.share({ title: document.title, url: window.location.href }).catch(function () {});
+        return;
+      }
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(window.location.href);
+        var orig = shareBtn.textContent;
+        shareBtn.textContent = 'Link Copied!';
+        setTimeout(function () { shareBtn.textContent = orig; }, 2000);
+      }
+    });
+  }
+
+  if (downloadPdfBtn) {
+    downloadPdfBtn.addEventListener('click', function () {
+      window.print();
+    });
+  }
+
+  if (downloadMdBtn) {
+    downloadMdBtn.addEventListener('click', function () {
+      var titleEl = document.querySelector('.article-title');
+      var title = titleEl ? titleEl.innerText : document.title;
+      var catEl = document.querySelector('.meta-tag');
+      var category = catEl ? catEl.innerText : '';
+      var content = document.querySelector('.article-content');
+      if (!content) return;
+
+      var mdText = '# ' + title + '\n\n';
+      if (category) mdText += '**Category**: ' + category + '\n\n';
+      mdText += '**URL**: ' + window.location.href + '\n\n---\n\n';
+
+      var elements = content.querySelectorAll('h2, h3, p, ul, ol, pre');
+      elements.forEach(function (el) {
+        var tag = el.tagName.toLowerCase();
+        if (tag === 'h2') {
+          mdText += '\n## ' + el.innerText.trim() + '\n\n';
+        } else if (tag === 'h3') {
+          mdText += '\n### ' + el.innerText.trim() + '\n\n';
+        } else if (tag === 'p') {
+          mdText += el.innerText.trim() + '\n\n';
+        } else if (tag === 'ul' || tag === 'ol') {
+          el.querySelectorAll('li').forEach(function (li) {
+            mdText += '- ' + li.innerText.trim() + '\n';
+          });
+          mdText += '\n';
+        } else if (tag === 'pre') {
+          var code = el.querySelector('code');
+          var lang = '';
+          if (code) {
+            var classes = Array.from(code.classList);
+            for (var i = 0; i < classes.length; i++) {
+              if (classes[i].indexOf('language-') === 0) {
+                lang = classes[i].replace('language-', '');
+                break;
+              }
+            }
+          }
+          mdText += '```' + lang + '\n' + el.innerText.trim() + '\n```\n\n';
+        }
+      });
+
+      var filename = window.location.pathname.split('/').pop().replace('.html', '') || 'article';
+      var blob = new Blob([mdText], { type: 'text/markdown;charset=utf-8;' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = filename + '.md';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+  }
+});

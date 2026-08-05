@@ -302,7 +302,13 @@ pre code {
 .author-info p { margin: 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.45; }
 
 /* ── Article Header & Meta Bar ── */
-.btn-share {
+.article-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.btn-share, .btn-action {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -311,7 +317,7 @@ pre code {
   color: var(--text-main);
   font-size: 0.82rem;
   font-weight: 600;
-  padding: 0.4rem 0.9rem;
+  padding: 0.4rem 0.85rem;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -319,12 +325,13 @@ pre code {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
-.btn-share:hover, .btn-share:focus-visible {
+.btn-share:hover, .btn-share:focus-visible,
+.btn-action:hover, .btn-action:focus-visible {
   border-color: var(--text-main);
   color: var(--text-main);
   background: rgba(255, 255, 255, 0.08);
 }
-.btn-share:active {
+.btn-share:active, .btn-action:active {
   transform: scale(0.96);
 }
 @media (max-width: 640px) {
@@ -333,11 +340,74 @@ pre code {
     align-items: stretch;
     gap: 0.75rem;
   }
-  .btn-share {
+  .article-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+  .btn-share, .btn-action {
     width: 100%;
     justify-content: center;
-    padding: 0.55rem 1rem;
-    margin-top: 0.25rem;
+    padding: 0.5rem 0.4rem;
+    font-size: 0.78rem;
+  }
+}
+
+/* ── Native PDF Print Stylesheet (@media print) ── */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  site-nav,
+  .reading-progress-bar,
+  .back-link,
+  .article-actions,
+  .btn-share,
+  .btn-action,
+  .site-footer,
+  .author-box,
+  #shareBtn,
+  #downloadMdBtn,
+  #downloadPdfBtn {
+    display: none !important;
+  }
+  .container-article {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    color: #000000 !important;
+  }
+  .article-title {
+    color: #000000 !important;
+    font-size: 24pt !important;
+  }
+  .article-content {
+    color: #111111 !important;
+    font-size: 11pt !important;
+  }
+  .article-content p, .article-content li {
+    color: #222222 !important;
+  }
+  pre, code {
+    background: #f4f4f5 !important;
+    color: #111111 !important;
+    border: 1px solid #cccccc !important;
+    white-space: pre-wrap !important;
+  }
+  a {
+    color: #000000 !important;
+    text-decoration: underline !important;
+  }
+  .exec-summary, .toc-card, .callout-card {
+    background: #f9f9fb !important;
+    border: 1px solid #dddddd !important;
+    color: #111111 !important;
+  }
+  .article-hero-wrapper {
+    max-height: 350px !important;
+    overflow: hidden !important;
   }
 }
 

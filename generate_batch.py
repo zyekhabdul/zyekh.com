@@ -206,6 +206,7 @@ def generate_article_html(article_data, current_cache_ver=None):
 <link href="/assets/css/shared.css?v={current_cache_ver}" rel="stylesheet"/>
 <link href="/assets/css/blog.css?v={current_cache_ver}" rel="stylesheet"/>
 <script defer="" src="/assets/js/site-nav.js?v={current_cache_ver}"></script>
+<script defer="" src="/assets/js/article-actions.js?v={current_cache_ver}"></script>
 </head>
 <body>
 <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
@@ -228,7 +229,11 @@ def generate_article_html(article_data, current_cache_ver=None):
         <time class="meta-item" datetime="{date_pub}T00:00:00Z">Published: {date_pub}</time>
         <span>{read_time} min read ({word_count}+ Words)</span>
       </div>
-      <button class="btn-share" id="shareBtn" type="button">Share Article</button>
+      <div class="article-actions">
+        <button class="btn-share" id="shareBtn" type="button">Share</button>
+        <button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
+        <button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
+      </div>
     </div>
   </header>
 
