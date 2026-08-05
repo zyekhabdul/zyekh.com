@@ -46,6 +46,7 @@ def sync_all(bump_version=False):
     urls_data.append((f"{base_url}/about/", "2026-08-03", "weekly", "0.9"))
     urls_data.append((f"{base_url}/tools/", "2026-08-03", "weekly", "0.9"))
     urls_data.append((f"{base_url}/blog/", "2026-08-03", "weekly", "0.9"))
+    urls_data.append((f"{base_url}/blueprints/", "2026-08-05", "weekly", "0.9"))
 
     # Blog Articles
     for b in sorted(glob.glob("blog/*.html")):

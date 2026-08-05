@@ -5,21 +5,21 @@
   <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <meta name="theme-color" content="#09090b">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>zyekh.com — All-in-One Tech & Security Portal Hub</title>
-  <meta name="description" content="Official Tech & Security Portal Hub: 41 free client-side web utilities, Linux VPS security blueprints, eBPF kernel research, and open-source software tools.">
+  <title>zyekh.com — All-in-One Tech &amp; Security Portal Hub</title>
+  <meta name="description" content="Official Tech &amp; Security Portal Hub: 36 free client-side web utilities, 25 Linux &amp; cloud security articles, zero-trust architecture blueprints, and RAG knowledge base.">
   
   <!-- Canonical & Social Meta Tags -->
   <link rel="canonical" href="https://zyekh.com/">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
-  <meta property="og:title" content="zyekh.com — All-in-One Tech & Security Portal Hub">
-  <meta property="og:description" content="41 free client-side web utilities, Linux VPS security blueprints, eBPF kernel research, and open-source software tools.">
+  <meta property="og:title" content="zyekh.com — All-in-One Tech &amp; Security Portal Hub">
+  <meta property="og:description" content="36 free client-side web utilities, 25 Linux &amp; cloud security articles, zero-trust architecture blueprints, and RAG knowledge base.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://zyekh.com/">
   <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
   <meta property="og:site_name" content="zyekh.com">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="zyekh.com — All-in-One Tech & Security Portal Hub">
-  <meta name="twitter:description" content="41 free client-side web utilities, Linux VPS security blueprints, and open-source tools.">
+  <meta name="twitter:title" content="zyekh.com — All-in-One Tech &amp; Security Portal Hub">
+  <meta name="twitter:description" content="36 free client-side web utilities, 25 Linux &amp; cloud security articles, and open-source tools.">
   <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
 
   <!-- Schema.org JSON-LD -->
@@ -32,7 +32,7 @@
         "@id": "https://zyekh.com/#website",
         "url": "https://zyekh.com/",
         "name": "zyekh.com",
-        "description": "All-in-One Tech & Security Portal Hub with 41 Web Utility Tools and Technical Security Articles.",
+        "description": "All-in-One Tech & Security Portal Hub with 36 Web Utility Tools, 25 Technical Security Articles, and Command Blueprints.",
         "publisher": {
           "@type": "Person",
           "@id": "https://zyekh.com/#person",
@@ -53,7 +53,7 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v124">
   <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v124">
 
   <style>
@@ -141,9 +141,8 @@
       transition: transform 0.2s, border-color 0.2s, background-color 0.2s;
     }
     .bento-card:hover {
-      border-color: rgba(255,255,255,0.35);
+      border-color: var(--border-color-hover);
       transform: translateY(-3px);
-      background-color: #141417;
     }
 
     .bento-main-tools { grid-column: span 8; }
@@ -163,10 +162,10 @@
       display: block;
       transition: all 0.2s;
     }
-    .quick-tool-pill:hover { border-color: var(--text-main); background: #18181c; }
+    .quick-tool-pill:hover { border-color: var(--text-main); }
     .quick-tool-cat { font-size: 0.7rem; color: var(--text-muted); display: block; font-family: 'Fira Code', monospace; text-transform: uppercase; margin-bottom: 0.15rem; }
     .cta-link-text { font-size: 0.85rem; color: var(--text-muted); text-decoration: none; font-weight: 600; transition: color 0.2s; }
-    .bento-card:hover .cta-link-text { color: #ffffff; }
+    .bento-card:hover .cta-link-text { color: var(--text-main); }
   </style>
 </head>
 <body>
@@ -177,16 +176,16 @@
   <main class="main-container">
     <!-- Portal Hero Header -->
     <header class="portal-hero">
-      <span class="badge">ALL-IN-ONE TECH &amp; SECURITY PORTAL</span>
+      <span class="badge">MINIMALIST ARCHITECTURE &amp; SECURITY PORTAL</span>
       <h1 class="page-title" style="font-size:clamp(2rem, 5vw, 3.2rem);margin-top:0.5rem;">zyekh.com</h1>
       <p class="page-subtitle" style="max-width:680px;margin:0.5rem auto 0 auto;">
-        41 Free Client-Side Web Utilities, Linux VPS Security Blueprints, eBPF Kernel Observability, &amp; Open-Source Software Tools.
+        25 Deep Technical Articles • 36 Interactive Tools • Command Blueprints • RAG Base (llms.txt)
       </p>
     </header>
 
     <!-- Spotlight Search Bar — Overlay -->
     <div class="spotlight-box">
-      <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Search 41 tools &amp; articles..." autocomplete="off">
+      <input type="text" id="spotlightInput" class="spotlight-input" placeholder="Search 61 tools, blueprints &amp; articles..." autocomplete="off">
       <div class="spotlight-shortcut" aria-hidden="true">
         <span class="key">Ctrl + K</span>
       </div>
@@ -202,93 +201,85 @@
       <div class="bento-card bento-main-tools">
         <div>
           <div style="display:flex;justify-content:space-between;align-items:center;">
-            <span class="badge">41 CLIENT-SIDE TOOLS</span>
-            <a href="/tools/" class="cta-link-text">View All 41 Tools →</a>
+            <span class="badge">36 CLIENT-SIDE TOOLS</span>
+            <a href="/tools/" class="cta-link-text">View All 36 Tools →</a>
           </div>
           <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.4rem;"><a href="/tools/" style="color:inherit;text-decoration:none;">Web Utility Tools Hub</a></h2>
           <p style="color:var(--text-muted);font-size:0.9rem;">Fast, privacy-first developer &amp; financial calculators running 100% offline in browser.</p>
 
           <div class="quick-tools-grid">
-            <a href="/tools/curl.html" class="quick-tool-pill">
+            <a href="/tools/json.html" class="quick-tool-pill">
               <span class="quick-tool-cat">DEV UTILITY</span>
-              cURL to Code
+              JSON Formatter
             </a>
-            <a href="/tools/ai-token.html" class="quick-tool-pill">
-              <span class="quick-tool-cat">AI UTILITY</span>
-              AI Token Counter
-            </a>
-            <a href="/tools/env.html" class="quick-tool-pill">
-              <span class="quick-tool-cat">DEV UTILITY</span>
-              .env Redactor
-            </a>
-            <a href="/tools/hash.html" class="quick-tool-pill">
+            <a href="/tools/jwt.html" class="quick-tool-pill">
               <span class="quick-tool-cat">SECURITY</span>
-              Hash &amp; Checksum
-            </a>
-            <a href="/tools/uuid.html" class="quick-tool-pill">
-              <span class="quick-tool-cat">DEV UTILITY</span>
-              UUID &amp; ULID Generator
+              JWT Inspector
             </a>
             <a href="/tools/subnet.html" class="quick-tool-pill">
               <span class="quick-tool-cat">NETWORKING</span>
               IP Subnet Calculator
             </a>
-            <a href="/tools/pph21.html" class="quick-tool-pill">
-              <span class="quick-tool-cat">FINANCIAL</span>
-              PPh 21 TER 2024
+            <a href="/tools/password.html" class="quick-tool-pill">
+              <span class="quick-tool-cat">SECURITY</span>
+              Password Generator
             </a>
-            <a href="/tools/pesangon.html" class="quick-tool-pill">
-              <span class="quick-tool-cat">LABOUR LAW</span>
-              Kalkulator Pesangon
+            <a href="/tools/cron.html" class="quick-tool-pill">
+              <span class="quick-tool-cat">DEV UTILITY</span>
+              Cron Expression Helper
+            </a>
+            <a href="/tools/base64.html" class="quick-tool-pill">
+              <span class="quick-tool-cat">DEV UTILITY</span>
+              Base64 Encoder
             </a>
           </div>
         </div>
       </div>
 
-      <!-- Bento 2: Profile & About Card (Span 4) -->
-      <a href="/about/" class="bento-card bento-sidebar">
+      <!-- Bento 2: Command Blueprints Hub (Span 4) -->
+      <a href="/blueprints/" class="bento-card bento-sidebar">
         <div>
-          <span class="badge">DEVELOPER PROFILE</span>
-          <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.3rem;">Zyekh Abdul Qadir Jailani</h2>
+          <span class="badge">NEW FEATURE HUB</span>
+          <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.3rem;">Command Blueprints</h2>
           <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.5;">
-            Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher from Indonesia.
+            Production-ready eBPF network policies, kernel sandbox rulesets, and one-liner hardening commands.
           </p>
           <div style="margin-top:1rem;font-size:0.85rem;color:var(--text-muted);">
-            • Verified DUDI Habituasi (Skillage)<br>
-            • eBPF Kernel Memory Forensics<br>
-            • FOSS Security Contributor
+            • Cilium &amp; Tetragon Policy<br>
+            • Vault SSH CA Setup<br>
+            • Landlock &amp; Seccomp Sandbox
           </div>
         </div>
         <div style="margin-top:1.25rem;">
-          <span class="cta-link-text">Read Full Bio &amp; Profile →</span>
+          <span class="cta-link-text">Launch Blueprints →</span>
         </div>
       </a>
 
-      <!-- Bento 3: Technical Security Articles (Span 6) -->
-      <a href="/blog/linux-vps-hardening-guide-2026.html" class="bento-card bento-half">
+      <!-- Bento 3: 2026 Trending Articles (Span 6) -->
+      <a href="/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html" class="bento-card bento-half">
         <div>
-          <span class="badge">TECHNICAL ARTICLES</span>
-          <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.25rem;">Linux VPS Hardening Blueprint 2026</h2>
+          <span class="badge">2026 TRENDING ARTICLE</span>
+          <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.25rem;">Rust in the Linux Kernel Security</h2>
           <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.5;">
-            Comprehensive guide for Debian/Ubuntu server security: SSH lockdown, nftables, fail2ban, auditd, and kernel parameters.
+            How Rust eliminates spatial and temporal memory vulnerabilities in modern Linux kernel drivers and network modules.
           </p>
         </div>
         <div style="margin-top:1rem;">
-          <span class="cta-link-text">Read Security Article →</span>
+          <span class="cta-link-text">Read Article →</span>
         </div>
       </a>
 
-      <!-- Bento 4: Open Source Repositories (Span 6) -->
-      <a href="https://github.com/zyekhabdul/vol3-ebpf-detector" target="_blank" rel="noopener" class="bento-card bento-half">
+      <!-- Bento 4: Cilium eBPF & Tetragon (Span 6) -->
+      <a href="/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html" class="bento-card bento-half">
         <div>
-          <span class="badge">OPEN SOURCE REPOS</span>
-          <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.25rem;">vol3-ebpf-detector</h2>
+          <span class="badge">CLOUD SECURITY</span>
+          <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.25rem;">Cilium eBPF &amp; Tetragon Tracing</h2>
           <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.5;">
-            Volatility 3 plugin &amp; standalone memory carver for eBPF rootkit detection and Linux kernel forensics.
+            Deploying Cilium eBPF for zero-trust network policy enforcement and Tetragon for real-time kernel event monitoring.
           </p>
         </div>
         <div style="margin-top:1rem;">
-          <span class="cta-link-text">Explore GitHub Repository →</span>
+          <span class="cta-link-text">Read Article →</span>
         </div>
       </a>
 
@@ -296,29 +287,28 @@
   </main>
 
   <footer class="footer" role="contentinfo">
-    <p>&copy; 2026 <strong>zyekh.com</strong> — Portal Hub · <a href="/about/" style="color:var(--text-muted);">About</a> · <a href="/tools/" style="color:var(--text-muted);">41 Web Tools</a> · <a href="/blog/" style="color:var(--text-muted);">Articles</a></p>
+    <p>&copy; 2026 <strong>zyekh.com</strong> — Portal Hub · <a href="/about/" style="color:var(--text-muted);">About</a> · <a href="/tools/" style="color:var(--text-muted);">36 Web Tools</a> · <a href="/blog/" style="color:var(--text-muted);">25 Articles</a> · <a href="/blueprints/" style="color:var(--text-muted);">Blueprints</a> · <a href="/llms.txt" style="color:var(--text-muted);">llms.txt (RAG Base)</a></p>
   </footer>
 
   <!-- Spotlight Search & Keyboard Shortcut Listener -->
   <script>
     const searchItems = [
-      { title: 'cURL Command to Code Converter', url: '/tools/curl.html', category: 'Developer Utility' },
-      { title: 'AI Prompt Token & API Cost Estimator', url: '/tools/ai-token.html', category: 'AI Utility' },
-      { title: '.env to JSON & Secret Redactor', url: '/tools/env.html', category: 'Developer Utility' },
-      { title: 'SVG Vector to CSS Data URI', url: '/tools/svg-converter.html', category: 'Developer Utility' },
-      { title: 'Hash Generator & Checksum Inspector', url: '/tools/hash.html', category: 'Security' },
-      { title: 'UUID & ULID Bulk Generator', url: '/tools/uuid.html', category: 'Developer Utility' },
-      { title: 'HMAC Signer & Signature Verifier', url: '/tools/hmac.html', category: 'Security' },
-      { title: 'IP Subnet & CIDR Calculator', url: '/tools/subnet.html', category: 'Networking' },
-      { title: 'SQL Query Formatter & Beautifier', url: '/tools/sql.html', category: 'Developer Utility' },
-      { title: 'Zakat Calculator Maal & Income', url: '/tools/zakat.html', category: 'Financial' },
-      { title: 'PPh 21 Income Tax Calculator', url: '/tools/pph21.html', category: 'Financial' },
-      { title: 'Kalkulator Pesangon PHK (PP 35/2021)', url: '/tools/pesangon.html', category: 'Labour Law' },
+      { title: 'Command & Architecture Blueprints', url: '/blueprints/', category: 'Feature Hub' },
+      { title: 'Rust in the Linux Kernel Security', url: '/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html', category: 'Security Article' },
+      { title: 'Cilium eBPF & Tetragon Security', url: '/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html', category: 'Security Article' },
+      { title: 'Linux Landlock LSM Sandboxing', url: '/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html', category: 'Security Article' },
+      { title: 'Zero-Trust Microservices with Wasm', url: '/blog/zero-trust-microservices-with-wasm-runtime-sandboxing.html', category: 'Security Article' },
+      { title: 'HTTP/3 QUIC Protocol Security', url: '/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html', category: 'Security Article' },
+      { title: 'Linux Seccomp-BPF Syscall Filtering', url: '/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html', category: 'Security Article' },
+      { title: 'Kubernetes Pod Security Standards', url: '/blog/kubernetes-pod-security-standards-pss-and-admission-control.html', category: 'Security Article' },
+      { title: 'Linux Audit Logging Vector & ClickHouse', url: '/blog/linux-audit-logging-with-vector-and-clickhouse-dfir.html', category: 'Security Article' },
+      { title: 'Short-Lived SSH Auth with Vault CA', url: '/blog/ssh-certificates-vault-ca-short-lived-authentication.html', category: 'Security Article' },
+      { title: 'Container Image Signing with Cosign', url: '/blog/container-image-signing-and-slsa-provenance-with-cosign.html', category: 'Security Article' },
       { title: 'JSON Formatter & Tree Viewer', url: '/tools/json.html', category: 'Developer Utility' },
       { title: 'JWT Token Decoder & Inspector', url: '/tools/jwt.html', category: 'Security' },
+      { title: 'IP Subnet & CIDR Calculator', url: '/tools/subnet.html', category: 'Networking' },
+      { title: 'Password Generator', url: '/tools/password.html', category: 'Security' },
       { title: 'Base64 Encoder / Decoder', url: '/tools/base64.html', category: 'Developer Utility' },
-      { title: 'RegEx Live Tester & Match Inspector', url: '/tools/regex.html', category: 'Developer Utility' },
-      { title: 'Linux VPS Hardening Blueprint 2026', url: '/blog/linux-vps-hardening-guide-2026.html', category: 'Security Article' },
       { title: 'About Zyekh Abdul Qadir Jailani', url: '/about/', category: 'Profile' }
     ];
 

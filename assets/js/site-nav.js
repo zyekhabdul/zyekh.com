@@ -3,15 +3,26 @@
  * Usage: <site-nav active="home|tools|blog|about"></site-nav>
  * Zero dependencies. Baseline 2023+.
  */
+// Immediate Theme Init to avoid UI flash
+(function() {
+  var saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+
 class SiteNav extends HTMLElement {
   connectedCallback() {
     let active = this.getAttribute('active') || '';
 
     const links = [
-      { href: '/',         label: 'Home',         key: 'home' },
-      { href: '/tools/',   label: 'Tools Hub',    key: 'tools' },
-      { href: '/blog/',    label: 'Articles',     key: 'blog' },
-      { href: '/about/',   label: 'About & Bio',  key: 'about' }
+      { href: '/',           label: 'Home',         key: 'home' },
+      { href: '/tools/',     label: 'Tools Hub',    key: 'tools' },
+      { href: '/blog/',      label: 'Articles',     key: 'blog' },
+      { href: '/blueprints/',label: 'Blueprints',   key: 'blueprints' },
+      { href: '/about/',     label: 'About & Bio',  key: 'about' }
     ];
 
     const listItems = links.map(l => {
@@ -32,6 +43,10 @@ class SiteNav extends HTMLElement {
           </button>
           <nav class="nav-menu" id="navMenu">
             <ul class="nav-list">${listItems}</ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
+              <span class="theme-icon-light">[ LIGHT ]</span>
+              <span class="theme-icon-dark">[ DARK ]</span>
+            </button>
           </nav>
         </div>
       </header>`;
@@ -49,6 +64,15 @@ class SiteNav extends HTMLElement {
 
     const toggle = this.querySelector('#navToggle');
     const menu   = this.querySelector('#navMenu');
+    const themeBtn = this.querySelector('#themeToggle');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+        const nextTheme = isLight ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        localStorage.setItem('theme', nextTheme);
+      });
+    }
     if (!toggle || !menu) return;
 
     // Backdrop

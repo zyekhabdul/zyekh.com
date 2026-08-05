@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Linux &amp; Cloud Security Architecture Blueprints — zyekh.com</title>
+<meta content="Production-ready terminal one-liners, security policy matrices, and zero-trust infrastructure architecture blueprints." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/blueprints/" rel="canonical"/>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="website" property="og:type"/>
+<meta content="Linux &amp; Cloud Security Architecture Blueprints — zyekh.com" property="og:title"/>
+<meta content="Production-ready terminal one-liners, security policy matrices, and zero-trust infrastructure architecture blueprints." property="og:description"/>
+<meta content="https://zyekh.com/blueprints/" property="og:url"/>
+<meta content="https://zyekh.com/assets/img/cilium-ebpf-security.jpg" property="og:image"/>
+
+<!-- Favicons & Manifest -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/manifest.json" rel="manifest"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Linux & Cloud Security Architecture Blueprints",
+  "description": "Production-ready terminal one-liners, security policy matrices, and zero-trust infrastructure architecture blueprints.",
+  "url": "https://zyekh.com/blueprints/",
+  "publisher": {
+    "@type": "Person",
+    "name": "Zyekh Abdul Qadir Jailani",
+    "url": "https://zyekh.com/"
+  }
+}
+</script>
+<link href="/assets/fonts/fonts.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260805_v124" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.js?v=20260805_v124"></script>
+</head>
+<body>
+<div class="reading-progress-bar"></div>
+<site-nav active="blueprints"></site-nav>
+
+<div class="container-blog">
+  <header style="margin-bottom: 2rem; text-align: center;">
+    <span class="meta-tag">Command &amp; Security Blueprints</span>
+    <h1 style="font-size: 2.25rem; font-weight: 700; margin: 0.75rem 0 0.5rem 0; color: var(--text-main);">Linux &amp; Cloud Security Architecture Blueprints</h1>
+    <p style="color: var(--text-muted); max-width: 720px; margin: 0 auto; font-size: 1rem; line-height: 1.6;">
+      Production-tested configuration templates, eBPF network policies, kernel sandbox rulesets, and zero-trust deployment one-liners.
+    </p>
+  </header>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.25rem;">
+
+    <!-- Blueprint 1 -->
+    <div class="article-card">
+      <div>
+        <span class="meta-tag">eBPF • Network Security</span>
+        <h3 style="font-size: 1.15rem; margin: 0.5rem 0; color: var(--text-main);">Cilium eBPF Host Routing &amp; Tetragon Tracing</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">Bypass iptables overhead with eBPF O(1) packet routing and enforce in-kernel process termination.</p>
+        <pre><code class="language-bash"># Install Cilium with eBPF Host Routing enabled
+helm install cilium cilium/cilium \
+  --namespace kube-system \
+  --set kubeProxyReplacement=strict \
+  --set bpf.masquerade=true</code></pre>
+      </div>
+      <a class="blog-badge" href="/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html" style="margin-top: 0.75rem; align-self: start;">Read Full Blueprint →</a>
+    </div>
+
+    <!-- Blueprint 2 -->
+    <div class="article-card">
+      <div>
+        <span class="meta-tag">Linux Security • Access Control</span>
+        <h3 style="font-size: 1.15rem; margin: 0.5rem 0; color: var(--text-main);">Linux Landlock LSM Unprivileged Sandbox</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">Restrict process filesystem access without requiring root (CAP_SYS_ADMIN) permissions.</p>
+        <pre><code class="language-c">/* Enforce NO_NEW_PRIVS and lock down Landlock Sandbox */
+prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+syscall(__NR_landlock_restrict_self, ruleset_fd, 0);</code></pre>
+      </div>
+      <a class="blog-badge" href="/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html" style="margin-top: 0.75rem; align-self: start;">Read Full Blueprint →</a>
+    </div>
+
+    <!-- Blueprint 3 -->
+    <div class="article-card">
+      <div>
+        <span class="meta-tag">Zero-Trust • SSH Authentication</span>
+        <h3 style="font-size: 1.15rem; margin: 0.5rem 0; color: var(--text-main);">Vault SSH CA Short-Lived Certificates</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">Eliminate static authorized_keys by trusting HashiCorp Vault CA 8-hour SSH user certificates.</p>
+        <pre><code class="language-bash"># Configure /etc/ssh/sshd_config to trust Vault CA
+TrustedUserCAKeys /etc/ssh/trusted-user-ca.pub
+AuthorizedPrincipalsFile /etc/ssh/auth_principals/%u</code></pre>
+      </div>
+      <a class="blog-badge" href="/blog/ssh-certificates-vault-ca-short-lived-authentication.html" style="margin-top: 0.75rem; align-self: start;">Read Full Blueprint →</a>
+    </div>
+
+    <!-- Blueprint 4 -->
+    <div class="article-card">
+      <div>
+        <span class="meta-tag">WebAssembly • Cloud-Native</span>
+        <h3 style="font-size: 1.15rem; margin: 0.5rem 0; color: var(--text-main);">WebAssembly (Wasm) WASI Runtime Isolation</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">Execute microservices inside linear memory sandboxes with nanosecond cold-start times.</p>
+        <pre><code class="language-bash"># Execute Wasm module with explicit WASI capability grant
+wasmtime run --dir /opt/app/data::/data \
+  target/wasm32-wasip1/release/microservice.wasm</code></pre>
+      </div>
+      <a class="blog-badge" href="/blog/zero-trust-microservices-with-wasm-runtime-sandboxing.html" style="margin-top: 0.75rem; align-self: start;">Read Full Blueprint →</a>
+    </div>
+
+    <!-- Blueprint 5 -->
+    <div class="article-card">
+      <div>
+        <span class="meta-tag">Web Security • HTTP/3</span>
+        <h3 style="font-size: 1.15rem; margin: 0.5rem 0; color: var(--text-main);">HTTP/3 QUIC 0-RTT Replay Defense</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">Disable 0-RTT early data on state-modifying requests to prevent replay attack vectors.</p>
+        <pre><code class="language-nginx"># Reject 0-RTT Early Data on State-Modifying Routes
+location /api/v1/payment {
+    ssl_early_data off;
+    proxy_pass http://127.0.0.1:8080;
+}</code></pre>
+      </div>
+      <a class="blog-badge" href="/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html" style="margin-top: 0.75rem; align-self: start;">Read Full Blueprint →</a>
+    </div>
+
+    <!-- Blueprint 6 -->
+    <div class="article-card">
+      <div>
+        <span class="meta-tag">Supply Chain • Container Security</span>
+        <h3 style="font-size: 1.15rem; margin: 0.5rem 0; color: var(--text-main);">Sigstore Cosign Keyless Image Signing</h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">Sign OCI container images keylessly in CI/CD using OIDC identity tokens and Rekor ledger.</p>
+        <pre><code class="language-bash"># Verify Container Image Signature Keylessly
+cosign verify \
+  --certificate-identity "https://github.com/zyekhabdul/zyekh.com/.github/workflows/deploy.yml@refs/heads/main" \
+  --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+  ghcr.io/zyekh/secure-api:v2.0.0</code></pre>
+      </div>
+      <a class="blog-badge" href="/blog/container-image-signing-and-slsa-provenance-with-cosign.html" style="margin-top: 0.75rem; align-self: start;">Read Full Blueprint →</a>
+    </div>
+
+  </div>
+</div>
+
+<footer class="site-footer" style="margin-top: 3rem; text-align: center; border-top: 1px solid var(--border-color); padding: 1.5rem 0;">
+  <div style="font-size: 0.85rem; color: var(--text-muted);">
+    zyekh.com — Zero-Overhead Engineering &amp; Security Blueprints.
+  </div>
+</footer>
+</body>
+</html>
