@@ -49,25 +49,41 @@ Do not invent new classes. Always construct pages using the existing standardize
 - `.container-blog`: The standard max-width wrapper for readable content.
 
 ### B. Interactive Cards (The "Clickable Box")
-Every item in a list or grid must be a fully clickable card.
+Every item in a list or grid must be a fully clickable card. There are only **TWO** acceptable layouts. Do not mix them. Do not create a third layout.
+
+#### Standard A: With Image (Mirrors `/blog/index.html`)
+Use this for articles or rich media.
 ```html
-<!-- Correct Card Architecture -->
 <div class="article-item">
   <article class="article-card">
-    <a href="/target-url.html" style="display: block; text-decoration: none; color: inherit;">
-      <!-- Thumbnail -->
+    <a href="/target-url.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
       <div class="card-thumb-wrapper">
-         <img src="/assets/img/thumbnail.jpg" alt="Description" class="card-thumb-img" loading="lazy" />
+         <picture>
+           <img src="/assets/img/thumbnail.jpg" alt="Description" class="card-thumb-img" loading="lazy" />
+         </picture>
       </div>
-      <!-- Meta -->
       <div class="tags-container">
          <span class="meta-tag">#Security</span>
       </div>
-      <!-- Content -->
       <h2 class="card-title">Technical Title Goes Here</h2>
       <p class="article-excerpt">A concise, 2-line maximum summary of the content.</p>
     </a>
   </article>
+</div>
+```
+
+#### Standard B: Without Image (Mirrors `/tools/index.html`)
+Use this for data items, tools, cheatsheets, and text-heavy lists.
+```html
+<div class="tool-item">
+  <a href="/target-url.html" class="tool-card">
+    <div>
+      <span class="tool-category">CATEGORY NAME</span>
+      <h3 class="tool-title">Utility Title</h3>
+      <p class="tool-desc">A concise, 2-line maximum explanation.</p>
+    </div>
+    <span class="tool-badge">Open Tool →</span>
+  </a>
 </div>
 ```
 
