@@ -522,7 +522,7 @@
 <strong>PGP Public Key:</strong> <a href="/gpg-key.asc" style="font-weight:600" target="_blank">/gpg-key.asc</a><br/>
 <strong>Security Policy:</strong> <a href="/.well-known/security.txt" style="font-weight:600" target="_blank">/.well-known/security.txt</a> (RFC 9116)
             </p>
-<div onclick="navigator.clipboard.writeText('curl -sL zyekh.com/gpg-key.asc | gpg --import'); this.style.borderColor='#ffffff'; setTimeout(()=&gt;this.style.borderColor='var(--border-color)', 1500);" style="background:#000; border:1px solid var(--border-color); padding:0.8rem; border-radius:6px; margin-top:1rem; cursor:pointer; transition: border-color 0.2s ease;" title="Click to copy">
+<div onclick="navigator.clipboard.writeText('curl -sL zyekh.com/gpg-key.asc | gpg --import'); this.style.borderColor='var(--text-main)'; setTimeout(()=>this.style.borderColor='var(--border-color)', 1500);" style="background:var(--code-bg); border:1px solid var(--border-color); padding:0.8rem; border-radius:6px; margin-top:1rem; cursor:pointer; transition: border-color 0.2s ease;" title="Click to copy">
 <div style="font-family:'Fira Code', monospace; font-size:0.85rem">$ curl -sL zyekh.com/gpg-key.asc | gpg --import</div>
 <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem;">Click to copy one-click import command</div>
 </div>
@@ -537,11 +537,11 @@
 <input autocomplete="off" name="_honey" style="display:none;" tabindex="-1" type="text"/>
 <h3 style="margin-top:0;">Send Direct Message</h3>
 <label for="contact-name" style="color:var(--text-muted); font-size:0.85rem;">Your Name</label>
-<input class="pure-input-1" id="contact-name" name="name" required="" style="background:#09090b; border:1px solid var(--border-color); padding:0.5rem" type="text"/>
+<input class="pure-input-1" id="contact-name" name="name" required="" style="border:1px solid var(--border-color); padding:0.5rem" type="text"/>
 <label for="contact-email" style="color:var(--text-muted); font-size:0.85rem; margin-top:0.5rem;">Your Email</label>
-<input class="pure-input-1" id="contact-email" name="email" required="" style="background:#09090b; border:1px solid var(--border-color); padding:0.5rem" type="email"/>
+<input class="pure-input-1" id="contact-email" name="email" required="" style="border:1px solid var(--border-color); padding:0.5rem" type="email"/>
 <label for="contact-message" style="color:var(--text-muted); font-size:0.85rem; margin-top:0.5rem;">Message</label>
-<textarea class="pure-input-1" id="contact-message" name="message" required="" rows="3" style="background:#09090b; border:1px solid var(--border-color); padding:0.5rem"></textarea>
+<textarea class="pure-input-1" id="contact-message" name="message" required="" rows="3" style="border:1px solid var(--border-color); padding:0.5rem"></textarea>
 <button class="btn-primary" style="margin-top:1rem; width:100%;" type="submit">Send Message</button>
 </form>
 </div>
