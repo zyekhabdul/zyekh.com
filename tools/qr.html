@@ -18,8 +18,8 @@
 
   <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v125">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v127">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v127">
   <!-- SEO & Social Meta Tags -->
   <link rel="canonical" href="https://zyekh.com/tools/qr.html">
   <meta property="og:title" content="Generator QR Code Online Gratis — zyekh.com">
@@ -92,6 +92,21 @@
   ]
 }
   </script>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 60;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+</script>
 </head>
 <body>
     <!-- Header Navigation -->
@@ -115,7 +130,7 @@
       <p class="page-subtitle">Free high-definition QR code generator with custom sizing and instant image rendering.</p>
     </header>
   <div class="tool-box">
-      <p><textarea id="in" rows="4" cols="40" placeholder="Teks atau URL…" oninput="update()"></textarea></p>
+      <p><textarea id="in" rows="4" cols="40" placeholder="Teks atau URL…" oninput="if(!this._d)this._d=debounceRAF(function(){update()},60);this._d()"></textarea></p>
   <p id="qr"></p>
   <p><button id="dl" disabled onclick="download()">Unduh PNG</button></p>
     </div>
@@ -186,6 +201,6 @@
       }, 'image/png');
     }
   </script>
-  <script src="/assets/js/site-nav.js?v=20260805_v125" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260805_v127" defer></script>
 </body>
 </html>

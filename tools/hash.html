@@ -67,8 +67,8 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v125">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v127">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v127">
 
   <style>
     textarea.hash-input { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; width: 100%; min-height: 120px; resize: vertical; margin-bottom: 1rem; }
@@ -76,6 +76,21 @@
     .hash-label { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.25rem; }
     .hash-val { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--text-main); word-break: break-all; }
   </style>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 60;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+</script>
 </head>
 <body>
   <site-nav active="tools"></site-nav>
@@ -99,7 +114,7 @@
 
     <section class="tool-box">
       <label for="hashText" style="font-weight:600;display:block;margin-bottom:0.4rem;">Text Input</label>
-      <textarea id="hashText" class="hash-input" placeholder="Type or paste text to generate cryptographic hashes..." oninput="generateHashes()"></textarea>
+      <textarea id="hashText" class="hash-input" placeholder="Type or paste text to generate cryptographic hashes..." oninput="if(!this._d)this._d=debounceRAF(function(){generateHashes()},60);this._d()"></textarea>
 
       <div style="margin-bottom:1.5rem;">
         <label for="fileChecksum" style="font-size:0.85rem;color:var(--text-muted);"> Atau Hitung File Checksum (Local File Hashing):</label>
@@ -186,6 +201,6 @@
       return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
   </script>
-  <script src="/assets/js/site-nav.js?v=20260805_v125" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260805_v127" defer></script>
 </body>
 </html>

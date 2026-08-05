@@ -67,8 +67,8 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v125">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v127">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v127">
 
   <style>
     textarea.url-box { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; width: 100%; min-height: 110px; resize: vertical; margin-bottom: 1rem; word-break: break-all; }
@@ -77,6 +77,21 @@
     .query-table th, .query-table td { border: 1px solid var(--border-color); padding: 0.55rem 0.75rem; text-align: left; }
     .query-table th { background: var(--bg-card); color: var(--text-muted); }
   </style>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 60;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+</script>
 </head>
 <body>
   <site-nav active="tools"></site-nav>
@@ -100,7 +115,7 @@
 
     <section class="tool-box">
       <label for="urlInput" style="font-weight:600;display:block;margin-bottom:0.4rem;">URL / String Input</label>
-      <textarea id="urlInput" class="url-box" placeholder="https://zyekh.com/tools/?search=security&utm_source=twitter&fbclid=12345" oninput="processURL()"></textarea>
+      <textarea id="urlInput" class="url-box" placeholder="https://zyekh.com/tools/?search=security&utm_source=twitter&fbclid=12345" oninput="if(!this._d)this._d=debounceRAF(function(){processURL()},60);this._d()"></textarea>
 
       <div class="btn-group">
         <button type="button" onclick="encodeURL()">Encode URL</button>
@@ -224,6 +239,6 @@
       return str.replace(/[&<>'"]/g, tag => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'}[tag]));
     }
   </script>
-  <script src="/assets/js/site-nav.js?v=20260805_v125" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260805_v127" defer></script>
 </body>
 </html>

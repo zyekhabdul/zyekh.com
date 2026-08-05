@@ -67,8 +67,8 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v125">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v127">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v127">
 
   <style>
     textarea.jwt-input { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; width: 100%; min-height: 110px; resize: vertical; margin-bottom: 1rem; word-break: break-all; }
@@ -83,6 +83,21 @@
     .expiry-badge.active { background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); color: #4ade80; }
     .expiry-badge.expired { background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; }
   </style>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 60;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+</script>
 </head>
 <body>
   <site-nav active="tools"></site-nav>
@@ -106,7 +121,7 @@
 
     <section class="tool-box">
       <label for="jwtInput" style="font-weight:600;">Encoded JWT Token</label>
-      <textarea id="jwtInput" class="jwt-input" placeholder="Paste your JWT token here (eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...)" oninput="decodeJWT()"></textarea>
+      <textarea id="jwtInput" class="jwt-input" placeholder="Paste your JWT token here (eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...)" oninput="if(!this._d)this._d=debounceRAF(function(){decodeJWT()},60);this._d()"></textarea>
 
       <div id="jwtExpiry" class="expiry-badge" style="display:none;"></div>
 
@@ -201,6 +216,6 @@
       return decodeURIComponent(atob(base64).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
     }
   </script>
-  <script src="/assets/js/site-nav.js?v=20260805_v125" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260805_v127" defer></script>
 </body>
 </html>

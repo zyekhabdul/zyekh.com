@@ -64,8 +64,8 @@
   </script>
 <!-- Self-hosted Fonts & Styles -->
 <link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
-<link href="/assets/fonts/fonts.css?v=20260803_v75" rel="stylesheet"/>
-<link href="/assets/css/shared.css?v=20260805_v125" rel="stylesheet"/>
+<link href="/assets/fonts/fonts.css?v=20260805_v127" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260805_v127" rel="stylesheet"/>
 <style>
     .base64-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
     @media (max-width: 768px) { .base64-grid { grid-template-columns: 1fr; } }
@@ -73,6 +73,21 @@
     .btn-group { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
     .img-preview { max-width: 100%; max-height: 200px; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-top: 0.5rem; display: none; }
   </style>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 60;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+</script>
 </head>
 <body>
 <site-nav active="tools"></site-nav>
@@ -100,7 +115,7 @@
 <div class="base64-grid">
 <div>
 <label for="inputArea" style="font-weight:600;">Plain Text / Upload Image</label>
-<textarea class="b64-box" id="inputArea" oninput="autoProcess()" placeholder="Type text or paste data here..."></textarea>
+<textarea class="b64-box" id="inputArea" oninput="if(!this._d)this._d=debounceRAF(function(){autoProcess()},60);this._d()" placeholder="Type text or paste data here..."></textarea>
 <div style="margin-top:0.75rem;">
 <label for="imgUpload" style="font-size:0.85rem;color:var(--text-muted);">Atau Upload Gambar (Image to Base64 Data URI):</label>
 <input accept="image/*" id="imgUpload" onchange="convertImage()" style="font-size:0.85rem;margin-top:0.3rem;" type="file"/>
@@ -188,6 +203,6 @@
       } catch (err) {}
     }
   </script>
-<script defer="" src="/assets/js/site-nav.js?v=20260805_v125"></script>
+<script defer="" src="/assets/js/site-nav.js?v=20260805_v127"></script>
 </body>
 </html>

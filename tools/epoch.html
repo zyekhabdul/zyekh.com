@@ -67,8 +67,8 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v125">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v127">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v127">
 
   <style>
     .epoch-card { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1rem; }
@@ -78,6 +78,21 @@
     .result-table th, .result-table td { border: 1px solid var(--border-color); padding: 0.6rem 0.8rem; text-align: left; }
     .result-table th { background: var(--bg-card); color: var(--text-muted); width: 35%; }
   </style>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 60;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+</script>
 </head>
 <body>
   <site-nav active="tools"></site-nav>
@@ -107,7 +122,7 @@
 
       <div class="form-group">
         <label for="epochInput" style="font-weight:600;">Unix Timestamp (Detik atau Milidetik)</label>
-        <input type="text" id="epochInput" class="epoch-input" placeholder="Masukkan Unix timestamp (contoh: 1775150400)" oninput="convertTimestamp()">
+        <input type="text" id="epochInput" class="epoch-input" placeholder="Masukkan Unix timestamp (contoh: 1775150400)" oninput="if(!this._d)this._d=debounceRAF(function(){convertTimestamp()},60);this._d()">
       </div>
 
       <table class="result-table">
@@ -200,6 +215,6 @@
     // Auto convert default
     document.addEventListener('DOMContentLoaded', convertTimestamp);
   </script>
-  <script src="/assets/js/site-nav.js?v=20260805_v125" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260805_v127" defer></script>
 </body>
 </html>

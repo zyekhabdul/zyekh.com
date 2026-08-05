@@ -67,8 +67,8 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v125">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v127">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v127">
 
   <style>
     .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
@@ -77,6 +77,21 @@
     .form-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
     .form-item { flex: 1; min-width: 150px; }
   </style>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 60;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+</script>
 </head>
 <body>
   <site-nav active="tools"></site-nav>
@@ -119,14 +134,14 @@
 
         <div class="form-item" id="tableNameGroup" style="display:none;">
           <label for="tableName" style="font-weight:600;display:block;margin-bottom:0.4rem;">SQL Table Name</label>
-          <input type="text" id="tableName" value="users" oninput="convertCSV()" style="width:100%;">
+          <input type="text" id="tableName" value="users" oninput="if(!this._d)this._d=debounceRAF(function(){convertCSV()},60);this._d()" style="width:100%;">
         </div>
       </div>
 
       <div class="grid-2-col">
         <div>
           <label for="csvInput" style="font-weight:600;display:block;margin-bottom:0.4rem;">CSV / TSV Input Data</label>
-          <textarea id="csvInput" class="csv-box" placeholder="id,name,role,email&#10;1,Zyekh,Developer,zyekh@example.com&#10;2,Alice,Security,alice@example.com" oninput="convertCSV()"></textarea>
+          <textarea id="csvInput" class="csv-box" placeholder="id,name,role,email&#10;1,Zyekh,Developer,zyekh@example.com&#10;2,Alice,Security,alice@example.com" oninput="if(!this._d)this._d=debounceRAF(function(){convertCSV()},60);this._d()"></textarea>
         </div>
 
         <div>
@@ -221,6 +236,6 @@
       } catch (err) {}
     }
   </script>
-  <script src="/assets/js/site-nav.js?v=20260805_v125" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260805_v127" defer></script>
 </body>
 </html>

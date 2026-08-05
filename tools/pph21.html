@@ -18,8 +18,8 @@
 
   <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v125">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v127">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v127">
   <!-- SEO & Social Meta Tags -->
   <link rel="canonical" href="https://zyekh.com/tools/pph21.html">
   <meta property="og:title" content="Kalkulator PPh 21 TER 2026 Online Gratis — zyekh.com">
@@ -122,6 +122,21 @@
   ]
 }
   </script>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 60;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+</script>
 </head>
 <body>
     <!-- Header Navigation -->
@@ -167,12 +182,12 @@
 
   <p>
     <label for="amount" id="amountLabel">Gaji bruto per bulan (Rp)</label><br>
-    <input type="number" id="amount" min="0" step="100000" placeholder="15000000" oninput="calc()">
+    <input type="number" id="amount" min="0" step="100000" placeholder="15000000" oninput="if(!this._d)this._d=debounceRAF(function(){calc()},60);this._d()">
   </p>
 
   <p>
     <label for="pensiun">Iuran pensiun per bulan (Rp, opsional)</label><br>
-    <input type="number" id="pensiun" min="0" step="50000" value="0" oninput="calc()">
+    <input type="number" id="pensiun" min="0" step="50000" value="0" oninput="if(!this._d)this._d=debounceRAF(function(){calc()},60);this._d()">
   </p>
 
   <table>
@@ -300,6 +315,6 @@
     }
     calc();
   </script>
-  <script src="/assets/js/site-nav.js?v=20260805_v125" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260805_v127" defer></script>
 </body>
 </html>

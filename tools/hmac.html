@@ -67,8 +67,8 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v125">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v127">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v127">
 
   <style>
     .form-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
@@ -76,6 +76,21 @@
     textarea.hmac-box { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; width: 100%; min-height: 100px; resize: vertical; margin-bottom: 1rem; }
     .hmac-result { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: #4ade80; background: var(--bg-dark); border: 1px solid var(--border-color); padding: 0.75rem; border-radius: var(--radius-md); word-break: break-all; margin-bottom: 1rem; }
   </style>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 60;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+</script>
 </head>
 <body>
   <site-nav active="tools"></site-nav>
@@ -118,10 +133,10 @@
       </div>
 
       <label for="hmacKey" style="font-weight:600;display:block;margin-bottom:0.4rem;">Secret Key (Kunci Rahasia)</label>
-      <input type="text" id="hmacKey" placeholder="Paste secret key here..." oninput="generateHMAC()" style="width:100%;font-family:'Fira Code',monospace;margin-bottom:1rem;">
+      <input type="text" id="hmacKey" placeholder="Paste secret key here..." oninput="if(!this._d)this._d=debounceRAF(function(){generateHMAC()},60);this._d()" style="width:100%;font-family:'Fira Code',monospace;margin-bottom:1rem;">
 
       <label for="hmacMessage" style="font-weight:600;display:block;margin-bottom:0.4rem;">Message Payload / Data String</label>
-      <textarea id="hmacMessage" class="hmac-box" placeholder="Type or paste payload string to sign..." oninput="generateHMAC()"></textarea>
+      <textarea id="hmacMessage" class="hmac-box" placeholder="Type or paste payload string to sign..." oninput="if(!this._d)this._d=debounceRAF(function(){generateHMAC()},60);this._d()"></textarea>
 
       <label style="font-weight:600;display:block;margin-bottom:0.4rem;">Generated HMAC Signature</label>
       <div id="hmacResult" class="hmac-result">—</div>
@@ -193,6 +208,6 @@
       } catch (err) {}
     }
   </script>
-  <script src="/assets/js/site-nav.js?v=20260805_v125" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260805_v127" defer></script>
 </body>
 </html>

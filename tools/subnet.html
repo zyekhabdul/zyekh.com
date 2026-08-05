@@ -67,14 +67,29 @@
 
   <!-- Self-hosted Fonts & Styles -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v125">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v127">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v127">
 
   <style>
     .subnet-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-family: 'Fira Code', monospace; font-size: 0.88rem; }
     .subnet-table th, .subnet-table td { border: 1px solid var(--border-color); padding: 0.6rem 0.85rem; text-align: left; }
     .subnet-table th { background: var(--bg-card); color: var(--text-muted); width: 35%; }
   </style>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 60;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+</script>
 </head>
 <body>
   <site-nav active="tools"></site-nav>
@@ -99,7 +114,7 @@
     <section class="tool-box">
       <div style="margin-bottom:1.5rem;">
         <label for="cidrInput" style="font-weight:600;display:block;margin-bottom:0.4rem;">IP Address / CIDR Notation</label>
-        <input type="text" id="cidrInput" value="192.168.1.1/24" placeholder="192.168.1.1/24 atau 10.0.0.0/16" oninput="calculateSubnet()" style="font-family:'Fira Code',monospace;font-size:1rem;width:100%;">
+        <input type="text" id="cidrInput" value="192.168.1.1/24" placeholder="192.168.1.1/24 atau 10.0.0.0/16" oninput="if(!this._d)this._d=debounceRAF(function(){calculateSubnet()},60);this._d()" style="font-family:'Fira Code',monospace;font-size:1rem;width:100%;">
       </div>
 
       <table class="subnet-table">
@@ -208,6 +223,6 @@
 
     document.addEventListener('DOMContentLoaded', calculateSubnet);
   </script>
-  <script src="/assets/js/site-nav.js?v=20260805_v125" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260805_v127" defer></script>
 </body>
 </html>

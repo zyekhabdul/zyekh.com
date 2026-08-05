@@ -18,8 +18,8 @@
 
   <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260803_v75">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v125">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260805_v127">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260805_v127">
   <!-- SEO & Social Meta Tags -->
   <link rel="canonical" href="https://zyekh.com/tools/zakat.html">
   <meta property="og:title" content="Kalkulator Zakat Maal & Penghasilan Online Gratis — zyekh.com">
@@ -122,6 +122,21 @@
   ]
 }
   </script>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 60;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+</script>
 </head>
 <body>
     <!-- Header Navigation -->
@@ -154,26 +169,26 @@
   <div id="maal">
     <p>
       <label for="emas">Harga emas 24K per gram (Rp)</label><br>
-      <input type="number" id="emas" value="1200000" step="10000" oninput="calcMaal()">
+      <input type="number" id="emas" value="1200000" step="10000" oninput="if(!this._d)this._d=debounceRAF(function(){calcMaal()},60);this._d()">
     </p>
     <p>
       <label for="harta">Total harta (tabungan, emas, dll.) — Rp</label><br>
-      <input type="number" id="harta" min="0" step="100000" placeholder="50000000" oninput="calcMaal()">
+      <input type="number" id="harta" min="0" step="100000" placeholder="50000000" oninput="if(!this._d)this._d=debounceRAF(function(){calcMaal()},60);this._d()">
     </p>
     <p>
       <label for="utang">Utang jatuh tempo — Rp</label><br>
-      <input type="number" id="utang" min="0" step="100000" value="0" oninput="calcMaal()">
+      <input type="number" id="utang" min="0" step="100000" value="0" oninput="if(!this._d)this._d=debounceRAF(function(){calcMaal()},60);this._d()">
     </p>
   </div>
 
   <div id="penghasilan" hidden>
     <p>
       <label for="emas2">Harga emas 24K per gram (Rp)</label><br>
-      <input type="number" id="emas2" value="1200000" step="10000" oninput="calcPenghasilan()">
+      <input type="number" id="emas2" value="1200000" step="10000" oninput="if(!this._d)this._d=debounceRAF(function(){calcPenghasilan()},60);this._d()">
     </p>
     <p>
       <label for="gaji">Penghasilan per bulan (Rp)</label><br>
-      <input type="number" id="gaji" min="0" step="100000" placeholder="10000000" oninput="calcPenghasilan()">
+      <input type="number" id="gaji" min="0" step="100000" placeholder="10000000" oninput="if(!this._d)this._d=debounceRAF(function(){calcPenghasilan()},60);this._d()">
     </p>
   </div>
 
@@ -263,6 +278,6 @@
 
     calcMaal();
   </script>
-  <script src="/assets/js/site-nav.js?v=20260805_v125" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260805_v127" defer></script>
 </body>
 </html>
