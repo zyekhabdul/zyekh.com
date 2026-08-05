@@ -311,7 +311,7 @@ site-nav {
 }
 .nav-link:hover,
 .nav-link:focus    { color: var(--text-main); background: var(--accent-glow); }
-.nav-link.active    { color: var(--text-main); background: var(--border-color); font-weight: 600; }
+.nav-link.active    { color: var(--text-main); background: var(--border-color); font-weight: 500; }
 
 /* Backdrop overlay */
 .nav-backdrop {
@@ -497,7 +497,7 @@ label {
   display: block;
   margin-bottom: 0.4rem;
 }
-button {
+button:not(.filter-btn):not(.theme-toggle):not(.nav-toggle):not(.copy-code-btn):not(.btn-share):not(.btn-action) {
   background-color: var(--text-main);
   color: var(--bg-dark);
   font-weight: 600;
@@ -510,7 +510,7 @@ button {
   margin-bottom: 0.4rem;
   transition: background-color var(--transition);
 }
-button:hover { background-color: #e4e4e7; }
+button:not(.filter-btn):not(.theme-toggle):not(.nav-toggle):not(.copy-code-btn):not(.btn-share):not(.btn-action):hover { background-color: #e4e4e7; }
 
 /* ===================== Table ===================== */
 table {

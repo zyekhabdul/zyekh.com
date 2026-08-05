@@ -182,6 +182,19 @@
   margin-bottom: 0.5rem;
 }
 
+[data-theme="light"] .article-content,
+[data-theme="light"] .article-content p,
+[data-theme="light"] .article-content ul,
+[data-theme="light"] .article-content ol,
+[data-theme="light"] .article-content li,
+[data-theme="light"] .article-content span,
+[data-theme="light"] .article-excerpt,
+[data-theme="light"] .exec-summary p,
+[data-theme="light"] .toc-card p,
+[data-theme="light"] .callout p {
+  color: #09090b !important;
+}
+
 /* ── Code Blocks ── */
 pre {
   background-color: var(--code-bg);
