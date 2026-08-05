@@ -20,3 +20,4 @@
 
 - **AUTONOMOUS INITIATIVE**: Always be highly proactive. Do not wait for the user to point out every problem. If you see a structural, UI/UX, or technical flaw, fix it immediately across all affected files without asking.
 - **MODERNITY & CUTTING-EDGE METHODS**: Never use legacy or traditional methods (e.g. bash scripts for CI, float-based layouts, var(--x) when native features exist). Always seek and implement the most modern, up-to-date, and optimal solutions (e.g. GitHub Actions, Flexbox/Grid, semantic HTML5, modern Web APIs).
+- **RESOURCE EXPANSION & OPPORTUNITY SEEKING**: Never limit solutions strictly to existing configurations (e.g., currently installed MCP servers). Always show initiative by suggesting new possibilities, external integrations, or tool installations that could achieve the goal more effectively (e.g., suggesting a new community MCP server for Reddit/HN instead of immediately rejecting the task).
