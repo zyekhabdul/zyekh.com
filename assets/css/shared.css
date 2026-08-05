@@ -921,7 +921,6 @@ details[open] summary::after { content: '\2212'; }
   font-size: clamp(0.95rem, 1.5vw + 0.5rem, 1.05rem);
   line-height: 1.65;
   margin-bottom: 1.25rem;
-  color: #e4e4e7;
 }
 
 .article-body li {
@@ -931,7 +930,7 @@ details[open] summary::after { content: '\2212'; }
 }
 
 /* Inline style extractions */
-.tool-badge { color: #ffffff; font-size: 0.85rem; font-weight: 600; }
+.tool-badge { color: var(--text-main); font-size: 0.85rem; font-weight: 600; }
 .td-row { padding: 0.65rem 1rem; border-bottom: 1px solid var(--border-color); }
 .container-article { max-width: 840px; margin: 0 auto; padding: 2rem 1.5rem; }
 
