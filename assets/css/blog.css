@@ -266,7 +266,7 @@ pre code {
 .article-body ol { margin-bottom: 1.5rem; padding-left: 1.5rem; color: var(--text-main); }
 
 /* Blog article inline style extractions */
-.blog-badge { color: #ffffff; font-weight: 600; }
+.blog-badge { color: var(--text-main); font-weight: 600; text-decoration: underline; }
 .callout-card { margin-top: 2.5rem; padding: 1.25rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); }
 .heading-reset { margin-top: 0; margin-bottom: 0.6rem; color: var(--text-main); font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 700; line-height: 1.3; }
 .note-sm { margin-bottom: 0; font-size: 0.9rem; color: var(--text-muted); line-height: 1.55; }
@@ -340,6 +340,7 @@ pre code {
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid var(--border-color-hover);
+  flex-shrink: 0;
 }
 .author-info h4 { margin: 0 0 0.25rem 0; font-size: 1.05rem; }
 .author-info p { margin: 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.45; }
