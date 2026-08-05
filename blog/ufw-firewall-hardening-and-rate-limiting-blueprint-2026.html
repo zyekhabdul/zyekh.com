@@ -120,9 +120,9 @@
 }
 </script>
 <link href="/assets/fonts/fonts.css?v=20260805_v124" rel="stylesheet"/>
-<link href="/assets/css/shared.css?v=20260805_v124" rel="stylesheet"/>
-<link href="/assets/css/blog.css?v=20260805_v124" rel="stylesheet"/>
-<script defer="" src="/assets/js/site-nav.js?v=20260805_v124"></script>
+<link href="/assets/css/shared.css?v=20260805_v127" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260805_v127" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.js?v=20260805_v127"></script>
 <script defer="" src="/assets/js/article-actions.js?v=20260805_v124"></script>
 </head>
 <body>
@@ -265,11 +265,11 @@ nmap -sS -p 22,80,443,5432 <SERVER_IP></code></pre>
       <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
 <details>
   <summary>Does UFW override iptables rules defined by Docker?</summary>
-  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Docker bypasses standard UFW user rules by inserting iptables rules directly into the DOCKER chain. Use ufw-docker or configure daemon.json iptables: false for strict isolation.</p>
+  <p class="faq-answer">Docker bypasses standard UFW user rules by inserting iptables rules directly into the DOCKER chain. Use ufw-docker or configure daemon.json iptables: false for strict isolation.</p>
 </details>
 <details>
   <summary>What is the difference between ufw allow and ufw limit?</summary>
-  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">ufw allow permits unlimited connections, while ufw limit denies connections if an IP address attempts 6+ connections within 30 seconds.</p>
+  <p class="faq-answer">ufw allow permits unlimited connections, while ufw limit denies connections if an IP address attempts 6+ connections within 30 seconds.</p>
 </details>
     </div>
 
@@ -279,7 +279,7 @@ nmap -sS -p 22,80,443,5432 <SERVER_IP></code></pre>
       <div class="author-info">
         <h4>Written by Zyekh Abdul Qadir Jailani</h4>
         <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
-        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+        <div class="author-social-links note-sm" style="margin-top:0\.4rem;">
           <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
           <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
           <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •

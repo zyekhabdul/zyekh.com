@@ -51,13 +51,13 @@
   --border-color-hover:#71717a;
   --border-hover:      #71717a;
   --text-main:         #09090b;
-  --text-muted:        #3f3f46;
+  --text-muted:        #27272a;
   --accent-white:      #09090b;
   --accent:            #09090b;
   --accent-glow:       rgba(0, 0, 0, 0.05);
   --info:              #18181b;
-  --warn:              #3f3f46;
-  --danger:            #52525b;
+  --warn:              #27272a;
+  --danger:            #3f3f46;
   --code-bg:           #e4e4e7;
 }
 
@@ -77,9 +77,9 @@
 [data-theme="light"] input[type="datetime-local"],
 [data-theme="light"] select,
 [data-theme="light"] textarea {
-  background: #ffffff !important;
-  border-color: #d4d4d8 !important;
-  color: #09090b !important;
+  background: #ffffff;
+  border-color: #d4d4d8;
+  color: #09090b;
 }
 
 [data-theme="light"] pre,
@@ -92,20 +92,21 @@
 
 [data-theme="light"] .btn-primary,
 [data-theme="light"] button[type="submit"] {
-  background-color: #09090b !important;
-  color: #ffffff !important;
-  border-color: #09090b !important;
+  background-color: #09090b;
+  color: #ffffff;
+  border-color: #09090b;
 }
 [data-theme="light"] .btn-primary:hover,
 [data-theme="light"] button[type="submit"]:hover {
-  background-color: #27272a !important;
+  background-color: #27272a;
 }
 
 .theme-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 116px;
+  min-width: 124px;
+  width: 124px;
   box-sizing: border-box;
   background: var(--bg-card);
   border: 1.5px solid var(--border-color-hover);
@@ -113,7 +114,7 @@
   font-size: 0.78rem;
   font-weight: 700;
   font-family: 'Fira Code', monospace;
-  padding: 0.35rem 0;
+  padding: 0.35rem 0.4rem;
   border-radius: 20px;
   cursor: pointer;
   transition: border-color 0.2s ease, background-color 0.2s ease;
@@ -121,13 +122,19 @@
   touch-action: manipulation;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   flex-shrink: 0;
+  white-space: nowrap;
 }
 .theme-toggle:hover {
   border-color: var(--text-main);
 }
+.theme-icon-light, .theme-icon-dark {
+  white-space: nowrap;
+  display: inline-block;
+  text-align: center;
+}
 [data-theme="light"] .theme-icon-light { display: none; }
-[data-theme="light"] .theme-icon-dark { display: inline; }
-:root:not([data-theme="light"]) .theme-icon-light { display: inline; }
+[data-theme="light"] .theme-icon-dark { display: inline-block; }
+:root:not([data-theme="light"]) .theme-icon-light { display: inline-block; }
 :root:not([data-theme="light"]) .theme-icon-dark { display: none; }
 
 /* ===================== Reset & Base ===================== */
@@ -993,29 +1000,32 @@ details[open] summary::after { content: '\2212'; }
 }
 
 /* Dark Mode Active Filter Pill (White button, Black text) */
-:root:not([data-theme="light"]) .filter-btn.active {
-  background: #fafafa !important;
-  border-color: #fafafa !important;
-  color: #09090b !important;
-  font-weight: 600 !important;
+.filter-btn.active {
+  background: #fafafa;
+  border-color: #fafafa;
+  color: #09090b;
+  font-weight: 600;
 }
 
-/* Light Mode Non-Active Filter Pill (White button, Black text - matching /about Explore Web Tools Hub) */
-[data-theme="light"] .filter-btn:not(.active) {
-  background: #ffffff !important;
-  border: 1px solid #d4d4d8 !important;
-  color: #09090b !important;
+/* Light Mode Non-Active Filter Pill (White background, Black text, subtle border) */
+[data-theme="light"] .filter-btn {
+  background: #ffffff;
+  border: 1px solid #d4d4d8;
+  color: #09090b;
 }
-[data-theme="light"] .filter-btn:not(.active):hover {
-  border-color: #71717a !important;
+[data-theme="light"] .filter-btn:hover {
+  border-color: #09090b;
+  background: #f4f4f5;
+  color: #09090b;
 }
 
-/* Light Mode Active Filter Pill (Black button, White text - matching /about View Repositories) */
+/* Light Mode Active Filter Pill (Crisp 2px black border, light background, bold black text) */
 [data-theme="light"] .filter-btn.active {
-  background: #09090b !important;
-  border-color: #09090b !important;
-  color: #ffffff !important;
-  font-weight: 600 !important;
+  background: #f4f4f5;
+  border: 2px solid #09090b;
+  color: #09090b;
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
 

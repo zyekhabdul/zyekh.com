@@ -120,9 +120,9 @@
 }
 </script>
 <link href="/assets/fonts/fonts.css?v=20260805_v124" rel="stylesheet"/>
-<link href="/assets/css/shared.css?v=20260805_v124" rel="stylesheet"/>
-<link href="/assets/css/blog.css?v=20260805_v124" rel="stylesheet"/>
-<script defer="" src="/assets/js/site-nav.js?v=20260805_v124"></script>
+<link href="/assets/css/shared.css?v=20260805_v127" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260805_v127" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.js?v=20260805_v127"></script>
 <script defer="" src="/assets/js/article-actions.js?v=20260805_v124"></script>
 </head>
 <body>
@@ -301,11 +301,11 @@ dmesg | grep -i "SECCOMP"</code></pre>
       <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
 <details>
   <summary>What is the performance overhead of Seccomp-BPF?</summary>
-  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Seccomp-BPF executes in nanoseconds per syscall because BPF bytecode is JIT-compiled into native machine instructions.</p>
+  <p class="faq-answer">Seccomp-BPF executes in nanoseconds per syscall because BPF bytecode is JIT-compiled into native machine instructions.</p>
 </details>
 <details>
   <summary>What happens if an application invokes a forbidden syscall?</summary>
-  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Depending on policy, Seccomp terminates the process immediately (SECCOMP_RET_KILL_PROCESS) or returns EPERM error status.</p>
+  <p class="faq-answer">Depending on policy, Seccomp terminates the process immediately (SECCOMP_RET_KILL_PROCESS) or returns EPERM error status.</p>
 </details>
     </div>
 
@@ -315,7 +315,7 @@ dmesg | grep -i "SECCOMP"</code></pre>
       <div class="author-info">
         <h4>Written by Zyekh Abdul Qadir Jailani</h4>
         <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
-        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+        <div class="author-social-links note-sm" style="margin-top:0\.4rem;">
           <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
           <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
           <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •

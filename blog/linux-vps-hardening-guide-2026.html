@@ -121,8 +121,8 @@
 <link href="https://zyekh.com/assets/img/vps-hardening.jpg" rel="image_src"/>
 <link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
 <link href="/assets/fonts/fonts.css?v=20260803_v75_v62" rel="stylesheet"/>
-<link href="/assets/css/shared.css?v=20260805_v124" rel="stylesheet"/>
-<link href="/assets/css/blog.css?v=20260805_v124" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260805_v127" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260805_v127" rel="stylesheet"/>
 <meta content="@zyekh" name="twitter:creator"/><meta content="@zyekh" name="twitter:site"/><meta content="https://zyekh.com/assets/img/vps-hardening.jpg" property="og:image:secure_url"/><meta content="image/jpeg" property="og:image:type"/><meta content="Comprehensive Linux VPS Hardening Blueprint for 2026 — zyekh.com" property="og:image:alt"/><meta content="Comprehensive Linux VPS Hardening Blueprint for 2026 — zyekh.com" name="twitter:image:alt"/><script defer="" src="/assets/js/article-actions.js?v=20260805_v124"></script>
 </head>
 <body>
@@ -372,19 +372,19 @@ backend = %(sshd_backend)s</code></pre>
 <div class="faq-section">
 <details>
 <summary>Why should I disable password authentication in SSH?</summary>
-<p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
+<p class="faq-answer">
             Password authentication is vulnerable to automated dictionary and brute-force attacks across public IP ranges. Ed25519 cryptographic key authentication eliminates password guessing entirely.
           </p>
 </details>
 <details>
 <summary>How does kernel sysctl tuning protect against SYN flood attacks?</summary>
-<p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
+<p class="faq-answer">
             Enabling <code>net.ipv62.tcp_syncookies = 1</code> allows the Linux kernel to send cryptographic SYN cookies when the connection backlog queue overflows, preventing memory exhaustion attacks without dropping legitimate connection attempts.
           </p>
 </details>
 <details>
 <summary>Should I change the default SSH port 22?</summary>
-<p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">
+<p class="faq-answer">
             While changing port 22 is security through obscurity, it eliminates up to 99% of noisy automated port-scanning bot scripts from cluttering your system authentication logs.
           </p>
 </details>
@@ -396,7 +396,7 @@ backend = %(sshd_backend)s</code></pre>
 <div class="author-info">
 <h4>Written by Zyekh Abdul Qadir Jailani</h4>
 <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
-<div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+<div class="author-social-links note-sm" style="margin-top:0\.4rem;">
 <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
             <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
             <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
@@ -418,6 +418,6 @@ backend = %(sshd_backend)s</code></pre>
 <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
 </footer>
 </article>
-<script defer="" src="/assets/js/site-nav.js?v=20260805_v124"></script>
+<script defer="" src="/assets/js/site-nav.js?v=20260805_v127"></script>
 </body>
 </html>
