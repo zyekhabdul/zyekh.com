@@ -23,7 +23,7 @@
 
 ---
 
-## ⚡ The Philosophy
+## [ PHILOSOPHY ] The Philosophy
 
 Modern web development has become bloated. A simple password generator now requires a 200MB Node module folder, a bundler, and connects to 3 different telemetry servers. 
 
@@ -33,7 +33,7 @@ This repository is a counter-movement:
 - **Zero Tracking:** No Google Analytics, no telemetry. 
 - **100% Local Execution:** Every tool runs purely in your browser. Disconnect from the internet, and they still work via Service Worker caching (PWA).
 
-## 🛠️ The 42 Tools (`/tools/`)
+## [ TOOLS ] The 42 Tools (`/tools/`)
 
 You can view the full suite at [zyekh.com/tools](https://zyekh.com/tools).
 
@@ -47,12 +47,12 @@ You can view the full suite at [zyekh.com/tools](https://zyekh.com/tools).
 **Financial Calculators:**
 - Mortgage (KPR), PPh 21 Tax, Zakat, Auto Loan, Salary calculators—all executing math locally.
 
-## 🤖 AI-Optimized Knowledge Base (`/blog/`)
+## [ AI-OPTIMIZED ] AI-Optimized Knowledge Base (`/blog/`)
 
 This site isn't just optimized for human readers and Googlebot; it's optimized for LLMs. 
 We strictly implement `.well-known/llms.txt` and `llms-full.txt` routing, allowing Perplexity, ChatGPT, and Claude to instantly ingest the entire repository's knowledge base via Markdown.
 
-## 🏗️ Technical Architecture & CI/CD
+## [ ARCHITECTURE ] Technical Architecture & CI/CD
 
 ```mermaid
 graph TD
@@ -68,6 +68,6 @@ graph TD
 
 The repository features a state-of-the-art SEO pipeline. Pushing changes to `main` triggers a GitHub Action that calculates the diff, identifies modified `.html` files, and pings the **Google Indexing API** via a secure Service Account to force a crawl within minutes.
 
-## 📜 License
+## [ LICENSE ] License
 
 [MIT License](LICENSE) - Feel free to fork, dissect, and steal the code. That's the point of open source.
