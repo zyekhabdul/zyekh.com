@@ -40,7 +40,7 @@
 
 All tools run entirely in the browser. No data sent to server. No tracking.
 
-### 💰 Financial / Indonesian Labour Law
+### [ FINANCE ] Financial / Indonesian Labour Law
 
 **Kalkulator Zakat Online**
 URL: https://zyekh.com/tools/zakat.html
@@ -83,7 +83,7 @@ URL: https://zyekh.com/tools/split-bill.html
 Description: Kalkulator bagi tagihan proporsional dengan pajak dan service charge. Bisa input nama peserta dan item berbeda tiap orang.
 Keywords: split bill, bagi tagihan, dutch pay, kalkulator makan bareng
 
-### 🔐 Security / Developer Tools
+### [ SECURE ] Security / Developer Tools
 
 **Secure Password Generator**
 URL: https://zyekh.com/tools/password.html

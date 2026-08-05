@@ -8,7 +8,7 @@
 Setiap kali melakukan perubahan pada kode JavaScript (`assets/js/*.js`) atau CSS (`assets/css/*.css`):
 
 1. **Bump Service Worker Version**:
-   - Wajib menaikkan versi `CACHE_VERSION` di `sw.js` (contoh: `v3` ➔ `v4`).
+   - Wajib menaikkan versi `CACHE_VERSION` di `sw.js` (contoh: `v3` -> `v4`).
    - *Alasan*: Tanpa menaikkan `CACHE_VERSION`, Service Worker akan terus menyajikan file lama dari `CacheStorage` browser pengguna.
 
 2. **Update Cache-Buster Query Parameters di Seluruh File HTML**:
@@ -35,7 +35,7 @@ Setiap kali melakukan perubahan pada kode JavaScript (`assets/js/*.js`) atau CSS
 
 ---
 
-## 🧩 3. NAVIGATION BAR & RESPONSIVE BREAKPOINT PROTOCOL
+## [ MODULE ] 3. NAVIGATION BAR & RESPONSIVE BREAKPOINT PROTOCOL
 
 1. **Pencegahan Teks Patah (Multi-line Wrapping)**:
    - Aturan `.brand-logo` dan `.nav-link` WAJIB memiliki `white-space: nowrap;` dan `flex-shrink: 0;`.
@@ -55,17 +55,17 @@ Setiap kali melakukan perubahan pada kode JavaScript (`assets/js/*.js`) atau CSS
 3. **Bottom-of-Page Contact Trigger**:
    - Wajib menyertakan pengecekan terbawah halaman `(window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60)` untuk mengaktifkan link `Contact`.
 
-## ⚡ 5. STRICT NO-EMOJI & MINIMALIST CODE PROTOCOL (WAJIB)
+## [ FAST ] 5. STRICT NO-EMOJI & MINIMALIST CODE PROTOCOL (WAJIB)
 
 1. **Dilarang Penggunaan Emoji di Kode & Dokumentasi**:
-   - DILARANG keras menyisipkan karakter emoji (seperti , ⏱️, , ️, 🧰, , , dll.) ke dalam berkas HTML, CSS, JavaScript, maupun file dokumentasi di repositori ini.
+   - DILARANG keras menyisipkan karakter emoji (seperti , ⏱️, , ️, [ TOOLS ], , , dll.) ke dalam berkas HTML, CSS, JavaScript, maupun file dokumentasi di repositori ini.
    - *Alasan*: Menjaga efisiensi token, kesederhanaan *Clean Minimalist FOSS Aesthetic*, dan performa *parsing*.
 2. **Gunakan Ikon Teks / SVG / Typography Standard**:
    - Sebagai pengganti emoji, gunakan simbol teks ASCII/Unicode bersih (`•`, `->`, `[ VERIFIED ]`, `[ WARN ]`, `[ INFO ]`, `[ NOTE ]`) atau SVG vektor jika diperlukan.
 
 ---
 
-## ⚡ 6. MODERN SYNTAX STANDARDS PROTOCOL (BASELINE 2024+)
+## [ FAST ] 6. MODERN SYNTAX STANDARDS PROTOCOL (BASELINE 2024+)
 
 
 1. **Centralized Service Worker Registration**:
@@ -110,7 +110,7 @@ Seluruh artikel yang dihasilkan WAJIB mematuhi **10 Komponen Wajib SOP Gold Stan
 
 ---
 
-## ✅ 7. EMPIRICAL VERIFICATION PROTOCOL (SEBELUM MENYATAKAN SELESAI)
+## [ VERIFIED ] 7. EMPIRICAL VERIFICATION PROTOCOL (SEBELUM MENYATAKAN SELESAI)
 
 Sebelum mengklaim tugas selesai atau mengirimkan laporan ke pengguna, AI WAJIB menjalankan skrip audit di terminal:
 
@@ -123,6 +123,6 @@ print(f'Auditing {len(html_files)} files...')
 for f in html_files:
     soup = BeautifulSoup(open(f).read(), 'html.parser')
     assert soup.find('site-nav'), f'Missing <site-nav> in {f}'
-print('✅ ALL 32 HTML FILES VERIFIED COMPLIANT!')
+print('[ VERIFIED ] ALL 32 HTML FILES VERIFIED COMPLIANT!')
 "
 ```
