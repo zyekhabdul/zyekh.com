@@ -109,12 +109,13 @@
 }
 .meta-tag {
   font-family: 'Fira Code', monospace;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 0.25rem;
+  border: 1px solid var(--border-color);
+  padding: 0.15rem 0.4rem;
+  border-radius: var(--radius-sm);
   display: inline-block;
+  margin-bottom: 0.25rem;
 }
 .card-title,
 .card-title a {
