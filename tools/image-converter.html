@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id-ID">
+<head>
+<script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Offline Image Format Converter (WebP, JPG, PNG) | Zyekh</title>
+<meta content="Convert images locally in your browser to WebP, JPG, or PNG formats without uploading to any server. 100% client-side offline image conversion tool." name="description"/>
+<meta content="image converter, webp converter, convert to webp, offline image converter, jpg to png, webp to jpg, png to webp" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/image-converter.html" rel="canonical"/>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Open Graph -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="website" property="og:type"/>
+<meta content="Offline Image Format Converter (WebP, JPG, PNG) | Zyekh" property="og:title"/>
+<meta content="Convert images locally in your browser to WebP, JPG, or PNG formats without uploading to any server. 100% client-side offline image conversion tool." property="og:description"/>
+<meta content="https://zyekh.com/tools/image-converter.html" property="og:url"/>
+<meta content="https://zyekh.com/assets/img/og-card.jpg" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/og-card.jpg" name="twitter:image"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://zyekh.com/tools/image-converter.html#app",
+        "name": "Offline Image Format Converter",
+        "description": "Convert images locally in your browser to WebP, JPG, or PNG formats without uploading to any server.",
+        "url": "https://zyekh.com/tools/image-converter.html",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript and HTML5 Canvas. Runs entirely client-side.",
+        "inLanguage": "id-ID",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+        "creator": {
+          "@type": "Person",
+          "@id": "https://zyekh.com/#person",
+          "name": "Zyekh Abdul Qadir Jailani",
+          "url": "https://zyekh.com/"
+        },
+        "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://zyekh.com/tools/image-converter.html#breadcrumb",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Image Converter", "item": "https://zyekh.com/tools/image-converter.html" }
+        ]
+      }
+    ]
+  }
+  </script>
+<!-- Self-hosted Fonts & Styles -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.css?v=20260806_v141" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260806_v141" rel="stylesheet"/>
+<style>
+    .converter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
+    @media (max-width: 768px) { .converter-grid { grid-template-columns: 1fr; } }
+    .upload-zone { border: 2px dashed var(--border-color); border-radius: var(--radius-md); padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--bg-dark); }
+    .upload-zone:hover, .upload-zone.dragover { border-color: var(--primary-color); background: rgba(99, 102, 241, 0.05); }
+    .controls-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; }
+    .img-preview { max-width: 100%; max-height: 300px; border-radius: var(--radius-md); box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-top: 1rem; display: none; object-fit: contain; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.4rem; font-weight: 600; }
+    .range-wrap { display: flex; align-items: center; gap: 1rem; }
+    .range-wrap input[type="range"] { flex: 1; }
+    .range-val { font-family: 'Fira Code', monospace; font-size: 0.85rem; width: 40px; text-align: right; }
+    #downloadBtn { width: 100%; justify-content: center; font-size: 1rem; padding: 0.75rem; margin-top: 1rem; }
+    .file-info { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; }
+  </style>
+  <style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+  <link rel="preload" href="/assets/css/shared.css?v=20260806_v141" as="style">
+  <link rel="preload" href="/assets/js/site-nav.js?v=20260806_v141" as="script">
+</head>
+<body>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">Image Converter</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">DEVELOPER UTILITIES</span>
+<h1 class="page-title">Offline Image Format Converter</h1>
+<p class="page-subtitle">Convert images between WebP, JPG, and PNG formats directly in your browser without server uploads.</p>
+</header>
+
+<section class="tool-box">
+  <div class="converter-grid">
+    <div>
+      <div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+        <svg style="width:48px;height:48px;color:var(--text-muted);margin-bottom:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+        <h3 style="font-size:1.1rem;margin:0 0 0.5rem 0;">Click or Drag & Drop Image Here</h3>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin:0;">Supports PNG, JPG, WebP, GIF, BMP</p>
+        <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="handleFileSelect(event)">
+      </div>
+      <div id="originalInfo" class="file-info"></div>
+      <img id="previewImg" class="img-preview" alt="Preview Image" />
+    </div>
+
+    <div class="controls-panel">
+      <div class="form-group">
+        <label>Output Format</label>
+        <select id="formatSelect" onchange="updateConversion()">
+          <option value="image/webp">WebP (Optimized for Web)</option>
+          <option value="image/jpeg">JPG / JPEG</option>
+          <option value="image/png">PNG (Lossless / Transparent)</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="qualityGroup">
+        <label>Compression Quality (WebP/JPG only)</label>
+        <div class="range-wrap">
+          <input type="range" id="qualityRange" min="0.1" max="1.0" step="0.05" value="0.8" oninput="document.getElementById('qualityVal').textContent=Math.round(this.value*100)+'%'; updateConversion();">
+          <span id="qualityVal" class="range-val">80%</span>
+        </div>
+      </div>
+
+      <div id="outputInfo" class="file-info" style="margin-top:1.5rem;font-weight:600;color:var(--text-main);"></div>
+      
+      <button type="button" id="downloadBtn" onclick="downloadImage()" disabled>
+        Download Converted Image
+      </button>
+    </div>
+  </div>
+</section>
+
+<section class="seo-content-block seo-block" style="margin-top:2rem;">
+<h2>Tentang Konversi Gambar Offline</h2>
+<p>Tool ini memanfaatkan <strong>HTML5 Canvas API</strong> yang berjalan secara native di dalam web browser Anda. File gambar yang Anda unggah <strong>tidak pernah dikirim ke server manapun</strong>, sehingga privasi dan kerahasiaan data Anda 100% terjamin.</p>
+<h3 class="mt-md">Mengapa Memilih WebP?</h3>
+<p>WebP adalah format gambar modern yang menawarkan kompresi *lossy* dan *lossless* superior untuk web. Menggunakan WebP dapat menghemat *bandwidth* hingga 30% dibandingkan PNG atau JPEG dengan kualitas visual yang sama, yang berkontribusi langsung pada peningkatan skor performa Lighthouse Anda.</p>
+</section>
+</main>
+<footer class="footer" role="contentinfo">
+  <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+    <a href="/about/" class="text-muted text-sm">About</a>
+    <span class="text-muted text-sm">&middot;</span>
+    <a href="/tools/" class="text-muted text-sm">42 Web Tools</a>
+    <span class="text-muted text-sm">&middot;</span>
+    <a href="/blog/" class="text-muted text-sm">25 Articles</a>
+    <span class="text-muted text-sm">&middot;</span>
+    <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
+    <span class="text-muted text-sm">&middot;</span>
+    <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
+  </div>
+</footer>
+
+<script>
+  let currentImage = null;
+  let currentFileName = 'image';
+  let convertedBlob = null;
+  let timeoutId = null;
+
+  const dropZone = document.getElementById('dropZone');
+  
+  dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+  
+  dropZone.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+  });
+  
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      processFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  function handleFileSelect(e) {
+    if (e.target.files && e.target.files.length > 0) {
+      processFile(e.target.files[0]);
+    }
+  }
+
+  function formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024, dm = decimals < 0 ? 0 : decimals, sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
+
+  function processFile(file) {
+    if (!file.type.startsWith('image/')) {
+      alert('[ERROR] Please select a valid image file.');
+      return;
+    }
+
+    currentFileName = file.name.split('.').slice(0, -1).join('.') || 'image';
+    document.getElementById('originalInfo').innerHTML = `Original: <strong>${file.name}</strong> (${formatBytes(file.size)})`;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        currentImage = img;
+        const preview = document.getElementById('previewImg');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+        updateConversion();
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function updateConversion() {
+    if (!currentImage) return;
+    
+    // Debounce conversion to prevent UI lag on slider slide
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      const format = document.getElementById('formatSelect').value;
+      const quality = parseFloat(document.getElementById('qualityRange').value);
+      
+      const qGroup = document.getElementById('qualityGroup');
+      qGroup.style.opacity = (format === 'image/png') ? '0.3' : '1';
+      qGroup.style.pointerEvents = (format === 'image/png') ? 'none' : 'auto';
+
+      const canvas = document.createElement('canvas');
+      canvas.width = currentImage.naturalWidth;
+      canvas.height = currentImage.naturalHeight;
+      const ctx = canvas.getContext('2d');
+      
+      // Fill white background for JPGs to handle transparency
+      if (format === 'image/jpeg') {
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+      
+      ctx.drawImage(currentImage, 0, 0);
+
+      canvas.toBlob((blob) => {
+        convertedBlob = blob;
+        const outSize = formatBytes(blob.size);
+        const ext = format.split('/')[1].replace('jpeg', 'jpg');
+        document.getElementById('outputInfo').innerHTML = `Estimated Output: <strong>${outSize}</strong> (.${ext})`;
+        document.getElementById('downloadBtn').disabled = false;
+      }, format, format === 'image/png' ? undefined : quality);
+
+    }, 150);
+  }
+
+  function downloadImage() {
+    if (!convertedBlob) return;
+    const format = document.getElementById('formatSelect').value;
+    const ext = format.split('/')[1].replace('jpeg', 'jpg');
+    
+    const url = URL.createObjectURL(convertedBlob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${currentFileName}_converted.${ext}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+</script>
+<script defer="" src="/assets/js/site-nav.js?v=20260806_v141"></script>
+</body>
+</html>

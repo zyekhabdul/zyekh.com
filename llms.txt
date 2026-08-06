@@ -49,6 +49,7 @@
 - [Hash Generator & Checksum Inspector](https://zyekh.com/tools/hash.html): Generate SHA-256, SHA-512, SHA-1 cryptographic hashes and verify file checksums 100% offline & client-side in browser.
 - [HMAC Signer & Signature Verifier](https://zyekh.com/tools/hmac.html): Generate and verify HMAC-SHA256, HMAC-SHA512, and HMAC-SHA1 message signatures 100% offline & client-side in browser.
 - [HTML Entity Encoder & Decoder](https://zyekh.com/tools/html-entity.html): Encode special characters into safe HTML entities or decode HTML entities back to raw text 100% offline & client-side in browser.
+- [Offline Image Format Converter](https://zyekh.com/tools/image-converter.html): Convert images locally in your browser to WebP, JPG, or PNG formats without uploading to any server. 100% client-side offline image conversion tool.
 - [Kalkulator Saldo JHT 2026](https://zyekh.com/tools/jht.html): Hitung estimasi saldo & pencairan JHT BPJS Ketenagakerjaan (2% pekerja + 3.7% perusahaan) secara gratis, akurat, dan aman.
 - [Kalkulator JKP 2026](https://zyekh.com/tools/jkp.html): Simulasi perhitungan uang tunai JKP BPJS (45% & 25% upah maks 5 juta) selama 6 bulan untuk korban PHK.
 - [JSON Formatter, Validator & Tree Viewer](https://zyekh.com/tools/json.html): Format, beautify, minify, validate, and inspect JSON structure interactively 100% client-side in browser. Safe, offline, zero data upload.

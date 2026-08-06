@@ -22,8 +22,8 @@
   }
   </script>
 <link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
-<link href="/assets/fonts/fonts.css?v=20260806_v138" rel="stylesheet"/>
-<link href="/assets/css/shared.css?v=20260806_v138" rel="stylesheet"/>
+<link href="/assets/fonts/fonts.css?v=20260806_v141" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260806_v141" rel="stylesheet"/>
 <style>
     .error-container {
       max-width: 900px;
@@ -197,7 +197,9 @@
       line-height: 1.4;
     }
   </style>
-<link href="https://zyekh.com/404.html" rel="canonical"/>  <style id="antiClickjack">body{display:none !important;}</style>\n<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>\n</head>
+<link href="https://zyekh.com/404.html" rel="canonical"/>  <style id="antiClickjack">body{display:none !important;}</style>\n<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>\n    <link rel="preload" href="/assets/css/shared.css?v=20260806_v141" as="style">
+  <link rel="preload" href="/assets/js/site-nav.js?v=20260806_v141" as="script">
+</head>
 <body>
 <site-nav active=""></site-nav>
 <main class="main-container">
@@ -262,20 +264,26 @@
       <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
     </div>
   </footer>
-<script defer="" src="/assets/js/site-nav.js?v=20260806_v138"></script>
+<script defer="" src="/assets/js/site-nav.js?v=20260806_v141"></script>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
       const errEl = document.getElementById('errPath');
       if (errEl) errEl.textContent = '"' + window.location.pathname + '"';
     });
-    const termInput = document.getElementById('termInput');
+    const cmdInput = document.getElementById('termInput');
     const termOutput = document.getElementById('termOutput');
 
-    if (termInput && termOutput) {
-      termInput.addEventListener('keydown', (e) => {
+    if (cmdInput && termOutput) {
+      cmdInput.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
-          const cmd = termInput.value.trim().toLowerCase();
-          termInput.value = '';
+          const rawCmd = cmdInput.value.trim().toLowerCase();
+          cmdInput.value = '';
+          if (!rawCmd) return;
+          
+          const escapeHTML = str => str.replace(/[&<>'"]/g, tag => ({
+              '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+          }[tag]));
+          const cmd = escapeHTML(rawCmd);
 
           let response = '';
           if (cmd === 'help') {
