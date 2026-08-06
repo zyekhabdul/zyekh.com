@@ -77,7 +77,7 @@ def sync_all(bump_version=False):
         "article-actions.js": minify_js("assets/js/article-actions.js"),
         "shared.css": minify_css("assets/css/shared.css"),
         "blog.css": minify_css("assets/css/blog.css"),
-        "fonts.css": minify_css("assets/css/fonts.css")
+        "fonts.css": minify_css("assets/fonts/fonts.css")
     }
     
     html_files = sorted(glob.glob("**/*.html", recursive=True))
@@ -112,7 +112,7 @@ def sync_all(bump_version=False):
             min_basename = os.path.basename(min_path)
             
             c = re.sub(
-                r'((?:href|src)="/assets/(?:css|js)/)' + base_pattern + r'(?:\?v=[^"\'\s>]+)?(")',
+                r'((?:href|src)="/assets/(?:css|js|fonts)/)' + base_pattern + r'(?:\?v=[^"\'\s>]+)?(")',
                 rf'\1{min_basename}?v={vhash}\2 integrity="{sri}" crossorigin="anonymous"',
                 c
             )
@@ -137,7 +137,11 @@ def sync_all(bump_version=False):
                 content = re.sub(r"script-src[^;]*", f"script-src 'self' {' '.join(hashes)}", content)
                 return prefix + content + suffix
                 
-            c = re.sub(r'(<meta\s+http-equiv="Content-Security-Policy"\s+content=")([^"]+)(")', update_csp, c, flags=re.IGNORECASE)
+            if re.search(r'<meta\s+http-equiv="Content-Security-Policy"', c, flags=re.IGNORECASE):
+                c = re.sub(r'(<meta\s+http-equiv="Content-Security-Policy"\s+content=")([^"]+)(")', update_csp, c, flags=re.IGNORECASE)
+            else:
+                csp_meta = f'<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\' {" ".join(hashes)}; style-src \'self\' \'unsafe-inline\'; img-src \'self\' data: https:; font-src \'self\'; connect-src \'self\'; form-action \'self\'; frame-ancestors \'none\';">'
+                c = c.replace("</head>", f"  {csp_meta}\n</head>")
             
         open(f, "w", encoding="utf-8").write(c)
     print(f"[SYNC] Updated query version ?v={new_ver} across {len(html_files)} HTML files.")

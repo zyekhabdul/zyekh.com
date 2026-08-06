@@ -1,7 +1,7 @@
 /* zyekh.com Service Worker — Cache Strategy */
-const CACHE_VERSION = "v=20260806_v156";
+const CACHE_VERSION = "v=20260807_v157";
 const APP_CACHE = `zyekh-app-${CACHE_VERSION}`;
-const ASSETS_CACHE = `zyekh-assets-v1`;
+const ASSETS_CACHE = `zyekh-assets-${CACHE_VERSION}`;
 
 const PRECACHE_APP = [
   '/offline.html',
@@ -35,7 +35,10 @@ self.addEventListener('activate', event => {
   event.waitUntil(
     Promise.all([
       caches.keys().then(keys =>
-        Promise.all(keys.filter(k => k.startsWith('zyekh-app-') && k !== APP_CACHE).map(k => caches.delete(k)))
+        Promise.all(keys.filter(k => 
+          (k.startsWith('zyekh-app-') && k !== APP_CACHE) || 
+          (k.startsWith('zyekh-assets-') && k !== ASSETS_CACHE)
+        ).map(k => caches.delete(k)))
       ),
       self.registration.navigationPreload?.enable() ?? Promise.resolve()
     ])
