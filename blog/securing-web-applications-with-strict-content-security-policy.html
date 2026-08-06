@@ -113,12 +113,12 @@
 <!-- Fonts & Styles -->
 <link href="https://zyekh.com/assets/img/csp-security.jpg" rel="image_src"/>
 <link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
-<link href="/assets/fonts/fonts.css?v=20260806_v141" rel="stylesheet"/>
-<link href="/assets/css/shared.css?v=20260806_v141" rel="stylesheet"/>
-<link href="/assets/css/blog.css?v=20260806_v141" rel="stylesheet"/>
-<meta content="@zyekh" name="twitter:creator"/><meta content="@zyekh" name="twitter:site"/><meta content="https://zyekh.com/assets/img/csp-security.jpg" property="og:image:secure_url"/><meta content="image/jpeg" property="og:image:type"/><meta content="Implementing Strict Content Security Policy (CSP) &amp; Security Headers — zyekh.com" property="og:image:alt"/><meta content="Implementing Strict Content Security Policy (CSP) &amp; Security Headers — zyekh.com" name="twitter:image:alt"/><script defer="" src="/assets/js/article-actions.js?v=20260806_v141"></script>
-  <style id="antiClickjack">body{display:none !important;}</style>\n<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>\n    <link rel="preload" href="/assets/css/shared.css?v=20260806_v141" as="style">
-  <link rel="preload" href="/assets/js/site-nav.js?v=20260806_v141" as="script">
+<link href="/assets/fonts/fonts.css?v=20260806_v142" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260806_v143" integrity="sha384-83z3h+oWORKHk5bfpifN1qcBM751/ZzZB42gFDpRxgFqhqjFW2jYO/N5Do3eo7Rp" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/blog.css?v=20260806_v143" integrity="sha384-Mpt4w7j11Bep3mtquoMPikYDYfGELQGD+VddwONNfYlYqQejf0dR+UdWTo21gwQA" crossorigin="anonymous" rel="stylesheet"/>
+<meta content="@zyekh" name="twitter:creator"/><meta content="@zyekh" name="twitter:site"/><meta content="https://zyekh.com/assets/img/csp-security.jpg" property="og:image:secure_url"/><meta content="image/jpeg" property="og:image:type"/><meta content="Implementing Strict Content Security Policy (CSP) &amp; Security Headers — zyekh.com" property="og:image:alt"/><meta content="Implementing Strict Content Security Policy (CSP) &amp; Security Headers — zyekh.com" name="twitter:image:alt"/><script defer="" src="/assets/js/article-actions.js?v=20260806_v143" integrity="sha384-9xU40FdfP7YiTQyKGFPuhqrXez9IidWoVLRUXKQPMH3mj2KwXbhcbuZ++/tShDqn" crossorigin="anonymous"></script>
+  <style id="antiClickjack">body{display:none !important;}</style>\n<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>\n        <link rel="preload" href="/assets/css/shared.css?v=20260806_v143" integrity="sha384-83z3h+oWORKHk5bfpifN1qcBM751/ZzZB42gFDpRxgFqhqjFW2jYO/N5Do3eo7Rp" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.js?v=20260806_v143" integrity="sha384-xpu+Ss1Pb8vgHp6dXmvUeC6oCgdcozTIodudD6fBixWFLOCZNk/tKFITaXSfAQEr" crossorigin="anonymous" as="script">
 </head>
 <body>
 <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
@@ -253,9 +253,7 @@ if (window.trustedTypes &amp;&amp; trustedTypes.createPolicy) {
         Combine Trusted Types with <strong>Subresource Integrity (SRI)</strong> hashes on external CDN scripts to guarantee that third-party library files have not been modified or compromised in transit:
       </p>
 <pre><code class="language-html">&lt;!-- Subresource Integrity (SRI) Cryptographic Hash Verification --&gt;
-&lt;script src="https://cdn.example.com/library.js" 
-        integrity="sha384-oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/uxy9rx7HNQlGYl1kPzQho1wx4JwY8wC" 
-        crossorigin="anonymous"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.example.com/library.js"&gt;&lt;/script&gt;</code></pre>
 <!-- Section 4 -->
 <h2 id="csp-reporting">5. Automated CSP Violation Reporting (Report-To)</h2>
 <p>
@@ -359,6 +357,6 @@ if (window.trustedTypes &amp;&amp; trustedTypes.createPolicy) {
     </div>
   </footer>
 </article>
-<script defer="" src="/assets/js/site-nav.js?v=20260806_v141"></script>
+<script defer="" src="/assets/js/site-nav.js?v=20260806_v143" integrity="sha384-xpu+Ss1Pb8vgHp6dXmvUeC6oCgdcozTIodudD6fBixWFLOCZNk/tKFITaXSfAQEr" crossorigin="anonymous"></script>
 </body>
 </html>

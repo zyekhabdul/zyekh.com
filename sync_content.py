@@ -5,6 +5,14 @@ import re
 import datetime
 import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
+import hashlib
+import base64
+
+def generate_sri(filepath):
+    if not os.path.exists(filepath): return ""
+    with open(filepath, 'rb') as f:
+        digest = hashlib.sha384(f.read()).digest()
+    return "sha384-" + base64.b64encode(digest).decode('utf-8')
 
 def sync_all(bump_version=False):
     print("[SYNC] Starting automated RAG, Sitemap, RSS & Cache Version Synchronization...")
@@ -31,15 +39,21 @@ def sync_all(bump_version=False):
     new_ver = f"{today_str}_{sw_ver}"
     base_url = "https://zyekh.com"
 
-    # 2. Update HTML query version string across all HTML files
+    # 2. Update HTML query version string and inject SRI hashes across all HTML files
+    sri_cache = {
+        "site-nav.js": generate_sri("assets/js/site-nav.js"),
+        "article-actions.js": generate_sri("assets/js/article-actions.js"),
+        "shared.css": generate_sri("assets/css/shared.css"),
+        "blog.css": generate_sri("assets/css/blog.css"),
+        "fonts.css": generate_sri("assets/css/fonts.css")
+    }
+    
     html_files = sorted(glob.glob("**/*.html", recursive=True))
     for f in html_files:
         c = open(f, "r", encoding="utf-8").read()
-        c = re.sub(r"site-nav\.js(\?v=[^\"'>\s]*)?", f"site-nav.js?v={new_ver}", c)
-        c = re.sub(r"article-actions\.js(\?v=[^\"'>\s]*)?", f"article-actions.js?v={new_ver}", c)
-        c = re.sub(r"shared\.css(\?v=[^\"'>\s]*)?", f"shared.css?v={new_ver}", c)
-        c = re.sub(r"blog\.css(\?v=[^\"'>\s]*)?", f"blog.css?v={new_ver}", c)
-        c = re.sub(r"fonts\.css(\?v=[^\"'>\s]*)?", f"fonts.css?v={new_ver}", c)
+        
+        # Strip existing integrity and crossorigin attributes to prevent duplication
+        c = re.sub(r'\s+integrity="sha384-[^"]+"\s+crossorigin="anonymous"', '', c)
         
         # Security: Inject Anti-Clickjacking Frame Buster if not present
         anti_cj = '<style id="antiClickjack">body{display:none !important;}</style>\n<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>'
@@ -49,8 +63,19 @@ def sync_all(bump_version=False):
         # Performance: Inject Dynamic Resource Preloading for Render-Blocking Assets (Lighthouse 100/100)
         c = re.sub(r'<link rel="preload" href="/assets/css/shared\.css[^>]*>\s*', '', c)
         c = re.sub(r'<link rel="preload" href="/assets/js/site-nav\.js[^>]*>\s*', '', c)
-        preload_tags = f'<link rel="preload" href="/assets/css/shared.css?v={new_ver}" as="style">\n  <link rel="preload" href="/assets/js/site-nav.js?v={new_ver}" as="script">\n'
+        preload_tags = f'<link rel="preload" href="/assets/css/shared.css" as="style">\n  <link rel="preload" href="/assets/js/site-nav.js" as="script">\n'
         c = c.replace("</head>", f"  {preload_tags}</head>")
+
+        # Inject query version and new SRI hashes to ALL links/scripts (including preloads)
+        for asset, sri in sri_cache.items():
+            if not sri: continue
+            asset_escaped = re.escape(asset)
+            # Match href="..." or src="..."
+            c = re.sub(
+                r'((?:href|src)="/assets/(?:css|js)/' + asset_escaped + r')(?:\?v=[^"\'\s>]+)?(")',
+                rf'\1?v={new_ver}\2 integrity="{sri}" crossorigin="anonymous"',
+                c
+            )
             
         open(f, "w", encoding="utf-8").write(c)
     print(f"[SYNC] Updated query version ?v={new_ver} across {len(html_files)} HTML files.")
