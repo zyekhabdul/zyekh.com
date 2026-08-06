@@ -139,33 +139,39 @@ def sync_all(bump_version=False):
         open(f, "w", encoding="utf-8").write(c)
     print(f"[SYNC] Updated query version ?v={new_ver} across {len(html_files)} HTML files.")
 
-    # 3. Regenerate sitemap.xml dynamically
+    # 3. Regenerate sitemap.xml dynamically using OS mtime (Rule 20 Compliance)
     urls_data = []
+    
+    def get_file_mtime_str(filepath):
+        if not os.path.exists(filepath):
+            return datetime.datetime.now().strftime("%Y-%m-%d")
+        return datetime.datetime.fromtimestamp(os.path.getmtime(filepath)).strftime("%Y-%m-%d")
+
     # Static primary pages
-    urls_data.append((f"{base_url}/", "2026-08-05", "weekly", "1.0"))
-    urls_data.append((f"{base_url}/about/", "2026-08-05", "weekly", "0.9"))
-    urls_data.append((f"{base_url}/tools/", "2026-08-05", "weekly", "0.9"))
-    urls_data.append((f"{base_url}/blog/", "2026-08-05", "weekly", "0.9"))
-    urls_data.append((f"{base_url}/blueprints/", "2026-08-05", "weekly", "0.9"))
+    urls_data.append((f"{base_url}/", get_file_mtime_str("index.html"), "weekly", "1.0"))
+    urls_data.append((f"{base_url}/about/", get_file_mtime_str("about/index.html"), "weekly", "0.9"))
+    urls_data.append((f"{base_url}/tools/", get_file_mtime_str("tools/index.html"), "weekly", "0.9"))
+    urls_data.append((f"{base_url}/blog/", get_file_mtime_str("blog/index.html"), "weekly", "0.9"))
+    urls_data.append((f"{base_url}/blueprints/", get_file_mtime_str("blueprints/index.html"), "weekly", "0.9"))
 
     # Blog Articles
     for b in sorted(glob.glob("blog/*.html")):
         if b == "blog/index.html":
             continue
         rel_path = b.replace("\\", "/")
-        urls_data.append((f"{base_url}/{rel_path}", "2026-08-05", "weekly", "0.9"))
+        urls_data.append((f"{base_url}/{rel_path}", get_file_mtime_str(b), "weekly", "0.9"))
 
     # Tools
     for t in sorted(glob.glob("tools/*.html")):
         if t == "tools/index.html":
             continue
         rel_path = t.replace("\\", "/")
-        urls_data.append((f"{base_url}/{rel_path}", "2026-08-05", "weekly", "0.8"))
+        urls_data.append((f"{base_url}/{rel_path}", get_file_mtime_str(t), "weekly", "0.8"))
 
     sitemap_lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for url, lastmod, freq, prio in urls_data:
         sitemap_lines.append(f'  <url><loc>{url}</loc><lastmod>{lastmod}</lastmod><changefreq>{freq}</changefreq><priority>{prio}</priority></url>')
-    sitemap_lines.append('</urlset>\n')
+    sitemap_lines.append('</urlset>\\n')
 
     with open("sitemap.xml", "w", encoding="utf-8") as f:
         f.write("\n".join(sitemap_lines))
