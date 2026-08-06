@@ -42,9 +42,15 @@ def sync_all(bump_version=False):
         c = re.sub(r"fonts\.css(\?v=[^\"'>\s]*)?", f"fonts.css?v={new_ver}", c)
         
         # Security: Inject Anti-Clickjacking Frame Buster if not present
-        anti_cj = '<style id="antiClickjack">body{display:none !important;}</style>\\n<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>'
+        anti_cj = '<style id="antiClickjack">body{display:none !important;}</style>\n<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>'
         if "antiClickjack" not in c:
-            c = c.replace("</head>", f"  {anti_cj}\\n</head>")
+            c = c.replace("</head>", f"  {anti_cj}\n</head>")
+
+        # Performance: Inject Dynamic Resource Preloading for Render-Blocking Assets (Lighthouse 100/100)
+        c = re.sub(r'<link rel="preload" href="/assets/css/shared\.css[^>]*>\s*', '', c)
+        c = re.sub(r'<link rel="preload" href="/assets/js/site-nav\.js[^>]*>\s*', '', c)
+        preload_tags = f'<link rel="preload" href="/assets/css/shared.css?v={new_ver}" as="style">\n  <link rel="preload" href="/assets/js/site-nav.js?v={new_ver}" as="script">\n'
+        c = c.replace("</head>", f"  {preload_tags}</head>")
             
         open(f, "w", encoding="utf-8").write(c)
     print(f"[SYNC] Updated query version ?v={new_ver} across {len(html_files)} HTML files.")
