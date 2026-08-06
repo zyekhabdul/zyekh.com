@@ -14,6 +14,38 @@ def generate_sri(filepath):
         digest = hashlib.sha384(f.read()).digest()
     return "sha384-" + base64.b64encode(digest).decode('utf-8')
 
+def get_file_hash(filepath):
+    if not os.path.exists(filepath): return ""
+    with open(filepath, 'rb') as f:
+        return hashlib.md5(f.read()).hexdigest()[:8]
+
+def minify_css(filepath):
+    if not os.path.exists(filepath): return ""
+    with open(filepath, 'r', encoding='utf-8') as f:
+        content = f.read()
+    content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
+    content = re.sub(r'\s*([\{\}\:\;\=,>~])\s*', r'\1', content)
+    content = re.sub(r'\s+', ' ', content).strip()
+    min_path = filepath.replace('.css', '.min.css')
+    with open(min_path, 'w', encoding='utf-8') as f:
+        f.write(content)
+    return min_path
+
+def minify_js(filepath):
+    if not os.path.exists(filepath): return ""
+    with open(filepath, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+    min_lines = []
+    for line in lines:
+        l = line.strip()
+        if not l or l.startswith('//'): continue
+        min_lines.append(l)
+    content = ' '.join(min_lines)
+    min_path = filepath.replace('.js', '.min.js')
+    with open(min_path, 'w', encoding='utf-8') as f:
+        f.write(content)
+    return min_path
+
 def sync_all(bump_version=False):
     print("[SYNC] Starting automated RAG, Sitemap, RSS & Cache Version Synchronization...")
 
@@ -40,12 +72,12 @@ def sync_all(bump_version=False):
     base_url = "https://zyekh.com"
 
     # 2. Update HTML query version string and inject SRI hashes across all HTML files
-    sri_cache = {
-        "site-nav.js": generate_sri("assets/js/site-nav.js"),
-        "article-actions.js": generate_sri("assets/js/article-actions.js"),
-        "shared.css": generate_sri("assets/css/shared.css"),
-        "blog.css": generate_sri("assets/css/blog.css"),
-        "fonts.css": generate_sri("assets/css/fonts.css")
+    assets_map = {
+        "site-nav.js": minify_js("assets/js/site-nav.js"),
+        "article-actions.js": minify_js("assets/js/article-actions.js"),
+        "shared.css": minify_css("assets/css/shared.css"),
+        "blog.css": minify_css("assets/css/blog.css"),
+        "fonts.css": minify_css("assets/css/fonts.css")
     }
     
     html_files = sorted(glob.glob("**/*.html", recursive=True))
@@ -61,19 +93,24 @@ def sync_all(bump_version=False):
             c = c.replace("</head>", f"  {anti_cj}\n</head>")
 
         # Performance: Inject Dynamic Resource Preloading for Render-Blocking Assets (Lighthouse 100/100)
-        c = re.sub(r'<link rel="preload" href="/assets/css/shared\.css[^>]*>\s*', '', c)
-        c = re.sub(r'<link rel="preload" href="/assets/js/site-nav\.js[^>]*>\s*', '', c)
-        preload_tags = f'<link rel="preload" href="/assets/css/shared.css" as="style">\n  <link rel="preload" href="/assets/js/site-nav.js" as="script">\n'
+        c = re.sub(r'<link rel="preload" href="/assets/css/shared(?:\.min)?\.css[^>]*>\s*', '', c)
+        c = re.sub(r'<link rel="preload" href="/assets/js/site-nav(?:\.min)?\.js[^>]*>\s*', '', c)
+        preload_tags = f'<link rel="preload" href="/assets/css/shared.min.css" as="style">\n  <link rel="preload" href="/assets/js/site-nav.min.js" as="script">\n'
         c = c.replace("</head>", f"  {preload_tags}</head>")
 
-        # Inject query version and new SRI hashes to ALL links/scripts (including preloads)
-        for asset, sri in sri_cache.items():
-            if not sri: continue
-            asset_escaped = re.escape(asset)
-            # Match href="..." or src="..."
+        # Inject query version (file hash) and new SRI hashes to ALL links/scripts (including preloads)
+        for orig, min_path in assets_map.items():
+            if not min_path: continue
+            sri = generate_sri(min_path)
+            vhash = get_file_hash(min_path)
+            
+            orig_escaped = re.escape(orig)
+            base_pattern = orig_escaped.replace(r'\.css', r'(?:\.min)?\.css').replace(r'\.js', r'(?:\.min)?\.js')
+            min_basename = os.path.basename(min_path)
+            
             c = re.sub(
-                r'((?:href|src)="/assets/(?:css|js)/' + asset_escaped + r')(?:\?v=[^"\'\s>]+)?(")',
-                rf'\1?v={new_ver}\2 integrity="{sri}" crossorigin="anonymous"',
+                r'((?:href|src)="/assets/(?:css|js)/)' + base_pattern + r'(?:\?v=[^"\'\s>]+)?(")',
+                rf'\1{min_basename}?v={vhash}\2 integrity="{sri}" crossorigin="anonymous"',
                 c
             )
             
