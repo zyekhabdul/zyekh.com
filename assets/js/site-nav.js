@@ -39,6 +39,9 @@ class SiteNav extends HTMLElement {
               <span class="theme-icon-light">MODE: LIGHT</span>
               <span class="theme-icon-dark">MODE: DARK</span>
             </button>
+            <button class="pin-toggle" id="pinToggle" aria-label="Pin Tool" title="Pin this tool to Home" style="display:none; align-items:center; justify-content:center; background:none; border:none; cursor:pointer; font-size:1.1rem; filter:grayscale(100%); opacity:0.5; transition:transform 0.2s;">
+              <span class="pin-icon">📌</span>
+            </button>
           </nav>
         </div>
       </header>`;
@@ -65,6 +68,73 @@ class SiteNav extends HTMLElement {
         localStorage.setItem('theme', nextTheme);
       });
     }
+
+    const pinBtn = this.querySelector('#pinToggle');
+    if (pinBtn) {
+      const p = window.location.pathname;
+      const isTool = p.startsWith('/tools/') && !p.endsWith('/tools/') && !p.endsWith('index.html');
+      
+      if (isTool) {
+        pinBtn.style.display = 'inline-flex';
+        const toolPath = p;
+        let toolTitle = document.title.split(' — ')[0];
+        
+        const getPinned = () => {
+          try { return JSON.parse(localStorage.getItem('pinnedTools') || '[]'); } catch { return []; }
+        };
+        const isPinned = () => getPinned().some(t => t.path === toolPath);
+        
+        const updatePinUI = () => {
+          pinBtn.style.opacity = isPinned() ? '1' : '0.5';
+          pinBtn.style.filter = isPinned() ? 'none' : 'grayscale(100%)';
+          pinBtn.setAttribute('title', isPinned() ? 'Unpin from Home' : 'Pin to Home');
+        };
+        updatePinUI();
+        
+        pinBtn.addEventListener('click', () => {
+          let pinned = getPinned();
+          if (isPinned()) {
+            pinned = pinned.filter(t => t.path !== toolPath);
+          } else {
+            let cat = 'PINNED TOOL';
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc && metaDesc.content.toLowerCase().includes('security')) cat = 'SECURITY';
+            else if (toolPath.includes('network') || toolPath.includes('ip') || toolPath.includes('subnet')) cat = 'NETWORKING';
+            else if (toolPath.includes('json') || toolPath.includes('regex') || toolPath.includes('cron') || toolPath.includes('base64')) cat = 'DEV UTILITY';
+            
+            pinned.push({ path: toolPath, title: toolTitle, cat: cat });
+          }
+          localStorage.setItem('pinnedTools', JSON.stringify(pinned));
+          updatePinUI();
+          pinBtn.style.transform = 'scale(1.3)';
+          setTimeout(() => pinBtn.style.transform = 'scale(1)', 200);
+        });
+      }
+    }
+
+    // Hydrate Homepage Pinned Tools
+    const grid = document.getElementById('quickToolsGrid');
+    if (grid) {
+      try {
+        const pinned = JSON.parse(localStorage.getItem('pinnedTools') || '[]');
+        if (pinned && pinned.length > 0) {
+          let newHTML = pinned.map(t => `
+            <a href="${t.path}" class="quick-tool-pill" style="border-color:var(--text-main);">
+              <span class="quick-tool-cat" style="color:var(--text-main);">📌 ${t.cat || 'PINNED TOOL'}</span>
+              ${t.title}
+            </a>
+          `).join('');
+          newHTML += `
+            <button onclick="localStorage.removeItem('pinnedTools'); window.location.reload();" class="quick-tool-pill" style="background:none; cursor:pointer; text-align:left; border-style:dashed;">
+              <span class="quick-tool-cat">ACTION</span>
+              Clear Pins
+            </button>
+          `;
+          grid.innerHTML = newHTML;
+        }
+      } catch (e) {}
+    }
+
     if (!toggle || !menu) return;
 
     // Backdrop
