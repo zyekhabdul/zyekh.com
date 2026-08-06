@@ -171,7 +171,7 @@ def sync_all(bump_version=False):
     sitemap_lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for url, lastmod, freq, prio in urls_data:
         sitemap_lines.append(f'  <url><loc>{url}</loc><lastmod>{lastmod}</lastmod><changefreq>{freq}</changefreq><priority>{prio}</priority></url>')
-    sitemap_lines.append('</urlset>\\n')
+    sitemap_lines.append('</urlset>')
 
     with open("sitemap.xml", "w", encoding="utf-8") as f:
         f.write("\n".join(sitemap_lines))
