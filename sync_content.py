@@ -40,7 +40,7 @@ def minify_js(filepath):
         l = line.strip()
         if not l or l.startswith('//'): continue
         min_lines.append(l)
-    content = ' '.join(min_lines)
+    content = '\n'.join(min_lines)
     min_path = filepath.replace('.js', '.min.js')
     with open(min_path, 'w', encoding='utf-8') as f:
         f.write(content)
@@ -85,7 +85,8 @@ def sync_all(bump_version=False):
         c = open(f, "r", encoding="utf-8").read()
         
         # Strip existing integrity and crossorigin attributes to prevent duplication
-        c = re.sub(r'\s+integrity="sha384-[^"]+"\s+crossorigin="anonymous"', '', c)
+        c = re.sub(r'\s+integrity="[^"]+"', '', c)
+        c = re.sub(r'\s+crossorigin="[^"]+"', '', c)
         
         # Security: Inject Anti-Clickjacking Frame Buster if not present
         anti_cj = '<style id="antiClickjack">body{display:none !important;}</style>\n<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>'
@@ -93,8 +94,10 @@ def sync_all(bump_version=False):
             c = c.replace("</head>", f"  {anti_cj}\n</head>")
 
         # Performance: Inject Dynamic Resource Preloading for Render-Blocking Assets (Lighthouse 100/100)
-        c = re.sub(r'<link rel="preload" href="/assets/css/shared(?:\.min)?\.css[^>]*>\s*', '', c)
-        c = re.sub(r'<link rel="preload" href="/assets/js/site-nav(?:\.min)?\.js[^>]*>\s*', '', c)
+        c = re.sub(r'<link[^>]*href="/assets/css/shared(?:\.min)?\.css[^"]*"[^>]*rel="preload"[^>]*>\s*', '', c)
+        c = re.sub(r'<link[^>]*rel="preload"[^>]*href="/assets/css/shared(?:\.min)?\.css[^"]*"[^>]*>\s*', '', c)
+        c = re.sub(r'<link[^>]*href="/assets/js/site-nav(?:\.min)?\.js[^"]*"[^>]*rel="preload"[^>]*>\s*', '', c)
+        c = re.sub(r'<link[^>]*rel="preload"[^>]*href="/assets/js/site-nav(?:\.min)?\.js[^"]*"[^>]*>\s*', '', c)
         preload_tags = f'<link rel="preload" href="/assets/css/shared.min.css" as="style">\n  <link rel="preload" href="/assets/js/site-nav.min.js" as="script">\n'
         c = c.replace("</head>", f"  {preload_tags}</head>")
 
@@ -360,27 +363,23 @@ def sync_all(bump_version=False):
             data_cat_str = " ".join(list(dict.fromkeys(data_cats)))
             card_html = f'''<div class="article-item" data-category="{data_cat_str}">
 <article class="article-card">
-<div>
+<a href="{rel_path}" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
 <div class="card-thumb-wrapper">
-<a href="{rel_path}">
 <picture>
 <source srcset="{hero_webp}" type="image/webp"/>
 <img alt="{title}" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="{hero_jpg}" width="640"/>
 </picture>
-</a>
 </div>
 <div class="tags-container">{hashtags_html}</div>
-<h2 class="card-title">
-<a href="{rel_path}">{title}</a>
-</h2>
+<h2 class="card-title">{title}</h2>
 <p class="article-excerpt">
   {desc}
 </p>
-</div>
 <div class="article-footer">
 <span>{date_display}</span>
 <span>{read_time}</span>
 </div>
+</a>
 </article>
 </div>'''
             card_blocks.append(card_html)
