@@ -77,6 +77,28 @@ def sync_all(bump_version=False):
                 c
             )
             
+        # Strict CSP Generation: Hash all inline scripts to completely eliminate 'unsafe-inline' XSS vectors
+        script_pattern = re.compile(
+            r'<script(?![^>]*src=)(?![^>]*type="(?!text/javascript|module)[^"]*")[^>]*>(.*?)</script>',
+            re.DOTALL | re.IGNORECASE
+        )
+        hashes = []
+        for match in script_pattern.finditer(c):
+            digest = hashlib.sha256(match.group(1).encode('utf-8')).digest()
+            b64 = base64.b64encode(digest).decode('utf-8')
+            hashes.append(f"'sha256-{b64}'")
+        
+        if hashes:
+            def update_csp(match):
+                prefix = match.group(1)
+                content = match.group(2)
+                suffix = match.group(3)
+                # Replace script-src entirely to ensure idempotency and drop unsafe-inline
+                content = re.sub(r"script-src[^;]*", f"script-src 'self' {' '.join(hashes)}", content)
+                return prefix + content + suffix
+                
+            c = re.sub(r'(<meta\s+http-equiv="Content-Security-Policy"\s+content=")([^"]+)(")', update_csp, c, flags=re.IGNORECASE)
+            
         open(f, "w", encoding="utf-8").write(c)
     print(f"[SYNC] Updated query version ?v={new_ver} across {len(html_files)} HTML files.")
 
