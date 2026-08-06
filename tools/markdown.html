@@ -20,8 +20,8 @@
 
   <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
   <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260806_v141">
-  <link rel="stylesheet" href="/assets/css/shared.css?v=20260806_v141">
+  <link rel="stylesheet" href="/assets/fonts/fonts.css?v=20260806_v142">
+  <link rel="stylesheet" href="/assets/css/shared.css?v=20260806_v142">
   <!-- SEO & Social Meta Tags -->
   <link rel="canonical" href="https://zyekh.com/tools/markdown.html">
   <meta property="og:title" content="Markdown Live Preview Editor Online — zyekh.com">
@@ -109,8 +109,8 @@ window.debounceRAF = function(fn, delay) {
   };
 };
 </script>
-  <style id="antiClickjack">body{display:none !important;}</style>\n<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>\n    <link rel="preload" href="/assets/css/shared.css?v=20260806_v141" as="style">
-  <link rel="preload" href="/assets/js/site-nav.js?v=20260806_v141" as="script">
+  <style id="antiClickjack">body{display:none !important;}</style>\n<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>\n      <link rel="preload" href="/assets/css/shared.css?v=20260806_v142" as="style">
+  <link rel="preload" href="/assets/js/site-nav.js?v=20260806_v142" as="script">
 </head>
 <body>
     <!-- Header Navigation -->
@@ -184,15 +184,34 @@ window.debounceRAF = function(fn, delay) {
         preview.innerHTML = '<p style="color:var(--text-muted)">Preview akan muncul di sini…</p>';
         return;
       }
-      const html = marked.parse(src);
+      const rawHtml = marked.parse(src);
+      
+      // Native Zero-Dependency HTML Sanitizer (DOMParser)
+      const doc = new DOMParser().parseFromString(rawHtml, 'text/html');
+      // Remove dangerous tags
+      const dangerousTags = doc.querySelectorAll('script, iframe, object, embed, applet, meta, base');
+      dangerousTags.forEach(t => t.remove());
+      // Strip dangerous attributes (inline events and javascript: URIs)
+      const allElements = doc.querySelectorAll('*');
+      for (let i = 0; i < allElements.length; i++) {
+        const el = allElements[i];
+        for (let j = el.attributes.length - 1; j >= 0; j--) {
+          const attr = el.attributes[j];
+          if (attr.name.toLowerCase().startsWith('on') || 
+              attr.value.trim().toLowerCase().startsWith('javascript:')) {
+            el.removeAttribute(attr.name);
+          }
+        }
+      }
+
       window.requestAnimationFrame(() => {
-        preview.innerHTML = html;
+        preview.innerHTML = doc.body.innerHTML;
       });
     }
 
     // Initial render on load if textarea has content
     document.addEventListener('DOMContentLoaded', render);
   </script>
-  <script src="/assets/js/site-nav.js?v=20260806_v141" defer></script>
+  <script src="/assets/js/site-nav.js?v=20260806_v142" defer></script>
 </body>
 </html>
