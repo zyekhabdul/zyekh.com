@@ -14,14 +14,16 @@ def sync_all(bump_version=False):
     
     if os.path.exists(sw_path):
         sw_c = open(sw_path, "r", encoding="utf-8").read()
-        m = re.search(r"CACHE_VERSION = 'v(\d+)';", sw_c)
+        m = re.search(r'CACHE_VERSION = "v=\d{8}_v(\d+)";', sw_c)
         if m and bump_version:
             curr_v = int(m.group(1))
             next_v = curr_v + 1
             sw_ver = f"v{next_v}"
-            sw_c = re.sub(r"CACHE_VERSION = 'v\d+';", f"CACHE_VERSION = '{sw_ver}';", sw_c)
+            today_str = datetime.date.today().strftime("%Y%m%d")
+            new_full_ver = f"v={today_str}_{sw_ver}"
+            sw_c = re.sub(r'CACHE_VERSION = "v=\d{8}_v\d+";', f'CACHE_VERSION = "{new_full_ver}";', sw_c)
             open(sw_path, "w", encoding="utf-8").write(sw_c)
-            print(f"[SYNC] Auto-bumped sw.js CACHE_VERSION: v{curr_v} -> {sw_ver}")
+            print(f"[SYNC] Auto-bumped sw.js CACHE_VERSION to: {new_full_ver}")
         elif m:
             sw_ver = f"v{m.group(1)}"
 
@@ -38,6 +40,12 @@ def sync_all(bump_version=False):
         c = re.sub(r"shared\.css(\?v=[^\"'>\s]*)?", f"shared.css?v={new_ver}", c)
         c = re.sub(r"blog\.css(\?v=[^\"'>\s]*)?", f"blog.css?v={new_ver}", c)
         c = re.sub(r"fonts\.css(\?v=[^\"'>\s]*)?", f"fonts.css?v={new_ver}", c)
+        
+        # Security: Inject Anti-Clickjacking Frame Buster if not present
+        anti_cj = '<style id="antiClickjack">body{display:none !important;}</style>\\n<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>'
+        if "antiClickjack" not in c:
+            c = c.replace("</head>", f"  {anti_cj}\\n</head>")
+            
         open(f, "w", encoding="utf-8").write(c)
     print(f"[SYNC] Updated query version ?v={new_ver} across {len(html_files)} HTML files.")
 
@@ -85,7 +93,9 @@ def sync_all(bump_version=False):
         desc = desc_meta["content"].strip() if desc_meta else title
         
         time_tag = soup.find("time", class_="meta-item") or soup.find("meta", {"property": "article:published_time"})
-        pub_date_str = "Mon, 03 Aug 2026 00:00:00 GMT"
+        mtime = os.path.getmtime(b)
+        fallback_dt = datetime.datetime.fromtimestamp(mtime, datetime.timezone.utc)
+        pub_date_str = fallback_dt.strftime("%a, %d %b %Y %H:%M:%S GMT")
         if time_tag:
             raw_date = time_tag.get("datetime") or time_tag.get("content")
             if raw_date and len(raw_date) >= 10:
@@ -125,7 +135,7 @@ def sync_all(bump_version=False):
         f.write(feed_xml)
     print(f"[SYNC] Updated feed.xml with {len(article_meta)} articles.")
 
-    # Update llms.txt & llms-full.txt RAG Knowledge Base
+    # Update llms.txt RAG Knowledge Base (Note: llms-full.txt is maintained MANUALLY to preserve rich metadata)
     llms_txt = """# zyekh.com — LLM RAG Knowledge Base
 
 > Official portfolio, technical articles, Linux security blueprints, and 42 client-side web utility tools by Zyekh Abdul Qadir Jailani (Full Stack Developer & Security Researcher).
@@ -242,11 +252,47 @@ def sync_all(bump_version=False):
             grid_content = "\n".join(card_blocks)
             new_grid = BeautifulSoup(f'<div class="grid-2" id="articlesGrid">\n{grid_content}\n</div>', "html.parser")
             grid_div.replace_with(new_grid.div)
+            html_out = str(soup_index)
+            if not html_out.strip().lower().startswith("<!doctype html"):
+                html_out = "<!DOCTYPE html>\n" + html_out
             with open(index_path, "w", encoding="utf-8") as f:
-                f.write(str(soup_index))
+                f.write(html_out)
             print(f"[SYNC] Dynamically rendered {len(card_blocks)} article cards into {index_path}.")
 
-    print("[SYNC] Synchronization completed successfully!")
+    # 6. Generate search-index.json for Command Palette
+    search_index = []
+    import json
+    
+    for t in sorted(glob.glob("tools/*.html")):
+        if t == "tools/index.html": continue
+        try:
+            soup_t = BeautifulSoup(open(t, encoding="utf-8").read(), "html.parser")
+            h1 = soup_t.find("h1")
+            title = h1.text.strip() if h1 else os.path.basename(t)
+            desc_meta = soup_t.find("meta", {"name": "description"})
+            desc = desc_meta["content"].strip() if desc_meta else title
+            url = f"/{t.replace(chr(92), '/')}"
+            search_index.append({"title": title, "desc": desc, "url": url, "type": "Tool"})
+        except Exception:
+            pass
 
+    for b in sorted(glob.glob("blog/*.html")):
+        if b == "blog/index.html": continue
+        try:
+            soup_b = BeautifulSoup(open(b, encoding="utf-8").read(), "html.parser")
+            h1 = soup_b.find("h1")
+            title = h1.text.strip() if h1 else os.path.basename(b)
+            desc_meta = soup_b.find("meta", {"name": "description"})
+            desc = desc_meta["content"].strip() if desc_meta else title
+            url = f"/{b.replace(chr(92), '/')}"
+            search_index.append({"title": title, "desc": desc, "url": url, "type": "Article"})
+        except Exception:
+            pass
+
+    with open("search-index.json", "w", encoding="utf-8") as f:
+        json.dump(search_index, f)
+    print(f"[SYNC] Generated search-index.json with {len(search_index)} items.")
+
+    print("[SYNC] Synchronization completed successfully!")
 if __name__ == "__main__":
-    sync_all()
+    sync_all(bump_version=True)

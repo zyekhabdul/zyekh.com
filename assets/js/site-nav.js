@@ -3,15 +3,7 @@
  * Usage: <site-nav active="home|tools|blog|about"></site-nav>
  * Zero dependencies. Baseline 2023+.
  */
-// Immediate Theme Init to avoid UI flash
-(function() {
-  var saved = localStorage.getItem('theme');
-  if (saved) {
-    document.documentElement.setAttribute('data-theme', saved);
-  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-    document.documentElement.setAttribute('data-theme', 'light');
-  }
-})();
+
 
 class SiteNav extends HTMLElement {
   connectedCallback() {
@@ -109,18 +101,51 @@ class SiteNav extends HTMLElement {
 
     backdrop.addEventListener('click', () => setOpen(false));
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && menu.classList.contains('open')) {
+    this._keydownHandler = (e) => {
+      if (!menu.classList.contains('open')) return;
+      if (e.key === 'Escape') {
         setOpen(false);
         toggle.focus();
+        return;
       }
-    });
+      if (e.key === 'Tab') {
+        const focusable = menu.querySelectorAll('a[href], button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first || document.activeElement === document.body) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
+    };
+    document.addEventListener('keydown', this._keydownHandler);
 
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 960 && menu.classList.contains('open')) {
-        setOpen(false);
+    let resizeTicking = false;
+    this._resizeHandler = () => {
+      if (!resizeTicking) {
+        window.requestAnimationFrame(() => {
+          if (window.innerWidth > 960 && menu.classList.contains('open')) {
+            setOpen(false);
+          }
+          resizeTicking = false;
+        });
+        resizeTicking = true;
       }
-    });
+    };
+    window.addEventListener('resize', this._resizeHandler);
+  }
+
+  disconnectedCallback() {
+    if (this._keydownHandler) document.removeEventListener('keydown', this._keydownHandler);
+    if (this._resizeHandler) window.removeEventListener('resize', this._resizeHandler);
   }
 }
 
@@ -231,5 +256,73 @@ document.addEventListener('click', async (e) => {
     }, 1800);
   } catch (err) {
     btn.textContent = 'Failed';
+  }
+});
+
+// Native Zero-Dependency Command Palette (Ctrl+K)
+document.addEventListener('keydown', (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    let dialog = document.getElementById('cmdPalette');
+    if (!dialog) {
+      dialog = document.createElement('dialog');
+      dialog.id = 'cmdPalette';
+      dialog.className = 'cmd-palette';
+      dialog.innerHTML = `
+        <div class="cmd-container">
+          <input type="text" id="cmdInput" class="cmd-input" placeholder="Search 42+ tools and 25+ articles..." autocomplete="off">
+          <div id="cmdResults" class="cmd-results"></div>
+        </div>
+      `;
+      document.body.appendChild(dialog);
+      
+      const input = dialog.querySelector('#cmdInput');
+      const results = dialog.querySelector('#cmdResults');
+      let searchData = null;
+
+      dialog.addEventListener('click', (ev) => {
+        if (ev.target === dialog) dialog.close();
+      });
+
+      let debounceTimer;
+      input.addEventListener('input', (ev) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          const q = ev.target.value.toLowerCase().trim();
+          if (!q) { results.innerHTML = ''; return; }
+          if (!searchData) return;
+          const filtered = searchData.filter(item => 
+            item.title.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q)
+          ).slice(0, 8); // Top 8 results
+          
+          if (filtered.length === 0) {
+            results.innerHTML = '<div class="cmd-empty" style="padding:1rem;color:var(--text-muted);text-align:center;">No results found.</div>';
+            return;
+          }
+          
+          results.innerHTML = filtered.map(item => `
+            <a href="${item.url}" class="cmd-item" style="display:flex;gap:1rem;padding:0.75rem;border-bottom:1px solid var(--border-color);text-decoration:none;color:var(--text-main);align-items:center;">
+              <span class="cmd-type" style="font-size:0.7rem;padding:0.2rem 0.4rem;background:var(--bg-card);border-radius:4px;border:1px solid var(--border-color);">${item.type.toUpperCase()}</span>
+              <div class="cmd-text" style="display:flex;flex-direction:column;gap:0.25rem;">
+                <strong style="font-size:0.9rem;">${item.title}</strong>
+                <small style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:300px;">${item.desc}</small>
+              </div>
+            </a>
+          `).join('');
+        }, 100);
+      });
+
+      fetch('/search-index.json').then(r => r.json()).then(data => {
+        searchData = data;
+      }).catch(() => {});
+    }
+    
+    if (!dialog.open) {
+      dialog.showModal();
+      document.getElementById('cmdInput').value = '';
+      document.getElementById('cmdResults').innerHTML = '';
+      // Small delay to ensure focus works after rendering
+      setTimeout(() => document.getElementById('cmdInput').focus(), 10);
+    }
   }
 });

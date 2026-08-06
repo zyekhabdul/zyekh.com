@@ -66,3 +66,21 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
 15. **MODERNITY & CUTTING-EDGE METHODS**: Never use legacy or traditional methods (e.g. bash scripts for CI, float-based layouts). Always seek and implement the most modern, up-to-date, and optimal solutions (e.g. GitHub Actions, Flexbox/Grid, semantic HTML5, modern Web APIs).
 
 16. **RESOURCE EXPANSION & OPPORTUNITY SEEKING**: Never limit solutions strictly to existing configurations (e.g., currently installed MCP servers). Always show initiative by suggesting new possibilities, external integrations, or tool installations that could achieve the goal more effectively (e.g., suggesting a new community MCP server for Reddit/HN instead of immediately rejecting the task).
+
+17. **ENDLESS PURSUIT OF OPTIMIZATION (ZERO COMPLACENCY)**: Never declare the system "stable," "perfect," or "error-free." Time moves forward, standards evolve, and new perspectives always reveal hidden bugs or inefficiencies. The AI pattern of declaring a task "complete and flawless" is a hallucination of finality. Always assume there is room for innovation, deeper analysis, and structural improvement.
+
+18. **THE PRINCIPLE OF COLLATERAL BLAST RADIUS**: Whenever modifying a shared global asset, the AI MUST explicitly acknowledge the global blast radius. Never optimize a layout for a blog post if it structurally breaks a tool UI. Always cross-reference changes against at least two distinct page archetypes (e.g., Blog vs Tool) before committing.
+
+19. **SYSTEMIC SURFACE PATCHING (DEFENSE IN DEPTH)**: A security fix is invalid if it is a band-aid on a single node. If an AI identifies and applies a security hardening protocol (e.g., Strict CSP, input sanitization), it MUST proactively execute a global grep/search to enforce the exact same protocol across the entire architectural surface. Think systemically, not locally.
+
+20. **DATA INTEGRITY IN AUTOMATION**: When building or modifying build/sync scripts, NEVER use hardcoded 'magic strings' or dummy data for fallbacks. Always route to native, immutable OS metadata (e.g., file modification time / `mtime`) to preserve data integrity and prevent historical corruption during automated loops.
+
+21. **VOLATILITY SEPARATION**: Always separate the volatile from the immutable. Whether designing cache layers, DOM rendering loops, or CSS logic, never tightly couple assets that change daily (app logic) with assets that change yearly (heavy media, fonts). This ensures maximum kinetic efficiency and zero bandwidth waste.
+
+22. **ARCHITECTURAL SURVEYING BEFORE CONSTRUCTION**: Never build new automation, CI/CD pipelines, or deployment hooks without first performing a comprehensive repository-wide survey to discover existing orchestration scripts (e.g., master pipelines, bash scripts, Python orchestrators). Building redundant automation is an AI anti-pattern that creates conflicting operational layers.
+
+23. **CREDENTIAL SPRAYING & LAZY PARSING (ANTI-EXFILTRATION)**: AI agents must never write regex or scripts that blindly harvest secrets/tokens from config files (e.g., `mcp_config.json`) and blast them sequentially to external APIs. This is a catastrophic data exfiltration vector. Always parse JSON/YAML structurally and target exact key paths (e.g., `env.CLOUDFLARE_API_TOKEN`).
+
+24. **PLAINTEXT CREDENTIAL HARDCODING**: Never hardcode passwords, API keys, or plaintext secrets directly into Python scripts, bash automation, or `/tmp/` injection files (e.g., `git_askpass.sh`). Rely entirely on secure environment variables, native SSH agent forwarding, or authorized GitHub Actions secrets.
+
+25. **PASSIVE IDEATION DEPENDENCY (REACTIVE STAGNATION)**: The AI must never stall the project by waiting for the user to invent the next feature or dictate the next move. If the AI validates an architectural improvement (e.g., from IDEAS.md), it MUST proactively build and integrate it immediately. Asking "What should I do next?" forces the user to carry the cognitive load and is a catastrophic AI anti-pattern.

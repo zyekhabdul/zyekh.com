@@ -1,12 +1,14 @@
 /* zyekh.com Service Worker — Cache Strategy */
-const CACHE_VERSION = "v=20260806_v135";
-const CACHE_NAME = `zyekh-${CACHE_VERSION}`;
+const CACHE_VERSION = "v=20260806_v138";
+const APP_CACHE = `zyekh-app-${CACHE_VERSION}`;
+const ASSETS_CACHE = `zyekh-assets-v1`;
 
-/* Assets to precache on install (minimal core shell) */
-const PRECACHE = [
+const PRECACHE_APP = [
   '/offline.html',
   '/assets/css/shared.css',
-  '/assets/js/site-nav.js',
+  '/assets/js/site-nav.js'
+];
+const PRECACHE_ASSETS = [
   '/assets/fonts/fonts.css',
   '/assets/fonts/inter-variable-latin.woff2'
 ];
@@ -14,14 +16,16 @@ const PRECACHE = [
 /* ── Install: precache core shell ── */
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache =>
-        Promise.allSettled(
-          PRECACHE.map(u => cache.add(u).catch(err =>
-            console.warn('[SW] Precache skip:', u, err)
-          ))
-        )
+    Promise.all([
+      caches.open(APP_CACHE).then(cache => 
+        Promise.allSettled(PRECACHE_APP.map(u => cache.add(u).catch(err => console.warn('[SW] App Precache skip:', u, err))))
+      ),
+      caches.open(ASSETS_CACHE).then(cache => 
+        Promise.allSettled(PRECACHE_ASSETS.map(u => 
+          cache.match(u).then(res => res ? res : cache.add(u)).catch(err => console.warn('[SW] Assets Precache skip:', u, err))
+        ))
       )
+    ])
   );
   self.skipWaiting();
 });
@@ -31,7 +35,7 @@ self.addEventListener('activate', event => {
   event.waitUntil(
     Promise.all([
       caches.keys().then(keys =>
-        Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+        Promise.all(keys.filter(k => k.startsWith('zyekh-app-') && k !== APP_CACHE).map(k => caches.delete(k)))
       ),
       self.registration.navigationPreload?.enable() ?? Promise.resolve()
     ])
@@ -65,12 +69,13 @@ self.addEventListener('fetch', event => {
 
 /* Cache-First: serve from cache, fallback to network then cache */
 async function cacheFirst(request) {
-  const cached = await caches.match(request);
+  const cached = await caches.match(request, { ignoreSearch: true });
   if (cached) return cached;
   try {
     const response = await fetch(request);
     if (response.ok) {
-      const cache = await caches.open(CACHE_NAME);
+      const targetCache = request.url.match(/\.(png|jpe?g|gif|webp|svg|woff2?|ttf|ico)$/i) ? ASSETS_CACHE : APP_CACHE;
+      const cache = await caches.open(targetCache);
       cache.put(request, response.clone());
     }
     return response;
@@ -85,14 +90,14 @@ async function networkFirstNav(event) {
     const preloadResponse = await event.preloadResponse;
     if (preloadResponse) {
       if (preloadResponse.ok) {
-        const cache = await caches.open(CACHE_NAME);
+        const cache = await caches.open(APP_CACHE);
         cache.put(event.request, preloadResponse.clone());
       }
       return preloadResponse;
     }
     const response = await fetch(event.request);
     if (response.ok) {
-      const cache = await caches.open(CACHE_NAME);
+      const cache = await caches.open(APP_CACHE);
       cache.put(event.request, response.clone());
     }
     return response;

@@ -89,8 +89,8 @@
 <link href="/manifest.json" rel="manifest"/>
 <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
 <link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
-<link href="/assets/fonts/fonts.css?v=20260806_v135" rel="stylesheet"/>
-<link href="/assets/css/shared.css?v=20260806_v135" rel="stylesheet"/>
+<link href="/assets/fonts/fonts.css?v=20260806_v138" rel="stylesheet"/>
+<link href="/assets/css/shared.css?v=20260806_v138" rel="stylesheet"/>
 <style>
     h1, h2, h3, h4, .brand-title {
       font-family: 'Outfit', sans-serif;
@@ -262,10 +262,10 @@
     }
   </style>
 <link as="image" fetchpriority="high" href="/assets/img/profile.webp" rel="preload" type="image/webp"/>
-</head>
+  <style id="antiClickjack">body{display:none !important;}</style>\n<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>\n</head>
 <body>
 <site-nav active="about"></site-nav>
-<script defer="" src="/assets/js/site-nav.js?v=20260806_v135"></script>
+<script defer="" src="/assets/js/site-nav.js?v=20260806_v138"></script>
 <main class="main-container">
 <!-- Hero Section -->
 <section class="hero-section">
@@ -310,7 +310,7 @@
 <li style="margin-bottom: 0.6rem;"><strong>Certification:</strong> DUDI Habituasi (Front-End Track) — Skillage</li>
 <li style="margin-bottom: 0.6rem;"><strong>Core Focus:</strong> Enterprise Backend Architecture, Android modding, Network Security hardening.</li>
 <li style="margin-bottom: 0.6rem;"><strong>Availability:</strong> Open for software engineering projects, architectural consulting, &amp; security audits.</li>
-<li><strong>Source:</strong> <a href="https://github.com/zyekhabdul/zyekh.com" style="color:var(--text-muted); text-decoration:underline;" target="_blank">Public Open Source Repository on GitHub</a></li>
+<li><strong>Source:</strong> <a href="https://github.com/zyekhabdul/zyekh.com" style="color:var(--text-muted); text-decoration:underline;" target="_blank" rel="noopener noreferrer">Public Open Source Repository on GitHub</a></li>
 </ul>
 </div>
 </div>
@@ -518,12 +518,12 @@
 <div class="custom-card">
 <h3 style="margin-top:0;">Contact &amp; Verification Channels</h3>
 <p style="color:var(--text-muted); font-size:0.95rem; line-height: 1.8; margin-bottom: 1rem;">
-<strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">linkedin.com/in/zyekh-abdul-qadir-jailani</a><br/>
-<strong>GitHub:</strong> <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">github.com/zyekhabdul</a><br/>
-<strong>Discord Community:</strong> <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">discord.gg/jDmerBugvu</a><br/>
+<strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener noreferrer" style="font-weight:600" target="_blank">linkedin.com/in/zyekh-abdul-qadir-jailani</a><br/>
+<strong>GitHub:</strong> <a href="https://github.com/zyekhabdul" rel="noopener noreferrer" style="font-weight:600" target="_blank">github.com/zyekhabdul</a><br/>
+<strong>Discord Community:</strong> <a href="https://discord.gg/jDmerBugvu" rel="noopener noreferrer" style="font-weight:600" target="_blank">discord.gg/jDmerBugvu</a><br/>
 <strong>Primary Email:</strong> <a href="mailto:zyekhabdulqadirjailani@gmail.com" style="font-weight:600">zyekhabdulqadirjailani@gmail.com</a><br/>
-<strong>PGP Public Key:</strong> <a href="/gpg-key.asc" style="font-weight:600" target="_blank">/gpg-key.asc</a><br/>
-<strong>Security Policy:</strong> <a href="/.well-known/security.txt" style="font-weight:600" target="_blank">/.well-known/security.txt</a> (RFC 9116)
+<strong>PGP Public Key:</strong> <a href="/gpg-key.asc" rel="noopener noreferrer" style="font-weight:600" target="_blank">/gpg-key.asc</a><br/>
+<strong>Security Policy:</strong> <a href="/.well-known/security.txt" rel="noopener noreferrer" style="font-weight:600" target="_blank">/.well-known/security.txt</a> (RFC 9116)
             </p>
 <div onclick="navigator.clipboard.writeText('curl -sL zyekh.com/gpg-key.asc | gpg --import'); this.style.borderColor='var(--text-main)'; setTimeout(()=>this.style.borderColor='var(--border-color)', 1500);" style="background:var(--code-bg); border:1px solid var(--border-color); padding:0.8rem; border-radius:6px; margin-top:1rem; cursor:pointer; transition: border-color 0.2s ease;" title="Click to copy">
 <div style="font-family:'Fira Code', monospace; font-size:0.85rem">$ curl -sL zyekh.com/gpg-key.asc | gpg --import</div>

@@ -279,11 +279,11 @@ def generate_article_html(article_data, current_cache_ver=None):
         <h4>Written by Zyekh Abdul Qadir Jailani</h4>
         <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
         <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
-          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
-          <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
-          <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
-          <a href="mailto:zyekhabdulqadirjailani@gmail.com" style="font-weight:600">Email</a> •
-          <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener noreferrer" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener noreferrer" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener noreferrer" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="/.well-known/security.txt" rel="noopener noreferrer" style="font-weight:600" target="_blank">Security Policy</a> •
+          <a href="/gpg-key.asc" rel="noopener noreferrer" style="font-weight:600" target="_blank">PGP Key</a>
         </div>
       </div>
     </div>
