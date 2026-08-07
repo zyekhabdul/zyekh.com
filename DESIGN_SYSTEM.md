@@ -136,6 +136,17 @@ Never apply custom background colors or inline styles to terminal outputs or cod
 
 **AI Anti-pattern to avoid**: Proposing ad-hoc solutions (e.g. custom wrapper divs, inline `overflow: hidden`, JS resize observers) before checking if `min-width: 0` on the grid child resolves it.
 
+### Law 7: Copy Button & `<pre>` Wrap in Cards
+**Problem**: A dynamically injected absolute "Copy" button inside a `<pre>` block will overlap the code text if the text is long, because the text flows to the 100% width of the container.
+**Standard fix**: 
+1. The Copy button must be injected as a **sibling** to the `<pre>` (inside a `position: relative` wrapper div), never as a child of `<pre>`.
+2. The `<pre>` block within grid cards (e.g., `.tool-card pre`) must have `padding-right: 3.5rem` to reserve permanent blank space for the absolute Copy button.
+3. Grid card `<pre>` blocks should use `white-space: pre-wrap; overflow-y: auto;` to wrap long lines instead of horizontal scrolling, keeping the UI compact.
+
+### Law 8: Inline Code `<code>` Styling
+When writing inline code within paragraphs or list items (outside of a `<pre>`), do not use plain text or bold text. 
+**Standard fix**: Inline `<code>` must be enclosed in a distinct "box" (background color with border and padding) mirroring the `/blueprints` design. This is already handled globally in `shared.css`. Just wrap the text in `<code>` and the CSS will apply `background: var(--code-bg); padding: 0.15rem 0.3rem; border: 1px solid var(--border-color); border-radius: 4px;`.
+
 ---
 
 **FINAL DIRECTIVE TO AI**: Before generating any new page or UI component, cross-reference your structural plan with this document. If your design mutates an existing pattern, mixes up the wrapper classes, or requires excessive scrolling, **you have failed the assignment and must redesign it to be identical to existing patterns.**
