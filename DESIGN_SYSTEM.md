@@ -147,6 +147,14 @@ Never apply custom background colors or inline styles to terminal outputs or cod
 When writing inline code within paragraphs or list items (outside of a `<pre>`), do not use plain text or bold text. 
 **Standard fix**: Inline `<code>` must be enclosed in a distinct "box" (background color with border and padding) mirroring the `/blueprints` design. This is already handled globally in `shared.css`. Just wrap the text in `<code>` and the CSS will apply `background: var(--code-bg); padding: 0.15rem 0.3rem; border: 1px solid var(--border-color); border-radius: 4px;`.
 
+### Law 9: Theme Initialization Protocol (Anti-FOUC)
+**Problem**: Reading `localStorage` to initialize dark/light mode from within a deferred Web Component (like `site-nav.js`) causes a Flash of Unstyled Content (FOUC), where the page flashes white before turning dark.
+**Standard fix**: 
+Theme initialization must be executed synchronously before the `<body>` is rendered. This is handled globally by injecting a blocking `<script>` tag directly into the `<head>` of all HTML files. 
+- Do **NOT** put `localStorage.getItem('theme')` initialization logic in `site-nav.js`.
+- The `sync_content.py` build script automatically injects the anti-FOUC script into all HTML files.
+- `site-nav.js` should only contain the click event listener for the toggle button.
+
 ---
 
 **FINAL DIRECTIVE TO AI**: Before generating any new page or UI component, cross-reference your structural plan with this document. If your design mutates an existing pattern, mixes up the wrapper classes, or requires excessive scrolling, **you have failed the assignment and must redesign it to be identical to existing patterns.**

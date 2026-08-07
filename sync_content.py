@@ -93,6 +93,11 @@ def sync_all(bump_version=False):
         if "antiClickjack" not in c:
             c = c.replace("</head>", f"  {anti_cj}\n</head>")
 
+        # UX: Inject Theme Initialization Script (Anti-FOUC)
+        theme_init = '<script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>'
+        if "localStorage.getItem(\"theme\")" not in c and "data-theme" not in c[:c.find("</head>")]:
+            c = c.replace("</head>", f"  {theme_init}\n</head>")
+
         # Performance: Inject Dynamic Resource Preloading for Render-Blocking Assets (Lighthouse 100/100)
         c = re.sub(r'<link[^>]*href="/assets/css/shared(?:\.min)?\.css[^"]*"[^>]*rel="preload"[^>]*>\s*', '', c)
         c = re.sub(r'<link[^>]*rel="preload"[^>]*href="/assets/css/shared(?:\.min)?\.css[^"]*"[^>]*>\s*', '', c)

@@ -45,8 +45,8 @@
 <script defer="" src="/assets/js/site-nav.min.js?v=54c77b6d" integrity="sha384-SggUOIR1p8sOkXQ+YISwod0odDbnfV4aSwRV8NEgq0rHRb8qYi/1yijc37eFvwSJ" crossorigin="anonymous"></script>
   <style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-              <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
-          <link rel="preload" href="/assets/css/shared.min.css?v=265904fa" integrity="sha384-wmI54qxeJ25dnP8904oOOOmRGC4wKqfB541NE9czva3hudoYM2ZZGyOdhQKtA8Yk" crossorigin="anonymous" as="style">
+              <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-nxg0s2FMTLYSI24FskQ1L5swcY7bQPEE2KiV5lL7C5o='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+            <link rel="preload" href="/assets/css/shared.min.css?v=265904fa" integrity="sha384-wmI54qxeJ25dnP8904oOOOmRGC4wKqfB541NE9czva3hudoYM2ZZGyOdhQKtA8Yk" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=54c77b6d" integrity="sha384-SggUOIR1p8sOkXQ+YISwod0odDbnfV4aSwRV8NEgq0rHRb8qYi/1yijc37eFvwSJ" crossorigin="anonymous" as="script">
 </head>
 <body>
@@ -67,9 +67,24 @@
     <a href="/blueprints/the-ultimate-linux-and-cloud-security-architecture-cheatsheet.html" class="btn-primary">Access the Full Cheatsheet Matrix -&gt;</a>
   </div>
 
+  <!-- Filter & Search -->
+  <div class="search-filter-box">
+    <input type="text" id="searchInput" class="search-input" placeholder="Cari blueprint (contoh: eBPF, ssh, wasm, cosign)...">
+    <p id="searchCounter" style="margin-top: 0.75rem; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0;"></p>
+  </div>
 
+  <!-- Category Pill Filters -->
+  <div class="filter-bar" id="categoryFilterBar">
+    <button type="button" class="filter-btn active" data-category="all">Semua (6)</button>
+    <button type="button" class="filter-btn" data-category="KERNEL & EBPF">Kernel &amp; eBPF</button>
+    <button type="button" class="filter-btn" data-category="ZERO TRUST">Zero Trust</button>
+    <button type="button" class="filter-btn" data-category="CLOUD NATIVE">Cloud Native</button>
+  </div>
 
-  <div class="grid-3">
+  <div id="blueprintsGrid" class="grid-3">
+    <div id="noResultsMsg" style="display: none; width: 100%; padding: 2rem; text-align: center; color: var(--text-muted); background: var(--bg-card); border-radius: 8px; border: 1px dashed var(--border-color); margin: 0.5rem;">
+      Blueprint tidak ditemukan. Coba kata kunci lain.
+    </div>
 
     <!-- Blueprint 1 -->
     <div class="tool-item">
@@ -184,5 +199,79 @@ cosign verify \
       <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
     </div>
   </footer>
+
+  <script>
+    // Client-side Filter & Search Logic
+    const searchInput = document.getElementById('searchInput');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.tool-item');
+    const searchCounter = document.getElementById('searchCounter');
+    const noResultsMsg = document.getElementById('noResultsMsg');
+    
+    let activeCategory = 'all';
+    let filterDebounceTimer;
+    const totalItems = items.length;
+
+    // Build Cache
+    const itemCache = Array.from(items).map(item => {
+      const catSpan = item.querySelector('.tool-category');
+      const rawCat = catSpan ? catSpan.textContent.toUpperCase() : '';
+      
+      let cat = 'OTHER';
+      if (rawCat.includes('EBPF') || rawCat.includes('LINUX SECURITY')) cat = 'KERNEL & EBPF';
+      else if (rawCat.includes('ZERO-TRUST') || rawCat.includes('WEB SECURITY')) cat = 'ZERO TRUST';
+      else if (rawCat.includes('WEBASSEMBLY') || rawCat.includes('SUPPLY CHAIN')) cat = 'CLOUD NATIVE';
+
+      return {
+        element: item,
+        category: cat,
+        searchableText: item.textContent.toLowerCase()
+      };
+    });
+
+    function filterItems() {
+      const q = searchInput ? searchInput.value.toLowerCase().trim() : '';
+      let visibleCount = 0;
+
+      itemCache.forEach(data => {
+        const matchesQuery = !q || data.searchableText.includes(q);
+        const matchesCategory = activeCategory === 'all' || data.category === activeCategory;
+
+        if (matchesQuery && matchesCategory) {
+          data.element.style.display = '';
+          visibleCount++;
+        } else {
+          data.element.style.display = 'none';
+        }
+      });
+
+      if (searchCounter) {
+        searchCounter.textContent = `Menampilkan ${visibleCount} dari ${totalItems} blueprints`;
+      }
+      if (noResultsMsg) {
+        noResultsMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    }
+
+    if (searchCounter) {
+      searchCounter.textContent = `Menampilkan ${totalItems} dari ${totalItems} blueprints`;
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        clearTimeout(filterDebounceTimer);
+        filterDebounceTimer = setTimeout(filterItems, 80);
+      });
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        activeCategory = this.getAttribute('data-category');
+        filterItems();
+      });
+    });
+  </script>
 </body>
 </html>
