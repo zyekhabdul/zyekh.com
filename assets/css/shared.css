@@ -137,6 +137,10 @@
 :root:not([data-theme="light"]) .theme-icon-light { display: inline-block; }
 :root:not([data-theme="light"]) .theme-icon-dark { display: none; }
 
+/* BUILD PIPELINE — WAJIB setelah edit file ini:
+   python3 -c "from sync_content import sync_all; sync_all(bump_version=True)"
+   JANGAN gunakan minifier ad-hoc. SRI hash harus sinkron di 76+ HTML files. */
+
 /* ===================== Reset & Base ===================== */
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -980,7 +984,9 @@ details[open] summary::after { content: '\2212'; }
 .toggle-label { font-size: 0.9rem; color: var(--text-muted); cursor: pointer; pointer-events: auto; user-select: auto; }
 
 /* Tools — tool-item (tools/index.html grid items) */
-.tool-item { display: flex; flex-direction: column; }
+/* min-width:0 — override CSS Grid default min-width:auto. Without this,
+   a grid child containing <pre> will blow past 1fr column boundary. */
+.tool-item { display: flex; flex-direction: column; min-width: 0; }
 
 /* Tools — SEO content block (alias for seo-block with section semantics) */
 .seo-content-block { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); }

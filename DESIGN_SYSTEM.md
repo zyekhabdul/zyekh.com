@@ -121,6 +121,21 @@ When writing technical articles or cheatsheets, do not invent custom inline styl
 Never apply custom background colors or inline styles to terminal outputs or code snippets. 
 - All code blocks must simply be wrapped in `<pre><code>`. The `blog.css` handles the `Fira Code` typography, overflow scroll, and Dark Mode syntax coloring automatically.
 
+### Law 6: CSS Grid Children Containing `<pre>` — Grid Blowout Prevention
+**Problem**: CSS Grid columns default to `min-width: auto`. When a `.tool-item` (grid child) contains a `<pre>` block with long lines, the `<pre>` forces the column to expand beyond its `1fr` boundary, blowing past the `.main-container` margin.
+
+**Root cause**: `max-width: 100%` on `<pre>` is calculated relative to the grid child's actual size — which has already expanded. The chain breaks at the grid child level, not the `<pre>` level.
+
+**Standard fix** (already codified in `shared.css`):
+```css
+.tool-item { display: flex; flex-direction: column; min-width: 0; }
+```
+`min-width: 0` overrides CSS Grid's `min-width: auto` default, allowing the column to shrink to the `1fr` constraint. The `<pre>` then correctly scrolls horizontally within its bounded container.
+
+**Rule**: Any new grid child class (e.g. `.article-item`, `.blueprint-item`) that may contain `<pre>` or `<code>` blocks MUST include `min-width: 0`. Do NOT solve this by adding `overflow: hidden` on the card — that clips the horizontal scroll of the code block.
+
+**AI Anti-pattern to avoid**: Proposing ad-hoc solutions (e.g. custom wrapper divs, inline `overflow: hidden`, JS resize observers) before checking if `min-width: 0` on the grid child resolves it.
+
 ---
 
 **FINAL DIRECTIVE TO AI**: Before generating any new page or UI component, cross-reference your structural plan with this document. If your design mutates an existing pattern, mixes up the wrapper classes, or requires excessive scrolling, **you have failed the assignment and must redesign it to be identical to existing patterns.**
