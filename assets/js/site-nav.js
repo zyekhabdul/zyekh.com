@@ -230,9 +230,14 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.textContent = 'Copy';
     btn.setAttribute('aria-label', 'Copy code to clipboard');
     btn.style.cssText = 'position:absolute; top:0.5rem; right:0.5rem; background:var(--bg-card); color:var(--text-muted); border:1px solid var(--border-color); font-size:0.75rem; padding:0.2rem 0.55rem; border-radius:4px; cursor:pointer; font-family:sans-serif; transition:all 0.2s; z-index:2;';
-    
-    pre.style.position = 'relative';
-    pre.appendChild(btn);
+
+    // Wrap pre in a div so button is a sibling (not child) of pre.
+    // This prevents button from overlapping code when pre has overflow scroll.
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'position:relative;';
+    pre.parentNode.insertBefore(wrapper, pre);
+    wrapper.appendChild(pre);
+    wrapper.appendChild(btn);
   });
 
   // Universal Passive Reading Progress Bar Listener (Throttled via rAF for zero CPU churn)

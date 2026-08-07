@@ -988,6 +988,22 @@ details[open] summary::after { content: '\2212'; }
    a grid child containing <pre> will blow past 1fr column boundary. */
 .tool-item { display: flex; flex-direction: column; min-width: 0; }
 
+/* pre inside .tool-card: compact font, wrap, vertical scroll (not horizontal) */
+.tool-card pre {
+  font-size: 0.78rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 160px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0.5rem 0 0 0;
+  padding: 0.6rem 3.5rem 0.6rem 0.75rem; /* right:3.5rem reserves space for copy button */
+  background: var(--code-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+.tool-card pre code { font-size: inherit; }
+
 /* Tools — SEO content block (alias for seo-block with section semantics) */
 .seo-content-block { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); }
 
