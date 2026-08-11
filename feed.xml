@@ -28,11 +28,25 @@
       <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
+      <title>ColBERT Late Interaction: Advancing RAG Beyond Dense Embeddings</title>
+      <link>https://zyekh.com/blog/colbert-late-interaction-advanced-rag.html</link>
+      <guid>https://zyekh.com/blog/colbert-late-interaction-advanced-rag.html</guid>
+      <description>How late interaction retrieval models solve the 'lost in the middle' problem and dramatically improve Retrieval-Augmented Generation precision over standard vector DBs.</description>
+      <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Container Image Signing & SLSA Provenance Verification with Sigstore Cosign</title>
       <link>https://zyekh.com/blog/container-image-signing-and-slsa-provenance-with-cosign.html</link>
       <guid>https://zyekh.com/blog/container-image-signing-and-slsa-provenance-with-cosign.html</guid>
       <description>Supply chain security guide on signing OCI container images keylessly and verifying SLSA build provenance using Sigstore Cosign and Rekor.</description>
       <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>DSPy: Replacing Prompt Engineering with Declarative Optimization Compilers</title>
+      <link>https://zyekh.com/blog/dspy-declarative-prompting-optimization.html</link>
+      <guid>https://zyekh.com/blog/dspy-declarative-prompting-optimization.html</guid>
+      <description>Why manual prompt tweaking is dead. Learn how to compile and optimize LM pipelines using DSPy's automated metric-driven optimization algorithms.</description>
+      <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation</title>
@@ -61,6 +75,13 @@
       <guid>https://zyekh.com/blog/kubernetes-pod-security-standards-pss-and-admission-control.html</guid>
       <description>Production guide on enforcing Privileged, Baseline, and Restricted Pod Security Standards (PSS) using native Kubernetes admission controllers.</description>
       <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>KV Cache INT4 Quantization for 1M+ Token Context Windows</title>
+      <link>https://zyekh.com/blog/kv-cache-int4-quantization-long-context.html</link>
+      <guid>https://zyekh.com/blog/kv-cache-int4-quantization-long-context.html</guid>
+      <description>Squeezing massive context windows into consumer GPUs by quantizing the Key-Value cache down to 4-bit precision without losing retrieval accuracy.</description>
+      <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>High-Throughput Linux Audit Logging with Vector & ClickHouse DFIR Pipeline</title>
@@ -105,11 +126,32 @@
       <pubDate>Fri, 10 Jul 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
+      <title>Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing</title>
+      <link>https://zyekh.com/blog/moe-serving-mixture-of-experts-routing.html</link>
+      <guid>https://zyekh.com/blog/moe-serving-mixture-of-experts-routing.html</guid>
+      <description>Deep dive into the routing gates of Mixtral 8x7B, memory-offloading strategies, and EP (Expert Parallelism) across multi-GPU setups.</description>
+      <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Multi-Agent Swarm Orchestration: Hierarchical Agentic Workflows</title>
+      <link>https://zyekh.com/blog/multi-agent-swarm-orchestration-patterns.html</link>
+      <guid>https://zyekh.com/blog/multi-agent-swarm-orchestration-patterns.html</guid>
+      <description>Designing recursive agent loops, tool-calling pipelines, and autonomous swarm routing using AutoGen and LangGraph for complex software engineering tasks.</description>
+      <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Nginx Reverse Proxy Security Hardening Blueprint for 2026</title>
       <link>https://zyekh.com/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html</link>
       <guid>https://zyekh.com/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html</guid>
       <description>Production guide for hardening Nginx reverse proxies with TLS 1.3, rate limiting, buffer overflow defense, and security headers.</description>
       <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>OmniRouter Architecture: Resilient LLM Gateway Routing & Fallback Pipelines</title>
+      <link>https://zyekh.com/blog/omnirouter-llm-gateway-routing-fallback-patterns.html</link>
+      <guid>https://zyekh.com/blog/omnirouter-llm-gateway-routing-fallback-patterns.html</guid>
+      <description>Advanced API routing techniques for multi-LLM architectures, mitigating rate limits, and ensuring speculative decoding fallbacks across OpenAI, Anthropic, and open-source nodes.</description>
+      <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force</title>
@@ -133,11 +175,25 @@
       <pubDate>Wed, 15 Jul 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
+      <title>S-LoRA: Multiplexing Thousands of Fine-Tuned Adapters on a Single GPU</title>
+      <link>https://zyekh.com/blog/slora-adapter-multiplexing-single-gpu.html</link>
+      <guid>https://zyekh.com/blog/slora-adapter-multiplexing-single-gpu.html</guid>
+      <description>How Unified Paging and scalable LoRA adapter serving allows platforms to host 10,000+ custom fine-tuned models concurrently without OOM errors.</description>
+      <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Short-Lived SSH Certificate Authentication with HashiCorp Vault CA</title>
       <link>https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html</link>
       <guid>https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html</guid>
       <description>Zero-trust SSH architecture blueprint for eliminating static SSH public keys using HashiCorp Vault Certificate Authority and short-lived certificates.</description>
       <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Structured Output Generation: Enforcing JSON & Regex at the Logits Level</title>
+      <link>https://zyekh.com/blog/structured-output-generation-logits-constraints.html</link>
+      <guid>https://zyekh.com/blog/structured-output-generation-logits-constraints.html</guid>
+      <description>Bypassing brittle prompt engineering by directly manipulating the LLM token logits to mathematically guarantee valid JSON schema outputs.</description>
+      <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>Systemd Service Sandboxing: Restricting Process Capability & System Calls</title>
@@ -159,6 +215,20 @@
       <guid>https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html</guid>
       <description>Technical deep-dive on Extended Berkeley Packet Filter (eBPF) tracing, kprobes, tracepoints, bpftrace, and zero-overhead kernel runtime security monitoring.</description>
       <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>vLLM PagedAttention: Memory Optimization & High-Throughput LLM Inference Tuning</title>
+      <link>https://zyekh.com/blog/vllm-pagedattention-high-throughput-inference-tuning.html</link>
+      <guid>https://zyekh.com/blog/vllm-pagedattention-high-throughput-inference-tuning.html</guid>
+      <description>Deep dive into OS-inspired virtual memory management for LLM KV caches, maximizing GPU utilization, and achieving 20x throughput scaling for production inference.</description>
+      <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>WebGPU LLM Inference: Running 7B Models Natively in the Browser</title>
+      <link>https://zyekh.com/blog/webgpu-llm-inference-browser-sandbox.html</link>
+      <guid>https://zyekh.com/blog/webgpu-llm-inference-browser-sandbox.html</guid>
+      <description>Leveraging WebGPU, TVM, and Rust-compiled WebAssembly to bypass server costs and run private local LLMs entirely within client-side browser sandboxes.</description>
+      <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels & Strict Firewall Rules</title>

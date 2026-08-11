@@ -11,11 +11,11 @@ When tasked with building UIs, AI models predictably fall into toxic UX anti-pat
 **Why this fails:** It wastes screen real estate, forces the user into endless scrolling, causes cognitive overload, and destroys the site's professional consistency.
 
 **Prohibited AI Habits:**
-- 🚫 **Oversized Elements**: Do not use giant paddings (e.g., `padding: 3rem`) or huge fonts for standard cards.
-- 🚫 **Single-Column Lists for Data**: Never stack 10+ items vertically if they can be placed in a grid.
-- 🚫 **Ad-Hoc CSS Injection**: Do not inject custom `<style>` blocks into HTML headers to create new, disconnected UI components.
-- 🚫 **Unclickable Areas**: Never make just the text/title clickable. The entire bounded box (card) must be a clickable anchor `<a>`.
-- 🚫 **Design Mutation**: Never invent a new layout for a component (like a Footer, Header, or Card) if that component already exists on another page.
+- [ WARN ] **Oversized Elements**: Do not use giant paddings (e.g., `padding: 3rem`) or huge fonts for standard cards.
+- [ WARN ] **Single-Column Lists for Data**: Never stack 10+ items vertically if they can be placed in a grid.
+- [ WARN ] **Ad-Hoc CSS Injection**: Do not inject custom `<style>` blocks into HTML headers to create new, disconnected UI components.
+- [ WARN ] **Unclickable Areas**: Never make just the text/title clickable. The entire bounded box (card) must be a clickable anchor `<a>`.
+- [ WARN ] **Design Mutation**: Never invent a new layout for a component (like a Footer, Header, or Card) if that component already exists on another page.
 
 ---
 

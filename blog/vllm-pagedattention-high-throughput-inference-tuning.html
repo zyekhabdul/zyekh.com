@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>vLLM PagedAttention: Memory Optimization & High-Throughput LLM Inference Tuning — zyekh.com</title>
+<meta content="Deep dive into OS-inspired virtual memory management for LLM KV caches, maximizing GPU utilization, and achieving 20x throughput scaling for production inference." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/blog/vllm-pagedattention-high-throughput-inference-tuning.html" rel="canonical"/>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="vLLM PagedAttention: Memory Optimization & High-Throughput LLM Inference Tuning" property="og:title"/>
+<meta content="Deep dive into OS-inspired virtual memory management for LLM KV caches, maximizing GPU utilization, and achieving 20x throughput scaling for production inference." property="og:description"/>
+<meta content="https://zyekh.com/blog/vllm-pagedattention-high-throughput-inference-tuning.html" property="og:url"/>
+<meta content="1280" property="og:image:width"/>
+<meta content="720" property="og:image:height"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="https://zyekh.com/assets/img/vllm_pagedattention_hero.jpg" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/vllm_pagedattention_hero.jpg" property="og:image:secure_url"/>
+<meta content="image/jpeg" property="og:image:type"/>
+<meta content="vLLM PagedAttention: Memory Optimization & High-Throughput LLM Inference Tuning — zyekh.com" property="og:image:alt"/>
+<meta content="2026-08-09T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<meta content="@zyekh" name="twitter:creator"/>
+<meta content="@zyekh" name="twitter:site"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="vLLM PagedAttention: Memory Optimization & High-Throughput LLM Inference Tuning" name="twitter:title"/>
+<meta content="Deep dive into OS-inspired virtual memory management for LLM KV caches, maximizing GPU utilization, and achieving 20x throughput scaling for production inference." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/vllm_pagedattention_hero.jpg" name="twitter:image"/>
+<meta content="vLLM PagedAttention: Memory Optimization & High-Throughput LLM Inference Tuning — zyekh.com" name="twitter:image:alt"/>
+
+<!-- Favicons & Manifest -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "vLLM PagedAttention: Memory Optimization & High-Throughput LLM Inference Tuning",
+      "description": "Deep dive into OS-inspired virtual memory management for LLM KV caches, maximizing GPU utilization, and achieving 20x throughput scaling for production inference.",
+      "url": "https://zyekh.com/blog/vllm-pagedattention-high-throughput-inference-tuning.html",
+      "image": "https://zyekh.com/assets/img/vllm_pagedattention_hero.jpg",
+      "datePublished": "2026-08-09",
+      "dateModified": "2026-08-09",
+      "wordCount": 1300,
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/blog/vllm-pagedattention-high-throughput-inference-tuning.html"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/blog/vllm-pagedattention-high-throughput-inference-tuning.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zyekh.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog & Articles",
+          "item": "https://zyekh.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "vLLM PagedAttention: Memory Optimization & High-Throughput LLM Inference Tuning",
+          "item": "https://zyekh.com/blog/vllm-pagedattention-high-throughput-inference-tuning.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can vLLM run on consumer-grade GPUs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, vLLM supports consumer GPUs (e.g., RTX 3090/4090) provided the model weights and the configured KV cache pool fit within the available VRAM (e.g., 24GB). Quantization is highly recommended for consumer hardware."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=265904fa" integrity="sha384-wmI54qxeJ25dnP8904oOOOmRGC4wKqfB541NE9czva3hudoYM2ZZGyOdhQKtA8Yk" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/blog.min.css?v=23f57ed3" integrity="sha384-SlDoFGdtZDy6TVVSM6hpiewl1j4rCdicA+gWwc2yy2fu3uaRLFkup0nmR8A41dzf" crossorigin="anonymous" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.min.js?v=1a543392" integrity="sha384-ZbSVhINPEG8vjpEZ7zeZ4gjYVn6gQoXkK79tOK8s5QOfaIl5cf17iJa3S3nWYvkl" crossorigin="anonymous"></script>
+<script defer="" src="/assets/js/article-actions.min.js?v=6cf0fa6c" integrity="sha384-7Zc8x9pMA4XVFbvKkDb77s0tC31UxKSpwWO9VZ/rbGTiNxaNERlsv1xKIPrVUHID" crossorigin="anonymous"></script>
+  <style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+  <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+  <link rel="preload" href="/assets/css/shared.min.css?v=265904fa" integrity="sha384-wmI54qxeJ25dnP8904oOOOmRGC4wKqfB541NE9czva3hudoYM2ZZGyOdhQKtA8Yk" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=1a543392" integrity="sha384-ZbSVhINPEG8vjpEZ7zeZ4gjYVn6gQoXkK79tOK8s5QOfaIl5cf17iJa3S3nWYvkl" crossorigin="anonymous" as="script">
+</head>
+<body>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+  <!-- Back to Blog -->
+  <a class="back-link" href="/blog/">← Back to Articles</a>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="meta-tag">AI Engineering • Performance</span>
+    <h1 class="article-title">vLLM PagedAttention: Memory Optimization & High-Throughput LLM Inference Tuning</h1>
+    <div class="article-meta">
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="2026-08-09T00:00:00Z">Published: 2026-08-09</time>
+        <span>15 min read (1300+ Words)</span>
+      </div>
+      <div class="article-actions">
+        <button class="btn-share" id="shareBtn" type="button">Share</button>
+        <button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
+        <button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Article Body Content -->
+  <main class="article-content">
+    <!-- Featured Hero Image -->
+    <figure class="article-hero-wrapper">
+      <picture>
+        <source srcset="https://zyekh.com/assets/img/vllm_pagedattention_hero.webp" type="image/webp"/>
+        <img alt="vLLM PagedAttention: Memory Optimization & High-Throughput LLM Inference Tuning" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="https://zyekh.com/assets/img/vllm_pagedattention_hero.jpg" width="1280"/>
+      </picture>
+      <figcaption class="hero-caption">3D Isometric Representation of vLLM PagedAttention Memory Allocation</figcaption>
+    </figure>
+
+    <!-- Executive Summary / Takeaways Box -->
+    <div class="exec-summary">
+      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+      <ul>
+<li>KV Cache Bottleneck: Understand why traditional LLM inference wastes up to 80% of GPU memory due to fragmentation.</li>
+<li>PagedAttention Mechanism: Inspired by OS virtual memory, allocate KV cache non-contiguously to eliminate memory waste.</li>
+<li>High-Throughput Tuning: Optimize vLLM batch sizes, tensor parallelism, and quantization for massive concurrent requests.</li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc-card">
+      <div class="toc-title">Table of Contents</div>
+      <ol class="toc-list">
+<li><a href="#kv-cache-bottleneck">1. The Anatomy of the KV Cache Bottleneck</a></li>
+<li><a href="#pagedattention-architecture">2. PagedAttention: OS Virtual Memory for LLMs</a></li>
+<li><a href="#vllm-deployment-tuning">3. vLLM Deployment & Throughput Tuning</a></li>
+<li><a href="#continuous-batching">4. Continuous Batching and Iteration-Level Scheduling</a></li>
+<li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
+      </ol>
+    </nav>
+
+<h2 id="kv-cache-bottleneck">1. The Anatomy of the KV Cache Bottleneck</h2>
+<p>In auto-regressive Transformer models, generating the next token requires attending to all previously generated tokens. Recomputing these attention scores for every new token is computationally prohibitive. Therefore, inference engines cache the Key (K) and Value (V) tensors for past tokens. This is known as the KV cache.</p>
+<p>As sequence lengths grow, the KV cache expands linearly, consuming massive amounts of high-bandwidth memory (HBM) on the GPU. In traditional inference frameworks, memory for the KV cache is allocated statically and contiguously based on the maximum possible sequence length of the request.</p>
+<p>Because the actual generation length is unpredictable, this static allocation leads to severe internal fragmentation. A request might reserve memory for 2048 tokens but only generate 20 tokens. Additionally, external fragmentation occurs as requests of varying lengths interleave, creating unusable gaps in memory.</p>
+<p>Profiling reveals that in naive deployments, up to 80% of GPU memory dedicated to the KV cache is wasted. This memory starvation prevents the engine from batching more concurrent requests, severely limiting the overall throughput of the inference server, regardless of how much raw compute power the GPU possesses.</p>
+<p>Addressing this bottleneck requires a fundamental shift in how GPU memory is managed during the decoding phase of LLM inference.</p>
+<pre><code class="language-python"># Traditional static allocation (Pseudocode)
+kv_cache = allocate_gpu_memory(batch_size, num_heads, max_seq_len, head_size)
+# Wastes memory if actual_seq_len << max_seq_len</code></pre>
+
+<h2 id="pagedattention-architecture">2. PagedAttention: OS Virtual Memory for LLMs</h2>
+<p>vLLM introduces PagedAttention, an algorithm that elegantly solves the KV cache fragmentation problem by borrowing concepts from operating system virtual memory management. Instead of allocating memory contiguously, PagedAttention divides the KV cache into fixed-size blocks (pages).</p>
+<p>Each block contains the KV vectors for a fixed number of tokens. When a request is processed, the engine dynamically allocates these blocks on demand. The logical blocks associated with a specific request are mapped to non-contiguous physical blocks in GPU memory via a block table, mirroring how an OS maps virtual pages to physical frames.</p>
+<p>During the attention computation, the PagedAttention kernel fetches the KV vectors by traversing the block table. Because the blocks do not need to be contiguous, external fragmentation is entirely eliminated. Internal fragmentation is restricted only to the final, partially filled block of a request.</p>
+<p>This dynamic allocation allows the inference engine to pack significantly more concurrent requests into the same GPU memory footprint. Furthermore, it enables memory sharing across different requests. For example, if multiple requests share the same system prompt, the blocks containing the prompt's KV cache can be shared, drastically reducing memory consumption.</p>
+<p>By near-optimally utilizing GPU memory, PagedAttention allows vLLM to achieve state-of-the-art throughput, outperforming traditional engines like Hugging Face Transformers by up to 24x in high-concurrency scenarios.</p>
+
+<h2 id="vllm-deployment-tuning">3. vLLM Deployment & Throughput Tuning</h2>
+<p>Deploying vLLM in a production environment requires careful tuning of its core parameters to maximize hardware utilization. The most critical configuration is the `--gpu-memory-utilization` flag. This dictates what percentage of the GPU's HBM is reserved for the KV cache pool versus the model weights.</p>
+<p>For large models (e.g., Llama-3 70B) spanning multiple GPUs, Tensor Parallelism (TP) is essential. vLLM utilizes Megatron-LM's tensor parallel algorithms to shard the model's weight matrices across multiple devices. Configuring `--tensor-parallel-size` correctly ensures that the compute load is balanced and the inter-GPU communication overhead is minimized.</p>
+<p>To further increase throughput, operators must tune the `--max-num-batched-tokens` and `--max-num-seqs` parameters. These dictate the aggressiveness of the continuous batching scheduler. Pushing these values too high can lead to GPU Out-Of-Memory (OOM) errors during the prefill phase, while setting them too low leaves compute resources idle.</p>
+<p>Quantization is another powerful lever. vLLM supports AWQ (Activation-aware Weight Quantization) and GPTQ, allowing 16-bit models to be compressed into 4-bit representations. This drastically reduces the memory footprint of the model weights, freeing up more HBM for the PagedAttention KV cache pool, which directly translates to higher concurrency.</p>
+<p>Finally, enabling CUDA Graph capture for the decoding phase eliminates CPU dispatch overhead, significantly reducing latency for small batch sizes. Tuning these parameters in tandem transforms a standard GPU node into a high-octane inference engine.</p>
+<pre><code class="language-bash"># Starting vLLM server with optimized parameters for production
+python -m vllm.entrypoints.openai.api_server \
+    --model meta-llama/Meta-Llama-3-8B-Instruct \
+    --tensor-parallel-size 1 \
+    --gpu-memory-utilization 0.90 \
+    --max-num-batched-tokens 8192 \
+    --quantization awq</code></pre>
+
+<h2 id="continuous-batching">4. Continuous Batching and Iteration-Level Scheduling</h2>
+<p>Traditional inference engines use static batching, where a batch of requests is processed together, and the engine must wait for the longest request in the batch to complete before accepting new requests. This leads to massive idle times for early-finishing requests.</p>
+<p>vLLM employs continuous batching (or iteration-level scheduling). The scheduler evaluates the state of all requests at every single token generation step. As soon as a request completes, its KV cache blocks are instantly freed, and a new request is immediately injected into the active batch.</p>
+<p>This fine-grained scheduling, coupled with PagedAttention's dynamic memory management, ensures that the GPU remains fully saturated at all times. The continuous influx and eviction of requests create a steady-state pipeline that maximizes overall system throughput.</p>
+<p>When deployed behind an OmniRouter gateway, vLLM nodes provide a highly predictable, high-throughput backend capable of absorbing massive traffic spikes without catastrophic latency degradation.</p>
+<p>The combination of OmniRouter's intelligent traffic shaping and vLLM's ruthless hardware optimization represents the pinnacle of modern AI engineering.</p>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+<details>
+  <summary>Can vLLM run on consumer-grade GPUs?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Yes, vLLM supports consumer GPUs (e.g., RTX 3090/4090) provided the model weights and the configured KV cache pool fit within the available VRAM (e.g., 24GB). Quantization is highly recommended for consumer hardware.</p>
+</details>
+    </div>
+
+    <!-- Author Bio Card (EEAT & DFIR Branding) -->
+    <div class="author-card">
+      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+      <div class="author-info">
+        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener noreferrer" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener noreferrer" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener noreferrer" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="/.well-known/security.txt" rel="noopener noreferrer" style="font-weight:600" target="_blank">Security Policy</a> •
+          <a href="/gpg-key.asc" rel="noopener noreferrer" style="font-weight:600" target="_blank">PGP Key</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/json.html">JSON Formatter, Validator & Tree Viewer</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
+</article>
+</body>
+</html>

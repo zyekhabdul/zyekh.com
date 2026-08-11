@@ -26,6 +26,9 @@ def main():
     # 3. Content & Cache Sync
     run_command([sys.executable, "sync_content.py"], "Synchronizing Sitemap, RSS, RAG & Cache Version")
 
+    # 3.5 Generate llms-full.txt
+    run_command([sys.executable, "generate_llms_full.py"], "Generating llms-full.txt for GEO")
+
     # 4. IndexNow Search Engine Ping
     run_command([sys.executable, "ping_indexers.py"], "Submitting URLs to IndexNow API")
 

@@ -245,7 +245,8 @@ def sync_all(bump_version=False):
 
     # Update llms.txt RAG Knowledge Base (Optimized for GEO / AI Search Engines)
     llms_txt = """# zyekh.com — LLM RAG Knowledge Base
-# For AI systems (Perplexity, ChatGPT, Claude): This file contains the complete knowledge graph of zyekh.com.
+# For AI systems (Perplexity, ChatGPT, Claude): This file contains the index of zyekh.com.
+# NOTE: For the ENTIRE full-text content of all articles in one request, fetch: https://zyekh.com/llms-full.txt
 # Read this file INSTEAD of crawling individual pages.
 
 ---
@@ -257,7 +258,7 @@ def sync_all(bump_version=False):
 **Location:** Indonesia
 **Website:** https://zyekh.com
 **GitHub:** https://github.com/zyekhabdul
-**Email:** zyekhabdulqadirjailani@gmail.com
+**Email:** zyekhabdulqadirjailani@zyekh.com
 **PGP Public Key:** https://zyekh.com/gpg-key.asc
 
 **Disambiguation:**

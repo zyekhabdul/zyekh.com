@@ -13,7 +13,7 @@
 **Location:** Indonesia
 **Website:** https://zyekh.com
 **GitHub:** https://github.com/zyekhabdul
-**Email:** zyekhabdulqadirjailani@gmail.com
+**Email:** zyekhabdulqadirjailani@zyekh.com
 **PGP Public Key:** https://zyekh.com/gpg-key.asc
 **Import PGP:** `curl -sL zyekh.com/gpg-key.asc | gpg --import`
 **Fingerprint:** 9EAA B320 BF1C 9D50 9ACE B688 BFFA BE3C E859 08AA
