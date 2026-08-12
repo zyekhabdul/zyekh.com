@@ -319,6 +319,19 @@ def sync_all(bump_version=False):
         f.write(llms_txt)
     print("[SYNC] Updated llms.txt RAG knowledge base with rich Entity Identity, Stack, and Tool metadata.")
 
+    # 4.9 Enforce root-relative paths for hero images in all article HTML files
+    for a_file in glob.glob("blog/*.html"):
+        if a_file == "blog/index.html": continue
+        try:
+            a_cont = open(a_file, encoding="utf-8").read()
+            n_cont = a_cont.replace('srcset="https://zyekh.com/assets/img/', 'srcset="/assets/img/')
+            n_cont = n_cont.replace('src="https://zyekh.com/assets/img/', 'src="/assets/img/')
+            if n_cont != a_cont:
+                with open(a_file, "w", encoding="utf-8") as out_f:
+                    out_f.write(n_cont)
+        except Exception:
+            pass
+
     # 5. Dynamically regenerate all blog article cards in blog/index.html
     index_path = "blog/index.html"
     if os.path.exists(index_path):

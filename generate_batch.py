@@ -154,6 +154,8 @@ def generate_article_html(article_data, current_cache_ver=None):
         
     schema_json_str = json.dumps(schema_graph, indent=2)
 
+    hero_img_rel = hero_img.replace("https://zyekh.com", "") if hero_img.startswith("https://zyekh.com") else hero_img
+    
     # Complete 100% SOP Compliant HTML Template
     full_html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -242,8 +244,8 @@ def generate_article_html(article_data, current_cache_ver=None):
     <!-- Featured Hero Image -->
     <figure class="article-hero-wrapper">
       <picture>
-        <source srcset="{hero_img.replace('.jpg', '.webp')}" type="image/webp"/>
-        <img alt="{title}" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="{hero_img}" width="1280"/>
+        <source srcset="{hero_img_rel.replace('.jpg', '.webp')}" type="image/webp"/>
+        <img alt="{title}" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="{hero_img_rel}" width="1280"/>
       </picture>
       <figcaption class="hero-caption">{hero_caption}</figcaption>
     </figure>
