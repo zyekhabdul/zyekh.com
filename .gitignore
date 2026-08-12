@@ -21,3 +21,10 @@ yarn-debug.log*
 yarn-error.log*
 .env
 .env.local
+
+# Python bytecode & cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
