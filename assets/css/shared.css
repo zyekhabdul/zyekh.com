@@ -573,7 +573,7 @@ label {
   display: block;
   margin-bottom: 0.4rem;
 }
-button:not(.filter-btn):not(.theme-toggle):not(.nav-toggle):not(.copy-code-btn):not(.btn-share):not(.btn-action) {
+button:not(.filter-btn):not(.theme-toggle):not(.nav-toggle):not(.copy-code-btn):not(.btn-share):not(.btn-action):not(.btn-sim) {
   background-color: var(--text-main);
   color: var(--bg-dark);
   font-weight: 600;
@@ -586,7 +586,7 @@ button:not(.filter-btn):not(.theme-toggle):not(.nav-toggle):not(.copy-code-btn):
   margin-bottom: 0.4rem;
   transition: background-color var(--transition);
 }
-button:not(.filter-btn):not(.theme-toggle):not(.nav-toggle):not(.copy-code-btn):not(.btn-share):not(.btn-action):hover { background-color: #e4e4e7; }
+button:not(.filter-btn):not(.theme-toggle):not(.nav-toggle):not(.copy-code-btn):not(.btn-share):not(.btn-action):not(.btn-sim):hover { background-color: #e4e4e7; }
 
 /* ===================== Table ===================== */
 table {

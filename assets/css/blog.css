@@ -638,6 +638,7 @@ pre code {
 .btn-sim:hover {
   border-color: var(--text-main);
   background: var(--accent-glow);
+  color: var(--text-main);
 }
 .btn-sim.primary {
   background: var(--text-main);
@@ -645,7 +646,9 @@ pre code {
   border-color: var(--text-main);
 }
 .btn-sim.primary:hover {
-  opacity: 0.9;
+  opacity: 0.85;
+  background: var(--text-main);
+  color: var(--bg-card);
 }
 .btn-sim.danger {
   border-color: rgba(239, 68, 68, 0.4);
