@@ -63,6 +63,9 @@ def generate_article_html(article_data, current_cache_ver=None):
         for p in sec.get('content_paragraphs', []):
             sec_block.append(f'<p>{p}</p>')
             
+        if sec.get('custom_html'):
+            sec_block.append(sec['custom_html'])
+            
         if sec.get('code_block'):
             lang = sec.get('code_language', 'bash')
             sec_block.append(f'<pre><code class="language-{lang}">{sec["code_block"]}</code></pre>')

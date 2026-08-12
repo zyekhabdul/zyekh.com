@@ -575,7 +575,196 @@ pre code {
 .article-content > .toc-card,
 .article-content > .callout-card,
 .article-content > .table-wrapper,
-.article-content > .faq-section {
+.article-content > .faq-section,
+.article-content > .interactive-simulator-card {
   content-visibility: auto;
   contain-intrinsic-size: 1px 300px;
 }
+
+/* ── Interactive Technical Simulator Cards (Vanilla JS Widgets) ── */
+.interactive-simulator-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md, 8px);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+.sim-header {
+  margin-bottom: 1.25rem;
+}
+.sim-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: var(--bg-card-hover, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+.sim-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 0.35rem 0;
+  font-family: 'Outfit', sans-serif;
+}
+.sim-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+.sim-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+.btn-sim {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 0.45rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-sim:hover {
+  border-color: var(--text-main);
+  background: var(--bg-card-hover, rgba(255, 255, 255, 0.08));
+}
+.btn-sim.primary {
+  background: var(--text-main);
+  color: var(--bg-main, #09090b);
+  border-color: var(--text-main);
+}
+.btn-sim.primary:hover {
+  opacity: 0.9;
+}
+.btn-sim.danger {
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+}
+.btn-sim.danger:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+}
+.sim-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+@media (max-width: 768px) {
+  .sim-grid-layout {
+    grid-template-columns: 1fr;
+  }
+}
+.sim-panel {
+  background: var(--bg-main, #09090b);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 1rem;
+}
+.panel-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+}
+.token-stream {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+  min-height: 38px;
+  align-items: center;
+}
+.token-chip {
+  font-size: 0.75rem;
+  font-family: monospace;
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+}
+.token-chip.prompt {
+  border-color: var(--text-main);
+  font-weight: 700;
+}
+.block-table-wrapper {
+  overflow-x: auto;
+}
+.sim-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+.sim-table th, .sim-table td {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border-color);
+}
+.phys-badge {
+  font-family: monospace;
+  color: var(--text-main);
+  font-weight: 700;
+}
+.gpu-vram-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.vram-block {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.4rem;
+  background: var(--bg-card);
+  font-size: 0.7rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.vram-block.allocated {
+  border-color: var(--text-main);
+  background: var(--bg-card-hover, rgba(255, 255, 255, 0.08));
+}
+.vram-block-id {
+  font-weight: 700;
+  font-family: monospace;
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+}
+.vram-block.allocated .vram-block-id {
+  color: var(--text-main);
+}
+.vram-slots {
+  display: flex;
+  gap: 2px;
+  justify-content: center;
+}
+.vram-slot {
+  width: 8px;
+  height: 8px;
+  border-radius: 1px;
+  background: var(--border-color);
+}
+.vram-slot.filled {
+  background: var(--text-main);
+}
+.vram-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-color);
+  padding-top: 0.5rem;
+}
+

@@ -113,7 +113,7 @@
 </script>
 <link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
 <link href="/assets/css/shared.min.css?v=265904fa" integrity="sha384-wmI54qxeJ25dnP8904oOOOmRGC4wKqfB541NE9czva3hudoYM2ZZGyOdhQKtA8Yk" crossorigin="anonymous" rel="stylesheet"/>
-<link href="/assets/css/blog.min.css?v=23f57ed3" integrity="sha384-SlDoFGdtZDy6TVVSM6hpiewl1j4rCdicA+gWwc2yy2fu3uaRLFkup0nmR8A41dzf" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/blog.min.css?v=590c4257" integrity="sha384-j9mXtO3pj8dChRxQ5RkMVJOgh1AnEFUbhT4v1bI2fWz7lyTreeHb2Me4vxK8wHvK" crossorigin="anonymous" rel="stylesheet"/>
 <script defer="" src="/assets/js/site-nav.min.js?v=e918ab41" integrity="sha384-H7P5LUmGVjlmdyOIVhzTBdPQwKiGSEepFkx3CmK2spY15d1KGtrMAlSMBnZvew38" crossorigin="anonymous"></script>
 <script defer="" src="/assets/js/article-actions.min.js?v=6cf0fa6c" integrity="sha384-7Zc8x9pMA4XVFbvKkDb77s0tC31UxKSpwWO9VZ/rbGTiNxaNERlsv1xKIPrVUHID" crossorigin="anonymous"></script>
   <style id="antiClickjack">body{display:none !important;}</style>
@@ -121,7 +121,7 @@
   <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
   <link rel="preload" href="/assets/css/shared.min.css?v=265904fa" integrity="sha384-wmI54qxeJ25dnP8904oOOOmRGC4wKqfB541NE9czva3hudoYM2ZZGyOdhQKtA8Yk" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=e918ab41" integrity="sha384-H7P5LUmGVjlmdyOIVhzTBdPQwKiGSEepFkx3CmK2spY15d1KGtrMAlSMBnZvew38" crossorigin="anonymous" as="script">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-WCVIuQw56Baf3aZHEn2hYOCf2WfdN8HAbyADYFYtDj0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
 <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
@@ -199,6 +199,161 @@
 <p>The engine applies a binary mask to the logits tensor: valid tokens retain their original logit values, while invalid tokens are set to -infinity.</p>
 <p>When Softmax is applied, invalid tokens receive a probability of exactly 0.0. It becomes mathematically impossible for the model to generate a syntactically invalid character.</p>
 <p>This deterministic filtering guarantees that the generated string will always parse successfully into the target schema structure.</p>
+
+    <div class="interactive-simulator-card" id="logitMaskingSim">
+      <div class="sim-header">
+        <span class="sim-badge">[ INTERACTIVE SIMULATOR ]</span>
+        <h3 class="sim-title">FSM Token Logit Masking &amp; Probability Simulator</h3>
+        <p class="sim-subtitle">Observe how FSM grammar rules force invalid token logits to negative infinity (-inf), driving Softmax probability to 0.0%.</p>
+      </div>
+
+      <div class="sim-controls">
+        <button type="button" class="btn-sim primary" id="stepLogitBtn">Step Next Valid Token</button>
+        <button type="button" class="btn-sim danger" id="resetLogitBtn">Reset FSM State</button>
+      </div>
+
+      <div class="sim-grid-layout">
+        <div class="sim-panel">
+          <div class="panel-title">Generated JSON Stream &amp; Active FSM State</div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.5rem;">Target Schema: <code style="color:var(--text-main);">{"status": "SUCCESS", "code": 200}</code></div>
+          <div class="token-stream" id="jsonStreamDisplay" style="font-family:monospace; background:var(--bg-card); padding:0.75rem; border:1px solid var(--border-color); border-radius:4px; min-height:48px;">
+            {
+          </div>
+          <div style="font-size:0.78rem; margin-top:0.75rem;">Active FSM Rule: <strong id="fsmStateRule" style="color:var(--text-main); font-family:monospace;">State 1: Expecting Quoted Key ("status")</strong></div>
+        </div>
+
+        <div class="sim-panel">
+          <div class="panel-title">Vocabulary Logits &amp; Softmax Masking</div>
+          <div class="block-table-wrapper">
+            <table class="sim-table">
+              <thead>
+                <tr>
+                  <th>Token</th>
+                  <th>Raw Logit</th>
+                  <th>Masked Logit</th>
+                  <th>Softmax Prob</th>
+                </tr>
+              </thead>
+              <tbody id="logitTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+        const fsmSteps = [
+          {
+            output: '{
+  ',
+            rule: 'State 1: Expecting Quoted Key ("status")',
+            vocab: [
+              { token: '"status"', raw: 8.5, valid: true },
+              { token: '"error"', raw: 6.2, valid: false },
+              { token: '123', raw: 7.1, valid: false },
+              { token: 'Sure!', raw: 9.8, valid: false }
+            ]
+          },
+          {
+            output: '{
+  "status"',
+            rule: 'State 2: Expecting Key-Value Separator ( : )',
+            vocab: [
+              { token: ':', raw: 9.2, valid: true },
+              { token: '=', raw: 5.4, valid: false },
+              { token: '}', raw: 3.1, valid: false },
+              { token: '
+', raw: 4.8, valid: false }
+            ]
+          },
+          {
+            output: '{
+  "status": ',
+            rule: 'State 3: Expecting String Value ("SUCCESS")',
+            vocab: [
+              { token: '"SUCCESS"', raw: 9.1, valid: true },
+              { token: '200', raw: 8.0, valid: false },
+              { token: 'true', raw: 4.5, valid: false },
+              { token: '[null]', raw: 6.7, valid: false }
+            ]
+          },
+          {
+            output: '{
+  "status": "SUCCESS"',
+            rule: 'State 4: Expecting Field Separator ( , )',
+            vocab: [
+              { token: ',', raw: 8.9, valid: true },
+              { token: '}', raw: 2.1, valid: false },
+              { token: 'AND', raw: 7.3, valid: false }
+            ]
+          },
+          {
+            output: '{
+  "status": "SUCCESS",
+  "code": 200
+}',
+            rule: 'State 5: Schema Match Completed (Terminal State)',
+            vocab: [
+              { token: '<EOS>', raw: 9.9, valid: true }
+            ]
+          }
+        ];
+
+        let currentStepIdx = 0;
+        const jsonStreamDisplayEl = document.getElementById('jsonStreamDisplay');
+        const fsmStateRuleEl = document.getElementById('fsmStateRule');
+        const logitTableBodyEl = document.getElementById('logitTableBody');
+
+        function render() {
+          if (!jsonStreamDisplayEl || !fsmStateRuleEl || !logitTableBodyEl) return;
+          const step = fsmSteps[currentStepIdx];
+          jsonStreamDisplayEl.innerText = step.output;
+          fsmStateRuleEl.innerText = step.rule;
+
+          let validExpSum = 0;
+          step.vocab.forEach(v => {
+            if (v.valid) validExpSum += Math.exp(v.raw);
+          });
+
+          let tableHTML = '';
+          step.vocab.forEach(v => {
+            let maskedLogit = v.valid ? v.raw.toFixed(1) : '-inf';
+            let probStr = '0.0%';
+            if (v.valid && validExpSum > 0) {
+              const prob = (Math.exp(v.raw) / validExpSum) * 100;
+              probStr = prob.toFixed(1) + '%';
+            }
+
+            tableHTML += `
+              <tr>
+                <td><code style="color:var(--text-main);">${v.token}</code></td>
+                <td>${v.raw.toFixed(1)}</td>
+                <td style="color:${v.valid ? 'var(--text-main)' : '#ef4444'}; font-weight:700;">${maskedLogit}</td>
+                <td><strong style="color:${v.valid ? 'var(--text-main)' : 'var(--text-muted)'};">${probStr}</strong></td>
+              </tr>
+            `;
+          });
+
+          logitTableBodyEl.innerHTML = tableHTML;
+        }
+
+        document.getElementById('stepLogitBtn')?.addEventListener('click', function() {
+          if (currentStepIdx < fsmSteps.length - 1) {
+            currentStepIdx++;
+            render();
+          }
+        });
+
+        document.getElementById('resetLogitBtn')?.addEventListener('click', function() {
+          currentStepIdx = 0;
+          render();
+        });
+
+        render();
+      })();
+    </script>
+
 <pre><code class="language-python"># PyTorch Custom Logit Masking Processor for JSON Validation
 import torch
 from transformers import LogitsProcessor

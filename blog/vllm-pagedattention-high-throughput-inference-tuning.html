@@ -113,7 +113,7 @@
 </script>
 <link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
 <link href="/assets/css/shared.min.css?v=265904fa" integrity="sha384-wmI54qxeJ25dnP8904oOOOmRGC4wKqfB541NE9czva3hudoYM2ZZGyOdhQKtA8Yk" crossorigin="anonymous" rel="stylesheet"/>
-<link href="/assets/css/blog.min.css?v=23f57ed3" integrity="sha384-SlDoFGdtZDy6TVVSM6hpiewl1j4rCdicA+gWwc2yy2fu3uaRLFkup0nmR8A41dzf" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/blog.min.css?v=590c4257" integrity="sha384-j9mXtO3pj8dChRxQ5RkMVJOgh1AnEFUbhT4v1bI2fWz7lyTreeHb2Me4vxK8wHvK" crossorigin="anonymous" rel="stylesheet"/>
 <script defer="" src="/assets/js/site-nav.min.js?v=e918ab41" integrity="sha384-H7P5LUmGVjlmdyOIVhzTBdPQwKiGSEepFkx3CmK2spY15d1KGtrMAlSMBnZvew38" crossorigin="anonymous"></script>
 <script defer="" src="/assets/js/article-actions.min.js?v=6cf0fa6c" integrity="sha384-7Zc8x9pMA4XVFbvKkDb77s0tC31UxKSpwWO9VZ/rbGTiNxaNERlsv1xKIPrVUHID" crossorigin="anonymous"></script>
   <style id="antiClickjack">body{display:none !important;}</style>
@@ -121,7 +121,7 @@
   <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
   <link rel="preload" href="/assets/css/shared.min.css?v=265904fa" integrity="sha384-wmI54qxeJ25dnP8904oOOOmRGC4wKqfB541NE9czva3hudoYM2ZZGyOdhQKtA8Yk" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=e918ab41" integrity="sha384-H7P5LUmGVjlmdyOIVhzTBdPQwKiGSEepFkx3CmK2spY15d1KGtrMAlSMBnZvew38" crossorigin="anonymous" as="script">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-CW490bWPrc9Vfr3mK5JiYH9PWPgYrHxPWJO5fWqjAko='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
 <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
@@ -201,6 +201,142 @@ kv_cache = allocate_gpu_memory(batch_size, num_heads, max_seq_len, head_size)
 <p>During the attention computation, the PagedAttention kernel fetches the KV vectors by traversing the block table. Because the blocks do not need to be contiguous, external fragmentation is entirely eliminated. Internal fragmentation is restricted only to the final, partially filled block of a request.</p>
 <p>This dynamic allocation allows the inference engine to pack significantly more concurrent requests into the same GPU memory footprint. Furthermore, it enables memory sharing across different requests. For example, if multiple requests share the same system prompt, the blocks containing the prompt's KV cache can be shared, drastically reducing memory consumption.</p>
 <p>By near-optimally utilizing GPU memory, PagedAttention allows vLLM to achieve state-of-the-art throughput, outperforming traditional engines like Hugging Face Transformers by up to 24x in high-concurrency scenarios.</p>
+
+    <div class="interactive-simulator-card" id="pagedAttentionSim">
+      <div class="sim-header">
+        <span class="sim-badge">[ INTERACTIVE SIMULATOR ]</span>
+        <h3 class="sim-title">PagedAttention GPU Virtual Memory Block Allocator</h3>
+        <p class="sim-subtitle">Simulate how vLLM allocates non-contiguous physical GPU VRAM blocks dynamically as sequence length grows.</p>
+      </div>
+
+      <div class="sim-controls">
+        <button type="button" class="btn-sim primary" id="addTokenBtn">+ Generate Token</button>
+        <button type="button" class="btn-sim" id="genBatchBtn">+ Auto 4 Tokens</button>
+        <button type="button" class="btn-sim danger" id="resetSimBtn">Reset VRAM</button>
+      </div>
+
+      <div class="sim-grid-layout">
+        <div class="sim-panel">
+          <div class="panel-title">Logical Token Stream &amp; Block Table</div>
+          <div class="token-stream" id="tokenStream">
+            <span class="token-chip prompt">[PROMPT]</span>
+          </div>
+          <div class="block-table-wrapper">
+            <table class="sim-table">
+              <thead>
+                <tr>
+                  <th>Logical Block #</th>
+                  <th>Tokens Count</th>
+                  <th>Mapped Physical Block #</th>
+                </tr>
+              </thead>
+              <tbody id="blockTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="sim-panel">
+          <div class="panel-title">Physical GPU HBM VRAM Pool (8 Blocks)</div>
+          <div class="gpu-vram-grid" id="vramGrid"></div>
+          <div class="vram-stats">
+            <span>VRAM Utilization: <strong id="vramPercent">0.0%</strong></span>
+            <span>Allocated Blocks: <strong id="allocCount">0 / 8</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function() {
+        const BLOCK_SIZE = 4;
+        const TOTAL_PHYSICAL_BLOCKS = 8;
+        let tokens = ["PROMPT_SYS"];
+        let physPool = [2, 5, 0, 7, 1, 4, 3, 6]; 
+        let allocatedPhys = [];
+        const tokenStreamEl = document.getElementById('tokenStream');
+        const blockTableBodyEl = document.getElementById('blockTableBody');
+        const vramGridEl = document.getElementById('vramGrid');
+        const vramPercentEl = document.getElementById('vramPercent');
+        const allocCountEl = document.getElementById('allocCount');
+        const sampleTokens = ["PagedAttention", "allocates", "non-contiguous", "memory", "blocks", "reducing", "VRAM", "fragmentation", "enabling", "higher", "throughput", "concurrency", "serving"];
+        let sampleIdx = 0;
+
+        function render() {
+          if (!tokenStreamEl || !blockTableBodyEl || !vramGridEl) return;
+          tokenStreamEl.innerHTML = tokens.map((t, i) => 
+            `<span class="token-chip ${i === 0 ? 'prompt' : ''}">${t}</span>`
+          ).join('');
+          
+          const totalTokens = tokens.length;
+          const numLogicalBlocks = Math.ceil(totalTokens / BLOCK_SIZE);
+          allocatedPhys = physPool.slice(0, numLogicalBlocks);
+          
+          let tableHTML = '';
+          for (let i = 0; i < numLogicalBlocks; i++) {
+            const blockTokens = Math.min(BLOCK_SIZE, totalTokens - (i * BLOCK_SIZE));
+            const physId = allocatedPhys[i];
+            tableHTML += `
+              <tr>
+                <td>Logical Block ${i}</td>
+                <td>${blockTokens} / ${BLOCK_SIZE}</td>
+                <td><span class="phys-badge">Phys Block ${physId}</span></td>
+              </tr>
+            `;
+          }
+          blockTableBodyEl.innerHTML = tableHTML || '<tr><td colspan="3" style="text-align:center;">No blocks allocated</td></tr>';
+          
+          let vramHTML = '';
+          for (let p = 0; p < TOTAL_PHYSICAL_BLOCKS; p++) {
+            const allocIndex = allocatedPhys.indexOf(p);
+            const isAlloc = allocIndex !== -1;
+            let filledSlots = 0;
+            if (isAlloc) {
+              filledSlots = Math.min(BLOCK_SIZE, totalTokens - (allocIndex * BLOCK_SIZE));
+            }
+            let slotsHTML = '';
+            for (let s = 0; s < BLOCK_SIZE; s++) {
+              slotsHTML += `<div class="vram-slot ${s < filledSlots ? 'filled' : ''}"></div>`;
+            }
+            vramHTML += `
+              <div class="vram-block ${isAlloc ? 'allocated' : ''}">
+                <div class="vram-block-id">PHYS #${p}</div>
+                <div class="vram-slots">${slotsHTML}</div>
+              </div>
+            `;
+          }
+          vramGridEl.innerHTML = vramHTML;
+          const utilPct = ((numLogicalBlocks / TOTAL_PHYSICAL_BLOCKS) * 100).toFixed(1);
+          if (vramPercentEl) vramPercentEl.textContent = `${utilPct}%`;
+          if (allocCountEl) allocCountEl.textContent = `${numLogicalBlocks} / ${TOTAL_PHYSICAL_BLOCKS}`;
+        }
+
+        document.getElementById('addTokenBtn')?.addEventListener('click', function() {
+          if (tokens.length >= BLOCK_SIZE * TOTAL_PHYSICAL_BLOCKS) return;
+          tokens.push(sampleTokens[sampleIdx % sampleTokens.length]);
+          sampleIdx++;
+          render();
+        });
+
+        document.getElementById('genBatchBtn')?.addEventListener('click', function() {
+          for (let i = 0; i < 4; i++) {
+            if (tokens.length < BLOCK_SIZE * TOTAL_PHYSICAL_BLOCKS) {
+              tokens.push(sampleTokens[sampleIdx % sampleTokens.length]);
+              sampleIdx++;
+            }
+          }
+          render();
+        });
+
+        document.getElementById('resetSimBtn')?.addEventListener('click', function() {
+          tokens = ["PROMPT_SYS"];
+          sampleIdx = 0;
+          render();
+        });
+
+        render();
+      })();
+    </script>
+
 
 <h2 id="vllm-deployment-tuning">3. vLLM Deployment & Throughput Tuning</h2>
 <p>Deploying vLLM in a production environment requires careful tuning of its core parameters to maximize hardware utilization. The most critical configuration is the `--gpu-memory-utilization` flag. This dictates what percentage of the GPU's HBM is reserved for the KV cache pool versus the model weights.</p>
