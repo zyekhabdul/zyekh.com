@@ -322,8 +322,28 @@ def sync_all(bump_version=False):
     # 5. Dynamically regenerate all blog article cards in blog/index.html
     index_path = "blog/index.html"
     if os.path.exists(index_path):
-        articles = sorted(glob.glob("blog/*.html"))
-        articles = [a for a in articles if a != "blog/index.html"]
+        batch_order = {}
+        if os.path.exists("batch_data.json"):
+            try:
+                bdata = json.load(open("batch_data.json", encoding="utf-8"))
+                batch_order = {item["slug"]: idx for idx, item in enumerate(bdata)}
+            except Exception:
+                pass
+
+        def get_article_sort_key(a_path):
+            slug = os.path.basename(a_path).replace(".html", "")
+            idx = batch_order.get(slug, -1)
+            try:
+                content = open(a_path, encoding="utf-8").read()
+                m = re.search(r'datetime="([^"]+)"', content)
+                if m:
+                    return (m.group(1), idx)
+            except Exception:
+                pass
+            return ("1970-01-01", idx)
+
+        articles = [a for a in glob.glob("blog/*.html") if a != "blog/index.html"]
+        articles = sorted(articles, key=get_article_sort_key, reverse=True)
         card_blocks = []
         for a in articles:
             rel_path = "/" + a.replace("\\", "/")
