@@ -600,7 +600,7 @@ pre code {
   letter-spacing: 0.05em;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
-  background: var(--bg-card-hover, rgba(255, 255, 255, 0.05));
+  background: var(--accent-glow);
   border: 1px solid var(--border-color);
   color: var(--text-main);
   margin-bottom: 0.5rem;
@@ -637,11 +637,11 @@ pre code {
 }
 .btn-sim:hover {
   border-color: var(--text-main);
-  background: var(--bg-card-hover, rgba(255, 255, 255, 0.08));
+  background: var(--accent-glow);
 }
 .btn-sim.primary {
   background: var(--text-main);
-  color: var(--bg-main, #09090b);
+  color: var(--bg-card);
   border-color: var(--text-main);
 }
 .btn-sim.primary:hover {
@@ -666,7 +666,7 @@ pre code {
   }
 }
 .sim-panel {
-  background: var(--bg-main, #09090b);
+  background: var(--bg-dark);
   border: 1px solid var(--border-color);
   border-radius: 6px;
   padding: 1rem;
@@ -734,7 +734,7 @@ pre code {
 }
 .vram-block.allocated {
   border-color: var(--text-main);
-  background: var(--bg-card-hover, rgba(255, 255, 255, 0.08));
+  background: var(--accent-glow);
 }
 .vram-block-id {
   font-weight: 700;
@@ -767,4 +767,5 @@ pre code {
   border-top: 1px solid var(--border-color);
   padding-top: 0.5rem;
 }
+
 
