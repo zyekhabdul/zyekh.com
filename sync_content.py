@@ -165,6 +165,7 @@ def sync_all(bump_version=False):
     urls_data.append((f"{base_url}/tools/", get_file_mtime_str("tools/index.html"), "weekly", "0.9"))
     urls_data.append((f"{base_url}/blog/", get_file_mtime_str("blog/index.html"), "weekly", "0.9"))
     urls_data.append((f"{base_url}/blueprints/", get_file_mtime_str("blueprints/index.html"), "weekly", "0.9"))
+    urls_data.append((f"{base_url}/contact/", get_file_mtime_str("contact/index.html"), "weekly", "0.9"))
 
     # Blog Articles
     for b in sorted(glob.glob("blog/*.html")):

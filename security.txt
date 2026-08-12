@@ -6,7 +6,7 @@ Encryption: https://zyekh.com/gpg-key.asc
 Canonical: https://zyekh.com/.well-known/security.txt
 Preferred-Languages: en, id
 Policy: https://zyekh.com/security.txt
-Hiring: https://zyekh.com/#contact
+Hiring: https://zyekh.com/contact/
 Expires: 2027-12-31T23:59:59.000Z
 
 # Public Encryption Fingerprint:

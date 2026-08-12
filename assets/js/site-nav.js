@@ -14,7 +14,8 @@ class SiteNav extends HTMLElement {
       { href: '/tools/',     label: 'Tools Hub',    key: 'tools' },
       { href: '/blog/',      label: 'Articles',     key: 'blog' },
       { href: '/blueprints/',label: 'Blueprints',   key: 'blueprints' },
-      { href: '/about/',     label: 'About & Bio',  key: 'about' }
+      { href: '/about/',     label: 'About & Bio',  key: 'about' },
+      { href: '/contact/',   label: 'Contact',      key: 'contact' }
     ];
 
     const listItems = links.map(l => {
