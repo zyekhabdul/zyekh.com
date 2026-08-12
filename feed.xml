@@ -31,7 +31,7 @@
       <title>ColBERT Late Interaction: Advancing RAG Beyond Dense Embeddings</title>
       <link>https://zyekh.com/blog/colbert-late-interaction-advanced-rag.html</link>
       <guid>https://zyekh.com/blog/colbert-late-interaction-advanced-rag.html</guid>
-      <description>How late interaction retrieval models solve the 'lost in the middle' problem and dramatically improve Retrieval-Augmented Generation precision over standard vector DBs.</description>
+      <description>How late interaction retrieval models solve the lost-in-the-middle problem and dramatically improve Retrieval-Augmented Generation precision over standard single-vector embeddings.</description>
       <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
@@ -45,7 +45,7 @@
       <title>DSPy: Replacing Prompt Engineering with Declarative Optimization Compilers</title>
       <link>https://zyekh.com/blog/dspy-declarative-prompting-optimization.html</link>
       <guid>https://zyekh.com/blog/dspy-declarative-prompting-optimization.html</guid>
-      <description>Why manual prompt tweaking is dead. Learn how to compile and optimize LM pipelines using DSPy's automated metric-driven optimization algorithms.</description>
+      <description>Why manual prompt tweaking is obsolete. Learn how to compile and optimize LM pipelines using DSPy declarative modules and metric-driven teleprompter algorithms.</description>
       <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
@@ -129,14 +129,14 @@
       <title>Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing</title>
       <link>https://zyekh.com/blog/moe-serving-mixture-of-experts-routing.html</link>
       <guid>https://zyekh.com/blog/moe-serving-mixture-of-experts-routing.html</guid>
-      <description>Deep dive into the routing gates of Mixtral 8x7B, memory-offloading strategies, and EP (Expert Parallelism) across multi-GPU setups.</description>
+      <description>Deep dive into the gating router mechanisms of Mixtral 8x7B and DeepSeek-V2, expert parallelism strategies, and VRAM memory offloading patterns across multi-GPU setups.</description>
       <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>Multi-Agent Swarm Orchestration: Hierarchical Agentic Workflows</title>
       <link>https://zyekh.com/blog/multi-agent-swarm-orchestration-patterns.html</link>
       <guid>https://zyekh.com/blog/multi-agent-swarm-orchestration-patterns.html</guid>
-      <description>Designing recursive agent loops, tool-calling pipelines, and autonomous swarm routing using AutoGen and LangGraph for complex software engineering tasks.</description>
+      <description>Designing recursive agent loops, tool-calling pipelines, state graph transitions, and autonomous swarm routing for complex software engineering automation.</description>
       <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
@@ -178,7 +178,7 @@
       <title>S-LoRA: Multiplexing Thousands of Fine-Tuned Adapters on a Single GPU</title>
       <link>https://zyekh.com/blog/slora-adapter-multiplexing-single-gpu.html</link>
       <guid>https://zyekh.com/blog/slora-adapter-multiplexing-single-gpu.html</guid>
-      <description>How Unified Paging and scalable LoRA adapter serving allows platforms to host 10,000+ custom fine-tuned models concurrently without OOM errors.</description>
+      <description>How Unified Paging and scalable LoRA adapter serving allows cloud platforms to host 10,000+ custom fine-tuned models concurrently on a single GPU without OOM errors.</description>
       <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
@@ -192,7 +192,7 @@
       <title>Structured Output Generation: Enforcing JSON & Regex at the Logits Level</title>
       <link>https://zyekh.com/blog/structured-output-generation-logits-constraints.html</link>
       <guid>https://zyekh.com/blog/structured-output-generation-logits-constraints.html</guid>
-      <description>Bypassing brittle prompt engineering by directly manipulating the LLM token logits to mathematically guarantee valid JSON schema outputs.</description>
+      <description>Bypassing brittle prompt engineering by directly manipulating LLM token logits to mathematically guarantee valid JSON schema outputs without retry loops.</description>
       <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
@@ -227,7 +227,7 @@
       <title>WebGPU LLM Inference: Running 7B Models Natively in the Browser</title>
       <link>https://zyekh.com/blog/webgpu-llm-inference-browser-sandbox.html</link>
       <guid>https://zyekh.com/blog/webgpu-llm-inference-browser-sandbox.html</guid>
-      <description>Leveraging WebGPU, TVM, and Rust-compiled WebAssembly to bypass server costs and run private local LLMs entirely within client-side browser sandboxes.</description>
+      <description>Leveraging WebGPU compute shaders, TVM WebAssembly, and WGSL pipelines to run private local LLMs entirely within client-side browser sandboxes without server infrastructure.</description>
       <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>

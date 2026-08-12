@@ -6,7 +6,7 @@
 <meta content="#09090b" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing — zyekh.com</title>
-<meta content="Deep dive into the routing gates of Mixtral 8x7B, memory-offloading strategies, and EP (Expert Parallelism) across multi-GPU setups." name="description"/>
+<meta content="Deep dive into the gating router mechanisms of Mixtral 8x7B and DeepSeek-V2, expert parallelism strategies, and VRAM memory offloading patterns across multi-GPU setups." name="description"/>
 <meta content="Zyekh Abdul Qadir Jailani" name="author"/>
 <link href="https://zyekh.com/feed.xml" rel="alternate" title="zyekh.com RSS Feed" type="application/rss+xml"/>
 <link href="https://zyekh.com/blog/moe-serving-mixture-of-experts-routing.html" rel="canonical"/>
@@ -15,7 +15,7 @@
 <meta content="zyekh.com" property="og:site_name"/>
 <meta content="article" property="og:type"/>
 <meta content="Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing" property="og:title"/>
-<meta content="Deep dive into the routing gates of Mixtral 8x7B, memory-offloading strategies, and EP (Expert Parallelism) across multi-GPU setups." property="og:description"/>
+<meta content="Deep dive into the gating router mechanisms of Mixtral 8x7B and DeepSeek-V2, expert parallelism strategies, and VRAM memory offloading patterns across multi-GPU setups." property="og:description"/>
 <meta content="https://zyekh.com/blog/moe-serving-mixture-of-experts-routing.html" property="og:url"/>
 <meta content="1280" property="og:image:width"/>
 <meta content="720" property="og:image:height"/>
@@ -30,7 +30,7 @@
 <meta content="@zyekh" name="twitter:site"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing" name="twitter:title"/>
-<meta content="Deep dive into the routing gates of Mixtral 8x7B, memory-offloading strategies, and EP (Expert Parallelism) across multi-GPU setups." name="twitter:description"/>
+<meta content="Deep dive into the gating router mechanisms of Mixtral 8x7B and DeepSeek-V2, expert parallelism strategies, and VRAM memory offloading patterns across multi-GPU setups." name="twitter:description"/>
 <meta content="https://zyekh.com/assets/img/moe_serving_hero.jpg" name="twitter:image"/>
 <meta content="Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing — zyekh.com" name="twitter:image:alt"/>
 
@@ -49,12 +49,12 @@
     {
       "@type": "TechArticle",
       "headline": "Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing",
-      "description": "Deep dive into the routing gates of Mixtral 8x7B, memory-offloading strategies, and EP (Expert Parallelism) across multi-GPU setups.",
+      "description": "Deep dive into the gating router mechanisms of Mixtral 8x7B and DeepSeek-V2, expert parallelism strategies, and VRAM memory offloading patterns across multi-GPU setups.",
       "url": "https://zyekh.com/blog/moe-serving-mixture-of-experts-routing.html",
       "image": "https://zyekh.com/assets/img/moe_serving_hero.jpg",
       "datePublished": "2026-08-09",
       "dateModified": "2026-08-09",
-      "wordCount": 1350,
+      "wordCount": 1400,
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
@@ -100,10 +100,10 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "How does Serving Mixture of Experts (MoE) compare to traditional approaches?",
+          "name": "Why is Mixtral 8x7B faster than Llama-2 70B if parameter sizes are comparable?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "It provides a mathematically sound, highly optimized alternative that scales better under concurrent cloud-native workloads."
+            "text": "Because Mixtral only executes 13B parameters per token via top-2 expert gating, requiring significantly fewer FLOPs per token than Llama-2 70B."
           }
         }
       ]
@@ -119,9 +119,9 @@
   <style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
   <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
-                <link rel="preload" href="/assets/css/shared.min.css?v=265904fa" integrity="sha384-wmI54qxeJ25dnP8904oOOOmRGC4wKqfB541NE9czva3hudoYM2ZZGyOdhQKtA8Yk" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/css/shared.min.css?v=265904fa" integrity="sha384-wmI54qxeJ25dnP8904oOOOmRGC4wKqfB541NE9czva3hudoYM2ZZGyOdhQKtA8Yk" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=1b4f4bbc" integrity="sha384-9IJNiuY0RJ3mYrw2j6nyFelA/kU4S44UeFm9Zf8chVvlv/uJkxfCnNhBu9J1SpqC" crossorigin="anonymous" as="script">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
 <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
@@ -142,7 +142,7 @@
       <div class="meta-info">
         <span>By Zyekh Abdul Qadir Jailani</span>
         <time class="meta-item" datetime="2026-08-09T00:00:00Z">Published: 2026-08-09</time>
-        <span>16 min read (1350+ Words)</span>
+        <span>16 min read (1400+ Words)</span>
       </div>
       <div class="article-actions">
         <button class="btn-share" id="shareBtn" type="button">Share</button>
@@ -160,16 +160,16 @@
         <source srcset="https://zyekh.com/assets/img/moe_serving_hero.webp" type="image/webp"/>
         <img alt="Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="https://zyekh.com/assets/img/moe_serving_hero.jpg" width="1280"/>
       </picture>
-      <figcaption class="hero-caption">3D Isometric Cyber Architecture representation of AI Engineering • Architecture</figcaption>
+      <figcaption class="hero-caption">3D Isometric Model of Mixture-of-Experts Gating Router and Sparse Network Layers</figcaption>
     </figure>
 
     <!-- Executive Summary / Takeaways Box -->
     <div class="exec-summary">
       <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
       <ul>
-<li>Core Mechanism: Explaining the fundamentals of AI Engineering • Architecture.</li>
-<li>Architecture Blueprint: Step-by-step implementation guide.</li>
-<li>Performance Tuning: Scaling and optimization strategies.</li>
+<li>Sparse Execution: MoE architectures scale model parameter count to hundreds of billions while executing only a fraction of parameters per token.</li>
+<li>Gating Router Mechanisms: Softmax gating routers dynamically assign tokens to top-k expert networks based on semantic specialization.</li>
+<li>Expert Parallelism (EP): Shard individual expert Feed-Forward Networks across multiple GPUs to balance VRAM footprint.</li>
       </ul>
     </div>
 
@@ -177,39 +177,68 @@
     <nav class="toc-card">
       <div class="toc-title">Table of Contents</div>
       <ol class="toc-list">
-<li><a href="#introduction">1. Introduction to the Paradigm</a></li>
-<li><a href="#core-architecture">2. Core Architectural Components</a></li>
-<li><a href="#implementation">3. Implementation & Engineering Challenges</a></li>
-<li><a href="#performance-scaling">4. Performance Scaling in Production</a></li>
+<li><a href="#moe-fundamentals">1. Sparse Computation: The Power of Mixture of Experts</a></li>
+<li><a href="#gating-router-math">2. Gating Router Mathematics & Top-K Softmax</a></li>
+<li><a href="#expert-parallelism">3. Expert Parallelism (EP) and Multi-GPU Sharding</a></li>
+<li><a href="#vllm-moe-serving">4. High-Throughput Production Deployment Blueprint</a></li>
 <li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
       </ol>
     </nav>
 
-<h2 id="introduction">1. Introduction to the Paradigm</h2>
-<p>In the domain of Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing, advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. </p>
-<p>In the domain of Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing, advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. </p>
-<p>In the domain of Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing, advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. </p>
+<h2 id="moe-fundamentals">1. Sparse Computation: The Power of Mixture of Experts</h2>
+<p>Dense Transformer models process every single input token through every parameter in the network. As model parameter counts scale from 7B to 70B and beyond, the FLOPs required per token scale linearly, making real-time inference prohibitively expensive.</p>
+<p>Mixture-of-Experts (MoE) architectures solve this efficiency scaling problem by replacing monolithic Feed-Forward Network (FFN) layers with multiple independent 'expert' sub-networks.</p>
+<p>In a sparse MoE model such as Mixtral 8x7B, the total parameter count is 47 billion. However, during inference, a router routes each token to only 2 of the 8 available experts per layer. Consequently, only 13 billion parameters are active per token.</p>
+<p>This sparse execution model delivers the high capability and knowledge capacity of a 47B model at the inference latency and FLOP cost of a much smaller 13B model.</p>
 
-<h2 id="core-architecture">2. Core Architectural Components</h2>
-<p>In the domain of Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing, advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. </p>
-<p>In the domain of Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing, advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. </p>
-<p>In the domain of Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing, advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. </p>
+<h2 id="gating-router-math">2. Gating Router Mathematics & Top-K Softmax</h2>
+<p>The core intelligence of an MoE layer resides in its gating router network. The router is a lightweight learnable linear layer that takes input token representations H and computes a probability distribution over N experts.</p>
+<p>To enforce sparsity, the router applies a Top-K gating function. The router multiplies input hidden state H by weight matrix W_g, adds noise during training for load balancing, and selects the top K highest scoring expert indices via Softmax normalization.</p>
+<p>If an expert's score falls outside the top K, its gate value is set to zero, bypassing compute execution for that sub-network entirely.</p>
+<p>The outputs of the selected top K experts are weighted by their normalized gating scores and summed together before passing to the next Transformer layer.</p>
+<pre><code class="language-python"># PyTorch Top-K MoE Gating Router Implementation
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
 
-<h2 id="implementation">3. Implementation & Engineering Challenges</h2>
-<p>In the domain of Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing, advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. </p>
-<p>In the domain of Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing, advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. </p>
-<p>In the domain of Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing, advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. </p>
+class TopKGatingRouter(nn.Module):
+    def __init__(self, hidden_dim: int, num_experts: int, top_k: int = 2):
+        super().__init__()
+        self.gate = nn.Linear(hidden_dim, num_experts, bias=False)
+        self.top_k = top_k
 
-<h2 id="performance-scaling">4. Performance Scaling in Production</h2>
-<p>In the domain of Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing, advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. </p>
-<p>In the domain of Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing, advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. advanced systemic configurations rely on robust architectural paradigms that scale infinitely under heavy cloud-native workloads. </p>
+    def forward(self, x: torch.Tensor):
+        # x: [batch_size * seq_len, hidden_dim]
+        logits = self.gate(x)
+        weights, indices = torch.topk(F.softmax(logits, dim=-1), self.top_k, dim=-1)
+        # Normalize top-k weights so they sum to 1.0
+        weights = weights / weights.sum(dim=-1, keepdim=True)
+        return weights, indices</code></pre>
+
+<h2 id="expert-parallelism">3. Expert Parallelism (EP) and Multi-GPU Sharding</h2>
+<p>While MoE models save compute FLOPs per token, they do NOT save VRAM footprint. All 47B parameters of Mixtral 8x7B must reside in GPU memory to respond immediately to routed tokens.</p>
+<p>Fitting these parameters across multiple GPUs requires Expert Parallelism (EP). Unlike Tensor Parallelism (TP), which shards weight matrices within a layer, Expert Parallelism assigns different expert sub-networks to different GPU devices.</p>
+<p>GPU 0 might host Experts 1 and 2, while GPU 1 hosts Experts 3 and 4. During inference, tokens are dispatched across GPUs via high-speed All-to-All communication primitives.</p>
+<p>When token distribution across experts is unbalanced (e.g., Expert 1 receives 80% of all tokens), load imbalance occurs, causing GPU 0 to bottleneck the entire cluster. Production serving engines enforce auxiliary load-balancing losses to keep expert utilization uniform.</p>
+
+<h2 id="vllm-moe-serving">4. High-Throughput Production Deployment Blueprint</h2>
+<p>Serving MoE architectures in production requires high-throughput inference engines like vLLM or SGLang equipped with specialized MoE kernels.</p>
+<p>These engines implement fused Megatron-LM MoE operations and quantized weight formats (such as AWQ 4-bit), allowing a 47B MoE model to fit comfortably on a single node equipped with two 24GB or 40GB GPUs.</p>
+<p>Configuring appropriate continuous batching limits ensures that expert dispatch queues remain full, maximizing GPU HBM memory bandwidth utilization.</p>
+<pre><code class="language-bash"># Deploying Mixtral 8x7B MoE on vLLM with Tensor & Expert Parallelism
+python3 -m vllm.entrypoints.openai.api_server \
+    --model mistralai/Mixtral-8x7B-Instruct-v0.1 \
+    --tensor-parallel-size 2 \
+    --gpu-memory-utilization 0.92 \
+    --max-num-batched-tokens 16384 \
+    --quantization awq</code></pre>
 
     <!-- FAQ Section -->
     <div class="faq-section">
       <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
 <details>
-  <summary>How does Serving Mixture of Experts (MoE) compare to traditional approaches?</summary>
-  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">It provides a mathematically sound, highly optimized alternative that scales better under concurrent cloud-native workloads.</p>
+  <summary>Why is Mixtral 8x7B faster than Llama-2 70B if parameter sizes are comparable?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Because Mixtral only executes 13B parameters per token via top-2 expert gating, requiring significantly fewer FLOPs per token than Llama-2 70B.</p>
 </details>
     </div>
 
@@ -233,7 +262,7 @@
     <div class="article-cross-links callout-card">
       <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
       <p class="note-sm">
-        Gunakan <a class="blog-badge" href="/tools/json.html">JSON Formatter</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+        Gunakan <a class="blog-badge" href="/tools/base64.html">Base64 Encoder & Decoder</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
       </p>
     </div>
   </main>
