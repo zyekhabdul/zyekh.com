@@ -660,7 +660,7 @@ pre code {
 }
 .sim-grid-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  grid-template-columns: 330px 1fr;
   gap: 1.25rem;
 }
 @media (max-width: 900px) {
