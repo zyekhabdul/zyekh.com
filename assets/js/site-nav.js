@@ -51,6 +51,26 @@ class SiteNav extends HTMLElement {
   }
 
   _initNav() {
+    // Inject Speculation Rules API for 0ms Instant Page Pre-rendering (Chromium Baseline 2024+)
+    if (!document.querySelector('script[type="speculationrules"]')) {
+      const specScript = document.createElement('script');
+      specScript.type = 'speculationrules';
+      specScript.textContent = JSON.stringify({
+        prerender: [
+          {
+            source: 'document',
+            where: {
+              and: [
+                { href_matches: '/*' }
+              ]
+            },
+            eagerness: 'moderate'
+          }
+        ]
+      });
+      document.head.appendChild(specScript);
+    }
+
     // Centralized Service Worker Registration (Clean & Lightweight)
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
