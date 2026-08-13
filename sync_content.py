@@ -477,5 +477,52 @@ def sync_all(bump_version=False):
     print(f"[SYNC] Generated search-index.json with {len(search_index)} items.")
 
     print("[SYNC] Synchronization completed successfully!")
+
+def purge_cloudflare_cache(zone_id="1427afa77c5824ee0c34b514260e2e5d"):
+    import json, os, urllib.request
+    token = os.environ.get("CLOUDFLARE_API_TOKEN") or os.environ.get("CF_API_TOKEN")
+    
+    if not token:
+        for cfg_file in [
+            os.path.expanduser("~/.gemini/config/mcp_config_extended.json"),
+            os.path.expanduser("~/.gemini/config/mcp_config.json")
+        ]:
+            if os.path.exists(cfg_file):
+                try:
+                    with open(cfg_file) as f:
+                        data = json.load(f)
+                    cf_srv = data.get("mcpServers", {}).get("cloudflare", {})
+                    t = cf_srv.get("env", {}).get("CLOUDFLARE_API_TOKEN")
+                    if t:
+                        token = t
+                        break
+                except Exception:
+                    pass
+
+    if not token:
+        print("[CF PURGE] Skipping: Cloudflare API token not found in env or MCP config.")
+        return False
+
+    url = f"https://api.cloudflare.com/client/v4/zones/{zone_id}/purge_cache"
+    headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+    payload = json.dumps({"purge_everything": True}).encode("utf-8")
+    req = urllib.request.Request(url, data=payload, headers=headers, method="POST")
+    try:
+        with urllib.request.urlopen(req) as resp:
+            res_data = json.loads(resp.read().decode("utf-8"))
+            if res_data.get("success"):
+                print(f"[CF PURGE] Successfully purged Cloudflare CDN cache for Zone {zone_id}!")
+                return True
+            else:
+                print(f"[CF PURGE] Failed: {res_data.get('errors')}")
+                return False
+    except Exception as e:
+        print(f"[CF PURGE] Exception during purge: {e}")
+        return False
+
 if __name__ == "__main__":
+    import sys
     sync_all(bump_version=True)
+    if "--purge-cf" in sys.argv:
+        purge_cloudflare_cache()
+
