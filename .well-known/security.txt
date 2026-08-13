@@ -10,4 +10,4 @@ Hiring: https://zyekh.com/contact/
 Expires: 2027-12-31T23:59:59.000Z
 
 # Public Encryption Fingerprint:
-# 9EAA B320 BF1C 9D50 9ACE B688 BFFA BE3C E859 08AA
+# FEB2 E478 8FF9 7BE6 DE42 C055 2976 A87B 6EBA F1E5
