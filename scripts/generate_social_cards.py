@@ -359,9 +359,8 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             draw.text((margin + 110, cy), cl, fill=c_color, font=font_code)
             cy += code_lh
 
-        # 5. Bottom 2-Column Matrix (Full Parity: 3 Invariants & 3 Metrics)
+        # 5. Bottom 2-Column Matrix (Full Parity: Dynamic Tight Box Height)
         curr_y += box_h + 16
-        bot_h = 320
         col_w = (inner_w - 30) // 2
         left_x = margin + 80
         right_x = left_x + col_w + 30
@@ -370,15 +369,26 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         font_matrix_body = get_font(size=23, family="sans", is_bold=False)
         matrix_lh = 32
 
+        # Pre-wrap to calculate exact content height without awkward inner space
+        invariants = article_data.get('invariants', [])[:3]
+        metrics = article_data.get('metrics', [])[:3]
+
+        wrapped_invs = [wrap_text(inv if inv.startswith("[+]") else f"[+] {inv}", font_matrix_body, col_w - 44, draw) for inv in invariants]
+        wrapped_mets = [wrap_text(met if met.startswith("[*]") else f"[*] {met}", font_matrix_body, col_w - 44, draw) for met in metrics]
+
+        total_inv_lines = sum(len(w) for w in wrapped_invs)
+        total_met_lines = sum(len(w) for w in wrapped_mets)
+        max_lines = max(total_inv_lines, total_met_lines)
+
+        # Dynamic box height: header + content lines + item gaps + bottom padding
+        bot_h = 52 + (max_lines * matrix_lh) + (max(len(invariants), len(metrics)) * 6) + 16
+
         # Left Column: All Architectural Invariants
         draw.rectangle([left_x, curr_y, left_x + col_w, curr_y + bot_h], fill=box_bg, outline=box_border, width=2)
         draw.text((left_x + 22, curr_y + 16), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_matrix_head)
-        invariants = article_data.get('invariants', [])[:3]
         iy = curr_y + 52
-        for inv_item in invariants:
-            clean_inv = inv_item if inv_item.startswith("[+]") else f"[+] {inv_item}"
-            wrapped_inv = wrap_text(clean_inv, font_matrix_body, col_w - 44, draw)
-            for il in wrapped_inv:
+        for w_inv in wrapped_invs:
+            for il in w_inv:
                 draw.text((left_x + 22, iy), il, fill=text_main, font=font_matrix_body)
                 iy += matrix_lh
             iy += 6
@@ -386,18 +396,18 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         # Right Column: All Production Operational Metrics
         draw.rectangle([right_x, curr_y, right_x + col_w, curr_y + bot_h], fill=box_bg, outline=box_border, width=2)
         draw.text((right_x + 22, curr_y + 16), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_matrix_head)
-        metrics = article_data.get('metrics', [])[:3]
         my = curr_y + 52
-        for met_item in metrics:
-            clean_met = met_item if met_item.startswith("[*]") else f"[*] {met_item}"
-            wrapped_met = wrap_text(clean_met, font_matrix_body, col_w - 44, draw)
-            for ml in wrapped_met:
+        for w_met in wrapped_mets:
+            for ml in w_met:
                 draw.text((right_x + 22, my), ml, fill=text_main, font=font_matrix_body)
                 my += matrix_lh
             my += 6
 
-        # 6. Footer
-        draw.text((margin + 80, height - margin - 40), "OPEN TECHNICAL ARCHITECTURE SPECIFICATION • SYSTEMS & SECURITY BLUEPRINT 2026", fill=text_muted, font=font_meta)
+        # 6. Collision-Free Footer (Only rendered if there is ample vertical breathing room)
+        footer_y = height - margin - 35
+        if curr_y + bot_h + 30 <= footer_y:
+            draw.text((margin + 80, footer_y), "OPEN TECHNICAL ARCHITECTURE SPECIFICATION • SYSTEMS & SECURITY BLUEPRINT 2026", fill=text_muted, font=font_meta)
+
 
 
 
