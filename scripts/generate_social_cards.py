@@ -13,33 +13,42 @@ OUTPUT_DIR = BASE_DIR / "assets" / "img" / "social-cards"
 
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# Font Resolver (Bundled Local Fonts First -> System Fallback)
-def get_font(size=40, is_mono=False, is_bold=False):
-    bundled_mono = str(BASE_DIR / "assets" / "fonts" / "ttf" / "JetBrainsMono-Regular.ttf")
-    bundled_bold = str(BASE_DIR / "assets" / "fonts" / "ttf" / "DejaVuSans-Bold.ttf")
-    bundled_sans = str(BASE_DIR / "assets" / "fonts" / "ttf" / "DejaVuSans-Regular.ttf")
+# Font Resolver (Authentic Zyekh.com Typography: Outfit, Inter, Fira Code)
+def get_font(size=40, family="sans", is_bold=False):
+    ttf_dir = BASE_DIR / "assets" / "fonts" / "ttf"
+    
+    outfit_bold = str(ttf_dir / "Outfit-Bold.ttf")
+    inter_reg = str(ttf_dir / "Inter-Regular.ttf")
+    fira_reg = str(ttf_dir / "FiraCode-Regular.ttf")
+    fira_bold = str(ttf_dir / "FiraCode-Bold.ttf")
+    jetbrains_reg = str(ttf_dir / "JetBrainsMono-Regular.ttf")
 
-    mono_fonts = [
-        bundled_mono,
-        "/usr/share/fonts/TTF/JetBrainsMonoNerdFontMono-Regular.ttf",
-        "/usr/share/fonts/TTF/DejaVuSansMono.ttf",
-        "/usr/share/fonts/liberation/LiberationMono-Regular.ttf",
-        "/usr/share/fonts/noto/NotoSansMono-Regular.ttf"
-    ]
-    bold_fonts = [
-        bundled_bold,
-        "/usr/share/fonts/TTF/DejaVuSans-Bold.ttf",
-        "/usr/share/fonts/liberation/LiberationSans-Bold.ttf",
-        "/usr/share/fonts/noto/NotoSans-Bold.ttf"
-    ]
-    sans_fonts = [
-        bundled_sans,
-        "/usr/share/fonts/TTF/DejaVuSans.ttf",
-        "/usr/share/fonts/liberation/LiberationSans-Regular.ttf",
-        "/usr/share/fonts/noto/NotoSans-Regular.ttf"
-    ]
+    if family in ["title", "outfit"] or (family == "sans" and is_bold):
+        candidates = [
+            outfit_bold,
+            str(ttf_dir / "DejaVuSans-Bold.ttf"),
+            "/usr/share/fonts/TTF/DejaVuSans-Bold.ttf"
+        ]
+    elif family in ["mono", "code"]:
+        if is_bold:
+            candidates = [
+                fira_bold,
+                jetbrains_reg,
+                str(ttf_dir / "DejaVuSans-Bold.ttf")
+            ]
+        else:
+            candidates = [
+                fira_reg,
+                jetbrains_reg,
+                str(ttf_dir / "DejaVuSans-Regular.ttf")
+            ]
+    else:  # family == "sans" / "inter"
+        candidates = [
+            inter_reg,
+            str(ttf_dir / "DejaVuSans-Regular.ttf"),
+            "/usr/share/fonts/TTF/DejaVuSans.ttf"
+        ]
 
-    candidates = mono_fonts if is_mono else (bold_fonts if is_bold else sans_fonts)
     for path in candidates:
         if os.path.exists(path):
             try:
@@ -47,6 +56,7 @@ def get_font(size=40, is_mono=False, is_bold=False):
             except Exception:
                 continue
     return ImageFont.load_default()
+
 
 
 def wrap_text(text, font, max_width, draw):
@@ -150,11 +160,11 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         else:
             title_font_size, title_line_h = 74, 98
 
-        font_tag = get_font(size=46, is_mono=True, is_bold=True)
-        font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
-        font_bar = get_font(size=36, is_mono=True, is_bold=True)
-        font_pillar_head = get_font(size=38, is_mono=True, is_bold=True)
-        font_meta = get_font(size=36, is_mono=True, is_bold=False)
+        font_tag = get_font(size=46, family="mono", is_bold=True)
+        font_title = get_font(size=title_font_size, family="outfit", is_bold=True)
+        font_bar = get_font(size=36, family="mono", is_bold=True)
+        font_pillar_head = get_font(size=38, family="mono", is_bold=True)
+        font_meta = get_font(size=36, family="mono", is_bold=False)
 
         # 2. Description Auto-Scaling
         desc_text = article_data.get('description', '')
@@ -164,7 +174,7 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             desc_font_size, desc_line_h = 42, 56
         else:
             desc_font_size, desc_line_h = 38, 52
-        font_desc = get_font(size=desc_font_size, is_mono=False, is_bold=False)
+        font_desc = get_font(size=desc_font_size, family="sans", is_bold=False)
 
         # 3. Code Auto-Scaling
         raw_code = article_data.get('code_snippet', [])
@@ -175,7 +185,7 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             code_font_size, code_line_h, max_code_lines = 38, 52, 8
         else:
             code_font_size, code_line_h, max_code_lines = 34, 48, 8
-        font_code = get_font(size=code_font_size, is_mono=True, is_bold=False)
+        font_code = get_font(size=code_font_size, family="mono", is_bold=False)
 
         # 4. Invariants Auto-Scaling
         invariants = article_data.get('invariants', [])[:3]
@@ -186,7 +196,7 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             inv_font_size, inv_line_h = 37, 50
         else:
             inv_font_size, inv_line_h = 34, 46
-        font_inv_body = get_font(size=inv_font_size, is_mono=False, is_bold=False)
+        font_inv_body = get_font(size=inv_font_size, family="sans", is_bold=False)
 
         # 5. Metrics Auto-Scaling
         metrics = article_data.get('metrics', [])[:3]
@@ -197,7 +207,8 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             met_font_size, met_line_h = 37, 50
         else:
             met_font_size, met_line_h = 34, 46
-        font_met_body = get_font(size=met_font_size, is_mono=False, is_bold=False)
+        font_met_body = get_font(size=met_font_size, family="sans", is_bold=False)
+
 
         # --- DRAWING PASS ---
         # A. Category Tag
@@ -218,11 +229,22 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
                 draw.text((margin + 80, curr_y), dl, fill=text_muted, font=font_desc)
                 curr_y += desc_line_h
 
+        # --- DYNAMIC VERTICAL BUDGETING (ZERO EMPTY VOID) ---
+        footer_y = height - margin - 50
+        target_bottom = footer_y - 45
+        available_budget = target_bottom - curr_y - 20
+        gap_between_boxes = 26
+        
+        # Calculate box heights proportionally
+        usable_height = available_budget - (gap_between_boxes * 2)
+        box_h = int(usable_height * 0.40)
+        p1_h = int(usable_height * 0.30)
+        p2_h = usable_height - box_h - p1_h
+
         # D. Terminal Architecture Window
         curr_y += 20
-        wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, max_code_lines, draw)
+        wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 9, draw)
         bar_h = 76
-        box_h = bar_h + 18 + (len(wrapped_code) * code_line_h) + 16
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + bar_h], fill=bar_bg, outline=box_border, width=2)
 
@@ -239,7 +261,7 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         bar_text_y = curr_y + (bar_h - t_h) // 2 - 2
         draw.text((margin + 210, bar_text_y), bar_title, fill=text_muted, font=font_bar)
 
-        cy = curr_y + bar_h + 18
+        cy = curr_y + bar_h + 24
         for cl in wrapped_code:
             is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
             c_color = text_muted if is_comment else text_main
@@ -247,37 +269,34 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             cy += code_line_h
 
         # E. Pillar 1: Architectural Guarantees
-        curr_y += box_h + 24
+        curr_y += box_h + gap_between_boxes
         inv_wrapped_list = [wrap_text(t if t.startswith("[+]") else f"[+] {t}", font_inv_body, max_content_w, draw) for t in invariants]
-        total_inv_lines = sum(len(lines) for lines in inv_wrapped_list)
-        p1_h = 68 + (total_inv_lines * inv_line_h) + (len(invariants) * 6) + 14
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + p1_h], fill=card_color, outline=box_border, width=2)
-        draw.text((margin + 110, curr_y + 20), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_pillar_head)
+        draw.text((margin + 110, curr_y + 24), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_pillar_head)
         
-        py = curr_y + 68
+        py = curr_y + 78
         for wrapped_t in inv_wrapped_list:
             for tl in wrapped_t:
                 draw.text((margin + 110, py), tl, fill=text_main, font=font_inv_body)
                 py += inv_line_h
-            py += 6
+            py += 10
 
         # F. Pillar 2: Production Performance & Verification
-        curr_y += p1_h + 20
+        curr_y += p1_h + gap_between_boxes
         met_wrapped_list = [wrap_text(m if m.startswith("[*]") else f"[*] {m}", font_met_body, max_content_w, draw) for m in metrics]
-        total_met_lines = sum(len(lines) for lines in met_wrapped_list)
-        p2_h = 68 + (total_met_lines * met_line_h) + (len(metrics) * 6) + 14
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + p2_h], fill=card_color, outline=box_border, width=2)
-        draw.text((margin + 110, curr_y + 20), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_pillar_head)
+        draw.text((margin + 110, curr_y + 24), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_pillar_head)
         
-        py = curr_y + 68
+        py = curr_y + 78
         for wrapped_m in met_wrapped_list:
             for ml in wrapped_m:
                 draw.text((margin + 110, py), ml, fill=text_main, font=font_met_body)
                 py += met_line_h
-            py += 6
+            py += 10
 
         # G. Footer
-        draw.text((margin + 80, height - margin - 50), "Ref: ZYEKH.COM / TECHNICAL BLUEPRINT SPECIFICATION • DECENTRALIZED SYNDICATION 2026", fill=text_muted, font=font_meta)
+        draw.text((margin + 80, footer_y), "Ref: ZYEKH.COM / TECHNICAL BLUEPRINT SPECIFICATION • DECENTRALIZED SYNDICATION 2026", fill=text_muted, font=font_meta)
+
 
     else:
         # =========================================================================
@@ -290,24 +309,25 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         else:
             title_font_size, title_line_h = 60, 78
 
-        font_tag = get_font(size=44, is_mono=True, is_bold=True)
-        font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
+        font_tag = get_font(size=44, family="mono", is_bold=True)
+        font_title = get_font(size=title_font_size, family="outfit", is_bold=True)
         
         desc_text = article_data.get('description', '')
         desc_font_size = 36 if len(desc_text) <= 120 else 32
-        font_desc = get_font(size=desc_font_size, is_mono=False, is_bold=False)
+        font_desc = get_font(size=desc_font_size, family="sans", is_bold=False)
         
-        font_bar = get_font(size=34, is_mono=True, is_bold=True)
+        font_bar = get_font(size=34, family="mono", is_bold=True)
         
         raw_code = article_data.get('code_snippet', [])
         code_font_size = 34 if len(raw_code) <= 6 else 30
-        font_code = get_font(size=code_font_size, is_mono=True, is_bold=False)
+        font_code = get_font(size=code_font_size, family="mono", is_bold=False)
         
-        font_mini_head = get_font(size=32, is_mono=True, is_bold=True)
-        font_mini_body = get_font(size=29, is_mono=False, is_bold=False)
-        font_meta = get_font(size=34, is_mono=True, is_bold=False)
+        font_mini_head = get_font(size=32, family="mono", is_bold=True)
+        font_mini_body = get_font(size=29, family="sans", is_bold=False)
+        font_meta = get_font(size=34, family="mono", is_bold=False)
 
         # 1. Category Tag
+
         draw.text((margin + 80, margin + 45), cat_tag, fill=text_muted, font=font_tag)
 
         # 2. Main Title (Max 2 lines in Landscape)
