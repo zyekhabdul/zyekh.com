@@ -261,8 +261,10 @@ customElements.define('site-nav', SiteNav);</code></pre>
 <!-- Section 4 -->
 <h2 id="cdn-caching">4. Edge CDN Cache Invalidation &amp; Asset Fingerprinting</h2>
 <p>
-        To ensure users instantly receive updated stylesheet and JavaScript assets without stale browser caching issues, modern static architecture utilizes explicit query-string asset busters (e.g., <code>shared.css?v=20260806_v142"language-javascript"&gt;// sw.js — Cache Storage Version Management
-const CACHE_NAME = 'zyekh-v62';
+  To ensure users instantly receive updated stylesheet and JavaScript assets without stale browser caching issues, modern static architecture utilizes explicit query-string asset busters (e.g., <code>shared.min.css?v=hash</code>) paired with Service Worker cache lifecycle management:
+</p>
+<pre><code class="language-javascript">// sw.js — Cache Storage Version Management
+const CACHE_NAME = 'zyekh-v215';
 
 self.addEventListener('activate', event =&gt; {
   event.waitUntil(
@@ -271,7 +273,7 @@ self.addEventListener('activate', event =&gt; {
     )
   );
   self.clients.claim();
-});</code>
+});</code></pre>
 <!-- Section 5 -->
 <h2 id="comparison-matrix">5. Architectural Comparison Matrix</h2>
 <p>

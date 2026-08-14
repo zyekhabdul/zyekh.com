@@ -186,6 +186,7 @@ def sync_all(bump_version=False):
     # Static primary pages
     urls_data.append((f"{base_url}/", get_file_mtime_str("index.html"), "weekly", "1.0"))
     urls_data.append((f"{base_url}/about/", get_file_mtime_str("about/index.html"), "weekly", "0.9"))
+    urls_data.append((f"{base_url}/links/", get_file_mtime_str("links/index.html"), "weekly", "0.9"))
     urls_data.append((f"{base_url}/tools/", get_file_mtime_str("tools/index.html"), "weekly", "0.9"))
     urls_data.append((f"{base_url}/blog/", get_file_mtime_str("blog/index.html"), "weekly", "0.9"))
     urls_data.append((f"{base_url}/blueprints/", get_file_mtime_str("blueprints/index.html"), "weekly", "0.9"))
@@ -244,11 +245,13 @@ def sync_all(bump_version=False):
     # Update feed.xml
     feed_items = []
     for item in article_meta:
+        escaped_title = html.escape(item['title'])
+        escaped_desc = html.escape(item['desc'])
         feed_items.append(f"""    <item>
-      <title>{item['title']}</title>
+      <title>{escaped_title}</title>
       <link>{item['url']}</link>
       <guid>{item['url']}</guid>
-      <description>{item['desc']}</description>
+      <description>{escaped_desc}</description>
       <pubDate>{item['pub_date']}</pubDate>
     </item>""")
 

@@ -189,12 +189,74 @@ def verify_all_articles():
     if card_failures > 0:
         failures += card_failures
 
+    # Check 17: XML Feeds & Sitemap Integrity Audit
+    import xml.etree.ElementTree as ET
+    print("\n[AUDIT] Running Check 17: XML Feeds & Sitemap Integrity Audit...")
+    xml_failures = 0
+    try:
+        feed_tree = ET.parse('feed.xml')
+        feed_links = set(elem.text.strip() for elem in feed_tree.getroot().findall('channel/item/link') if elem.text)
+        for a in articles:
+            expected_url = f"https://zyekh.com/{a.replace(os.sep, '/')}"
+            if expected_url not in feed_links:
+                print(f"[FAIL] Article missing from feed.xml: {expected_url}")
+                xml_failures += 1
+    except Exception as e:
+        print(f"[FAIL] feed.xml XML parse error: {e}")
+        xml_failures += 1
+
+    try:
+        sitemap_tree = ET.parse('sitemap.xml')
+        sitemap_urls = set(elem.text.strip() for elem in sitemap_tree.getroot().findall('{http://www.sitemaps.org/schemas/sitemap/0.9}url/{http://www.sitemaps.org/schemas/sitemap/0.9}loc') if elem.text)
+        for a in articles:
+            expected_url = f"https://zyekh.com/{a.replace(os.sep, '/')}"
+            if expected_url not in sitemap_urls:
+                print(f"[FAIL] Article missing from sitemap.xml: {expected_url}")
+                xml_failures += 1
+        if "https://zyekh.com/links/" not in sitemap_urls:
+            print("[FAIL] /links/ page missing from sitemap.xml")
+            xml_failures += 1
+    except Exception as e:
+        print(f"[FAIL] sitemap.xml XML parse error: {e}")
+        xml_failures += 1
+
+    if xml_failures > 0:
+        failures += xml_failures
+
+    # Check 18: Tools Metadata & RAG Knowledge Base Parity Audit
+    print("\n[AUDIT] Running Check 18: Tools OpenGraph & RAG Knowledge Base Parity Audit...")
+    tool_failures = 0
+    tools = [t for t in sorted(glob.glob("tools/*.html")) if t != "tools/index.html"]
+    for t in tools:
+        t_content = open(t, encoding='utf-8', errors='ignore').read()
+        t_soup = BeautifulSoup(t_content, 'html.parser')
+        if not t_soup.find('meta', property='og:image'):
+            print(f"[FAIL] {t} missing <meta property=\"og:image\">")
+            tool_failures += 1
+        if not t_soup.find('meta', attrs={'name': 'twitter:image'}):
+            print(f"[FAIL] {t} missing <meta name=\"twitter:image\">")
+            tool_failures += 1
+
+    if not os.path.exists("llms-full.txt"):
+        print("[FAIL] llms-full.txt does not exist")
+        tool_failures += 1
+    else:
+        llms_full_content = open("llms-full.txt", encoding='utf-8').read()
+        for a in articles:
+            a_slug = os.path.splitext(os.path.basename(a))[0]
+            if a_slug not in llms_full_content:
+                print(f"[FAIL] Article '{a_slug}' missing from llms-full.txt")
+                tool_failures += 1
+
+    if tool_failures > 0:
+        failures += tool_failures
+
     print("\n============================================================")
     if failures > 0:
-        print(f"FAILED: {failures} QA audit violations detected across articles/images.")
+        print(f"FAILED: {failures} QA audit violations detected across system.")
         sys.exit(1)
     else:
-        print(f"SUCCESS: All {len(articles)} articles passed 100% QA audit (Checks 1-16)!")
+        print(f"SUCCESS: All {len(articles)} articles and system assets passed 100% QA audit (Checks 1-18)!")
         print("============================================================")
 
 if __name__ == "__main__":

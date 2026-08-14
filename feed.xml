@@ -7,21 +7,21 @@
     <language>en-us</language>
     <atom:link href="https://zyekh.com/feed.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Linux Auditd Blueprint: Real-Time Kernel Event Tracking & Security Auditing</title>
+      <title>Linux Auditd Blueprint: Real-Time Kernel Event Tracking &amp; Security Auditing</title>
       <link>https://zyekh.com/blog/auditd-kernel-event-monitoring-and-dfir-logging.html</link>
       <guid>https://zyekh.com/blog/auditd-kernel-event-monitoring-and-dfir-logging.html</guid>
       <description>Security guide for configuring Linux Audit Framework (auditd) to log execve system calls, file integrity changes, and privilege escalation events.</description>
       <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Process Isolation on Linux: Unprivileged User Namespaces & Chroot Jails</title>
+      <title>Process Isolation on Linux: Unprivileged User Namespaces &amp; Chroot Jails</title>
       <link>https://zyekh.com/blog/chroot-jail-and-unprivileged-namespaces-isolation.html</link>
       <guid>https://zyekh.com/blog/chroot-jail-and-unprivileged-namespaces-isolation.html</guid>
       <description>Technical blueprint for configuring unprivileged user namespaces and chroot jails to sandbox untrusted services without full container runtimes.</description>
       <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Cilium eBPF & Tetragon: Cloud-Native Runtime Security & Network Enforcement</title>
+      <title>Cilium eBPF &amp; Tetragon: Cloud-Native Runtime Security &amp; Network Enforcement</title>
       <link>https://zyekh.com/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html</link>
       <guid>https://zyekh.com/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html</guid>
       <description>Deep-dive guide on deploying Cilium eBPF for zero-trust network policy enforcement and Tetragon for real-time kernel event monitoring in Kubernetes.</description>
@@ -35,7 +35,7 @@
       <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Container Image Signing & SLSA Provenance Verification with Sigstore Cosign</title>
+      <title>Container Image Signing &amp; SLSA Provenance Verification with Sigstore Cosign</title>
       <link>https://zyekh.com/blog/container-image-signing-and-slsa-provenance-with-cosign.html</link>
       <guid>https://zyekh.com/blog/container-image-signing-and-slsa-provenance-with-cosign.html</guid>
       <description>Supply chain security guide on signing OCI container images keylessly and verifying SLSA build provenance using Sigstore Cosign and Rekor.</description>
@@ -56,21 +56,21 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Automated Intrusion Prevention: Fail2ban Configuration for SSH & Nginx Protection</title>
+      <title>Automated Intrusion Prevention: Fail2ban Configuration for SSH &amp; Nginx Protection</title>
       <link>https://zyekh.com/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html</link>
       <guid>https://zyekh.com/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html</guid>
       <description>Comprehensive blueprint for deploying Fail2ban to detect brute-force attacks, automate IP bans via iptables/nftables, and configure recidive long-term bans.</description>
       <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>HTTP/3 & QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks</title>
+      <title>HTTP/3 &amp; QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks</title>
       <link>https://zyekh.com/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html</link>
       <guid>https://zyekh.com/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html</guid>
       <description>Production blueprint for hardening HTTP/3 and QUIC transport protocols, mitigating 0-RTT replay vectors, and configuring UDP rate limiting.</description>
       <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Kubernetes Pod Security Standards (PSS) & Native Admission Control</title>
+      <title>Kubernetes Pod Security Standards (PSS) &amp; Native Admission Control</title>
       <link>https://zyekh.com/blog/kubernetes-pod-security-standards-pss-and-admission-control.html</link>
       <guid>https://zyekh.com/blog/kubernetes-pod-security-standards-pss-and-admission-control.html</guid>
       <description>Production guide on enforcing Privileged, Baseline, and Restricted Pod Security Standards (PSS) using native Kubernetes admission controllers.</description>
@@ -84,7 +84,7 @@
       <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>High-Throughput Linux Audit Logging with Vector & ClickHouse DFIR Pipeline</title>
+      <title>High-Throughput Linux Audit Logging with Vector &amp; ClickHouse DFIR Pipeline</title>
       <link>https://zyekh.com/blog/linux-audit-logging-with-vector-and-clickhouse-dfir.html</link>
       <guid>https://zyekh.com/blog/linux-audit-logging-with-vector-and-clickhouse-dfir.html</guid>
       <description>Architecture guide on building a high-throughput Linux kernel audit logging pipeline using Vector log forwarder and ClickHouse for real-time DFIR forensics.</description>
@@ -98,7 +98,7 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Linux Landlock LSM: Unprivileged Application Sandboxing & Access Control</title>
+      <title>Linux Landlock LSM: Unprivileged Application Sandboxing &amp; Access Control</title>
       <link>https://zyekh.com/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html</link>
       <guid>https://zyekh.com/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html</guid>
       <description>Engineering guide on using the Landlock Linux Security Module to enforce unprivileged file system and network access control restrictions.</description>
@@ -147,7 +147,7 @@
       <pubDate>Mon, 03 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>OmniRouter Architecture: Resilient LLM Gateway Routing & Fallback Pipelines</title>
+      <title>OmniRouter Architecture: Resilient LLM Gateway Routing &amp; Fallback Pipelines</title>
       <link>https://zyekh.com/blog/omnirouter-llm-gateway-routing-fallback-patterns.html</link>
       <guid>https://zyekh.com/blog/omnirouter-llm-gateway-routing-fallback-patterns.html</guid>
       <description>Advanced API routing techniques for multi-LLM architectures, mitigating rate limits, and ensuring speculative decoding fallbacks across OpenAI, Anthropic, and open-source nodes.</description>
@@ -161,14 +161,14 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Rust in the Linux Kernel: Securing Core Subsystems & Memory Safety</title>
+      <title>Rust in the Linux Kernel: Securing Core Subsystems &amp; Memory Safety</title>
       <link>https://zyekh.com/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html</link>
       <guid>https://zyekh.com/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html</guid>
       <description>Comprehensive engineering guide on how Rust eliminates spatial and temporal memory vulnerabilities in modern Linux kernel drivers and network modules.</description>
       <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Implementing Strict Content Security Policy (CSP) & Security Headers</title>
+      <title>Implementing Strict Content Security Policy (CSP) &amp; Security Headers</title>
       <link>https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html</link>
       <guid>https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html</guid>
       <description>Comprehensive technical guide for configuring strict Content Security Policy (CSP), HTTP Strict Transport Security (HSTS), X-Content-Type-Options, and Nginx security headers.</description>
@@ -189,21 +189,21 @@
       <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Structured Output Generation: Enforcing JSON & Regex at the Logits Level</title>
+      <title>Structured Output Generation: Enforcing JSON &amp; Regex at the Logits Level</title>
       <link>https://zyekh.com/blog/structured-output-generation-logits-constraints.html</link>
       <guid>https://zyekh.com/blog/structured-output-generation-logits-constraints.html</guid>
       <description>Bypassing brittle prompt engineering by directly manipulating LLM token logits to mathematically guarantee valid JSON schema outputs without retry loops.</description>
       <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Systemd Service Sandboxing: Restricting Process Capability & System Calls</title>
+      <title>Systemd Service Sandboxing: Restricting Process Capability &amp; System Calls</title>
       <link>https://zyekh.com/blog/systemd-service-sandboxing-and-security-hardening.html</link>
       <guid>https://zyekh.com/blog/systemd-service-sandboxing-and-security-hardening.html</guid>
       <description>Production guide for sandboxing Linux daemons using systemd security directives like ProtectSystem, SystemCallFilter, and CapabilityBoundingSet.</description>
       <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>UFW Firewall Hardening: Advanced Rate Limiting & Default-Deny Security Blueprint</title>
+      <title>UFW Firewall Hardening: Advanced Rate Limiting &amp; Default-Deny Security Blueprint</title>
       <link>https://zyekh.com/blog/ufw-firewall-hardening-and-rate-limiting-blueprint-2026.html</link>
       <guid>https://zyekh.com/blog/ufw-firewall-hardening-and-rate-limiting-blueprint-2026.html</guid>
       <description>Production guide for securing Linux servers using UFW with default-deny policies, custom application profiles, rate limiting, and interface isolation.</description>
@@ -217,7 +217,7 @@
       <pubDate>Mon, 20 Jul 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>vLLM PagedAttention: Memory Optimization & High-Throughput LLM Inference Tuning</title>
+      <title>vLLM PagedAttention: Memory Optimization &amp; High-Throughput LLM Inference Tuning</title>
       <link>https://zyekh.com/blog/vllm-pagedattention-high-throughput-inference-tuning.html</link>
       <guid>https://zyekh.com/blog/vllm-pagedattention-high-throughput-inference-tuning.html</guid>
       <description>Deep dive into OS-inspired virtual memory management for LLM KV caches, maximizing GPU utilization, and achieving 20x throughput scaling for production inference.</description>
@@ -231,7 +231,7 @@
       <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels & Strict Firewall Rules</title>
+      <title>Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels &amp; Strict Firewall Rules</title>
       <link>https://zyekh.com/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html</link>
       <guid>https://zyekh.com/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html</guid>
       <description>Step-by-step technical blueprint for creating encrypted private mesh networks between multi-cloud VPS nodes using WireGuard and UDP noise protocols.</description>
@@ -245,7 +245,7 @@
       <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Zero-Trust SSH Access Blueprint: FIDO2 Hardware Keys & SSH Certificate Authority</title>
+      <title>Zero-Trust SSH Access Blueprint: FIDO2 Hardware Keys &amp; SSH Certificate Authority</title>
       <link>https://zyekh.com/blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html</link>
       <guid>https://zyekh.com/blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html</guid>
       <description>Comprehensive technical blueprint for securing Linux SSH infrastructure using FIDO2/YubiKey hardware tokens, SSH Certificate Authority (SSH CA), and short-lived certificates.</description>
