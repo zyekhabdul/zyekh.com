@@ -137,19 +137,9 @@ def sync_all(bump_version=False):
             hashes.append(f"'sha256-{b64}'")
         
         if hashes:
-            def update_csp(match):
-                prefix = match.group(1)
-                content = match.group(2)
-                suffix = match.group(3)
-                # Replace script-src entirely to ensure idempotency and drop unsafe-inline
-                content = re.sub(r"script-src[^;]*", f"script-src 'self' {' '.join(hashes)}", content)
-                return prefix + content + suffix
-                
-            if re.search(r'<meta\s+http-equiv="Content-Security-Policy"', c, flags=re.IGNORECASE):
-                c = re.sub(r'(<meta\s+http-equiv="Content-Security-Policy"\s+content=")([^"]+)(")', update_csp, c, flags=re.IGNORECASE)
-            else:
-                csp_meta = f'<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\' {" ".join(hashes)}; style-src \'self\' \'unsafe-inline\'; img-src \'self\' data: https:; font-src \'self\'; connect-src \'self\'; form-action \'self\'; frame-ancestors \'none\';">'
-                c = c.replace("</head>", f"  {csp_meta}\n</head>")
+            csp_meta = f'<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\' {" ".join(hashes)}; style-src \'self\' \'unsafe-inline\'; img-src \'self\' data: https:; font-src \'self\'; connect-src \'self\'; form-action \'self\'; frame-ancestors \'none\';">'
+            c = re.sub(r'<meta\s+[^>]*http-equiv=["\']Content-Security-Policy["\'][^>]*>\s*', '', c, flags=re.IGNORECASE)
+            c = c.replace("</head>", f"  {csp_meta}\n</head>")
             
         # OpenGraph Ultra-Hardened Meta Tag Injection for blog articles
         if f.startswith("blog/") and f != "blog/index.html":

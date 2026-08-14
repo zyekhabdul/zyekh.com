@@ -3,7 +3,6 @@
 <head>
 <script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-biuHCjQ6GXf6iG7ns6DZ2owJoZ5Zm6GK/OosNbs/b8s='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
   <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <meta name="theme-color" content="#09090b">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,8 +57,9 @@
   </script>
   <style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-                                                                                                                            <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+                                                                                                                              <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" as="script">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-762ImFEh7vSaVx7w8tjbfvdXC2OdYAo9kPtmlR4b7PA='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
 
@@ -69,7 +69,7 @@
   <main class="main-container">
     <header class="page-header">
       <h1 class="page-title">Web Utility Tools Hub</h1>
-      <p class="page-subtitle">Collection of 43 fast, free, client-side web utility tools. Use directly in your browser with zero tracking and no account registration required.</p>
+      <p class="page-subtitle">Collection of 46 fast, free, client-side web utility tools. Use directly in your browser with zero tracking and no account registration required.</p>
     </header>
 
     <!-- Filter & Search -->
@@ -80,11 +80,12 @@
 
     <!-- Category Pill Filters -->
     <div class="filter-bar" id="categoryFilterBar">
-      <button type="button" class="filter-btn active" data-category="all">Semua (43)</button>
-      <button type="button" class="filter-btn" data-category="FINANCIAL UTILITIES">Finansial &amp; Pajak (8)</button>
-      <button type="button" class="filter-btn" data-category="DEVELOPER UTILITIES">Developer Utilities (22)</button>
-      <button type="button" class="filter-btn" data-category="TEXT &amp; FORMATTING">Teks &amp; Format (5)</button>
-      <button type="button" class="filter-btn" data-category="GENERATORS &amp; UTILITIES">Generators &amp; Utilities (8)</button>
+      <button type="button" class="filter-btn active" data-category="all">Semua</button>
+      <button type="button" class="filter-btn" data-category="AI INFRASTRUCTURE,NETWORK SECURITY">AI &amp; Security</button>
+      <button type="button" class="filter-btn" data-category="DEVELOPER UTILITIES">Developer Utilities</button>
+      <button type="button" class="filter-btn" data-category="FINANCIAL UTILITIES">Finansial &amp; Pajak</button>
+      <button type="button" class="filter-btn" data-category="TEXT &amp; FORMATTING">Teks &amp; Format</button>
+      <button type="button" class="filter-btn" data-category="GENERATORS &amp; UTILITIES">Generators &amp; Utilities</button>
     </div>
 
     <!-- Tools Grid Container -->
@@ -634,20 +635,41 @@
     const filterBtns = document.querySelectorAll('#categoryFilterBar .filter-btn');
     const totalTools = toolItems.length;
 
-    let activeCategory = 'all';
+    let activeCategories = ['ALL'];
     let filterDebounceTimer = null;
 
     // Fast memory index (Zero DOM reflow during typing)
+    const categoryCounts = { 'ALL': totalTools };
     const toolCache = Array.from(toolItems).map(item => {
       const title = item.getAttribute('data-title') || '';
       const content = item.textContent || '';
       const catElem = item.querySelector('.tool-category');
       const category = catElem ? catElem.textContent.trim().toUpperCase() : '';
+      if (category) {
+        categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+      }
       return {
         element: item,
         searchableText: (title + ' ' + content).toLowerCase(),
         category: category
       };
+    });
+
+    // Dynamically calculate and inject category counts on filter pills
+    filterBtns.forEach(btn => {
+      const catAttr = (btn.getAttribute('data-category') || 'all').toUpperCase();
+      const catList = catAttr.split(',').map(s => s.trim());
+      let count = 0;
+      if (catList.includes('ALL')) {
+        count = totalTools;
+      } else {
+        catList.forEach(c => {
+          count += (categoryCounts[c] || 0);
+        });
+      }
+      const baseLabel = btn.getAttribute('data-label') || btn.textContent.replace(/\s*\(\d+\)\s*$/, '').trim();
+      btn.setAttribute('data-label', baseLabel);
+      btn.textContent = `${baseLabel} (${count})`;
     });
 
     function filterTools() {
@@ -656,7 +678,7 @@
 
       toolCache.forEach(data => {
         const matchesQuery = !q || data.searchableText.includes(q);
-        const matchesCategory = activeCategory === 'all' || data.category === activeCategory.toUpperCase();
+        const matchesCategory = activeCategories.includes('ALL') || activeCategories.includes(data.category);
 
         if (matchesQuery && matchesCategory) {
           data.element.style.display = '';
@@ -688,7 +710,8 @@
       btn.addEventListener('click', function() {
         filterBtns.forEach(b => b.classList.remove('active'));
         this.classList.add('active');
-        activeCategory = this.getAttribute('data-category');
+        const catAttr = (this.getAttribute('data-category') || 'all').toUpperCase();
+        activeCategories = catAttr.split(',').map(s => s.trim());
         filterTools();
       });
     });
