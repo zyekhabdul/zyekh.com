@@ -93,3 +93,18 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
 
 29. **DUAL-FILE MCP DISCOVERY PROTOCOL**: When discovering MCP server endpoints, tools, or API tokens, AI agents MUST inspect BOTH configuration files (`~/.gemini/config/mcp_config.json` AND `~/.gemini/config/mcp_config_extended.json`). Never stop after checking only `mcp_config.json`.
 
+30. **MULTI-RATIO SOCIAL CARD DENSITY STANDARD (ZERO WHITE SPACE)**:
+    - 1:1 Square Cards (2400x2400): MUST use the 4-tier high-density technical infographic layout (Header Zone -> Terminal Architecture Window 740px with real article code -> 2-Box Invariants & Operational Metrics Matrix -> Footer Spec Bar). Leaving empty margins or single-box white space on a square canvas is strictly forbidden.
+    - 16:9 Landscape Cards (2400x1260): MUST use the clean horizontal layout with terminal code matrix and metadata footer.
+
+31. **CLEAN DOM-BASED SYNDICATION PARSING (ZERO BOILERPLATE LEAKAGE)**:
+    - When generating markdown for external syndication (Dev.to, Hashnode, Medium, Reddit), ALWAYS parse `<main class="article-content">` via a structured DOM parser (BeautifulSoup).
+    - NEVER use greedy regex over broad `<article>` tags.
+    - MUST explicitly decompose all non-content boilerplate: `.author-card`, `.article-cross-links`, `.exec-summary`, `.article-actions`, `.back-link`, `figure.article-hero-wrapper`, `<script>`, `<style>`, and `<footer>`.
+    - Convert `<details><summary>` FAQ blocks into clean `**Q: ...**\n\n*A: ...*`.
+
+32. **PLATFORM-SPECIFIC CHARACTER & GRAPHEME BUDGET PROTOCOL**:
+    - Bluesky / ATProto: Enforce strict 300-grapheme budget for post status text (`len(text.encode('utf-8')) <= 280`). Dynamically truncate description/title with `...` while preserving URLs and hashtag facets to prevent `HTTP 400: Post too long` errors.
+    - Mastodon: 500-character budget with direct `/api/v2/media` multipart uploads.
+    - Always catch and log `urllib.error.HTTPError` response bodies directly for API diagnosis.
+

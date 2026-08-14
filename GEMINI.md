@@ -16,8 +16,10 @@
 - **Cloudflare purge**: always purge after push via API (zone: `1427afa77c5824ee0c34b514260e2e5d`).
 - **AI Image Prompts**: Prompts must visually represent the core technical mechanism of the article (e.g. eBPF packet bypass, Wasm memory sandbox). Use rich 3D isometric cyber architecture styling with custom HSL lighting to ensure engaging, informative thumbnails. All images must pass Check 15 MD5 uniqueness audit.
 - **MD5 Image Uniqueness**: All article hero images must have 100% unique MD5 hashes. Enforced via `verify_batch.py` (Check 15).
-- **Input Listener Debouncing**: Always debounce `oninput` handlers (50ms-80ms) and batch DOM writes in `window.requestAnimationFrame()` to eliminate layout thrashing and typing lag.
 - **DUAL-FILE MCP DISCOVERY PROTOCOL**: Whenever discovering MCP endpoints, tools, or API tokens, AI agents MUST inspect BOTH configuration files (`mcp_config.json` AND `mcp_config_extended.json`) under `~/.gemini/config/`. Never assume configuration is limited to a single file.
+- **Social Card Density**: Square cards (2400x2400) must fill canvas height via 4-tier infographic layout (Header + 740px Terminal + 2-Box Invariants/Metrics Matrix + Footer). Zero empty white space.
+- **Clean DOM Syndication Parsing**: Always parse `<main class="article-content">` with BeautifulSoup and decompose `.author-card`, `.article-cross-links`, `.exec-summary`, `.article-actions`, `.back-link`, `figure`, `footer`. Never use greedy regex.
+- **ATProto 300-Grapheme Limit**: Bluesky posts must not exceed 280 bytes in status text. Use `format_bluesky_post_text()` to truncate gracefully and avoid HTTP 400.
 
 - **AUTONOMOUS INITIATIVE**: Always be highly proactive. Do not wait for the user to point out every problem. If you see a structural, UI/UX, or technical flaw, fix it immediately across all affected files without asking.
 
