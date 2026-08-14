@@ -292,29 +292,28 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         # =========================================================================
         # 16:9 LANDSCAPE OPENGRAPH LAYOUT (2400 x 1260) — STANDARD TYPOGRAPHY
         # =========================================================================
-        title_font_size, title_line_h = 64, 82
-        desc_font_size, desc_line_h = 32, 44
-        code_font_size, code_line_h = 32, 42
+        title_font_size, title_line_h = 60, 76
+        desc_font_size, desc_line_h = 30, 42
+        code_font_size, code_lh = 30, 38
 
-        font_tag = get_font(size=40, family="mono", is_bold=False)
+        font_tag = get_font(size=38, family="mono", is_bold=False)
         font_title = get_font(size=title_font_size, family="outfit", is_bold=True)
         font_desc = get_font(size=desc_font_size, family="sans", is_bold=False)
-        font_bar = get_font(size=32, family="mono", is_bold=False)
+        font_bar = get_font(size=30, family="mono", is_bold=False)
         font_code = get_font(size=code_font_size, family="mono", is_bold=False)
-        font_mini_head = get_font(size=28, family="mono", is_bold=False)
-        font_mini_body = get_font(size=26, family="sans", is_bold=False)
-        font_meta = get_font(size=34, family="mono", is_bold=False)
+        font_matrix_head = get_font(size=25, family="mono", is_bold=False)
+        font_matrix_body = get_font(size=22, family="sans", is_bold=False)
+        font_meta = get_font(size=32, family="mono", is_bold=False)
 
         raw_code = article_data.get('code_snippet', [])
         desc_text = article_data.get('description', '')
-
 
         # 1. Category Tag
         draw.text((margin + 80, margin + 45), cat_tag, fill=text_muted, font=font_tag)
 
         # 2. Main Title (Max 2 lines in Landscape)
         title_lines = wrap_text(raw_title, font_title, inner_w, draw)[:2]
-        curr_y = margin + 110
+        curr_y = margin + 105
         for line in title_lines:
             draw.text((margin + 80, curr_y), line, fill=text_main, font=font_title)
             curr_y += title_line_h
@@ -325,15 +324,14 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             curr_y += 6
             for dl in desc_lines:
                 draw.text((margin + 80, curr_y), dl, fill=text_muted, font=font_desc)
-                curr_y += 48
+                curr_y += desc_line_h
 
         # 4. Terminal Box (Dynamic Tight Height)
-        curr_y += 16
+        curr_y += 14
         wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 7, draw)
         
-        bar_h = 60
-        code_lh = 42 if code_font_size >= 32 else 38
-        box_h = bar_h + 16 + (len(wrapped_code) * code_lh) + 16
+        bar_h = 56
+        box_h = bar_h + 14 + (len(wrapped_code) * code_lh) + 14
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + bar_h], fill=bar_bg, outline=box_border, width=2)
         
@@ -350,23 +348,19 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         bar_text_y = curr_y + (bar_h - t_h) // 2 - 2
         draw.text((margin + 200, bar_text_y), bar_title, fill=text_muted, font=font_bar)
 
-        cy = curr_y + bar_h + 16
+        cy = curr_y + bar_h + 14
         for cl in wrapped_code:
             is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
             c_color = text_muted if is_comment else text_main
             draw.text((margin + 110, cy), cl, fill=c_color, font=font_code)
             cy += code_lh
 
-
         # 5. Bottom 2-Column Matrix (Full Parity: Dynamic Tight Box Height)
-        curr_y += box_h + 16
+        curr_y += box_h + 14
         col_w = (inner_w - 30) // 2
         left_x = margin + 80
         right_x = left_x + col_w + 30
-
-        font_matrix_head = get_font(size=26, family="mono", is_bold=False)
-        font_matrix_body = get_font(size=23, family="sans", is_bold=False)
-        matrix_lh = 32
+        matrix_lh = 28
 
         # Pre-wrap to calculate exact content height without awkward inner space
         invariants = article_data.get('invariants', [])[:3]
@@ -380,12 +374,12 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         max_lines = max(total_inv_lines, total_met_lines)
 
         # Dynamic box height: header + content lines + item gaps + bottom padding
-        bot_h = 52 + (max_lines * matrix_lh) + (max(len(invariants), len(metrics)) * 6) + 16
+        bot_h = 48 + (max_lines * matrix_lh) + (max(len(invariants), len(metrics)) * 6) + 14
 
         # Left Column: All Architectural Invariants
         draw.rectangle([left_x, curr_y, left_x + col_w, curr_y + bot_h], fill=box_bg, outline=box_border, width=2)
-        draw.text((left_x + 22, curr_y + 16), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_matrix_head)
-        iy = curr_y + 52
+        draw.text((left_x + 22, curr_y + 14), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_matrix_head)
+        iy = curr_y + 48
         for w_inv in wrapped_invs:
             for il in w_inv:
                 draw.text((left_x + 22, iy), il, fill=text_main, font=font_matrix_body)
@@ -394,8 +388,8 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
 
         # Right Column: All Production Operational Metrics
         draw.rectangle([right_x, curr_y, right_x + col_w, curr_y + bot_h], fill=box_bg, outline=box_border, width=2)
-        draw.text((right_x + 22, curr_y + 16), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_matrix_head)
-        my = curr_y + 52
+        draw.text((right_x + 22, curr_y + 14), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_matrix_head)
+        my = curr_y + 48
         for w_met in wrapped_mets:
             for ml in w_met:
                 draw.text((right_x + 22, my), ml, fill=text_main, font=font_matrix_body)
@@ -403,8 +397,8 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             my += 6
 
         # 6. Collision-Free Footer (Only rendered if there is ample vertical breathing room)
-        footer_y = height - margin - 55
-        if curr_y + bot_h + 24 <= footer_y:
+        footer_y = height - margin - 50
+        if curr_y + bot_h + 20 <= footer_y:
             draw.text((margin + 80, footer_y), "OPEN TECHNICAL ARCHITECTURE SPECIFICATION • SYSTEMS & SECURITY BLUEPRINT 2026", fill=text_muted, font=font_meta)
 
 

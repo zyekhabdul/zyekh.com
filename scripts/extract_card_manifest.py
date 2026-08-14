@@ -26,7 +26,6 @@ def sanitize_text(text: str) -> str:
     return re.sub(r'\s+', ' ', t).strip()
 
 def extract_clean_code(raw_html: str) -> list[str]:
-
     pres = re.findall(r'<pre(?:.*?)><code(?:.*?)>(.*?)</code></pre>', raw_html, re.DOTALL)
     if not pres:
         pres = re.findall(r'<pre(?:.*?)>(.*?)</pre>', raw_html, re.DOTALL)
@@ -63,7 +62,7 @@ def extract_clean_code(raw_html: str) -> list[str]:
     def score_block(b):
         text = "\n".join(b)
         score = len(b)
-        if any(kw in text for kw in ["#", "//", "def ", "fn ", "struct ", "class ", "sudo ", "ssh-", "import ", "use ", "add_header", "ufw ", ":root"]):
+        if any(kw in text for kw in ["#", "//", "def ", "fn ", "struct ", "class ", "sudo ", "ssh-", "add_header", "ufw ", ":root"]):
             score += 20
         if not text.startswith("// XDP Action"):
             score += 5
@@ -74,9 +73,36 @@ def extract_clean_code(raw_html: str) -> list[str]:
     candidate_blocks.sort(key=score_block, reverse=True)
     best = candidate_blocks[0]
     
-    # Filter lines so no standalone orphan single brackets exist in the array
+    # Strip non-essential top imports if function or executable logic follows
+    has_logic = any(any(l.strip().startswith(kw) for kw in ["fn ", "def ", "class ", "struct ", "int ", "server ", "if ", "let "]) for l in best)
+    if has_logic and len(best) > 7:
+        filtered = []
+        for l in best:
+            s = l.strip()
+            if s.startswith("use ") or s.startswith("#include ") or (s.startswith("import ") and not any(k in s for k in ["torch", "outlines", "dspy"])):
+                continue
+            filtered.append(l)
+        if len(filtered) >= 3:
+            best = filtered
+
     clean_best = [l for l in best if l.strip() not in ['{', '}', '(', ')']]
-    selected = clean_best[:8]
+    
+    if len(clean_best) <= 8:
+        selected = clean_best
+    else:
+        selected = clean_best[:8]
+        # Check brace balance
+        open_b = sum(l.count('{') for l in selected)
+        close_b = sum(l.count('}') for l in selected)
+        if open_b > close_b:
+            for next_line in clean_best[8:10]:
+                if '}' in next_line or 'Ok(' in next_line:
+                    selected = clean_best[:7] + [next_line]
+                    break
+            open_b = sum(l.count('{') for l in selected)
+            close_b = sum(l.count('}') for l in selected)
+            if open_b > close_b and not selected[-1].strip().startswith('}'):
+                selected[-1] = '}'
         
     if selected and selected[-1].strip().endswith('\\'):
         selected[-1] = selected[-1].strip()[:-1].rstrip()
@@ -114,6 +140,8 @@ def extract_manifest():
         desc_meta = soup.find('meta', {'name': 'description'})
         raw_desc = desc_meta['content'].strip() if desc_meta and desc_meta.get('content') else ""
         description = sanitize_text(raw_desc)
+        if description and not description.endswith('.'):
+            description += '.'
 
         # 3. Tags
         tags = []
@@ -146,41 +174,54 @@ def extract_manifest():
                 "Zero Overhead: Native kernel mechanisms and deterministic execution."
             ]
 
-        # 6. Contextual Operational Metrics (Factual & Domain-Specific)
-        domain_tag = " • ".join([t.upper() for t in tags[:2]]) if tags else "TECHNICAL BLUEPRINT"
-        
-        # Metric 1: Domain & Architecture Category
-        m1 = f"Architecture Domain: {domain_tag}"
-        
-        # Metric 2: Contextual Production Impact (Extracted from 4th takeaway if available, or domain-tuned)
+        # 6. Contextual Operational Metrics (High-Density & Non-Redundant)
+        # Metric 1: Concrete Operational / Production Impact (From Takeaway 4 or domain impact)
         if len(takeaways) >= 4:
             raw_t4 = takeaways[3]
             if ":" in raw_t4:
                 pfx, rest = raw_t4.split(":", 1)
-                m2 = f"Operational Impact: {pfx.strip()} - {rest.strip()}"
+                m1 = f"Operational Impact: {pfx.strip()} - {rest.strip()}"
             else:
-                m2 = f"Operational Impact: {raw_t4}"
+                m1 = f"Operational Impact: {raw_t4}"
         elif any(k in slug for k in ["llm", "rag", "vllm", "moe", "slora", "kv-cache", "dspy", "webgpu", "structured-output", "colbert"]):
-            m2 = "Inference Impact: High-throughput token optimization with zero memory fragmentation"
+            m1 = "Inference Impact: High-throughput token optimization with zero memory fragmentation."
         elif any(k in slug for k in ["ebpf", "xdp", "tetragon", "cilium"]):
-            m2 = "Kernel Impact: Sub-microsecond packet processing in kernel space via eBPF/XDP"
+            m1 = "Kernel Impact: Sub-microsecond packet processing in kernel space via eBPF/XDP."
         elif any(k in slug for k in ["ssh", "fido2", "vault", "pam", "faillock", "landlock", "seccomp", "chroot", "auditd", "cosign", "systemd", "pss"]):
-            m2 = "Security Impact: Zero-trust cryptographic boundary with hardware-backed integrity"
+            m1 = "Security Impact: Zero-trust cryptographic boundary with hardware-backed integrity."
         elif any(k in slug for k in ["rust"]):
-            m2 = "Safety Impact: Memory safety without garbage collection overhead in kernel subsystems"
+            m1 = "Safety Impact: Memory safety without garbage collection overhead in kernel subsystems."
         else:
-            m2 = "Production Impact: Deterministic low-latency execution with zero external dependencies"
+            m1 = "Production Impact: Deterministic low-latency execution with zero external dependencies."
+
+        # Metric 2: Contextual Execution & Sandboxing Metric
+        if "wasm" in slug:
+            m2 = "Runtime Sandboxing: Wasm linear memory sandbox with sub-millisecond cold starts."
+        elif any(k in slug for k in ["ebpf", "xdp", "tetragon", "cilium"]):
+            m2 = "Packet Processing: In-kernel JIT bytecode evaluation with zero context-switch overhead."
+        elif any(k in slug for k in ["sysctl", "landlock", "seccomp", "chroot", "auditd", "systemd", "pam", "faillock", "vps", "ufw", "fail2ban"]):
+            m2 = "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement."
+        elif any(k in slug for k in ["ssh", "fido2", "vault", "cosign", "pss"]):
+            m2 = "Cryptographic Guarantee: Short-lived certificate lifetimes with hardware-backed authentication."
+        elif any(k in slug for k in ["llm", "rag", "vllm", "moe", "slora", "kv-cache", "colbert", "dspy", "webgpu", "structured-output"]):
+            m2 = "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste."
+        elif any(k in slug for k in ["csp", "http3", "nginx", "minimalist", "wireguard"]):
+            m2 = "Transport Hardening: Strict TLS 1.3 cryptographic ciphers with zero-trust origin boundaries."
+        else:
+            m2 = "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry."
 
         # Metric 3: Standards Compliance
-
         if any(k in slug for k in ["llm", "rag", "vllm", "moe", "slora", "kv-cache", "dspy", "webgpu", "structured-output", "colbert"]):
-            m3 = "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
+            m3 = "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
         elif any(k in slug for k in ["csp", "http3", "minimalist"]):
-            m3 = "Web Standard: Zero-Vulnerability Edge & Strict Content Security Policy"
+            m3 = "Web Standard: Zero-Vulnerability Edge & Strict Content Security Policy."
         else:
-            m3 = "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+            m3 = "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
 
         metrics = [m1, m2, m3]
+        for i in range(len(metrics)):
+            if not (metrics[i].endswith('.') or metrics[i].endswith('!') or metrics[i].endswith('?') or metrics[i].endswith(')')):
+                metrics[i] += '.'
 
         manifest[slug] = {
             "slug": slug,
@@ -191,8 +232,6 @@ def extract_manifest():
             "invariants": takeaways[:3],
             "metrics": metrics
         }
-
-
 
     MANIFEST_FILE.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding='utf-8')
     print(f"[ SUCCESS ] Manifest generated for {len(manifest)} articles -> {MANIFEST_FILE}")

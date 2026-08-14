@@ -21,9 +21,9 @@
       "Audit Ruleset Modularization: Structure rules inside /etc/audit/rules.d/."
     ],
     "metrics": [
-      "Architecture Domain: CYBERSECURITY • AUDITDDFIR",
       "Operational Impact: Log Analysis via ausearch - Query security event logs efficiently with aureport and ausearch.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "chroot-jail-and-unprivileged-namespaces-isolation": {
@@ -48,9 +48,9 @@
       "No-Root Security: Prevent container breakouts by dropping root capabilities."
     ],
     "metrics": [
-      "Architecture Domain: SYSTEMHARDENING • PROCESSISOLATION",
       "Operational Impact: Minimal File System Footprint - Build lightweight jails without full OS layers.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "cilium-ebpf-cloud-native-network-security-and-cilium-tetragon": {
@@ -77,9 +77,9 @@
       "Tetragon Security Tracing: Detect privilege escalations, file integrity violations, and namespace escapes in real-time."
     ],
     "metrics": [
-      "Architecture Domain: CLOUDSECURITY • KUBERNETESEBPF",
       "Operational Impact: Kernel Observability - Export low-overhead Security Observability metrics to Prometheus and SIEM platforms.",
-      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
+      "Packet Processing: In-kernel JIT bytecode evaluation with zero context-switch overhead.",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
     ]
   },
   "colbert-late-interaction-advanced-rag": {
@@ -106,9 +106,9 @@
       "PLAID Indexing: Compress token vectors using residual quantization to achieve sub-10ms search over millions of documents."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING • RAG",
-      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
-      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation.",
+      "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste.",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
     ]
   },
   "container-image-signing-and-slsa-provenance-with-cosign": {
@@ -135,9 +135,9 @@
       "SLSA Provenance Attestation: Attach cryptographically signed SLSA build provenance attestations to container images."
     ],
     "metrics": [
-      "Architecture Domain: SUPPLYCHAINSECURITY • DEVOPS",
       "Operational Impact: Kyverno Policy Enforcement - Block un-signed or non-compliant container images from running in Kubernetes clusters.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Cryptographic Guarantee: Short-lived certificate lifetimes with hardware-backed authentication.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "dspy-declarative-prompting-optimization": {
@@ -164,9 +164,9 @@
       "Teleprompter Compilers: Use algorithms like MIPRO to automatically generate, evaluate, and optimize prompts against metrics."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING • PROMPTING",
-      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
-      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation.",
+      "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste.",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
     ]
   },
   "ebpf-xdp-packet-filtering-and-ddos-mitigation": {
@@ -178,14 +178,14 @@
       "xdpddosdefense"
     ],
     "code_snippet": [
-      "#include <linux/bpf.h>",
-      "#include <linux/if_ether.h>",
-      "#include <linux/ip.h>",
-      "#include <bpf/bpf_helpers.h>",
       "struct {",
       "    __uint(type, BPF_MAP_TYPE_HASH);",
       "    __uint(max_entries, 100000);",
-      "    __type(key, __be32);"
+      "    __type(key, __be32);",
+      "    __type(value, __u64);",
+      "} blacklist SEC(\"maps\");",
+      "SEC(\"xdp\")",
+      "}"
     ],
     "invariants": [
       "XDP_DROP Early Decision: Drop malicious UDP/SYN floods before allocating sk_buff memory.",
@@ -193,9 +193,9 @@
       "Zero-Copy Performance: Process 10M+ packets per second on commodity server hardware."
     ],
     "metrics": [
-      "Architecture Domain: LINUXKERNEL • XDPDDOSDEFENSE",
       "Operational Impact: Clang/LLVM BPF Compilation - Build C programs directly into BPF bytecode targets.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Packet Processing: In-kernel JIT bytecode evaluation with zero context-switch overhead.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "fail2ban-intrusion-prevention-and-ssh-abuse-mitigation": {
@@ -222,9 +222,9 @@
       "Nginx 40x Log Monitoring: Ban aggressive web scanners triggering repeated 404/403 HTTP errors."
     ],
     "metrics": [
-      "Architecture Domain: CYBERSECURITY • FAIL2BANDEFENSE",
       "Operational Impact: NFTables Backend - Migrate from legacy iptables actions to high-performance nftables banning.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "http3-quic-security-hardening-and-0rtt-mitigation-blueprint": {
@@ -243,7 +243,7 @@
       "    server_name zyekh.com;",
       "    # Mandatory TLS 1.3 for QUIC",
       "    ssl_protocols TLSv1.3;",
-      "    ssl_certificate /etc/letsencrypt/live/zyekh.com/fullchain.pem;"
+      "}"
     ],
     "invariants": [
       "UDP Flood Mitigation: Enforce strict eBPF/XDP rate limiting on UDP port 443 to prevent QUIC amplification attacks.",
@@ -251,9 +251,9 @@
       "Connection ID Privacy: Enable randomized QUIC Connection ID rotation to prevent client tracking across networks."
     ],
     "metrics": [
-      "Architecture Domain: WEBSECURITY • NETWORKPROTOCOLS",
       "Operational Impact: Active Migration Protection - Require Path Validation (PATH_CHALLENGE) when clients switch network interfaces.",
-      "Web Standard: Zero-Vulnerability Edge & Strict Content Security Policy"
+      "Transport Hardening: Strict TLS 1.3 cryptographic ciphers with zero-trust origin boundaries.",
+      "Web Standard: Zero-Vulnerability Edge & Strict Content Security Policy."
     ]
   },
   "kubernetes-pod-security-standards-pss-and-admission-control": {
@@ -280,9 +280,9 @@
       "Non-Root Enforcement: Block containers running as root (UID 0) or requesting privilege escalation (allowPrivilegeEscalation=false)."
     ],
     "metrics": [
-      "Architecture Domain: CLOUDSECURITY • KUBERNETES",
       "Operational Impact: Audit & Warn Modes - Test security standards across production namespaces without breaking existing pod workloads.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Cryptographic Guarantee: Short-lived certificate lifetimes with hardware-backed authentication.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "kv-cache-int4-quantization-long-context": {
@@ -309,9 +309,9 @@
       "Outlier Preservation: Keep recent tokens and high-magnitude attention outliers in FP16 to preserve needle-in-a-haystack retrieval."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING • QUANTIZATION",
-      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
-      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation.",
+      "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste.",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
     ]
   },
   "linux-audit-logging-with-vector-and-clickhouse-dfir": {
@@ -338,9 +338,9 @@
       "Real-Time DFIR Queries: Execute SQL analytical queries over billions of kernel process events in sub-seconds."
     ],
     "metrics": [
-      "Architecture Domain: SECURITYMONITORING • DFIR",
       "Operational Impact: Zero Log Loss Architecture - Utilize Vector disk-backed memory buffers to survive network outages.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "linux-kernel-sysctl-hardening-network-stack-security": {
@@ -367,9 +367,9 @@
       "ICMP Redirect Defense: Disable accept_redirects and send_redirects across interfaces."
     ],
     "metrics": [
-      "Architecture Domain: LINUXKERNEL • SYSCTLHARDENING",
       "Operational Impact: ASLR & Memory Protection - Enforce kernel.randomize_va_space=2 and dmesg restrictions.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "linux-landlock-lsm-unprivileged-sandboxing-blueprint": {
@@ -388,7 +388,7 @@
       "                         LANDLOCK_ACCESS_FS_WRITE_FILE,",
       "};",
       "int ruleset_fd = landlock_create_ruleset(&attr, sizeof(attr), 0);",
-      "struct landlock_path_beneath_attr path_attr = {"
+      "}"
     ],
     "invariants": [
       "Unprivileged Access Control: Restrict process filesystem and network access without requiring root (CAP_SYS_ADMIN) privileges.",
@@ -396,9 +396,9 @@
       "Network Socket Binding Limits: Restrict TCP bind and connect calls at the process level."
     ],
     "metrics": [
-      "Architecture Domain: LINUXSECURITY • ACCESSCONTROL",
       "Operational Impact: Inherited Security Rules - Landlock rules automatically apply to all child processes spawned by the sandboxed process.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "linux-seccomp-bpf-syscall-filtering-hardening-guide": {
@@ -411,13 +411,13 @@
     ],
     "code_snippet": [
       "// C Implementation of Seccomp-BPF Syscall Allowlist",
-      "#include <seccomp.h>",
-      "#include <stdio.h>",
-      "#include <stdlib.h>",
-      "#include <unistd.h>",
       "int init_seccomp_sandbox() {",
       "    // Initialize default-kill Seccomp context",
-      "    scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_KILL);"
+      "    scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_KILL);",
+      "    if (!ctx) return -1;",
+      "    // Allow essential system calls",
+      "    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(read), 0);",
+      "}"
     ],
     "invariants": [
       "Syscall Attack Surface Reduction: Block unused system calls (e.g., ptrace, reboot, kexec_load) at the kernel boundary.",
@@ -425,9 +425,9 @@
       "Default-Deny Policy: Enforce SECCOMP_RET_KILL_PROCESS or SECCOMP_RET_ERRNO for unapproved syscalls."
     ],
     "metrics": [
-      "Architecture Domain: LINUXSECURITY • PROCESSISOLATION",
       "Operational Impact: Container Integration - Deploy custom Seccomp profiles across Docker, Podman, and Kubernetes workloads.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "linux-vps-hardening-guide-2026": {
@@ -454,9 +454,9 @@
       "Firewall & Rate Limiting: Implement Uncomplicated Firewall (UFW) with default-deny inbound rules and SSH brute-force rate limits."
     ],
     "metrics": [
-      "Architecture Domain: SYSTEMHARDENING • LINUXVPS",
       "Operational Impact: Automated Intrusion Prevention - Deploy fail2ban and auditd for continuous log analysis and kernel event tracking.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "minimalist-server-architecture-pure-css-and-static-hosting": {
@@ -475,7 +475,7 @@
       "  --border-color: #27272a;",
       "/* Fluid H1 scaling without JavaScript or media query clutter */",
       ".hero-title {",
-      "  font-family: 'Outfit', sans-serif;"
+      "}"
     ],
     "invariants": [
       "Zero Attack Surface: Eliminating server-side runtime engines (PHP, Node.js) and SQL databases removes SQLi, RCE, and session vulnerabilities.",
@@ -483,9 +483,9 @@
       "Zero Infrastructure Maintenance: No database patching, runtime updates, or server reboot cycles required."
     ],
     "metrics": [
-      "Architecture Domain: WEBPERFORMANCE • STATICARCHITECTURE",
       "Operational Impact: Extreme Sustainability & Scalability - Static assets handle traffic surges effortlessly without autoscaling costs or server crashes.",
-      "Web Standard: Zero-Vulnerability Edge & Strict Content Security Policy"
+      "Transport Hardening: Strict TLS 1.3 cryptographic ciphers with zero-trust origin boundaries.",
+      "Web Standard: Zero-Vulnerability Edge & Strict Content Security Policy."
     ]
   },
   "moe-serving-mixture-of-experts-routing": {
@@ -512,9 +512,9 @@
       "Expert Parallelism (EP): Shard individual expert Feed-Forward Networks across multiple GPUs to balance VRAM footprint."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING • ARCHITECTURE",
-      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
-      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation.",
+      "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste.",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
     ]
   },
   "multi-agent-swarm-orchestration-patterns": {
@@ -541,9 +541,9 @@
       "State Machines & Guards: Enforce deterministic state transitions and infinite loop detection guards in agentic execution."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING • AGENTS",
-      "Production Impact: Deterministic low-latency execution with zero external dependencies",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Production Impact: Deterministic low-latency execution with zero external dependencies.",
+      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "nginx-reverse-proxy-security-hardening-blueprint-2026": {
@@ -570,9 +570,9 @@
       "Rate Limiting: Implement limit_req_zone to mitigate HTTP flood attacks."
     ],
     "metrics": [
-      "Architecture Domain: WEBSECURITY • NGINXHARDENING",
       "Operational Impact: TLS 1.3 Strict Ciphers - Mandate ECDHE-ECDSA-AES128-GCM-SHA256 and modern TLS protocols.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Transport Hardening: Strict TLS 1.3 cryptographic ciphers with zero-trust origin boundaries.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "omnirouter-llm-gateway-routing-fallback-patterns": {
@@ -599,9 +599,9 @@
       "Speculative Decoding Pipelines: Accelerate inference by drafting tokens on smaller models and verifying on larger models."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING • ARCHITECTURE",
-      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
-      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation.",
+      "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste.",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
     ]
   },
   "pam-tally2-faillock-account-lockout-policy-guide": {
@@ -628,9 +628,9 @@
       "Unlock Timeouts: Configure unlock_time=900 (15 minutes) for automatic account unlocking."
     ],
     "metrics": [
-      "Architecture Domain: SYSTEMHARDENING • PAMSECURITY",
       "Operational Impact: Root Account Protection - Enable even_deny_root with higher thresholds for root accounts.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "rust-in-linux-kernel-security-and-memory-safety-blueprint-2026": {
@@ -643,13 +643,13 @@
     ],
     "code_snippet": [
       "// Example: Safe Linux Kernel Module in Rust",
-      "use kernel::prelude::*;",
       "module! {",
       "    type: RustKernelDemo,",
       "    name: \"rust_kernel_security\",",
       "    author: \"Zyekh Abdul Qadir Jailani\",",
       "    description: \"Rust Memory Safety Kernel Subsystem\",",
-      "    license: \"GPL\","
+      "    license: \"GPL\",",
+      "}"
     ],
     "invariants": [
       "Memory Safety Enforcement: Eliminate use-after-free, double-free, and buffer overflow vulnerabilities at compile time.",
@@ -657,9 +657,9 @@
       "Strict Concurrency Control: Utilize Rust ownership rules to eliminate data races in multi-threaded kernel worker threads."
     ],
     "metrics": [
-      "Architecture Domain: LINUXSECURITY • KERNELARCHITECTURE",
       "Operational Impact: Kernel Driver Modernization - Write Linux network and device drivers using idiomatic safe Rust abstractions.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "securing-web-applications-with-strict-content-security-policy": {
@@ -686,9 +686,9 @@
       "Strict Transport Security: Enforce HTTPS and HSTS preloading with max-age=63072000; includeSubDomains; preload."
     ],
     "metrics": [
-      "Architecture Domain: WEBSECURITY • CSPHARDENING",
       "Operational Impact: MIME Sniffing Defense - X-Content-Type-Options: nosniff prevents browsers from misinterpreting non-executable files as executable scripts.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "slora-adapter-multiplexing-single-gpu": {
@@ -715,9 +715,9 @@
       "Unified Paging: Manage adapter weights and KV caches in a unified memory pool, eliminating fragmentation during batched inference."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING • PERFORMANCE",
-      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
-      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation.",
+      "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste.",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
     ]
   },
   "ssh-certificates-vault-ca-short-lived-authentication": {
@@ -744,9 +744,9 @@
       "Identity-Based Access: Map OIDC/Okta identity groups directly to Linux user principals and SSH permissions."
     ],
     "metrics": [
-      "Architecture Domain: INFRASTRUCTURESECURITY • SSH",
       "Operational Impact: Comprehensive Audit Trail - Record every SSH certificate issuance event in Vault access logs.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Cryptographic Guarantee: Short-lived certificate lifetimes with hardware-backed authentication.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "structured-output-generation-logits-constraints": {
@@ -773,9 +773,9 @@
       "FSM Grammar Engines: Drive token selection using Context-Free Grammars (CFG) and Pydantic schemas via Outlines & Guidance."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING • LOGITS",
-      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
-      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation.",
+      "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste.",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
     ]
   },
   "systemd-service-sandboxing-and-security-hardening": {
@@ -802,9 +802,9 @@
       "Capability Bounding: Restrict Linux capabilities using CapabilityBoundingSet=."
     ],
     "metrics": [
-      "Architecture Domain: SYSTEMHARDENING • SYSTEMDSECURITY",
       "Operational Impact: System Call Filtering - Block dangerous syscalls via SystemCallFilter=@system-service.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "ufw-firewall-hardening-and-rate-limiting-blueprint-2026": {
@@ -831,9 +831,9 @@
       "Custom Application Profiles: Define precise port and protocol definitions in /etc/ufw/applications.d/."
     ],
     "metrics": [
-      "Architecture Domain: SYSTEMHARDENING • UFWFIREWALL",
       "Operational Impact: Routed Packet Filtering - Restrict IPv4/IPv6 forwarding across network bridges and container interfaces.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "understanding-linux-ebpf-security-monitoring": {
@@ -846,13 +846,12 @@
     ],
     "code_snippet": [
       "// C code using eBPF CO-RE struct relocation",
-      "#include <vmlinux.h>",
-      "#include <bpf/bpf_helpers.h>",
-      "#include <bpf/bpf_core_read.h>",
       "SEC(\"kprobe/sys_execve\")",
       "int BPF_KPROBE(trace_exec, const char *filename) {",
       "    u32 pid = bpf_get_current_pid_tgid() >> 32;",
-      "    bpf_printk(\"Execve triggered by PID %d\\n\", pid);"
+      "    bpf_printk(\"Execve triggered by PID %d\\n\", pid);",
+      "    return 0;",
+      "char LICENSE[] SEC(\"license\") = \"GPL\";"
     ],
     "invariants": [
       "Kernel-Level Visibility: eBPF enables non-intrusive tracing of system calls, process executions, network packets, and file I/O directly within kernel space.",
@@ -860,9 +859,9 @@
       "Safety-Verified Execution: The in-kernel eBPF verifier proves program safety (no memory corruption, no infinite loops) prior to loading."
     ],
     "metrics": [
-      "Architecture Domain: LINUXKERNEL • EBPFMONITORING",
       "Operational Impact: Real-Time Threat Detection - Hook into kprobes, uprobes, and tracepoints to catch container breakouts and rootkit persistence instantly.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Packet Processing: In-kernel JIT bytecode evaluation with zero context-switch overhead.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "vllm-pagedattention-high-throughput-inference-tuning": {
@@ -888,9 +887,9 @@
       "High-Throughput Tuning: Optimize vLLM batch sizes, tensor parallelism, and quantization for massive concurrent requests."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING • PERFORMANCE",
-      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
-      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation.",
+      "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste.",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
     ]
   },
   "webgpu-llm-inference-browser-sandbox": {
@@ -909,7 +908,7 @@
       "@compute @workgroup_size(16, 16)",
       "fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {",
       "    let row = global_id.x;",
-      "    let col = global_id.y;"
+      "}"
     ],
     "invariants": [
       "Zero-Server Cost Architecture: Run 7B parameter models client-side with 0 infrastructure cost and total data privacy.",
@@ -917,9 +916,9 @@
       "Web Worker Offloading: Prevent DOM freezing by decoupling WebGPU tensor execution into background Web Workers."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING • WEBGPU",
-      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
-      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation.",
+      "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste.",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
     ]
   },
   "wireguard-vpn-tunneling-for-secure-vps-mesh-networks": {
@@ -946,9 +945,9 @@
       "Interface Isolation: Bind internal database and backend traffic strictly to WireGuard IP (10.0.0.x)."
     ],
     "metrics": [
-      "Architecture Domain: WEBSECURITY • WIREGUARDMESH",
       "Operational Impact: Automated Peer Routing - Configure AllowedIPs to enforce point-to-point mesh routing.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "zero-trust-microservices-with-wasm-runtime-sandboxing": {
@@ -961,13 +960,13 @@
     ],
     "code_snippet": [
       "// Rust Microservice compiled to wasm32-wasip1 target",
-      "use std::fs::File;",
-      "use std::io::Read;",
       "fn main() -> Result<(), Box<dyn std::error::Error>> {",
       "    println!(\"Executing isolated Wasm microservice...\");",
       "    // WASI capability check: Accessing un-mapped directories will fail gracefully",
       "    let mut file = File::open(\"/data/config.json\")?;",
-      "    let mut content = String::new();"
+      "    let mut content = String::new();",
+      "    file.read_to_string(&mut content)?;",
+      "}"
     ],
     "invariants": [
       "Memory Isolation: Wasm runtimes enforce strict linear memory bounds, preventing out-of-bounds pointer reads and memory corruption.",
@@ -975,9 +974,9 @@
       "Nanosecond Cold Starts: Execute microservices in sub-millisecond timeframes compared to multi-second container startup overhead."
     ],
     "metrics": [
-      "Architecture Domain: CLOUDSECURITY • WEBASSEMBLY",
       "Operational Impact: Polyglot Security - Compile Rust, Go, C/C++, and Zig applications to portable Wasm bytecode binaries.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Runtime Sandboxing: Wasm linear memory sandbox with sub-millisecond cold starts.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "zero-trust-ssh-access-with-fido2-and-ssh-ca": {
@@ -1003,9 +1002,9 @@
       "Centralized Authority: Use an offline SSH Certificate Authority (CA) to sign user access requests with automatic 8-hour expiration."
     ],
     "metrics": [
-      "Architecture Domain: CYBERSECURITY • ZEROTRUSTSSH",
       "Operational Impact: Zero Administrative Sprawl - Adding or revoking user permissions requires zero modifications on target servers.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Cryptographic Guarantee: Short-lived certificate lifetimes with hardware-backed authentication.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   }
 }

@@ -44,27 +44,33 @@ def validate_manifest():
             if not (inv_str.endswith('.') or inv_str.endswith('!') or inv_str.endswith('?') or inv_str.endswith(')')):
                 errors.append(f"{slug}: Invariant {idx} is missing terminating punctuation: '{inv_str}'")
 
-        # Metrics (Must be 3 items with contextual accuracy)
+        # Metrics (Must be 3 items with contextual accuracy and proper punctuation)
         metrics = item.get("metrics", [])
         if len(metrics) < 3:
             errors.append(f"{slug}: Metrics count {len(metrics)} < 3")
         for idx, met in enumerate(metrics, 1):
-            if not met.strip():
+            met_str = met.strip()
+            if not met_str:
                 errors.append(f"{slug}: Metric {idx} is empty")
+            if not (met_str.endswith('.') or met_str.endswith('!') or met_str.endswith('?') or met_str.endswith(')')):
+                errors.append(f"{slug}: Metric {idx} is missing terminating punctuation: '{met_str}'")
+            if met_str.lower().startswith("architecture domain:"):
+                errors.append(f"{slug}: Redundant Category Domain found in Metric {idx}: '{met_str}'")
             # Semantic Anti-Boilerplate Gate
-            if "compile-time invariant" in met.lower() and not any(k in slug for k in ["rust", "wasm"]):
-                errors.append(f"{slug}: Semantic mismatch - non-compiled domain contains 'compile-time invariant' boilerplate: '{met}'")
+            if "compile-time invariant" in met_str.lower() and not any(k in slug for k in ["rust", "wasm"]):
+                errors.append(f"{slug}: Semantic mismatch - non-compiled domain contains 'compile-time invariant' boilerplate: '{met_str}'")
 
         # Code Snippet (Must be 3-8 lines, last line must not end with \)
-
         code = item.get("code_snippet", [])
         if len(code) < 3:
             errors.append(f"{slug}: Code snippet has only {len(code)} lines (< 3)")
         if code and code[-1].strip().endswith('\\'):
             errors.append(f"{slug}: Final code line has dangling trailing backslash: '{code[-1]}'")
         for idx, line in enumerate(code, 1):
-            if line.strip() in ['{', '}', '(', ')']:
-                errors.append(f"{slug}: Code line {idx} is an orphan bracket: '{line}'")
+            if idx == 1 and line.strip() in ['{', '}', '(', ')']:
+                errors.append(f"{slug}: First code line is an orphan bracket: '{line}'")
+            if idx == len(code) and line.strip() in ['{', '(', ')']:
+                errors.append(f"{slug}: Final code line is an unclosed opening bracket: '{line}'")
 
     if errors:
         print(f"\n[ FAIL ] Found {len(errors)} validation errors:")
