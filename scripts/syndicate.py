@@ -271,15 +271,38 @@ def publish_devto(article):
         print(f"[ ERROR ] Dev.to Publish Failed: {e}")
         return False
 
+def resolve_bluesky_pds(handle_or_did):
+    did = handle_or_did
+    if not handle_or_did.startswith("did:"):
+        try:
+            url = f"https://bsky.social/xrpc/com.atproto.identity.resolveHandle?handle={handle_or_did}"
+            with urllib.request.urlopen(url, timeout=5) as resp:
+                data = json.loads(resp.read().decode())
+                did = data.get("did", handle_or_did)
+        except Exception:
+            pass
+    if did.startswith("did:plc:"):
+        try:
+            url = f"https://plc.directory/{did}"
+            with urllib.request.urlopen(url, timeout=5) as resp:
+                data = json.loads(resp.read().decode())
+                for svc in data.get("service", []):
+                    if svc.get("type") == "AtprotoPersonalDataServer":
+                        return svc.get("serviceEndpoint", "https://bsky.social"), did
+        except Exception:
+            pass
+    return "https://bsky.social", did
+
 def publish_bluesky(article):
     load_dotenv()
     handle = os.environ.get('BSKY_HANDLE')
     password = os.environ.get('BSKY_APP_PASSWORD')
-    pds_server = os.environ.get('BSKY_SERVER', 'https://bsky.social')
 
     if not handle or not password:
         print("[ WARN ] BSKY_HANDLE or BSKY_APP_PASSWORD not set in environment or .env file.")
         return False
+
+    pds_server, did = resolve_bluesky_pds(handle)
 
     # 1. Create Session
     session_endpoint = f"{pds_server.rstrip('/')}/xrpc/com.atproto.server.createSession"
@@ -294,7 +317,7 @@ def publish_bluesky(article):
         with urllib.request.urlopen(req, timeout=10) as resp:
             session_data = json.loads(resp.read().decode('utf-8'))
             access_jwt = session_data.get('accessJwt')
-            did = session_data.get('did')
+            did = session_data.get('did', did)
     except Exception as e:
         print(f"[ ERROR ] Bluesky Auth Failed: {e}")
         return False
