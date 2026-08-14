@@ -1082,6 +1082,10 @@ details[open] summary::after { content: '\2212'; }
   border: 1px solid var(--border-color);
   color: var(--text-main);
   padding: 0.45rem 1rem;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 500;

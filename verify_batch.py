@@ -94,6 +94,11 @@ def verify_all_articles():
             if h2_count < 4:
                 errors.append(f"Section depth deficit: {h2_count} H2 headings (Minimum required: 4 sections)")
             
+        # Check 16: Hero Image LCP Performance Optimization Check (loading="eager")
+        hero_img_el = soup.find('img', class_='article-hero-img')
+        if hero_img_el and hero_img_el.get('loading') == 'lazy':
+            errors.append("Hero image loading attribute set to 'lazy' instead of 'eager' (LCP Bottleneck)")
+            
         if errors:
             failures += 1
             print(f"[FAIL] {filename}:")

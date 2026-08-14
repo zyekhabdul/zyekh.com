@@ -4,15 +4,15 @@ import sys
 import argparse
 import urllib.parse
 import urllib.request
-import xml.etree.ElementTree as ET
-import glob
 import re
 import json
 import html
 import webbrowser
+from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BLOG_DIR = os.path.join(BASE_DIR, "blog")
+BASE_DIR = Path(__file__).resolve().parent.parent
+BLOG_DIR = BASE_DIR / "blog"
 BASE_URL = "https://zyekh.com"
 
 SUBREDDITS = [
@@ -25,8 +25,8 @@ SUBREDDITS = [
 ]
 
 def load_dotenv():
-    env_file = os.path.join(BASE_DIR, ".env")
-    if os.path.exists(env_file):
+    env_file = BASE_DIR / ".env"
+    if env_file.exists():
         with open(env_file, 'r', encoding='utf-8') as f:
             for line in f:
                 line = line.strip()
@@ -34,12 +34,12 @@ def load_dotenv():
                     k, v = line.split('=', 1)
                     os.environ[k.strip()] = v.strip()
 
-def parse_article_metadata(filepath):
-    content = open(filepath, 'r', encoding='utf-8').read()
+def parse_article_metadata(filepath: Path):
+    content = filepath.read_text(encoding='utf-8')
     
     # Title
     title_match = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE | re.DOTALL)
-    title = html.unescape(title_match.group(1).strip()) if title_match else os.path.basename(filepath)
+    title = html.unescape(title_match.group(1).strip()) if title_match else filepath.name
     title = re.sub(r'\s*—\s*zyekh\.com.*', '', title)
     title = re.sub(r'\s*\|\s*zyekh\.com.*', '', title)
 
@@ -47,8 +47,20 @@ def parse_article_metadata(filepath):
     desc_match = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', content, re.IGNORECASE | re.DOTALL)
     description = html.unescape(desc_match.group(1).strip()) if desc_match else ""
 
+    # Dynamic Tags Extraction from HTML meta-tags or tags-container
+    extracted_tags = []
+    tag_matches = re.findall(r'<span\s+class=["\']meta-tag["\']>\s*#?([\w-]+)\s*</span>', content, re.IGNORECASE)
+    if tag_matches:
+        for t in tag_matches:
+            clean_t = t.lower().strip()
+            if clean_t and clean_t not in extracted_tags:
+                extracted_tags.append(clean_t)
+    
+    if not extracted_tags:
+        extracted_tags = ["security", "linux", "devops", "architecture"]
+
     # Slug / Relative URL
-    rel_path = os.path.relpath(filepath, BASE_DIR)
+    rel_path = filepath.relative_to(BASE_DIR)
     url = f"{BASE_URL}/{rel_path}"
 
     # Exec Summary / TL;DR text
@@ -82,14 +94,15 @@ def parse_article_metadata(filepath):
         'url': url,
         'exec_summary': exec_summary,
         'body': article_body,
-        'filename': os.path.basename(filepath)
+        'tags': extracted_tags,
+        'filename': filepath.name
     }
 
 def get_all_articles():
-    html_files = sorted(glob.glob(os.path.join(BLOG_DIR, "*.html")))
+    html_files = sorted(BLOG_DIR.glob("*.html"))
     articles = []
     for f in html_files:
-        if os.path.basename(f) != "index.html":
+        if f.name != "index.html":
             articles.append(parse_article_metadata(f))
     return articles
 
@@ -117,7 +130,8 @@ def publish_mastodon(article):
         print("[ WARN ] MASTODON_ACCESS_TOKEN not set in environment or .env file.")
         return False
 
-    status_text = f"{article['title']}\n\n{article['description']}\n\n[ Read Full Article -> ] {article['url']}\n\n#Security #Linux #DevOps #Engineering"
+    tags_str = ' '.join([f"#{t.capitalize()}" for t in article['tags']])
+    status_text = f"{article['title']}\n\n{article['description']}\n\n[ Read Full Article -> ] {article['url']}\n\n{tags_str}"
     endpoint = f"{server.rstrip('/')}/api/v1/statuses"
     payload = json.dumps({'status': status_text, 'visibility': 'public'}).encode('utf-8')
 
@@ -131,7 +145,7 @@ def publish_mastodon(article):
         }
     )
     try:
-        with urllib.request.urlopen(req) as resp:
+        with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read().decode('utf-8'))
             post_url = data.get('url', data.get('id', 'published'))
             print(f"[ SUCCESS ] Mastodon Post Published: {post_url}")
@@ -162,7 +176,7 @@ def publish_devto(article):
             "title": article['title'],
             "published": True,
             "body_markdown": body_content,
-            "tags": ["security", "linux", "devops", "architecture"],
+            "tags": article['tags'][:4],
             "canonical_url": article['url'],
             "description": article['description']
         }
@@ -178,7 +192,7 @@ def publish_devto(article):
         }
     )
     try:
-        with urllib.request.urlopen(req) as resp:
+        with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read().decode('utf-8'))
             url = data.get('url', 'published')
             print(f"[ SUCCESS ] Dev.to Article Published: {url}")
@@ -187,10 +201,75 @@ def publish_devto(article):
         print(f"[ ERROR ] Dev.to Publish Failed: {e}")
         return False
 
+def publish_bluesky(article):
+    load_dotenv()
+    handle = os.environ.get('BSKY_HANDLE')
+    password = os.environ.get('BSKY_APP_PASSWORD')
+    pds_server = os.environ.get('BSKY_SERVER', 'https://bsky.social')
+
+    if not handle or not password:
+        print("[ WARN ] BSKY_HANDLE or BSKY_APP_PASSWORD not set in environment or .env file.")
+        return False
+
+    # 1. Create Session
+    session_endpoint = f"{pds_server.rstrip('/')}/xrpc/com.atproto.server.createSession"
+    session_payload = json.dumps({"identifier": handle, "password": password}).encode('utf-8')
+
+    req = urllib.request.Request(
+        session_endpoint,
+        data=session_payload,
+        headers={'Content-Type': 'application/json', 'User-Agent': 'ZyekhSyndicator/1.0'}
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            session_data = json.loads(resp.read().decode('utf-8'))
+            access_jwt = session_data.get('accessJwt')
+            did = session_data.get('did')
+    except Exception as e:
+        print(f"[ ERROR ] Bluesky Auth Failed: {e}")
+        return False
+
+    # 2. Post Record
+    post_endpoint = f"{pds_server.rstrip('/')}/xrpc/com.atproto.repo.createRecord"
+    status_text = f"{article['title']}\n\n{article['description']}\n\n[ Read Full Article -> ] {article['url']}"
+
+    import datetime
+    now_iso = datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z")
+
+    record_payload = json.dumps({
+        "repo": did,
+        "collection": "app.bsky.feed.post",
+        "record": {
+            "$type": "app.bsky.feed.post",
+            "text": status_text,
+            "createdAt": now_iso
+        }
+    }).encode('utf-8')
+
+    post_req = urllib.request.Request(
+        post_endpoint,
+        data=record_payload,
+        headers={
+            'Authorization': f'Bearer {access_jwt}',
+            'Content-Type': 'application/json',
+            'User-Agent': 'ZyekhSyndicator/1.0'
+        }
+    )
+    try:
+        with urllib.request.urlopen(post_req, timeout=10) as resp:
+            data = json.loads(resp.read().decode('utf-8'))
+            uri = data.get('uri', 'published')
+            print(f"[ SUCCESS ] Bluesky Post Published: {uri}")
+            return True
+    except Exception as e:
+        print(f"[ ERROR ] Bluesky Post Failed: {e}")
+        return False
+
 def print_syndication_package(article, auto_open=False):
     print("=" * 70)
     print(f"[ ARTICLE ] {article['title']}")
     print(f"[ URL ] {article['url']}")
+    print(f"[ TAGS ] {', '.join(article['tags'])}")
     print("=" * 70)
 
     print("\n[ REDDIT INTENT SUBMIT URLS (1-CLICK AUTO-FILL) ]")
@@ -218,7 +297,7 @@ def print_syndication_package(article, auto_open=False):
     print(f"published: true")
     print(f"canonical_url: {article['url']}")
     print(f"description: '{article['description']}'")
-    print("tags: linux, security, devops, architecture")
+    print(f"tags: {', '.join(article['tags'][:4])}")
     print("---\n")
 
     print("[ REDDIT DRAFT POST SNIPPET (COPY-PASTE) ]")
@@ -244,7 +323,8 @@ def main():
     parser.add_argument("--open", "-o", action="store_true", help="Auto-open submit tabs in browser")
     parser.add_argument("--publish-mastodon", action="store_true", help="Auto-publish status to Mastodon API")
     parser.add_argument("--publish-devto", action="store_true", help="Auto-publish article to Dev.to API")
-    parser.add_argument("--publish", "-p", action="store_true", help="Auto-publish to both Mastodon and Dev.to APIs")
+    parser.add_argument("--publish-bsky", action="store_true", help="Auto-publish status to Bluesky API")
+    parser.add_argument("--publish", "-p", action="store_true", help="Auto-publish to all social APIs (Mastodon, Dev.to, Bluesky)")
     args = parser.parse_args()
 
     articles = get_all_articles()
@@ -262,18 +342,28 @@ def main():
             print(f"[ WARN ] Article matching '{args.slug}' not found.")
             sys.exit(1)
     else:
-        articles_by_mtime = sorted(articles, key=lambda x: os.path.getmtime(os.path.join(BLOG_DIR, x['filename'])), reverse=True)
+        articles_by_mtime = sorted(articles, key=lambda x: (BLOG_DIR / x['filename']).stat().st_mtime, reverse=True)
         selected_article = articles_by_mtime[0]
 
     print_syndication_package(selected_article, auto_open=args.open)
 
+    # Parallel API Execution via ThreadPoolExecutor
+    publish_tasks = []
     if args.publish or args.publish_mastodon:
-        print("\n[ API PUBLISH ] Broadcasting to Mastodon...")
-        publish_mastodon(selected_article)
+        publish_tasks.append(("Mastodon", publish_mastodon))
 
     if args.publish or args.publish_devto:
-        print("\n[ API PUBLISH ] Broadcasting to Dev.to...")
-        publish_devto(selected_article)
+        publish_tasks.append(("Dev.to", publish_devto))
+
+    if args.publish or args.publish_bsky:
+        publish_tasks.append(("Bluesky", publish_bluesky))
+
+    if publish_tasks:
+        print("\n[ API PARALLEL PUBLISH ] Broadcasting to social APIs concurrently...")
+        with ThreadPoolExecutor(max_workers=len(publish_tasks)) as executor:
+            futures = [executor.submit(func, selected_article) for name, func in publish_tasks]
+            for future in futures:
+                future.result()
 
 if __name__ == "__main__":
     main()

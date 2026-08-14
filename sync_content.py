@@ -148,6 +148,10 @@ def sync_all(bump_version=False):
                 csp_meta = f'<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\' {" ".join(hashes)}; style-src \'self\' \'unsafe-inline\'; img-src \'self\' data: https:; font-src \'self\'; connect-src \'self\'; form-action \'self\'; frame-ancestors \'none\';">'
                 c = c.replace("</head>", f"  {csp_meta}\n</head>")
             
+        # LCP Performance: Ensure Hero Image in blog articles uses loading="eager" instead of "lazy"
+        if f.startswith("blog/") and f != "blog/index.html":
+            c = re.sub(r'(<img[^>]*class=["\'][^"\']*article-hero-img[^"\']*["\'][^>]*)loading=["\']lazy["\']', r'\1loading="eager"', c)
+
         open(f, "w", encoding="utf-8").write(c)
     print(f"[SYNC] Updated query version ?v={new_ver} across {len(html_files)} HTML files.")
 
