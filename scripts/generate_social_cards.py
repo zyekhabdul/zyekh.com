@@ -134,13 +134,13 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         # =========================================================================
         # 1:1 SQUARE INFOGRAPHIC LAYOUT (2400 x 2400) — ADAPTIVE DYNAMIC SIZING
         # =========================================================================
-        # 1. Title Auto-Scaling ("Semakin banyak teks, semakin kecil")
+        # 1. Title Auto-Scaling ("Semakin sedikit teks, semakin besar")
         if len(raw_title) <= 48:
-            title_font_size, title_line_h = 92, 120
+            title_font_size, title_line_h = 96, 126
         elif len(raw_title) <= 75:
-            title_font_size, title_line_h = 82, 108
+            title_font_size, title_line_h = 86, 112
         else:
-            title_font_size, title_line_h = 74, 98
+            title_font_size, title_line_h = 76, 100
 
         font_tag = get_font(size=42, family="mono", is_bold=False)
         font_title = get_font(size=title_font_size, family="outfit", is_bold=True)
@@ -148,35 +148,34 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         font_pillar_head = get_font(size=36, family="mono", is_bold=False)
         font_meta = get_font(size=34, family="mono", is_bold=False)
 
-
         # 2. Description Auto-Scaling
         desc_text = article_data.get('description', '')
         if len(desc_text) <= 90:
-            desc_font_size, desc_line_h = 46, 62
+            desc_font_size, desc_line_h = 48, 66
         elif len(desc_text) <= 160:
-            desc_font_size, desc_line_h = 42, 56
+            desc_font_size, desc_line_h = 44, 58
         else:
-            desc_font_size, desc_line_h = 38, 52
+            desc_font_size, desc_line_h = 40, 54
         font_desc = get_font(size=desc_font_size, family="sans", is_bold=False)
 
         # 3. Code Auto-Scaling
         raw_code = article_data.get('code_snippet', [])
         total_code_chars = sum(len(l) for l in raw_code)
         if len(raw_code) <= 5 and total_code_chars <= 220:
-            code_font_size, code_line_h, max_code_lines = 42, 58, 6
+            code_font_size, code_line_h, max_code_lines = 44, 62, 6
         elif len(raw_code) <= 7 and total_code_chars <= 360:
-            code_font_size, code_line_h, max_code_lines = 38, 52, 8
+            code_font_size, code_line_h, max_code_lines = 40, 56, 8
         else:
-            code_font_size, code_line_h, max_code_lines = 34, 48, 8
+            code_font_size, code_line_h, max_code_lines = 36, 50, 8
         font_code = get_font(size=code_font_size, family="mono", is_bold=False)
 
         # 4. Invariants Auto-Scaling
         invariants = article_data.get('invariants', [])[:3]
         total_inv_chars = sum(len(x) for x in invariants)
         if total_inv_chars <= 180:
-            inv_font_size, inv_line_h = 40, 54
+            inv_font_size, inv_line_h = 42, 58
         elif total_inv_chars <= 270:
-            inv_font_size, inv_line_h = 37, 50
+            inv_font_size, inv_line_h = 38, 52
         else:
             inv_font_size, inv_line_h = 34, 46
         font_inv_body = get_font(size=inv_font_size, family="sans", is_bold=False)
@@ -185,13 +184,12 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         metrics = article_data.get('metrics', [])[:3]
         total_met_chars = sum(len(x) for x in metrics)
         if total_met_chars <= 180:
-            met_font_size, met_line_h = 40, 54
+            met_font_size, met_line_h = 42, 58
         elif total_met_chars <= 270:
-            met_font_size, met_line_h = 37, 50
+            met_font_size, met_line_h = 38, 52
         else:
             met_font_size, met_line_h = 34, 46
         font_met_body = get_font(size=met_font_size, family="sans", is_bold=False)
-
 
         # --- DRAWING PASS ---
         # A. Category Tag
@@ -227,9 +225,8 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         p2_h = 68 + (total_met_lines * met_line_h) + (len(metrics) * 8) + 18
 
         footer_y = height - margin - 45
-        available_budget = footer_y - curr_y - 20
-        total_boxes_h = box_h + p1_h + p2_h
-        gap_between_boxes = max(24, (available_budget - total_boxes_h) // 3)
+        gap_between_boxes = 24
+
 
         # D. Terminal Architecture Window
         curr_y += 20
@@ -280,9 +277,11 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
                 py += met_line_h
             py += 8
 
-        # G. Collision-Free Footer
-        if curr_y + p2_h + 30 <= footer_y:
+        # G. Cohesive Footer (Directly below Pillar 2)
+        footer_y = curr_y + p2_h + 40
+        if footer_y + 40 <= height - margin:
             draw.text((margin + 80, footer_y), "OPEN TECHNICAL ARCHITECTURE SPECIFICATION • SYSTEMS & SECURITY BLUEPRINT 2026", fill=text_muted, font=font_meta)
+
 
 
     else:
