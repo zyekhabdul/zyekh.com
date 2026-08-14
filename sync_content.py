@@ -2,6 +2,7 @@
 import glob
 import os
 import re
+import html
 import datetime
 import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
@@ -150,6 +151,33 @@ def sync_all(bump_version=False):
                 csp_meta = f'<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\' {" ".join(hashes)}; style-src \'self\' \'unsafe-inline\'; img-src \'self\' data: https:; font-src \'self\'; connect-src \'self\'; form-action \'self\'; frame-ancestors \'none\';">'
                 c = c.replace("</head>", f"  {csp_meta}\n</head>")
             
+        # OpenGraph Ultra-Hardened Meta Tag Injection for blog articles
+        if f.startswith("blog/") and f != "blog/index.html":
+            slug = os.path.basename(f).replace(".html", "")
+            title_match = re.search(r'<title>(.*?)</title>', c, re.IGNORECASE | re.DOTALL)
+            title = title_match.group(1).strip() if title_match else slug
+            title = re.sub(r'\s*—\s*zyekh\.com.*', '', title)
+            title = re.sub(r'\s*\|\s*zyekh\.com.*', '', title)
+            
+            card_url = f"https://zyekh.com/assets/img/social-cards/{slug}-dark-landscape.png"
+            
+            # Remove legacy og:image and twitter:image tags regardless of attribute ordering
+            c = re.sub(r'<meta\s+[^>]*property=["\']og:image[^"\']*["\'][^>]*>\s*', '', c, flags=re.IGNORECASE)
+            c = re.sub(r'<meta\s+[^>]*name=["\']twitter:image[^"\']*["\'][^>]*>\s*', '', c, flags=re.IGNORECASE)
+            c = re.sub(r'<meta\s+[^>]*name=["\']twitter:card["\'][^>]*>\s*', '', c, flags=re.IGNORECASE)
+            
+            og_hardening = (
+                f'<meta property="og:image" content="{card_url}">\n'
+                f'  <meta property="og:image:secure_url" content="{card_url}">\n'
+                f'  <meta property="og:image:type" content="image/png">\n'
+                f'  <meta property="og:image:width" content="2400">\n'
+                f'  <meta property="og:image:height" content="1260">\n'
+                f'  <meta property="og:image:alt" content="Technical specification card for {html.escape(title)}">\n'
+                f'  <meta name="twitter:card" content="summary_large_image">\n'
+                f'  <meta name="twitter:image" content="{card_url}">\n'
+            )
+            c = c.replace("</head>", f"  {og_hardening}</head>")
+
         # LCP Performance: Ensure Hero Image in blog articles uses loading="eager" instead of "lazy"
         if f.startswith("blog/") and f != "blog/index.html":
             c = re.sub(r'(<img[^>]*class=["\'][^"\']*article-hero-img[^"\']*["\'][^>]*)loading=["\']lazy["\']', r'\1loading="eager"', c)
