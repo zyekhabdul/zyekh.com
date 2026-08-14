@@ -33,7 +33,23 @@ def load_dotenv():
                 line = line.strip()
                 if line and not line.startswith('#') and '=' in line:
                     k, v = line.split('=', 1)
-                    os.environ[k.strip()] = v.strip()
+                    os.environ.setdefault(k.strip(), v.strip())
+
+    # Dual-File MCP Discovery Protocol fallback
+    mcp_paths = [
+        Path.home() / ".gemini" / "config" / "mcp_config.json",
+        Path.home() / ".gemini" / "config" / "mcp_config_extended.json"
+    ]
+    for mcp_path in mcp_paths:
+        if mcp_path.exists():
+            try:
+                cfg = json.loads(mcp_path.read_text(encoding='utf-8'))
+                for server in cfg.get("mcpServers", {}).values():
+                    for k, v in server.get("env", {}).items():
+                        if isinstance(v, str):
+                            os.environ.setdefault(k, v)
+            except Exception:
+                pass
 
 def parse_article_metadata(filepath: Path):
     content = filepath.read_text(encoding='utf-8')
