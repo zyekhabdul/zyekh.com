@@ -132,64 +132,27 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
     if mode == "square":
 
         # =========================================================================
-        # 1:1 SQUARE INFOGRAPHIC LAYOUT (2400 x 2400) — ADAPTIVE DYNAMIC SIZING
+        # 1:1 SQUARE INFOGRAPHIC LAYOUT (2400 x 2400) — STANDARD TYPOGRAPHY
         # =========================================================================
-        # 1. Title Auto-Scaling ("Semakin sedikit teks, semakin besar")
-        if len(raw_title) <= 48:
-            title_font_size, title_line_h = 96, 126
-        elif len(raw_title) <= 75:
-            title_font_size, title_line_h = 86, 112
-        else:
-            title_font_size, title_line_h = 76, 100
+        title_font_size, title_line_h = 76, 100
+        desc_font_size, desc_line_h = 38, 52
+        code_font_size, code_line_h = 34, 48
+        inv_font_size, inv_line_h = 34, 46
+        met_font_size, met_line_h = 34, 46
 
         font_tag = get_font(size=42, family="mono", is_bold=False)
         font_title = get_font(size=title_font_size, family="outfit", is_bold=True)
+        font_desc = get_font(size=desc_font_size, family="sans", is_bold=False)
         font_bar = get_font(size=34, family="mono", is_bold=False)
-        font_pillar_head = get_font(size=36, family="mono", is_bold=False)
+        font_code = get_font(size=code_font_size, family="mono", is_bold=False)
+        font_pillar_head = get_font(size=34, family="mono", is_bold=False)
+        font_inv_body = get_font(size=inv_font_size, family="sans", is_bold=False)
+        font_met_body = get_font(size=met_font_size, family="sans", is_bold=False)
         font_meta = get_font(size=34, family="mono", is_bold=False)
 
-        # 2. Description Auto-Scaling
-        desc_text = article_data.get('description', '')
-        if len(desc_text) <= 90:
-            desc_font_size, desc_line_h = 48, 66
-        elif len(desc_text) <= 160:
-            desc_font_size, desc_line_h = 44, 58
-        else:
-            desc_font_size, desc_line_h = 40, 54
-        font_desc = get_font(size=desc_font_size, family="sans", is_bold=False)
-
-        # 3. Code Auto-Scaling
         raw_code = article_data.get('code_snippet', [])
-        total_code_chars = sum(len(l) for l in raw_code)
-        if len(raw_code) <= 5 and total_code_chars <= 220:
-            code_font_size, code_line_h, max_code_lines = 44, 62, 6
-        elif len(raw_code) <= 7 and total_code_chars <= 360:
-            code_font_size, code_line_h, max_code_lines = 40, 56, 8
-        else:
-            code_font_size, code_line_h, max_code_lines = 36, 50, 8
-        font_code = get_font(size=code_font_size, family="mono", is_bold=False)
-
-        # 4. Invariants Auto-Scaling
         invariants = article_data.get('invariants', [])[:3]
-        total_inv_chars = sum(len(x) for x in invariants)
-        if total_inv_chars <= 180:
-            inv_font_size, inv_line_h = 42, 58
-        elif total_inv_chars <= 270:
-            inv_font_size, inv_line_h = 38, 52
-        else:
-            inv_font_size, inv_line_h = 34, 46
-        font_inv_body = get_font(size=inv_font_size, family="sans", is_bold=False)
-
-        # 5. Metrics Auto-Scaling
         metrics = article_data.get('metrics', [])[:3]
-        total_met_chars = sum(len(x) for x in metrics)
-        if total_met_chars <= 180:
-            met_font_size, met_line_h = 42, 58
-        elif total_met_chars <= 270:
-            met_font_size, met_line_h = 38, 52
-        else:
-            met_font_size, met_line_h = 34, 46
-        font_met_body = get_font(size=met_font_size, family="sans", is_bold=False)
 
         # --- DRAWING PASS ---
         # A. Category Tag
@@ -203,6 +166,7 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             curr_y += title_line_h
 
         # C. Subtitle / Description
+        desc_text = article_data.get('description', '')
         if desc_text:
             desc_lines = wrap_text(desc_text, font_desc, inner_w, draw)[:2]
             curr_y += 8
@@ -224,8 +188,8 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         p1_h = 68 + (total_inv_lines * inv_line_h) + (len(invariants) * 8) + 18
         p2_h = 68 + (total_met_lines * met_line_h) + (len(metrics) * 8) + 18
 
-        footer_y = height - margin - 45
         gap_between_boxes = 24
+
 
 
         # D. Terminal Architecture Window
@@ -286,31 +250,24 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
 
     else:
         # =========================================================================
-        # 16:9 LANDSCAPE OPENGRAPH LAYOUT (2400 x 1260) — ADAPTIVE SIZING
+        # 16:9 LANDSCAPE OPENGRAPH LAYOUT (2400 x 1260) — STANDARD TYPOGRAPHY
         # =========================================================================
-        if len(raw_title) <= 50:
-            title_font_size, title_line_h = 78, 100
-        elif len(raw_title) <= 75:
-            title_font_size, title_line_h = 68, 88
-        else:
-            title_font_size, title_line_h = 60, 78
+        title_font_size, title_line_h = 64, 82
+        desc_font_size, desc_line_h = 32, 44
+        code_font_size, code_line_h = 32, 42
 
         font_tag = get_font(size=40, family="mono", is_bold=False)
         font_title = get_font(size=title_font_size, family="outfit", is_bold=True)
-        
-        desc_text = article_data.get('description', '')
-        desc_font_size = 36 if len(desc_text) <= 120 else 32
         font_desc = get_font(size=desc_font_size, family="sans", is_bold=False)
-        
         font_bar = get_font(size=32, family="mono", is_bold=False)
-        
-        raw_code = article_data.get('code_snippet', [])
-        code_font_size = 34 if len(raw_code) <= 6 else 30
         font_code = get_font(size=code_font_size, family="mono", is_bold=False)
-        
         font_mini_head = get_font(size=28, family="mono", is_bold=False)
         font_mini_body = get_font(size=26, family="sans", is_bold=False)
         font_meta = get_font(size=34, family="mono", is_bold=False)
+
+        raw_code = article_data.get('code_snippet', [])
+        desc_text = article_data.get('description', '')
+
 
         # 1. Category Tag
         draw.text((margin + 80, margin + 45), cat_tag, fill=text_muted, font=font_tag)
