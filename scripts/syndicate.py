@@ -232,12 +232,12 @@ def publish_bluesky(article):
         print(f"[ ERROR ] Bluesky Auth Failed: {e}")
         return False
 
-    # 2. Check/Generate Category Social Card Attachment
-    card_path = BASE_DIR / "assets" / "img" / "social-cards" / f"{article['slug']}.png"
+    # 2. Check/Generate Light Square Social Card Attachment for Bluesky Mobile Feed Breakout
+    card_path = BASE_DIR / "assets" / "img" / "social-cards" / f"{article['slug']}-light-square.png"
     if not card_path.exists():
         try:
             from scripts.generate_social_cards import generate_social_card
-            generate_social_card(article, card_path)
+            generate_social_card(article, card_path, theme="light", mode="square")
         except Exception as err:
             print(f"[ WARN ] Social Card auto-generation skipped: {err}")
 

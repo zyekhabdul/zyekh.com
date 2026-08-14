@@ -71,15 +71,30 @@ def determine_category_standard(title, tags, content):
     else:
         return "A" # Standar A: Kernel Config Matrix
 
-def generate_social_card(article_data, output_path: Path):
-    # 2x High-DPI Retina Canvas Dimensions (2400 x 1260 px) for Crisp 4K Display
-    width, height = 2400, 1260
-    bg_color = (9, 9, 11)       # #09090b (Dark Main)
-    card_color = (20, 20, 23)   # #141417 (Dark Surface)
-    border_color = (39, 39, 42) # #27272a (Border)
-    box_bg = (0, 0, 0)          # #000000 (Code Box)
-    text_main = (250, 250, 250) # #fafafa
-    text_muted = (161, 161, 170)# #a1a1aa
+def generate_social_card(article_data, output_path: Path, theme="dark", mode="landscape"):
+    # Dimensions based on mode
+    if mode == "square":
+        width, height = 2400, 2400
+    else:
+        width, height = 2400, 1260
+
+    # Theme Tokens
+    if theme == "light":
+        bg_color = (244, 244, 245)    # #f4f4f5 (Light Main)
+        card_color = (255, 255, 255)  # #ffffff (Pure White Card)
+        border_color = (212, 212, 216)# #d4d4d8 (Clean Border)
+        box_bg = (244, 244, 245)      # #f4f4f5 (Code Box)
+        box_border = (212, 212, 216)  # #d4d4d8
+        text_main = (9, 9, 11)        # #09090b (Deep Black)
+        text_muted = (82, 82, 91)     # #52525b (Dark Gray)
+    else:
+        bg_color = (9, 9, 11)          # #09090b (Dark Main)
+        card_color = (20, 20, 23)      # #141417 (Dark Surface)
+        border_color = (39, 39, 42)    # #27272a (Border)
+        box_bg = (0, 0, 0)             # #000000 (Code Box)
+        box_border = (39, 39, 42)
+        text_main = (250, 250, 250)    # #fafafa (White)
+        text_muted = (161, 161, 170)   # #a1a1aa (Muted Gray)
 
     img = Image.new("RGB", (width, height), bg_color)
     draw = ImageDraw.Draw(img)
@@ -89,9 +104,16 @@ def generate_social_card(article_data, output_path: Path):
     card_rect = [margin, margin, width - margin, height - margin]
     draw.rectangle(card_rect, fill=card_color, outline=border_color, width=4)
 
-    # High-DPI 2x Fonts
+    # Dynamic Title Font Auto-Scaling
+    raw_title = article_data['title']
+    title_font_size = 64
+    if len(raw_title) > 65:
+        title_font_size = 50
+    elif len(raw_title) > 50:
+        title_font_size = 56
+
     font_tag = get_font(size=36, is_mono=True, is_bold=True)
-    font_title = get_font(size=64, is_mono=False, is_bold=True)
+    font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
     font_body = get_font(size=40, is_mono=False, is_bold=False)
     font_code = get_font(size=34, is_mono=True, is_bold=False)
     font_meta = get_font(size=32, is_mono=True, is_bold=False)
@@ -102,14 +124,15 @@ def generate_social_card(article_data, output_path: Path):
     # 1. Top Category Tag
     draw.text((margin + 70, margin + 70), cat_tag, fill=text_muted, font=font_tag)
 
-    # 2. Main Title (Wrapped max 2 lines)
-    title_lines = wrap_text(article_data['title'], font_title, width - (margin * 2 + 140), draw)
-    title_lines = title_lines[:2]
+    # 2. Main Title (Wrapped max 3 lines)
+    title_lines = wrap_text(raw_title, font_title, width - (margin * 2 + 140), draw)
+    title_lines = title_lines[:3]
     
     curr_y = margin + 140
+    line_h = int(title_font_size * 1.35)
     for line in title_lines:
         draw.text((margin + 70, curr_y), line, fill=text_main, font=font_title)
-        curr_y += 88
+        curr_y += line_h
 
     # Determine Standard Layout
     standard = article_data.get('standard') or determine_category_standard(
@@ -121,9 +144,9 @@ def generate_social_card(article_data, output_path: Path):
 
     if standard == "A":
         # Standar A: Kernel Config Matrix
-        box_h = 320
+        box_h = 340 if mode == "square" else 300
         box_rect = [margin + 70, curr_y, margin + 70 + inner_w, curr_y + box_h]
-        draw.rectangle(box_rect, fill=box_bg, outline=border_color, width=2)
+        draw.rectangle(box_rect, fill=box_bg, outline=box_border, width=2)
         
         code_lines = [
             "# Kernel Syscall & Sandbox Configuration",
@@ -142,9 +165,9 @@ def generate_social_card(article_data, output_path: Path):
 
     elif standard == "B":
         # Standar B: Network Flow Diagram
-        box_h = 320
+        box_h = 340 if mode == "square" else 300
         box_rect = [margin + 70, curr_y, margin + 70 + inner_w, curr_y + box_h]
-        draw.rectangle(box_rect, fill=box_bg, outline=border_color, width=2)
+        draw.rectangle(box_rect, fill=box_bg, outline=box_border, width=2)
 
         flow_lines = [
             "+-------------------+       +--------------------+       +--------------------+",
@@ -162,9 +185,9 @@ def generate_social_card(article_data, output_path: Path):
 
     elif standard == "C":
         # Standar C: AI/LLM Benchmark Table
-        box_h = 320
+        box_h = 340 if mode == "square" else 300
         box_rect = [margin + 70, curr_y, margin + 70 + inner_w, curr_y + box_h]
-        draw.rectangle(box_rect, fill=box_bg, outline=border_color, width=2)
+        draw.rectangle(box_rect, fill=box_bg, outline=box_border, width=2)
 
         tbl_lines = [
             "Engine / Strategy        | KV Waste (%) | Max Sequences | Throughput",
@@ -183,9 +206,9 @@ def generate_social_card(article_data, output_path: Path):
 
     else:
         # Standar D: Utility Transformation Matrix
-        box_h = 320
+        box_h = 340 if mode == "square" else 300
         box_rect = [margin + 70, curr_y, margin + 70 + inner_w, curr_y + box_h]
-        draw.rectangle(box_rect, fill=box_bg, outline=border_color, width=2)
+        draw.rectangle(box_rect, fill=box_bg, outline=box_border, width=2)
 
         util_lines = [
             "Input Mode  : Octal Notation 4755 (SUID Bit Active)",
@@ -204,8 +227,17 @@ def generate_social_card(article_data, output_path: Path):
     # Footer Specification Line (No Brand Logo / No Ad Signal)
     draw.text((margin + 70, height - margin - 70), "Ref: High-Density Technical Reference Specification", fill=text_muted, font=font_meta)
 
+    # Save with File Size Optimization Guard (< 950KB for Bluesky API limit)
     img.save(output_path, "PNG", optimize=True)
-    print(f"[ SUCCESS ] 2x High-DPI Social Share Card Generated ({standard}): {output_path}")
+    
+    file_size_kb = output_path.stat().st_size / 1024
+    if file_size_kb > 950:
+        # Quantize palette if exceeding 950KB
+        q_img = img.quantize(colors=256, method=Image.Quantize.MEDIANCUT)
+        q_img.save(output_path, "PNG", optimize=True)
+        file_size_kb = output_path.stat().st_size / 1024
+
+    print(f"[ SUCCESS ] {theme.upper()} {mode.upper()} Social Card Generated ({standard}, {file_size_kb:.1f} KB): {output_path.name}")
     return output_path
 
 def parse_html_for_card(filepath: Path):
@@ -236,10 +268,10 @@ def parse_html_for_card(filepath: Path):
     }
 
 def main():
-    parser = argparse.ArgumentParser(description="Zyekh.com 2x High-DPI Category Social Share Card Generator")
-    parser.add_argument("--latest", action="store_true", help="Generate card for the latest blog article")
+    parser = argparse.ArgumentParser(description="Zyekh.com Dual-Theme & Multi-Ratio Social Share Card Generator")
+    parser.add_argument("--latest", action="store_true", help="Generate cards for the latest blog article")
     parser.add_argument("--all", action="store_true", help="Generate cards for all blog articles")
-    parser.add_argument("--slug", type=str, help="Generate card for a specific article slug")
+    parser.add_argument("--slug", type=str, help="Generate cards for a specific article slug")
     args = parser.parse_args()
 
     articles = sorted(BLOG_DIR.glob("*.html"))
@@ -249,30 +281,29 @@ def main():
         print("[ WARN ] No blog articles found.")
         sys.exit(1)
 
+    targets = []
     if args.slug:
-        target = None
         for a in articles:
             if args.slug in a.name:
-                target = a
+                targets.append(a)
                 break
-        if target:
-            data = parse_html_for_card(target)
-            out_p = OUTPUT_DIR / f"{data['slug']}.png"
-            generate_social_card(data, out_p)
-        else:
-            print(f"[ ERROR ] Article '{args.slug}' not found.")
     elif args.all:
-        print(f"[ BATCH 2X HIGH-DPI ] Generating 2400x1260 social cards for {len(articles)} articles...")
-        for a in articles:
-            data = parse_html_for_card(a)
-            out_p = OUTPUT_DIR / f"{data['slug']}.png"
-            generate_social_card(data, out_p)
+        targets = articles
     else:
         articles_by_mtime = sorted(articles, key=lambda x: x.stat().st_mtime, reverse=True)
-        latest = articles_by_mtime[0]
-        data = parse_html_for_card(latest)
-        out_p = OUTPUT_DIR / f"{data['slug']}.png"
-        generate_social_card(data, out_p)
+        targets = [articles_by_mtime[0]]
+
+    print(f"[ BATCH DUAL-THEME MULTI-RATIO ] Processing {len(targets)} articles...")
+    for a in targets:
+        data = parse_html_for_card(a)
+        
+        # 1. Dark Landscape (2400x1260) -> For OpenGraph & Mastodon
+        out_dark_land = OUTPUT_DIR / f"{data['slug']}-dark-landscape.png"
+        generate_social_card(data, out_dark_land, theme="dark", mode="landscape")
+        
+        # 2. Light Square (2400x2400) -> For Bluesky Mobile Feed Breakout
+        out_light_sq = OUTPUT_DIR / f"{data['slug']}-light-square.png"
+        generate_social_card(data, out_light_sq, theme="light", mode="square")
 
 if __name__ == "__main__":
     main()
