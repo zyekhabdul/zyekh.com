@@ -60,6 +60,34 @@ def wrap_text(text, font, max_width, draw):
         lines.append(' '.join(current_line))
     return lines
 
+def wrap_code_lines(raw_lines, font, max_w, max_total_lines, draw):
+    final_lines = []
+    for line in raw_lines:
+        bbox = draw.textbbox((0, 0), line, font=font)
+        if bbox[2] - bbox[0] <= max_w:
+            final_lines.append(line)
+        else:
+            words = line.split(' ')
+            curr = ''
+            for w in words:
+                test = (curr + ' ' + w).strip() if curr else w
+                if draw.textbbox((0, 0), test, font=font)[2] - draw.textbbox((0, 0), test, font=font)[0] <= max_w:
+                    curr = test
+                else:
+                    if curr:
+                        final_lines.append(curr)
+                    if draw.textbbox((0, 0), w, font=font)[2] - draw.textbbox((0, 0), w, font=font)[0] > max_w:
+                        while w and (draw.textbbox((0, 0), w + '...', font=font)[2] - draw.textbbox((0, 0), w + '...', font=font)[0]) > max_w:
+                            w = w[:-1]
+                        curr = w + '...'
+                    else:
+                        curr = '    ' + w
+            if curr:
+                final_lines.append(curr)
+        if len(final_lines) >= max_total_lines:
+            break
+    return final_lines[:max_total_lines]
+
 def generate_social_card(article_data, output_path: Path, theme="dark", mode="landscape"):
     if mode == "square":
         width, height = 2400, 2400
@@ -105,6 +133,7 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
     cat_tag = f"[ {tag_str} ]" if tag_str else "[ TECHNICAL SPECIFICATION ]"
 
     inner_w = width - (margin * 2 + 160)
+    max_code_w = inner_w - 60
 
     if mode == "square":
         # =========================================================================
@@ -115,7 +144,7 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
         font_desc = get_font(size=42, is_mono=False, is_bold=False)
         font_bar = get_font(size=36, is_mono=True, is_bold=True)
-        font_code = get_font(size=40, is_mono=True, is_bold=False)
+        font_code = get_font(size=36, is_mono=True, is_bold=False)
         font_pillar_head = get_font(size=38, is_mono=True, is_bold=True)
         font_pillar_body = get_font(size=36, is_mono=False, is_bold=False)
         font_meta = get_font(size=34, is_mono=True, is_bold=False)
@@ -162,9 +191,9 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         bar_text_y = curr_y + (bar_h - t_h) // 2 - 2
         draw.text((margin + 210, bar_text_y), bar_title, fill=text_muted, font=font_bar)
 
-        code_lines = article_data.get('code_snippet', [])
-        if not code_lines:
-            code_lines = [
+        raw_code = article_data.get('code_snippet', [])
+        if not raw_code:
+            raw_code = [
                 "# Linux Subsystem Hardening Architecture",
                 "ProtectSystem=strict          # Mount /usr, /boot, /etc read-only",
                 "ProtectHome=true              # Deny access to /home, /root, /run/user",
@@ -172,12 +201,14 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
                 "RestrictSUIDSGID=true         # Neutralize privilege escalation binaries"
             ]
 
-        cy = curr_y + bar_h + 30
-        for cl in code_lines[:9]:
+        wrapped_code = wrap_code_lines(raw_code, font_code, max_code_w, 9, draw)
+
+        cy = curr_y + bar_h + 25
+        for cl in wrapped_code:
             is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
             c_color = text_muted if is_comment else text_main
             draw.text((margin + 110, cy), cl, fill=c_color, font=font_code)
-            cy += 64
+            cy += 58
 
         # 5. Pillar 1: Architectural Guarantees
         curr_y += box_h + 35
@@ -192,10 +223,12 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
                 "[+] Strict Privilege Boundary: Enforces least-privilege capability gates.",
                 "[+] Defense-in-Depth: Multi-layered runtime validation and kernel telemetry."
             ]
-        py = curr_y + 80
+        py = curr_y + 75
         for t in takeaways[:3]:
-            draw.text((margin + 110, py), t, fill=text_main, font=font_pillar_body)
-            py += 60
+            wrapped_t = wrap_text(t, font_pillar_body, max_code_w, draw)
+            for tl in wrapped_t[:1]:
+                draw.text((margin + 110, py), tl, fill=text_main, font=font_pillar_body)
+                py += 58
 
         # 6. Pillar 2: Production Performance & Verification
         curr_y += p1_h + 25
@@ -210,10 +243,12 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
                 "[*] Automated Audit: Continuous Clippy, KASAN, and DFIR telemetry checks",
                 "[*] Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
             ]
-        py = curr_y + 80
+        py = curr_y + 75
         for m in metrics[:3]:
-            draw.text((margin + 110, py), m, fill=text_main, font=font_pillar_body)
-            py += 60
+            wrapped_m = wrap_text(m, font_pillar_body, max_code_w, draw)
+            for ml in wrapped_m[:1]:
+                draw.text((margin + 110, py), ml, fill=text_main, font=font_pillar_body)
+                py += 58
 
         # 7. Footer
         draw.text((margin + 80, height - margin - 55), "Ref: ZYEKH.COM / TECHNICAL BLUEPRINT SPECIFICATION • DECENTRALIZED SYNDICATION 2026", fill=text_muted, font=font_meta)
@@ -226,7 +261,7 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         font_tag = get_font(size=44, is_mono=True, is_bold=True)
         font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
         font_bar = get_font(size=34, is_mono=True, is_bold=True)
-        font_code = get_font(size=42, is_mono=True, is_bold=False)
+        font_code = get_font(size=36, is_mono=True, is_bold=False)
         font_meta = get_font(size=34, is_mono=True, is_bold=False)
 
         # 1. Category Tag
@@ -262,9 +297,9 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         bar_text_y = curr_y + (bar_h - t_h) // 2 - 2
         draw.text((margin + 200, bar_text_y), bar_title, fill=text_muted, font=font_bar)
 
-        code_lines = article_data.get('code_snippet', [])
-        if not code_lines:
-            code_lines = [
+        raw_code = article_data.get('code_snippet', [])
+        if not raw_code:
+            raw_code = [
                 "# Linux Subsystem Hardening Architecture",
                 "ProtectSystem=strict          # Mount /usr, /boot, /etc read-only",
                 "ProtectHome=true              # Deny access to /home, /root, /run/user",
@@ -272,12 +307,14 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
                 "RestrictSUIDSGID=true         # Neutralize privilege escalation binaries"
             ]
 
-        cy = curr_y + bar_h + 30
-        for cl in code_lines[:7]:
+        wrapped_code = wrap_code_lines(raw_code, font_code, max_code_w, 8, draw)
+
+        cy = curr_y + bar_h + 25
+        for cl in wrapped_code:
             is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
             c_color = text_muted if is_comment else text_main
             draw.text((margin + 110, cy), cl, fill=c_color, font=font_code)
-            cy += 64
+            cy += 58
 
         # 4. Footer
         draw.text((margin + 80, height - margin - 50), "Ref: High-Density Technical Reference Specification • zyekh.com", fill=text_muted, font=font_meta)
@@ -324,7 +361,7 @@ def parse_html_for_card(filepath: Path):
         raw_code = (code_tag.get_text() if code_tag else p.get_text()).strip()
         lines = [line.rstrip() for line in raw_code.splitlines() if line.strip()]
         code_lines.extend(lines)
-        if len(code_lines) >= 10:
+        if len(code_lines) >= 12:
             break
 
     # Executive Summary Takeaways
