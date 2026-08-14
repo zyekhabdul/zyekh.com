@@ -16,7 +16,7 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 - [ DONE ] **Command Palette / Quick Search (Ctrl+K)**: Sistem pencarian *fuzzy* berbasis Vanilla JS untuk menemukan 42+ tools secara instan.
 - [ DONE ] **Local Bookmarking (Pinned Tools)**: Fitur "Favorite Tools" yang menyimpan konfigurasi preferensi pengguna di `localStorage`.
 - [ DONE ] **Native Dark/Light Theme Toggle**: Sistem *theming* murni CSS Custom Properties (`:root`) yang merespons `prefers-color-scheme` dan tersimpan persisten di klien.
-- [ PROPOSED ] **Self-Hosted Link Hub (`/links/`)**: Pengganti Linktree murni Vanilla HTML5/CSS di domain sendiri untuk memaksimalkan *domain authority*, E-E-A-T microformats (`rel="me"`), Schema.org `Person`, dan 100% *zero-tracking*.
+- [ DONE ] **Self-Hosted Link Hub (`/links/`)**: Pengganti Linktree murni Vanilla HTML5/CSS di domain sendiri untuk memaksimalkan *domain authority*, E-E-A-T microformats (`rel="me"`), Schema.org `Person`, dan 100% *zero-tracking*.
 
 ## 4. Rencana Ekspansi Batch 4 & Simulasi Interaktif
 - [ PROPOSED ] **Batch 4 Technical Deep Dives**: 5-10 artikel teknis baru mendalam tentang *Speculative Decoding*, *eBPF LSM Hooks*, *FlashAttention-3*, dan *WASM Edge Sandboxing*.
