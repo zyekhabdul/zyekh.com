@@ -75,6 +75,8 @@ def sync_all(bump_version=False):
     assets_map = {
         "site-nav.js": minify_js("assets/js/site-nav.js"),
         "article-actions.js": minify_js("assets/js/article-actions.js"),
+        "marked.min.js": "assets/js/marked.min.js",
+        "qrcode.min.js": "assets/js/qrcode.min.js",
         "shared.css": minify_css("assets/css/shared.css"),
         "blog.css": minify_css("assets/css/blog.css"),
         "fonts.css": minify_css("assets/fonts/fonts.css")
