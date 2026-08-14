@@ -113,4 +113,11 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
     - **Raw Syntax Code Extraction**: Never use DOM HTML parsers (`BeautifulSoup.get_text()`) on `<pre><code>` blocks if code contains `<generics>`, `<headers.h>`, or `<placeholders>` as DOM parsers strip them as unknown HTML tags. Always extract code directly from raw HTML strings via regex and unescape HTML entities.
     - **No Dangling Trailing Continuations**: Code snippets must be self-contained. Never leave trailing backslashes `\` or standalone opening braces `{` as the last line of a card image.
 
+34. **DECOUPLED 3-STAGE MANIFEST-DRIVEN ASSET COMPILATION STANDARD**:
+    - Never couple data extraction/text copywriting directly with graphic pixel rendering in a single runtime loop.
+    - **Stage 1 (Data Layer)**: Run `extract_card_manifest.py` to produce a frozen, human-readable `data/social_cards_manifest.json`.
+    - **Stage 2 (Quality Gate)**: Run `validate_card_manifest.py` to empirically verify text completeness, sentence termination, and syntax integrity before rendering.
+    - **Stage 3 (Presentation Layer)**: Run `generate_social_cards.py` as a pure deterministic image compiler reading exclusively from `manifest.json`.
+
+
 
