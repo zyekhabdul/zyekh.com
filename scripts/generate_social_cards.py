@@ -13,41 +13,22 @@ OUTPUT_DIR = BASE_DIR / "assets" / "img" / "social-cards"
 
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# Font Resolver (Authentic Zyekh.com Typography: Outfit, Inter, Fira Code)
+# Font Resolver (Authentic Zyekh.com Typography: Outfit, Inter, JetBrains Mono)
 def get_font(size=40, family="sans", is_bold=False):
     ttf_dir = BASE_DIR / "assets" / "fonts" / "ttf"
     
     outfit_bold = str(ttf_dir / "Outfit-Bold.ttf")
+    outfit_semibold = str(ttf_dir / "Outfit-SemiBold.ttf")
     inter_reg = str(ttf_dir / "Inter-Regular.ttf")
-    fira_reg = str(ttf_dir / "FiraCode-Regular.ttf")
-    fira_bold = str(ttf_dir / "FiraCode-Bold.ttf")
-    jetbrains_reg = str(ttf_dir / "JetBrainsMono-Regular.ttf")
+    inter_bold = str(ttf_dir / "Inter-Bold.ttf")
+    mono_reg = str(ttf_dir / "JetBrainsMono-Regular.ttf")
 
-    if family in ["title", "outfit"] or (family == "sans" and is_bold):
-        candidates = [
-            outfit_bold,
-            str(ttf_dir / "DejaVuSans-Bold.ttf"),
-            "/usr/share/fonts/TTF/DejaVuSans-Bold.ttf"
-        ]
+    if family in ["title", "outfit"]:
+        candidates = [outfit_bold, outfit_semibold]
     elif family in ["mono", "code"]:
-        if is_bold:
-            candidates = [
-                fira_bold,
-                jetbrains_reg,
-                str(ttf_dir / "DejaVuSans-Bold.ttf")
-            ]
-        else:
-            candidates = [
-                fira_reg,
-                jetbrains_reg,
-                str(ttf_dir / "DejaVuSans-Regular.ttf")
-            ]
+        candidates = [mono_reg]
     else:  # family == "sans" / "inter"
-        candidates = [
-            inter_reg,
-            str(ttf_dir / "DejaVuSans-Regular.ttf"),
-            "/usr/share/fonts/TTF/DejaVuSans.ttf"
-        ]
+        candidates = [inter_bold] if is_bold else [inter_reg]
 
     for path in candidates:
         if os.path.exists(path):
@@ -56,6 +37,7 @@ def get_font(size=40, family="sans", is_bold=False):
             except Exception:
                 continue
     return ImageFont.load_default()
+
 
 
 
