@@ -83,6 +83,54 @@ def wrap_code_lines(raw_lines, font, max_w, max_total_lines, draw):
             break
     return final_lines[:max_total_lines]
 
+def extract_clean_code(article_html: str):
+    # Pure regex directly on raw HTML to preserve <generics>, <headers.h>, and unescaped syntax
+    pres = re.findall(r'<pre(?:.*?)><code(?:.*?)>(.*?)</code></pre>', article_html, re.DOTALL)
+    if not pres:
+        pres = re.findall(r'<pre(?:.*?)>(.*?)</pre>', article_html, re.DOTALL)
+        
+    candidate_blocks = []
+    for raw in pres:
+        if "interactive-demo" in raw or "tool-container" in raw or "document.getElementById" in raw or "innerHTML" in raw:
+            continue
+        unescaped = html.unescape(raw)
+        clean = re.sub(r'<span[^>]*>', '', unescaped)
+        clean = re.sub(r'</span>', '', clean)
+        clean = re.sub(r'</?code[^>]*>', '', clean)
+        
+        lines = [l.rstrip() for l in clean.splitlines() if l.strip()]
+        if len(lines) >= 3:
+            candidate_blocks.append(lines)
+            
+    if not candidate_blocks:
+        return [
+            "# Production Linux Hardening Architecture",
+            "ProtectSystem=strict          # Mount /usr, /boot, /etc read-only",
+            "ProtectHome=true              # Deny access to /home, /root, /run/user",
+            "MemoryDenyWriteExecute=true   # Enforce strict W^X memory bounds",
+            "RestrictSUIDSGID=true         # Neutralize privilege escalation binaries"
+        ]
+        
+    def score_block(b):
+        text = "\n".join(b)
+        score = len(b)
+        if any(kw in text for kw in ["#", "//", "def ", "fn ", "struct ", "class ", "sudo ", "ssh-", "import ", "use "]):
+            score += 15
+        if not text.startswith("// XDP Action"):
+            score += 5
+        return score
+
+    candidate_blocks.sort(key=score_block, reverse=True)
+    best = candidate_blocks[0]
+    
+    while best and len(best[0].strip()) <= 2:
+        best = best[1:]
+        
+    selected = best[:8]
+    if selected and selected[-1].strip().endswith('\\'):
+        selected[-1] = selected[-1].strip()[:-1].rstrip()
+    return selected
+
 def generate_social_card(article_data, output_path: Path, theme="dark", mode="landscape"):
     if mode == "square":
         width, height = 2400, 2400
@@ -187,15 +235,6 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         draw.text((margin + 210, bar_text_y), bar_title, fill=text_muted, font=font_bar)
 
         raw_code = article_data.get('code_snippet', [])
-        if not raw_code:
-            raw_code = [
-                "# Linux Subsystem Hardening Architecture",
-                "ProtectSystem=strict          # Mount /usr, /boot, /etc read-only",
-                "ProtectHome=true              # Deny access to /home, /root, /run/user",
-                "MemoryDenyWriteExecute=true   # Enforce strict W^X memory bounds",
-                "RestrictSUIDSGID=true         # Neutralize privilege escalation binaries"
-            ]
-
         wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 9, draw)
 
         cy = curr_y + bar_h + 20
@@ -212,12 +251,6 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         draw.text((margin + 110, curr_y + 22), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_pillar_head)
         
         takeaways = article_data.get('takeaways', [])
-        if not takeaways:
-            takeaways = [
-                "Compile-Time Safety: Eliminates spatial and temporal memory corruption.",
-                "Strict Privilege Boundary: Enforces least-privilege capability gates.",
-                "Defense-in-Depth: Multi-layered runtime validation and kernel telemetry."
-            ]
         py = curr_y + 70
         for t in takeaways[:3]:
             clean_t = t if t.startswith("[+]") else f"[+] {t}"
@@ -234,12 +267,6 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         draw.text((margin + 110, curr_y + 22), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_pillar_head)
         
         metrics = article_data.get('metrics', [])
-        if not metrics:
-            metrics = [
-                "Performance Impact: Line-rate throughput with zero CPU stack overhead",
-                "Automated Audit: Continuous Clippy, KASAN, and DFIR telemetry checks",
-                "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
-            ]
         py = curr_y + 70
         for m in metrics[:3]:
             clean_m = m if m.startswith("[*]") else f"[*] {m}"
@@ -297,15 +324,6 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         draw.text((margin + 200, bar_text_y), bar_title, fill=text_muted, font=font_bar)
 
         raw_code = article_data.get('code_snippet', [])
-        if not raw_code:
-            raw_code = [
-                "# Linux Subsystem Hardening Architecture",
-                "ProtectSystem=strict          # Mount /usr, /boot, /etc read-only",
-                "ProtectHome=true              # Deny access to /home, /root, /run/user",
-                "MemoryDenyWriteExecute=true   # Enforce strict W^X memory bounds",
-                "RestrictSUIDSGID=true         # Neutralize privilege escalation binaries"
-            ]
-
         wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 9, draw)
 
         cy = curr_y + bar_h + 20
@@ -330,8 +348,8 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
     return output_path
 
 def parse_html_for_card(filepath: Path):
-    content = filepath.read_text(encoding='utf-8')
-    soup = BeautifulSoup(content, 'html.parser')
+    raw_content = filepath.read_text(encoding='utf-8')
+    soup = BeautifulSoup(raw_content, 'html.parser')
     
     # Title
     h1 = soup.find('h1')
@@ -353,15 +371,8 @@ def parse_html_for_card(filepath: Path):
             if p_clean and p_clean not in tags:
                 tags.append(p_clean)
 
-    # Multi-pre code block collector
-    code_lines = []
-    for p in soup.find_all('pre'):
-        code_tag = p.find('code')
-        raw_code = (code_tag.get_text() if code_tag else p.get_text()).strip()
-        lines = [line.rstrip() for line in raw_code.splitlines() if line.strip()]
-        code_lines.extend(lines)
-        if len(code_lines) >= 12:
-            break
+    # Clean Code Extraction via Regex (preserving generics & full commands)
+    code_lines = extract_clean_code(raw_content)
 
     # Executive Summary Takeaways
     takeaways = []
@@ -371,6 +382,13 @@ def parse_html_for_card(filepath: Path):
             t_text = li.get_text().strip()
             if t_text:
                 takeaways.append(t_text)
+
+    if not takeaways:
+        takeaways = [
+            "Compile-Time Safety: Eliminates spatial and temporal memory corruption.",
+            "Strict Privilege Boundary: Enforces least-privilege capability gates.",
+            "Defense-in-Depth: Multi-layered runtime validation and kernel telemetry."
+        ]
 
     # Operational Metrics
     metrics = [
