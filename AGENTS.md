@@ -108,3 +108,9 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
     - Mastodon: 500-character budget with direct `/api/v2/media` multipart uploads.
     - Always catch and log `urllib.error.HTTPError` response bodies directly for API diagnosis.
 
+33. **ZERO TEXT SLICING & SYNTAX INTEGRITY PROTOCOL (ANTI-DANGLING TEXT)**:
+    - **Never Slice Wrapped Arrays**: When rendering multi-line wrapped text (e.g. `wrapped_t = wrap_text(...)`), NEVER apply `[:1]` or arbitrary array slicing that discards subsequent lines. Always iterate over the full array sequentially (`for line in wrapped_t: draw.text(...)`) to ensure complete sentences without dangling thoughts.
+    - **Raw Syntax Code Extraction**: Never use DOM HTML parsers (`BeautifulSoup.get_text()`) on `<pre><code>` blocks if code contains `<generics>`, `<headers.h>`, or `<placeholders>` as DOM parsers strip them as unknown HTML tags. Always extract code directly from raw HTML strings via regex and unescape HTML entities.
+    - **No Dangling Trailing Continuations**: Code snippets must be self-contained. Never leave trailing backslashes `\` or standalone opening braces `{` as the last line of a card image.
+
+

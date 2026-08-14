@@ -20,6 +20,9 @@
 - **Social Card Density**: Square cards (2400x2400) must fill canvas height via 4-tier infographic layout (Header + 740px Terminal + 2-Box Invariants/Metrics Matrix + Footer). Zero empty white space.
 - **Clean DOM Syndication Parsing**: Always parse `<main class="article-content">` with BeautifulSoup and decompose `.author-card`, `.article-cross-links`, `.exec-summary`, `.article-actions`, `.back-link`, `figure`, `footer`. Never use greedy regex.
 - **ATProto 300-Grapheme Limit**: Bluesky posts must not exceed 280 bytes in status text. Use `format_bluesky_post_text()` to truncate gracefully and avoid HTTP 400.
+- **Zero Text Slicing (Anti-Dangling Sentences)**: Never slice wrapped text arrays (`[:1]`). Always render all wrapped lines sequentially to prevent sentences cutting off mid-thought.
+- **Raw Syntax Code Extraction**: Never use DOM parsers on `<pre>` code if code contains `<generics>`, `<headers.h>`, or `<placeholders>` (DOM parsers delete them as unknown HTML tags). Always extract raw code via regex and unescape HTML entities.
+
 
 - **AUTONOMOUS INITIATIVE**: Always be highly proactive. Do not wait for the user to point out every problem. If you see a structural, UI/UX, or technical flaw, fix it immediately across all affected files without asking.
 
