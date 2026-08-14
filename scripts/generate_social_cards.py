@@ -76,20 +76,26 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         box_border = (203, 213, 225)
         text_main = (15, 23, 42)        # #0f172a (Slate 900)
         text_muted = (100, 116, 139)    # #64748b (Slate 500)
+        dot_red = (239, 68, 68)
+        dot_yellow = (234, 179, 8)
+        dot_green = (34, 197, 94)
     else:
         bg_color = (9, 9, 11)           # #09090b (Dark Canvas)
         card_color = (18, 18, 22)       # #121216 (Dark Surface)
         border_color = (39, 39, 42)     # #27272a (Border)
         box_bg = (0, 0, 0)              # #000000 (Terminal Box)
-        bar_bg = (24, 24, 27)           # #18181b (Terminal Header Bar)
-        box_border = (39, 39, 42)
+        bar_bg = (28, 28, 32)           # #1c1c20 (Terminal Header Bar)
+        box_border = (45, 45, 50)       # #2d2d32
         text_main = (250, 250, 250)     # #fafafa (White)
         text_muted = (161, 161, 170)    # #a1a1aa (Muted Gray)
+        dot_red = (239, 68, 68)
+        dot_yellow = (234, 179, 8)
+        dot_green = (34, 197, 94)
 
     img = Image.new("RGB", (width, height), bg_color)
     draw = ImageDraw.Draw(img)
 
-    margin = 90
+    margin = 90 if mode == "square" else 80
     card_rect = [margin, margin, width - margin, height - margin]
     draw.rectangle(card_rect, fill=card_color, outline=border_color, width=4)
 
@@ -98,30 +104,31 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
     tag_str = " • ".join([t.upper() for t in tags[:3]])
     cat_tag = f"[ {tag_str} ]" if tag_str else "[ TECHNICAL SPECIFICATION ]"
 
-    inner_w = width - (margin * 2 + 140)
+    inner_w = width - (margin * 2 + 160)
 
     if mode == "square":
         # =========================================================================
         # 1:1 SQUARE INFOGRAPHIC LAYOUT (2400 x 2400)
         # =========================================================================
-        title_font_size = 78 if len(raw_title) <= 55 else (68 if len(raw_title) <= 75 else 60)
-        font_tag = get_font(size=42, is_mono=True, is_bold=True)
+        title_font_size = 84 if len(raw_title) <= 55 else (74 if len(raw_title) <= 75 else 66)
+        font_tag = get_font(size=46, is_mono=True, is_bold=True)
         font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
-        font_desc = get_font(size=38, is_mono=False, is_bold=False)
-        font_code = get_font(size=36, is_mono=True, is_bold=False)
-        font_pillar_head = get_font(size=36, is_mono=True, is_bold=True)
-        font_pillar_body = get_font(size=34, is_mono=False, is_bold=False)
-        font_meta = get_font(size=32, is_mono=True, is_bold=False)
+        font_desc = get_font(size=42, is_mono=False, is_bold=False)
+        font_bar = get_font(size=36, is_mono=True, is_bold=True)
+        font_code = get_font(size=40, is_mono=True, is_bold=False)
+        font_pillar_head = get_font(size=38, is_mono=True, is_bold=True)
+        font_pillar_body = get_font(size=36, is_mono=False, is_bold=False)
+        font_meta = get_font(size=34, is_mono=True, is_bold=False)
 
         # 1. Category Tag
-        draw.text((margin + 70, margin + 60), cat_tag, fill=text_muted, font=font_tag)
+        draw.text((margin + 80, margin + 60), cat_tag, fill=text_muted, font=font_tag)
 
         # 2. Main Title (Max 3 Lines)
         title_lines = wrap_text(raw_title, font_title, inner_w, draw)[:3]
         curr_y = margin + 130
         line_h = int(title_font_size * 1.32)
         for line in title_lines:
-            draw.text((margin + 70, curr_y), line, fill=text_main, font=font_title)
+            draw.text((margin + 80, curr_y), line, fill=text_main, font=font_title)
             curr_y += line_h
 
         # 3. Subtitle / Description (Max 2 Lines)
@@ -130,17 +137,30 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             desc_lines = wrap_text(desc_text, font_desc, inner_w, draw)[:2]
             curr_y += 10
             for dl in desc_lines:
-                draw.text((margin + 70, curr_y), dl, fill=text_muted, font=font_desc)
-                curr_y += 52
+                draw.text((margin + 80, curr_y), dl, fill=text_muted, font=font_desc)
+                curr_y += 56
 
         # 4. Terminal Architecture Window
         curr_y += 30
-        box_h = 740
-        draw.rectangle([margin + 70, curr_y, margin + 70 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
+        box_h = 720
+        draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
         
-        # Terminal Header Bar
-        draw.rectangle([margin + 70, curr_y, margin + 70 + inner_w, curr_y + 60], fill=bar_bg, outline=box_border, width=2)
-        draw.text((margin + 100, curr_y + 14), "[ TERMINAL // SUBSYSTEM CONFIGURATION & ARCHITECTURE ]", fill=text_muted, font=font_tag)
+        # Terminal Header Bar (80px height)
+        bar_h = 80
+        draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + bar_h], fill=bar_bg, outline=box_border, width=2)
+        
+        # 3 Window Control Dots
+        dot_y = curr_y + bar_h // 2
+        draw.ellipse([margin + 115 - 8, dot_y - 8, margin + 115 + 8, dot_y + 8], fill=dot_red)
+        draw.ellipse([margin + 142 - 8, dot_y - 8, margin + 142 + 8, dot_y + 8], fill=dot_yellow)
+        draw.ellipse([margin + 169 - 8, dot_y - 8, margin + 169 + 8, dot_y + 8], fill=dot_green)
+
+        # Bar Title (Strictly Centered Inside Bar)
+        bar_title = "[ TERMINAL // SUBSYSTEM CONFIGURATION & ARCHITECTURE ]"
+        t_bbox = draw.textbbox((0, 0), bar_title, font=font_bar)
+        t_h = t_bbox[3] - t_bbox[1]
+        bar_text_y = curr_y + (bar_h - t_h) // 2 - 2
+        draw.text((margin + 210, bar_text_y), bar_title, fill=text_muted, font=font_bar)
 
         code_lines = article_data.get('code_snippet', [])
         if not code_lines:
@@ -152,18 +172,18 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
                 "RestrictSUIDSGID=true         # Neutralize privilege escalation binaries"
             ]
 
-        cy = curr_y + 85
-        for cl in code_lines[:10]:
+        cy = curr_y + bar_h + 30
+        for cl in code_lines[:9]:
             is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
             c_color = text_muted if is_comment else text_main
-            draw.text((margin + 100, cy), cl, fill=c_color, font=font_code)
-            cy += 58
+            draw.text((margin + 110, cy), cl, fill=c_color, font=font_code)
+            cy += 64
 
         # 5. Pillar 1: Architectural Guarantees
         curr_y += box_h + 35
         p1_h = 280
-        draw.rectangle([margin + 70, curr_y, margin + 70 + inner_w, curr_y + p1_h], fill=card_color, outline=box_border, width=2)
-        draw.text((margin + 100, curr_y + 25), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_pillar_head)
+        draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + p1_h], fill=card_color, outline=box_border, width=2)
+        draw.text((margin + 110, curr_y + 24), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_pillar_head)
         
         takeaways = article_data.get('takeaways', [])
         if not takeaways:
@@ -174,14 +194,14 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             ]
         py = curr_y + 80
         for t in takeaways[:3]:
-            draw.text((margin + 100, py), t, fill=text_main, font=font_pillar_body)
-            py += 58
+            draw.text((margin + 110, py), t, fill=text_main, font=font_pillar_body)
+            py += 60
 
         # 6. Pillar 2: Production Performance & Verification
         curr_y += p1_h + 25
         p2_h = 280
-        draw.rectangle([margin + 70, curr_y, margin + 70 + inner_w, curr_y + p2_h], fill=card_color, outline=box_border, width=2)
-        draw.text((margin + 100, curr_y + 25), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_pillar_head)
+        draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + p2_h], fill=card_color, outline=box_border, width=2)
+        draw.text((margin + 110, curr_y + 24), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_pillar_head)
         
         metrics = article_data.get('metrics', [])
         if not metrics:
@@ -192,42 +212,55 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             ]
         py = curr_y + 80
         for m in metrics[:3]:
-            draw.text((margin + 100, py), m, fill=text_main, font=font_pillar_body)
-            py += 58
+            draw.text((margin + 110, py), m, fill=text_main, font=font_pillar_body)
+            py += 60
 
         # 7. Footer
-        draw.text((margin + 70, height - margin - 60), "Ref: ZYEKH.COM / TECHNICAL BLUEPRINT SPECIFICATION • DECENTRALIZED SYNDICATION 2026", fill=text_muted, font=font_meta)
+        draw.text((margin + 80, height - margin - 55), "Ref: ZYEKH.COM / TECHNICAL BLUEPRINT SPECIFICATION • DECENTRALIZED SYNDICATION 2026", fill=text_muted, font=font_meta)
 
     else:
         # =========================================================================
         # 16:9 LANDSCAPE OPENGRAPH LAYOUT (2400 x 1260)
         # =========================================================================
-        title_font_size = 64 if len(raw_title) <= 55 else (56 if len(raw_title) <= 70 else 50)
-        font_tag = get_font(size=36, is_mono=True, is_bold=True)
+        title_font_size = 78 if len(raw_title) <= 55 else (68 if len(raw_title) <= 75 else 60)
+        font_tag = get_font(size=44, is_mono=True, is_bold=True)
         font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
-        font_desc = get_font(size=36, is_mono=False, is_bold=False)
-        font_code = get_font(size=34, is_mono=True, is_bold=False)
-        font_meta = get_font(size=32, is_mono=True, is_bold=False)
+        font_bar = get_font(size=34, is_mono=True, is_bold=True)
+        font_code = get_font(size=42, is_mono=True, is_bold=False)
+        font_meta = get_font(size=34, is_mono=True, is_bold=False)
 
         # 1. Category Tag
-        draw.text((margin + 70, margin + 60), cat_tag, fill=text_muted, font=font_tag)
+        draw.text((margin + 80, margin + 60), cat_tag, fill=text_muted, font=font_tag)
 
-        # 2. Main Title
-        title_lines = wrap_text(raw_title, font_title, inner_w, draw)[:3]
-        curr_y = margin + 125
+        # 2. Main Title (Max 2 lines in Landscape)
+        title_lines = wrap_text(raw_title, font_title, inner_w, draw)[:2]
+        curr_y = margin + 130
         line_h = int(title_font_size * 1.32)
         for line in title_lines:
-            draw.text((margin + 70, curr_y), line, fill=text_main, font=font_title)
+            draw.text((margin + 80, curr_y), line, fill=text_main, font=font_title)
             curr_y += line_h
 
-        # 3. Terminal Box
-        curr_y += 25
-        box_h = 420
-        draw.rectangle([margin + 70, curr_y, margin + 70 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
+        # 3. Terminal Box (560px height to fill landscape canvas)
+        curr_y += 30
+        box_h = 560
+        draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
         
-        # Terminal Header Bar
-        draw.rectangle([margin + 70, curr_y, margin + 70 + inner_w, curr_y + 50], fill=bar_bg, outline=box_border, width=2)
-        draw.text((margin + 100, curr_y + 12), "[ ARCHITECTURE SPECIFICATION // CODE MATRIX ]", fill=text_muted, font=font_tag)
+        # Terminal Header Bar (76px height)
+        bar_h = 76
+        draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + bar_h], fill=bar_bg, outline=box_border, width=2)
+        
+        # 3 Window Control Dots
+        dot_y = curr_y + bar_h // 2
+        draw.ellipse([margin + 110 - 7, dot_y - 7, margin + 110 + 7, dot_y + 7], fill=dot_red)
+        draw.ellipse([margin + 135 - 7, dot_y - 7, margin + 135 + 7, dot_y + 7], fill=dot_yellow)
+        draw.ellipse([margin + 160 - 7, dot_y - 7, margin + 160 + 7, dot_y + 7], fill=dot_green)
+
+        # Bar Title (Strictly Centered Inside 76px Bar)
+        bar_title = "[ TERMINAL // ARCHITECTURE & CONFIGURATION MATRIX ]"
+        t_bbox = draw.textbbox((0, 0), bar_title, font=font_bar)
+        t_h = t_bbox[3] - t_bbox[1]
+        bar_text_y = curr_y + (bar_h - t_h) // 2 - 2
+        draw.text((margin + 200, bar_text_y), bar_title, fill=text_muted, font=font_bar)
 
         code_lines = article_data.get('code_snippet', [])
         if not code_lines:
@@ -235,20 +268,21 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
                 "# Linux Subsystem Hardening Architecture",
                 "ProtectSystem=strict          # Mount /usr, /boot, /etc read-only",
                 "ProtectHome=true              # Deny access to /home, /root, /run/user",
-                "MemoryDenyWriteExecute=true   # Enforce strict W^X memory bounds"
+                "MemoryDenyWriteExecute=true   # Enforce strict W^X memory bounds",
+                "RestrictSUIDSGID=true         # Neutralize privilege escalation binaries"
             ]
 
-        cy = curr_y + 75
-        for cl in code_lines[:5]:
+        cy = curr_y + bar_h + 30
+        for cl in code_lines[:7]:
             is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
             c_color = text_muted if is_comment else text_main
-            draw.text((margin + 100, cy), cl, fill=c_color, font=font_code)
-            cy += 60
+            draw.text((margin + 110, cy), cl, fill=c_color, font=font_code)
+            cy += 64
 
-        # Footer
-        draw.text((margin + 70, height - margin - 50), "Ref: High-Density Technical Reference Specification • zyekh.com", fill=text_muted, font=font_meta)
+        # 4. Footer
+        draw.text((margin + 80, height - margin - 50), "Ref: High-Density Technical Reference Specification • zyekh.com", fill=text_muted, font=font_meta)
 
-    # Save with File Size Optimization (< 950KB for Bluesky API limit)
+    # Save with File Size Optimization (< 950KB for API limit)
     img.save(output_path, "PNG", optimize=True)
     file_size_kb = output_path.stat().st_size / 1024
     if file_size_kb > 950:
@@ -283,13 +317,15 @@ def parse_html_for_card(filepath: Path):
             if p_clean and p_clean not in tags:
                 tags.append(p_clean)
 
-    # Code Snippet from first <pre><code>
+    # Multi-pre code block collector
     code_lines = []
-    first_pre = soup.find('pre')
-    if first_pre:
-        code_tag = first_pre.find('code')
-        raw_code = (code_tag.get_text() if code_tag else first_pre.get_text()).strip()
-        code_lines = [line.rstrip() for line in raw_code.splitlines() if line.strip()][:10]
+    for p in soup.find_all('pre'):
+        code_tag = p.find('code')
+        raw_code = (code_tag.get_text() if code_tag else p.get_text()).strip()
+        lines = [line.rstrip() for line in raw_code.splitlines() if line.strip()]
+        code_lines.extend(lines)
+        if len(code_lines) >= 10:
+            break
 
     # Executive Summary Takeaways
     takeaways = []
