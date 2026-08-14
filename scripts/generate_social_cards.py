@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 import os
 import sys
-import re
-import html
+import json
 import argparse
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
-from bs4 import BeautifulSoup
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-BLOG_DIR = BASE_DIR / "blog"
+DATA_DIR = BASE_DIR / "data"
+MANIFEST_FILE = DATA_DIR / "social_cards_manifest.json"
 OUTPUT_DIR = BASE_DIR / "assets" / "img" / "social-cards"
 
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -82,54 +81,6 @@ def wrap_code_lines(raw_lines, font, max_w, max_total_lines, draw):
         if len(final_lines) >= max_total_lines:
             break
     return final_lines[:max_total_lines]
-
-def extract_clean_code(article_html: str):
-    # Pure regex directly on raw HTML to preserve <generics>, <headers.h>, and unescaped syntax
-    pres = re.findall(r'<pre(?:.*?)><code(?:.*?)>(.*?)</code></pre>', article_html, re.DOTALL)
-    if not pres:
-        pres = re.findall(r'<pre(?:.*?)>(.*?)</pre>', article_html, re.DOTALL)
-        
-    candidate_blocks = []
-    for raw in pres:
-        if "interactive-demo" in raw or "tool-container" in raw or "document.getElementById" in raw or "innerHTML" in raw:
-            continue
-        unescaped = html.unescape(raw)
-        clean = re.sub(r'<span[^>]*>', '', unescaped)
-        clean = re.sub(r'</span>', '', clean)
-        clean = re.sub(r'</?code[^>]*>', '', clean)
-        
-        lines = [l.rstrip() for l in clean.splitlines() if l.strip()]
-        if len(lines) >= 3:
-            candidate_blocks.append(lines)
-            
-    if not candidate_blocks:
-        return [
-            "# Production Linux Hardening Architecture",
-            "ProtectSystem=strict          # Mount /usr, /boot, /etc read-only",
-            "ProtectHome=true              # Deny access to /home, /root, /run/user",
-            "MemoryDenyWriteExecute=true   # Enforce strict W^X memory bounds",
-            "RestrictSUIDSGID=true         # Neutralize privilege escalation binaries"
-        ]
-        
-    def score_block(b):
-        text = "\n".join(b)
-        score = len(b)
-        if any(kw in text for kw in ["#", "//", "def ", "fn ", "struct ", "class ", "sudo ", "ssh-", "import ", "use "]):
-            score += 15
-        if not text.startswith("// XDP Action"):
-            score += 5
-        return score
-
-    candidate_blocks.sort(key=score_block, reverse=True)
-    best = candidate_blocks[0]
-    
-    while best and len(best[0].strip()) <= 2:
-        best = best[1:]
-        
-    selected = best[:8]
-    if selected and selected[-1].strip().endswith('\\'):
-        selected[-1] = selected[-1].strip()[:-1].rstrip()
-    return selected
 
 def generate_social_card(article_data, output_path: Path, theme="dark", mode="landscape"):
     if mode == "square":
@@ -250,9 +201,9 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + p1_h], fill=card_color, outline=box_border, width=2)
         draw.text((margin + 110, curr_y + 22), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_pillar_head)
         
-        takeaways = article_data.get('takeaways', [])
+        invariants = article_data.get('invariants', [])
         py = curr_y + 70
-        for t in takeaways[:3]:
+        for t in invariants[:3]:
             clean_t = t if t.startswith("[+]") else f"[+] {t}"
             wrapped_t = wrap_text(clean_t, font_pillar_body, max_content_w, draw)
             for tl in wrapped_t:
@@ -347,96 +298,35 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
     print(f"[ SUCCESS ] {theme.upper()} {mode.upper()} Social Card Generated ({file_size_kb:.1f} KB): {output_path.name}")
     return output_path
 
-def parse_html_for_card(filepath: Path):
-    raw_content = filepath.read_text(encoding='utf-8')
-    soup = BeautifulSoup(raw_content, 'html.parser')
-    
-    # Title
-    h1 = soup.find('h1')
-    title = h1.get_text().strip() if h1 else filepath.stem
-    title = re.sub(r'\s*—\s*zyekh\.com.*', '', title)
-    title = re.sub(r'\s*\|\s*zyekh\.com.*', '', title)
-
-    # Description
-    desc_meta = soup.find('meta', {'name': 'description'})
-    description = desc_meta['content'].strip() if desc_meta and desc_meta.get('content') else ""
-
-    # Tags
-    tags = []
-    for tag_elem in soup.find_all('span', class_='meta-tag'):
-        t_text = tag_elem.get_text().replace('#', '').strip()
-        parts = [p.strip().lower() for p in re.split(r'[•,/|]+', t_text) if p.strip()]
-        for p in parts:
-            p_clean = re.sub(r'[^a-z0-9-]', '', p)
-            if p_clean and p_clean not in tags:
-                tags.append(p_clean)
-
-    # Clean Code Extraction via Regex (preserving generics & full commands)
-    code_lines = extract_clean_code(raw_content)
-
-    # Executive Summary Takeaways
-    takeaways = []
-    summary_div = soup.find('div', class_='exec-summary')
-    if summary_div:
-        for li in summary_div.find_all('li'):
-            t_text = li.get_text().strip()
-            if t_text:
-                takeaways.append(t_text)
-
-    if not takeaways:
-        takeaways = [
-            "Compile-Time Safety: Eliminates spatial and temporal memory corruption.",
-            "Strict Privilege Boundary: Enforces least-privilege capability gates.",
-            "Defense-in-Depth: Multi-layered runtime validation and kernel telemetry."
-        ]
-
-    # Operational Metrics
-    metrics = [
-        f"Architecture Domain: {tags[0].upper() if tags else 'SECURITY'} Hardening Protocol",
-        "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
-        "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
-    ]
-
-    return {
-        'title': title,
-        'description': description,
-        'tags': tags or ['security', 'linux'],
-        'slug': filepath.stem,
-        'code_snippet': code_lines,
-        'takeaways': takeaways[:3],
-        'metrics': metrics
-    }
-
 def main():
-    parser = argparse.ArgumentParser(description="Zyekh.com Dual-Theme & Multi-Ratio Social Share Card Generator")
+    parser = argparse.ArgumentParser(description="Zyekh.com Manifest-Driven Social Share Card Compiler")
     parser.add_argument("--latest", action="store_true", help="Generate cards for the latest blog article")
     parser.add_argument("--all", action="store_true", help="Generate cards for all blog articles")
     parser.add_argument("--slug", type=str, help="Generate cards for a specific article slug")
     args = parser.parse_args()
 
-    articles = sorted(BLOG_DIR.glob("*.html"))
-    articles = [a for a in articles if a.name != "index.html"]
-
-    if not articles:
-        print("[ WARN ] No blog articles found.")
+    if not MANIFEST_FILE.exists():
+        print(f"[ ERROR ] Manifest file not found: {MANIFEST_FILE}. Run scripts/extract_card_manifest.py first.")
         sys.exit(1)
+
+    manifest = json.loads(MANIFEST_FILE.read_text(encoding='utf-8'))
+    print(f"[ MANIFEST-DRIVEN COMPILER ] Loaded {len(manifest)} articles from manifest.")
 
     targets = []
     if args.slug:
-        for a in articles:
-            if args.slug in a.name:
-                targets.append(a)
-                break
+        if args.slug in manifest:
+            targets.append(manifest[args.slug])
+        else:
+            print(f"[ ERROR ] Slug '{args.slug}' not found in manifest.")
+            sys.exit(1)
     elif args.all:
-        targets = articles
+        targets = list(manifest.values())
     else:
-        articles_by_mtime = sorted(articles, key=lambda x: x.stat().st_mtime, reverse=True)
-        targets = [articles_by_mtime[0]]
+        # Default: pick first entry
+        targets = [list(manifest.values())[0]]
 
-    print(f"[ BATCH DUAL-THEME MULTI-RATIO ] Processing {len(targets)} articles...")
-    for a in targets:
-        data = parse_html_for_card(a)
-        
+    print(f"[ COMPILER ] Compiling {len(targets)} articles into social share cards...")
+    for data in targets:
         # 1. Dark Landscape (2400x1260) -> For OpenGraph & Mastodon
         out_dark_land = OUTPUT_DIR / f"{data['slug']}-dark-landscape.png"
         generate_social_card(data, out_dark_land, theme="dark", mode="landscape")

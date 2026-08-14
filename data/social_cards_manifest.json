@@ -1,0 +1,1011 @@
+{
+  "auditd-kernel-event-monitoring-and-dfir-logging": {
+    "slug": "auditd-kernel-event-monitoring-and-dfir-logging",
+    "title": "Linux Auditd Blueprint: Real-Time Kernel Event Tracking & Security Auditing",
+    "description": "Security guide for configuring Linux Audit Framework (auditd) to log execve system calls, file integrity changes, and privilege escalation events.",
+    "tags": [
+      "cybersecurity",
+      "auditddfir"
+    ],
+    "code_snippet": [
+      "# File Integrity Watch Rules",
+      "-w /etc/passwd -p wa -k identity_changes",
+      "-w /etc/shadow -p wa -k identity_changes",
+      "-w /etc/sudoers -p wa -k privilege_changes",
+      "-w /etc/sudoers.d/ -p wa -k privilege_changes",
+      "-w /var/log/tallylog -p wa -k auth_logs"
+    ],
+    "invariants": [
+      "Execve Process Auditing: Track all executed commands across system users.",
+      "File Integrity Monitoring: Monitor write and attribute modifications on /etc/passwd and /etc/sudoers.",
+      "Audit Ruleset Modularization: Structure rules inside /etc/audit/rules.d/."
+    ],
+    "metrics": [
+      "Architecture Domain: CYBERSECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "chroot-jail-and-unprivileged-namespaces-isolation": {
+    "slug": "chroot-jail-and-unprivileged-namespaces-isolation",
+    "title": "Process Isolation on Linux: Unprivileged User Namespaces & Chroot Jails",
+    "description": "Technical blueprint for configuring unprivileged user namespaces and chroot jails to sandbox untrusted services without full container runtimes.",
+    "tags": [
+      "systemhardening",
+      "processisolation"
+    ],
+    "code_snippet": [
+      "# Example systemd service with RootDirectory chroot",
+      "[Service]",
+      "RootDirectory=/srv/jail",
+      "ExecStart=/bin/myapp",
+      "User=nobody",
+      "Group=nogroup"
+    ],
+    "invariants": [
+      "User Namespaces (CLONE_NEWUSER): Map unprivileged user IDs to root inside isolated namespaces.",
+      "Chroot Directory Binding: Mount minimal /lib64 and /dev nodes inside chroot roots.",
+      "No-Root Security: Prevent container breakouts by dropping root capabilities."
+    ],
+    "metrics": [
+      "Architecture Domain: SYSTEMHARDENING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "cilium-ebpf-cloud-native-network-security-and-cilium-tetragon": {
+    "slug": "cilium-ebpf-cloud-native-network-security-and-cilium-tetragon",
+    "title": "Cilium eBPF & Tetragon: Cloud-Native Runtime Security & Network Enforcement",
+    "description": "Deep-dive guide on deploying Cilium eBPF for zero-trust network policy enforcement and Tetragon for real-time kernel event monitoring in Kubernetes.",
+    "tags": [
+      "cloudsecurity",
+      "kubernetesebpf"
+    ],
+    "code_snippet": [
+      "# Cilium NetworkPolicy enforcing L7 HTTP REST limits",
+      "apiVersion: \"cilium.io/v2\"",
+      "kind: CiliumNetworkPolicy",
+      "metadata:",
+      "  name: \"secure-api-gateway\"",
+      "  namespace: production",
+      "spec:",
+      "  endpointSelector:"
+    ],
+    "invariants": [
+      "eBPF Network Bypass: Replace iptables overhead with socket-layer eBPF programs for microsecond latency.",
+      "L3-L7 Zero-Trust Policies: Enforce API-level access rules (HTTP, gRPC, Kafka) directly at the kernel layer.",
+      "Tetragon Security Tracing: Detect privilege escalations, file integrity violations, and namespace escapes in real-time."
+    ],
+    "metrics": [
+      "Architecture Domain: CLOUDSECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "colbert-late-interaction-advanced-rag": {
+    "slug": "colbert-late-interaction-advanced-rag",
+    "title": "ColBERT Late Interaction: Advancing RAG Beyond Dense Embeddings",
+    "description": "How late interaction retrieval models solve the lost-in-the-middle problem and dramatically improve Retrieval-Augmented Generation precision over standard single-vector embeddings.",
+    "tags": [
+      "aiengineering",
+      "rag"
+    ],
+    "code_snippet": [
+      "# PyTorch Implementation of ColBERT MaxSim Operator",
+      "import torch",
+      "import torch.nn.functional as F",
+      "def colbert_maxsim(query_embeddings: torch.Tensor, doc_embeddings: torch.Tensor) -> torch.Tensor:",
+      "    # query_embeddings: [batch_size, q_len, dim]",
+      "    # doc_embeddings:   [batch_size, d_len, dim]",
+      "    # Compute cosine similarity matrix between all query and document tokens",
+      "    sim_matrix = torch.bmm(query_embeddings, doc_embeddings.transpose(1, 2))"
+    ],
+    "invariants": [
+      "Single-Vector Bottleneck: Single-vector dense embeddings compress entire documents into one vector, losing granular semantic nuances.",
+      "Late Interaction Paradigm: Retain token-level embeddings for query and document, scoring similarity using the MaxSim operator.",
+      "PLAID Indexing: Compress token vectors using residual quantization to achieve sub-10ms search over millions of documents."
+    ],
+    "metrics": [
+      "Architecture Domain: AIENGINEERING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "container-image-signing-and-slsa-provenance-with-cosign": {
+    "slug": "container-image-signing-and-slsa-provenance-with-cosign",
+    "title": "Container Image Signing & SLSA Provenance Verification with Sigstore Cosign",
+    "description": "Supply chain security guide on signing OCI container images keylessly and verifying SLSA build provenance using Sigstore Cosign and Rekor.",
+    "tags": [
+      "supplychainsecurity",
+      "devops"
+    ],
+    "code_snippet": [
+      "# Kyverno ClusterPolicy: Enforce Cosign Image Signature Verification",
+      "apiVersion: kyverno.io/v1",
+      "kind: ClusterPolicy",
+      "metadata:",
+      "  name: verify-image-signature",
+      "spec:",
+      "  validationFailureAction: Enforce",
+      "  rules:"
+    ],
+    "invariants": [
+      "Keyless Image Signing: Sign OCI container images in CI/CD using OIDC identity tokens (Fulcio CA) without managing private keys.",
+      "Immutable Transparency Log: Record signature metadata in the public Rekor transparency log to prevent signature tampering.",
+      "SLSA Provenance Attestation: Attach cryptographically signed SLSA build provenance attestations to container images."
+    ],
+    "metrics": [
+      "Architecture Domain: SUPPLYCHAINSECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "dspy-declarative-prompting-optimization": {
+    "slug": "dspy-declarative-prompting-optimization",
+    "title": "DSPy: Replacing Prompt Engineering with Declarative Optimization Compilers",
+    "description": "Why manual prompt tweaking is obsolete. Learn how to compile and optimize LM pipelines using DSPy declarative modules and metric-driven teleprompter algorithms.",
+    "tags": [
+      "aiengineering",
+      "prompting"
+    ],
+    "code_snippet": [
+      "# DSPy Declarative Pipeline Definition",
+      "import dspy",
+      "# Define explicit task Signature",
+      "class EmotionClassifier(dspy.Signature):",
+      "    \"\"\"Classify user text into security threat levels with confidence scoring.\"\"\"",
+      "    log_entry = dspy.InputField(desc=\"Raw system audit log entry\")",
+      "    threat_level = dspy.OutputField(desc=\"CRITICAL, WARNING, or INFO\")",
+      "    rationale = dspy.OutputField(desc=\"Step-by-step reasoning for classification\")"
+    ],
+    "invariants": [
+      "Manual Prompting Fragility: Hand-crafted prompt strings break when switching model versions or underlying providers.",
+      "Declarative Signatures: Separate task specifications (inputs/outputs) from raw prompt string formatting.",
+      "Teleprompter Compilers: Use algorithms like MIPRO to automatically generate, evaluate, and optimize prompts against metrics."
+    ],
+    "metrics": [
+      "Architecture Domain: AIENGINEERING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "ebpf-xdp-packet-filtering-and-ddos-mitigation": {
+    "slug": "ebpf-xdp-packet-filtering-and-ddos-mitigation",
+    "title": "High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation",
+    "description": "Technical guide for writing eBPF eXpress Data Path (XDP) kernel programs to drop malicious DDoS traffic at the network driver level.",
+    "tags": [
+      "linuxkernel",
+      "xdpddosdefense"
+    ],
+    "code_snippet": [
+      "#include <linux/bpf.h>",
+      "#include <linux/if_ether.h>",
+      "#include <linux/ip.h>",
+      "#include <bpf/bpf_helpers.h>",
+      "struct {",
+      "    __uint(type, BPF_MAP_TYPE_HASH);",
+      "    __uint(max_entries, 100000);",
+      "    __type(key, __be32);"
+    ],
+    "invariants": [
+      "XDP_DROP Early Decision: Drop malicious UDP/SYN floods before allocating sk_buff memory.",
+      "Kernel Map Invalidation: Dynamic IP blocklists via eBPF BPF_MAP_TYPE_HASH maps.",
+      "Zero-Copy Performance: Process 10M+ packets per second on commodity server hardware."
+    ],
+    "metrics": [
+      "Architecture Domain: LINUXKERNEL Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "fail2ban-intrusion-prevention-and-ssh-abuse-mitigation": {
+    "slug": "fail2ban-intrusion-prevention-and-ssh-abuse-mitigation",
+    "title": "Automated Intrusion Prevention: Fail2ban Configuration for SSH & Nginx Protection",
+    "description": "Comprehensive blueprint for deploying Fail2ban to detect brute-force attacks, automate IP bans via iptables/nftables, and configure recidive long-term bans.",
+    "tags": [
+      "cybersecurity",
+      "fail2bandefense"
+    ],
+    "code_snippet": [
+      "# /etc/fail2ban/jail.local",
+      "[DEFAULT]",
+      "bantime  = 1h",
+      "findtime = 10m",
+      "maxretry = 5",
+      "banaction = ufw",
+      "ignoreip = 127.0.0.1/8 ::1 10.0.0.0/8 192.168.1.0/24",
+      "[sshd]"
+    ],
+    "invariants": [
+      "Jail Configuration: Override default settings safely using jail.local instead of jail.conf.",
+      "Recidive Jails: Deploy long-term (1-week+) bans for repeat offender IP addresses.",
+      "Nginx 40x Log Monitoring: Ban aggressive web scanners triggering repeated 404/403 HTTP errors."
+    ],
+    "metrics": [
+      "Architecture Domain: CYBERSECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "http3-quic-security-hardening-and-0rtt-mitigation-blueprint": {
+    "slug": "http3-quic-security-hardening-and-0rtt-mitigation-blueprint",
+    "title": "HTTP/3 & QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks",
+    "description": "Production blueprint for hardening HTTP/3 and QUIC transport protocols, mitigating 0-RTT replay vectors, and configuring UDP rate limiting.",
+    "tags": [
+      "websecurity",
+      "networkprotocols"
+    ],
+    "code_snippet": [
+      "# Nginx HTTP/3 QUIC Security Hardening in server block",
+      "server {",
+      "    listen 443 quic reuseport;",
+      "    listen 443 ssl;",
+      "    server_name zyekh.com;",
+      "    # Mandatory TLS 1.3 for QUIC",
+      "    ssl_protocols TLSv1.3;",
+      "    ssl_certificate /etc/letsencrypt/live/zyekh.com/fullchain.pem;"
+    ],
+    "invariants": [
+      "UDP Flood Mitigation: Enforce strict eBPF/XDP rate limiting on UDP port 443 to prevent QUIC amplification attacks.",
+      "0-RTT Replay Defense: Disable 0-RTT early data or enforce anti-replay token validation for non-idempotent HTTP methods.",
+      "Connection ID Privacy: Enable randomized QUIC Connection ID rotation to prevent client tracking across networks."
+    ],
+    "metrics": [
+      "Architecture Domain: WEBSECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "kubernetes-pod-security-standards-pss-and-admission-control": {
+    "slug": "kubernetes-pod-security-standards-pss-and-admission-control",
+    "title": "Kubernetes Pod Security Standards (PSS) & Native Admission Control",
+    "description": "Production guide on enforcing Privileged, Baseline, and Restricted Pod Security Standards (PSS) using native Kubernetes admission controllers.",
+    "tags": [
+      "cloudsecurity",
+      "kubernetes"
+    ],
+    "code_snippet": [
+      "# Compliant Restricted Pod Specification",
+      "apiVersion: v1",
+      "kind: Pod",
+      "metadata:",
+      "  name: secure-app-worker",
+      "  namespace: production-apps",
+      "spec:",
+      "  securityContext:"
+    ],
+    "invariants": [
+      "Pod Security Levels: Enforce Privileged, Baseline, or Restricted security profiles at the namespace level.",
+      "Native Admission Controller: Replace legacy PodSecurityPolicies (PSP) with built-in Pod Security Admission (PSA).",
+      "Non-Root Enforcement: Block containers running as root (UID 0) or requesting privilege escalation (allowPrivilegeEscalation=false)."
+    ],
+    "metrics": [
+      "Architecture Domain: CLOUDSECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "kv-cache-int4-quantization-long-context": {
+    "slug": "kv-cache-int4-quantization-long-context",
+    "title": "KV Cache INT4 Quantization for 1M+ Token Context Windows",
+    "description": "Squeezing massive context windows into consumer GPUs by quantizing the Key-Value cache down to 4-bit precision without losing retrieval accuracy.",
+    "tags": [
+      "aiengineering",
+      "quantization"
+    ],
+    "code_snippet": [
+      "# PyTorch Per-Channel Asymmetric INT4 Quantization Pseudocode",
+      "import torch",
+      "def quantize_kv_cache_int4(tensor_fp16: torch.Tensor):",
+      "    # tensor_fp16: [num_heads, seq_len, head_dim]",
+      "    min_val = tensor_fp16.min(dim=-1, keepdim=True)[0]",
+      "    max_val = tensor_fp16.max(dim=-1, keepdim=True)[0]",
+      "    # Compute scale factor and zero point for 4-bit range (0 to 15)",
+      "    scale = (max_val - min_val) / 15.0"
+    ],
+    "invariants": [
+      "VRAM Scaling Bottleneck: At 1 million tokens context length, the FP16 KV cache consumes over 32GB VRAM, exceeding model weights.",
+      "Asymmetric INT4 Quantization: Quantize KV cache tensors to 4-bit integers using per-channel scaling factors and zero-point offsets.",
+      "Outlier Preservation: Keep recent tokens and high-magnitude attention outliers in FP16 to preserve needle-in-a-haystack retrieval."
+    ],
+    "metrics": [
+      "Architecture Domain: AIENGINEERING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "linux-audit-logging-with-vector-and-clickhouse-dfir": {
+    "slug": "linux-audit-logging-with-vector-and-clickhouse-dfir",
+    "title": "High-Throughput Linux Audit Logging with Vector & ClickHouse DFIR Pipeline",
+    "description": "Architecture guide on building a high-throughput Linux kernel audit logging pipeline using Vector log forwarder and ClickHouse for real-time DFIR forensics.",
+    "tags": [
+      "securitymonitoring",
+      "dfir"
+    ],
+    "code_snippet": [
+      "# Vector Configuration (/etc/vector/vector.yaml)",
+      "sources:",
+      "  linux_audit:",
+      "    type: file",
+      "    include:",
+      "      - /var/log/audit/audit.log",
+      "    ignore_checkpoints: false",
+      "transforms:"
+    ],
+    "invariants": [
+      "High-Throughput Log Forwarding: Ingest 100,000+ audit events/sec using Vector written in Rust.",
+      "Columnar Storage Efficiency: Compress security audit logs by 10x using ClickHouse columnar database storage.",
+      "Real-Time DFIR Queries: Execute SQL analytical queries over billions of kernel process events in sub-seconds."
+    ],
+    "metrics": [
+      "Architecture Domain: SECURITYMONITORING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "linux-kernel-sysctl-hardening-network-stack-security": {
+    "slug": "linux-kernel-sysctl-hardening-network-stack-security",
+    "title": "Linux Kernel Sysctl Hardening: Securing TCP/IP Network Stack against SYN Floods",
+    "description": "Hardening guide for tuning Linux kernel sysctl parameters to defend against TCP SYN floods, IP spoofing, packet redirects, and memory exhaustion.",
+    "tags": [
+      "linuxkernel",
+      "sysctlhardening"
+    ],
+    "code_snippet": [
+      "# Memory protection and system safety",
+      "kernel.randomize_va_space = 2",
+      "kernel.dmesg_restrict = 1",
+      "kernel.kptr_restrict = 2",
+      "fs.protected_hardlinks = 1",
+      "fs.protected_symlinks = 1",
+      "fs.protected_fifos = 2",
+      "fs.protected_regular = 2"
+    ],
+    "invariants": [
+      "SYN Flood Protection: Enable tcp_syncookies and increase tcp_max_syn_backlog.",
+      "Reverse Path Filtering: Set rp_filter=1 to drop spoofed IP packets.",
+      "ICMP Redirect Defense: Disable accept_redirects and send_redirects across interfaces."
+    ],
+    "metrics": [
+      "Architecture Domain: LINUXKERNEL Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "linux-landlock-lsm-unprivileged-sandboxing-blueprint": {
+    "slug": "linux-landlock-lsm-unprivileged-sandboxing-blueprint",
+    "title": "Linux Landlock LSM: Unprivileged Application Sandboxing & Access Control",
+    "description": "Engineering guide on using the Landlock Linux Security Module to enforce unprivileged file system and network access control restrictions.",
+    "tags": [
+      "linuxsecurity",
+      "accesscontrol"
+    ],
+    "code_snippet": [
+      "/* Construct Landlock Ruleset allowing read access to /tmp only */",
+      "struct landlock_ruleset_attr attr = {",
+      "    .handled_access_fs = LANDLOCK_ACCESS_FS_READ_FILE |",
+      "                         LANDLOCK_ACCESS_FS_READ_DIR |",
+      "                         LANDLOCK_ACCESS_FS_WRITE_FILE,",
+      "};",
+      "int ruleset_fd = landlock_create_ruleset(&attr, sizeof(attr), 0);",
+      "struct landlock_path_beneath_attr path_attr = {"
+    ],
+    "invariants": [
+      "Unprivileged Access Control: Restrict process filesystem and network access without requiring root (CAP_SYS_ADMIN) privileges.",
+      "File Hierarchy Restriction: Restrict application read/write access exclusively to pre-approved directory paths.",
+      "Network Socket Binding Limits: Restrict TCP bind and connect calls at the process level."
+    ],
+    "metrics": [
+      "Architecture Domain: LINUXSECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "linux-seccomp-bpf-syscall-filtering-hardening-guide": {
+    "slug": "linux-seccomp-bpf-syscall-filtering-hardening-guide",
+    "title": "Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces",
+    "description": "Step-by-step engineering blueprint for implementing Seccomp-BPF syscall filters to restrict Linux process capabilities and block zero-day kernel exploits.",
+    "tags": [
+      "linuxsecurity",
+      "processisolation"
+    ],
+    "code_snippet": [
+      "// C Implementation of Seccomp-BPF Syscall Allowlist",
+      "#include <seccomp.h>",
+      "#include <stdio.h>",
+      "#include <stdlib.h>",
+      "#include <unistd.h>",
+      "int init_seccomp_sandbox() {",
+      "    // Initialize default-kill Seccomp context",
+      "    scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_KILL);"
+    ],
+    "invariants": [
+      "Syscall Attack Surface Reduction: Block unused system calls (e.g., ptrace, reboot, kexec_load) at the kernel boundary.",
+      "BPF Filter Evaluation: Evaluate syscall arguments in constant time using compiled BPF bytecode instructions.",
+      "Default-Deny Policy: Enforce SECCOMP_RET_KILL_PROCESS or SECCOMP_RET_ERRNO for unapproved syscalls."
+    ],
+    "metrics": [
+      "Architecture Domain: LINUXSECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "linux-vps-hardening-guide-2026": {
+    "slug": "linux-vps-hardening-guide-2026",
+    "title": "Comprehensive Linux VPS Hardening Blueprint for 2026",
+    "description": "Production-grade security blueprint for Debian and Ubuntu Linux servers. Includes SSH key enforcement, kernel sysctl parameters, UFW rate-limiting, Fail2Ban auditing, and automated updates.",
+    "tags": [
+      "systemhardening",
+      "linuxvps"
+    ],
+    "code_snippet": [
+      "# /etc/sysctl.d/99-vps-hardening.conf",
+      "# 1. IP Packet Forwarding & Routing Protection",
+      "net.ipv62.conf.all.accept_source_route = 0",
+      "net.ipv62.conf.default.accept_source_route = 0",
+      "net.ipv62.conf.all.accept_source_route = 0",
+      "# 2. ICMP Redirect Protection (Prevent MitM Packet Hijacking)",
+      "net.ipv62.conf.all.accept_redirects = 0",
+      "net.ipv62.conf.default.accept_redirects = 0"
+    ],
+    "invariants": [
+      "SSH Key Enforcement: Mandate Ed25519 SSH keys, disable root password login, and enforce modern cryptographic ciphers (ChaCha20-Poly1305 / AES-256-GCM).",
+      "Kernel Network Hardening: Configure sysctl to block TCP SYN floods, IP source routing, ICMP redirects, and reverse path spoofing.",
+      "Firewall & Rate Limiting: Implement Uncomplicated Firewall (UFW) with default-deny inbound rules and SSH brute-force rate limits."
+    ],
+    "metrics": [
+      "Architecture Domain: SYSTEMHARDENING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "minimalist-server-architecture-pure-css-and-static-hosting": {
+    "slug": "minimalist-server-architecture-pure-css-and-static-hosting",
+    "title": "Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security",
+    "description": "Architectural analysis comparing static edge hosting to monolithic server frameworks. Examines attack surface reduction, TTFB performance benchmarks, zero server maintenance, and pure CSS design systems.",
+    "tags": [
+      "webperformance",
+      "staticarchitecture"
+    ],
+    "code_snippet": [
+      "/* Native CSS Fluid Typography & Container Standardization */",
+      ":root {",
+      "  --bg-dark: #09090b;",
+      "  --text-main: #fafafa;",
+      "  --border-color: #27272a;",
+      "/* Fluid H1 scaling without JavaScript or media query clutter */",
+      ".hero-title {",
+      "  font-family: 'Outfit', sans-serif;"
+    ],
+    "invariants": [
+      "Zero Attack Surface: Eliminating server-side runtime engines (PHP, Node.js) and SQL databases removes SQLi, RCE, and session vulnerabilities.",
+      "Sub-20ms TTFB: Serving pre-rendered HTML/CSS directly from CDN edge memory delivers instant global load times without backend processing delay.",
+      "Zero Infrastructure Maintenance: No database patching, runtime updates, or server reboot cycles required."
+    ],
+    "metrics": [
+      "Architecture Domain: WEBPERFORMANCE Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "moe-serving-mixture-of-experts-routing": {
+    "slug": "moe-serving-mixture-of-experts-routing",
+    "title": "Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing",
+    "description": "Deep dive into the gating router mechanisms of Mixtral 8x7B and DeepSeek-V2, expert parallelism strategies, and VRAM memory offloading patterns across multi-GPU setups.",
+    "tags": [
+      "aiengineering",
+      "architecture"
+    ],
+    "code_snippet": [
+      "# PyTorch Top-K MoE Gating Router Implementation",
+      "import torch",
+      "import torch.nn as nn",
+      "import torch.nn.functional as F",
+      "class TopKGatingRouter(nn.Module):",
+      "    def __init__(self, hidden_dim: int, num_experts: int, top_k: int = 2):",
+      "        super().__init__()",
+      "        self.gate = nn.Linear(hidden_dim, num_experts, bias=False)"
+    ],
+    "invariants": [
+      "Sparse Execution: MoE architectures scale model parameter count to hundreds of billions while executing only a fraction of parameters per token.",
+      "Gating Router Mechanisms: Softmax gating routers dynamically assign tokens to top-k expert networks based on semantic specialization.",
+      "Expert Parallelism (EP): Shard individual expert Feed-Forward Networks across multiple GPUs to balance VRAM footprint."
+    ],
+    "metrics": [
+      "Architecture Domain: AIENGINEERING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "multi-agent-swarm-orchestration-patterns": {
+    "slug": "multi-agent-swarm-orchestration-patterns",
+    "title": "Multi-Agent Swarm Orchestration: Hierarchical Agentic Workflows",
+    "description": "Designing recursive agent loops, tool-calling pipelines, state graph transitions, and autonomous swarm routing for complex software engineering automation.",
+    "tags": [
+      "aiengineering",
+      "agents"
+    ],
+    "code_snippet": [
+      "# LangGraph Multi-Agent State Machine Definition",
+      "from typing import Annotated, TypedDict",
+      "from langgraph.graph import StateGraph, END",
+      "class SwarmState(TypedDict):",
+      "    task: str",
+      "    code: str",
+      "    review_status: str",
+      "    iteration_count: int"
+    ],
+    "invariants": [
+      "Single-Agent Limits: Monolithic single-agent loops fail on complex multi-step tasks due to context degradation and prompt confusion.",
+      "Hierarchical Swarms: Segment tasks across specialized agents (Architect, Coder, Reviewer, QA) connected via explicit state graphs.",
+      "State Machines & Guards: Enforce deterministic state transitions and infinite loop detection guards in agentic execution."
+    ],
+    "metrics": [
+      "Architecture Domain: AIENGINEERING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "nginx-reverse-proxy-security-hardening-blueprint-2026": {
+    "slug": "nginx-reverse-proxy-security-hardening-blueprint-2026",
+    "title": "Nginx Reverse Proxy Security Hardening Blueprint for 2026",
+    "description": "Production guide for hardening Nginx reverse proxies with TLS 1.3, rate limiting, buffer overflow defense, and security headers.",
+    "tags": [
+      "websecurity",
+      "nginxhardening"
+    ],
+    "code_snippet": [
+      "# Strict TLS 1.2 / TLS 1.3 configuration",
+      "ssl_protocols TLSv1.2 TLSv1.3;",
+      "ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;",
+      "ssl_prefer_server_ciphers off;",
+      "ssl_session_timeout 1d;",
+      "ssl_session_cache shared:SSL:10m;",
+      "ssl_stapling on;",
+      "ssl_stapling_verify on;"
+    ],
+    "invariants": [
+      "Disable Nginx Server Tokens: Suppress server version disclosure in HTTP headers.",
+      "Buffer Overflow Defense: Restrict client_body_buffer_size and client_max_body_size.",
+      "Rate Limiting: Implement limit_req_zone to mitigate HTTP flood attacks."
+    ],
+    "metrics": [
+      "Architecture Domain: WEBSECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "omnirouter-llm-gateway-routing-fallback-patterns": {
+    "slug": "omnirouter-llm-gateway-routing-fallback-patterns",
+    "title": "OmniRouter Architecture: Resilient LLM Gateway Routing & Fallback Pipelines",
+    "description": "Advanced API routing techniques for multi-LLM architectures, mitigating rate limits, and ensuring speculative decoding fallbacks across OpenAI, Anthropic, and open-source nodes.",
+    "tags": [
+      "aiengineering",
+      "architecture"
+    ],
+    "code_snippet": [
+      "// Example OmniRouter Configuration in YAML",
+      "routes:",
+      "  - match:",
+      "      intent: \"complex_reasoning\"",
+      "    backend: \"claude-3-5-sonnet\"",
+      "    fallback: [\"gpt-4o\", \"llama-3-70b-instruct\"]",
+      "  - match:",
+      "      intent: \"summarization\""
+    ],
+    "invariants": [
+      "Dynamic Gateway Routing: Route queries to specialized models based on semantic classification and latency metrics.",
+      "Resilient Fallback Chains: Automatically downgrade from expensive frontier models to local 8B models during API outages.",
+      "Speculative Decoding Pipelines: Accelerate inference by drafting tokens on smaller models and verifying on larger models."
+    ],
+    "metrics": [
+      "Architecture Domain: AIENGINEERING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "pam-tally2-faillock-account-lockout-policy-guide": {
+    "slug": "pam-tally2-faillock-account-lockout-policy-guide",
+    "title": "Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force",
+    "description": "Security guide for configuring pam_faillock to prevent SSH and console brute-force authentication attacks on RHEL, Debian, and Ubuntu systems.",
+    "tags": [
+      "systemhardening",
+      "pamsecurity"
+    ],
+    "code_snippet": [
+      "# /etc/security/faillock.conf",
+      "dir = /var/log/faillock",
+      "deny = 5",
+      "fail_interval = 900",
+      "unlock_time = 900",
+      "even_deny_root",
+      "root_unlock_time = 1800",
+      "silent"
+    ],
+    "invariants": [
+      "Faillock Directory Storage: Store failed login tally files in /var/log/faillock/.",
+      "Deny Thresholds: Enforce deny=3 or 5 consecutive failures before temporary lockout.",
+      "Unlock Timeouts: Configure unlock_time=900 (15 minutes) for automatic account unlocking."
+    ],
+    "metrics": [
+      "Architecture Domain: SYSTEMHARDENING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "rust-in-linux-kernel-security-and-memory-safety-blueprint-2026": {
+    "slug": "rust-in-linux-kernel-security-and-memory-safety-blueprint-2026",
+    "title": "Rust in the Linux Kernel: Securing Core Subsystems & Memory Safety",
+    "description": "Comprehensive engineering guide on how Rust eliminates spatial and temporal memory vulnerabilities in modern Linux kernel drivers and network modules.",
+    "tags": [
+      "linuxsecurity",
+      "kernelarchitecture"
+    ],
+    "code_snippet": [
+      "// Example: Safe Linux Kernel Module in Rust",
+      "use kernel::prelude::*;",
+      "module! {",
+      "    type: RustKernelDemo,",
+      "    name: \"rust_kernel_security\",",
+      "    author: \"Zyekh Abdul Qadir Jailani\",",
+      "    description: \"Rust Memory Safety Kernel Subsystem\",",
+      "    license: \"GPL\","
+    ],
+    "invariants": [
+      "Memory Safety Enforcement: Eliminate use-after-free, double-free, and buffer overflow vulnerabilities at compile time.",
+      "Safe Abstraction Layers: Use C bindings wrapped in safe Rust traits to prevent undefined behavior in kernel modules.",
+      "Strict Concurrency Control: Utilize Rust ownership rules to eliminate data races in multi-threaded kernel worker threads."
+    ],
+    "metrics": [
+      "Architecture Domain: LINUXSECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "securing-web-applications-with-strict-content-security-policy": {
+    "slug": "securing-web-applications-with-strict-content-security-policy",
+    "title": "Implementing Strict Content Security Policy (CSP) & Security Headers",
+    "description": "Comprehensive technical guide for configuring strict Content Security Policy (CSP), HTTP Strict Transport Security (HSTS), X-Content-Type-Options, and Nginx security headers.",
+    "tags": [
+      "websecurity",
+      "csphardening"
+    ],
+    "code_snippet": [
+      "# /etc/nginx/conf.d/security-headers.conf",
+      "# Content Security Policy (Strict Nonce/Self Baseline)",
+      "add_header Content-Security-Policy \"default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests;\" always;",
+      "# HTTP Strict Transport Security (HSTS 2 Years + Preload)",
+      "add_header Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\" always;",
+      "# Prevent MIME-Sniffing Exploits",
+      "add_header X-Content-Type-Options \"nosniff\" always;",
+      "# Frame Options (Anti-Clickjacking)"
+    ],
+    "invariants": [
+      "XSS Mitigation: Content Security Policy (CSP) stops Cross-Site Scripting by restricting script execution to cryptographically nonced or hashed scripts.",
+      "Clickjacking Defense: X-Frame-Options: DENY and frame-ancestors 'none' prevent malicious iframe embedding.",
+      "Strict Transport Security: Enforce HTTPS and HSTS preloading with max-age=63072000; includeSubDomains; preload."
+    ],
+    "metrics": [
+      "Architecture Domain: WEBSECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "slora-adapter-multiplexing-single-gpu": {
+    "slug": "slora-adapter-multiplexing-single-gpu",
+    "title": "S-LoRA: Multiplexing Thousands of Fine-Tuned Adapters on a Single GPU",
+    "description": "How Unified Paging and scalable LoRA adapter serving allows cloud platforms to host 10,000+ custom fine-tuned models concurrently on a single GPU without OOM errors.",
+    "tags": [
+      "aiengineering",
+      "performance"
+    ],
+    "code_snippet": [
+      "# Pseudocode for Batched S-LoRA Vector Matrix Addition",
+      "def batched_slora_forward(base_x, adapter_ids, lora_A_pool, lora_B_pool):",
+      "    # Compute shared base model output",
+      "    base_out = base_model_forward(base_x)",
+      "    # Batched GEMM for custom LoRA adapters",
+      "    adapter_out = torch.zeros_like(base_out)",
+      "    for i, adapter_id in enumerate(adapter_ids):",
+      "        A = lora_A_pool[adapter_id]"
+    ],
+    "invariants": [
+      "Multi-Tenant Serving Challenge: Hosting thousands of custom fine-tuned LLMs natively requires independent base model instances, causing severe VRAM waste.",
+      "S-LoRA Architecture: Store a single shared base model in VRAM and dynamically multiplex thousands of small Low-Rank Adapters (LoRA).",
+      "Unified Paging: Manage adapter weights and KV caches in a unified memory pool, eliminating fragmentation during batched inference."
+    ],
+    "metrics": [
+      "Architecture Domain: AIENGINEERING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "ssh-certificates-vault-ca-short-lived-authentication": {
+    "slug": "ssh-certificates-vault-ca-short-lived-authentication",
+    "title": "Short-Lived SSH Certificate Authentication with HashiCorp Vault CA",
+    "description": "Zero-trust SSH architecture blueprint for eliminating static SSH public keys using HashiCorp Vault Certificate Authority and short-lived certificates.",
+    "tags": [
+      "infrastructuresecurity",
+      "ssh"
+    ],
+    "code_snippet": [
+      "# Enable SSH Secrets Engine in Vault",
+      "vault secrets enable -path=ssh-client-signer ssh",
+      "# Configure CA Keypair",
+      "vault write ssh-client-signer/config/ca generate_signing_key=true",
+      "# Export Vault CA Public Key for OpenSSH Hosts",
+      "vault read -field=public_key ssh-client-signer/config/ca > /etc/ssh/trusted-user-ca.pub",
+      "# Create Engineer Access Role",
+      "vault write ssh-client-signer/roles/devops"
+    ],
+    "invariants": [
+      "Zero Key Management: Eliminate authorized_keys management across server fleets by trusting a single Vault CA public key.",
+      "Short-Lived Certificates: Issue SSH user certificates valid for 8 hours, eliminating the risk of stolen static private keys.",
+      "Identity-Based Access: Map OIDC/Okta identity groups directly to Linux user principals and SSH permissions."
+    ],
+    "metrics": [
+      "Architecture Domain: INFRASTRUCTURESECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "structured-output-generation-logits-constraints": {
+    "slug": "structured-output-generation-logits-constraints",
+    "title": "Structured Output Generation: Enforcing JSON & Regex at the Logits Level",
+    "description": "Bypassing brittle prompt engineering by directly manipulating LLM token logits to mathematically guarantee valid JSON schema outputs without retry loops.",
+    "tags": [
+      "aiengineering",
+      "logits"
+    ],
+    "code_snippet": [
+      "# Outlines Guaranteed JSON Generation with Pydantic",
+      "import outlines",
+      "from pydantic import BaseModel, Field",
+      "from typing import List",
+      "class VulnerabilityReport(BaseModel):",
+      "    cve_id: str = Field(description=\"CVE identifier format: CVE-YYYY-NNNN\")",
+      "    severity: str = Field(description=\"CRITICAL, HIGH, MEDIUM, or LOW\")",
+      "    affected_packages: List[str]"
+    ],
+    "invariants": [
+      "Prompting Insecurity: Instructing an LLM to 'output valid JSON' fails unpredictably on complex schemas, causing JSON parse errors.",
+      "Logit Masking Mechanics: Intercept vocabulary logits before sampling and set invalid token scores to negative infinity (-inf).",
+      "FSM Grammar Engines: Drive token selection using Context-Free Grammars (CFG) and Pydantic schemas via Outlines & Guidance."
+    ],
+    "metrics": [
+      "Architecture Domain: AIENGINEERING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "systemd-service-sandboxing-and-security-hardening": {
+    "slug": "systemd-service-sandboxing-and-security-hardening",
+    "title": "Systemd Service Sandboxing: Restricting Process Capability & System Calls",
+    "description": "Production guide for sandboxing Linux daemons using systemd security directives like ProtectSystem, SystemCallFilter, and CapabilityBoundingSet.",
+    "tags": [
+      "systemhardening",
+      "systemdsecurity"
+    ],
+    "code_snippet": [
+      "# /etc/systemd/system/myapp.service.d/override.conf",
+      "[Service]",
+      "ProtectSystem=strict",
+      "ProtectHome=yes",
+      "ReadWritePaths=/var/log/myapp /var/lib/myapp",
+      "PrivateTmp=yes",
+      "ProtectKernelTunables=yes",
+      "ProtectKernelModules=yes"
+    ],
+    "invariants": [
+      "FileSystem Protection: Set ProtectSystem=strict and ProtectHome=yes to enforce read-only mount namespaces.",
+      "Privilege Restriction: Mandate NoNewPrivileges=yes to block suid escalation.",
+      "Capability Bounding: Restrict Linux capabilities using CapabilityBoundingSet=."
+    ],
+    "metrics": [
+      "Architecture Domain: SYSTEMHARDENING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "ufw-firewall-hardening-and-rate-limiting-blueprint-2026": {
+    "slug": "ufw-firewall-hardening-and-rate-limiting-blueprint-2026",
+    "title": "UFW Firewall Hardening: Advanced Rate Limiting & Default-Deny Security Blueprint",
+    "description": "Production guide for securing Linux servers using UFW with default-deny policies, custom application profiles, rate limiting, and interface isolation.",
+    "tags": [
+      "systemhardening",
+      "ufwfirewall"
+    ],
+    "code_snippet": [
+      "# Reset UFW to clean state",
+      "ufw --force reset",
+      "# Set default traffic policies",
+      "ufw default deny incoming",
+      "ufw default allow outgoing",
+      "# Allow SSH on custom port with rate limiting",
+      "ufw limit 22/tcp comment 'SSH Rate Limited'",
+      "# Enable UFW logging"
+    ],
+    "invariants": [
+      "Strict Default-Deny Rules: Block all unrequested incoming connections while permitting stateful outbound traffic.",
+      "Native SSH Rate Limiting: Enforce ufw limit to block IP addresses making 6+ connections within 30 seconds.",
+      "Custom Application Profiles: Define precise port and protocol definitions in /etc/ufw/applications.d/."
+    ],
+    "metrics": [
+      "Architecture Domain: SYSTEMHARDENING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "understanding-linux-ebpf-security-monitoring": {
+    "slug": "understanding-linux-ebpf-security-monitoring",
+    "title": "Understanding eBPF for Real-Time Linux Security Monitoring",
+    "description": "Technical deep-dive on Extended Berkeley Packet Filter (eBPF) tracing, kprobes, tracepoints, bpftrace, and zero-overhead kernel runtime security monitoring.",
+    "tags": [
+      "linuxkernel",
+      "ebpfmonitoring"
+    ],
+    "code_snippet": [
+      "// C code using eBPF CO-RE struct relocation",
+      "#include <vmlinux.h>",
+      "#include <bpf/bpf_helpers.h>",
+      "#include <bpf/bpf_core_read.h>",
+      "SEC(\"kprobe/sys_execve\")",
+      "int BPF_KPROBE(trace_exec, const char *filename) {",
+      "    u32 pid = bpf_get_current_pid_tgid() >> 32;",
+      "    bpf_printk(\"Execve triggered by PID %d\\n\", pid);"
+    ],
+    "invariants": [
+      "Kernel-Level Visibility: eBPF enables non-intrusive tracing of system calls, process executions, network packets, and file I/O directly within kernel space.",
+      "Zero Context-Switch Overhead: In-kernel JIT-compiled execution avoids costly user-to-kernel space context switches.",
+      "Safety-Verified Execution: The in-kernel eBPF verifier proves program safety (no memory corruption, no infinite loops) prior to loading."
+    ],
+    "metrics": [
+      "Architecture Domain: LINUXKERNEL Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "vllm-pagedattention-high-throughput-inference-tuning": {
+    "slug": "vllm-pagedattention-high-throughput-inference-tuning",
+    "title": "vLLM PagedAttention: Memory Optimization & High-Throughput LLM Inference Tuning",
+    "description": "Deep dive into OS-inspired virtual memory management for LLM KV caches, maximizing GPU utilization, and achieving 20x throughput scaling for production inference.",
+    "tags": [
+      "aiengineering",
+      "performance"
+    ],
+    "code_snippet": [
+      "# Starting vLLM server with optimized parameters for production",
+      "python -m vllm.entrypoints.openai.api_server \\",
+      "    --model meta-llama/Meta-Llama-3-8B-Instruct \\",
+      "    --tensor-parallel-size 1 \\",
+      "    --gpu-memory-utilization 0.90 \\",
+      "    --max-num-batched-tokens 8192 \\",
+      "    --quantization awq"
+    ],
+    "invariants": [
+      "KV Cache Bottleneck: Understand why traditional LLM inference wastes up to 80% of GPU memory due to fragmentation.",
+      "PagedAttention Mechanism: Inspired by OS virtual memory, allocate KV cache non-contiguously to eliminate memory waste.",
+      "High-Throughput Tuning: Optimize vLLM batch sizes, tensor parallelism, and quantization for massive concurrent requests."
+    ],
+    "metrics": [
+      "Architecture Domain: AIENGINEERING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "webgpu-llm-inference-browser-sandbox": {
+    "slug": "webgpu-llm-inference-browser-sandbox",
+    "title": "WebGPU LLM Inference: Running 7B Models Natively in the Browser",
+    "description": "Leveraging WebGPU compute shaders, TVM WebAssembly, and WGSL pipelines to run private local LLMs entirely within client-side browser sandboxes without server infrastructure.",
+    "tags": [
+      "aiengineering",
+      "webgpu"
+    ],
+    "code_snippet": [
+      "// WGSL Compute Shader for Parallel Matrix Multiplication (GEMM)",
+      "@group(0) @binding(0) var<storage, read> matrixA : array<f32>;",
+      "@group(0) @binding(1) var<storage, read> matrixB : array<f32>;",
+      "@group(0) @binding(2) var<storage, read_write> matrixC : array<f32>;",
+      "@compute @workgroup_size(16, 16)",
+      "fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {",
+      "    let row = global_id.x;",
+      "    let col = global_id.y;"
+    ],
+    "invariants": [
+      "Zero-Server Cost Architecture: Run 7B parameter models client-side with 0 infrastructure cost and total data privacy.",
+      "WGSL Compute Pipelines: Utilize WebGPU Shading Language to execute parallel matrix multiplications directly on client GPUs.",
+      "Web Worker Offloading: Prevent DOM freezing by decoupling WebGPU tensor execution into background Web Workers."
+    ],
+    "metrics": [
+      "Architecture Domain: AIENGINEERING Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "wireguard-vpn-tunneling-for-secure-vps-mesh-networks": {
+    "slug": "wireguard-vpn-tunneling-for-secure-vps-mesh-networks",
+    "title": "Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels & Strict Firewall Rules",
+    "description": "Step-by-step technical blueprint for creating encrypted private mesh networks between multi-cloud VPS nodes using WireGuard and UDP noise protocols.",
+    "tags": [
+      "websecurity",
+      "wireguardmesh"
+    ],
+    "code_snippet": [
+      "# /etc/wireguard/wg0.conf on Web Server (Node B)",
+      "[Interface]",
+      "PrivateKey = <NODE_B_PRIVATE_KEY>",
+      "Address = 10.0.0.2/24",
+      "[Peer]",
+      "# Gateway Server (Node A)",
+      "PublicKey = <NODE_A_PUBLIC_KEY>",
+      "Endpoint = 203.0.113.10:51820"
+    ],
+    "invariants": [
+      "Kernel-Level Performance: WireGuard executes inside Linux kernel space with minimal latency.",
+      "Noise Protocol Framework: Cryptographic handshakes ensure perfect forward secrecy.",
+      "Interface Isolation: Bind internal database and backend traffic strictly to WireGuard IP (10.0.0.x)."
+    ],
+    "metrics": [
+      "Architecture Domain: WEBSECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "zero-trust-microservices-with-wasm-runtime-sandboxing": {
+    "slug": "zero-trust-microservices-with-wasm-runtime-sandboxing",
+    "title": "Zero-Trust Microservices with WebAssembly (Wasm) Runtime Sandboxing",
+    "description": "Architecture blueprint for running untrusted microservice code inside WebAssembly sandboxes with nanosecond startup times and linear memory bounds.",
+    "tags": [
+      "cloudsecurity",
+      "webassembly"
+    ],
+    "code_snippet": [
+      "// Rust Microservice compiled to wasm32-wasip1 target",
+      "use std::fs::File;",
+      "use std::io::Read;",
+      "fn main() -> Result<(), Box<dyn std::error::Error>> {",
+      "    println!(\"Executing isolated Wasm microservice...\");",
+      "    // WASI capability check: Accessing un-mapped directories will fail gracefully",
+      "    let mut file = File::open(\"/data/config.json\")?;",
+      "    let mut content = String::new();"
+    ],
+    "invariants": [
+      "Memory Isolation: Wasm runtimes enforce strict linear memory bounds, preventing out-of-bounds pointer reads and memory corruption.",
+      "Capability-Based I/O: WASI (WebAssembly System Interface) enforces default-deny access to filesystems, environment variables, and network sockets.",
+      "Nanosecond Cold Starts: Execute microservices in sub-millisecond timeframes compared to multi-second container startup overhead."
+    ],
+    "metrics": [
+      "Architecture Domain: CLOUDSECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  },
+  "zero-trust-ssh-access-with-fido2-and-ssh-ca": {
+    "slug": "zero-trust-ssh-access-with-fido2-and-ssh-ca",
+    "title": "Zero-Trust SSH Access Blueprint: FIDO2 Hardware Keys & SSH Certificate Authority",
+    "description": "Comprehensive technical blueprint for securing Linux SSH infrastructure using FIDO2/YubiKey hardware tokens, SSH Certificate Authority (SSH CA), and short-lived certificates.",
+    "tags": [
+      "cybersecurity",
+      "zerotrustssh"
+    ],
+    "code_snippet": [
+      "# Sign engineer's public key valid for 8 hours for principal 'admin-role'",
+      "ssh-keygen -s /etc/ssh/ca/ssh_user_ca \\",
+      "  -I \"engineer@company.com\" \\",
+      "  -n \"admin-role\" \\",
+      "  -V +8h \\",
+      "  -z 20260803001 \\",
+      "  id_ed25519_sk.pub"
+    ],
+    "invariants": [
+      "Eliminate Static Keys: Migrate from static authorized_keys deployment to short-lived SSH Certificates.",
+      "FIDO2 Hardware Bound: Enforce ed25519-sk key pairs tied to physical security tokens (YubiKey/FIDO2).",
+      "Centralized Authority: Use an offline SSH Certificate Authority (CA) to sign user access requests with automatic 8-hour expiration."
+    ],
+    "metrics": [
+      "Architecture Domain: CYBERSECURITY Hardening Protocol",
+      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
+  }
+}
