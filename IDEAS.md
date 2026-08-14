@@ -16,10 +16,14 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 - [ DONE ] **Automated Subresource Integrity (SRI)**: Generator hash SHA-384 otomatis pada seluruh aset statis.
 - [ DONE ] **Automated Cloudflare CDN Cache Purge**: Pemicu Purge Cache Cloudflare otomatis via API.
 - [ DONE ] **Decoupled 3-Stage Manifest-Driven Social Card Generator**: Generator gambar Ultra-HD 2400px (Light Square untuk Bluesky + Dark Landscape untuk OpenGraph/Mastodon) berbasis `data/social_cards_manifest.json` (ADR-014).
-- [ DONE ] **Check 16 Automated QA Gate in `verify_batch.py`**: Validasi otomatis keutuhan kartu media sosial, manifest JSON, dan limit ukuran file < 950KB.
+- [ DONE ] **Automated Data Desynchronization Guard (Check 16 in `verify_batch.py`)**: Validasi otomatis keutuhan kartu media sosial, manifest JSON, dan limit ukuran file < 950KB sebelum rilis artikel.
+- [ DONE ] **Dual-Pass File Size Quantization Guard**: Kompresi palet otomatis ke 256 warna (`MEDIANCUT`) di `generate_social_cards.py` jika ukuran file > 800KB untuk memastikan selalu lolos limit API Bluesky (1.0MB) dan Mastodon.
+- [ DONE ] **Safe Unicode Glyph Sanitization (`extract_card_manifest.py`)**: Normalisasi otomatis karakter smart quotes (`”`, `“`), em-dash (`—`), dan panah (`→`) ke format teks teknis bersih untuk mencegah glik/tofu `[?]`.
+- [ DONE ] **Bundled Local TTF Font Distribution (`assets/fonts/ttf/`)**: Pustaka font mandiri (`JetBrainsMono`, `DejaVuSans`) di repositori untuk menjamin rendering konsisten di semua OS dan CI/CD runner.
 - [ DONE ] **Automated Multi-Channel Broadcast Pipeline**: Orkestrasi otomatis `ping_indexers.py` (IndexNow Bing/Yandex) dan `scripts/syndicate.py` (Bluesky & Mastodon) pasca-rilis artikel.
-- [ BACKLOG ] **Content Hash Cache-Busting on OpenGraph Tags**: Otomatis menyematkan hash query string `?v=<hash>` pada `og:image` di seluruh HTML agar crawler media sosial tidak menampilkan thumbnail kadaluarsa.
+- [ BACKLOG ] **Content Hash Cache-Busting on OpenGraph Tags**: Otomatis menyematkan hash query string `?v=<hash>` pada `og:image` di seluruh HTML agar crawler media sosial (Facebook, LinkedIn, Discord, Telegram) tidak menampilkan thumbnail kadaluarsa.
 - [ BACKLOG ] **Dynamic Canvas Vertical Budgeting**: Kalkulator layout dinamis fleksibel di Pillow compiler untuk auto-adjust padding ketika judul/konten artikel sangat panjang.
+
 
 ## 3. Peningkatan Aksesibilitas & UX
 - [ DONE ] **Command Palette / Quick Search (Ctrl+K)**: Pencarian cepat berbasis Vanilla JS untuk 46+ tools.
