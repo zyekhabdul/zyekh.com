@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speculative Decoding Simulator — LLM Inference Speedup Calculator | zyekh.com</title>
+  <meta name="description" content="Interactive Speculative Decoding simulator & LLM inference latency calculator. Visualize draft model token acceptance, calculate expected speedup ratio, and analyze latency tradeoffs offline.">
+  <link rel="canonical" href="https://zyekh.com/tools/speculative-decoding.html">
+  <meta property="og:title" content="Speculative Decoding Simulator | zyekh.com">
+  <meta property="og:description" content="Interactive LLM inference speculative decoding simulator & speedup ratio calculator.">
+  <meta property="og:url" content="https://zyekh.com/tools/speculative-decoding.html">
+  <meta property="og:type" content="website">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Speculative Decoding Simulator",
+    "url": "https://zyekh.com/tools/speculative-decoding.html",
+    "description": "Interactive LLM inference speculative decoding speedup calculator and token verification tree simulator.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "author": {
+      "@type": "Person",
+      "name": "Abdul Zyekh",
+      "url": "https://zyekh.com"
+    }
+  }
+  </script>
+
+  <style id="antiClickjack">body{display:none !important;}</style>
+  <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+  <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+  <link rel="stylesheet" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous">
+  <style>
+    .sim-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; }
+    .sim-slider-group { margin-bottom: 1.2rem; }
+    .sim-slider-header { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.4rem; }
+    .sim-slider-val { font-family: 'Fira Code', monospace; font-weight: 700; color: var(--text-main); }
+    input[type="range"] { width: 100%; accent-color: var(--text-main); cursor: pointer; }
+    .token-stream-box { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; font-family: 'Fira Code', monospace; min-height: 140px; }
+    .token-chip { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 4px; margin: 0.2rem; font-size: 0.85rem; border: 1px solid var(--border-color); }
+    .token-accepted { background: rgba(34, 197, 94, 0.15); border-color: #22c55e; color: #4ade80; }
+    .token-rejected { background: rgba(239, 68, 68, 0.15); border-color: #ef4444; color: #f87171; }
+    .token-draft { background: var(--bg-card); color: var(--text-muted); }
+  </style>
+  <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" as="script">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-o0TZcEGiQSJh6Gw7ZXdUsBy4N2rXwSgYHYdOFFF2enc='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+</head>
+<body>
+
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav class="breadcrumb">
+      <li><a href="/" class="breadcrumb-link">Home</a></li>
+      <li class="breadcrumb-sep">/</li>
+      <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+      <li class="breadcrumb-sep">/</li>
+      <li class="text-muted">Speculative Decoding Simulator</li>
+    </nav>
+
+    <header class="page-header">
+      <h1 class="page-title">Speculative Decoding Simulator</h1>
+      <p class="page-subtitle">Interactive LLM inference latency calculator & token verification tree simulator. Analyze speedup ratios, expected accepted tokens, and draft model tradeoffs offline.</p>
+    </header>
+
+    <div class="grid-2" style="gap: 1.5rem;">
+      <!-- Controls -->
+      <div class="sim-card">
+        <h2 class="section-title" style="font-size: 1.2rem; margin-bottom: 1rem;">[ PARAMETERS ] Model Controls</h2>
+        
+        <div class="sim-slider-group">
+          <div class="sim-slider-header">
+            <span>Draft Acceptance Rate (&alpha;):</span>
+            <span class="sim-slider-val" id="valAlpha">75%</span>
+          </div>
+          <input type="range" id="inputAlpha" min="10" max="95" value="75" step="1">
+          <span class="text-muted-xs">Probability that target model accepts a draft token.</span>
+        </div>
+
+        <div class="sim-slider-group">
+          <div class="sim-slider-header">
+            <span>Lookahead Window (K):</span>
+            <span class="sim-slider-val" id="valK">5 tokens</span>
+          </div>
+          <input type="range" id="inputK" min="1" max="10" value="5" step="1">
+          <span class="text-muted-xs">Number of tokens guessed by draft model per step.</span>
+        </div>
+
+        <div class="sim-slider-group">
+          <div class="sim-slider-header">
+            <span>Draft Latency (t_draft):</span>
+            <span class="sim-slider-val" id="valTd">5 ms</span>
+          </div>
+          <input type="range" id="inputTd" min="1" max="20" value="5" step="1">
+          <span class="text-muted-xs">Time taken by draft model to generate 1 token.</span>
+        </div>
+
+        <div class="sim-slider-group">
+          <div class="sim-slider-header">
+            <span>Target Latency (t_target):</span>
+            <span class="sim-slider-val" id="valTt">45 ms</span>
+          </div>
+          <input type="range" id="inputTt" min="20" max="150" value="45" step="5">
+          <span class="text-muted-xs">Time taken by target model to verify 1 batch of tokens.</span>
+        </div>
+
+        <button type="button" id="btnResimulate" class="btn-primary" style="margin-top: 0.5rem;">[ SIMULATE STEP ] Generate Random Stream</button>
+      </div>
+
+      <!-- Results Matrix -->
+      <div class="sim-card">
+        <h2 class="section-title" style="font-size: 1.2rem; margin-bottom: 1rem;">[ METRICS ] Real-Time Performance</h2>
+
+        <div class="result-summary">
+          <div class="result-card total">
+            <div class="label">Speedup Ratio (S)</div>
+            <div class="value" id="resSpeedup">2.34x</div>
+          </div>
+          <div class="result-card">
+            <div class="label">Expected Tokens / Step</div>
+            <div class="value" id="resExpTokens">3.16</div>
+          </div>
+          <div class="result-card">
+            <div class="label">Effective Latency / Token</div>
+            <div class="value" id="resEffLat">19.2 ms</div>
+          </div>
+          <div class="result-card">
+            <div class="label">Time Saved</div>
+            <div class="value" id="resTimeSaved">57.3%</div>
+          </div>
+        </div>
+
+        <h3 style="font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">[ TOKEN VERIFICATION STREAM ]</h3>
+        <div class="token-stream-box" id="tokenStreamBox">
+          <!-- Dynamic Token Stream Chips -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Technical Guide -->
+    <section class="seo-content-block">
+      <h2 class="section-title">[ ARCHITECTURE ] How Speculative Decoding Works</h2>
+      <p class="text-muted">Speculative Decoding (Leviathan et al., Chen et al.) accelerates LLM inference by pairing a small, fast draft model with a large target model. The draft model speculatively generates $K$ tokens. The target model then verifies all $K$ tokens in a single parallel forward pass.</p>
+      
+      <div class="sim-card" style="margin-top: 1rem;">
+        <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">Mathematical Foundation</h3>
+        <ul style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; padding-left: 1.2rem;">
+          <li><strong>Expected Tokens per Step</strong>: \( E[T] = \frac{1 - \alpha^{K+1}}{1 - \alpha} \). Higher acceptance rate \(\alpha\) yields more accepted tokens per verification pass.</li>
+          <li><strong>Step Execution Time</strong>: \( T_{step} = K \cdot t_{draft} + t_{target} \). Includes draft generation overhead plus 1 target verification pass.</li>
+          <li><strong>Speedup Formula</strong>: \( S = \frac{E[T] \cdot t_{target}}{K \cdot t_{draft} + t_{target}} \). Maximum speedup occurs when \(t_{draft} \ll t_{target}\) and acceptance rate \(\alpha > 70\%\).</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="nav-container">
+      <p>Zyekh's Zero-Dependency Web Hub &copy; 2026. 100% Local-First & Zero-Tracking.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
+  <script>
+    (function() {
+      const inputAlpha = document.getElementById('inputAlpha');
+      const inputK = document.getElementById('inputK');
+      const inputTd = document.getElementById('inputTd');
+      const inputTt = document.getElementById('inputTt');
+
+      const valAlpha = document.getElementById('valAlpha');
+      const valK = document.getElementById('valK');
+      const valTd = document.getElementById('valTd');
+      const valTt = document.getElementById('valTt');
+
+      const resSpeedup = document.getElementById('resSpeedup');
+      const resExpTokens = document.getElementById('resExpTokens');
+      const resEffLat = document.getElementById('resEffLat');
+      const resTimeSaved = document.getElementById('resTimeSaved');
+      const tokenStreamBox = document.getElementById('tokenStreamBox');
+      const btnResimulate = document.getElementById('btnResimulate');
+
+      function debounceRAF(fn) {
+        let queued = false;
+        return function(...args) {
+          if (queued) return;
+          queued = true;
+          window.requestAnimationFrame(() => {
+            fn.apply(this, args);
+            queued = false;
+          });
+        };
+      }
+
+      const sampleTokens = ["The", "kernel", "sandbox", "isolates", "memory", "access", "via", "seccomp", "bpf", "hooks"];
+
+      function calculateMetrics() {
+        const alpha = parseFloat(inputAlpha.value) / 100;
+        const K = parseInt(inputK.value, 10);
+        const td = parseFloat(inputTd.value);
+        const tt = parseFloat(inputTt.value);
+
+        valAlpha.textContent = `${inputAlpha.value}%`;
+        valK.textContent = `${K} tokens`;
+        valTd.textContent = `${td} ms`;
+        valTt.textContent = `${tt} ms`;
+
+        // Mathematical Expectation
+        let expTokens;
+        if (Math.abs(alpha - 1.0) < 0.001) {
+          expTokens = K + 1;
+        } else {
+          expTokens = (1 - Math.pow(alpha, K + 1)) / (1 - alpha);
+        }
+
+        const stepTime = (K * td) + tt;
+        const baseTimeForExpTokens = expTokens * tt;
+        const speedup = baseTimeForExpTokens / stepTime;
+        const effLat = stepTime / expTokens;
+        const timeSaved = Math.max(0, (1 - (1 / speedup)) * 100);
+
+        resSpeedup.textContent = `${speedup.toFixed(2)}x`;
+        resExpTokens.textContent = expTokens.toFixed(2);
+        resEffLat.textContent = `${effLat.toFixed(1)} ms`;
+        resTimeSaved.textContent = `${timeSaved.toFixed(1)}%`;
+
+        renderTokenStream(alpha, K);
+      }
+
+      function renderTokenStream(alpha, K) {
+        tokenStreamBox.innerHTML = '';
+        let accepted = true;
+        let htmlChips = '';
+
+        for (let i = 0; i < K; i++) {
+          const tName = sampleTokens[i % sampleTokens.length];
+          const rand = Math.random();
+          if (accepted && rand < alpha) {
+            htmlChips += `<span class="token-chip token-accepted">[+] ${tName} (Accepted)</span>`;
+          } else if (accepted) {
+            accepted = false;
+            htmlChips += `<span class="token-chip token-rejected">[-] ${tName} (Rejected -> Target Replaced)</span>`;
+          } else {
+            htmlChips += `<span class="token-chip token-draft">[~] ${tName} (Skipped)</span>`;
+          }
+        }
+        tokenStreamBox.innerHTML = htmlChips;
+      }
+
+      const updateUI = debounceRAF(calculateMetrics);
+
+      [inputAlpha, inputK, inputTd, inputTt].forEach(el => {
+        el.addEventListener('input', updateUI);
+      });
+
+      btnResimulate.addEventListener('click', () => {
+        calculateMetrics();
+      });
+
+      calculateMetrics();
+    })();
+  </script>
+</body>
+</html>
