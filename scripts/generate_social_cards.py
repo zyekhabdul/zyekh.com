@@ -160,11 +160,12 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         else:
             title_font_size, title_line_h = 74, 98
 
-        font_tag = get_font(size=46, family="mono", is_bold=True)
+        font_tag = get_font(size=42, family="mono", is_bold=False)
         font_title = get_font(size=title_font_size, family="outfit", is_bold=True)
-        font_bar = get_font(size=36, family="mono", is_bold=True)
-        font_pillar_head = get_font(size=38, family="mono", is_bold=True)
-        font_meta = get_font(size=36, family="mono", is_bold=False)
+        font_bar = get_font(size=34, family="mono", is_bold=False)
+        font_pillar_head = get_font(size=36, family="mono", is_bold=False)
+        font_meta = get_font(size=34, family="mono", is_bold=False)
+
 
         # 2. Description Auto-Scaling
         desc_text = article_data.get('description', '')
@@ -295,7 +296,7 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             py += 10
 
         # G. Footer
-        draw.text((margin + 80, footer_y), "Ref: ZYEKH.COM / TECHNICAL BLUEPRINT SPECIFICATION • DECENTRALIZED SYNDICATION 2026", fill=text_muted, font=font_meta)
+        draw.text((margin + 80, footer_y), "OPEN TECHNICAL ARCHITECTURE SPECIFICATION • SYSTEMS & SECURITY BLUEPRINT 2026", fill=text_muted, font=font_meta)
 
 
     else:
@@ -309,25 +310,24 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         else:
             title_font_size, title_line_h = 60, 78
 
-        font_tag = get_font(size=44, family="mono", is_bold=True)
+        font_tag = get_font(size=40, family="mono", is_bold=False)
         font_title = get_font(size=title_font_size, family="outfit", is_bold=True)
         
         desc_text = article_data.get('description', '')
         desc_font_size = 36 if len(desc_text) <= 120 else 32
         font_desc = get_font(size=desc_font_size, family="sans", is_bold=False)
         
-        font_bar = get_font(size=34, family="mono", is_bold=True)
+        font_bar = get_font(size=32, family="mono", is_bold=False)
         
         raw_code = article_data.get('code_snippet', [])
         code_font_size = 34 if len(raw_code) <= 6 else 30
         font_code = get_font(size=code_font_size, family="mono", is_bold=False)
         
-        font_mini_head = get_font(size=32, family="mono", is_bold=True)
-        font_mini_body = get_font(size=29, family="sans", is_bold=False)
+        font_mini_head = get_font(size=28, family="mono", is_bold=False)
+        font_mini_body = get_font(size=26, family="sans", is_bold=False)
         font_meta = get_font(size=34, family="mono", is_bold=False)
 
         # 1. Category Tag
-
         draw.text((margin + 80, margin + 45), cat_tag, fill=text_muted, font=font_tag)
 
         # 2. Main Title (Max 2 lines in Landscape)
@@ -349,7 +349,7 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         curr_y += 16
         wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 7, draw)
         
-        box_h = 420
+        box_h = 415
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
         
         # Terminal Header Bar (68px height)
@@ -378,40 +378,41 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             cy += code_lh
 
         # 5. Bottom 2-Column Matrix (Zero White Space / Zero Void)
-        curr_y += box_h + 18
-        bot_h = 165
+        curr_y += box_h + 16
+        bot_h = 180
         col_w = (inner_w - 30) // 2
         left_x = margin + 80
         right_x = left_x + col_w + 30
 
         # Left Column: Architectural Invariant
         draw.rectangle([left_x, curr_y, left_x + col_w, curr_y + bot_h], fill=box_bg, outline=box_border, width=2)
-        draw.text((left_x + 25, curr_y + 18), "[ KEY ARCHITECTURAL INVARIANT ]", fill=text_main, font=font_mini_head)
+        draw.text((left_x + 25, curr_y + 16), "[ KEY ARCHITECTURAL INVARIANT ]", fill=text_main, font=font_mini_head)
         invariants = article_data.get('invariants', [])
         if invariants:
             inv_sample = invariants[0]
             clean_inv = inv_sample if inv_sample.startswith("[+]") else f"[+] {inv_sample}"
-            wrapped_inv = wrap_text(clean_inv, font_mini_body, col_w - 50, draw)[:2]
-            iy = curr_y + 58
+            wrapped_inv = wrap_text(clean_inv, font_mini_body, col_w - 50, draw)
+            iy = curr_y + 52
             for il in wrapped_inv:
                 draw.text((left_x + 25, iy), il, fill=text_main, font=font_mini_body)
-                iy += 40
+                iy += 36
 
         # Right Column: Production Operational Metric
         draw.rectangle([right_x, curr_y, right_x + col_w, curr_y + bot_h], fill=box_bg, outline=box_border, width=2)
-        draw.text((right_x + 25, curr_y + 18), "[ PRODUCTION OPERATIONAL METRIC ]", fill=text_main, font=font_mini_head)
+        draw.text((right_x + 25, curr_y + 16), "[ PRODUCTION OPERATIONAL METRIC ]", fill=text_main, font=font_mini_head)
         metrics = article_data.get('metrics', [])
         if metrics:
             met_sample = metrics[1] if len(metrics) > 1 else metrics[0]
             clean_met = met_sample if met_sample.startswith("[*]") else f"[*] {met_sample}"
-            wrapped_met = wrap_text(clean_met, font_mini_body, col_w - 50, draw)[:2]
-            my = curr_y + 58
+            wrapped_met = wrap_text(clean_met, font_mini_body, col_w - 50, draw)
+            my = curr_y + 52
             for ml in wrapped_met:
                 draw.text((right_x + 25, my), ml, fill=text_main, font=font_mini_body)
-                my += 40
+                my += 36
 
         # 6. Footer
-        draw.text((margin + 80, height - margin - 45), "Ref: ZYEKH.COM / TECHNICAL BLUEPRINT SPECIFICATION • DECENTRALIZED SYNDICATION 2026", fill=text_muted, font=font_meta)
+        draw.text((margin + 80, height - margin - 45), "OPEN TECHNICAL ARCHITECTURE SPECIFICATION • SYSTEMS & SECURITY BLUEPRINT 2026", fill=text_muted, font=font_meta)
+
 
     # Save with File Size Optimization (< 950KB for API limit)
 
