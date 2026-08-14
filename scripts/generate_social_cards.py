@@ -212,22 +212,27 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
                 draw.text((margin + 80, curr_y), dl, fill=text_muted, font=font_desc)
                 curr_y += desc_line_h
 
-        # --- DYNAMIC VERTICAL BUDGETING (ZERO EMPTY VOID) ---
-        footer_y = height - margin - 50
-        target_bottom = footer_y - 45
-        available_budget = target_bottom - curr_y - 20
-        gap_between_boxes = 26
-        
-        # Calculate box heights proportionally
-        usable_height = available_budget - (gap_between_boxes * 2)
-        box_h = int(usable_height * 0.40)
-        p1_h = int(usable_height * 0.30)
-        p2_h = usable_height - box_h - p1_h
+        # --- DYNAMIC CONTENT-DRIVEN BOX HEIGHTS ---
+        # 1. Pre-calculate wrapped content
+        wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 9, draw)
+        inv_wrapped_list = [wrap_text(t if t.startswith("[+]") else f"[+] {t}", font_inv_body, max_content_w, draw) for t in invariants]
+        met_wrapped_list = [wrap_text(m if m.startswith("[*]") else f"[*] {m}", font_met_body, max_content_w, draw) for m in metrics]
+
+        total_inv_lines = sum(len(lines) for lines in inv_wrapped_list)
+        total_met_lines = sum(len(lines) for lines in met_wrapped_list)
+
+        bar_h = 76
+        box_h = bar_h + 20 + (len(wrapped_code) * code_line_h) + 20
+        p1_h = 68 + (total_inv_lines * inv_line_h) + (len(invariants) * 8) + 18
+        p2_h = 68 + (total_met_lines * met_line_h) + (len(metrics) * 8) + 18
+
+        footer_y = height - margin - 45
+        available_budget = footer_y - curr_y - 20
+        total_boxes_h = box_h + p1_h + p2_h
+        gap_between_boxes = max(24, (available_budget - total_boxes_h) // 3)
 
         # D. Terminal Architecture Window
         curr_y += 20
-        wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 9, draw)
-        bar_h = 76
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + bar_h], fill=bar_bg, outline=box_border, width=2)
 
@@ -244,7 +249,7 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         bar_text_y = curr_y + (bar_h - t_h) // 2 - 2
         draw.text((margin + 210, bar_text_y), bar_title, fill=text_muted, font=font_bar)
 
-        cy = curr_y + bar_h + 24
+        cy = curr_y + bar_h + 20
         for cl in wrapped_code:
             is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
             c_color = text_muted if is_comment else text_main
@@ -253,32 +258,31 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
 
         # E. Pillar 1: Architectural Guarantees
         curr_y += box_h + gap_between_boxes
-        inv_wrapped_list = [wrap_text(t if t.startswith("[+]") else f"[+] {t}", font_inv_body, max_content_w, draw) for t in invariants]
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + p1_h], fill=card_color, outline=box_border, width=2)
-        draw.text((margin + 110, curr_y + 24), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_pillar_head)
+        draw.text((margin + 110, curr_y + 22), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_pillar_head)
         
-        py = curr_y + 78
+        py = curr_y + 70
         for wrapped_t in inv_wrapped_list:
             for tl in wrapped_t:
                 draw.text((margin + 110, py), tl, fill=text_main, font=font_inv_body)
                 py += inv_line_h
-            py += 10
+            py += 8
 
         # F. Pillar 2: Production Performance & Verification
         curr_y += p1_h + gap_between_boxes
-        met_wrapped_list = [wrap_text(m if m.startswith("[*]") else f"[*] {m}", font_met_body, max_content_w, draw) for m in metrics]
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + p2_h], fill=card_color, outline=box_border, width=2)
-        draw.text((margin + 110, curr_y + 24), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_pillar_head)
+        draw.text((margin + 110, curr_y + 22), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_pillar_head)
         
-        py = curr_y + 78
+        py = curr_y + 70
         for wrapped_m in met_wrapped_list:
             for ml in wrapped_m:
                 draw.text((margin + 110, py), ml, fill=text_main, font=font_met_body)
                 py += met_line_h
-            py += 10
+            py += 8
 
-        # G. Footer
-        draw.text((margin + 80, footer_y), "OPEN TECHNICAL ARCHITECTURE SPECIFICATION • SYSTEMS & SECURITY BLUEPRINT 2026", fill=text_muted, font=font_meta)
+        # G. Collision-Free Footer
+        if curr_y + p2_h + 30 <= footer_y:
+            draw.text((margin + 80, footer_y), "OPEN TECHNICAL ARCHITECTURE SPECIFICATION • SYSTEMS & SECURITY BLUEPRINT 2026", fill=text_muted, font=font_meta)
 
 
     else:
@@ -327,15 +331,14 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
                 draw.text((margin + 80, curr_y), dl, fill=text_muted, font=font_desc)
                 curr_y += 48
 
-        # 4. Terminal Box (Balanced Height)
+        # 4. Terminal Box (Dynamic Tight Height)
         curr_y += 16
-        wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 6, draw)
+        wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 7, draw)
         
-        box_h = 365
-        draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
-        
-        # Terminal Header Bar (60px height)
         bar_h = 60
+        code_lh = 42 if code_font_size >= 32 else 38
+        box_h = bar_h + 16 + (len(wrapped_code) * code_lh) + 16
+        draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + bar_h], fill=bar_bg, outline=box_border, width=2)
         
         # 3 Window Control Dots
@@ -351,13 +354,13 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         bar_text_y = curr_y + (bar_h - t_h) // 2 - 2
         draw.text((margin + 200, bar_text_y), bar_title, fill=text_muted, font=font_bar)
 
-        cy = curr_y + bar_h + 14
-        code_lh = 44 if code_font_size >= 32 else 40
+        cy = curr_y + bar_h + 16
         for cl in wrapped_code:
             is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
             c_color = text_muted if is_comment else text_main
             draw.text((margin + 110, cy), cl, fill=c_color, font=font_code)
             cy += code_lh
+
 
         # 5. Bottom 2-Column Matrix (Full Parity: Dynamic Tight Box Height)
         curr_y += box_h + 16
