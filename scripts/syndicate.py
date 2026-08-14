@@ -141,6 +141,45 @@ def generate_mastodon_intent_url(title, url):
     encoded_text = urllib.parse.quote(text)
     return f"https://infosec.exchange/share?text={encoded_text}"
 
+def upload_mastodon_media(token, server, image_path, description=""):
+    import uuid
+    boundary = f"----WebKitFormBoundary{uuid.uuid4().hex}"
+    endpoint = f"{server.rstrip('/')}/api/v2/media"
+    
+    with open(image_path, "rb") as f:
+        file_bytes = f.read()
+    
+    body = bytearray()
+    body.extend(f"--{boundary}\r\n".encode('utf-8'))
+    body.extend(f'Content-Disposition: form-data; name="file"; filename="{os.path.basename(image_path)}"\r\n'.encode('utf-8'))
+    body.extend(b"Content-Type: image/png\r\n\r\n")
+    body.extend(file_bytes)
+    body.extend(b"\r\n")
+    
+    if description:
+        body.extend(f"--{boundary}\r\n".encode('utf-8'))
+        body.extend(f'Content-Disposition: form-data; name="description"\r\n\r\n'.encode('utf-8'))
+        body.extend(f"{description}\r\n".encode('utf-8'))
+        
+    body.extend(f"--{boundary}--\r\n".encode('utf-8'))
+    
+    req = urllib.request.Request(
+        endpoint,
+        data=bytes(body),
+        headers={
+            'Authorization': f'Bearer {token}',
+            'Content-Type': f'multipart/form-data; boundary={boundary}',
+            'User-Agent': 'ZyekhSyndicator/1.0'
+        }
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode('utf-8'))
+            return data.get('id')
+    except Exception as err:
+        print(f"[ WARN ] Mastodon Media Upload Failed: {err}")
+        return None
+
 def publish_mastodon(article):
     load_dotenv()
     token = os.environ.get('MASTODON_ACCESS_TOKEN')
@@ -151,8 +190,20 @@ def publish_mastodon(article):
 
     tags_str = ' '.join([f"#{t.capitalize()}" for t in article['tags']])
     status_text = f"{article['title']}\n\n{article['description']}\n\n[ Read Full Article -> ] {article['url']}\n\n{tags_str}"
+    
+    media_ids = []
+    card_path = BASE_DIR / "assets" / "img" / "social-cards" / f"{article['slug']}-dark-landscape.png"
+    if card_path.exists():
+        media_id = upload_mastodon_media(token, server, card_path, description=article['title'])
+        if media_id:
+            media_ids.append(media_id)
+            print(f"[ SUCCESS ] Mastodon Dark Landscape Social Card Attached: {card_path.name}")
+
     endpoint = f"{server.rstrip('/')}/api/v1/statuses"
-    payload = json.dumps({'status': status_text, 'visibility': 'public'}).encode('utf-8')
+    payload_dict = {'status': status_text, 'visibility': 'public'}
+    if media_ids:
+        payload_dict['media_ids'] = media_ids
+    payload = json.dumps(payload_dict).encode('utf-8')
 
     req = urllib.request.Request(
         endpoint,
