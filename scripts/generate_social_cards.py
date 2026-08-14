@@ -76,12 +76,7 @@ def wrap_code_lines(raw_lines, font, max_w, max_total_lines, draw):
                 else:
                     if curr:
                         final_lines.append(curr)
-                    if draw.textbbox((0, 0), w, font=font)[2] - draw.textbbox((0, 0), w, font=font)[0] > max_w:
-                        while w and (draw.textbbox((0, 0), w + '...', font=font)[2] - draw.textbbox((0, 0), w + '...', font=font)[0]) > max_w:
-                            w = w[:-1]
-                        curr = w + '...'
-                    else:
-                        curr = '    ' + w
+                    curr = '    ' + w
             if curr:
                 final_lines.append(curr)
         if len(final_lines) >= max_total_lines:
@@ -133,20 +128,20 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
     cat_tag = f"[ {tag_str} ]" if tag_str else "[ TECHNICAL SPECIFICATION ]"
 
     inner_w = width - (margin * 2 + 160)
-    max_code_w = inner_w - 60
+    max_content_w = inner_w - 60
 
     if mode == "square":
         # =========================================================================
         # 1:1 SQUARE INFOGRAPHIC LAYOUT (2400 x 2400)
         # =========================================================================
-        title_font_size = 84 if len(raw_title) <= 55 else (74 if len(raw_title) <= 75 else 66)
-        font_tag = get_font(size=46, is_mono=True, is_bold=True)
+        title_font_size = 80 if len(raw_title) <= 55 else (70 if len(raw_title) <= 75 else 62)
+        font_tag = get_font(size=44, is_mono=True, is_bold=True)
         font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
-        font_desc = get_font(size=42, is_mono=False, is_bold=False)
-        font_bar = get_font(size=36, is_mono=True, is_bold=True)
-        font_code = get_font(size=36, is_mono=True, is_bold=False)
-        font_pillar_head = get_font(size=38, is_mono=True, is_bold=True)
-        font_pillar_body = get_font(size=36, is_mono=False, is_bold=False)
+        font_desc = get_font(size=38, is_mono=False, is_bold=False)
+        font_bar = get_font(size=34, is_mono=True, is_bold=True)
+        font_code = get_font(size=33, is_mono=True, is_bold=False)
+        font_pillar_head = get_font(size=36, is_mono=True, is_bold=True)
+        font_pillar_body = get_font(size=32, is_mono=False, is_bold=False)
         font_meta = get_font(size=34, is_mono=True, is_bold=False)
 
         # 1. Category Tag
@@ -167,15 +162,15 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             curr_y += 10
             for dl in desc_lines:
                 draw.text((margin + 80, curr_y), dl, fill=text_muted, font=font_desc)
-                curr_y += 56
+                curr_y += 52
 
         # 4. Terminal Architecture Window
-        curr_y += 30
-        box_h = 720
+        curr_y += 25
+        box_h = 620
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
         
-        # Terminal Header Bar (80px height)
-        bar_h = 80
+        # Terminal Header Bar (76px height)
+        bar_h = 76
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + bar_h], fill=bar_bg, outline=box_border, width=2)
         
         # 3 Window Control Dots
@@ -201,54 +196,58 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
                 "RestrictSUIDSGID=true         # Neutralize privilege escalation binaries"
             ]
 
-        wrapped_code = wrap_code_lines(raw_code, font_code, max_code_w, 9, draw)
+        wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 9, draw)
 
-        cy = curr_y + bar_h + 25
+        cy = curr_y + bar_h + 20
         for cl in wrapped_code:
             is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
             c_color = text_muted if is_comment else text_main
             draw.text((margin + 110, cy), cl, fill=c_color, font=font_code)
-            cy += 58
+            cy += 52
 
-        # 5. Pillar 1: Architectural Guarantees
-        curr_y += box_h + 35
-        p1_h = 280
+        # 5. Pillar 1: Architectural Guarantees (Fully Wrapped Bullets)
+        curr_y += box_h + 30
+        p1_h = 320
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + p1_h], fill=card_color, outline=box_border, width=2)
-        draw.text((margin + 110, curr_y + 24), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_pillar_head)
+        draw.text((margin + 110, curr_y + 22), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_pillar_head)
         
         takeaways = article_data.get('takeaways', [])
         if not takeaways:
             takeaways = [
-                "[+] Compile-Time Safety: Eliminates spatial and temporal memory corruption.",
-                "[+] Strict Privilege Boundary: Enforces least-privilege capability gates.",
-                "[+] Defense-in-Depth: Multi-layered runtime validation and kernel telemetry."
+                "Compile-Time Safety: Eliminates spatial and temporal memory corruption.",
+                "Strict Privilege Boundary: Enforces least-privilege capability gates.",
+                "Defense-in-Depth: Multi-layered runtime validation and kernel telemetry."
             ]
-        py = curr_y + 75
+        py = curr_y + 70
         for t in takeaways[:3]:
-            wrapped_t = wrap_text(t, font_pillar_body, max_code_w, draw)
-            for tl in wrapped_t[:1]:
+            clean_t = t if t.startswith("[+]") else f"[+] {t}"
+            wrapped_t = wrap_text(clean_t, font_pillar_body, max_content_w, draw)
+            for tl in wrapped_t:
                 draw.text((margin + 110, py), tl, fill=text_main, font=font_pillar_body)
-                py += 58
+                py += 46
+            py += 6
 
-        # 6. Pillar 2: Production Performance & Verification
-        curr_y += p1_h + 25
-        p2_h = 280
+        # 6. Pillar 2: Production Performance & Verification (Fully Wrapped Metrics)
+        curr_y += p1_h + 20
+        p2_h = 300
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + p2_h], fill=card_color, outline=box_border, width=2)
-        draw.text((margin + 110, curr_y + 24), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_pillar_head)
+        draw.text((margin + 110, curr_y + 22), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_pillar_head)
         
         metrics = article_data.get('metrics', [])
         if not metrics:
             metrics = [
-                "[*] Performance Impact: Line-rate throughput with zero CPU stack overhead",
-                "[*] Automated Audit: Continuous Clippy, KASAN, and DFIR telemetry checks",
-                "[*] Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+                "Performance Impact: Line-rate throughput with zero CPU stack overhead",
+                "Automated Audit: Continuous Clippy, KASAN, and DFIR telemetry checks",
+                "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
             ]
-        py = curr_y + 75
+        py = curr_y + 70
         for m in metrics[:3]:
-            wrapped_m = wrap_text(m, font_pillar_body, max_code_w, draw)
-            for ml in wrapped_m[:1]:
+            clean_m = m if m.startswith("[*]") else f"[*] {m}"
+            wrapped_m = wrap_text(clean_m, font_pillar_body, max_content_w, draw)
+            for ml in wrapped_m:
                 draw.text((margin + 110, py), ml, fill=text_main, font=font_pillar_body)
-                py += 58
+                py += 46
+            py += 6
 
         # 7. Footer
         draw.text((margin + 80, height - margin - 55), "Ref: ZYEKH.COM / TECHNICAL BLUEPRINT SPECIFICATION • DECENTRALIZED SYNDICATION 2026", fill=text_muted, font=font_meta)
@@ -261,7 +260,7 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         font_tag = get_font(size=44, is_mono=True, is_bold=True)
         font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
         font_bar = get_font(size=34, is_mono=True, is_bold=True)
-        font_code = get_font(size=36, is_mono=True, is_bold=False)
+        font_code = get_font(size=33, is_mono=True, is_bold=False)
         font_meta = get_font(size=34, is_mono=True, is_bold=False)
 
         # 1. Category Tag
@@ -275,9 +274,9 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             draw.text((margin + 80, curr_y), line, fill=text_main, font=font_title)
             curr_y += line_h
 
-        # 3. Terminal Box (560px height to fill landscape canvas)
+        # 3. Terminal Box (580px height to fill landscape canvas)
         curr_y += 30
-        box_h = 560
+        box_h = 580
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
         
         # Terminal Header Bar (76px height)
@@ -307,14 +306,14 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
                 "RestrictSUIDSGID=true         # Neutralize privilege escalation binaries"
             ]
 
-        wrapped_code = wrap_code_lines(raw_code, font_code, max_code_w, 8, draw)
+        wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 9, draw)
 
-        cy = curr_y + bar_h + 25
+        cy = curr_y + bar_h + 20
         for cl in wrapped_code:
             is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
             c_color = text_muted if is_comment else text_main
             draw.text((margin + 110, cy), cl, fill=c_color, font=font_code)
-            cy += 58
+            cy += 52
 
         # 4. Footer
         draw.text((margin + 80, height - margin - 50), "Ref: High-Density Technical Reference Specification • zyekh.com", fill=text_muted, font=font_meta)
@@ -371,13 +370,13 @@ def parse_html_for_card(filepath: Path):
         for li in summary_div.find_all('li'):
             t_text = li.get_text().strip()
             if t_text:
-                takeaways.append(f"[+] {t_text}")
+                takeaways.append(t_text)
 
     # Operational Metrics
     metrics = [
-        f"[*] Architecture Domain: {tags[0].upper() if tags else 'SECURITY'} Hardening Protocol",
-        "[*] Production Impact: Zero runtime overhead with compile-time invariant enforcement",
-        "[*] Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+        f"Architecture Domain: {tags[0].upper() if tags else 'SECURITY'} Hardening Protocol",
+        "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+        "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
 
     return {
