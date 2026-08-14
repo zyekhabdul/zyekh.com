@@ -14,7 +14,19 @@ MANIFEST_FILE = DATA_DIR / "social_cards_manifest.json"
 
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
+def sanitize_text(text: str) -> str:
+    if not text:
+        return ""
+    # Normalize smart quotes, dashes, ellipsis, and arrows
+    t = text.replace('“', '"').replace('”', '"')
+    t = t.replace('‘', "'").replace('’', "'")
+    t = t.replace('—', ' - ').replace('–', '-')
+    t = t.replace('…', '...')
+    t = t.replace('→', '->').replace('←', '<-')
+    return re.sub(r'\s+', ' ', t).strip()
+
 def extract_clean_code(raw_html: str) -> list[str]:
+
     pres = re.findall(r'<pre(?:.*?)><code(?:.*?)>(.*?)</code></pre>', raw_html, re.DOTALL)
     if not pres:
         pres = re.findall(r'<pre(?:.*?)>(.*?)</pre>', raw_html, re.DOTALL)
@@ -85,13 +97,15 @@ def extract_manifest():
 
         # 1. Title
         h1 = soup.find('h1')
-        title = h1.get_text().strip() if h1 else slug
-        title = re.sub(r'\s*—\s*zyekh\.com.*', '', title)
-        title = re.sub(r'\s*\|\s*zyekh\.com.*', '', title)
+        raw_title = h1.get_text().strip() if h1 else slug
+        raw_title = re.sub(r'\s*—\s*zyekh\.com.*', '', raw_title)
+        raw_title = re.sub(r'\s*\|\s*zyekh\.com.*', '', raw_title)
+        title = sanitize_text(raw_title)
 
         # 2. Description
         desc_meta = soup.find('meta', {'name': 'description'})
-        description = desc_meta['content'].strip() if desc_meta and desc_meta.get('content') else ""
+        raw_desc = desc_meta['content'].strip() if desc_meta and desc_meta.get('content') else ""
+        description = sanitize_text(raw_desc)
 
         # 3. Tags
         tags = []
@@ -111,7 +125,7 @@ def extract_manifest():
         summary_div = soup.find('div', class_='exec-summary')
         if summary_div:
             for li in summary_div.find_all('li'):
-                t_text = li.get_text().strip()
+                t_text = sanitize_text(li.get_text().strip())
                 if t_text:
                     if not (t_text.endswith('.') or t_text.endswith('!') or t_text.endswith('?') or t_text.endswith(')')):
                         t_text += '.'
@@ -141,6 +155,7 @@ def extract_manifest():
             "invariants": takeaways[:3],
             "metrics": metrics
         }
+
 
     MANIFEST_FILE.write_text(json.dumps(manifest, indent=2, ensure_ascii=False), encoding='utf-8')
     print(f"[ SUCCESS ] Manifest generated for {len(manifest)} articles -> {MANIFEST_FILE}")

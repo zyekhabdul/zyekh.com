@@ -130,13 +130,73 @@ def verify_all_articles():
     if img_failures > 0:
         failures += img_failures
 
+    # Check 16: Social Cards & Manifest Deterministic Integrity Audit
+    import json
+    from PIL import Image
+    print("\n[AUDIT] Running Check 16: Social Share Cards & Manifest Integrity Audit...")
+    manifest_path = "data/social_cards_manifest.json"
+    card_failures = 0
+    if not os.path.exists(manifest_path):
+        print(f"[FAIL] Manifest file missing: {manifest_path}")
+        card_failures += 1
+    else:
+        manifest_data = json.loads(open(manifest_path, encoding='utf-8').read())
+        for a in articles:
+            slug = os.path.splitext(os.path.basename(a))[0]
+            if slug not in manifest_data:
+                print(f"[FAIL] Article '{slug}' missing from {manifest_path}")
+                card_failures += 1
+                continue
+            
+            # Check Dark Landscape Card
+            dark_land = f"assets/img/social-cards/{slug}-dark-landscape.png"
+            if not os.path.exists(dark_land):
+                print(f"[FAIL] Missing Dark Landscape Card: {dark_land}")
+                card_failures += 1
+            else:
+                sz = os.path.getsize(dark_land) / 1024
+                if sz < 10 or sz > 950:
+                    print(f"[FAIL] {dark_land} file size invalid ({sz:.1f} KB)")
+                    card_failures += 1
+                try:
+                    with Image.open(dark_land) as im:
+                        if im.size != (2400, 1260):
+                            print(f"[FAIL] {dark_land} dimensions {im.size} != (2400, 1260)")
+                            card_failures += 1
+                except Exception as e:
+                    print(f"[FAIL] {dark_land} corrupted: {e}")
+                    card_failures += 1
+
+            # Check Light Square Card
+            light_sq = f"assets/img/social-cards/{slug}-light-square.png"
+            if not os.path.exists(light_sq):
+                print(f"[FAIL] Missing Light Square Card: {light_sq}")
+                card_failures += 1
+            else:
+                sz = os.path.getsize(light_sq) / 1024
+                if sz < 10 or sz > 950:
+                    print(f"[FAIL] {light_sq} file size invalid ({sz:.1f} KB)")
+                    card_failures += 1
+                try:
+                    with Image.open(light_sq) as im:
+                        if im.size != (2400, 2400):
+                            print(f"[FAIL] {light_sq} dimensions {im.size} != (2400, 2400)")
+                            card_failures += 1
+                except Exception as e:
+                    print(f"[FAIL] {light_sq} corrupted: {e}")
+                    card_failures += 1
+
+    if card_failures > 0:
+        failures += card_failures
+
     print("\n============================================================")
     if failures > 0:
         print(f"FAILED: {failures} QA audit violations detected across articles/images.")
         sys.exit(1)
     else:
-        print(f"SUCCESS: All {len(articles)} articles passed 100% QA audit!")
+        print(f"SUCCESS: All {len(articles)} articles passed 100% QA audit (Checks 1-16)!")
         print("============================================================")
 
 if __name__ == "__main__":
     verify_all_articles()
+

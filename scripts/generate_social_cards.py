@@ -13,20 +13,27 @@ OUTPUT_DIR = BASE_DIR / "assets" / "img" / "social-cards"
 
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# Font Resolver
+# Font Resolver (Bundled Local Fonts First -> System Fallback)
 def get_font(size=40, is_mono=False, is_bold=False):
+    bundled_mono = str(BASE_DIR / "assets" / "fonts" / "ttf" / "JetBrainsMono-Regular.ttf")
+    bundled_bold = str(BASE_DIR / "assets" / "fonts" / "ttf" / "DejaVuSans-Bold.ttf")
+    bundled_sans = str(BASE_DIR / "assets" / "fonts" / "ttf" / "DejaVuSans-Regular.ttf")
+
     mono_fonts = [
+        bundled_mono,
         "/usr/share/fonts/TTF/JetBrainsMonoNerdFontMono-Regular.ttf",
         "/usr/share/fonts/TTF/DejaVuSansMono.ttf",
         "/usr/share/fonts/liberation/LiberationMono-Regular.ttf",
         "/usr/share/fonts/noto/NotoSansMono-Regular.ttf"
     ]
     bold_fonts = [
+        bundled_bold,
         "/usr/share/fonts/TTF/DejaVuSans-Bold.ttf",
         "/usr/share/fonts/liberation/LiberationSans-Bold.ttf",
         "/usr/share/fonts/noto/NotoSans-Bold.ttf"
     ]
     sans_fonts = [
+        bundled_sans,
         "/usr/share/fonts/TTF/DejaVuSans.ttf",
         "/usr/share/fonts/liberation/LiberationSans-Regular.ttf",
         "/usr/share/fonts/noto/NotoSans-Regular.ttf"
@@ -40,6 +47,7 @@ def get_font(size=40, is_mono=False, is_bold=False):
             except Exception:
                 continue
     return ImageFont.load_default()
+
 
 def wrap_text(text, font, max_width, draw):
     words = text.split()
