@@ -138,143 +138,195 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
     max_content_w = inner_w - 60
 
     if mode == "square":
+
         # =========================================================================
-        # 1:1 SQUARE INFOGRAPHIC LAYOUT (2400 x 2400)
+        # 1:1 SQUARE INFOGRAPHIC LAYOUT (2400 x 2400) — ADAPTIVE DYNAMIC SIZING
         # =========================================================================
-        title_font_size = 80 if len(raw_title) <= 55 else (70 if len(raw_title) <= 75 else 62)
-        font_tag = get_font(size=44, is_mono=True, is_bold=True)
+        # 1. Title Auto-Scaling ("Semakin banyak teks, semakin kecil")
+        if len(raw_title) <= 48:
+            title_font_size, title_line_h = 92, 120
+        elif len(raw_title) <= 75:
+            title_font_size, title_line_h = 82, 108
+        else:
+            title_font_size, title_line_h = 74, 98
+
+        font_tag = get_font(size=46, is_mono=True, is_bold=True)
         font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
-        font_desc = get_font(size=38, is_mono=False, is_bold=False)
-        font_bar = get_font(size=34, is_mono=True, is_bold=True)
-        font_code = get_font(size=33, is_mono=True, is_bold=False)
-        font_pillar_head = get_font(size=36, is_mono=True, is_bold=True)
-        font_pillar_body = get_font(size=32, is_mono=False, is_bold=False)
-        font_meta = get_font(size=34, is_mono=True, is_bold=False)
+        font_bar = get_font(size=36, is_mono=True, is_bold=True)
+        font_pillar_head = get_font(size=38, is_mono=True, is_bold=True)
+        font_meta = get_font(size=36, is_mono=True, is_bold=False)
 
-        # 1. Category Tag
-        draw.text((margin + 80, margin + 60), cat_tag, fill=text_muted, font=font_tag)
+        # 2. Description Auto-Scaling
+        desc_text = article_data.get('description', '')
+        if len(desc_text) <= 90:
+            desc_font_size, desc_line_h = 46, 62
+        elif len(desc_text) <= 160:
+            desc_font_size, desc_line_h = 42, 56
+        else:
+            desc_font_size, desc_line_h = 38, 52
+        font_desc = get_font(size=desc_font_size, is_mono=False, is_bold=False)
 
-        # 2. Main Title (Max 3 Lines)
+        # 3. Code Auto-Scaling
+        raw_code = article_data.get('code_snippet', [])
+        total_code_chars = sum(len(l) for l in raw_code)
+        if len(raw_code) <= 5 and total_code_chars <= 220:
+            code_font_size, code_line_h, max_code_lines = 42, 58, 6
+        elif len(raw_code) <= 7 and total_code_chars <= 360:
+            code_font_size, code_line_h, max_code_lines = 38, 52, 8
+        else:
+            code_font_size, code_line_h, max_code_lines = 34, 48, 8
+        font_code = get_font(size=code_font_size, is_mono=True, is_bold=False)
+
+        # 4. Invariants Auto-Scaling
+        invariants = article_data.get('invariants', [])[:3]
+        total_inv_chars = sum(len(x) for x in invariants)
+        if total_inv_chars <= 180:
+            inv_font_size, inv_line_h = 40, 54
+        elif total_inv_chars <= 270:
+            inv_font_size, inv_line_h = 37, 50
+        else:
+            inv_font_size, inv_line_h = 34, 46
+        font_inv_body = get_font(size=inv_font_size, is_mono=False, is_bold=False)
+
+        # 5. Metrics Auto-Scaling
+        metrics = article_data.get('metrics', [])[:3]
+        total_met_chars = sum(len(x) for x in metrics)
+        if total_met_chars <= 180:
+            met_font_size, met_line_h = 40, 54
+        elif total_met_chars <= 270:
+            met_font_size, met_line_h = 37, 50
+        else:
+            met_font_size, met_line_h = 34, 46
+        font_met_body = get_font(size=met_font_size, is_mono=False, is_bold=False)
+
+        # --- DRAWING PASS ---
+        # A. Category Tag
+        draw.text((margin + 80, margin + 55), cat_tag, fill=text_muted, font=font_tag)
+
+        # B. Main Title
         title_lines = wrap_text(raw_title, font_title, inner_w, draw)[:3]
-        curr_y = margin + 130
-        line_h = int(title_font_size * 1.32)
+        curr_y = margin + 125
         for line in title_lines:
             draw.text((margin + 80, curr_y), line, fill=text_main, font=font_title)
-            curr_y += line_h
+            curr_y += title_line_h
 
-        # 3. Subtitle / Description (Max 2 Lines)
-        desc_text = article_data.get('description', '')
+        # C. Subtitle / Description
         if desc_text:
             desc_lines = wrap_text(desc_text, font_desc, inner_w, draw)[:2]
-            curr_y += 10
+            curr_y += 8
             for dl in desc_lines:
                 draw.text((margin + 80, curr_y), dl, fill=text_muted, font=font_desc)
-                curr_y += 52
+                curr_y += desc_line_h
 
-        # 4. Terminal Architecture Window
-        curr_y += 25
-        box_h = 620
-        draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
-        
-        # Terminal Header Bar (76px height)
+        # D. Terminal Architecture Window
+        curr_y += 20
+        wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, max_code_lines, draw)
         bar_h = 76
+        box_h = bar_h + 18 + (len(wrapped_code) * code_line_h) + 16
+        draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + bar_h], fill=bar_bg, outline=box_border, width=2)
-        
-        # 3 Window Control Dots
+
+        # Control Dots
         dot_y = curr_y + bar_h // 2
         draw.ellipse([margin + 115 - 8, dot_y - 8, margin + 115 + 8, dot_y + 8], fill=dot_red)
         draw.ellipse([margin + 142 - 8, dot_y - 8, margin + 142 + 8, dot_y + 8], fill=dot_yellow)
         draw.ellipse([margin + 169 - 8, dot_y - 8, margin + 169 + 8, dot_y + 8], fill=dot_green)
 
-        # Bar Title (Strictly Centered Inside Bar)
+        # Bar Title
         bar_title = "[ TERMINAL // SUBSYSTEM CONFIGURATION & ARCHITECTURE ]"
         t_bbox = draw.textbbox((0, 0), bar_title, font=font_bar)
         t_h = t_bbox[3] - t_bbox[1]
         bar_text_y = curr_y + (bar_h - t_h) // 2 - 2
         draw.text((margin + 210, bar_text_y), bar_title, fill=text_muted, font=font_bar)
 
-        raw_code = article_data.get('code_snippet', [])
-        wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 9, draw)
-
-        cy = curr_y + bar_h + 20
+        cy = curr_y + bar_h + 18
         for cl in wrapped_code:
             is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
             c_color = text_muted if is_comment else text_main
             draw.text((margin + 110, cy), cl, fill=c_color, font=font_code)
-            cy += 52
+            cy += code_line_h
 
-        # 5. Pillar 1: Architectural Guarantees (Fully Wrapped Bullets)
-        curr_y += box_h + 30
-        p1_h = 320
+        # E. Pillar 1: Architectural Guarantees
+        curr_y += box_h + 24
+        inv_wrapped_list = [wrap_text(t if t.startswith("[+]") else f"[+] {t}", font_inv_body, max_content_w, draw) for t in invariants]
+        total_inv_lines = sum(len(lines) for lines in inv_wrapped_list)
+        p1_h = 68 + (total_inv_lines * inv_line_h) + (len(invariants) * 6) + 14
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + p1_h], fill=card_color, outline=box_border, width=2)
-        draw.text((margin + 110, curr_y + 22), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_pillar_head)
+        draw.text((margin + 110, curr_y + 20), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_pillar_head)
         
-        invariants = article_data.get('invariants', [])
-        py = curr_y + 70
-        for t in invariants[:3]:
-            clean_t = t if t.startswith("[+]") else f"[+] {t}"
-            wrapped_t = wrap_text(clean_t, font_pillar_body, max_content_w, draw)
+        py = curr_y + 68
+        for wrapped_t in inv_wrapped_list:
             for tl in wrapped_t:
-                draw.text((margin + 110, py), tl, fill=text_main, font=font_pillar_body)
-                py += 46
+                draw.text((margin + 110, py), tl, fill=text_main, font=font_inv_body)
+                py += inv_line_h
             py += 6
 
-        # 6. Pillar 2: Production Performance & Verification (Fully Wrapped Metrics)
+        # F. Pillar 2: Production Performance & Verification
         curr_y += p1_h + 20
-        p2_h = 300
+        met_wrapped_list = [wrap_text(m if m.startswith("[*]") else f"[*] {m}", font_met_body, max_content_w, draw) for m in metrics]
+        total_met_lines = sum(len(lines) for lines in met_wrapped_list)
+        p2_h = 68 + (total_met_lines * met_line_h) + (len(metrics) * 6) + 14
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + p2_h], fill=card_color, outline=box_border, width=2)
-        draw.text((margin + 110, curr_y + 22), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_pillar_head)
+        draw.text((margin + 110, curr_y + 20), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_pillar_head)
         
-        metrics = article_data.get('metrics', [])
-        py = curr_y + 70
-        for m in metrics[:3]:
-            clean_m = m if m.startswith("[*]") else f"[*] {m}"
-            wrapped_m = wrap_text(clean_m, font_pillar_body, max_content_w, draw)
+        py = curr_y + 68
+        for wrapped_m in met_wrapped_list:
             for ml in wrapped_m:
-                draw.text((margin + 110, py), ml, fill=text_main, font=font_pillar_body)
-                py += 46
+                draw.text((margin + 110, py), ml, fill=text_main, font=font_met_body)
+                py += met_line_h
             py += 6
 
-        # 7. Footer
-        draw.text((margin + 80, height - margin - 55), "Ref: ZYEKH.COM / TECHNICAL BLUEPRINT SPECIFICATION • DECENTRALIZED SYNDICATION 2026", fill=text_muted, font=font_meta)
+        # G. Footer
+        draw.text((margin + 80, height - margin - 50), "Ref: ZYEKH.COM / TECHNICAL BLUEPRINT SPECIFICATION • DECENTRALIZED SYNDICATION 2026", fill=text_muted, font=font_meta)
 
     else:
         # =========================================================================
-        # 16:9 LANDSCAPE OPENGRAPH LAYOUT (2400 x 1260) — HIGH-DENSITY BLUEPRINT
+        # 16:9 LANDSCAPE OPENGRAPH LAYOUT (2400 x 1260) — ADAPTIVE SIZING
         # =========================================================================
-        title_font_size = 72 if len(raw_title) <= 55 else (64 if len(raw_title) <= 75 else 56)
-        font_tag = get_font(size=42, is_mono=True, is_bold=True)
+        if len(raw_title) <= 50:
+            title_font_size, title_line_h = 78, 100
+        elif len(raw_title) <= 75:
+            title_font_size, title_line_h = 68, 88
+        else:
+            title_font_size, title_line_h = 60, 78
+
+        font_tag = get_font(size=44, is_mono=True, is_bold=True)
         font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
-        font_desc = get_font(size=34, is_mono=False, is_bold=False)
-        font_bar = get_font(size=32, is_mono=True, is_bold=True)
-        font_code = get_font(size=30, is_mono=True, is_bold=False)
-        font_mini_head = get_font(size=30, is_mono=True, is_bold=True)
-        font_mini_body = get_font(size=27, is_mono=False, is_bold=False)
-        font_meta = get_font(size=32, is_mono=True, is_bold=False)
+        
+        desc_text = article_data.get('description', '')
+        desc_font_size = 36 if len(desc_text) <= 120 else 32
+        font_desc = get_font(size=desc_font_size, is_mono=False, is_bold=False)
+        
+        font_bar = get_font(size=34, is_mono=True, is_bold=True)
+        
+        raw_code = article_data.get('code_snippet', [])
+        code_font_size = 34 if len(raw_code) <= 6 else 30
+        font_code = get_font(size=code_font_size, is_mono=True, is_bold=False)
+        
+        font_mini_head = get_font(size=32, is_mono=True, is_bold=True)
+        font_mini_body = get_font(size=29, is_mono=False, is_bold=False)
+        font_meta = get_font(size=34, is_mono=True, is_bold=False)
 
         # 1. Category Tag
-        draw.text((margin + 80, margin + 50), cat_tag, fill=text_muted, font=font_tag)
+        draw.text((margin + 80, margin + 45), cat_tag, fill=text_muted, font=font_tag)
 
         # 2. Main Title (Max 2 lines in Landscape)
         title_lines = wrap_text(raw_title, font_title, inner_w, draw)[:2]
-        curr_y = margin + 115
-        line_h = int(title_font_size * 1.28)
+        curr_y = margin + 110
         for line in title_lines:
             draw.text((margin + 80, curr_y), line, fill=text_main, font=font_title)
-            curr_y += line_h
+            curr_y += title_line_h
 
         # 3. Subtitle / Description (1-2 lines)
-        desc_text = article_data.get('description', '')
         if desc_text:
             desc_lines = wrap_text(desc_text, font_desc, inner_w, draw)[:2]
             curr_y += 6
             for dl in desc_lines:
                 draw.text((margin + 80, curr_y), dl, fill=text_muted, font=font_desc)
-                curr_y += 46
+                curr_y += 48
 
         # 4. Terminal Box (Balanced Height)
-        curr_y += 18
-        raw_code = article_data.get('code_snippet', [])
+        curr_y += 16
         wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 7, draw)
         
         box_h = 420
@@ -298,11 +350,12 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         draw.text((margin + 200, bar_text_y), bar_title, fill=text_muted, font=font_bar)
 
         cy = curr_y + bar_h + 16
+        code_lh = 48 if code_font_size >= 34 else 44
         for cl in wrapped_code:
             is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
             c_color = text_muted if is_comment else text_main
             draw.text((margin + 110, cy), cl, fill=c_color, font=font_code)
-            cy += 46
+            cy += code_lh
 
         # 5. Bottom 2-Column Matrix (Zero White Space / Zero Void)
         curr_y += box_h + 18
@@ -322,7 +375,7 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             iy = curr_y + 58
             for il in wrapped_inv:
                 draw.text((left_x + 25, iy), il, fill=text_main, font=font_mini_body)
-                iy += 38
+                iy += 40
 
         # Right Column: Production Operational Metric
         draw.rectangle([right_x, curr_y, right_x + col_w, curr_y + bot_h], fill=box_bg, outline=box_border, width=2)
@@ -335,14 +388,13 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             my = curr_y + 58
             for ml in wrapped_met:
                 draw.text((right_x + 25, my), ml, fill=text_main, font=font_mini_body)
-                my += 38
-
+                my += 40
 
         # 6. Footer
         draw.text((margin + 80, height - margin - 45), "Ref: ZYEKH.COM / TECHNICAL BLUEPRINT SPECIFICATION • DECENTRALIZED SYNDICATION 2026", fill=text_muted, font=font_meta)
 
-
     # Save with File Size Optimization (< 950KB for API limit)
+
     img.save(output_path, "PNG", optimize=True)
     file_size_kb = output_path.stat().st_size / 1024
     if file_size_kb > 950:
