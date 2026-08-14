@@ -44,15 +44,19 @@ def validate_manifest():
             if not (inv_str.endswith('.') or inv_str.endswith('!') or inv_str.endswith('?') or inv_str.endswith(')')):
                 errors.append(f"{slug}: Invariant {idx} is missing terminating punctuation: '{inv_str}'")
 
-        # Metrics (Must be 3 items)
+        # Metrics (Must be 3 items with contextual accuracy)
         metrics = item.get("metrics", [])
         if len(metrics) < 3:
             errors.append(f"{slug}: Metrics count {len(metrics)} < 3")
         for idx, met in enumerate(metrics, 1):
             if not met.strip():
                 errors.append(f"{slug}: Metric {idx} is empty")
+            # Semantic Anti-Boilerplate Gate
+            if "compile-time invariant" in met.lower() and not any(k in slug for k in ["rust", "wasm"]):
+                errors.append(f"{slug}: Semantic mismatch - non-compiled domain contains 'compile-time invariant' boilerplate: '{met}'")
 
         # Code Snippet (Must be 3-8 lines, last line must not end with \)
+
         code = item.get("code_snippet", [])
         if len(code) < 3:
             errors.append(f"{slug}: Code snippet has only {len(code)} lines (< 3)")

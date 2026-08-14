@@ -240,33 +240,48 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
 
     else:
         # =========================================================================
-        # 16:9 LANDSCAPE OPENGRAPH LAYOUT (2400 x 1260)
+        # 16:9 LANDSCAPE OPENGRAPH LAYOUT (2400 x 1260) — HIGH-DENSITY BLUEPRINT
         # =========================================================================
-        title_font_size = 78 if len(raw_title) <= 55 else (68 if len(raw_title) <= 75 else 60)
-        font_tag = get_font(size=44, is_mono=True, is_bold=True)
+        title_font_size = 72 if len(raw_title) <= 55 else (64 if len(raw_title) <= 75 else 56)
+        font_tag = get_font(size=42, is_mono=True, is_bold=True)
         font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
-        font_bar = get_font(size=34, is_mono=True, is_bold=True)
-        font_code = get_font(size=33, is_mono=True, is_bold=False)
-        font_meta = get_font(size=34, is_mono=True, is_bold=False)
+        font_desc = get_font(size=34, is_mono=False, is_bold=False)
+        font_bar = get_font(size=32, is_mono=True, is_bold=True)
+        font_code = get_font(size=30, is_mono=True, is_bold=False)
+        font_mini_head = get_font(size=30, is_mono=True, is_bold=True)
+        font_mini_body = get_font(size=27, is_mono=False, is_bold=False)
+        font_meta = get_font(size=32, is_mono=True, is_bold=False)
 
         # 1. Category Tag
-        draw.text((margin + 80, margin + 60), cat_tag, fill=text_muted, font=font_tag)
+        draw.text((margin + 80, margin + 50), cat_tag, fill=text_muted, font=font_tag)
 
         # 2. Main Title (Max 2 lines in Landscape)
         title_lines = wrap_text(raw_title, font_title, inner_w, draw)[:2]
-        curr_y = margin + 130
-        line_h = int(title_font_size * 1.32)
+        curr_y = margin + 115
+        line_h = int(title_font_size * 1.28)
         for line in title_lines:
             draw.text((margin + 80, curr_y), line, fill=text_main, font=font_title)
             curr_y += line_h
 
-        # 3. Terminal Box (580px height to fill landscape canvas)
-        curr_y += 30
-        box_h = 580
+        # 3. Subtitle / Description (1-2 lines)
+        desc_text = article_data.get('description', '')
+        if desc_text:
+            desc_lines = wrap_text(desc_text, font_desc, inner_w, draw)[:2]
+            curr_y += 6
+            for dl in desc_lines:
+                draw.text((margin + 80, curr_y), dl, fill=text_muted, font=font_desc)
+                curr_y += 46
+
+        # 4. Terminal Box (Balanced Height)
+        curr_y += 18
+        raw_code = article_data.get('code_snippet', [])
+        wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 7, draw)
+        
+        box_h = 420
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
         
-        # Terminal Header Bar (76px height)
-        bar_h = 76
+        # Terminal Header Bar (68px height)
+        bar_h = 68
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + bar_h], fill=bar_bg, outline=box_border, width=2)
         
         # 3 Window Control Dots
@@ -275,25 +290,56 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         draw.ellipse([margin + 135 - 7, dot_y - 7, margin + 135 + 7, dot_y + 7], fill=dot_yellow)
         draw.ellipse([margin + 160 - 7, dot_y - 7, margin + 160 + 7, dot_y + 7], fill=dot_green)
 
-        # Bar Title (Strictly Centered Inside 76px Bar)
-        bar_title = "[ TERMINAL // ARCHITECTURE & CONFIGURATION MATRIX ]"
+        # Bar Title (Strictly Centered Inside Bar)
+        bar_title = "[ TERMINAL // CONFIGURATION & CODE SPECIFICATION ]"
         t_bbox = draw.textbbox((0, 0), bar_title, font=font_bar)
         t_h = t_bbox[3] - t_bbox[1]
         bar_text_y = curr_y + (bar_h - t_h) // 2 - 2
         draw.text((margin + 200, bar_text_y), bar_title, fill=text_muted, font=font_bar)
 
-        raw_code = article_data.get('code_snippet', [])
-        wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 9, draw)
-
-        cy = curr_y + bar_h + 20
+        cy = curr_y + bar_h + 16
         for cl in wrapped_code:
             is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
             c_color = text_muted if is_comment else text_main
             draw.text((margin + 110, cy), cl, fill=c_color, font=font_code)
-            cy += 52
+            cy += 46
 
-        # 4. Footer
-        draw.text((margin + 80, height - margin - 50), "Ref: High-Density Technical Reference Specification • zyekh.com", fill=text_muted, font=font_meta)
+        # 5. Bottom 2-Column Matrix (Zero White Space / Zero Void)
+        curr_y += box_h + 18
+        bot_h = 165
+        col_w = (inner_w - 30) // 2
+        left_x = margin + 80
+        right_x = left_x + col_w + 30
+
+        # Left Column: Architectural Invariant
+        draw.rectangle([left_x, curr_y, left_x + col_w, curr_y + bot_h], fill=box_bg, outline=box_border, width=2)
+        draw.text((left_x + 25, curr_y + 18), "[ KEY ARCHITECTURAL INVARIANT ]", fill=text_main, font=font_mini_head)
+        invariants = article_data.get('invariants', [])
+        if invariants:
+            inv_sample = invariants[0]
+            clean_inv = inv_sample if inv_sample.startswith("[+]") else f"[+] {inv_sample}"
+            wrapped_inv = wrap_text(clean_inv, font_mini_body, col_w - 50, draw)[:2]
+            iy = curr_y + 58
+            for il in wrapped_inv:
+                draw.text((left_x + 25, iy), il, fill=text_muted, font=font_mini_body)
+                iy += 38
+
+        # Right Column: Production Operational Metric
+        draw.rectangle([right_x, curr_y, right_x + col_w, curr_y + bot_h], fill=box_bg, outline=box_border, width=2)
+        draw.text((right_x + 25, curr_y + 18), "[ PRODUCTION OPERATIONAL METRIC ]", fill=text_main, font=font_mini_head)
+        metrics = article_data.get('metrics', [])
+        if metrics:
+            met_sample = metrics[1] if len(metrics) > 1 else metrics[0]
+            clean_met = met_sample if met_sample.startswith("[*]") else f"[*] {met_sample}"
+            wrapped_met = wrap_text(clean_met, font_mini_body, col_w - 50, draw)[:2]
+            my = curr_y + 58
+            for ml in wrapped_met:
+                draw.text((right_x + 25, my), ml, fill=text_muted, font=font_mini_body)
+                my += 38
+
+        # 6. Footer
+        draw.text((margin + 80, height - margin - 45), "Ref: ZYEKH.COM / TECHNICAL BLUEPRINT SPECIFICATION • DECENTRALIZED SYNDICATION 2026", fill=text_muted, font=font_meta)
+
 
     # Save with File Size Optimization (< 950KB for API limit)
     img.save(output_path, "PNG", optimize=True)

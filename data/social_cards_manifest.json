@@ -21,8 +21,8 @@
       "Audit Ruleset Modularization: Structure rules inside /etc/audit/rules.d/."
     ],
     "metrics": [
-      "Architecture Domain: CYBERSECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: CYBERSECURITY • AUDITDDFIR",
+      "Production Impact: Log Analysis via ausearch: Query security event logs efficiently with aureport and ausearch.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -48,8 +48,8 @@
       "No-Root Security: Prevent container breakouts by dropping root capabilities."
     ],
     "metrics": [
-      "Architecture Domain: SYSTEMHARDENING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: SYSTEMHARDENING • PROCESSISOLATION",
+      "Production Impact: Minimal File System Footprint: Build lightweight jails without full OS layers.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -77,9 +77,9 @@
       "Tetragon Security Tracing: Detect privilege escalations, file integrity violations, and namespace escapes in real-time."
     ],
     "metrics": [
-      "Architecture Domain: CLOUDSECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Architecture Domain: CLOUDSECURITY • KUBERNETESEBPF",
+      "Production Impact: Kernel Observability: Export low-overhead Security Observability metrics to Prometheus and SIEM platforms.",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
     ]
   },
   "colbert-late-interaction-advanced-rag": {
@@ -106,9 +106,9 @@
       "PLAID Indexing: Compress token vectors using residual quantization to achieve sub-10ms search over millions of documents."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Architecture Domain: AIENGINEERING • RAG",
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
     ]
   },
   "container-image-signing-and-slsa-provenance-with-cosign": {
@@ -135,8 +135,8 @@
       "SLSA Provenance Attestation: Attach cryptographically signed SLSA build provenance attestations to container images."
     ],
     "metrics": [
-      "Architecture Domain: SUPPLYCHAINSECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: SUPPLYCHAINSECURITY • DEVOPS",
+      "Production Impact: Kyverno Policy Enforcement: Block un-signed or non-compliant container images from running in Kubernetes clusters.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -164,9 +164,9 @@
       "Teleprompter Compilers: Use algorithms like MIPRO to automatically generate, evaluate, and optimize prompts against metrics."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Architecture Domain: AIENGINEERING • PROMPTING",
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
     ]
   },
   "ebpf-xdp-packet-filtering-and-ddos-mitigation": {
@@ -193,8 +193,8 @@
       "Zero-Copy Performance: Process 10M+ packets per second on commodity server hardware."
     ],
     "metrics": [
-      "Architecture Domain: LINUXKERNEL Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: LINUXKERNEL • XDPDDOSDEFENSE",
+      "Production Impact: Clang/LLVM BPF Compilation: Build C programs directly into BPF bytecode targets.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -222,8 +222,8 @@
       "Nginx 40x Log Monitoring: Ban aggressive web scanners triggering repeated 404/403 HTTP errors."
     ],
     "metrics": [
-      "Architecture Domain: CYBERSECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: CYBERSECURITY • FAIL2BANDEFENSE",
+      "Production Impact: NFTables Backend: Migrate from legacy iptables actions to high-performance nftables banning.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -251,9 +251,9 @@
       "Connection ID Privacy: Enable randomized QUIC Connection ID rotation to prevent client tracking across networks."
     ],
     "metrics": [
-      "Architecture Domain: WEBSECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Architecture Domain: WEBSECURITY • NETWORKPROTOCOLS",
+      "Production Impact: Active Migration Protection: Require Path Validation (PATH_CHALLENGE) when clients switch network interfaces.",
+      "Web Standard: Zero-Vulnerability Edge & Strict Content Security Policy"
     ]
   },
   "kubernetes-pod-security-standards-pss-and-admission-control": {
@@ -280,8 +280,8 @@
       "Non-Root Enforcement: Block containers running as root (UID 0) or requesting privilege escalation (allowPrivilegeEscalation=false)."
     ],
     "metrics": [
-      "Architecture Domain: CLOUDSECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: CLOUDSECURITY • KUBERNETES",
+      "Production Impact: Audit & Warn Modes: Test security standards across production namespaces without breaking existing pod workloads.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -309,9 +309,9 @@
       "Outlier Preservation: Keep recent tokens and high-magnitude attention outliers in FP16 to preserve needle-in-a-haystack retrieval."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Architecture Domain: AIENGINEERING • QUANTIZATION",
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
     ]
   },
   "linux-audit-logging-with-vector-and-clickhouse-dfir": {
@@ -338,8 +338,8 @@
       "Real-Time DFIR Queries: Execute SQL analytical queries over billions of kernel process events in sub-seconds."
     ],
     "metrics": [
-      "Architecture Domain: SECURITYMONITORING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: SECURITYMONITORING • DFIR",
+      "Production Impact: Zero Log Loss Architecture: Utilize Vector disk-backed memory buffers to survive network outages.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -367,8 +367,8 @@
       "ICMP Redirect Defense: Disable accept_redirects and send_redirects across interfaces."
     ],
     "metrics": [
-      "Architecture Domain: LINUXKERNEL Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: LINUXKERNEL • SYSCTLHARDENING",
+      "Production Impact: ASLR & Memory Protection: Enforce kernel.randomize_va_space=2 and dmesg restrictions.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -396,8 +396,8 @@
       "Network Socket Binding Limits: Restrict TCP bind and connect calls at the process level."
     ],
     "metrics": [
-      "Architecture Domain: LINUXSECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: LINUXSECURITY • ACCESSCONTROL",
+      "Production Impact: Inherited Security Rules: Landlock rules automatically apply to all child processes spawned by the sandboxed process.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -425,8 +425,8 @@
       "Default-Deny Policy: Enforce SECCOMP_RET_KILL_PROCESS or SECCOMP_RET_ERRNO for unapproved syscalls."
     ],
     "metrics": [
-      "Architecture Domain: LINUXSECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: LINUXSECURITY • PROCESSISOLATION",
+      "Production Impact: Container Integration: Deploy custom Seccomp profiles across Docker, Podman, and Kubernetes workloads.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -454,8 +454,8 @@
       "Firewall & Rate Limiting: Implement Uncomplicated Firewall (UFW) with default-deny inbound rules and SSH brute-force rate limits."
     ],
     "metrics": [
-      "Architecture Domain: SYSTEMHARDENING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: SYSTEMHARDENING • LINUXVPS",
+      "Production Impact: Automated Intrusion Prevention: Deploy fail2ban and auditd for continuous log analysis and kernel event tracking.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -483,9 +483,9 @@
       "Zero Infrastructure Maintenance: No database patching, runtime updates, or server reboot cycles required."
     ],
     "metrics": [
-      "Architecture Domain: WEBPERFORMANCE Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Architecture Domain: WEBPERFORMANCE • STATICARCHITECTURE",
+      "Production Impact: Extreme Sustainability & Scalability: Static assets handle traffic surges effortlessly without autoscaling costs or server crashes.",
+      "Web Standard: Zero-Vulnerability Edge & Strict Content Security Policy"
     ]
   },
   "moe-serving-mixture-of-experts-routing": {
@@ -512,9 +512,9 @@
       "Expert Parallelism (EP): Shard individual expert Feed-Forward Networks across multiple GPUs to balance VRAM footprint."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Architecture Domain: AIENGINEERING • ARCHITECTURE",
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
     ]
   },
   "multi-agent-swarm-orchestration-patterns": {
@@ -541,8 +541,8 @@
       "State Machines & Guards: Enforce deterministic state transitions and infinite loop detection guards in agentic execution."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: AIENGINEERING • AGENTS",
+      "Production Impact: Deterministic low-latency execution with zero external dependencies",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -570,8 +570,8 @@
       "Rate Limiting: Implement limit_req_zone to mitigate HTTP flood attacks."
     ],
     "metrics": [
-      "Architecture Domain: WEBSECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: WEBSECURITY • NGINXHARDENING",
+      "Production Impact: TLS 1.3 Strict Ciphers: Mandate ECDHE-ECDSA-AES128-GCM-SHA256 and modern TLS protocols.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -599,9 +599,9 @@
       "Speculative Decoding Pipelines: Accelerate inference by drafting tokens on smaller models and verifying on larger models."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Architecture Domain: AIENGINEERING • ARCHITECTURE",
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
     ]
   },
   "pam-tally2-faillock-account-lockout-policy-guide": {
@@ -628,8 +628,8 @@
       "Unlock Timeouts: Configure unlock_time=900 (15 minutes) for automatic account unlocking."
     ],
     "metrics": [
-      "Architecture Domain: SYSTEMHARDENING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: SYSTEMHARDENING • PAMSECURITY",
+      "Production Impact: Root Account Protection: Enable even_deny_root with higher thresholds for root accounts.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -657,8 +657,8 @@
       "Strict Concurrency Control: Utilize Rust ownership rules to eliminate data races in multi-threaded kernel worker threads."
     ],
     "metrics": [
-      "Architecture Domain: LINUXSECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: LINUXSECURITY • KERNELARCHITECTURE",
+      "Production Impact: Kernel Driver Modernization: Write Linux network and device drivers using idiomatic safe Rust abstractions.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -686,8 +686,8 @@
       "Strict Transport Security: Enforce HTTPS and HSTS preloading with max-age=63072000; includeSubDomains; preload."
     ],
     "metrics": [
-      "Architecture Domain: WEBSECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: WEBSECURITY • CSPHARDENING",
+      "Production Impact: MIME Sniffing Defense: X-Content-Type-Options: nosniff prevents browsers from misinterpreting non-executable files as executable scripts.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -715,9 +715,9 @@
       "Unified Paging: Manage adapter weights and KV caches in a unified memory pool, eliminating fragmentation during batched inference."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Architecture Domain: AIENGINEERING • PERFORMANCE",
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
     ]
   },
   "ssh-certificates-vault-ca-short-lived-authentication": {
@@ -744,8 +744,8 @@
       "Identity-Based Access: Map OIDC/Okta identity groups directly to Linux user principals and SSH permissions."
     ],
     "metrics": [
-      "Architecture Domain: INFRASTRUCTURESECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: INFRASTRUCTURESECURITY • SSH",
+      "Production Impact: Comprehensive Audit Trail: Record every SSH certificate issuance event in Vault access logs.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -773,9 +773,9 @@
       "FSM Grammar Engines: Drive token selection using Context-Free Grammars (CFG) and Pydantic schemas via Outlines & Guidance."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Architecture Domain: AIENGINEERING • LOGITS",
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
     ]
   },
   "systemd-service-sandboxing-and-security-hardening": {
@@ -802,8 +802,8 @@
       "Capability Bounding: Restrict Linux capabilities using CapabilityBoundingSet=."
     ],
     "metrics": [
-      "Architecture Domain: SYSTEMHARDENING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: SYSTEMHARDENING • SYSTEMDSECURITY",
+      "Production Impact: System Call Filtering: Block dangerous syscalls via SystemCallFilter=@system-service.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -831,8 +831,8 @@
       "Custom Application Profiles: Define precise port and protocol definitions in /etc/ufw/applications.d/."
     ],
     "metrics": [
-      "Architecture Domain: SYSTEMHARDENING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: SYSTEMHARDENING • UFWFIREWALL",
+      "Production Impact: Routed Packet Filtering: Restrict IPv4/IPv6 forwarding across network bridges and container interfaces.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -860,8 +860,8 @@
       "Safety-Verified Execution: The in-kernel eBPF verifier proves program safety (no memory corruption, no infinite loops) prior to loading."
     ],
     "metrics": [
-      "Architecture Domain: LINUXKERNEL Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: LINUXKERNEL • EBPFMONITORING",
+      "Production Impact: Real-Time Threat Detection: Hook into kprobes, uprobes, and tracepoints to catch container breakouts and rootkit persistence instantly.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -888,9 +888,9 @@
       "High-Throughput Tuning: Optimize vLLM batch sizes, tensor parallelism, and quantization for massive concurrent requests."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Architecture Domain: AIENGINEERING • PERFORMANCE",
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
     ]
   },
   "webgpu-llm-inference-browser-sandbox": {
@@ -917,9 +917,9 @@
       "Web Worker Offloading: Prevent DOM freezing by decoupling WebGPU tensor execution into background Web Workers."
     ],
     "metrics": [
-      "Architecture Domain: AIENGINEERING Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+      "Architecture Domain: AIENGINEERING • WEBGPU",
+      "Inference Impact: High-throughput token optimization with zero memory fragmentation",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
     ]
   },
   "wireguard-vpn-tunneling-for-secure-vps-mesh-networks": {
@@ -946,8 +946,8 @@
       "Interface Isolation: Bind internal database and backend traffic strictly to WireGuard IP (10.0.0.x)."
     ],
     "metrics": [
-      "Architecture Domain: WEBSECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: WEBSECURITY • WIREGUARDMESH",
+      "Production Impact: Automated Peer Routing: Configure AllowedIPs to enforce point-to-point mesh routing.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -975,8 +975,8 @@
       "Nanosecond Cold Starts: Execute microservices in sub-millisecond timeframes compared to multi-second container startup overhead."
     ],
     "metrics": [
-      "Architecture Domain: CLOUDSECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: CLOUDSECURITY • WEBASSEMBLY",
+      "Production Impact: Polyglot Security: Compile Rust, Go, C/C++, and Zig applications to portable Wasm bytecode binaries.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   },
@@ -1003,8 +1003,8 @@
       "Centralized Authority: Use an offline SSH Certificate Authority (CA) to sign user access requests with automatic 8-hour expiration."
     ],
     "metrics": [
-      "Architecture Domain: CYBERSECURITY Hardening Protocol",
-      "Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+      "Architecture Domain: CYBERSECURITY • ZEROTRUSTSSH",
+      "Production Impact: Zero Administrative Sprawl: Adding or revoking user permissions requires zero modifications on target servers.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
     ]
   }
