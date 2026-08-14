@@ -293,6 +293,28 @@ def resolve_bluesky_pds(handle_or_did):
             pass
     return "https://bsky.social", did
 
+def extract_bsky_facets(text):
+    facets = []
+    url_regex = re.compile(r'https?://[^\s)]+')
+    for m in url_regex.finditer(text):
+        uri = m.group(0)
+        byte_start = len(text[:m.start()].encode('utf-8'))
+        byte_end = len(text[:m.end()].encode('utf-8'))
+        facets.append({
+            "index": {"byteStart": byte_start, "byteEnd": byte_end},
+            "features": [{"$type": "app.bsky.richtext.facet#link", "uri": uri}]
+        })
+    tag_regex = re.compile(r'#([A-Za-z0-9_]+)')
+    for m in tag_regex.finditer(text):
+        tag = m.group(1)
+        byte_start = len(text[:m.start()].encode('utf-8'))
+        byte_end = len(text[:m.end()].encode('utf-8'))
+        facets.append({
+            "index": {"byteStart": byte_start, "byteEnd": byte_end},
+            "features": [{"$type": "app.bsky.richtext.facet#tag", "tag": tag}]
+        })
+    return facets
+
 def publish_bluesky(article):
     load_dotenv()
     handle = os.environ.get('BSKY_HANDLE')
@@ -354,7 +376,8 @@ def publish_bluesky(article):
 
     # 3. Post Record with Embed
     post_endpoint = f"{pds_server.rstrip('/')}/xrpc/com.atproto.repo.createRecord"
-    status_text = f"{article['title']}\n\n{article['description']}\n\n[ Read Full Article -> ] {article['url']}"
+    tags_str = ' '.join([f"#{t.capitalize()}" for t in article.get('tags', [])])
+    status_text = f"{article['title']}\n\n{article['description']}\n\n[ Read Full Article -> ] {article['url']}\n\n{tags_str}".strip()
     now_iso = datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z")
 
     record_obj = {
@@ -362,6 +385,10 @@ def publish_bluesky(article):
         "text": status_text,
         "createdAt": now_iso
     }
+    facets = extract_bsky_facets(status_text)
+    if facets:
+        record_obj["facets"] = facets
+
     if blob_ref:
         record_obj["embed"] = {
             "$type": "app.bsky.embed.images",
