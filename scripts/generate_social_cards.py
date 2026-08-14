@@ -6,6 +6,7 @@ import html
 import argparse
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
+from bs4 import BeautifulSoup
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 BLOG_DIR = BASE_DIR / "blog"
@@ -59,20 +60,7 @@ def wrap_text(text, font, max_width, draw):
         lines.append(' '.join(current_line))
     return lines
 
-def determine_category_standard(title, tags, content):
-    lower_content = (title + " " + " ".join(tags) + " " + content[:1000]).lower()
-    
-    if any(k in lower_content for k in ['ebpf', 'xdp', 'network', 'wireguard', 'vpn', 'quic', 'http3', 'cilium']):
-        return "B" # Standar B: Network System Flow
-    elif any(k in lower_content for k in ['llm', 'vllm', 'dspy', 'kv cache', 'colbert', 'rag', 'moe', 'webgpu']):
-        return "C" # Standar C: AI LLM Benchmark Table
-    elif any(k in lower_content for k in ['tool', 'utility', 'calculator', 'chmod', 'subnet', 'jwt']):
-        return "D" # Standar D: Utility Matrix
-    else:
-        return "A" # Standar A: Kernel Config Matrix
-
 def generate_social_card(article_data, output_path: Path, theme="dark", mode="landscape"):
-    # Dimensions based on mode
     if mode == "square":
         width, height = 2400, 2400
     else:
@@ -80,191 +68,253 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
 
     # Theme Tokens
     if theme == "light":
-        bg_color = (244, 244, 245)    # #f4f4f5 (Light Main)
-        card_color = (255, 255, 255)  # #ffffff (Pure White Card)
-        border_color = (212, 212, 216)# #d4d4d8 (Clean Border)
-        box_bg = (244, 244, 245)      # #f4f4f5 (Code Box)
-        box_border = (212, 212, 216)  # #d4d4d8
-        text_main = (9, 9, 11)        # #09090b (Deep Black)
-        text_muted = (82, 82, 91)     # #52525b (Dark Gray)
+        bg_color = (244, 244, 245)      # #f4f4f5 (Light Canvas)
+        card_color = (255, 255, 255)    # #ffffff (Pure White Surface)
+        border_color = (203, 213, 225)  # #cbd5e1 (Clean Slate Border)
+        box_bg = (248, 250, 252)        # #f8fafc (Terminal/Box Light)
+        bar_bg = (226, 232, 240)        # #e2e8f0 (Terminal Header Bar)
+        box_border = (203, 213, 225)
+        text_main = (15, 23, 42)        # #0f172a (Slate 900)
+        text_muted = (100, 116, 139)    # #64748b (Slate 500)
     else:
-        bg_color = (9, 9, 11)          # #09090b (Dark Main)
-        card_color = (20, 20, 23)      # #141417 (Dark Surface)
-        border_color = (39, 39, 42)    # #27272a (Border)
-        box_bg = (0, 0, 0)             # #000000 (Code Box)
+        bg_color = (9, 9, 11)           # #09090b (Dark Canvas)
+        card_color = (18, 18, 22)       # #121216 (Dark Surface)
+        border_color = (39, 39, 42)     # #27272a (Border)
+        box_bg = (0, 0, 0)              # #000000 (Terminal Box)
+        bar_bg = (24, 24, 27)           # #18181b (Terminal Header Bar)
         box_border = (39, 39, 42)
-        text_main = (250, 250, 250)    # #fafafa (White)
-        text_muted = (161, 161, 170)   # #a1a1aa (Muted Gray)
+        text_main = (250, 250, 250)     # #fafafa (White)
+        text_muted = (161, 161, 170)    # #a1a1aa (Muted Gray)
 
     img = Image.new("RGB", (width, height), bg_color)
     draw = ImageDraw.Draw(img)
 
-    # Outer Card Container (Margin 80px)
-    margin = 80
+    margin = 90
     card_rect = [margin, margin, width - margin, height - margin]
     draw.rectangle(card_rect, fill=card_color, outline=border_color, width=4)
 
-    # Dynamic Title Font Auto-Scaling
     raw_title = article_data['title']
-    title_font_size = 64
-    if len(raw_title) > 65:
-        title_font_size = 50
-    elif len(raw_title) > 50:
-        title_font_size = 56
-
-    font_tag = get_font(size=36, is_mono=True, is_bold=True)
-    font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
-    font_body = get_font(size=40, is_mono=False, is_bold=False)
-    font_code = get_font(size=34, is_mono=True, is_bold=False)
-    font_meta = get_font(size=32, is_mono=True, is_bold=False)
-
     tags = article_data.get('tags', ['SECURITY'])
-    cat_tag = f"[ {tags[0].upper()} HARDENING ]" if tags else "[ TECHNICAL SPECIFICATION ]"
-    
-    # 1. Top Category Tag
-    draw.text((margin + 70, margin + 70), cat_tag, fill=text_muted, font=font_tag)
+    tag_str = " • ".join([t.upper() for t in tags[:3]])
+    cat_tag = f"[ {tag_str} ]" if tag_str else "[ TECHNICAL SPECIFICATION ]"
 
-    # 2. Main Title (Wrapped max 3 lines)
-    title_lines = wrap_text(raw_title, font_title, width - (margin * 2 + 140), draw)
-    title_lines = title_lines[:3]
-    
-    curr_y = margin + 140
-    line_h = int(title_font_size * 1.35)
-    for line in title_lines:
-        draw.text((margin + 70, curr_y), line, fill=text_main, font=font_title)
-        curr_y += line_h
-
-    # Determine Standard Layout
-    standard = article_data.get('standard') or determine_category_standard(
-        article_data['title'], article_data.get('tags', []), article_data.get('body', '')
-    )
-
-    curr_y += 30
     inner_w = width - (margin * 2 + 140)
 
-    if standard == "A":
-        # Standar A: Kernel Config Matrix
-        box_h = 340 if mode == "square" else 300
-        box_rect = [margin + 70, curr_y, margin + 70 + inner_w, curr_y + box_h]
-        draw.rectangle(box_rect, fill=box_bg, outline=box_border, width=2)
+    if mode == "square":
+        # =========================================================================
+        # 1:1 SQUARE INFOGRAPHIC LAYOUT (2400 x 2400)
+        # =========================================================================
+        title_font_size = 78 if len(raw_title) <= 55 else (68 if len(raw_title) <= 75 else 60)
+        font_tag = get_font(size=42, is_mono=True, is_bold=True)
+        font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
+        font_desc = get_font(size=38, is_mono=False, is_bold=False)
+        font_code = get_font(size=36, is_mono=True, is_bold=False)
+        font_pillar_head = get_font(size=36, is_mono=True, is_bold=True)
+        font_pillar_body = get_font(size=34, is_mono=False, is_bold=False)
+        font_meta = get_font(size=32, is_mono=True, is_bold=False)
+
+        # 1. Category Tag
+        draw.text((margin + 70, margin + 60), cat_tag, fill=text_muted, font=font_tag)
+
+        # 2. Main Title (Max 3 Lines)
+        title_lines = wrap_text(raw_title, font_title, inner_w, draw)[:3]
+        curr_y = margin + 130
+        line_h = int(title_font_size * 1.32)
+        for line in title_lines:
+            draw.text((margin + 70, curr_y), line, fill=text_main, font=font_title)
+            curr_y += line_h
+
+        # 3. Subtitle / Description (Max 2 Lines)
+        desc_text = article_data.get('description', '')
+        if desc_text:
+            desc_lines = wrap_text(desc_text, font_desc, inner_w, draw)[:2]
+            curr_y += 10
+            for dl in desc_lines:
+                draw.text((margin + 70, curr_y), dl, fill=text_muted, font=font_desc)
+                curr_y += 52
+
+        # 4. Terminal Architecture Window
+        curr_y += 30
+        box_h = 740
+        draw.rectangle([margin + 70, curr_y, margin + 70 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
         
-        code_lines = [
-            "# Kernel Syscall & Sandbox Configuration",
-            "ProtectSystem=strict          # Mount /usr, /boot, /etc read-only",
-            "ProtectHome=true              # Deny access to /home, /root, /run/user",
-            "MemoryDenyWriteExecute=true   # Enforce W^X memory allocation policy"
-        ]
-        cy = curr_y + 30
-        for cl in code_lines:
-            c_color = text_muted if cl.startswith("#") else text_main
+        # Terminal Header Bar
+        draw.rectangle([margin + 70, curr_y, margin + 70 + inner_w, curr_y + 60], fill=bar_bg, outline=box_border, width=2)
+        draw.text((margin + 100, curr_y + 14), "[ TERMINAL // SUBSYSTEM CONFIGURATION & ARCHITECTURE ]", fill=text_muted, font=font_tag)
+
+        code_lines = article_data.get('code_snippet', [])
+        if not code_lines:
+            code_lines = [
+                "# Linux Subsystem Hardening Architecture",
+                "ProtectSystem=strict          # Mount /usr, /boot, /etc read-only",
+                "ProtectHome=true              # Deny access to /home, /root, /run/user",
+                "MemoryDenyWriteExecute=true   # Enforce strict W^X memory bounds",
+                "RestrictSUIDSGID=true         # Neutralize privilege escalation binaries"
+            ]
+
+        cy = curr_y + 85
+        for cl in code_lines[:10]:
+            is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
+            c_color = text_muted if is_comment else text_main
             draw.text((margin + 100, cy), cl, fill=c_color, font=font_code)
-            cy += 64
+            cy += 58
 
-        curr_y += box_h + 40
-        draw.text((margin + 70, curr_y), "Impact: Zero-Trust Process Sandboxing & Syscall Isolation at Kernel Level", fill=text_muted, font=font_body)
+        # 5. Pillar 1: Architectural Guarantees
+        curr_y += box_h + 35
+        p1_h = 280
+        draw.rectangle([margin + 70, curr_y, margin + 70 + inner_w, curr_y + p1_h], fill=card_color, outline=box_border, width=2)
+        draw.text((margin + 100, curr_y + 25), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_pillar_head)
+        
+        takeaways = article_data.get('takeaways', [])
+        if not takeaways:
+            takeaways = [
+                "[+] Compile-Time Safety: Eliminates spatial and temporal memory corruption.",
+                "[+] Strict Privilege Boundary: Enforces least-privilege capability gates.",
+                "[+] Defense-in-Depth: Multi-layered runtime validation and kernel telemetry."
+            ]
+        py = curr_y + 80
+        for t in takeaways[:3]:
+            draw.text((margin + 100, py), t, fill=text_main, font=font_pillar_body)
+            py += 58
 
-    elif standard == "B":
-        # Standar B: Network Flow Diagram
-        box_h = 340 if mode == "square" else 300
-        box_rect = [margin + 70, curr_y, margin + 70 + inner_w, curr_y + box_h]
-        draw.rectangle(box_rect, fill=box_bg, outline=box_border, width=2)
+        # 6. Pillar 2: Production Performance & Verification
+        curr_y += p1_h + 25
+        p2_h = 280
+        draw.rectangle([margin + 70, curr_y, margin + 70 + inner_w, curr_y + p2_h], fill=card_color, outline=box_border, width=2)
+        draw.text((margin + 100, curr_y + 25), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_pillar_head)
+        
+        metrics = article_data.get('metrics', [])
+        if not metrics:
+            metrics = [
+                "[*] Performance Impact: Line-rate throughput with zero CPU stack overhead",
+                "[*] Automated Audit: Continuous Clippy, KASAN, and DFIR telemetry checks",
+                "[*] Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+            ]
+        py = curr_y + 80
+        for m in metrics[:3]:
+            draw.text((margin + 100, py), m, fill=text_main, font=font_pillar_body)
+            py += 58
 
-        flow_lines = [
-            "+-------------------+       +--------------------+       +--------------------+",
-            "|  NIC Driver (RX)  | ----> | eBPF XDP Program   | ----> | XDP_DROP (Dropped) |",
-            "+-------------------+       +--------------------+       +--------------------+",
-            "                                      | (XDP_PASS) -> Linux TCP/IP Stack       "
-        ]
-        cy = curr_y + 30
-        for fl in flow_lines:
-            draw.text((margin + 100, cy), fl, fill=text_main, font=font_code)
-            cy += 64
-
-        curr_y += box_h + 40
-        draw.text((margin + 70, curr_y), "Performance: Line-Rate Packet Filtering with Zero CPU Stack Overhead", fill=text_muted, font=font_body)
-
-    elif standard == "C":
-        # Standar C: AI/LLM Benchmark Table
-        box_h = 340 if mode == "square" else 300
-        box_rect = [margin + 70, curr_y, margin + 70 + inner_w, curr_y + box_h]
-        draw.rectangle(box_rect, fill=box_bg, outline=box_border, width=2)
-
-        tbl_lines = [
-            "Engine / Strategy        | KV Waste (%) | Max Sequences | Throughput",
-            "-------------------------+--------------+---------------+-----------",
-            "Standard HuggingFace     | 60%-80%      | 16 seq        | 1.0x      ",
-            "vLLM PagedAttention      | < 4%         | 64 seq        | 3.8x Speed"
-        ]
-        cy = curr_y + 30
-        for tl in tbl_lines:
-            c_color = text_muted if "Engine" in tl or "---" in tl else text_main
-            draw.text((margin + 100, cy), tl, fill=c_color, font=font_code)
-            cy += 64
-
-        curr_y += box_h + 40
-        draw.text((margin + 70, curr_y), "Key Innovation: Virtual Memory Paging Eliminates Memory Fragmentation", fill=text_muted, font=font_body)
+        # 7. Footer
+        draw.text((margin + 70, height - margin - 60), "Ref: ZYEKH.COM / TECHNICAL BLUEPRINT SPECIFICATION • DECENTRALIZED SYNDICATION 2026", fill=text_muted, font=font_meta)
 
     else:
-        # Standar D: Utility Transformation Matrix
-        box_h = 340 if mode == "square" else 300
-        box_rect = [margin + 70, curr_y, margin + 70 + inner_w, curr_y + box_h]
-        draw.rectangle(box_rect, fill=box_bg, outline=box_border, width=2)
+        # =========================================================================
+        # 16:9 LANDSCAPE OPENGRAPH LAYOUT (2400 x 1260)
+        # =========================================================================
+        title_font_size = 64 if len(raw_title) <= 55 else (56 if len(raw_title) <= 70 else 50)
+        font_tag = get_font(size=36, is_mono=True, is_bold=True)
+        font_title = get_font(size=title_font_size, is_mono=False, is_bold=True)
+        font_desc = get_font(size=36, is_mono=False, is_bold=False)
+        font_code = get_font(size=34, is_mono=True, is_bold=False)
+        font_meta = get_font(size=32, is_mono=True, is_bold=False)
 
-        util_lines = [
-            "Input Mode  : Octal Notation 4755 (SUID Bit Active)",
-            "Binary Mask : 100 111 101 101",
-            "Symbolic    : -rwsr-xr-x",
-            "Execution   : Executed with file owner (root) effective privilege"
-        ]
-        cy = curr_y + 30
-        for ul in util_lines:
-            draw.text((margin + 100, cy), ul, fill=text_main, font=font_code)
-            cy += 64
+        # 1. Category Tag
+        draw.text((margin + 70, margin + 60), cat_tag, fill=text_muted, font=font_tag)
 
-        curr_y += box_h + 40
-        draw.text((margin + 70, curr_y), "Transformation Matrix: Local Cryptographic & Octal Permission Evaluation", fill=text_muted, font=font_body)
+        # 2. Main Title
+        title_lines = wrap_text(raw_title, font_title, inner_w, draw)[:3]
+        curr_y = margin + 125
+        line_h = int(title_font_size * 1.32)
+        for line in title_lines:
+            draw.text((margin + 70, curr_y), line, fill=text_main, font=font_title)
+            curr_y += line_h
 
-    # Footer Specification Line (No Brand Logo / No Ad Signal)
-    draw.text((margin + 70, height - margin - 70), "Ref: High-Density Technical Reference Specification", fill=text_muted, font=font_meta)
+        # 3. Terminal Box
+        curr_y += 25
+        box_h = 420
+        draw.rectangle([margin + 70, curr_y, margin + 70 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
+        
+        # Terminal Header Bar
+        draw.rectangle([margin + 70, curr_y, margin + 70 + inner_w, curr_y + 50], fill=bar_bg, outline=box_border, width=2)
+        draw.text((margin + 100, curr_y + 12), "[ ARCHITECTURE SPECIFICATION // CODE MATRIX ]", fill=text_muted, font=font_tag)
 
-    # Save with File Size Optimization Guard (< 950KB for Bluesky API limit)
+        code_lines = article_data.get('code_snippet', [])
+        if not code_lines:
+            code_lines = [
+                "# Linux Subsystem Hardening Architecture",
+                "ProtectSystem=strict          # Mount /usr, /boot, /etc read-only",
+                "ProtectHome=true              # Deny access to /home, /root, /run/user",
+                "MemoryDenyWriteExecute=true   # Enforce strict W^X memory bounds"
+            ]
+
+        cy = curr_y + 75
+        for cl in code_lines[:5]:
+            is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
+            c_color = text_muted if is_comment else text_main
+            draw.text((margin + 100, cy), cl, fill=c_color, font=font_code)
+            cy += 60
+
+        # Footer
+        draw.text((margin + 70, height - margin - 50), "Ref: High-Density Technical Reference Specification • zyekh.com", fill=text_muted, font=font_meta)
+
+    # Save with File Size Optimization (< 950KB for Bluesky API limit)
     img.save(output_path, "PNG", optimize=True)
-    
     file_size_kb = output_path.stat().st_size / 1024
     if file_size_kb > 950:
-        # Quantize palette if exceeding 950KB
         q_img = img.quantize(colors=256, method=Image.Quantize.MEDIANCUT)
         q_img.save(output_path, "PNG", optimize=True)
         file_size_kb = output_path.stat().st_size / 1024
 
-    print(f"[ SUCCESS ] {theme.upper()} {mode.upper()} Social Card Generated ({standard}, {file_size_kb:.1f} KB): {output_path.name}")
+    print(f"[ SUCCESS ] {theme.upper()} {mode.upper()} Social Card Generated ({file_size_kb:.1f} KB): {output_path.name}")
     return output_path
 
 def parse_html_for_card(filepath: Path):
     content = filepath.read_text(encoding='utf-8')
+    soup = BeautifulSoup(content, 'html.parser')
     
-    title_match = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE | re.DOTALL)
-    title = html.unescape(title_match.group(1).strip()) if title_match else filepath.name
+    # Title
+    h1 = soup.find('h1')
+    title = h1.get_text().strip() if h1 else filepath.stem
     title = re.sub(r'\s*—\s*zyekh\.com.*', '', title)
     title = re.sub(r'\s*\|\s*zyekh\.com.*', '', title)
 
-    desc_match = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', content, re.IGNORECASE | re.DOTALL)
-    description = html.unescape(desc_match.group(1).strip()) if desc_match else ""
+    # Description
+    desc_meta = soup.find('meta', {'name': 'description'})
+    description = desc_meta['content'].strip() if desc_meta and desc_meta.get('content') else ""
 
+    # Tags
     tags = []
-    tag_matches = re.findall(r'<span\s+class=["\']meta-tag["\']>\s*#?([\w-]+)\s*</span>', content, re.IGNORECASE)
-    if tag_matches:
-        for t in tag_matches:
-            clean_t = t.lower().strip()
-            if clean_t and clean_t not in tags:
-                tags.append(clean_t)
+    for tag_elem in soup.find_all('span', class_='meta-tag'):
+        t_text = tag_elem.get_text().replace('#', '').strip()
+        parts = [p.strip().lower() for p in re.split(r'[•,/|]+', t_text) if p.strip()]
+        for p in parts:
+            p_clean = re.sub(r'[^a-z0-9-]', '', p)
+            if p_clean and p_clean not in tags:
+                tags.append(p_clean)
+
+    # Code Snippet from first <pre><code>
+    code_lines = []
+    first_pre = soup.find('pre')
+    if first_pre:
+        code_tag = first_pre.find('code')
+        raw_code = (code_tag.get_text() if code_tag else first_pre.get_text()).strip()
+        code_lines = [line.rstrip() for line in raw_code.splitlines() if line.strip()][:10]
+
+    # Executive Summary Takeaways
+    takeaways = []
+    summary_div = soup.find('div', class_='exec-summary')
+    if summary_div:
+        for li in summary_div.find_all('li'):
+            t_text = li.get_text().strip()
+            if t_text:
+                takeaways.append(f"[+] {t_text}")
+
+    # Operational Metrics
+    metrics = [
+        f"[*] Architecture Domain: {tags[0].upper() if tags else 'SECURITY'} Hardening Protocol",
+        "[*] Production Impact: Zero runtime overhead with compile-time invariant enforcement",
+        "[*] Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture"
+    ]
 
     return {
         'title': title,
         'description': description,
-        'tags': tags or ['security'],
-        'body': content[:1500],
-        'slug': filepath.stem
+        'tags': tags or ['security', 'linux'],
+        'slug': filepath.stem,
+        'code_snippet': code_lines,
+        'takeaways': takeaways[:3],
+        'metrics': metrics
     }
 
 def main():

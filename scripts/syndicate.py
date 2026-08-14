@@ -11,6 +11,7 @@ import webbrowser
 import datetime
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
+from bs4 import BeautifulSoup
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 BLOG_DIR = BASE_DIR / "blog"
@@ -53,66 +54,107 @@ def load_dotenv():
 
 def parse_article_metadata(filepath: Path):
     content = filepath.read_text(encoding='utf-8')
+    soup = BeautifulSoup(content, 'html.parser')
     
     # Title
-    title_match = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE | re.DOTALL)
-    title = html.unescape(title_match.group(1).strip()) if title_match else filepath.name
+    h1 = soup.find('h1')
+    title = h1.get_text().strip() if h1 else filepath.stem
     title = re.sub(r'\s*—\s*zyekh\.com.*', '', title)
     title = re.sub(r'\s*\|\s*zyekh\.com.*', '', title)
 
     # Description
-    desc_match = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\']', content, re.IGNORECASE | re.DOTALL)
-    description = html.unescape(desc_match.group(1).strip()) if desc_match else ""
+    desc_meta = soup.find('meta', {'name': 'description'})
+    description = desc_meta['content'].strip() if desc_meta and desc_meta.get('content') else ""
 
-    # Dynamic Tags Extraction from HTML meta-tags or tags-container
+    # Dynamic Tags Extraction
     extracted_tags = []
-    tag_matches = re.findall(r'<span\s+class=["\']meta-tag["\']>\s*#?([\w-]+)\s*</span>', content, re.IGNORECASE)
-    if tag_matches:
-        for t in tag_matches:
-            clean_t = t.lower().strip()
-            if clean_t and clean_t not in extracted_tags:
-                extracted_tags.append(clean_t)
+    for tag_elem in soup.find_all('span', class_='meta-tag'):
+        t_text = tag_elem.get_text().replace('#', '').strip()
+        parts = [p.strip().lower() for p in re.split(r'[•,/|]+', t_text) if p.strip()]
+        for p in parts:
+            p_clean = re.sub(r'[^a-z0-9-]', '', p)
+            if p_clean and p_clean not in extracted_tags:
+                extracted_tags.append(p_clean)
     
     if not extracted_tags:
         extracted_tags = ["security", "linux", "devops", "architecture"]
 
-    # Slug / Relative URL
-    rel_path = filepath.relative_to(BASE_DIR)
-    url = f"{BASE_URL}/{rel_path}"
+    url = f"{BASE_URL}/blog/{filepath.name}"
     slug = filepath.stem
 
-    # Exec Summary / TL;DR text
-    exec_summary = ""
-    summary_match = re.search(r'<div class=["\']exec-summary["\']>(.*?)</div>', content, re.IGNORECASE | re.DOTALL)
-    if summary_match:
-        clean_text = re.sub(r'<[^>]+>', '', summary_match.group(1)).strip()
-        clean_text = ' '.join(clean_text.split())
-        exec_summary = html.unescape(clean_text)
+    # Executive Summary
+    exec_summary_items = []
+    summary_div = soup.find('div', class_='exec-summary')
+    if summary_div:
+        for li in summary_div.find_all('li'):
+            item_text = li.get_text().strip()
+            if item_text:
+                exec_summary_items.append(item_text)
 
-    # Article Body Content (Markdown-like summary for Dev.to)
-    article_body = ""
-    body_match = re.search(r'<article[^>]*>(.*?)</article>', content, re.IGNORECASE | re.DOTALL)
-    if body_match:
-        clean_body = re.sub(r'<script[^>]*>.*?</script>', '', body_match.group(1), flags=re.DOTALL)
-        clean_body = re.sub(r'<style[^>]*>.*?</style>', '', clean_body, flags=re.DOTALL)
-        clean_body = re.sub(r'<h2[^>]*>(.*?)</h2>', r'\n\n## \1\n\n', clean_body)
-        clean_body = re.sub(r'<h3[^>]*>(.*?)</h3>', r'\n\n### \1\n\n', clean_body)
-        clean_body = re.sub(r'<p[^>]*>(.*?)</p>', r'\n\1\n', clean_body)
-        clean_body = re.sub(r'<li[^>]*>(.*?)</li>', r'* \1\n', clean_body)
-        clean_body = re.sub(r'<code[^>]*>(.*?)</code>', r'`\1`', clean_body)
-        clean_body = re.sub(r'<pre[^>]*><code[^>]*>(.*?)</code></pre>', r'\n```\n\1\n```\n', clean_body, flags=re.DOTALL)
-        clean_body = re.sub(r'<[^>]+>', '', clean_body)
-        clean_body = html.unescape(clean_body)
-        clean_body = re.sub(r'\n{3,}', '\n\n', clean_body).strip()
-        article_body = clean_body
+    # Clean Article Content Body (Dev.to Markdown extraction)
+    main_elem = soup.find('main', class_='article-content')
+    clean_markdown = ""
+    if main_elem:
+        content_soup = BeautifulSoup(str(main_elem), 'html.parser')
+        main_root = content_soup.find('main') or content_soup
+        
+        # Decompose non-content boilerplate elements
+        for unwanted in main_root.find_all(['script', 'style', 'figure', 'footer']):
+            unwanted.decompose()
+        for unwanted in main_root.find_all(class_=['author-card', 'article-cross-links', 'exec-summary', 'article-actions', 'back-link', 'hero-caption', 'heading-reset']):
+            unwanted.decompose()
+
+        # Convert FAQ <details> into clean Q&A
+        for details in main_root.find_all('details'):
+            summary = details.find('summary')
+            q_text = summary.get_text().strip() if summary else "FAQ"
+            if summary:
+                summary.decompose()
+            a_text = details.get_text().strip()
+            details.replace_with(soup.new_string(f"\n\n**Q: {q_text}**\n\n{a_text}\n\n"))
+
+        md_parts = []
+        for elem in main_root.children:
+            if not elem.name:
+                continue
+            if elem.name == 'h2':
+                md_parts.append(f"\n\n## {elem.get_text().strip()}\n\n")
+            elif elem.name == 'h3':
+                md_parts.append(f"\n\n### {elem.get_text().strip()}\n\n")
+            elif elem.name == 'h4':
+                md_parts.append(f"\n\n#### {elem.get_text().strip()}\n\n")
+            elif elem.name == 'pre':
+                code_tag = elem.find('code')
+                lang = ""
+                if code_tag and code_tag.get('class'):
+                    for cls in code_tag['class']:
+                        if cls.startswith('language-'):
+                            lang = cls.replace('language-', '')
+                code_text = code_tag.get_text() if code_tag else elem.get_text()
+                md_parts.append(f"\n\n```{lang}\n{code_text.strip()}\n```\n\n")
+            elif elem.name in ['ul', 'ol']:
+                list_str = "\n"
+                for idx, li in enumerate(elem.find_all('li'), 1):
+                    prefix = f"{idx}." if elem.name == 'ol' else "*"
+                    list_str += f"{prefix} {li.get_text().strip()}\n"
+                md_parts.append(list_str + "\n")
+            elif elem.name == 'p':
+                p_text = elem.get_text().strip()
+                if p_text:
+                    md_parts.append(f"{p_text}\n\n")
+            elif elem.name == 'div' and 'faq-section' in elem.get('class', []):
+                md_parts.append(f"{elem.get_text().strip()}\n\n")
+
+        raw_md = "".join(md_parts)
+        clean_markdown = re.sub(r'\n{3,}', '\n\n', raw_md).strip()
 
     return {
         'title': title,
         'description': description,
         'url': url,
         'slug': slug,
-        'exec_summary': exec_summary,
-        'body': article_body,
+        'exec_summary': exec_summary_items,
+        'body': clean_markdown,
         'tags': extracted_tags,
         'filename': filepath.name
     }
@@ -233,12 +275,15 @@ def publish_devto(article):
 
     body_content = f"# {article['title']}\n\n> {article['description']}\n\n"
     if article['exec_summary']:
-        body_content += f"## Executive Summary\n{article['exec_summary']}\n\n"
+        body_content += "## Executive Summary & Key Takeaways\n\n"
+        for item in article['exec_summary']:
+            body_content += f"* {item}\n"
+        body_content += "\n---\n\n"
     
     if article['body']:
         body_content += article['body'] + "\n\n"
     
-    body_content += f"---\n*Originally published at [{article['url']}]({article['url']})*"
+    body_content += f"---\n\n*Originally published at [{article['url']}]({article['url']})*"
 
     endpoint = "https://dev.to/api/articles"
     payload = json.dumps({
@@ -251,7 +296,6 @@ def publish_devto(article):
             "description": article['description']
         }
     }).encode('utf-8')
-
     req = urllib.request.Request(
         endpoint,
         data=payload,
@@ -267,6 +311,10 @@ def publish_devto(article):
             url = data.get('url', 'published')
             print(f"[ SUCCESS ] Dev.to Article Published: {url}")
             return True
+    except urllib.error.HTTPError as e:
+        err_msg = e.read().decode('utf-8')
+        print(f"[ ERROR ] Dev.to Publish Failed ({e.code}): {err_msg}")
+        return False
     except Exception as e:
         print(f"[ ERROR ] Dev.to Publish Failed: {e}")
         return False
@@ -314,6 +362,29 @@ def extract_bsky_facets(text):
             "features": [{"$type": "app.bsky.richtext.facet#tag", "tag": tag}]
         })
     return facets
+
+def format_bluesky_post_text(title, description, url, tags):
+    tags_str = ' '.join([f'#{t.capitalize()}' for t in tags[:2]])
+    suffix = f'\n\n[ Read Full Article -> ] {url}'
+    if tags_str:
+        suffix += f'\n\n{tags_str}'
+    suffix = suffix.strip()
+    fixed_len = len(suffix.encode('utf-8'))
+    
+    budget = 280 - fixed_len
+    title_len = len(title.encode('utf-8'))
+    if title_len >= budget - 20:
+        clean_title = title[:budget - 3].rstrip() + '...'
+        return f'{clean_title}\n\n{suffix}'
+    
+    desc_budget = budget - title_len - 2
+    if desc_budget > 30 and description:
+        clean_desc = description
+        if len(clean_desc.encode('utf-8')) > desc_budget:
+            clean_desc = clean_desc[:desc_budget - 3].rstrip() + '...'
+        return f'{title}\n\n{clean_desc}\n\n{suffix}'
+    else:
+        return f'{title}\n\n{suffix}'
 
 def publish_bluesky(article):
     load_dotenv()
@@ -376,8 +447,7 @@ def publish_bluesky(article):
 
     # 3. Post Record with Embed
     post_endpoint = f"{pds_server.rstrip('/')}/xrpc/com.atproto.repo.createRecord"
-    tags_str = ' '.join([f"#{t.capitalize()}" for t in article.get('tags', [])])
-    status_text = f"{article['title']}\n\n{article['description']}\n\n[ Read Full Article -> ] {article['url']}\n\n{tags_str}".strip()
+    status_text = format_bluesky_post_text(article['title'], article.get('description', ''), article['url'], article.get('tags', []))
     now_iso = datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z")
 
     record_obj = {
@@ -413,6 +483,10 @@ def publish_bluesky(article):
             uri = data.get('uri', 'published')
             print(f"[ SUCCESS ] Bluesky Post Published: {uri}")
             return True
+    except urllib.error.HTTPError as e:
+        err_msg = e.read().decode('utf-8')
+        print(f"[ ERROR ] Bluesky Post Failed ({e.code}): {err_msg}")
+        return False
     except Exception as e:
         print(f"[ ERROR ] Bluesky Post Failed: {e}")
         return False
