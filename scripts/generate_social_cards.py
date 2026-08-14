@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import sys
+import re
 import json
 import argparse
 from pathlib import Path
@@ -61,21 +62,60 @@ def wrap_text(text, font, max_width, draw):
 
 def wrap_code_lines(raw_lines, font, max_w, max_total_lines, draw):
     final_lines = []
+    
+    def get_width(text):
+        bbox = draw.textbbox((0, 0), text, font=font)
+        return bbox[2] - bbox[0]
+
     for line in raw_lines:
-        bbox = draw.textbbox((0, 0), line, font=font)
-        if bbox[2] - bbox[0] <= max_w:
+        if get_width(line) <= max_w:
             final_lines.append(line)
         else:
-            words = line.split(' ')
+            raw_tokens = line.split(' ')
+            tokens = []
+            for t in raw_tokens:
+                if not t:
+                    tokens.append('')
+                    continue
+                if get_width(t) <= max_w:
+                    tokens.append(t)
+                else:
+                    sub_parts = [p for p in re.split(r'([:;,/])', t) if p]
+                    cur_part = ''
+                    for p in sub_parts:
+                        if get_width(cur_part + p) <= max_w:
+                            cur_part += p
+                        else:
+                            if cur_part:
+                                tokens.append(cur_part)
+                            if get_width(p) > max_w:
+                                for ch in p:
+                                    if get_width(cur_part + ch) <= max_w:
+                                        cur_part += ch
+                                    else:
+                                        if cur_part:
+                                            tokens.append(cur_part)
+                                        cur_part = ch
+                            else:
+                                cur_part = p
+                    if cur_part:
+                        tokens.append(cur_part)
+            
             curr = ''
-            for w in words:
-                test = (curr + ' ' + w).strip() if curr else w
-                if draw.textbbox((0, 0), test, font=font)[2] - draw.textbbox((0, 0), test, font=font)[0] <= max_w:
+            for token in tokens:
+                sep = ' ' if curr and not curr.endswith(' ') and token else ''
+                test = curr + sep + token if curr else token
+                if get_width(test) <= max_w:
                     curr = test
                 else:
                     if curr:
                         final_lines.append(curr)
-                    curr = '    ' + w
+                    indent = '    ' if not token.startswith(' ') else ''
+                    test_indented = indent + token
+                    if get_width(test_indented) <= max_w:
+                        curr = test_indented
+                    else:
+                        curr = token
             if curr:
                 final_lines.append(curr)
         if len(final_lines) >= max_total_lines:
@@ -363,8 +403,8 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             my += 6
 
         # 6. Collision-Free Footer (Only rendered if there is ample vertical breathing room)
-        footer_y = height - margin - 35
-        if curr_y + bot_h + 30 <= footer_y:
+        footer_y = height - margin - 55
+        if curr_y + bot_h + 24 <= footer_y:
             draw.text((margin + 80, footer_y), "OPEN TECHNICAL ARCHITECTURE SPECIFICATION • SYSTEMS & SECURITY BLUEPRINT 2026", fill=text_muted, font=font_meta)
 
 
