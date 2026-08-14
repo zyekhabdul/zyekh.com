@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM Token & GPU VRAM Inference Cost Calculator 2026 | zyekh.com</title>
+  <meta name="description" content="Interactive 2026 LLM pricing comparison, API token cost estimator, and GPU VRAM hardware sizing calculator for Claude 3.7, GPT-4.5, DeepSeek-R1, Gemini 2.0, and Llama 3.3.">
+  <link rel="canonical" href="https://zyekh.com/tools/llm-calculator.html">
+  <meta property="og:title" content="LLM Token & GPU VRAM Inference Cost Calculator 2026 | zyekh.com">
+  <meta property="og:description" content="Compare LLM API token costs and calculate GPU VRAM requirements offline.">
+  <meta property="og:url" content="https://zyekh.com/tools/llm-calculator.html">
+  <meta property="og:type" content="website">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "LLM Token & GPU VRAM Inference Cost Calculator",
+    "url": "https://zyekh.com/tools/llm-calculator.html",
+    "description": "Interactive client-side LLM pricing comparison, token budget calculator, and GPU VRAM hardware sizing estimator.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Any",
+    "author": {
+      "@type": "Person",
+      "name": "Abdul Zyekh",
+      "url": "https://zyekh.com"
+    }
+  }
+  </script>
+
+  <style id="antiClickjack">body{display:none !important;}</style>
+  <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+  <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+  <link rel="stylesheet" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous">
+  <style>
+    .calc-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-label { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.4rem; }
+    .form-val-display { font-family: 'Fira Code', monospace; font-size: 0.85rem; color: var(--text-muted); }
+    .form-control { width: 100%; padding: 0.65rem 0.85rem; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--text-main); font-family: inherit; font-size: 0.95rem; box-sizing: border-box; }
+    .form-control:focus { outline: none; border-color: var(--border-hover); }
+    input[type="range"] { width: 100%; accent-color: var(--text-main); cursor: pointer; margin-top: 0.35rem; }
+    
+    .tab-bar { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+    .tab-btn { background: transparent; border: 1px solid transparent; color: var(--text-muted); padding: 0.5rem 1rem; border-radius: var(--radius-md); cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: var(--transition); }
+    .tab-btn:hover { color: var(--text-main); background: var(--bg-card); }
+    .tab-btn.active { color: var(--text-main); background: var(--bg-card); border-color: var(--border-color); }
+    
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .matrix-table-wrapper { overflow-x: auto; margin-top: 1rem; }
+    .matrix-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left; }
+    .matrix-table th, .matrix-table td { padding: 0.65rem 0.85rem; border: 1px solid var(--border-color); }
+    .matrix-table th { background: var(--code-bg); color: var(--text-main); font-weight: 600; }
+    .matrix-table tr:hover { background: rgba(255, 255, 255, 0.02); }
+    .matrix-table tr.highlight-row { background: rgba(59, 130, 246, 0.1); border-left: 3px solid #3b82f6; }
+
+    .token-preview-box { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; font-family: 'Fira Code', monospace; min-height: 100px; max-height: 250px; overflow-y: auto; line-height: 1.6; font-size: 0.88rem; }
+    .t-chunk { display: inline-block; padding: 0.1rem 0.35rem; margin: 0.15rem 0.1rem; border-radius: 3px; border: 1px solid var(--border-color); }
+    .t-c0 { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.3); }
+    .t-c1 { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border-color: rgba(168, 85, 247, 0.3); }
+    .t-c2 { background: rgba(34, 197, 94, 0.15); color: #86efac; border-color: rgba(34, 197, 94, 0.3); }
+    .t-c3 { background: rgba(234, 179, 8, 0.15); color: #fde047; border-color: rgba(234, 179, 8, 0.3); }
+    .t-c4 { background: rgba(249, 115, 22, 0.15); color: #fdba74; border-color: rgba(249, 115, 22, 0.3); }
+
+    .hardware-badge { display: inline-block; padding: 0.35rem 0.75rem; border-radius: var(--radius-md); font-weight: 700; font-size: 0.85rem; font-family: 'Fira Code', monospace; border: 1px solid var(--border-color); }
+    .hw-ok { background: rgba(34, 197, 94, 0.15); color: #4ade80; border-color: #22c55e; }
+    .hw-warn { background: rgba(234, 179, 8, 0.15); color: #fde047; border-color: #eab308; }
+    .hw-alert { background: rgba(239, 68, 68, 0.15); color: #f87171; border-color: #ef4444; }
+  </style>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-t/gLW3EW0VkQXohVbJqn1J+pKFUvYM6knUEnS671SIk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+    <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" as="script">
+</head>
+<body>
+
+  <site-nav active="tools"></site-nav>
+
+  <main class="main-container">
+    <nav class="breadcrumb">
+      <li><a href="/" class="breadcrumb-link">Home</a></li>
+      <li class="breadcrumb-sep">/</li>
+      <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
+      <li class="breadcrumb-sep">/</li>
+      <li class="text-muted">LLM Token & GPU VRAM Cost Calculator</li>
+    </nav>
+
+    <header class="page-header">
+      <h1 class="page-title">LLM Token & GPU VRAM Cost Calculator</h1>
+      <p class="page-subtitle">Interactive 2026 multi-model API pricing comparison, token budget estimator, and GPU hardware VRAM sizing calculator for local and cloud inference.</p>
+    </header>
+
+    <div class="tab-bar">
+      <button type="button" class="tab-btn active" id="tabBtnApi" onclick="switchTab('api')">[ 1. API Pricing & Token Cost ]</button>
+      <button type="button" class="tab-btn" id="tabBtnVram" onclick="switchTab('vram')">[ 2. GPU VRAM & Hardware Sizer ]</button>
+      <button type="button" class="tab-btn" id="tabBtnVisual" onclick="switchTab('visual')">[ 3. Token Boundary Visualizer ]</button>
+    </div>
+
+    <!-- TAB 1: API Pricing Calculator -->
+    <div class="tab-panel active" id="panelApi">
+      <div class="grid-2" style="gap: 1.5rem;">
+        <div class="calc-card">
+          <h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 1rem;">[ PARAMETERS ] Token Workload</h2>
+
+          <div class="form-group">
+            <label class="form-label" for="selectModel">Target Model Preset:</label>
+            <select id="selectModel" class="form-control">
+              <option value="claude-3-7-sonnet" selected>Claude 3.7 Sonnet ($3.00 / $15.00)</option>
+              <option value="claude-3-5-haiku">Claude 3.5 Haiku ($0.80 / $4.00)</option>
+              <option value="gpt-4-5">GPT-4.5 Preview ($75.00 / $150.00)</option>
+              <option value="gpt-4o">GPT-4o ($2.50 / $10.00)</option>
+              <option value="gpt-4o-mini">GPT-4o mini ($0.15 / $0.60)</option>
+              <option value="gemini-2-flash">Gemini 2.0 Flash ($0.10 / $0.40)</option>
+              <option value="gemini-2-pro">Gemini 2.0 Pro ($1.25 / $5.00)</option>
+              <option value="deepseek-r1">DeepSeek-R1 ($0.55 / $2.19)</option>
+              <option value="deepseek-v3">DeepSeek-V3 ($0.14 / $0.28)</option>
+              <option value="llama-3-3-70b">Llama 3.3 70B ($0.59 / $0.79)</option>
+              <option value="custom">Custom Model Pricing</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="customPriceGroup" style="display: none;">
+            <div style="display: flex; gap: 1rem;">
+              <div style="flex: 1;">
+                <label class="form-label" for="customInputPrice">Input $/1M:</label>
+                <input type="number" id="customInputPrice" class="form-control" value="2.00" step="0.01" min="0">
+              </div>
+              <div style="flex: 1;">
+                <label class="form-label" for="customOutputPrice">Output $/1M:</label>
+                <input type="number" id="customOutputPrice" class="form-control" value="8.00" step="0.01" min="0">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">
+              <label for="inputPromptTokens">Prompt Tokens (Input):</label>
+              <span class="form-val-display" id="dispPromptTokens">2,000 tokens</span>
+            </div>
+            <input type="range" id="inputPromptTokens" min="100" max="100000" value="2000" step="100">
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">
+              <label for="inputCompTokens">Completion Tokens (Output):</label>
+              <span class="form-val-display" id="dispCompTokens">500 tokens</span>
+            </div>
+            <input type="range" id="inputCompTokens" min="50" max="8000" value="500" step="50">
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">
+              <label for="inputReqPerDay">Requests / Day:</label>
+              <span class="form-val-display" id="dispReqPerDay">1,000 req/day</span>
+            </div>
+            <input type="range" id="inputReqPerDay" min="10" max="50000" value="1000" step="50">
+          </div>
+        </div>
+
+        <!-- Result Summary -->
+        <div class="calc-card">
+          <h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 1rem;">[ ESTIMATED COST ] Pricing Output</h2>
+
+          <div class="result-summary">
+            <div class="result-card total">
+              <div class="label">Monthly Estimated Cost</div>
+              <div class="value" id="resMonthlyCost">$405.00</div>
+            </div>
+            <div class="result-card">
+              <div class="label">Cost / Single Request</div>
+              <div class="value" id="resCostPerReq">$0.01350</div>
+            </div>
+            <div class="result-card">
+              <div class="label">Cost / 1,000 Requests</div>
+              <div class="value" id="resCostPer1k">$13.50</div>
+            </div>
+            <div class="result-card">
+              <div class="label">Daily Token Volume</div>
+              <div class="value" id="resDailyTokens">2.5M Tok</div>
+            </div>
+          </div>
+
+          <div class="callout" style="margin-top: 1.25rem;">
+            <strong>[ NOTE ] Prompt Caching Benefit:</strong> For models supporting prompt caching (Anthropic, DeepSeek, Google), cache-hit tokens typically yield 75% to 90% discount on input pricing.
+          </div>
+        </div>
+      </div>
+
+      <!-- Cross-Model Comparison Table -->
+      <div class="calc-card">
+        <h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 0.5rem;">[ BENCHMARK ] Multi-Model Cost Matrix (Monthly at Selected Volume)</h2>
+        <div class="matrix-table-wrapper">
+          <table class="matrix-table" id="tableModelComp">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Provider</th>
+                <th>Input $/1M</th>
+                <th>Output $/1M</th>
+                <th>Cost / Req</th>
+                <th>Monthly Cost</th>
+              </tr>
+            </thead>
+            <tbody id="tableBodyModels">
+              <!-- Dynamically Populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: GPU VRAM & Hardware Sizer -->
+    <div class="tab-panel" id="panelVram">
+      <div class="grid-2" style="gap: 1.5rem;">
+        <div class="calc-card">
+          <h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 1rem;">[ ARCHITECTURE ] Model & KV-Cache Configuration</h2>
+
+          <div class="form-group">
+            <label class="form-label" for="selectModelArch">Base Model Architecture:</label>
+            <select id="selectModelArch" class="form-control">
+              <option value="llama-3-2-3b">Llama 3.2 3B (28 Layers, 3.2B Params)</option>
+              <option value="llama-3-1-8b" selected>Llama 3.1 8B (32 Layers, 8.0B Params)</option>
+              <option value="qwen-2-5-14b">Qwen 2.5 14B (48 Layers, 14.7B Params)</option>
+              <option value="qwen-2-5-32b">Qwen 2.5 32B (64 Layers, 32.5B Params)</option>
+              <option value="llama-3-3-70b">Llama 3.3 70B (80 Layers, 70.6B Params)</option>
+              <option value="deepseek-v3">DeepSeek-V3 / R1 (671B MoE, 37B Active)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="selectWeightQuant">Weights Precision:</label>
+            <select id="selectWeightQuant" class="form-control">
+              <option value="16">FP16 / BF16 (16-bit, 2.0 Bytes/param)</option>
+              <option value="8">FP8 / INT8 (8-bit, 1.0 Bytes/param)</option>
+              <option value="4" selected>INT4 / AWQ / GPTQ (4-bit, 0.5 Bytes/param)</option>
+              <option value="4.5">GGUF Q4_K_M (approx 0.56 Bytes/param)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">
+              <label for="inputCtxLen">Context Window (Tokens):</label>
+              <span class="form-val-display" id="dispCtxLen">32,768 tokens</span>
+            </div>
+            <select id="inputCtxLen" class="form-control">
+              <option value="4096">4,096 tokens (4k)</option>
+              <option value="8192">8,192 tokens (8k)</option>
+              <option value="16384">16,384 tokens (16k)</option>
+              <option value="32768" selected>32,768 tokens (32k)</option>
+              <option value="65536">65,536 tokens (64k)</option>
+              <option value="131072">131,072 tokens (128k)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <div class="form-label">
+              <label for="inputBatchSize">Concurrency (Batch Size):</label>
+              <span class="form-val-display" id="dispBatchSize">4 concurrent streams</span>
+            </div>
+            <input type="range" id="inputBatchSize" min="1" max="32" value="4" step="1">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="selectKvQuant">KV-Cache Precision:</label>
+            <select id="selectKvQuant" class="form-control">
+              <option value="2">FP16 KV-Cache (2.0 Bytes/elem)</option>
+              <option value="1" selected>FP8 KV-Cache (1.0 Byte/elem - PagedAttention)</option>
+              <option value="0.5">INT4 KV-Cache (0.5 Bytes/elem)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Hardware Sizing Results -->
+        <div class="calc-card">
+          <h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 1rem;">[ HARDWARE SPEC ] Required VRAM & Sizing</h2>
+
+          <div class="result-summary">
+            <div class="result-card total">
+              <div class="label">Total VRAM Required</div>
+              <div class="value" id="resTotalVram">7.8 GB</div>
+            </div>
+            <div class="result-card">
+              <div class="label">Model Weights VRAM</div>
+              <div class="value" id="resWeightsVram">4.0 GB</div>
+            </div>
+            <div class="result-card">
+              <div class="label">KV-Cache Memory</div>
+              <div class="value" id="resKvVram">2.3 GB</div>
+            </div>
+            <div class="result-card">
+              <div class="label">CUDA Context & Overhead</div>
+              <div class="value" id="resOverheadVram">1.5 GB</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem;">
+            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Recommended GPU Hardware Tier:</div>
+            <div id="hwRecommendationBox" class="hardware-badge hw-ok">1x RTX 4060 Ti 16GB / Apple M3 24GB</div>
+          </div>
+
+          <div class="callout" style="margin-top: 1.25rem;">
+            <strong>[ SIZING FORMULA ]</strong>: Total VRAM = (Weights_GB) + (2 &times; n_layers &times; n_kv_heads &times; d_head &times; seq_len &times; batch_size &times; kv_bytes) + CUDA_Context_Buffer.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Token Boundary Visualizer -->
+    <div class="tab-panel" id="panelVisual">
+      <div class="calc-card">
+        <h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 0.5rem;">[ INTERACTIVE ] In-Browser Subword Token Boundary Highlighter</h2>
+        <p class="text-muted" style="margin-bottom: 1rem;">Type or paste any prompt below to visualize subword splitting, token boundaries, and approximate token counts in real-time.</p>
+
+        <div class="form-group">
+          <label class="form-label" for="txtTokenInput">Input Text Prompt:</label>
+          <textarea id="txtTokenInput" class="form-control" rows="4" style="font-family: 'Fira Code', monospace; resize: vertical;">Implementing eBPF XDP kernel filters accelerates high-throughput packet routing while eliminating context-switch overhead across microservice clusters.</textarea>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; font-family: 'Fira Code', monospace;">
+          <span><strong>Tokens:</strong> <span id="lblTokCount" style="color: #60a5fa;">23</span></span>
+          <span><strong>Characters:</strong> <span id="lblCharCount">149</span></span>
+          <span><strong>Bytes:</strong> <span id="lblByteCount">149 B</span></span>
+          <span><strong>Avg Chars/Token:</strong> <span id="lblRatio">6.5</span></span>
+        </div>
+
+        <div class="form-label">Visualized Token Chunks:</div>
+        <div class="token-preview-box" id="tokenChunksContainer">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Technical Article Links & Architecture Guide -->
+    <section class="seo-content-block" style="margin-top: 2rem;">
+      <h2 class="section-title">[ RELATED TECHNICAL GUIDES ] Deep-Dive References</h2>
+      <div class="grid-2" style="gap: 1rem;">
+        <div class="tool-item">
+          <a href="/blog/vllm-pagedattention-high-throughput-inference-tuning.html" class="tool-card">
+            <div>
+              <span class="tool-category">LLM RUNTIME</span>
+              <h3 class="tool-title">vLLM & PagedAttention Tuning</h3>
+              <p class="tool-desc">Eliminating KV-cache memory fragmentation and scaling throughput.</p>
+            </div>
+            <span class="tool-badge">Read Guide &rarr;</span>
+          </a>
+        </div>
+        <div class="tool-item">
+          <a href="/blog/kv-cache-int4-quantization-long-context.html" class="tool-card">
+            <div>
+              <span class="tool-category">QUANTIZATION</span>
+              <h3 class="tool-title">KV-Cache INT4 Quantization</h3>
+              <p class="tool-desc">Scaling 128k+ long context inference under constrained VRAM.</p>
+            </div>
+            <span class="tool-badge">Read Guide &rarr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="nav-container">
+      <p>Zyekh's Zero-Dependency Web Hub &copy; 2026. 100% Local-First & Zero-Tracking.</p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
+  <script>
+    const MODEL_DATABASE = [
+      { id: "claude-3-7-sonnet", name: "Claude 3.7 Sonnet", provider: "Anthropic", inPrice: 3.00, outPrice: 15.00 },
+      { id: "claude-3-5-haiku", name: "Claude 3.5 Haiku", provider: "Anthropic", inPrice: 0.80, outPrice: 4.00 },
+      { id: "gpt-4-5", name: "GPT-4.5 Preview", provider: "OpenAI", inPrice: 75.00, outPrice: 150.00 },
+      { id: "gpt-4o", name: "GPT-4o", provider: "OpenAI", inPrice: 2.50, outPrice: 10.00 },
+      { id: "gpt-4o-mini", name: "GPT-4o mini", provider: "OpenAI", inPrice: 0.15, outPrice: 0.60 },
+      { id: "gemini-2-flash", name: "Gemini 2.0 Flash", provider: "Google", inPrice: 0.10, outPrice: 0.40 },
+      { id: "gemini-2-pro", name: "Gemini 2.0 Pro", provider: "Google", inPrice: 1.25, outPrice: 5.00 },
+      { id: "deepseek-r1", name: "DeepSeek-R1", provider: "DeepSeek", inPrice: 0.55, outPrice: 2.19 },
+      { id: "deepseek-v3", name: "DeepSeek-V3", provider: "DeepSeek", inPrice: 0.14, outPrice: 0.28 },
+      { id: "llama-3-3-70b", name: "Llama 3.3 70B", provider: "Meta / Groq", inPrice: 0.59, outPrice: 0.79 }
+    ];
+
+    const ARCH_SPECS = {
+      "llama-3-2-3b": { name: "Llama 3.2 3B", params: 3.21, layers: 28, heads: 24, kvHeads: 8, headDim: 128 },
+      "llama-3-1-8b": { name: "Llama 3.1 8B", params: 8.03, layers: 32, heads: 32, kvHeads: 8, headDim: 128 },
+      "qwen-2-5-14b": { name: "Qwen 2.5 14B", params: 14.7, layers: 48, heads: 40, kvHeads: 8, headDim: 128 },
+      "qwen-2-5-32b": { name: "Qwen 2.5 32B", params: 32.5, layers: 64, heads: 40, kvHeads: 8, headDim: 128 },
+      "llama-3-3-70b": { name: "Llama 3.3 70B", params: 70.6, layers: 80, heads: 64, kvHeads: 8, headDim: 128 },
+      "deepseek-v3": { name: "DeepSeek-V3 / R1 (MoE)", params: 671, activeParams: 37, layers: 61, heads: 128, kvHeads: 128, headDim: 128, isMla: true }
+    };
+
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+
+      if (tabId === 'api') {
+        document.getElementById('tabBtnApi').classList.add('active');
+        document.getElementById('panelApi').classList.add('active');
+      } else if (tabId === 'vram') {
+        document.getElementById('tabBtnVram').classList.add('active');
+        document.getElementById('panelVram').classList.add('active');
+      } else if (tabId === 'visual') {
+        document.getElementById('tabBtnVisual').classList.add('active');
+        document.getElementById('panelVisual').classList.add('active');
+      }
+    }
+
+    function debounceRAF(fn) {
+      let queued = false;
+      return function(...args) {
+        if (queued) return;
+        queued = true;
+        window.requestAnimationFrame(() => {
+          fn.apply(this, args);
+          queued = false;
+        });
+      };
+    }
+
+    // --- TAB 1: API Cost Logic ---
+    const selectModel = document.getElementById('selectModel');
+    const customPriceGroup = document.getElementById('customPriceGroup');
+    const customInputPrice = document.getElementById('customInputPrice');
+    const customOutputPrice = document.getElementById('customOutputPrice');
+    const inputPromptTokens = document.getElementById('inputPromptTokens');
+    const inputCompTokens = document.getElementById('inputCompTokens');
+    const inputReqPerDay = document.getElementById('inputReqPerDay');
+
+    const dispPromptTokens = document.getElementById('dispPromptTokens');
+    const dispCompTokens = document.getElementById('dispCompTokens');
+    const dispReqPerDay = document.getElementById('dispReqPerDay');
+
+    const resMonthlyCost = document.getElementById('resMonthlyCost');
+    const resCostPerReq = document.getElementById('resCostPerReq');
+    const resCostPer1k = document.getElementById('resCostPer1k');
+    const resDailyTokens = document.getElementById('resDailyTokens');
+    const tableBodyModels = document.getElementById('tableBodyModels');
+
+    function updateApiCost() {
+      const selectedId = selectModel.value;
+      let inPrice = 0;
+      let outPrice = 0;
+
+      if (selectedId === 'custom') {
+        customPriceGroup.style.display = 'block';
+        inPrice = parseFloat(customInputPrice.value) || 0;
+        outPrice = parseFloat(customOutputPrice.value) || 0;
+      } else {
+        customPriceGroup.style.display = 'none';
+        const m = MODEL_DATABASE.find(item => item.id === selectedId);
+        if (m) {
+          inPrice = m.inPrice;
+          outPrice = m.outPrice;
+        }
+      }
+
+      const pTokens = parseInt(inputPromptTokens.value, 10);
+      const cTokens = parseInt(inputCompTokens.value, 10);
+      const reqPerDay = parseInt(inputReqPerDay.value, 10);
+
+      dispPromptTokens.textContent = `${pTokens.toLocaleString()} tokens`;
+      dispCompTokens.textContent = `${cTokens.toLocaleString()} tokens`;
+      dispReqPerDay.textContent = `${reqPerDay.toLocaleString()} req/day`;
+
+      const costPerReq = (pTokens / 1000000 * inPrice) + (cTokens / 1000000 * outPrice);
+      const costPer1k = costPerReq * 1000;
+      const monthlyCost = costPerReq * reqPerDay * 30;
+      const dailyTokens = (pTokens + cTokens) * reqPerDay;
+
+      resCostPerReq.textContent = `$${costPerReq.toFixed(5)}`;
+      resCostPer1k.textContent = `$${costPer1k.toFixed(2)}`;
+      resMonthlyCost.textContent = `$${monthlyCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      resDailyTokens.textContent = `${(dailyTokens / 1000000).toFixed(2)}M Tok`;
+
+      // Render Matrix Table
+      let rowsHtml = '';
+      MODEL_DATABASE.forEach(m => {
+        const mReqCost = (pTokens / 1000000 * m.inPrice) + (cTokens / 1000000 * m.outPrice);
+        const mMonthCost = mReqCost * reqPerDay * 30;
+        const isHighlight = (m.id === selectedId) ? 'class="highlight-row"' : '';
+        rowsHtml += `
+          <tr ${isHighlight}>
+            <td><strong>${m.name}</strong></td>
+            <td>${m.provider}</td>
+            <td>$${m.inPrice.toFixed(2)}</td>
+            <td>$${m.outPrice.toFixed(2)}</td>
+            <td>$${mReqCost.toFixed(5)}</td>
+            <td><strong>$${mMonthCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong></td>
+          </tr>
+        `;
+      });
+      tableBodyModels.innerHTML = rowsHtml;
+    }
+
+    // --- TAB 2: VRAM Sizing Logic ---
+    const selectModelArch = document.getElementById('selectModelArch');
+    const selectWeightQuant = document.getElementById('selectWeightQuant');
+    const inputCtxLen = document.getElementById('inputCtxLen');
+    const inputBatchSize = document.getElementById('inputBatchSize');
+    const selectKvQuant = document.getElementById('selectKvQuant');
+
+    const dispCtxLen = document.getElementById('dispCtxLen');
+    const dispBatchSize = document.getElementById('dispBatchSize');
+    const resTotalVram = document.getElementById('resTotalVram');
+    const resWeightsVram = document.getElementById('resWeightsVram');
+    const resKvVram = document.getElementById('resKvVram');
+    const resOverheadVram = document.getElementById('resOverheadVram');
+    const hwRecommendationBox = document.getElementById('hwRecommendationBox');
+
+    function updateVramSizing() {
+      const archKey = selectModelArch.value;
+      const arch = ARCH_SPECS[archKey] || ARCH_SPECS["llama-3-1-8b"];
+      const weightBytes = parseFloat(selectWeightQuant.value) / 8; // bits to bytes
+      const ctxLen = parseInt(inputCtxLen.value, 10);
+      const batchSize = parseInt(inputBatchSize.value, 10);
+      const kvBytes = parseFloat(selectKvQuant.value);
+
+      dispCtxLen.textContent = `${ctxLen.toLocaleString()} tokens`;
+      dispBatchSize.textContent = `${batchSize} concurrent stream${batchSize > 1 ? 's' : ''}`;
+
+      // Weights VRAM (GB)
+      const weightsGb = (arch.params * 1e9 * weightBytes) / (1024 * 1024 * 1024);
+
+      // KV-Cache VRAM (GB)
+      let kvGb = 0;
+      if (arch.isMla) {
+        // DeepSeek MLA compressed latent dim = 512 + 64 = 576 bytes per layer
+        const mlaBytesPerTokenPerLayer = 576 * kvBytes;
+        const totalKvBytes = 2 * arch.layers * mlaBytesPerTokenPerLayer * ctxLen * batchSize;
+        kvGb = totalKvBytes / (1024 * 1024 * 1024);
+      } else {
+        // Standard GQA formula: 2 * layers * kv_heads * head_dim * seq_len * batch_size * kv_bytes
+        const bytesPerToken = 2 * arch.layers * arch.kvHeads * arch.headDim * kvBytes;
+        const totalKvBytes = bytesPerToken * ctxLen * batchSize;
+        kvGb = totalKvBytes / (1024 * 1024 * 1024);
+      }
+
+      // Overhead (CUDA runtime context + activations buffer)
+      const overheadGb = Math.max(1.2, weightsGb * 0.15);
+      const totalVramGb = weightsGb + kvGb + overheadGb;
+
+      resWeightsVram.textContent = `${weightsGb.toFixed(1)} GB`;
+      resKvVram.textContent = `${kvGb.toFixed(1)} GB`;
+      resOverheadVram.textContent = `${overheadGb.toFixed(1)} GB`;
+      resTotalVram.textContent = `${totalVramGb.toFixed(1)} GB`;
+
+      // Hardware Tier Recommendation
+      let hwText = "";
+      let hwClass = "hw-ok";
+
+      if (totalVramGb <= 12) {
+        hwText = "1x RTX 4060 Ti 16GB / Apple M3 16GB-24GB";
+        hwClass = "hw-ok";
+      } else if (totalVramGb <= 24) {
+        hwText = "1x RTX 4090 24GB / 1x RTX 3090 24GB / Apple M3/M4 Max 36GB";
+        hwClass = "hw-ok";
+      } else if (totalVramGb <= 48) {
+        hwText = "2x RTX 3090/4090 24GB (48GB NVLink) or 1x RTX 6000 Ada 48GB";
+        hwClass = "hw-warn";
+      } else if (totalVramGb <= 80) {
+        hwText = "1x NVIDIA A100 80GB SXM / 1x H100 80GB PCIe / Apple M3 Ultra 96GB";
+        hwClass = "hw-warn";
+      } else if (totalVramGb <= 160) {
+        hwText = "2x NVIDIA H100 80GB SXM5 (160GB NVLink) / Apple M2/M3 Ultra 192GB";
+        hwClass = "hw-alert";
+      } else if (totalVramGb <= 320) {
+        hwText = "4x NVIDIA H100 80GB SXM5 (320GB Cluster)";
+        hwClass = "hw-alert";
+      } else {
+        hwText = "8x NVIDIA H100/H200 80GB-141GB High-Throughput Node";
+        hwClass = "hw-alert";
+      }
+
+      hwRecommendationBox.textContent = hwText;
+      hwRecommendationBox.className = `hardware-badge ${hwClass}`;
+    }
+
+    // --- TAB 3: Token Visualizer Logic ---
+    const txtTokenInput = document.getElementById('txtTokenInput');
+    const tokenChunksContainer = document.getElementById('tokenChunksContainer');
+    const lblTokCount = document.getElementById('lblTokCount');
+    const lblCharCount = document.getElementById('lblCharCount');
+    const lblByteCount = document.getElementById('lblByteCount');
+    const lblRatio = document.getElementById('lblRatio');
+
+    function updateTokenVisualizer() {
+      const text = txtTokenInput.value || '';
+      const charLen = text.length;
+      const encoder = new TextEncoder();
+      const byteLen = encoder.encode(text).length;
+
+      // Subword BPE simulation regex (splitting words, numbers, punctuation, spaces)
+      const tokenRegex = /\s+|[A-Z]?[a-z]+|[A-Z]+(?=[A-Z][a-z]|\b)|[0-9]+|[^\s\w]/g;
+      const matches = text.match(tokenRegex) || [];
+      const tokenCount = matches.length;
+
+      lblCharCount.textContent = charLen.toString();
+      lblByteCount.textContent = `${byteLen} B`;
+      lblTokCount.textContent = tokenCount.toString();
+      lblRatio.textContent = tokenCount > 0 ? (charLen / tokenCount).toFixed(1) : "0.0";
+
+      let html = '';
+      matches.forEach((tok, idx) => {
+        const clsIndex = idx % 5;
+        const escaped = tok.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/ /g, "&middot;");
+        html += `<span class="t-chunk t-c${clsIndex}" title="Token #${idx + 1} (${tok.length} chars)">${escaped}</span>`;
+      });
+      tokenChunksContainer.innerHTML = html || '<span class="text-muted">Enter text above to inspect tokens...</span>';
+    }
+
+    // Event Bindings with RAF debouncing
+    const onApiChange = debounceRAF(updateApiCost);
+    const onVramChange = debounceRAF(updateVramSizing);
+    const onVisualChange = debounceRAF(updateTokenVisualizer);
+
+    [selectModel, customInputPrice, customOutputPrice, inputPromptTokens, inputCompTokens, inputReqPerDay].forEach(el => {
+      el.addEventListener('input', onApiChange);
+      el.addEventListener('change', onApiChange);
+    });
+
+    [selectModelArch, selectWeightQuant, inputCtxLen, inputBatchSize, selectKvQuant].forEach(el => {
+      el.addEventListener('input', onVramChange);
+      el.addEventListener('change', onVramChange);
+    });
+
+    txtTokenInput.addEventListener('input', onVisualChange);
+
+    // Initial Execution
+    updateApiCost();
+    updateVramSizing();
+    updateTokenVisualizer();
+  </script>
+</body>
+</html>

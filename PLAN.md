@@ -1,58 +1,48 @@
-# IMPLEMENTATION PLAN: Automated Multi-Channel Broadcast Pipeline Integration
+# IMPLEMENTATION PLAN: LLM Token & GPU VRAM Inference Cost Calculator 2026
 
-- **Feature**: Automated Multi-Channel Broadcast Pipeline (`run_pipeline.py` + `scripts/syndicate.py`)
+- **Feature**: In-Browser LLM Token & GPU VRAM Inference Cost Calculator (`/tools/llm-calculator.html`)
 - **Repository**: `zyekh.com` (`/home/fuckadmin/Projects/zyekh.com`)
-- **Protocol**: Adaptive AI Workflow Standard & Zero Over-Engineering
+- **Theme**: Zero-Dependency, Local-First, Baseline 2024+, Strict No-Emoji
 
 ---
 
-## Chunk 1: Upgrade `run_pipeline.py` CLI Interface & Flag Orchestration
-- **Target File**: `run_pipeline.py` (Lines 1-77)
-- **Scope & Objectives**:
-  - Replace naive `sys.argv` inspection with standard `argparse` module.
-  - Implement granular flags:
-    - `--syndicate`: Trigger parallel social API syndication via `scripts/syndicate.py`.
-    - `--slug <slug_name>`: Target a specific article slug for syndication (default: latest published article).
-    - `--social-card`: Auto-generate dual-theme OpenGraph & square card attachments before syndicating.
-    - `--skip-qa`: Skip QA step (only for quick local testing, defaults to strict QA).
-    - `--purge-cf`: Standalone Cloudflare CDN cache purge.
-    - `--deploy`: Commit and deploy checkpoint (strictly adhering to user permission rules).
-- **Zero-Ambiguity Implementation**:
-  - Add `def run_syndication(slug=None, generate_cards=True)` that delegates to `sys.executable scripts/syndicate.py --publish` with appropriate arguments.
-  - Parse credentials securely from `.env` using existing `load_dotenv()` pattern.
-  - Ensure zero emoji usage across all stdout/stderr messages.
+## Chunk 1: Create `tools/llm-calculator.html`
+- **Target File**: `tools/llm-calculator.html`
+- **Scope & Specifications**:
+  - Semantic HTML5 structure with `<site-nav active="tools"></site-nav>` and `.main-container`.
+  - Schema JSON-LD `SoftwareApplication` / `WebApplication`.
+  - Anti-FOUC script & Anti-Clickjacking headers.
+  - Interactive multi-model pricing engine (Claude 3.7, GPT-4.5, Gemini 2.0 Flash/Pro, DeepSeek-R1, Llama 3.3).
+  - Accurate GPU VRAM sizing model (Model weights + KV-Cache per context & batch size + CUDA overhead).
+  - In-browser subword token chunker with RAF-debounced visual boundary highlighter.
+  - Zero external dependencies. Pure standard CSS custom properties from `assets/css/shared.css`.
 - **Definition of Done (DoD)**:
-  - `python3 run_pipeline.py --help` outputs all flags with zero errors.
-  - `python3 check_emojis.py` confirms 0 emojis in `run_pipeline.py`.
+  - File exists with valid HTML5 and passing all accessibility/structural standards.
 
 ---
 
-## Chunk 2: Enhance `scripts/syndicate.py` Robustness & Dual Config Fallback
-- **Target File**: `scripts/syndicate.py` (Lines 28-37, 353-405)
-- **Scope & Objectives**:
-  - Update `load_dotenv()` to support fallback checking against structured JSON configs if `.env` keys are missing.
-  - Add graceful error handling so missing optional tokens (e.g. Bluesky if user only uses Mastodon/Dev.to) emit `[ WARN ]` rather than failing the entire pipeline.
-  - Return proper exit codes (0 for success/graceful skip, non-zero for fatal parse error).
+## Chunk 2: Register Tool in `tools/index.html` & `search-index.json`
+- **Target Files**:
+  - `tools/index.html`: Add `.tool-item` card following Standard B layout from `DESIGN_SYSTEM.md`.
+  - `search-index.json`: Add searchable metadata object for Command Palette (Ctrl+K).
 - **Definition of Done (DoD)**:
-  - `python3 scripts/syndicate.py --latest` runs cleanly and outputs ASCII intent URLs and API status without uncaught exceptions.
+  - Tool appears in `tools/index.html` grid and searchable in Command Palette.
 
 ---
 
-## Chunk 3: Update Documentation & Roadmap in `IDEAS.md`
-- **Target File**: `IDEAS.md` (Line 19)
-- **Scope & Objectives**:
-  - Mark `[ BACKLOG ] Automated Multi-Channel Broadcast Pipeline` as `[ DONE ]`.
+## Chunk 3: Update `IDEAS.md` Status
+- **Target File**: `IDEAS.md`
+- **Scope**: Mark `LLM Token & GPU Inference Cost Calculator 2026` as `[ DONE ]`.
 - **Definition of Done (DoD)**:
-  - Line 19 of `IDEAS.md` reads `- [ DONE ] **Automated Multi-Channel Broadcast Pipeline**: ...`
+  - `IDEAS.md` line reflects `[ DONE ]`.
 
 ---
 
-## Chunk 4: Automated Verification & Dry-Run Test
-- **Target Scope**: End-to-end pipeline validation
-- **Execution**:
-  - Run `python3 verify_batch.py` (15-axis QA).
-  - Run `python3 check_emojis.py`.
-  - Test `python3 run_pipeline.py --help`.
-  - Test dry-run of pipeline without destructive push.
+## Chunk 4: Automated Content Sync & QA Verification
+- **Target Execution**:
+  - Run `python3 sync_content.py` (bumps `sw.js` `CACHE_VERSION`, updates query strings across all HTML files, regenerates `sitemap.xml`, `feed.xml`, `llms.txt`).
+  - Run `python3 generate_llms_full.py`.
+  - Run `python3 verify_batch.py` & `python3 check_emojis.py`.
+  - Check local git status & commit checkpoint.
 - **Definition of Done (DoD)**:
-  - All tests exit code 0.
+  - 100% QA audit pass, 0 emojis, clean local commit.
