@@ -80,7 +80,15 @@ def extract_clean_code(raw_html: str) -> list[str]:
         
     if selected and selected[-1].strip().endswith('\\'):
         selected[-1] = selected[-1].strip()[:-1].rstrip()
-    return selected
+
+    # Ensure continuation lines following '\' have proper indentation alignment
+    aligned = []
+    for i, line in enumerate(selected):
+        if i > 0 and selected[i-1].rstrip().endswith('\\'):
+            if not line.startswith(' ') and not line.startswith('\t'):
+                line = '  ' + line
+        aligned.append(line)
+    return aligned
 
 def extract_manifest():
     articles = sorted(BLOG_DIR.glob("*.html"))
@@ -146,7 +154,12 @@ def extract_manifest():
         
         # Metric 2: Contextual Production Impact (Extracted from 4th takeaway if available, or domain-tuned)
         if len(takeaways) >= 4:
-            m2 = f"Production Impact: {takeaways[3]}"
+            raw_t4 = takeaways[3]
+            if ":" in raw_t4:
+                pfx, rest = raw_t4.split(":", 1)
+                m2 = f"Operational Impact: {pfx.strip()} - {rest.strip()}"
+            else:
+                m2 = f"Operational Impact: {raw_t4}"
         elif any(k in slug for k in ["llm", "rag", "vllm", "moe", "slora", "kv-cache", "dspy", "webgpu", "structured-output", "colbert"]):
             m2 = "Inference Impact: High-throughput token optimization with zero memory fragmentation"
         elif any(k in slug for k in ["ebpf", "xdp", "tetragon", "cilium"]):
@@ -159,6 +172,7 @@ def extract_manifest():
             m2 = "Production Impact: Deterministic low-latency execution with zero external dependencies"
 
         # Metric 3: Standards Compliance
+
         if any(k in slug for k in ["llm", "rag", "vllm", "moe", "slora", "kv-cache", "dspy", "webgpu", "structured-output", "colbert"]):
             m3 = "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture"
         elif any(k in slug for k in ["csp", "http3", "minimalist"]):

@@ -119,5 +119,11 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
     - **Stage 2 (Quality Gate)**: Run `validate_card_manifest.py` to empirically verify text completeness, sentence termination, and syntax integrity before rendering.
     - **Stage 3 (Presentation Layer)**: Run `generate_social_cards.py` as a pure deterministic image compiler reading exclusively from `manifest.json`.
 
+35. **HIGH-CONTRAST LEGIBILITY & SYNTAX SYMMETRY PROTOCOL**:
+    - **High-Contrast Dark Theme Copy**: Always use `text_main` (`#f4f4f5` / white) for all card body text and invariant/metric descriptions on dark backgrounds. `text_muted` is strictly reserved for category tags, timestamps, headers, and code comments.
+    - **Double Prefix De-duplication**: When extracting takeaways, clean double-colon labels (e.g. `Operational Impact: Subtitle: Details` -> `Operational Impact: Subtitle - Details`) to ensure smooth natural readability.
+    - **Multiline Code Indentation Alignment**: Preserve visual symmetry for multiline continuation arguments in terminal code windows (e.g. lines following `\` must be indented with 2 spaces to align with preceding flags).
+
+
 
 

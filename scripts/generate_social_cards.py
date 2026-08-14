@@ -321,7 +321,7 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             wrapped_inv = wrap_text(clean_inv, font_mini_body, col_w - 50, draw)[:2]
             iy = curr_y + 58
             for il in wrapped_inv:
-                draw.text((left_x + 25, iy), il, fill=text_muted, font=font_mini_body)
+                draw.text((left_x + 25, iy), il, fill=text_main, font=font_mini_body)
                 iy += 38
 
         # Right Column: Production Operational Metric
@@ -334,8 +334,9 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
             wrapped_met = wrap_text(clean_met, font_mini_body, col_w - 50, draw)[:2]
             my = curr_y + 58
             for ml in wrapped_met:
-                draw.text((right_x + 25, my), ml, fill=text_muted, font=font_mini_body)
+                draw.text((right_x + 25, my), ml, fill=text_main, font=font_mini_body)
                 my += 38
+
 
         # 6. Footer
         draw.text((margin + 80, height - margin - 45), "Ref: ZYEKH.COM / TECHNICAL BLUEPRINT SPECIFICATION • DECENTRALIZED SYNDICATION 2026", fill=text_muted, font=font_meta)
