@@ -124,6 +124,32 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
     - **Double Prefix De-duplication**: When extracting takeaways, clean double-colon labels (e.g. `Operational Impact: Subtitle: Details` -> `Operational Impact: Subtitle - Details`) to ensure smooth natural readability.
     - **Multiline Code Indentation Alignment**: Preserve visual symmetry for multiline continuation arguments in terminal code windows (e.g. lines following `\` must be indented with 2 spaces to align with preceding flags).
 
+36. **AUTHENTIC STATIC TTF TYPOGRAPHY ANCHORING**:
+    - Never rely on dynamic WOFF2-to-TTF conversions without verifying internal binary weight metadata.
+    - All image generation scripts MUST strictly route to verified, static TrueType binaries in `assets/fonts/ttf/`: `Outfit-Bold.ttf` (700 Bold), `Inter-Regular.ttf` (400 Regular), `Inter-Bold.ttf` (700 Bold), and `JetBrainsMono-Regular.ttf` (400 Regular).
+
+37. **UNBOLDED MONOSPACE TAGS & HEADERS**:
+    - Category tag badges (`[ CYBERSECURITY • TOPIC ]`) and Terminal Bar Titles (`[ TERMINAL // ... ]`) MUST use Regular Monospace (`JetBrains Mono Regular 400`), never Bold, to preserve sleek, high-tech engineering aesthetics.
+
+38. **FULL INFORMATION PARITY ACROSS SOCIAL RATIOS (ZERO OMISSION)**:
+    - Never omit or reduce substantive technical points between ratios.
+    - Both 1:1 Square and 16:9 Landscape cards MUST render all 3 Architectural Invariants and all 3 Production Operational Metrics without truncation or data loss.
+
+39. **CONTENT-DRIVEN DYNAMIC TIGHT BOX HEIGHTS**:
+    - Never hardcode static box heights (`bot_h = 320px` or `box_h = 365px`).
+    - Box heights MUST be computed dynamically directly from the actual wrapped line count of the enclosed text:
+      $$\text{box\_height} = \text{header\_height} + (\text{lines} \times \text{line\_height}) + \text{item\_gaps} + \text{padding}$$
+    - Eliminates awkward internal empty space inside boxes and prevents downward overflow.
+
+40. **COMPACT COHESIVE GAPPING (ANTI-ARTIFICIAL STRETCH)**:
+    - Never stretch gaps between boxes with arbitrary leftover percentages.
+    - Stacks of boxes MUST maintain fixed, tight, cohesive component gaps ($24\text{px}$), flowing naturally from top to bottom.
+
+41. **COLLISION-FREE CONDITIONAL FOOTER SPECIFICATION**:
+    - Card footers MUST remain neutral and non-promotional (`OPEN TECHNICAL ARCHITECTURE SPECIFICATION • SYSTEMS & SECURITY BLUEPRINT 2026`).
+    - Footers MUST be wrapped in strict collision guards (`if footer_y >= content_bottom + 30px`), guaranteeing zero text overlapping with card borders or box bottoms.
+
+
 
 
 

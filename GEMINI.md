@@ -23,6 +23,13 @@
 - **Zero Text Slicing (Anti-Dangling Sentences)**: Never slice wrapped text arrays (`[:1]`). Always render all wrapped lines sequentially to prevent sentences cutting off mid-thought.
 - **Raw Syntax Code Extraction**: Never use DOM parsers on `<pre>` code if code contains `<generics>`, `<headers.h>`, or `<placeholders>` (DOM parsers delete them as unknown HTML tags). Always extract raw code via regex and unescape HTML entities.
 - **High-Contrast Legibility & Multiline Indentation Symmetry**: Always render dark theme card body copy in high-contrast `text_main` (`#f4f4f5`), reserving `text_muted` strictly for metadata headers and comments. Clean redundant double-colon prefixes in takeaways, and align multiline bash continuation lines with 2-space indentation.
+- **Authentic Static TTF Anchoring (Protocol 36)**: Never use converted WOFF2s for image generation. Always bind directly to static TrueType binaries (`Outfit-Bold.ttf`, `Inter-Regular.ttf`, `JetBrainsMono-Regular.ttf`).
+- **Unbolded Monospace Tags & Headers (Protocol 37)**: Keep tags (`[ CYBERSECURITY...]`) and terminal bar headers in 400 Regular monospace.
+- **Full Information Parity (Protocol 38)**: Both 1:1 Square and 16:9 Landscape cards MUST render all 3 Invariants and all 3 Metrics without omission.
+- **Dynamic Tight Box Height (Protocol 39)**: Box container heights must be computed dynamically from actual text lines to eliminate internal voids.
+- **Compact Cohesive Gaps (Protocol 40)**: Use tight fixed 24px component gaps instead of stretched empty spaces.
+- **Collision-Free Footer (Protocol 41)**: Wrap footers in strict collision guards and use neutral technical specification copy.
+
 
 
 
