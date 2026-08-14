@@ -8,6 +8,7 @@ import re
 import json
 import html
 import webbrowser
+import datetime
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 
@@ -62,6 +63,7 @@ def parse_article_metadata(filepath: Path):
     # Slug / Relative URL
     rel_path = filepath.relative_to(BASE_DIR)
     url = f"{BASE_URL}/{rel_path}"
+    slug = filepath.stem
 
     # Exec Summary / TL;DR text
     exec_summary = ""
@@ -92,6 +94,7 @@ def parse_article_metadata(filepath: Path):
         'title': title,
         'description': description,
         'url': url,
+        'slug': slug,
         'exec_summary': exec_summary,
         'body': article_body,
         'tags': extracted_tags,
@@ -229,26 +232,58 @@ def publish_bluesky(article):
         print(f"[ ERROR ] Bluesky Auth Failed: {e}")
         return False
 
-    # 2. Post Record
+    # 2. Check/Generate Category Social Card Attachment
+    card_path = BASE_DIR / "assets" / "img" / "social-cards" / f"{article['slug']}.png"
+    if not card_path.exists():
+        try:
+            from scripts.generate_social_cards import generate_social_card
+            generate_social_card(article, card_path)
+        except Exception as err:
+            print(f"[ WARN ] Social Card auto-generation skipped: {err}")
+
+    blob_ref = None
+    if card_path.exists():
+        upload_endpoint = f"{pds_server.rstrip('/')}/xrpc/com.atproto.repo.uploadBlob"
+        card_bytes = card_path.read_bytes()
+        blob_req = urllib.request.Request(
+            upload_endpoint,
+            data=card_bytes,
+            headers={
+                'Authorization': f'Bearer {access_jwt}',
+                'Content-Type': 'image/png',
+                'User-Agent': 'ZyekhSyndicator/1.0'
+            }
+        )
+        try:
+            with urllib.request.urlopen(blob_req, timeout=15) as b_resp:
+                b_data = json.loads(b_resp.read().decode('utf-8'))
+                blob_ref = b_data.get('blob')
+                print(f"[ SUCCESS ] Bluesky Category Social Card Attached: {card_path.name}")
+        except Exception as e:
+            print(f"[ WARN ] Bluesky Blob Upload Failed: {e}")
+
+    # 3. Post Record with Embed
     post_endpoint = f"{pds_server.rstrip('/')}/xrpc/com.atproto.repo.createRecord"
     status_text = f"{article['title']}\n\n{article['description']}\n\n[ Read Full Article -> ] {article['url']}"
-
-    import datetime
     now_iso = datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z")
 
-    record_payload = json.dumps({
-        "repo": did,
-        "collection": "app.bsky.feed.post",
-        "record": {
-            "$type": "app.bsky.feed.post",
-            "text": status_text,
-            "createdAt": now_iso
+    record_obj = {
+        "$type": "app.bsky.feed.post",
+        "text": status_text,
+        "createdAt": now_iso
+    }
+    if blob_ref:
+        record_obj["embed"] = {
+            "$type": "app.bsky.embed.images",
+            "images": [{
+                "alt": article['title'],
+                "image": blob_ref
+            }]
         }
-    }).encode('utf-8')
 
     post_req = urllib.request.Request(
         post_endpoint,
-        data=record_payload,
+        data=json.dumps({"repo": did, "collection": "app.bsky.feed.post", "record": record_obj}).encode('utf-8'),
         headers={
             'Authorization': f'Bearer {access_jwt}',
             'Content-Type': 'application/json',
