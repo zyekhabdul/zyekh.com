@@ -329,13 +329,13 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
 
         # 4. Terminal Box (Balanced Height)
         curr_y += 16
-        wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 7, draw)
+        wrapped_code = wrap_code_lines(raw_code, font_code, max_content_w, 6, draw)
         
-        box_h = 415
+        box_h = 365
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + box_h], fill=box_bg, outline=box_border, width=2)
         
-        # Terminal Header Bar (68px height)
-        bar_h = 68
+        # Terminal Header Bar (60px height)
+        bar_h = 60
         draw.rectangle([margin + 80, curr_y, margin + 80 + inner_w, curr_y + bar_h], fill=bar_bg, outline=box_border, width=2)
         
         # 3 Window Control Dots
@@ -351,49 +351,54 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         bar_text_y = curr_y + (bar_h - t_h) // 2 - 2
         draw.text((margin + 200, bar_text_y), bar_title, fill=text_muted, font=font_bar)
 
-        cy = curr_y + bar_h + 16
-        code_lh = 48 if code_font_size >= 34 else 44
+        cy = curr_y + bar_h + 14
+        code_lh = 44 if code_font_size >= 32 else 40
         for cl in wrapped_code:
             is_comment = cl.strip().startswith("//") or cl.strip().startswith("#") or cl.strip().startswith("*")
             c_color = text_muted if is_comment else text_main
             draw.text((margin + 110, cy), cl, fill=c_color, font=font_code)
             cy += code_lh
 
-        # 5. Bottom 2-Column Matrix (Zero White Space / Zero Void)
+        # 5. Bottom 2-Column Matrix (Full Parity: 3 Invariants & 3 Metrics)
         curr_y += box_h + 16
-        bot_h = 180
+        bot_h = 320
         col_w = (inner_w - 30) // 2
         left_x = margin + 80
         right_x = left_x + col_w + 30
 
-        # Left Column: Architectural Invariant
-        draw.rectangle([left_x, curr_y, left_x + col_w, curr_y + bot_h], fill=box_bg, outline=box_border, width=2)
-        draw.text((left_x + 25, curr_y + 16), "[ KEY ARCHITECTURAL INVARIANT ]", fill=text_main, font=font_mini_head)
-        invariants = article_data.get('invariants', [])
-        if invariants:
-            inv_sample = invariants[0]
-            clean_inv = inv_sample if inv_sample.startswith("[+]") else f"[+] {inv_sample}"
-            wrapped_inv = wrap_text(clean_inv, font_mini_body, col_w - 50, draw)
-            iy = curr_y + 52
-            for il in wrapped_inv:
-                draw.text((left_x + 25, iy), il, fill=text_main, font=font_mini_body)
-                iy += 36
+        font_matrix_head = get_font(size=26, family="mono", is_bold=False)
+        font_matrix_body = get_font(size=23, family="sans", is_bold=False)
+        matrix_lh = 32
 
-        # Right Column: Production Operational Metric
+        # Left Column: All Architectural Invariants
+        draw.rectangle([left_x, curr_y, left_x + col_w, curr_y + bot_h], fill=box_bg, outline=box_border, width=2)
+        draw.text((left_x + 22, curr_y + 16), "[ ARCHITECTURAL INVARIANTS & SECURITY GUARANTEES ]", fill=text_main, font=font_matrix_head)
+        invariants = article_data.get('invariants', [])[:3]
+        iy = curr_y + 52
+        for inv_item in invariants:
+            clean_inv = inv_item if inv_item.startswith("[+]") else f"[+] {inv_item}"
+            wrapped_inv = wrap_text(clean_inv, font_matrix_body, col_w - 44, draw)
+            for il in wrapped_inv:
+                draw.text((left_x + 22, iy), il, fill=text_main, font=font_matrix_body)
+                iy += matrix_lh
+            iy += 6
+
+        # Right Column: All Production Operational Metrics
         draw.rectangle([right_x, curr_y, right_x + col_w, curr_y + bot_h], fill=box_bg, outline=box_border, width=2)
-        draw.text((right_x + 25, curr_y + 16), "[ PRODUCTION OPERATIONAL METRIC ]", fill=text_main, font=font_mini_head)
-        metrics = article_data.get('metrics', [])
-        if metrics:
-            met_sample = metrics[1] if len(metrics) > 1 else metrics[0]
-            clean_met = met_sample if met_sample.startswith("[*]") else f"[*] {met_sample}"
-            wrapped_met = wrap_text(clean_met, font_mini_body, col_w - 50, draw)
-            my = curr_y + 52
+        draw.text((right_x + 22, curr_y + 16), "[ PRODUCTION OPERATIONAL METRICS & VERIFICATION ]", fill=text_main, font=font_matrix_head)
+        metrics = article_data.get('metrics', [])[:3]
+        my = curr_y + 52
+        for met_item in metrics:
+            clean_met = met_item if met_item.startswith("[*]") else f"[*] {met_item}"
+            wrapped_met = wrap_text(clean_met, font_matrix_body, col_w - 44, draw)
             for ml in wrapped_met:
-                draw.text((right_x + 25, my), ml, fill=text_main, font=font_mini_body)
-                my += 36
+                draw.text((right_x + 22, my), ml, fill=text_main, font=font_matrix_body)
+                my += matrix_lh
+            my += 6
 
         # 6. Footer
-        draw.text((margin + 80, height - margin - 45), "OPEN TECHNICAL ARCHITECTURE SPECIFICATION • SYSTEMS & SECURITY BLUEPRINT 2026", fill=text_muted, font=font_meta)
+        draw.text((margin + 80, height - margin - 40), "OPEN TECHNICAL ARCHITECTURE SPECIFICATION • SYSTEMS & SECURITY BLUEPRINT 2026", fill=text_muted, font=font_meta)
+
 
 
     # Save with File Size Optimization (< 950KB for API limit)
