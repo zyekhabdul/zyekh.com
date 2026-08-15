@@ -1,0 +1,67 @@
+{
+  "auditd-kernel-event-monitoring-and-dfir-logging": {
+    "devto": {
+      "id": 4397286,
+      "url": "https://dev.to/aomiqaza/linux-auditd-blueprint-real-time-kernel-event-tracking-security-auditing-2n2p"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3oqsxh6z23"
+    },
+    "mastodon": {
+      "id": "117097303636288020",
+      "url": "https://infosec.exchange/@zyekhabdul/117097303636288020"
+    }
+  },
+  "rust-in-linux-kernel-security-and-memory-safety-blueprint-2026": {
+    "devto": {
+      "id": 4396832,
+      "url": "https://dev.to/aomiqaza/rust-in-the-linux-kernel-securing-core-subsystems-memory-safety-4cd4"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3orazcq72e"
+    },
+    "mastodon": {
+      "id": "117097303890301640",
+      "url": "https://infosec.exchange/@zyekhabdul/117097303890301640"
+    }
+  },
+  "vllm-pagedattention-high-throughput-inference-tuning": {
+    "devto": {
+      "id": 4396702,
+      "url": "https://dev.to/aomiqaza/vllm-pagedattention-memory-optimization-high-throughput-llm-inference-tuning-3mk9"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3orlswex2p"
+    },
+    "mastodon": {
+      "id": "117097304112631188",
+      "url": "https://infosec.exchange/@zyekhabdul/117097304112631188"
+    }
+  },
+  "ebpf-xdp-packet-filtering-and-ddos-mitigation": {
+    "devto": {
+      "id": 4396700,
+      "url": "https://dev.to/aomiqaza/high-speed-ebpfxdp-packet-filtering-for-linux-server-ddos-mitigation-1hcp"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3orw4ffh24"
+    },
+    "mastodon": {
+      "id": "117097304367045913",
+      "url": "https://infosec.exchange/@zyekhabdul/117097304367045913"
+    }
+  },
+  "zero-trust-ssh-access-with-fido2-and-ssh-ca": {
+    "devto": {
+      "id": 4392671,
+      "url": "https://dev.to/aomiqaza/zero-trust-ssh-access-blueprint-fido2-hardware-keys-ssh-certificate-authority-55gj"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3osbq25k2f"
+    },
+    "mastodon": {
+      "id": "117097304619818967",
+      "url": "https://infosec.exchange/@zyekhabdul/117097304619818967"
+    }
+  }
+}

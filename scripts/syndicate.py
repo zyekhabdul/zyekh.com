@@ -7,6 +7,7 @@ import urllib.request
 import re
 import json
 import html
+import time
 import webbrowser
 import datetime
 from pathlib import Path
@@ -16,6 +17,8 @@ from bs4 import BeautifulSoup
 BASE_DIR = Path(__file__).resolve().parent.parent
 BLOG_DIR = BASE_DIR / "blog"
 BASE_URL = "https://zyekh.com"
+MANIFEST_FILE = BASE_DIR / "data" / "social_cards_manifest.json"
+HISTORY_FILE = BASE_DIR / "data" / "syndication_history.json"
 
 SUBREDDITS = [
     {"name": "r/netsec", "desc": "Network Security & Cyber Architecture"},
@@ -25,6 +28,41 @@ SUBREDDITS = [
     {"name": "r/webdev", "desc": "Web Performance, PWA & Frontend Architecture"},
     {"name": "r/devops", "desc": "Cloud Infrastructure & Container Security"}
 ]
+
+DOMAIN_HASHTAG_MAP = {
+    "rust": ["#RustLang", "#MemorySafety", "#SystemsProgramming"],
+    "wasm": ["#WebAssembly", "#Wasm", "#ZeroTrust"],
+    "ebpf": ["#eBPF", "#LinuxKernel", "#Observability"],
+    "xdp": ["#eBPF", "#DDoS", "#Networking"],
+    "ssh": ["#ZeroTrust", "#SSH", "#Infosec"],
+    "fido2": ["#FIDO2", "#YubiKey", "#HardwareSecurity"],
+    "vault": ["#HashiCorpVault", "#Security", "#DevOps"],
+    "auditd": ["#DFIR", "#LinuxSecurity", "#Auditd"],
+    "vector": ["#Vector", "#ClickHouse", "#LogManagement"],
+    "clickhouse": ["#ClickHouse", "#DataEngineering", "#DFIR"],
+    "seccomp": ["#Seccomp", "#LinuxSecurity", "#Sandboxing"],
+    "landlock": ["#Landlock", "#LSM", "#LinuxSecurity"],
+    "systemd": ["#Systemd", "#LinuxHardening", "#DevOps"],
+    "ufw": ["#Firewall", "#LinuxSecurity", "#SysAdmin"],
+    "fail2ban": ["#Fail2ban", "#IntrusionPrevention", "#Linux"],
+    "nginx": ["#Nginx", "#WebSecurity", "#TLS"],
+    "http3": ["#QUIC", "#HTTP3", "#WebPerf"],
+    "vllm": ["#vLLM", "#LLM", "#AIInference"],
+    "dspy": ["#DSPy", "#PromptEngineering", "#GenAI"],
+    "moe": ["#MixtureOfExperts", "#PyTorch", "#DeepLearning"],
+    "webgpu": ["#WebGPU", "#Inference", "#BrowserAI"],
+    "slora": ["#LoRA", "#FineTuning", "#GPU"],
+    "rag": ["#RAG", "#ColBERT", "#VectorSearch"],
+    "colbert": ["#ColBERT", "#InformationRetrieval", "#RAG"],
+    "kubernetes": ["#Kubernetes", "#CloudNative", "#K8sSecurity"],
+    "cilium": ["#Cilium", "#Tetragon", "#eBPF"],
+    "cosign": ["#Cosign", "#SLSA", "#SupplyChainSecurity"],
+    "wireguard": ["#WireGuard", "#VPN", "#MeshNetwork"],
+    "faillock": ["#LinuxSecurity", "#PAM", "#AccountSecurity"],
+    "csp": ["#AppSec", "#WebSecurity", "#CSP"],
+    "omnirouter": ["#AIInfrastructure", "#LLMGateway", "#Fallbacks"],
+    "chroot": ["#LinuxNamespaces", "#ContainerSecurity", "#Linux"]
+}
 
 def load_dotenv():
     env_file = BASE_DIR / ".env"
@@ -51,6 +89,70 @@ def load_dotenv():
                             os.environ.setdefault(k, v)
             except Exception:
                 pass
+
+def load_history() -> dict:
+    if HISTORY_FILE.exists():
+        try:
+            return json.loads(HISTORY_FILE.read_text(encoding='utf-8'))
+        except Exception:
+            pass
+    return {}
+
+def record_history(slug: str, platform: str, data: dict):
+    history = load_history()
+    if slug not in history:
+        history[slug] = {}
+    history[slug][platform] = data
+    HISTORY_FILE.parent.mkdir(parents=True, exist_ok=True)
+    HISTORY_FILE.write_text(json.dumps(history, indent=2), encoding='utf-8')
+
+def load_manifest() -> dict:
+    if MANIFEST_FILE.exists():
+        try:
+            return json.loads(MANIFEST_FILE.read_text(encoding='utf-8'))
+        except Exception:
+            pass
+    return {}
+
+def get_article_takeaways(article: dict, max_items: int = 2) -> list:
+    slug = article['slug']
+    manifest = load_manifest()
+    if slug in manifest:
+        invariants = manifest[slug].get('invariants', [])
+        if invariants:
+            return invariants[:max_items]
+    if article.get('exec_summary'):
+        return article['exec_summary'][:max_items]
+    return []
+
+def get_article_hashtags(article: dict, max_tags: int = 4) -> list:
+    slug = article['slug'].lower()
+    tags = article.get('tags', [])
+    matched_tags = []
+
+    # Map from slug keywords
+    for kw, htags in DOMAIN_HASHTAG_MAP.items():
+        if kw in slug:
+            for ht in htags:
+                if ht not in matched_tags:
+                    matched_tags.append(ht)
+
+    # Map from article meta tags
+    for t in tags:
+        t_clean = t.lower()
+        if t_clean in DOMAIN_HASHTAG_MAP:
+            for ht in DOMAIN_HASHTAG_MAP[t_clean]:
+                if ht not in matched_tags:
+                    matched_tags.append(ht)
+        else:
+            fmt = f"#{t.capitalize()}"
+            if fmt not in matched_tags:
+                matched_tags.append(fmt)
+
+    if not matched_tags:
+        matched_tags = ["#Security", "#Linux", "#DevOps", "#Architecture"]
+
+    return matched_tags[:max_tags]
 
 def parse_article_metadata(filepath: Path):
     content = filepath.read_text(encoding='utf-8')
@@ -224,6 +326,23 @@ def upload_mastodon_media(token, server, image_path, description=""):
         print(f"[ WARN ] Mastodon Media Upload Failed: {err}")
         return None
 
+def format_mastodon_status(article: dict) -> str:
+    takeaways = get_article_takeaways(article, max_items=2)
+    tags = get_article_hashtags(article, max_tags=4)
+    tags_str = ' '.join(tags)
+
+    status = f"{article['title']}\n\n{article['description']}"
+    if takeaways:
+        status += "\n\nKey Architecture:\n" + "\n".join([f"• {t}" for t in takeaways])
+    
+    status += f"\n\n[ Read Full Article -> ] {article['url']}\n\n{tags_str}"
+    
+    # 500 char safety truncate
+    if len(status) > 495:
+        # Fallback to lean description
+        status = f"{article['title']}\n\n{article['description']}\n\n[ Read Full Article -> ] {article['url']}\n\n{tags_str}"
+    return status
+
 def publish_mastodon(article):
     load_dotenv()
     token = os.environ.get('MASTODON_ACCESS_TOKEN')
@@ -232,8 +351,7 @@ def publish_mastodon(article):
         print("[ WARN ] MASTODON_ACCESS_TOKEN not set in environment or .env file.")
         return False
 
-    tags_str = ' '.join([f"#{t.capitalize()}" for t in article['tags']])
-    status_text = f"{article['title']}\n\n{article['description']}\n\n[ Read Full Article -> ] {article['url']}\n\n{tags_str}"
+    status_text = format_mastodon_status(article)
     
     media_ids = []
     card_path = BASE_DIR / "assets" / "img" / "social-cards" / f"{article['slug']}-dark-landscape.png"
@@ -262,6 +380,12 @@ def publish_mastodon(article):
         with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read().decode('utf-8'))
             post_url = data.get('url', data.get('id', 'published'))
+            post_id = data.get('id')
+            record_history(article['slug'], 'mastodon', {
+                'id': post_id,
+                'url': post_url,
+                'posted_at': datetime.datetime.now(datetime.timezone.utc).isoformat()
+            })
             print(f"[ SUCCESS ] Mastodon Post Published: {post_url}")
             return True
     except Exception as e:
@@ -287,7 +411,16 @@ def publish_devto(article):
     
     body_content += f"---\n\n*Originally published at [{article['url']}]({article['url']})*"
 
+    # Check if existing article ID is known
+    history = load_history()
+    existing_devto_id = history.get(article['slug'], {}).get('devto', {}).get('id')
+    
+    method = 'POST'
     endpoint = "https://dev.to/api/articles"
+    if existing_devto_id:
+        endpoint = f"https://dev.to/api/articles/{existing_devto_id}"
+        method = 'PUT'
+
     payload = json.dumps({
         "article": {
             "title": article['title'],
@@ -298,6 +431,7 @@ def publish_devto(article):
             "description": article['description']
         }
     }).encode('utf-8')
+
     req = urllib.request.Request(
         endpoint,
         data=payload,
@@ -305,13 +439,21 @@ def publish_devto(article):
             'api-key': api_key,
             'Content-Type': 'application/json',
             'User-Agent': 'ZyekhSyndicator/1.0'
-        }
+        },
+        method=method
     )
     try:
         with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read().decode('utf-8'))
             url = data.get('url', 'published')
-            print(f"[ SUCCESS ] Dev.to Article Published: {url}")
+            article_id = data.get('id')
+            record_history(article['slug'], 'devto', {
+                'id': article_id,
+                'url': url,
+                'updated_at': datetime.datetime.now(datetime.timezone.utc).isoformat()
+            })
+            action_label = "Updated" if method == 'PUT' else "Published"
+            print(f"[ SUCCESS ] Dev.to Article {action_label}: {url}")
             return True
     except urllib.error.HTTPError as e:
         err_msg = e.read().decode('utf-8')
@@ -365,8 +507,8 @@ def extract_bsky_facets(text):
         })
     return facets
 
-def format_bluesky_post_text(title, description, url, tags):
-    tags_str = ' '.join([f'#{t.capitalize()}' for t in tags[:2]])
+def format_bluesky_post_text(title, description, url, tags, takeaways=None):
+    tags_str = ' '.join(tags[:2])
     suffix = f'\n\n[ Read Full Article -> ] {url}'
     if tags_str:
         suffix += f'\n\n{tags_str}'
@@ -374,6 +516,14 @@ def format_bluesky_post_text(title, description, url, tags):
     fixed_len = len(suffix.encode('utf-8'))
     
     budget = 280 - fixed_len
+
+    # Try high-density bullet format if budget permits
+    if takeaways and len(takeaways) > 0:
+        bullet = f"• {takeaways[0]}"
+        combined = f"{title}\n\n{bullet}"
+        if len(combined.encode('utf-8')) <= budget - 4:
+            return f"{combined}\n\n{suffix}"
+
     title_len = len(title.encode('utf-8'))
     if title_len >= budget - 20:
         clean_title = title[:budget - 3].rstrip() + '...'
@@ -449,7 +599,9 @@ def publish_bluesky(article):
 
     # 3. Post Record with Embed
     post_endpoint = f"{pds_server.rstrip('/')}/xrpc/com.atproto.repo.createRecord"
-    status_text = format_bluesky_post_text(article['title'], article.get('description', ''), article['url'], article.get('tags', []))
+    takeaways = get_article_takeaways(article, max_items=1)
+    tags = get_article_hashtags(article, max_tags=2)
+    status_text = format_bluesky_post_text(article['title'], article.get('description', ''), article['url'], tags, takeaways)
     now_iso = datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z")
 
     record_obj = {
@@ -483,6 +635,11 @@ def publish_bluesky(article):
         with urllib.request.urlopen(post_req, timeout=10) as resp:
             data = json.loads(resp.read().decode('utf-8'))
             uri = data.get('uri', 'published')
+            record_history(article['slug'], 'bluesky', {
+                'uri': uri,
+                'cid': data.get('cid'),
+                'posted_at': datetime.datetime.now(datetime.timezone.utc).isoformat()
+            })
             print(f"[ SUCCESS ] Bluesky Post Published: {uri}")
             return True
     except urllib.error.HTTPError as e:
@@ -493,11 +650,49 @@ def publish_bluesky(article):
         print(f"[ ERROR ] Bluesky Post Failed: {e}")
         return False
 
+def print_status_table():
+    articles = get_all_articles()
+    history = load_history()
+    
+    print("\n" + "=" * 90)
+    print(f"{'ARTICLE SLUG':<45} | {'DEV.TO':<10} | {'BLUESKY':<10} | {'MASTODON':<10}")
+    print("=" * 90)
+
+    total = len(articles)
+    devto_count = 0
+    bsky_count = 0
+    masto_count = 0
+
+    for a in articles:
+        slug = a['slug']
+        h = history.get(slug, {})
+        
+        has_devto = "[ DONE ]" if 'devto' in h else "[  --  ]"
+        has_bsky = "[ DONE ]" if 'bluesky' in h else "[  --  ]"
+        has_masto = "[ DONE ]" if 'mastodon' in h else "[  --  ]"
+        
+        if 'devto' in h: devto_count += 1
+        if 'bluesky' in h: bsky_count += 1
+        if 'mastodon' in h: masto_count += 1
+
+        slug_trunc = slug[:43] + ".." if len(slug) > 45 else slug
+        print(f"{slug_trunc:<45} | {has_devto:<10} | {has_bsky:<10} | {has_masto:<10}")
+
+    print("=" * 90)
+    print(f"SYNDICATION TOTALS ({total} Articles):")
+    print(f"  • Dev.to:   {devto_count}/{total} published")
+    print(f"  • Bluesky:  {bsky_count}/{total} published")
+    print(f"  • Mastodon: {masto_count}/{total} published")
+    print("=" * 90 + "\n")
+
 def print_syndication_package(article, auto_open=False):
+    tags = get_article_hashtags(article, max_tags=4)
+    takeaways = get_article_takeaways(article, max_items=2)
+
     print("=" * 70)
     print(f"[ ARTICLE ] {article['title']}")
     print(f"[ URL ] {article['url']}")
-    print(f"[ TAGS ] {', '.join(article['tags'])}")
+    print(f"[ HASHTAGS ] {' '.join(tags)}")
     print("=" * 70)
 
     print("\n[ REDDIT INTENT SUBMIT URLS (1-CLICK AUTO-FILL) ]")
@@ -528,14 +723,17 @@ def print_syndication_package(article, auto_open=False):
     print(f"tags: {', '.join(article['tags'][:4])}")
     print("---\n")
 
-    print("[ REDDIT DRAFT POST SNIPPET (COPY-PASTE) ]")
+    print("[ REDDIT DRAFT POST SNIPPET (HIGH-DENSITY COPY) ]")
     print("-" * 70)
-    print(f"**Title**: {article['title']}")
-    if article['exec_summary']:
-        print(f"\n**TL;DR / Key Takeaways**:\n{article['exec_summary']}\n")
+    print(f"**Title**: {article['title']}\n")
+    if takeaways:
+        print("**Key Architecture / Highlights**:")
+        for t in takeaways:
+            print(f"* {t}")
+        print()
     else:
-        print(f"\n**Summary**:\n{article['description']}\n")
-    print(f"Full technical breakdown & commands: [{article['url']}]({article['url']})")
+        print(f"**Summary**: {article['description']}\n")
+    print(f"Full technical breakdown & benchmark commands: [{article['url']}]({article['url']})")
     print("-" * 70)
 
     if auto_open:
@@ -548,6 +746,8 @@ def main():
     parser = argparse.ArgumentParser(description="Zyekh.com Social Media & Intent Syndicator")
     parser.add_argument("--latest", "-l", action="store_true", help="Syndicate the latest article")
     parser.add_argument("--slug", "-s", type=str, help="Specify article HTML filename or slug")
+    parser.add_argument("--status", action="store_true", help="Display syndication status overview table")
+    parser.add_argument("--sync-unposted", action="store_true", help="Auto-publish all unposted articles to all social APIs with rate limiting")
     parser.add_argument("--open", "-o", action="store_true", help="Auto-open submit tabs in browser")
     parser.add_argument("--publish-mastodon", action="store_true", help="Auto-publish status to Mastodon API")
     parser.add_argument("--publish-devto", action="store_true", help="Auto-publish article to Dev.to API")
@@ -555,10 +755,43 @@ def main():
     parser.add_argument("--publish", "-p", action="store_true", help="Auto-publish to all social APIs (Mastodon, Dev.to, Bluesky)")
     args = parser.parse_args()
 
+    if args.status:
+        print_status_table()
+        sys.exit(0)
+
     articles = get_all_articles()
     if not articles:
         print("[ WARN ] No articles found in blog/ directory.")
         sys.exit(1)
+
+    if args.sync_unposted:
+        history = load_history()
+        unposted = []
+        for a in articles:
+            h = history.get(a['slug'], {})
+            if 'mastodon' not in h or 'bluesky' not in h or 'devto' not in h:
+                unposted.append(a)
+
+        print(f"\n[ BATCH SYNC ] Found {len(unposted)} unposted/partially-posted articles.")
+        for idx, a in enumerate(unposted, 1):
+            h = history.get(a['slug'], {})
+            print(f"\n[{idx}/{len(unposted)}] Broadcasting: {a['slug']}")
+            
+            if 'mastodon' not in h:
+                publish_mastodon(a)
+                time.sleep(2)
+            if 'bluesky' not in h:
+                publish_bluesky(a)
+                time.sleep(2)
+            if 'devto' not in h:
+                publish_devto(a)
+                time.sleep(2)
+            
+            time.sleep(1)
+
+        print("\n✨ [ BATCH SYNC COMPLETE ] ✨\n")
+        print_status_table()
+        sys.exit(0)
 
     selected_article = None
     if args.slug:
