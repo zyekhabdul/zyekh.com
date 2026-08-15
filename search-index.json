@@ -156,6 +156,12 @@
     "type": "Tool"
   },
   {
+    "title": "Linux sysctl & SSH Hardening Config Generator",
+    "desc": "Generate production-ready Linux kernel sysctl.d and OpenSSH sshd_config.d configuration files tailored to web, database, bastion, and edge workloads. 100% offline & client-side.",
+    "url": "/tools/linux-hardening-generator.html",
+    "type": "Tool"
+  },
+  {
     "title": "LLM Token & GPU VRAM Cost Calculator",
     "desc": "Interactive 2026 LLM pricing comparison, API token cost estimator, and GPU VRAM hardware sizing calculator for Claude 3.7, GPT-4.5, DeepSeek-R1, Gemini 2.0, and Llama 3.3.",
     "url": "/tools/llm-calculator.html",

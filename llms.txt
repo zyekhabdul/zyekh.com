@@ -95,6 +95,7 @@
 - [JSON Formatter, Validator & Tree Viewer](https://zyekh.com/tools/json.html): Format, beautify, minify, validate, and inspect JSON structure interactively 100% client-side in browser. Safe, offline, zero data upload.
 - [JWT Token Decoder & Inspector](https://zyekh.com/tools/jwt.html): Decode JSON Web Tokens (JWT) headers, claims payload, and expiration status 100% offline & safe client-side in browser.
 - [Mortgage (KPR) Calculator](https://zyekh.com/tools/kpr.html): Simulasi cicilan KPR atau kendaraan. Hitung angsuran bulanan, total bunga, dan total pembayaran dari plafon, tenor, dan suku bunga.
+- [Linux sysctl & SSH Hardening Config Generator](https://zyekh.com/tools/linux-hardening-generator.html): Generate production-ready Linux kernel sysctl.d and OpenSSH sshd_config.d configuration files tailored to web, database, bastion, and edge workloads. 100% offline & client-side.
 - [LLM Token & GPU VRAM Cost Calculator](https://zyekh.com/tools/llm-calculator.html): Interactive 2026 LLM pricing comparison, API token cost estimator, and GPU VRAM hardware sizing calculator for Claude 3.7, GPT-4.5, DeepSeek-R1, Gemini 2.0, and Llama 3.3.
 - [Lorem Ipsum Generator](https://zyekh.com/tools/lorem.html): Generator lorem ipsum versi Bahasa Indonesia untuk placeholder desain dan mockup. Atur jumlah paragraf.
 - [Markdown Live Editor](https://zyekh.com/tools/markdown.html): Preview markdown online gratis. Ketik markdown di kiri, lihat hasil render di kanan. Tanpa install.

@@ -21,6 +21,8 @@ CATEGORY_MAP = {
     "speculative": "AI & LLM Inference",
     "ebpf": "Security & Linux Systems",
     "chmod": "Security & Linux Systems",
+    "linux-hardening": "Security & Linux Systems",
+    "hardening": "Security & Linux Systems",
     "subnet": "Security & Linux Systems",
     "curl": "Security & Linux Systems",
     "hash": "Cryptography & Encoding",

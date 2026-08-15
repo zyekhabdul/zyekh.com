@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "description": "Structured machine-readable tool catalog and parameter schemas for Browser AI Agents & LLMs.",
   "platform": "https://zyekh.com",
-  "total_tools": 46,
-  "updated_at": "2026-08-15T08:24:42Z",
+  "total_tools": 47,
+  "updated_at": "2026-08-15T21:23:27Z",
   "tools": [
     {
       "id": "ai-token",
@@ -1036,6 +1036,147 @@
           "type": "number",
           "input_element": "number",
           "description": "Uang muka / DP (Rp, opsional)"
+        }
+      ]
+    },
+    {
+      "id": "linux-hardening-generator",
+      "name": "Linux sysctl & SSH Hardening Config Generator",
+      "description": "Generate production-ready Linux kernel sysctl.d and OpenSSH sshd_config.d configuration files tailored to web, database, bastion, and edge workloads. 100% offline & client-side.",
+      "category": "Security & Linux Systems",
+      "url": "https://zyekh.com/tools/linux-hardening-generator.html",
+      "execution": {
+        "type": "client_side_javascript",
+        "telemetry": "none",
+        "offline_ready": true,
+        "storage": "local_memory_or_localstorage"
+      },
+      "parameters": [
+        {
+          "name": "inputSshPort",
+          "type": "number",
+          "input_element": "number",
+          "description": "Custom SSH Port:"
+        },
+        {
+          "name": "chkSynCookies",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chksyncookies"
+        },
+        {
+          "name": "chkBbr",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkbbr"
+        },
+        {
+          "name": "chkRpFilter",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkrpfilter"
+        },
+        {
+          "name": "chkNoRedirects",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chknoredirects"
+        },
+        {
+          "name": "chkNoSourceRoute",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chknosourceroute"
+        },
+        {
+          "name": "chkIgnoreBroadcast",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkignorebroadcast"
+        },
+        {
+          "name": "chkRfc1337",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkrfc1337"
+        },
+        {
+          "name": "chkIpForward",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkipforward"
+        },
+        {
+          "name": "chkAslr",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkaslr"
+        },
+        {
+          "name": "chkDisableUnprivBpf",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkdisableunprivbpf"
+        },
+        {
+          "name": "chkDmesgRestrict",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkdmesgrestrict"
+        },
+        {
+          "name": "chkKptrRestrict",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkkptrrestrict"
+        },
+        {
+          "name": "chkDisableCoreDumps",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkdisablecoredumps"
+        },
+        {
+          "name": "chkProtectedLinks",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkprotectedlinks"
+        },
+        {
+          "name": "chkNoRootLogin",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chknorootlogin"
+        },
+        {
+          "name": "chkNoPasswordAuth",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chknopasswordauth"
+        },
+        {
+          "name": "chkModernCrypto",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkmoderncrypto"
+        },
+        {
+          "name": "chkMaxAuthTries",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkmaxauthtries"
+        },
+        {
+          "name": "chkNoForwarding",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chknoforwarding"
+        },
+        {
+          "name": "chkClientAlive",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkclientalive"
         }
       ]
     },

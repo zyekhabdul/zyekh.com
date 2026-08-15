@@ -106,11 +106,11 @@ TOOL_MAPPINGS = {
         'btn': 'Calculate WireGuard CIDR ->'
     },
     'linux-kernel-sysctl-hardening-network-stack-security': {
-        'badge': '[ INTERACTIVE CALCULATOR // NETWORKING ]',
-        'title': 'Subnet & TCP Network Calculator',
-        'desc': 'Compute CIDR subnet ranges, broadcast addresses, and TCP socket buffer tuning parameters.',
-        'url': '/tools/subnet.html',
-        'btn': 'Calculate Network Subnets ->'
+        'badge': '[ INTERACTIVE GENERATOR // SECURITY ]',
+        'title': 'Linux sysctl & SSH Hardening Config Generator',
+        'desc': 'Build production-ready 99-hardening.conf kernel parameters and OpenSSH daemon configs tailored to your workloads.',
+        'url': '/tools/linux-hardening-generator.html',
+        'btn': 'Build sysctl & SSH Configs ->'
     },
     'ufw-firewall-hardening-and-rate-limiting-blueprint-2026': {
         'badge': '[ INTERACTIVE CALCULATOR // SECURITY ]',
@@ -127,11 +127,11 @@ TOOL_MAPPINGS = {
         'btn': 'Calculate IgnoreIP Subnets ->'
     },
     'linux-vps-hardening-guide-2026': {
-        'badge': '[ INTERACTIVE UTILITY // SYSADMIN ]',
-        'title': 'Linux chmod & File Permissions Calculator',
-        'desc': 'Calculate octal (755, 600, 400) and symbolic file permissions for hardened Linux VPS configurations.',
-        'url': '/tools/chmod-calculator.html',
-        'btn': 'Calculate chmod Permissions ->'
+        'badge': '[ INTERACTIVE GENERATOR // SYSADMIN ]',
+        'title': 'Linux sysctl & SSH Hardening Config Generator',
+        'desc': 'Generate hardened 99-hardening.conf and sshd_config.d drop-in configuration files for your VPS offline.',
+        'url': '/tools/linux-hardening-generator.html',
+        'btn': 'Generate Hardening Configs ->'
     },
     'chroot-jail-and-unprivileged-namespaces-isolation': {
         'badge': '[ INTERACTIVE UTILITY // SANDBOXING ]',

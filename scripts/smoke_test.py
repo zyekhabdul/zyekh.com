@@ -50,6 +50,7 @@ def run_smoke_tests(port=None):
         ("/links/", 200, "text/html", ["<title>", "antiClickjack", "localStorage.getItem"]),
         ("/tools/", 200, "text/html", ["<title>", "antiClickjack", "localStorage.getItem"]),
         ("/tools/llm-calculator.html", 200, "text/html", ["<title>", "antiClickjack", "localStorage.getItem"]),
+        ("/tools/linux-hardening-generator.html", 200, "text/html", ["<title>", "antiClickjack", "localStorage.getItem"]),
         ("/blog/", 200, "text/html", ["<title>", "antiClickjack", "localStorage.getItem"]),
         ("/blog/linux-vps-hardening-guide-2026.html", 200, "text/html", ["<title>", "article", "antiClickjack"]),
         ("/blueprints/", 200, "text/html", ["<title>", "antiClickjack"]),

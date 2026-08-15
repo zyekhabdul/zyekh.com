@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Linux sysctl &amp; SSH Hardening Config Generator — Interactive Security Tool | zyekh.com</title>
+<meta content="Generate production-ready Linux kernel sysctl.d and OpenSSH sshd_config.d configuration files tailored to web, database, bastion, and edge workloads. 100% offline &amp; client-side." name="description"/>
+<meta content="linux hardening generator, sysctl hardening, sshd_config generator, kernel security, linux security config, tcp bbr, syn cookies, disable unprivileged bpf" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/linux-hardening-generator.html" rel="canonical"/>
+<!-- Open Graph / Social -->
+<meta content="Linux sysctl &amp; SSH Hardening Config Generator | zyekh.com" property="og:title"/>
+<meta content="Interactive Linux kernel sysctl.d and OpenSSH sshd_config.d hardening configuration builder. Zero telemetry, 100% client-side." property="og:description"/>
+<meta content="https://zyekh.com/tools/linux-hardening-generator.html" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-linux-hardening-generator-dark-landscape.png" property="og:image"/>
+<meta content="zyekh.com" property="og:site_name"/>
+<!-- Twitter Cards -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Linux sysctl &amp; SSH Hardening Config Generator | zyekh.com" name="twitter:title"/>
+<meta content="Interactive Linux kernel sysctl.d and OpenSSH sshd_config.d hardening configuration builder. Zero telemetry, 100% client-side." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-linux-hardening-generator-dark-landscape.png" name="twitter:image"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://zyekh.com/tools/linux-hardening-generator.html#app",
+      "name": "Linux sysctl & SSH Hardening Config Generator",
+      "description": "Interactive Linux kernel sysctl.d and OpenSSH sshd_config.d configuration generator with workload preset profiles.",
+      "url": "https://zyekh.com/tools/linux-hardening-generator.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Linux, POSIX, Any",
+      "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Person",
+        "@id": "https://zyekh.com/#person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com"
+      },
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/tools/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/tools/linux-hardening-generator.html#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Linux Hardening Generator", "item": "https://zyekh.com/tools/linux-hardening-generator.html" }
+      ]
+    }
+  ]
+}
+</script>
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+<script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+<!-- Preload Styles & Scripts -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link crossorigin="anonymous" href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" rel="stylesheet"/>
+<link crossorigin="anonymous" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" rel="stylesheet"/>
+<script crossorigin="anonymous" defer="" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" src="/assets/js/site-nav.min.js?v=d9dc72eb"></script>
+<style>
+  .cfg-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1.25rem; }
+  .cfg-section-title { font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-color); text-transform: uppercase; letter-spacing: 0.05em; }
+  .profile-badge-group { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .profile-btn { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-muted); padding: 0.35rem 0.75rem; border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.15s ease; }
+  .profile-btn:hover { color: var(--text-main); border-color: var(--text-muted); }
+  .profile-btn.active { background: var(--text-main); color: var(--bg-main); border-color: var(--text-main); }
+  
+  .toggle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.6rem; }
+  .toggle-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.85rem; color: var(--text-muted); cursor: pointer; padding: 0.4rem 0.5rem; border-radius: var(--radius-sm); transition: background 0.15s ease; }
+  .toggle-item:hover { background: var(--bg-secondary); color: var(--text-main); }
+  .toggle-item input[type="checkbox"] { margin-top: 0.2rem; accent-color: var(--accent); cursor: pointer; }
+  .toggle-info { display: flex; flex-direction: column; }
+  .toggle-title { font-weight: 600; color: var(--text-main); }
+  .toggle-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.3; }
+
+  .tab-bar { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 0.75rem; gap: 0.25rem; }
+  .tab-btn { background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--text-muted); padding: 0.5rem 0.85rem; font-size: 0.85rem; font-weight: 600; font-family: 'Fira Code', monospace; cursor: pointer; transition: all 0.15s ease; }
+  .tab-btn:hover { color: var(--text-main); }
+  .tab-btn.active { color: var(--text-main); border-bottom-color: var(--accent); }
+
+  .code-viewer-wrap { position: relative; }
+  .code-viewer { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; font-family: 'Fira Code', monospace; font-size: 0.82rem; line-height: 1.5; color: var(--text-main); height: 420px; overflow-y: auto; white-space: pre; word-break: normal; }
+  
+  .action-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; justify-content: space-between; align-items: center; }
+  .action-btn-group { display: flex; gap: 0.5rem; }
+  .btn-sm { padding: 0.4rem 0.75rem; font-size: 0.8rem; font-weight: 600; border-radius: var(--radius-sm); cursor: pointer; }
+
+  .deploy-guide { background: var(--bg-secondary); border: 1px dashed var(--border-color); border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-muted); }
+  .deploy-cmd { font-family: 'Fira Code', monospace; color: var(--text-main); background: var(--code-bg); padding: 0.2rem 0.4rem; border-radius: 4px; display: inline-block; margin-top: 0.25rem; }
+</style>
+<link as="style" crossorigin="anonymous" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" rel="preload"/>
+<link as="script" crossorigin="anonymous" href="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" rel="preload"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="Zyekh RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/atom.xml" rel="alternate" title="Zyekh Atom Feed" type="application/atom+xml"/>
+<link href="https://zyekh.com/feed.json" rel="alternate" title="Zyekh JSON Feed" type="application/feed+json"/>
+<meta content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-aNyTAR+MqOQdv7Ca8Q3TfC0rm4llOy11koFOFpbL1T0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';" http-equiv="Content-Security-Policy"/>
+</head>
+<body>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">Linux Hardening Generator</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">NETWORK &amp; SYSTEM SECURITY</span>
+<h1 class="page-title">Linux sysctl &amp; SSH Hardening Config Generator</h1>
+<p class="page-subtitle">Interactive configuration builder for Linux kernel security parameters (<code style="font-family:'Fira Code',monospace;">99-hardening.conf</code>) and OpenSSH daemon (<code style="font-family:'Fira Code',monospace;">99-hardened.conf</code>). Zero tracking, 100% offline.</p>
+</header>
+<div class="grid-2" style="gap: 1.5rem; align-items: start;">
+<!-- Column 1: Config Controls -->
+<div>
+<div class="cfg-card">
+<h2 class="cfg-section-title">[ 1. WORKLOAD PRESET PROFILE ]</h2>
+<p class="text-muted-xs" style="margin-bottom: 0.6rem;">Select an architectural preset to automatically populate optimal kernel and daemon baselines:</p>
+<div class="profile-badge-group">
+<button class="profile-btn active" data-profile="web" type="button">Web / API Server</button>
+<button class="profile-btn" data-profile="db" type="button">Production Database</button>
+<button class="profile-btn" data-profile="bastion" type="button">Bastion / Jump Host</button>
+<button class="profile-btn" data-profile="edge" type="button">Edge / Load Balancer</button>
+<button class="profile-btn" data-profile="minimal" type="button">Hardened VPS (General)</button>
+</div>
+<div class="form-group mb-sm">
+<label for="inputSshPort" style="font-size:0.85rem; font-weight:600;">Custom SSH Port:</label>
+<input id="inputSshPort" max="65535" min="1" style="width: 100%; max-width: 160px;" type="number" value="2222"/>
+<span class="text-muted-xs" style="display:block; margin-top:0.2rem;">Standard non-default port reduces bot scan volume by &gt;95%.</span>
+</div>
+</div>
+<div class="cfg-card">
+<h2 class="cfg-section-title">[ 2. KERNEL NETWORK SECURITY (sysctl) ]</h2>
+<div class="toggle-grid">
+<label class="toggle-item">
+<input checked="" id="chkSynCookies" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">TCP SYN Cookies</span>
+<span class="toggle-desc">Mitigates TCP SYN flood attacks via cryptographic sequence numbers.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkBbr" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">TCP BBR Congestion Control</span>
+<span class="toggle-desc">Enables BBR + FQ queue discipline for lower latency and packet loss resilience.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkRpFilter" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">Reverse Path Filtering (rp_filter)</span>
+<span class="toggle-desc">Drops spoofed IP packets that arrive on impossible interfaces.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkNoRedirects" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">Disable ICMP Redirects</span>
+<span class="toggle-desc">Prevents malicious gateway route injection and MITM routing changes.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkNoSourceRoute" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">Disable Source Routing</span>
+<span class="toggle-desc">Rejects packets that specify their own route path through the network.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkIgnoreBroadcast" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">Ignore Broadcast ICMP</span>
+<span class="toggle-desc">Mitigates Smurf amplification attacks on subnets.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkRfc1337" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">TCP TIME-WAIT Assassination Guard</span>
+<span class="toggle-desc">Implements RFC 1337 protection against RST injection into TIME-WAIT sockets.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input id="chkIpForward" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">IPv4 Packet Forwarding</span>
+<span class="toggle-desc">Keep disabled on standalone servers; enable only for VPN / Router nodes.</span>
+</div>
+</label>
+</div>
+</div>
+<div class="cfg-card">
+<h2 class="cfg-section-title">[ 3. KERNEL MEMORY &amp; PROCESS SECURITY ]</h2>
+<div class="toggle-grid">
+<label class="toggle-item">
+<input checked="" id="chkAslr" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">Full ASLR Randomization (Level 2)</span>
+<span class="toggle-desc">Randomizes stack, heap, and VDSO memory offsets against buffer overflow exploits.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkDisableUnprivBpf" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">Disable Unprivileged eBPF</span>
+<span class="toggle-desc">Blocks unprivileged users from injecting eBPF bytecode into the kernel.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkDmesgRestrict" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">Restrict dmesg Kernel Logs</span>
+<span class="toggle-desc">Prevents non-root users from reading kernel addresses and exploit offsets.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkKptrRestrict" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">Kernel Pointer Restriction (kptr_restrict)</span>
+<span class="toggle-desc">Hides kernel pointers in /proc and sysfs from unprivileged processes.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkDisableCoreDumps" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">Disable SUID Core Dumps</span>
+<span class="toggle-desc">Prevents credential extraction and memory dumps from crashing privileged binaries.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkProtectedLinks" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">Protected Symlinks &amp; Hardlinks</span>
+<span class="toggle-desc">Prevents symlink/hardlink race condition vulnerabilities in world-writable /tmp.</span>
+</div>
+</label>
+</div>
+</div>
+<div class="cfg-card">
+<h2 class="cfg-section-title">[ 4. OPENSSH DAEMON (sshd_config.d) ]</h2>
+<div class="toggle-grid">
+<label class="toggle-item">
+<input checked="" id="chkNoRootLogin" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">Disable Root Login</span>
+<span class="toggle-desc">Requires login via unprivileged user followed by sudo escalation.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkNoPasswordAuth" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">Enforce Public Key Auth Only</span>
+<span class="toggle-desc">Completely disables password-based logins (eliminates brute-force risk).</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkModernCrypto" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">Modern Cryptography Suite Only</span>
+<span class="toggle-desc">Restricts KEX to Curve25519, Ciphers to ChaCha20/AES-GCM, MACs to ETM.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkMaxAuthTries" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">MaxAuthTries 3</span>
+<span class="toggle-desc">Disconnects sessions after 3 failed key/password attempts.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkNoForwarding" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">Disable X11 &amp; Agent Forwarding</span>
+<span class="toggle-desc">Prevents SSH agent hijacking and malicious display hijacking.</span>
+</div>
+</label>
+<label class="toggle-item">
+<input checked="" id="chkClientAlive" type="checkbox"/>
+<div class="toggle-info">
+<span class="toggle-title">ClientAlive Timeout (300s)</span>
+<span class="toggle-desc">Terminates idle and abandoned SSH connections after 5 minutes.</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Column 2: Live Code Preview & Deployment -->
+<div style="position: sticky; top: 80px;">
+<div class="cfg-card" style="margin-bottom: 0;">
+<div class="tab-bar">
+<button class="tab-btn active" id="tabSysctl" type="button">99-hardening.conf (sysctl)</button>
+<button class="tab-btn" id="tabSshd" type="button">99-hardened.conf (sshd)</button>
+</div>
+<div class="code-viewer-wrap">
+<pre class="code-viewer" id="codeViewer"><code># Generating configuration...</code></pre>
+</div>
+<div class="action-bar">
+<div style="font-size: 0.8rem; color: var(--text-muted);">
+<span id="activeFilename">/etc/sysctl.d/99-hardening.conf</span>
+</div>
+<div class="action-btn-group">
+<button class="btn-primary btn-sm" id="btnCopy" type="button">Copy Config</button>
+<button class="btn-secondary btn-sm" id="btnDownload" type="button">Download .conf</button>
+</div>
+</div>
+<div class="deploy-guide" id="deployGuide">
+<strong>[ DEPLOYMENT INSTRUCTIONS ]</strong><br/>
+<span>1. Place file in directory:</span><br/>
+<span class="deploy-cmd">sudo cp 99-hardening.conf /etc/sysctl.d/</span><br/>
+<span>2. Apply kernel settings immediately without reboot:</span><br/>
+<span class="deploy-cmd">sudo sysctl --system</span>
+</div>
+</div>
+<!-- Related Architecture Deep-Dives -->
+<div class="cfg-card" style="margin-top: 1rem;">
+<h3 class="cfg-section-title" style="font-size: 0.85rem;">[ RELATED SECURITY BLUEPRINTS ]</h3>
+<ul style="font-size: 0.85rem; padding-left: 1.2rem; color: var(--text-muted); line-height: 1.6;">
+<li><a href="/blog/linux-vps-hardening-guide-2026.html" style="color: var(--text-main); font-weight: 600;">Linux VPS Hardening Guide 2026</a></li>
+<li><a href="/blog/linux-kernel-sysctl-hardening-network-stack-security.html" style="color: var(--text-main); font-weight: 600;">Kernel sysctl Network Stack Hardening</a></li>
+<li><a href="/blog/ssh-certificates-vault-ca-short-lived-authentication.html" style="color: var(--text-main); font-weight: 600;">Short-Lived SSH Certificates with HashiCorp Vault</a></li>
+</ul>
+</div>
+</div>
+</div>
+</main>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 50;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+
+(function() {
+  'use strict';
+
+  var activeTab = 'sysctl'; // 'sysctl' or 'sshd'
+  var activeProfile = 'web';
+
+  // Elements
+  var inputSshPort = document.getElementById('inputSshPort');
+  var chkSynCookies = document.getElementById('chkSynCookies');
+  var chkBbr = document.getElementById('chkBbr');
+  var chkRpFilter = document.getElementById('chkRpFilter');
+  var chkNoRedirects = document.getElementById('chkNoRedirects');
+  var chkNoSourceRoute = document.getElementById('chkNoSourceRoute');
+  var chkIgnoreBroadcast = document.getElementById('chkIgnoreBroadcast');
+  var chkRfc1337 = document.getElementById('chkRfc1337');
+  var chkIpForward = document.getElementById('chkIpForward');
+
+  var chkAslr = document.getElementById('chkAslr');
+  var chkDisableUnprivBpf = document.getElementById('chkDisableUnprivBpf');
+  var chkDmesgRestrict = document.getElementById('chkDmesgRestrict');
+  var chkKptrRestrict = document.getElementById('chkKptrRestrict');
+  var chkDisableCoreDumps = document.getElementById('chkDisableCoreDumps');
+  var chkProtectedLinks = document.getElementById('chkProtectedLinks');
+
+  var chkNoRootLogin = document.getElementById('chkNoRootLogin');
+  var chkNoPasswordAuth = document.getElementById('chkNoPasswordAuth');
+  var chkModernCrypto = document.getElementById('chkModernCrypto');
+  var chkMaxAuthTries = document.getElementById('chkMaxAuthTries');
+  var chkNoForwarding = document.getElementById('chkNoForwarding');
+  var chkClientAlive = document.getElementById('chkClientAlive');
+
+  var tabSysctl = document.getElementById('tabSysctl');
+  var tabSshd = document.getElementById('tabSshd');
+  var codeViewer = document.getElementById('codeViewer');
+  var activeFilename = document.getElementById('activeFilename');
+  var deployGuide = document.getElementById('deployGuide');
+  var btnCopy = document.getElementById('btnCopy');
+  var btnDownload = document.getElementById('btnDownload');
+  var profileBtns = document.querySelectorAll('.profile-btn');
+
+  var profiles = {
+    web: {
+      syn: true, bbr: true, rp: true, red: true, src: true, bc: true, rfc: true, fwd: false,
+      aslr: true, bpf: true, dmesg: true, kptr: true, dump: true, links: true,
+      sshRoot: true, sshPass: true, sshCrypto: true, sshTries: true, sshFwd: true, sshAlive: true, port: 2222
+    },
+    db: {
+      syn: true, bbr: true, rp: true, red: true, src: true, bc: true, rfc: true, fwd: false,
+      aslr: true, bpf: true, dmesg: true, kptr: true, dump: true, links: true,
+      sshRoot: true, sshPass: true, sshCrypto: true, sshTries: true, sshFwd: true, sshAlive: true, port: 2222
+    },
+    bastion: {
+      syn: true, bbr: true, rp: true, red: true, src: true, bc: true, rfc: true, fwd: false,
+      aslr: true, bpf: true, dmesg: true, kptr: true, dump: true, links: true,
+      sshRoot: true, sshPass: true, sshCrypto: true, sshTries: true, sshFwd: true, sshAlive: true, port: 2222
+    },
+    edge: {
+      syn: true, bbr: true, rp: true, red: true, src: true, bc: true, rfc: true, fwd: true,
+      aslr: true, bpf: false, dmesg: true, kptr: true, dump: true, links: true,
+      sshRoot: true, sshPass: true, sshCrypto: true, sshTries: true, sshFwd: true, sshAlive: true, port: 2222
+    },
+    minimal: {
+      syn: true, bbr: false, rp: true, red: true, src: true, bc: true, rfc: true, fwd: false,
+      aslr: true, bpf: true, dmesg: true, kptr: true, dump: true, links: true,
+      sshRoot: true, sshPass: true, sshCrypto: false, sshTries: true, sshFwd: false, sshAlive: true, port: 22
+    }
+  };
+
+  function applyProfile(profKey) {
+    var p = profiles[profKey];
+    if (!p) return;
+    chkSynCookies.checked = p.syn;
+    chkBbr.checked = p.bbr;
+    chkRpFilter.checked = p.rp;
+    chkNoRedirects.checked = p.red;
+    chkNoSourceRoute.checked = p.src;
+    chkIgnoreBroadcast.checked = p.bc;
+    chkRfc1337.checked = p.rfc;
+    chkIpForward.checked = p.fwd;
+
+    chkAslr.checked = p.aslr;
+    chkDisableUnprivBpf.checked = p.bpf;
+    chkDmesgRestrict.checked = p.dmesg;
+    chkKptrRestrict.checked = p.kptr;
+    chkDisableCoreDumps.checked = p.dump;
+    chkProtectedLinks.checked = p.links;
+
+    chkNoRootLogin.checked = p.sshRoot;
+    chkNoPasswordAuth.checked = p.sshPass;
+    chkModernCrypto.checked = p.sshCrypto;
+    chkMaxAuthTries.checked = p.sshTries;
+    chkNoForwarding.checked = p.sshFwd;
+    chkClientAlive.checked = p.sshAlive;
+    inputSshPort.value = p.port;
+
+    renderConfig();
+  }
+
+  function generateSysctl() {
+    var lines = [
+      '# ====================================================================',
+      '# /etc/sysctl.d/99-hardening.conf',
+      '# Linux Kernel Hardening & Network Optimization Blueprint 2026',
+      '# Generated offline via zyekh.com/tools/linux-hardening-generator.html',
+      '# ====================================================================',
+      ''
+    ];
+
+    lines.push('# --- Network Stack Hardening ---');
+    if (chkSynCookies.checked) {
+      lines.push('# Mitigate SYN Flood attacks via cryptographic cookies');
+      lines.push('net.ipv4.tcp_syncookies = 1');
+      lines.push('net.ipv4.tcp_max_syn_backlog = 8192');
+      lines.push('net.ipv4.tcp_synack_retries = 2');
+    }
+    if (chkBbr.checked) {
+      lines.push('# High-throughput congestion control via BBR and FQ queue discipline');
+      lines.push('net.core.default_qdisc = fq');
+      lines.push('net.ipv4.tcp_congestion_control = bbr');
+    }
+    if (chkRpFilter.checked) {
+      lines.push('# Reverse Path Filtering to prevent IP spoofing attacks');
+      lines.push('net.ipv4.conf.all.rp_filter = 1');
+      lines.push('net.ipv4.conf.default.rp_filter = 1');
+    }
+    if (chkNoRedirects.checked) {
+      lines.push('# Reject ICMP redirects (prevents rogue gateway manipulation)');
+      lines.push('net.ipv4.conf.all.accept_redirects = 0');
+      lines.push('net.ipv4.conf.default.accept_redirects = 0');
+      lines.push('net.ipv4.conf.all.send_redirects = 0');
+      lines.push('net.ipv4.conf.default.send_redirects = 0');
+      lines.push('net.ipv6.conf.all.accept_redirects = 0');
+      lines.push('net.ipv6.conf.default.accept_redirects = 0');
+    }
+    if (chkNoSourceRoute.checked) {
+      lines.push('# Drop source routed packets');
+      lines.push('net.ipv4.conf.all.accept_source_route = 0');
+      lines.push('net.ipv4.conf.default.accept_source_route = 0');
+      lines.push('net.ipv6.conf.all.accept_source_route = 0');
+      lines.push('net.ipv6.conf.default.accept_source_route = 0');
+    }
+    if (chkIgnoreBroadcast.checked) {
+      lines.push('# Ignore ICMP broadcast pings (prevents Smurf attacks)');
+      lines.push('net.ipv4.icmp_echo_ignore_broadcasts = 1');
+      lines.push('net.ipv4.icmp_ignore_bogus_error_responses = 1');
+    }
+    if (chkRfc1337.checked) {
+      lines.push('# RFC 1337 TIME-WAIT Assassination protection');
+      lines.push('net.ipv4.tcp_rfc1337 = 1');
+      lines.push('net.ipv4.tcp_fin_timeout = 15');
+    }
+    lines.push('# Packet Forwarding policy');
+    lines.push('net.ipv4.ip_forward = ' + (chkIpForward.checked ? '1' : '0'));
+    lines.push('');
+
+    lines.push('# --- Process & Kernel Memory Protection ---');
+    if (chkAslr.checked) {
+      lines.push('# Full ASLR stack/heap memory address randomization');
+      lines.push('kernel.randomize_va_space = 2');
+    }
+    if (chkDisableUnprivBpf.checked) {
+      lines.push('# Disable unprivileged eBPF program loading');
+      lines.push('kernel.unprivileged_bpf_disabled = 1');
+      lines.push('net.core.bpf_jit_harden = 2');
+    }
+    if (chkDmesgRestrict.checked) {
+      lines.push('# Restrict kernel dmesg access to CAP_SYSLOG users only');
+      lines.push('kernel.dmesg_restrict = 1');
+    }
+    if (chkKptrRestrict.checked) {
+      lines.push('# Hide kernel pointers from unprivileged access');
+      lines.push('kernel.kptr_restrict = 2');
+    }
+    if (chkDisableCoreDumps.checked) {
+      lines.push('# Disable SUID process core dumping to prevent secret exfiltration');
+      lines.push('fs.suid_dumpable = 0');
+    }
+    if (chkProtectedLinks.checked) {
+      lines.push('# Protected hardlinks, symlinks, and FIFOs in /tmp');
+      lines.push('fs.protected_hardlinks = 1');
+      lines.push('fs.protected_symlinks = 1');
+      lines.push('fs.protected_regular = 2');
+      lines.push('fs.protected_fifos = 2');
+    }
+
+    return lines.join('\n');
+  }
+
+  function generateSshd() {
+    var portVal = inputSshPort.value.trim() || '22';
+    var lines = [
+      '# ====================================================================',
+      '# /etc/ssh/sshd_config.d/99-hardened.conf',
+      '# OpenSSH Daemon Production Hardening Blueprint 2026',
+      '# Generated offline via zyekh.com/tools/linux-hardening-generator.html',
+      '# ====================================================================',
+      ''
+    ];
+
+    lines.push('# --- Network & Listening Configuration ---');
+    lines.push('Port ' + portVal);
+    lines.push('AddressFamily inet');
+    lines.push('Protocol 2');
+    lines.push('');
+
+    lines.push('# --- Authentication & Access Control ---');
+    if (chkNoRootLogin.checked) {
+      lines.push('PermitRootLogin no');
+    } else {
+      lines.push('PermitRootLogin prohibit-password');
+    }
+    if (chkNoPasswordAuth.checked) {
+      lines.push('PasswordAuthentication no');
+      lines.push('KbdInteractiveAuthentication no');
+      lines.push('PubkeyAuthentication yes');
+      lines.push('AuthenticationMethods publickey');
+    }
+    lines.push('PermitEmptyPasswords no');
+    if (chkMaxAuthTries.checked) {
+      lines.push('MaxAuthTries 3');
+      lines.push('MaxSessions 4');
+      lines.push('LoginGraceTime 30');
+    }
+    lines.push('');
+
+    lines.push('# --- Session Sandboxing & Forwarding ---');
+    if (chkNoForwarding.checked) {
+      lines.push('X11Forwarding no');
+      lines.push('AllowAgentForwarding no');
+      lines.push('AllowTcpForwarding no');
+      lines.push('GatewayPorts no');
+      lines.push('PermitTunnel no');
+      lines.push('PermitUserEnvironment no');
+    } else {
+      lines.push('X11Forwarding no');
+      lines.push('AllowAgentForwarding yes');
+      lines.push('AllowTcpForwarding yes');
+    }
+    if (chkClientAlive.checked) {
+      lines.push('# Disconnect idle sessions after 5 minutes');
+      lines.push('ClientAliveInterval 300');
+      lines.push('ClientAliveCountMax 2');
+    }
+    lines.push('');
+
+    if (chkModernCrypto.checked) {
+      lines.push('# --- Cryptographic Suite (Modern Post-Quantum & Classical Curve25519) ---');
+      lines.push('KexAlgorithms sntrup761x25519-sha512@openssh.com,curve25519-sha256,curve25519-sha256@libssh.org,diffie-hellman-group16-sha512,diffie-hellman-group18-sha512');
+      lines.push('Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com');
+      lines.push('MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com');
+      lines.push('HostKeyAlgorithms ssh-ed25519,ssh-ed25519-cert-01@openssh.com,rsa-sha2-512,rsa-sha2-256');
+    }
+
+    return lines.join('\n');
+  }
+
+  var renderConfig = window.debounceRAF(function() {
+    if (activeTab === 'sysctl') {
+      codeViewer.textContent = generateSysctl();
+      activeFilename.textContent = '/etc/sysctl.d/99-hardening.conf';
+      deployGuide.innerHTML = '<strong>[ DEPLOYMENT INSTRUCTIONS ]</strong><br/>' +
+        '<span>1. Place file in system directory:</span><br/>' +
+        '<span class="deploy-cmd">sudo cp 99-hardening.conf /etc/sysctl.d/</span><br/>' +
+        '<span>2. Apply kernel settings immediately without reboot:</span><br/>' +
+        '<span class="deploy-cmd">sudo sysctl --system</span>';
+    } else {
+      codeViewer.textContent = generateSshd();
+      activeFilename.textContent = '/etc/ssh/sshd_config.d/99-hardened.conf';
+      deployGuide.innerHTML = '<strong>[ DEPLOYMENT INSTRUCTIONS ]</strong><br/>' +
+        '<span>1. Place file in OpenSSH drop-in directory:</span><br/>' +
+        '<span class="deploy-cmd">sudo cp 99-hardened.conf /etc/ssh/sshd_config.d/</span><br/>' +
+        '<span>2. Test syntax integrity before reload (CRITICAL):</span><br/>' +
+        '<span class="deploy-cmd">sudo sshd -t &amp;&amp; sudo systemctl restart sshd</span>';
+    }
+  }, 40);
+
+  // Tab switcher
+  tabSysctl.addEventListener('click', function() {
+    activeTab = 'sysctl';
+    tabSysctl.classList.add('active');
+    tabSshd.classList.remove('active');
+    renderConfig();
+  });
+
+  tabSshd.addEventListener('click', function() {
+    activeTab = 'sshd';
+    tabSshd.classList.add('active');
+    tabSysctl.classList.remove('active');
+    renderConfig();
+  });
+
+  // Profile selection
+  profileBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      profileBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeProfile = btn.getAttribute('data-profile');
+      applyProfile(activeProfile);
+    });
+  });
+
+  // Checkbox & input listeners
+  var inputs = [
+    inputSshPort, chkSynCookies, chkBbr, chkRpFilter, chkNoRedirects, chkNoSourceRoute,
+    chkIgnoreBroadcast, chkRfc1337, chkIpForward, chkAslr, chkDisableUnprivBpf,
+    chkDmesgRestrict, chkKptrRestrict, chkDisableCoreDumps, chkProtectedLinks,
+    chkNoRootLogin, chkNoPasswordAuth, chkModernCrypto, chkMaxAuthTries,
+    chkNoForwarding, chkClientAlive
+  ];
+
+  inputs.forEach(function(el) {
+    if (el) {
+      el.addEventListener('input', renderConfig);
+      el.addEventListener('change', renderConfig);
+    }
+  });
+
+  // Copy button
+  btnCopy.addEventListener('click', function() {
+    var text = codeViewer.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        var old = btnCopy.textContent;
+        btnCopy.textContent = '[ COPIED ]';
+        setTimeout(function() { btnCopy.textContent = old; }, 1500);
+      });
+    }
+  });
+
+  // Download button
+  btnDownload.addEventListener('click', function() {
+    var text = codeViewer.textContent;
+    var filename = activeTab === 'sysctl' ? '99-hardening.conf' : '99-hardened.conf';
+    var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // Initial render
+  renderConfig();
+})();
+</script>
+</body>
+</html>

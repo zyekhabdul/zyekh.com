@@ -1,42 +1,53 @@
-# PLAN: Dynamic Canvas Vertical Budgeting & Multi-Persona Syndication Suite
+# PLAN: Linux Security sysctl & sshd Hardening Config Builder
 
 ## Objectives
-1. Implement **Dynamic Canvas Vertical Budgeting** in `scripts/generate_social_cards.py` and `scripts/validate_card_manifest.py` ensuring automatic padding and scale adjustments for high-density cards with zero collisions.
-2. Implement **Multi-Persona Copywriting & Time-Jitter Throttling** in `scripts/syndicate.py` to support variable copywriting angles (`authority`, `curation`, `quick_tip`) and organic posting jitter (1.5s-4.5s).
-3. Validate 100% compliance via `verify_batch.py` (Checks 1-21), 0 emojis, and Obsidian RAG memory sync.
+1. Build `/tools/linux-hardening-generator.html` — a zero-dependency, local-first, interactive configuration builder for Linux kernel `/etc/sysctl.d/99-hardening.conf` and OpenSSH `/etc/ssh/sshd_config.d/99-hardened.conf`.
+2. Generate social share cards (16:9 Dark Landscape + 1:1 Light Square) for the new tool via `scripts/generate_tools_social_cards.py`.
+3. Update `scripts/generate_tools_manifest.py` and compile `tools/tools-manifest.json`.
+4. Register the new tool in `tools/index.html` with category `NETWORK SECURITY` and full keyword filtering attributes.
+5. Synchronize sitemap, feeds, llms.txt, llms-full.txt, and bump `CACHE_VERSION` in `sw.js` and query strings across all HTML files via `sync_content.py`.
+6. Run 21-Axis QA Gate (`verify_batch.py`), 0-emoji audit (`check_emojis.py`), update Obsidian RAG, and record local git commit.
 
 ---
 
-## Chunk 1: Dynamic Canvas Vertical Budgeting Engine (`scripts/generate_social_cards.py`)
-- **Target File**: `scripts/generate_social_cards.py`
+## Chunk 1: Build Interactive Tool (`tools/linux-hardening-generator.html`)
+- **Target File**: `tools/linux-hardening-generator.html`
 - **Scope**:
-  - Compute `available_canvas_height` dynamically after header & title drawing pass.
-  - Dynamically adjust container padding (`pad_y = 20-28px`), box vertical gaps (`gap = 18-24px`), and line spacing based on wrapped text line counts.
-  - Ensure footer specification bar is strictly guarded with $\ge 30\text{px}$ clearance on both 1:1 Square (2400x2400) and 16:9 Landscape (2400x1260) canvases.
-- **DoD**: `scripts/validate_card_manifest.py` passes 100% with $\ge 20\text{px}$ minimum clearance across all 35 articles.
+  - Full SEO/GEO tags: Title, Description, Canonical URL, OpenGraph, Twitter Card, Schema.org `WebApplication` + `BreadcrumbList`.
+  - Anti-Clickjacking script and Anti-FOUC theme script.
+  - Responsive 2-column layout (`.grid-2` with `gap: 1.5rem`):
+    - Left Column: Target Workload Profile Select (`Web / API Server`, `High-Performance Database`, `Hardened Bastion Host / Jump Server`, `Edge Gateway / Load Balancer`, `Minimal VPS`), Kernel hardening toggles (`TCP SYN Cookies`, `TCP BBR Congestion`, `Reverse Path Filtering`, `Disable ICMP Redirects`, `Disable Source Routing`, `TCP Timestamps`, `Kernel ASLR Level 2`, `Disable Unprivileged eBPF`, `Restrict dmesg Access`, `Disable Core Dumps`), and SSH Hardening toggles (`Custom Port`, `Disable Root Login`, `Disable Password Auth`, `MaxAuthTries 3`, `Modern Kex/Ciphers`, `AllowAgentForwarding No`, `ClientAliveInterval 300`).
+    - Right Column: Live tabbed preview (`/etc/sysctl.d/99-hardening.conf` vs `/etc/ssh/sshd_config.d/99-hardened.conf`), 1-click clipboard copy, and direct `.conf` download buttons.
+  - Interactive Logic: Debounced input listeners (`window.debounceRAF`), dynamic config recalculation, clean vanilla JS event handling.
+- **DoD**: Tool loads correctly, generates valid Linux config files, and copy/download actions function 100% offline.
 
 ---
 
-## Chunk 2: Multi-Persona Copywriting & Time-Jitter Engine (`scripts/syndicate.py`)
-- **Target File**: `scripts/syndicate.py`
+## Chunk 2: Social Card & Manifest Compilation
+- **Target Files**: `scripts/generate_tools_manifest.py`, `scripts/generate_tools_social_cards.py`, `tools/tools-manifest.json`, `assets/img/social-cards/tool-linux-hardening-generator-*.png`
 - **Scope**:
-  - Implement 3 deterministic persona formatters in `scripts/syndicate.py`:
-    - `authority`: High-density architectural breakdown with system invariants and production metrics.
-    - `curation`: Practical engineering guide summary with actionable takeaways.
-    - `quick_tip`: High-impact key command and security invariant summary.
-  - Add `--persona [authority|curation|quick_tip|auto]` CLI flag.
-  - Add `--jitter` parameter (randomized 1.5s - 4.5s delay via `random.uniform`) in batch syndication loops.
-- **DoD**: `python3 scripts/syndicate.py --help` shows new arguments and all persona generators pass syntax and character budget tests.
+  - Add `"linux-hardening": "Security & Linux Systems"` to `CATEGORY_MAP` in `scripts/generate_tools_manifest.py`.
+  - Execute `scripts/generate_tools_social_cards.py` to compile deterministic 2400px cards.
+  - Execute `scripts/generate_tools_manifest.py` to update `tools/tools-manifest.json`.
+- **DoD**: Cards exist with valid dimensions and MD5 uniqueness; `tools-manifest.json` contains valid schema entry for `linux-hardening-generator`.
 
 ---
 
-## Chunk 3: Full-System Verification & Memory Checkpoint
-- **Target Files**: `IDEAS.md`, `DEVELOPMENT.md`, `AGENTS.md`, `00-AGY-Memory/zyekh.com/`
+## Chunk 3: Directory Registration & Global Sync
+- **Target Files**: `tools/index.html`, `sync_content.py`, `sw.js`
 - **Scope**:
-  - Run `python3 scripts/validate_card_manifest.py`.
-  - Run `python3 verify_batch.py` (21-Axis QA Gate).
-  - Run `python3 check_emojis.py`.
-  - Update `IDEAS.md`, `DEVELOPMENT.md`, `AGENTS.md` (ADR-031).
-  - Create local git commit (NO git push).
-  - Update Obsidian RAG (`INDEX.md`, `STATE.md`, `DECISIONS.md`).
-- **DoD**: 100% PASS on all QA checks, 0 emojis, clean git status.
+  - Add tool card to `tools/index.html` in `.grid-3` under `NETWORK SECURITY`.
+  - Run `python3 sync_content.py` to auto-bump `CACHE_VERSION`, compile `sitemap.xml`, `atom.xml`, `feed.json`, `llms.txt`, and `llms-full.txt`.
+- **DoD**: `sitemap.xml` contains 89 URLs; all HTML files have updated `CACHE_VERSION` query strings.
+
+---
+
+## Chunk 4: QA Gate Audit & Memory Synchronization
+- **Target Files**: `IDEAS.md`, `STATE.md`, `DECISIONS.md` (Obsidian RAG `00-AGY-Memory/zyekh.com/`)
+- **Scope**:
+  - Run `python3 verify_batch.py` (21-Axis QA Gate, 100% PASS).
+  - Run `python3 check_emojis.py` (0 emojis).
+  - Update `IDEAS.md` (mark item as [ DONE ]).
+  - Update Obsidian RAG (`INDEX.md`, `STATE.md`, `DECISIONS.md` ADR-032).
+  - Save local git commit (NO git push).
+- **DoD**: 100% PASS on all verification checks; clean git status.

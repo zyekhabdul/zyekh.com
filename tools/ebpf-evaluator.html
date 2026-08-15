@@ -11,12 +11,12 @@
 <meta content="Interactive eBPF XDP network packet filter &amp; DDoS mitigation simulator." property="og:description"/>
 <meta content="https://zyekh.com/tools/ebpf-evaluator.html" property="og:url"/>
 <meta content="website" property="og:type"/>
-<meta content="https://zyekh.com/assets/img/social-cards/tool-ebpf-evaluator-dark-landscape.png?v=e65fd40c" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-ebpf-evaluator-dark-landscape.png" property="og:image"/>
 <meta content="zyekh.com" property="og:site_name"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="eBPF XDP Packet Filter Evaluator | zyekh.com" name="twitter:title"/>
 <meta content="Interactive eBPF XDP network packet filter &amp; DDoS mitigation simulator." name="twitter:description"/>
-<meta content="https://zyekh.com/assets/img/social-cards/tool-ebpf-evaluator-dark-landscape.png?v=e65fd40c" name="twitter:image"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-ebpf-evaluator-dark-landscape.png" name="twitter:image"/>
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -36,7 +36,7 @@
 <style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
 <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
-<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<link crossorigin="anonymous" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" rel="stylesheet"/>
 <style>
     .sim-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; }
     .sim-slider-group { margin-bottom: 1.2rem; }
@@ -49,12 +49,12 @@
     .log-pass { color: #4ade80; }
     .log-tx { color: #60a5fa; }
   </style>
-<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
-  <link rel="preload" href="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous" as="script">
-  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
-  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
-  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-EBLbMcTI40fa+dU69q0bYlGE50lzC+NJTPGO+JctdX0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+<link as="style" crossorigin="anonymous" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" rel="preload"/>
+<link as="script" crossorigin="anonymous" href="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" rel="preload"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="Zyekh RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/atom.xml" rel="alternate" title="Zyekh Atom Feed" type="application/atom+xml"/>
+<link href="https://zyekh.com/feed.json" rel="alternate" title="Zyekh JSON Feed" type="application/feed+json"/>
+<meta content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-EBLbMcTI40fa+dU69q0bYlGE50lzC+NJTPGO+JctdX0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';" http-equiv="Content-Security-Policy"/>
 </head>
 <body>
 <site-nav active="tools"></site-nav>
@@ -143,7 +143,7 @@
 <p>Zyekh's Zero-Dependency Web Hub © 2026. 100% Local-First &amp; Zero-Tracking.</p>
 </div>
 </footer>
-<script src="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous"></script>
+<script crossorigin="anonymous" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" src="/assets/js/site-nav.min.js?v=d9dc72eb"></script>
 <script>
     (function() {
       const inputBlacklist = document.getElementById('inputBlacklist');

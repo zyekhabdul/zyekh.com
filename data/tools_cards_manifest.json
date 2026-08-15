@@ -441,6 +441,23 @@
     ],
     "url": "https://zyekh.com/tools/kpr.html"
   },
+  "linux-hardening-generator": {
+    "slug": "linux-hardening-generator",
+    "title": "Linux sysctl & SSH Hardening Config Generator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Generate production-ready Linux kernel sysctl.d and OpenSSH sshd_config.d configuration files tailored to web, database, bastion, and edge workloads. 100% offline & client-side.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/linux-hardening-generator.html"
+  },
   "llm-calculator": {
     "slug": "llm-calculator",
     "title": "LLM Token & GPU VRAM Cost Calculator",
