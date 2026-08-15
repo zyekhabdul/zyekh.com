@@ -1,4 +1,5 @@
 name: Social Media Syndication
+run-name: Multi-Channel Syndication Sync (Mastodon, Bluesky, Dev.to)
 
 on:
   push:
@@ -6,6 +7,8 @@ on:
       - main
     paths:
       - 'feed.xml'
+      - 'data/social_cards_manifest.json'
+  workflow_dispatch:
 
 jobs:
   syndicate:
@@ -14,17 +17,27 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2  # Need at least HEAD~1 to compare git diff
+          fetch-depth: 2
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+          cache: 'pip'
 
-      - name: Broadcast New RSS Items
+      - name: Install Dependencies
+        run: |
+          pip install beautifulsoup4 pillow
+
+      - name: Broadcast Unposted Articles to Social APIs
         env:
+          MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+          MASTODON_SERVER: ${{ secrets.MASTODON_SERVER || 'https://infosec.exchange' }}
+          BSKY_HANDLE: ${{ secrets.BSKY_HANDLE }}
+          BSKY_APP_PASSWORD: ${{ secrets.BSKY_APP_PASSWORD }}
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          python3 scripts/syndicate.py
+          python3 scripts/syndicate.py --sync-unposted

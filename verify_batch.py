@@ -256,12 +256,41 @@ def verify_all_articles():
     if tool_failures > 0:
         failures += tool_failures
 
+    # Check 19: Syndication History & Ledger Parity Audit
+    print("\n[AUDIT] Running Check 19: Syndication History & Ledger Parity Audit...")
+    ledger_failures = 0
+    history_path = "data/syndication_history.json"
+    if os.path.exists(history_path):
+        try:
+            history_data = json.loads(open(history_path, encoding='utf-8').read())
+            valid_slugs = set(os.path.splitext(os.path.basename(a))[0] for a in articles)
+            for slug, platforms in history_data.items():
+                if slug not in valid_slugs:
+                    print(f"[FAIL] Zombie slug in syndication history (no matching blog HTML): {slug}")
+                    ledger_failures += 1
+                for platform_name, meta in platforms.items():
+                    if not isinstance(meta, dict):
+                        print(f"[FAIL] Invalid metadata format for {slug} on {platform_name}")
+                        ledger_failures += 1
+                        continue
+                    if 'url' in meta and not (meta['url'].startswith('http://') or meta['url'].startswith('https://')):
+                        print(f"[FAIL] Invalid URL scheme in history for {slug} ({platform_name}): {meta['url']}")
+                        ledger_failures += 1
+                    if platform_name == 'bluesky' and 'uri' in meta and not meta['uri'].startswith('at://'):
+                        print(f"[FAIL] Invalid ATProto URI in history for {slug}: {meta['uri']}")
+                        ledger_failures += 1
+        except Exception as e:
+            print(f"[FAIL] syndication_history.json JSON parse error: {e}")
+            ledger_failures += 1
+    if ledger_failures > 0:
+        failures += ledger_failures
+
     print("\n============================================================")
     if failures > 0:
         print(f"FAILED: {failures} QA audit violations detected across system.")
         sys.exit(1)
     else:
-        print(f"SUCCESS: All {len(articles)} articles and system assets passed 100% QA audit (Checks 1-18)!")
+        print(f"SUCCESS: All {len(articles)} articles and system assets passed 100% QA audit (Checks 1-19)!")
         print("============================================================")
 
 if __name__ == "__main__":

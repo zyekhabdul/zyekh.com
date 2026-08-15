@@ -82,27 +82,37 @@ def purge_cloudflare_cache():
     except Exception as e:
         print(f"[ ERROR ] Cloudflare Purge API Call Failed: {e}")
 
-def run_syndication(slug=None, generate_cards=False):
+def run_syndication(slug=None, generate_cards=False, sync_unposted=False):
     syndicate_script = BASE_DIR / "scripts" / "syndicate.py"
     if not syndicate_script.exists():
         print("[ WARN ] scripts/syndicate.py not found. Skipping social syndication.")
         return
 
     if generate_cards:
+        extract_script = BASE_DIR / "scripts" / "extract_card_manifest.py"
+        validate_script = BASE_DIR / "scripts" / "validate_card_manifest.py"
         cards_script = BASE_DIR / "scripts" / "generate_social_cards.py"
+
+        print("\n[ PIPELINE STEP ] Executing Decoupled 3-Stage Social Asset Pipeline...")
+        if extract_script.exists():
+            subprocess.run([sys.executable, str(extract_script)], cwd=str(BASE_DIR), check=True)
+        if validate_script.exists():
+            subprocess.run([sys.executable, str(validate_script)], cwd=str(BASE_DIR), check=True)
         if cards_script.exists():
-            print("\n[ PIPELINE STEP ] Generating Dynamic Social Cards...")
             cards_cmd = [sys.executable, str(cards_script)]
             if slug:
                 cards_cmd.extend(["--slug", slug])
-            subprocess.run(cards_cmd, cwd=str(BASE_DIR), check=False)
+            else:
+                cards_cmd.append("--all")
+            subprocess.run(cards_cmd, cwd=str(BASE_DIR), check=True)
 
     print("\n[ PIPELINE STEP ] Broadcasting to Social APIs & Generating Intents...")
-    cmd = [sys.executable, str(syndicate_script), "--publish"]
-    if slug:
-        cmd.extend(["--slug", slug])
+    if sync_unposted:
+        cmd = [sys.executable, str(syndicate_script), "--sync-unposted"]
+    elif slug:
+        cmd = [sys.executable, str(syndicate_script), "--publish", "--slug", slug]
     else:
-        cmd.append("--latest")
+        cmd = [sys.executable, str(syndicate_script), "--publish", "--latest"]
 
     subprocess.run(cmd, cwd=str(BASE_DIR), check=False)
 
@@ -129,6 +139,11 @@ def main():
         "--syndicate",
         action="store_true",
         help="Broadcast article to social channels (Mastodon, Dev.to, Bluesky) via scripts/syndicate.py"
+    )
+    parser.add_argument(
+        "--sync-unposted",
+        action="store_true",
+        help="Broadcast all unposted articles to social channels with rate-limiting"
     )
     parser.add_argument(
         "--social-cards",
@@ -158,7 +173,7 @@ def main():
     print("============================================================")
 
     # Standalone Cloudflare Purge mode
-    if args.purge_cf and not any([not args.skip_generate, not args.skip_qa, args.syndicate]):
+    if args.purge_cf and not any([not args.skip_generate, not args.skip_qa, args.syndicate, args.sync_unposted]):
         purge_cloudflare_cache()
         print("\n[ SUCCESS ] Standalone Cloudflare purge completed.")
         return
@@ -167,9 +182,9 @@ def main():
     if not args.skip_generate:
         run_command([sys.executable, "generate_batch.py"], "Generating Article HTML Files")
 
-    # 2. QA Audit (Strict 15-axis verification)
+    # 2. QA Audit (Strict 19-axis verification)
     if not args.skip_qa:
-        run_command([sys.executable, "verify_batch.py"], "Running 15-Axis QA Audit")
+        run_command([sys.executable, "verify_batch.py"], "Running 19-Axis QA Audit")
 
     # 3. Content & Cache Sync
     run_command([sys.executable, "sync_content.py"], "Synchronizing Sitemap, RSS, RAG & Cache Version")
@@ -182,8 +197,8 @@ def main():
         run_command([sys.executable, "ping_indexers.py"], "Submitting URLs to IndexNow API")
 
     # 6. Multi-Channel Social Syndication
-    if args.syndicate:
-        run_syndication(slug=args.slug, generate_cards=args.social_cards)
+    if args.syndicate or args.sync_unposted:
+        run_syndication(slug=args.slug, generate_cards=args.social_cards, sync_unposted=args.sync_unposted)
 
     # 7. Deployment / Cloudflare Purge
     if args.deploy or args.purge_cf:

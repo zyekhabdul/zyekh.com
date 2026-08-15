@@ -158,3 +158,10 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
 43. **HEADLESS GEOMETRY & ZERO COLLISION AUDIT GATE**:
     - All manifest updates MUST pass `scripts/validate_card_manifest.py` before image compilation.
     - The validator runs headless simulated rendering measuring actual font bounding boxes to guarantee $\ge 20\text{px}$ clearance between content bottom and footer, and zero border collisions across all 35 articles.
+
+44. **PERSISTENT SYNDICATION LEDGER & DYNAMIC DOMAIN MAPPING STANDARD**:
+    - **State Ledger Persistence**: All external publications across Mastodon, Bluesky, and Dev.to MUST be recorded immutably in `data/syndication_history.json` with platform-specific IDs, URLs, and ISO UTC timestamps.
+    - **Zero Zombie References**: Every slug in `data/syndication_history.json` must strictly correspond to an existing HTML file in `blog/`, enforced automatically by QA Check 19 in `verify_batch.py`.
+    - **Dynamic Domain Tag Targeting**: AI agents must route article topics to curated high-engagement domain hashtags via `DOMAIN_HASHTAG_MAP` (e.g. `#RustLang`, `#eBPF`, `#ZeroTrust`, `#WebAssembly`) rather than vague generic tags.
+    - **Polite Batch Throttling**: Batch syndication commands (`--sync-unposted`) must enforce a 2-3s delay between API invocations to prevent remote rate-limit violations.
+
