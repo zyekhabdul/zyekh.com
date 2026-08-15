@@ -1,5 +1,5 @@
 /* zyekh.com Service Worker — Cache Strategy */
-const CACHE_VERSION = "v=20260816_v227";
+const CACHE_VERSION = "v=20260816_v228";
 const APP_CACHE = `zyekh-app-${CACHE_VERSION}`;
 const ASSETS_CACHE = `zyekh-assets-${CACHE_VERSION}`;
 

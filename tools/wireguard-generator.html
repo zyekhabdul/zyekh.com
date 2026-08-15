@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WireGuard Mesh &amp; Keypair Configuration Generator — Client-Side VPN Builder | zyekh.com</title>
+<meta content="Generate secure WireGuard VPN configurations and Curve25519 (X25519) keypairs 100% client-side in browser. Build Hub-and-Spoke gateways, Full Mesh tunnels, and Site-to-Site configs with zero external calls." name="description"/>
+<meta content="wireguard generator, wireguard config generator, x25519 keypair generator, wireguard mesh generator, wg0.conf generator, wireguard vpn builder, curve25519 javascript" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/wireguard-generator.html" rel="canonical"/>
+<!-- Open Graph / Social -->
+<meta content="WireGuard Mesh &amp; Keypair Configuration Generator | zyekh.com" property="og:title"/>
+<meta content="Generate secure WireGuard VPN configurations, X25519 keypairs, and mesh routing tables 100% offline in browser." property="og:description"/>
+<meta content="https://zyekh.com/tools/wireguard-generator.html" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-wireguard-generator-dark-landscape.png?v=bf0172aa" property="og:image"/>
+<meta content="zyekh.com" property="og:site_name"/>
+<!-- Twitter Cards -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="WireGuard Mesh &amp; Keypair Configuration Generator | zyekh.com" name="twitter:title"/>
+<meta content="Generate secure WireGuard VPN configurations, X25519 keypairs, and mesh routing tables 100% offline in browser." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-wireguard-generator-dark-landscape.png?v=bf0172aa" name="twitter:image"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://zyekh.com/tools/wireguard-generator.html#app",
+      "name": "WireGuard Mesh & Keypair Configuration Generator",
+      "description": "Interactive client-side WireGuard VPN configuration suite and Curve25519 keypair generator for Hub-and-Spoke, Full Mesh, and Site-to-Site network topologies.",
+      "url": "https://zyekh.com/tools/wireguard-generator.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript and a modern Web Crypto compatible browser.",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Person",
+        "@id": "https://zyekh.com/#person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com"
+      },
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/tools/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/tools/wireguard-generator.html#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "WireGuard Generator", "item": "https://zyekh.com/tools/wireguard-generator.html" }
+      ]
+    }
+  ]
+}
+</script>
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+<script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+<!-- Preload Styles & Scripts -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous"></script>
+<style>
+  .wg-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1.25rem; }
+  .wg-section-title { font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-color); text-transform: uppercase; letter-spacing: 0.05em; display: flex; justify-content: space-between; align-items: center; }
+  
+  .preset-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+  .preset-btn { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.45rem 0.85rem; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.15s ease; }
+  .preset-btn.active { background: var(--text-main); color: var(--bg-main); border-color: var(--text-main); }
+
+  .peer-item { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.85rem; margin-bottom: 0.75rem; }
+  .peer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.85rem; font-weight: 700; color: var(--text-main); }
+
+  .code-tab-nav { display: flex; gap: 0.3rem; border-bottom: 1px solid var(--border-color); margin-bottom: 0.75rem; overflow-x: auto; }
+  .code-tab-btn { background: none; border: none; border-bottom: 2px solid transparent; padding: 0.4rem 0.75rem; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); cursor: pointer; white-space: nowrap; }
+  .code-tab-btn.active { color: var(--text-main); border-bottom-color: var(--text-main); }
+
+  .output-code { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; font-family: 'Fira Code', monospace; font-size: 0.82rem; line-height: 1.5; color: var(--text-main); height: 380px; overflow-y: auto; white-space: pre; }
+</style>
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous" as="script">
+  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
+  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-ng4hRzaeEtoj/qQKf5f9aMlSrF4tvu8Q0K7MgAIG2wc='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+</head>
+<body>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">WireGuard Generator</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">NETWORK SECURITY &amp; MESH VPN</span>
+<h1 class="page-title">WireGuard Mesh &amp; Keypair Configuration Generator</h1>
+<p class="page-subtitle">Generate production-grade WireGuard VPN configurations, Curve25519 (X25519) cryptographic keypairs, and mesh routing parameters 100% client-side in browser memory with zero network requests.</p>
+</header>
+<!-- Topology Presets -->
+<div class="preset-tabs">
+<button class="preset-btn active" data-preset="gateway" type="button">Hub &amp; Spoke (VPN Gateway)</button>
+<button class="preset-btn" data-preset="mesh" type="button">Full Mesh (Inter-VPS Tunneling)</button>
+<button class="preset-btn" data-preset="site" type="button">Site-to-Site (Subnet Router)</button>
+</div>
+<div class="grid-2" style="gap: 1.5rem; align-items: start;">
+<!-- Column 1: Configuration Parameters -->
+<div>
+<!-- Server Node Interface -->
+<div class="wg-card">
+<div class="wg-section-title">
+<span>[ 1. SERVER / GATEWAY NODE ]</span>
+<button class="btn-tool" id="btnGenServerKey" style="font-size:0.75rem; padding:0.2rem 0.4rem;" type="button">Regen Keypair</button>
+</div>
+<div class="form-group mb-sm">
+<label for="txtEndpoint" style="font-size:0.82rem; font-weight:600;">Server Public Endpoint (IP or FQDN):</label>
+<input id="txtEndpoint" style="width: 100%; font-family:'Fira Code',monospace;" type="text" value="vpn.example.com:51820"/>
+</div>
+<div class="grid-2" style="gap: 0.75rem; margin-bottom: 0.75rem;">
+<div class="form-group">
+<label for="txtServerIp" style="font-size:0.82rem; font-weight:600;">Server Tunnel IP (CIDR):</label>
+<input id="txtServerIp" style="width: 100%; font-family:'Fira Code',monospace;" type="text" value="10.8.0.1/24"/>
+</div>
+<div class="form-group">
+<label for="txtListenPort" style="font-size:0.82rem; font-weight:600;">Listen Port:</label>
+<input id="txtListenPort" style="width: 100%; font-family:'Fira Code',monospace;" type="number" value="51820"/>
+</div>
+</div>
+<div class="grid-2" style="gap: 0.75rem; margin-bottom: 0.75rem;">
+<div class="form-group">
+<label for="txtNatIface" style="font-size:0.82rem; font-weight:600;">WAN Interface (for NAT):</label>
+<input id="txtNatIface" style="width: 100%; font-family:'Fira Code',monospace;" type="text" value="eth0"/>
+</div>
+<div class="form-group">
+<label for="txtDns" style="font-size:0.82rem; font-weight:600;">Client DNS Servers:</label>
+<input id="txtDns" style="width: 100%; font-family:'Fira Code',monospace;" type="text" value="1.1.1.1, 1.0.0.1"/>
+</div>
+</div>
+<div class="form-group mb-sm">
+<label style="font-size:0.75rem; color:var(--text-muted);">Server Public Key (Auto-derived X25519):</label>
+<input id="txtServerPubKey" readonly="" style="width:100%; font-family:'Fira Code',monospace; font-size:0.75rem; background:var(--bg-secondary); color:var(--text-muted);" type="text" value="Generating..."/>
+</div>
+</div>
+<!-- Peer Management -->
+<div class="wg-card">
+<div class="wg-section-title">
+<span>[ 2. CLIENT PEER NODES ]</span>
+<button class="btn-tool" id="btnAddPeer" style="font-size:0.75rem; padding:0.2rem 0.5rem;" type="button">+ Add Peer</button>
+</div>
+<div id="peerListContainer">
+<!-- Dynamically populated peer items -->
+</div>
+<div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.5rem;">
+          All X25519 private/public keypairs are computed locally via Montgomery curve scalar multiplication in browser memory.
+        </div>
+</div>
+</div>
+<!-- Column 2: Live Output Files -->
+<div>
+<div class="wg-card">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+<div class="code-tab-nav" style="border-bottom: none; margin-bottom: 0;">
+<button class="code-tab-btn active" data-tab="server" type="button">Server wg0.conf</button>
+<button class="code-tab-btn" data-tab="client" type="button">Client Peers</button>
+<button class="code-tab-btn" data-tab="setup" type="button">Setup Commands</button>
+<button class="code-tab-btn" data-tab="json" type="button">Topology JSON</button>
+</div>
+<div style="display: flex; gap: 0.4rem;">
+<button class="btn-tool" id="btnCopyConfig" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" type="button">Copy Config</button>
+<button class="btn-tool" id="btnDownloadConfig" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" type="button">Download</button>
+</div>
+</div>
+<!-- Client Selector dropdown (only shown on client tab) -->
+<div id="clientSelectorRow" style="display: none; margin-bottom: 0.5rem; align-items: center; gap: 0.5rem;">
+<label for="selActiveClient" style="font-size:0.8rem; font-weight:600;">Active Client Peer:</label>
+<select id="selActiveClient" style="padding:0.25rem 0.5rem; font-size:0.8rem; font-family:'Fira Code',monospace;"></select>
+</div>
+<div class="output-code" id="outputArea">Generating WireGuard configuration...</div>
+</div>
+<!-- Quick Security Invariants -->
+<div class="wg-card">
+<h3 class="wg-section-title" style="font-size: 0.85rem;">[ WIREGUARD ARCHITECTURAL INVARIANTS ]</h3>
+<ul style="font-size: 0.82rem; padding-left: 1.2rem; color: var(--text-muted); line-height: 1.6;">
+<li><strong>Cryptographic Identity:</strong> Noise_IK handshake using Curve25519 (X25519 ECDH), ChaCha20-Poly1305 AEAD, and BLAKE2s hashing.</li>
+<li><strong>Zero Network Fingerprint:</strong> Silent packet drops on unauthenticated handshakes; zero UDP port response to unauthorized scanners.</li>
+<li><strong>Kernel Line-Rate Performance:</strong> Direct execution inside Linux in-tree network stack without user-space context switches.</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Related Architecture Resources -->
+<div class="wg-card" style="margin-top: 1rem;">
+<h3 class="wg-section-title" style="font-size: 0.85rem;">[ RELATED LINUX &amp; NETWORK SECURITY RESOURCES ]</h3>
+<ul style="font-size: 0.85rem; padding-left: 1.2rem; color: var(--text-muted); line-height: 1.6;">
+<li><a href="/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html" style="color: var(--text-main); font-weight: 600;">WireGuard VPN Tunneling for Secure VPS Mesh Networks Blueprint</a></li>
+<li><a href="/tools/linux-hardening-generator.html" style="color: var(--text-main); font-weight: 600;">Linux sysctl &amp; OpenSSH Hardening Configuration Builder</a></li>
+<li><a href="/tools/ebpf-evaluator.html" style="color: var(--text-main); font-weight: 600;">eBPF XDP Packet Filter Evaluator</a></li>
+<li><a href="/blueprints/topology-builder.html" style="color: var(--text-main); font-weight: 600;">Interactive Zero-Trust Architecture Topology Builder</a></li>
+</ul>
+</div>
+</main>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 50;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+
+// Pure JavaScript Curve25519 (X25519) Implementation (RFC 7748)
+var X25519 = (function() {
+  var P = BigInt('57896044618658097711785492504343953926634992332820282019728792003956564819949'); // 2^255 - 19
+  var A24 = BigInt(121665);
+
+  function mod(a, m) {
+    var r = a % m;
+    return r >= 0n ? r : r + m;
+  }
+
+  function modPow(b, exp, m) {
+    var res = 1n;
+    b = mod(b, m);
+    while (exp > 0n) {
+      if (exp % 2n === 1n) res = mod(res * b, m);
+      b = mod(b * b, m);
+      exp = exp / 2n;
+    }
+    return res;
+  }
+
+  function modInverse(n, m) {
+    return modPow(n, m - 2n, m);
+  }
+
+  function clamp(keyBytes) {
+    var k = new Uint8Array(keyBytes);
+    k[0] &= 248;
+    k[31] &= 127;
+    k[31] |= 64;
+    return k;
+  }
+
+  function bytesToBigIntLE(bytes) {
+    var res = 0n;
+    for (var i = 0; i < bytes.length; i++) {
+      res += BigInt(bytes[i]) << BigInt(8 * i);
+    }
+    return res;
+  }
+
+  function bigIntToBytesLE(num, length) {
+    var bytes = new Uint8Array(length);
+    var temp = num;
+    for (var i = 0; i < length; i++) {
+      bytes[i] = Number(temp & 0xFFn);
+      temp = temp >> 8n;
+    }
+    return bytes;
+  }
+
+  function scalarMult(scalarBytes, pointBytes) {
+    var clampedScalar = clamp(scalarBytes);
+    var k = bytesToBigIntLE(clampedScalar);
+    var u = bytesToBigIntLE(pointBytes);
+
+    var x1 = u;
+    var x2 = 1n, z2 = 0n;
+    var x3 = u, z3 = 1n;
+    var swap = 0n;
+
+    for (var t = 254; t >= 0; t--) {
+      var kt = (k >> BigInt(t)) & 1n;
+      swap ^= kt;
+      if (swap === 1n) {
+        var tx = x2; x2 = x3; x3 = tx;
+        var tz = z2; z2 = z3; z3 = tz;
+      }
+      swap = kt;
+
+      var A = mod(x2 + z2, P);
+      var AA = mod(A * A, P);
+      var B = mod(x2 - z2, P);
+      var BB = mod(B * B, P);
+      var E = mod(AA - BB, P);
+      var C = mod(x3 + z3, P);
+      var D = mod(x3 - z3, P);
+      var DA = mod(D * A, P);
+      var CB = mod(C * B, P);
+
+      x3 = mod((DA + CB) * (DA + CB), P);
+      z3 = mod(x1 * mod((DA - CB) * (DA - CB), P), P);
+      x2 = mod(AA * BB, P);
+      z2 = mod(E * mod(AA + mod(A24 * E, P), P), P);
+    }
+
+    if (swap === 1n) {
+      var tx = x2; x2 = x3; x3 = tx;
+      var tz = z2; z2 = z3; z3 = tz;
+    }
+
+    var result = mod(x2 * modInverse(z2, P), P);
+    return bigIntToBytesLE(result, 32);
+  }
+
+  function toBase64(bytes) {
+    var binary = '';
+    for (var i = 0; i < bytes.length; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+  }
+
+  function generateKeypair() {
+    var privBytes = new Uint8Array(32);
+    window.crypto.getRandomValues(privBytes);
+    var clampedPriv = clamp(privBytes);
+
+    var basePoint = new Uint8Array(32);
+    basePoint[0] = 9;
+
+    var pubBytes = scalarMult(clampedPriv, basePoint);
+
+    return {
+      privateKey: toBase64(clampedPriv),
+      publicKey: toBase64(pubBytes)
+    };
+  }
+
+  function generatePresharedKey() {
+    var pskBytes = new Uint8Array(32);
+    window.crypto.getRandomValues(pskBytes);
+    return toBase64(pskBytes);
+  }
+
+  return {
+    generateKeypair: generateKeypair,
+    generatePresharedKey: generatePresharedKey
+  };
+})();
+
+(function() {
+  'use strict';
+
+  var serverData = {
+    keypair: X25519.generateKeypair(),
+    endpoint: 'vpn.example.com:51820',
+    tunnelIp: '10.8.0.1/24',
+    listenPort: 51820,
+    natIface: 'eth0',
+    dns: '1.1.1.1, 1.0.0.1'
+  };
+
+  var peers = [
+    {
+      id: 1,
+      name: 'laptop-work',
+      ip: '10.8.0.2/32',
+      allowedIps: '0.0.0.0/0, ::/0',
+      keepalive: 25,
+      psk: X25519.generatePresharedKey(),
+      keypair: X25519.generateKeypair()
+    },
+    {
+      id: 2,
+      name: 'phone-mobile',
+      ip: '10.8.0.3/32',
+      allowedIps: '0.0.0.0/0, ::/0',
+      keepalive: 25,
+      psk: X25519.generatePresharedKey(),
+      keypair: X25519.generateKeypair()
+    }
+  ];
+
+  var activeTab = 'server';
+  var activePreset = 'gateway';
+
+  // DOM Elements
+  var txtEndpoint = document.getElementById('txtEndpoint');
+  var txtServerIp = document.getElementById('txtServerIp');
+  var txtListenPort = document.getElementById('txtListenPort');
+  var txtNatIface = document.getElementById('txtNatIface');
+  var txtDns = document.getElementById('txtDns');
+  var txtServerPubKey = document.getElementById('txtServerPubKey');
+  var btnGenServerKey = document.getElementById('btnGenServerKey');
+  var btnAddPeer = document.getElementById('btnAddPeer');
+  var peerListContainer = document.getElementById('peerListContainer');
+  var outputArea = document.getElementById('outputArea');
+  var btnCopyConfig = document.getElementById('btnCopyConfig');
+  var btnDownloadConfig = document.getElementById('btnDownloadConfig');
+  var clientSelectorRow = document.getElementById('clientSelectorRow');
+  var selActiveClient = document.getElementById('selActiveClient');
+
+  function renderPeersList() {
+    peerListContainer.innerHTML = '';
+    selActiveClient.innerHTML = '';
+
+    peers.forEach(function(peer, idx) {
+      // Peer Item in Manager
+      var item = document.createElement('div');
+      item.className = 'peer-item';
+      item.innerHTML = `
+        <div class="peer-header">
+          <span>Peer #${idx + 1}: ${peer.name}</span>
+          <div>
+            <button class="btn-tool" style="font-size:0.7rem; padding:0.15rem 0.35rem;" onclick="window.regenPeerKey(${peer.id})">Regen Key</button>
+            <button class="btn-tool" style="font-size:0.7rem; padding:0.15rem 0.35rem; color:#ef4444;" onclick="window.removePeer(${peer.id})">[x]</button>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:0.5rem; margin-bottom:0.4rem;">
+          <input type="text" value="${peer.name}" placeholder="Peer Name" style="font-size:0.75rem; font-family:'Fira Code',monospace;" onchange="window.updatePeerName(${peer.id}, this.value)">
+          <input type="text" value="${peer.ip}" placeholder="Assigned IP" style="font-size:0.75rem; font-family:'Fira Code',monospace;" onchange="window.updatePeerIp(${peer.id}, this.value)">
+        </div>
+        <div style="font-size:0.7rem; font-family:'Fira Code',monospace; color:var(--text-muted); word-break:break-all;">
+          Pub: ${peer.keypair.publicKey}
+        </div>
+      `;
+      peerListContainer.appendChild(item);
+
+      // Populate client selector dropdown
+      var opt = document.createElement('option');
+      opt.value = peer.id;
+      opt.textContent = (idx + 1) + '. ' + peer.name + ' (' + peer.ip + ')';
+      selActiveClient.appendChild(opt);
+    });
+  }
+
+  function generateServerConfig() {
+    var lines = [];
+    lines.push('# /etc/wireguard/wg0.conf — Generated by zyekh.com');
+    lines.push('# Production Zero-Trust VPN Gateway');
+    lines.push('');
+    lines.push('[Interface]');
+    lines.push('Address = ' + txtServerIp.value);
+    lines.push('ListenPort = ' + txtListenPort.value);
+    lines.push('PrivateKey = ' + serverData.keypair.privateKey);
+    lines.push('');
+    lines.push('# NAT Firewall Rules (Enable IP masquerading)');
+    lines.push('PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o ' + txtNatIface.value + ' -j MASQUERADE');
+    lines.push('PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o ' + txtNatIface.value + ' -j MASQUERADE');
+    lines.push('');
+
+    peers.forEach(function(peer, idx) {
+      lines.push('# Client #' + (idx + 1) + ': ' + peer.name);
+      lines.push('[Peer]');
+      lines.push('PublicKey = ' + peer.keypair.publicKey);
+      if (peer.psk) {
+        lines.push('PresharedKey = ' + peer.psk);
+      }
+      lines.push('AllowedIPs = ' + peer.ip);
+      lines.push('');
+    });
+
+    return lines.join('\n');
+  }
+
+  function generateClientConfig(peerId) {
+    var peer = peers.find(function(p) { return p.id === peerId; }) || peers[0];
+    if (!peer) return '# No client peer configured.';
+
+    var lines = [];
+    lines.push('# ' + peer.name + '.conf — Client Configuration');
+    lines.push('# Import into WireGuard app (Linux / macOS / Windows / iOS / Android)');
+    lines.push('');
+    lines.push('[Interface]');
+    lines.push('PrivateKey = ' + peer.keypair.privateKey);
+    lines.push('Address = ' + peer.ip);
+    lines.push('DNS = ' + txtDns.value);
+    lines.push('');
+    lines.push('[Peer]');
+    lines.push('PublicKey = ' + serverData.keypair.publicKey);
+    if (peer.psk) {
+      lines.push('PresharedKey = ' + peer.psk);
+    }
+    lines.push('Endpoint = ' + txtEndpoint.value);
+    lines.push('AllowedIPs = ' + (activePreset === 'gateway' ? '0.0.0.0/0, ::/0' : '10.8.0.0/24'));
+    lines.push('PersistentKeepalive = 25');
+
+    return lines.join('\n');
+  }
+
+  function generateSetupCommands() {
+    var lines = [];
+    lines.push('# 1. Enable Linux Kernel IPv4 & IPv6 Packet Forwarding');
+    lines.push('sysctl -w net.ipv4.ip_forward=1');
+    lines.push('sysctl -w net.ipv6.conf.all.forwarding=1');
+    lines.push('echo "net.ipv4.ip_forward=1" >> /etc/sysctl.d/99-wireguard.conf');
+    lines.push('echo "net.ipv6.conf.all.forwarding=1" >> /etc/sysctl.d/99-wireguard.conf');
+    lines.push('');
+    lines.push('# 2. Install WireGuard & Save Server Configuration');
+    lines.push('apt update && apt install -y wireguard wireguard-tools');
+    lines.push('mkdir -p /etc/wireguard');
+    lines.push('chmod 700 /etc/wireguard');
+    lines.push('cat << \'EOF\' > /etc/wireguard/wg0.conf');
+    lines.push(generateServerConfig());
+    lines.push('EOF');
+    lines.push('chmod 600 /etc/wireguard/wg0.conf');
+    lines.push('');
+    lines.push('# 3. Start & Enable WireGuard Service');
+    lines.push('systemctl enable --now wg-quick@wg0');
+    lines.push('wg show');
+
+    return lines.join('\n');
+  }
+
+  function generateTopologyJson() {
+    return JSON.stringify({
+      version: '2026.1',
+      topology: activePreset,
+      server: {
+        endpoint: txtEndpoint.value,
+        tunnelIp: txtServerIp.value,
+        listenPort: parseInt(txtListenPort.value, 10),
+        publicKey: serverData.keypair.publicKey
+      },
+      peers: peers.map(function(p) {
+        return {
+          id: p.id,
+          name: p.name,
+          ip: p.ip,
+          allowedIps: p.allowedIps,
+          publicKey: p.keypair.publicKey
+        };
+      })
+    }, null, 2);
+  }
+
+  function updateOutput() {
+    txtServerPubKey.value = serverData.keypair.publicKey;
+
+    if (activeTab === 'server') {
+      clientSelectorRow.style.display = 'none';
+      outputArea.textContent = generateServerConfig();
+    } else if (activeTab === 'client') {
+      clientSelectorRow.style.display = 'flex';
+      var peerId = parseInt(selActiveClient.value, 10);
+      outputArea.textContent = generateClientConfig(peerId);
+    } else if (activeTab === 'setup') {
+      clientSelectorRow.style.display = 'none';
+      outputArea.textContent = generateSetupCommands();
+    } else if (activeTab === 'json') {
+      clientSelectorRow.style.display = 'none';
+      outputArea.textContent = generateTopologyJson();
+    }
+  }
+
+  var debouncedUpdate = window.debounceRAF(updateOutput, 60);
+
+  // Global actions
+  window.regenPeerKey = function(id) {
+    var p = peers.find(function(item) { return item.id === id; });
+    if (p) {
+      p.keypair = X25519.generateKeypair();
+      p.psk = X25519.generatePresharedKey();
+      renderPeersList();
+      debouncedUpdate();
+    }
+  };
+
+  window.removePeer = function(id) {
+    if (peers.length <= 1) return;
+    peers = peers.filter(function(item) { return item.id !== id; });
+    renderPeersList();
+    debouncedUpdate();
+  };
+
+  window.updatePeerName = function(id, val) {
+    var p = peers.find(function(item) { return item.id === id; });
+    if (p) {
+      p.name = val.trim().toLowerCase().replace(/[^a-z0-9_-]/g, '-');
+      renderPeersList();
+      debouncedUpdate();
+    }
+  };
+
+  window.updatePeerIp = function(id, val) {
+    var p = peers.find(function(item) { return item.id === id; });
+    if (p) {
+      p.ip = val.trim();
+      debouncedUpdate();
+    }
+  };
+
+  // Event Listeners
+  btnGenServerKey.addEventListener('click', function() {
+    serverData.keypair = X25519.generateKeypair();
+    debouncedUpdate();
+  });
+
+  btnAddPeer.addEventListener('click', function() {
+    var nextId = peers.length ? Math.max.apply(null, peers.map(function(p) { return p.id; })) + 1 : 1;
+    var nextIp = '10.8.0.' + (nextId + 1) + '/32';
+    peers.push({
+      id: nextId,
+      name: 'peer-' + nextId,
+      ip: nextIp,
+      allowedIps: '0.0.0.0/0, ::/0',
+      keepalive: 25,
+      psk: X25519.generatePresharedKey(),
+      keypair: X25519.generateKeypair()
+    });
+    renderPeersList();
+    debouncedUpdate();
+  });
+
+  txtEndpoint.addEventListener('input', debouncedUpdate);
+  txtServerIp.addEventListener('input', debouncedUpdate);
+  txtListenPort.addEventListener('input', debouncedUpdate);
+  txtNatIface.addEventListener('input', debouncedUpdate);
+  txtDns.addEventListener('input', debouncedUpdate);
+  selActiveClient.addEventListener('change', debouncedUpdate);
+
+  // Tab Buttons
+  document.querySelectorAll('.code-tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.code-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeTab = btn.getAttribute('data-tab');
+      debouncedUpdate();
+    });
+  });
+
+  // Preset Buttons
+  document.querySelectorAll('.preset-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activePreset = btn.getAttribute('data-preset');
+
+      if (activePreset === 'gateway') {
+        txtServerIp.value = '10.8.0.1/24';
+        peers.forEach(function(p, i) { p.ip = '10.8.0.' + (i + 2) + '/32'; p.allowedIps = '0.0.0.0/0, ::/0'; });
+      } else if (activePreset === 'mesh') {
+        txtServerIp.value = '10.99.0.1/24';
+        peers.forEach(function(p, i) { p.ip = '10.99.0.' + (i + 2) + '/32'; p.allowedIps = '10.99.0.0/24'; });
+      } else if (activePreset === 'site') {
+        txtServerIp.value = '10.200.0.1/24';
+        peers.forEach(function(p, i) { p.ip = '10.200.0.' + (i + 2) + '/32'; p.allowedIps = '192.168.1.0/24, 192.168.2.0/24'; });
+      }
+
+      renderPeersList();
+      debouncedUpdate();
+    });
+  });
+
+  // Copy & Download
+  btnCopyConfig.addEventListener('click', function() {
+    var text = outputArea.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        var old = btnCopyConfig.textContent;
+        btnCopyConfig.textContent = '[ COPIED ]';
+        setTimeout(function() { btnCopyConfig.textContent = old; }, 1500);
+      });
+    }
+  });
+
+  btnDownloadConfig.addEventListener('click', function() {
+    var text = outputArea.textContent;
+    var filename = 'wg0.conf';
+    if (activeTab === 'client') {
+      var peerId = parseInt(selActiveClient.value, 10);
+      var peer = peers.find(function(p) { return p.id === peerId; }) || peers[0];
+      filename = (peer ? peer.name : 'client') + '.conf';
+    } else if (activeTab === 'setup') {
+      filename = 'setup-wireguard.sh';
+    } else if (activeTab === 'json') {
+      filename = 'wireguard-topology.json';
+    }
+
+    var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  renderPeersList();
+  updateOutput();
+})();
+</script>
+</body>
+</html>

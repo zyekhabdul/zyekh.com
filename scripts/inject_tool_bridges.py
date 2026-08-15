@@ -99,11 +99,11 @@ TOOL_MAPPINGS = {
         'btn': 'Analyze Agent Tokens ->'
     },
     'wireguard-vpn-tunneling-for-secure-vps-mesh-networks': {
-        'badge': '[ INTERACTIVE CALCULATOR // NETWORKING ]',
-        'title': 'Subnet & CIDR Mask Calculator',
-        'desc': 'Calculate WireGuard mesh CIDR blocks, peer address allocations, and routing table prefix boundaries.',
-        'url': '/tools/subnet.html',
-        'btn': 'Calculate WireGuard CIDR ->'
+        'badge': '[ INTERACTIVE GENERATOR // VPN ]',
+        'title': 'WireGuard Mesh & Keypair Configuration Generator',
+        'desc': 'Generate production wg0.conf gateway files, client peer profiles, and Curve25519 (X25519) cryptographic keypairs 100% offline.',
+        'url': '/tools/wireguard-generator.html',
+        'btn': 'Launch WireGuard Generator ->'
     },
     'linux-kernel-sysctl-hardening-network-stack-security': {
         'badge': '[ INTERACTIVE GENERATOR // SECURITY ]',

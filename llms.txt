@@ -116,6 +116,7 @@
 - [URL Encoder / Decoder & Query Inspector](https://zyekh.com/tools/url.html): Encode, decode, parse query string parameters, and strip tracking tags from URLs 100% offline & client-side in browser.
 - [UUID & ULID Bulk Generator](https://zyekh.com/tools/uuid.html): Generate cryptographically secure UUID v4, v1, and lexicographically sortable ULIDs in bulk 100% offline & client-side in browser.
 - [WebGPU Shader & Inference Latency Profiler](https://zyekh.com/tools/webgpu-profiler.html): Benchmark local GPU compute capabilities using native WebGPU API. Measure WGSL shader compilation latency, matrix multiplication GFLOPS throughput, and VRAM memory bandwidth 100% offline.
+- [WireGuard Mesh & Keypair Configuration Generator](https://zyekh.com/tools/wireguard-generator.html): Generate secure WireGuard VPN configurations and Curve25519 (X25519) keypairs 100% client-side in browser. Build Hub-and-Spoke gateways, Full Mesh tunnels, and Site-to-Site configs with zero external calls.
 - [Zakat Calculator](https://zyekh.com/tools/zakat.html): Kalkulator zakat online: zakat maal (harta) dan zakat penghasilan. Nisab berdasarkan harga emas, perhitungan 2,5%.
 
 ---

@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "description": "Structured machine-readable tool catalog and parameter schemas for Browser AI Agents & LLMs.",
   "platform": "https://zyekh.com",
-  "total_tools": 48,
-  "updated_at": "2026-08-15T21:31:36Z",
+  "total_tools": 49,
+  "updated_at": "2026-08-15T21:34:42Z",
   "tools": [
     {
       "id": "ai-token",
@@ -1972,6 +1972,63 @@
             "5",
             "10"
           ]
+        }
+      ]
+    },
+    {
+      "id": "wireguard-generator",
+      "name": "WireGuard Mesh & Keypair Configuration Generator",
+      "description": "Generate secure WireGuard VPN configurations and Curve25519 (X25519) keypairs 100% client-side in browser. Build Hub-and-Spoke gateways, Full Mesh tunnels, and Site-to-Site configs with zero external calls.",
+      "category": "Security & Linux Systems",
+      "url": "https://zyekh.com/tools/wireguard-generator.html",
+      "execution": {
+        "type": "client_side_javascript",
+        "telemetry": "none",
+        "offline_ready": true,
+        "storage": "local_memory_or_localstorage"
+      },
+      "parameters": [
+        {
+          "name": "txtEndpoint",
+          "type": "string",
+          "input_element": "text",
+          "description": "Server Public Endpoint (IP or FQDN):"
+        },
+        {
+          "name": "txtServerIp",
+          "type": "string",
+          "input_element": "text",
+          "description": "Server Tunnel IP (CIDR):"
+        },
+        {
+          "name": "txtListenPort",
+          "type": "number",
+          "input_element": "number",
+          "description": "Listen Port:"
+        },
+        {
+          "name": "txtNatIface",
+          "type": "string",
+          "input_element": "text",
+          "description": "WAN Interface (for NAT):"
+        },
+        {
+          "name": "txtDns",
+          "type": "string",
+          "input_element": "text",
+          "description": "Client DNS Servers:"
+        },
+        {
+          "name": "txtServerPubKey",
+          "type": "string",
+          "input_element": "text",
+          "description": "Txtserverpubkey"
+        },
+        {
+          "name": "selActiveClient",
+          "type": "string",
+          "input_element": "select",
+          "description": "Active Client Peer:"
         }
       ]
     },
