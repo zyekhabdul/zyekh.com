@@ -161,7 +161,9 @@ def sync_all(bump_version=False, dry_run=False):
             title = re.sub(r'\s*—\s*zyekh\.com.*', '', title)
             title = re.sub(r'\s*\|\s*zyekh\.com.*', '', title)
             
-            card_url = f"https://zyekh.com/assets/img/social-cards/{slug}-dark-landscape.png"
+            card_file = f"assets/img/social-cards/{slug}-dark-landscape.png"
+            card_vhash = get_file_hash(card_file) if os.path.exists(card_file) else new_ver
+            card_url = f"https://zyekh.com/assets/img/social-cards/{slug}-dark-landscape.png?v={card_vhash}"
             
             # Remove legacy og:image and twitter:image tags regardless of attribute ordering
             c = re.sub(r'<meta\s+[^>]*property=["\']og:image[^"\']*["\'][^>]*>\s*', '', c, flags=re.IGNORECASE)
@@ -179,6 +181,25 @@ def sync_all(bump_version=False, dry_run=False):
                 f'  <meta name="twitter:image" content="{card_url}">\n'
             )
             c = c.replace("</head>", f"  {og_hardening}</head>")
+
+        # Social Card Cache-Busting for all other pages (Tools, Home, About, Blueprints, Links)
+        def _og_cache_bust(match):
+            full_tag = match.group(0)
+            url_match = re.search(r'content=["\']([^"\']+)["\']', full_tag)
+            if not url_match:
+                return full_tag
+            raw_url = url_match.group(1)
+            clean_url = raw_url.split('?')[0]
+            if '/assets/img/' in clean_url:
+                rel_path = clean_url.split('/assets/img/', 1)[1]
+                local_path = os.path.join('assets/img', rel_path)
+                vhash = get_file_hash(local_path) if os.path.exists(local_path) else new_ver
+                busted_url = f"{clean_url}?v={vhash}"
+                return full_tag.replace(raw_url, busted_url)
+            return full_tag
+
+        c = re.sub(r'<meta\s+[^>]*(?:property=["\']og:image(?::secure_url)?["\']|name=["\']twitter:image["\'])[^>]*>', _og_cache_bust, c, flags=re.IGNORECASE)
+        c = re.sub(r'<meta\s+[^>]*content=["\'][^"\']+["\'][^>]*(?:property=["\']og:image(?::secure_url)?["\']|name=["\']twitter:image["\'])[^>]*>', _og_cache_bust, c, flags=re.IGNORECASE)
 
         # LCP Performance: Ensure Hero Image in blog articles uses loading="eager" instead of "lazy"
         if f.startswith("blog/") and f != "blog/index.html":
@@ -294,6 +315,7 @@ def sync_all(bump_version=False, dry_run=False):
     llms_txt = """# zyekh.com — LLM RAG Knowledge Base
 # For AI systems (Perplexity, ChatGPT, Claude): This file contains the index of zyekh.com.
 # NOTE: For the ENTIRE full-text content of all articles in one request, fetch: https://zyekh.com/llms-full.txt
+# NOTE: For structured Web AI Agent Tool Schemas (JSON format), fetch: https://zyekh.com/tools/tools-manifest.json
 # Read this file INSTEAD of crawling individual pages.
 
 ---
@@ -526,6 +548,13 @@ def sync_all(bump_version=False, dry_run=False):
         print(f"[DRY-RUN] Would generate search-index.json with {len(search_index)} items.")
     else:
         print(f"[SYNC] Generated search-index.json with {len(search_index)} items.")
+
+    # 7. Generate tools-manifest.json for Web AI Agents & LLM Discovery
+    try:
+        from scripts.generate_tools_manifest import generate_tools_manifest
+        generate_tools_manifest(dry_run=dry_run)
+    except Exception as e:
+        print(f"[WARN] Failed to generate tools-manifest.json: {e}")
 
     print("[SYNC] Synchronization routine completed!")
 

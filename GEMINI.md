@@ -36,6 +36,7 @@
 - **Atomic File Write & Dry-Run Standard (Protocol 46)**: Batch file modification loops must write to temporary `.tmp` buffers and use `os.replace` for atomic commits, supporting `--dry-run` to preview file mutations.
 - **Strict Credential Masking & Log Redaction (Protocol 47)**: Remote API and syndication exceptions must pass through `sanitize_secret_log()` to eliminate credential exposure in stdout/stderr.
 - **Localhost Live HTTP Smoke Test Gate (Protocol 48 / Check 21)**: QA verification must execute live HTTP probing against an ephemeral localhost server (`scripts/smoke_test.py`), validating 100% of tested archetype routes, MIME types, Anti-Clickjacking headers, and Anti-FOUC theme scripts.
+- **Web AI Agent Tool Manifest Standard (Protocol 49)**: All client-side tools must have structured parameter schemas exported to `tools/tools-manifest.json` via `scripts/generate_tools_manifest.py`, referenced in `llms.txt` and `robots.txt`, and audited under Check 18 of `verify_batch.py`.
 
 
 - **AUTONOMOUS INITIATIVE**: Always be highly proactive. Do not wait for the user to point out every problem. If you see a structural, UI/UX, or technical flaw, fix it immediately across all affected files without asking.

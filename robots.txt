@@ -45,6 +45,7 @@ Allow: /
 # Fetch /llms.txt or /llms-full.txt for high-density knowledge base
 LLMs-Txt: https://zyekh.com/llms.txt
 LLMs-Full-Txt: https://zyekh.com/llms-full.txt
+Tools-Manifest: https://zyekh.com/tools/tools-manifest.json
 
 # XML Sitemap
 Sitemap: https://zyekh.com/sitemap.xml

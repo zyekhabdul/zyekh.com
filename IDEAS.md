@@ -24,7 +24,8 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 - [ DONE ] **Localhost Live HTTP Server Smoke Tester (Check 21)**: Pengujian live server ephemeral localhost via `scripts/smoke_test.py` terintegrasi ke QA Gate untuk memvalidasi seluruh routing arketipe, MIME types, anti-Clickjacking, dan anti-FOUC.
 - [ DONE ] **Atomic File Write Pattern & Dry-Run Mode**: Pola penulisan atomik file (`.tmp` + `os.replace`) dan simulasi `--dry-run` di `sync_content.py` untuk menjamin zero-corruption.
 - [ DONE ] **Strict Secret Masking & Error Trace Redaction**: Redaksi otomatis token Bearer, API keys, dan kata sandi di seluruh log error `scripts/syndicate.py` dan `run_pipeline.py`.
-- [ BACKLOG ] **Content Hash Cache-Busting on OpenGraph Tags**: Otomatis menyematkan hash query string `?v=<hash>` pada `og:image` di seluruh HTML agar crawler media sosial (Facebook, LinkedIn, Discord, Telegram) tidak menampilkan thumbnail kadaluarsa.
+- [ DONE ] **Content Hash Cache-Busting on OpenGraph & Twitter Tags**: Otomatis menyematkan hash query string `?v=<file_hash>` pada `og:image` dan `twitter:image` di seluruh 91 file HTML agar crawler media sosial (Facebook, LinkedIn, Discord, Telegram, X) tidak menampilkan thumbnail kadaluarsa.
+- [ DONE ] **Web AI Agent Tool Manifest (`/tools/tools-manifest.json`)**: Ekstraksi skema JSON terstruktur untuk seluruh 46 client-side tools (parameter, elemen form, model eksekusi client-side) untuk direct tool-calling oleh Browser AI agents (Claude Computer Use, ChatGPT Operator, Gemini Web Agent).
 - [ BACKLOG ] **Dynamic Canvas Vertical Budgeting**: Kalkulator layout dinamis fleksibel di Pillow compiler untuk auto-adjust padding ketika judul/konten artikel sangat panjang.
 
 

@@ -1,48 +1,41 @@
-# IMPLEMENTATION PLAN: Defense-in-Depth Systemic Hardening & Reliability Suite
+# IMPLEMENTATION PLAN: Social Card Cache-Busting & Web AI Agent Tool Manifest Suite
 
 - **Target Repository**: `zyekh.com` (`/home/fuckadmin/Projects/zyekh.com`)
-- **Theme**: Safety-First, Zero Over-engineering, Empirical Defense-in-Depth
+- **Theme**: Performance, Zero Over-engineering, AI-Agent Ingestion Optimization (GEO)
 
 ---
 
-## Chunk 1: Dry-Run Mode & Atomic Write Safety Guard in `sync_content.py`
+## Chunk 1: OpenGraph & Twitter Social Card Cache-Busting in `sync_content.py`
 - **Target File**: `sync_content.py`
 - **Scope & Specifications**:
-  - Add CLI arguments `--dry-run` and `--bump-version`.
-  - When `--dry-run` is provided, print the exact proposed modifications (files to update, new cache version, sitemap counts) without writing to disk.
-  - Implement atomic write pattern (`write to .tmp then os.replace()`) to eliminate corrupted partial files during interruptions.
+  - In `sync_content.py` HTML rewriting pass, detect `<meta property="og:image">` and `<meta name="twitter:image">`.
+  - Append/synchronize `?v=<version>` query parameter to ensure external crawlers (Discord, Telegram, X, LinkedIn, Facebook) never serve stale social card previews when images are updated.
+  - Apply across all 91 HTML files using `atomic_write()`.
 - **Definition of Done (DoD)**:
-  - `python3 sync_content.py --dry-run` executes cleanly, outputs predicted changes, and modifies 0 files.
-  - `python3 sync_content.py` executes atomic writes without error.
+  - `python3 sync_content.py --dry-run` shows predicted `og:image` updates.
+  - `python3 sync_content.py` applies query strings cleanly across all HTML files.
 
 ---
 
-## Chunk 2: Strict Secret Masking & Error Trace Redaction in `scripts/syndicate.py` & `run_pipeline.py`
+## Chunk 2: Web AI Agent Tool Manifest Generator (`scripts/generate_tools_manifest.py`) & GEO Integration
 - **Target Files**:
-  - `scripts/syndicate.py`
-  - `run_pipeline.py`
-- **Scope & Specifications**:
-  - Build `sanitize_secret_log(text)` function that identifies and scrubs Bearer tokens, passwords, and private API keys from all error logs and stdout prints.
-  - Wrap remote API `HTTPError` exceptions to log status code and masked sanitized response bodies rather than raw payload dumps.
+  - `scripts/generate_tools_manifest.py`: Extracts structured JSON schema for all 43 client-side tools (parameters, input fields, descriptions, execution model) into `tools/tools-manifest.json`.
+  - `sync_content.py`: Invoke tool manifest generator during automated content synchronization.
+  - `llms.txt` & `robots.txt`: Expose direct reference to `/tools/tools-manifest.json` for Browser AI agents.
+  - `verify_batch.py`: Check 18 verifies that `tools/tools-manifest.json` exists and covers 100% of tools in `tools/*.html`.
 - **Definition of Done (DoD)**:
-  - `python3 scripts/syndicate.py --status` and `python3 run_pipeline.py --help` execute without error and log scrubbing is active.
+  - `tools/tools-manifest.json` generated containing all 43 tools.
+  - `verify_batch.py` passes 100% with tool manifest validation.
 
 ---
 
-## Chunk 3: Localhost Smoke Tester & HTTP/DOM Suite (`scripts/smoke_test.py` & Check 21)
+## Chunk 3: Full-System Empirical Verification & Obsidian RAG Sync
 - **Target Files**:
-  - `scripts/smoke_test.py`: Spawns a background `http.server` on an ephemeral localhost port, tests core page archetypes (`/`, `/about/`, `/contact/`, `/links/`, `/tools/`, `/tools/llm-calculator.html`, `/blog/`, `/blog/linux-vps-hardening-guide-2026.html`, `/blueprints/`, `/offline.html`, `/404.html`), checks HTTP 200/404, Content-Type, CSP headers, Anti-Clickjacking presence, and Anti-FOUC presence.
-  - `verify_batch.py`: Add **Check 21 (Localhost Live HTTP Server & Architecture Smoke Test)**.
+  - `IDEAS.md`
+  - `DEVELOPMENT.md`
+  - `00-AGY-Memory/zyekh.com/` (`INDEX.md`, `STATE.md`, `DECISIONS.md`)
 - **Definition of Done (DoD)**:
-  - `python3 scripts/smoke_test.py` passes 100% of tested endpoints.
-  - `python3 verify_batch.py` (Checks 1-21) passes with 100% success.
-
----
-
-## Chunk 4: Documentation, Roadmap & Obsidian RAG Memory Sync
-- **Target Files**:
-  - `IDEAS.md` (Update roadmap status)
-  - `AGENTS.md` / `GEMINI.md` (Codify Protocol 46 & 47)
-  - `00-AGY-Memory/zyekh.com/` (`STATE.md`, `DECISIONS.md`, `INDEX.md`)
-- **Definition of Done (DoD)**:
-  - All documentation synchronized and committed locally.
+  - `python3 verify_batch.py` (Checks 1-21) passes 100%.
+  - `python3 check_emojis.py` reports 0 emojis.
+  - Local git commit created (No git push).
+  - Obsidian RAG synchronized.

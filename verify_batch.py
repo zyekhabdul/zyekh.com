@@ -256,6 +256,23 @@ def verify_all_articles():
                 print(f"[FAIL] Article '{a_slug}' missing from llms-full.txt")
                 tool_failures += 1
 
+    manifest_path = "tools/tools-manifest.json"
+    if not os.path.exists(manifest_path):
+        print("[FAIL] tools/tools-manifest.json does not exist")
+        tool_failures += 1
+    else:
+        try:
+            m_data = json.loads(open(manifest_path, encoding='utf-8').read())
+            manifest_slugs = set(tool_entry["id"] for tool_entry in m_data.get("tools", []))
+            for t in tools:
+                t_slug = os.path.splitext(os.path.basename(t))[0]
+                if t_slug not in manifest_slugs:
+                    print(f"[FAIL] Tool '{t_slug}' missing from tools/tools-manifest.json")
+                    tool_failures += 1
+        except Exception as err:
+            print(f"[FAIL] tools/tools-manifest.json is malformed JSON: {err}")
+            tool_failures += 1
+
     if tool_failures > 0:
         failures += tool_failures
 

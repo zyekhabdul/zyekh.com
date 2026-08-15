@@ -180,4 +180,8 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
 48. **LOCALHOST LIVE HTTP SMOKE TEST GATE (CHECK 21)**:
     - **Ephemeral Localhost Validation**: QA Gate verification (`verify_batch.py`) MUST execute live HTTP probing against an ephemeral localhost server (`scripts/smoke_test.py`), validating 100% of tested archetype routes, MIME types, Anti-Clickjacking headers, and Anti-FOUC theme scripts.
 
+49. **WEB AI AGENT TOOL MANIFEST & DIRECT INGESTION STANDARD**:
+    - **Structured Machine Schema**: All client-side tools in `tools/*.html` MUST have their parameter schemas, execution models, and metadata automatically compiled to `tools/tools-manifest.json` via `scripts/generate_tools_manifest.py`.
+    - **GEO & Agent Discovery Parity**: Direct references MUST be maintained in `llms.txt` and `robots.txt` (`Tools-Manifest`), and validated automatically under Check 18 of `verify_batch.py`.
+
 

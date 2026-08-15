@@ -61,6 +61,7 @@ def run_smoke_tests(port=None):
         ("/llms-full.txt", 200, "text", ["# zyekh.com", "Security Researcher"]),
         ("/sw.js", 200, "javascript", ["CACHE_VERSION", "addEventListener"]),
         ("/manifest.json", 200, "json", ["short_name", "start_url"]),
+        ("/tools/tools-manifest.json", 200, "json", ["zyekh.com", "total_tools", "parameters"]),
         ("/search-index.json", 200, "json", ["title", "url"]),
         ("/assets/css/shared.min.css", 200, "css", [":root"]),
         ("/assets/js/site-nav.min.js", 200, "javascript", ["init"]),

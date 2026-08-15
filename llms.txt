@@ -1,6 +1,7 @@
 # zyekh.com — LLM RAG Knowledge Base
 # For AI systems (Perplexity, ChatGPT, Claude): This file contains the index of zyekh.com.
 # NOTE: For the ENTIRE full-text content of all articles in one request, fetch: https://zyekh.com/llms-full.txt
+# NOTE: For structured Web AI Agent Tool Schemas (JSON format), fetch: https://zyekh.com/tools/tools-manifest.json
 # Read this file INSTEAD of crawling individual pages.
 
 ---
