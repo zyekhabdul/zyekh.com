@@ -121,6 +121,15 @@ def sync_all(bump_version=False, dry_run=False):
         preload_tags = f'<link rel="preload" href="/assets/css/shared.min.css" as="style">\n  <link rel="preload" href="/assets/js/site-nav.min.js" as="script">\n'
         c = c.replace("</head>", f"  {preload_tags}</head>")
 
+        # Multi-Format Feed Discovery Injection in <head>
+        feed_tags = (
+            '  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">\n'
+            '  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">\n'
+            '  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">\n'
+        )
+        c = re.sub(r'<link[^>]*rel="alternate"[^>]*type="application/(?:rss\+xml|atom\+xml|feed\+json)"[^>]*>\s*', '', c)
+        c = c.replace("</head>", f"{feed_tags}</head>")
+
         # Inject query version (file hash) and new SRI hashes to ALL links/scripts (including preloads)
         for orig, min_path in assets_map.items():
             if not min_path: continue
@@ -268,7 +277,7 @@ def sync_all(bump_version=False, dry_run=False):
     else:
         print(f"[SYNC] Regenerated sitemap.xml with {len(urls_data)} URLs.")
 
-    # 4. Extract blog articles for RSS feed.xml & llms.txt
+    # 4. Extract blog articles for RSS, Atom, and JSON feeds & llms.txt
     article_meta = []
     for b in sorted(glob.glob("blog/*.html")):
         if b == "blog/index.html":
@@ -279,23 +288,42 @@ def sync_all(bump_version=False, dry_run=False):
         desc_meta = soup.find("meta", {"name": "description"})
         desc = desc_meta["content"].strip() if desc_meta else title
         
+        slug = os.path.basename(b).replace(".html", "")
+        card_file = f"assets/img/social-cards/{slug}-dark-landscape.png"
+        card_url = f"https://zyekh.com/{card_file}" if os.path.exists(card_file) else "https://zyekh.com/assets/img/vps-hardening.jpg"
+
+        meta_span = soup.find("span", class_="meta-tag")
+        cat_text = meta_span.text.strip() if meta_span else "Cyber Security"
+        tags = [p.strip() for p in re.split(r'[•,/|]+', cat_text) if p.strip()]
+
         time_tag = soup.find("time", class_="meta-item") or soup.find("meta", {"property": "article:published_time"})
         mtime = os.path.getmtime(b)
         fallback_dt = datetime.datetime.fromtimestamp(mtime, datetime.timezone.utc)
         pub_date_str = fallback_dt.strftime("%a, %d %b %Y %H:%M:%S GMT")
+        iso_date_str = fallback_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
         if time_tag:
             raw_date = time_tag.get("datetime") or time_tag.get("content")
             if raw_date and len(raw_date) >= 10:
                 try:
                     dt = datetime.datetime.strptime(raw_date[:10], "%Y-%m-%d")
                     pub_date_str = dt.strftime("%a, %d %b %Y 00:00:00 GMT")
+                    iso_date_str = dt.strftime("%Y-%m-%dT00:00:00Z")
                 except ValueError:
                     pass
 
         rel_url = f"{base_url}/" + b.replace("\\", "/")
-        article_meta.append({"title": title, "url": rel_url, "desc": desc, "pub_date": pub_date_str})
+        article_meta.append({
+            "id": rel_url,
+            "title": title,
+            "url": rel_url,
+            "desc": desc,
+            "pub_date": pub_date_str,
+            "iso_date": iso_date_str,
+            "tags": tags,
+            "image": card_url
+        })
 
-    # Update feed.xml
+    # 4a. Update feed.xml (RSS 2.0)
     feed_items = []
     for item in article_meta:
         escaped_title = html.escape(item['title'])
@@ -326,11 +354,95 @@ def sync_all(bump_version=False, dry_run=False):
     else:
         print(f"[SYNC] Updated feed.xml with {len(article_meta)} articles.")
 
+    # 4b. Update atom.xml (RFC 4287 Atom 1.0)
+    latest_iso = article_meta[0]['iso_date'] if article_meta else datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    atom_entries = []
+    for item in article_meta:
+        escaped_title = html.escape(item['title'])
+        escaped_desc = html.escape(item['desc'])
+        category_tags = "\n".join([f'    <category term="{html.escape(t)}"/>' for t in item.get('tags', [])])
+        atom_entries.append(f"""  <entry>
+    <title>{escaped_title}</title>
+    <link href="{item['url']}"/>
+    <id>{item['url']}</id>
+    <updated>{item['iso_date']}</updated>
+    <published>{item['iso_date']}</published>
+    <summary>{escaped_desc}</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+{category_tags}
+  </entry>""")
+
+    atom_xml = f"""<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>zyekh.com — Technical Articles &amp; Security Insights</title>
+  <subtitle>Technical articles, Linux kernel news, system hardening guides, and cybersecurity research by Zyekh Abdul Qadir Jailani.</subtitle>
+  <link href="https://zyekh.com/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://zyekh.com/blog/"/>
+  <id>https://zyekh.com/blog/</id>
+  <updated>{latest_iso}</updated>
+  <author>
+    <name>Zyekh Abdul Qadir Jailani</name>
+    <email>zyekhabdulqadirjailani@zyekh.com</email>
+    <uri>https://zyekh.com/</uri>
+  </author>
+  <icon>https://zyekh.com/assets/icons/favicon-32x32.png</icon>
+  <logo>https://zyekh.com/assets/icons/apple-icon-180x180.png</logo>
+{chr(10).join(atom_entries)}
+</feed>
+"""
+    atomic_write("atom.xml", atom_xml, dry_run=dry_run)
+    if dry_run:
+        print(f"[DRY-RUN] Would update atom.xml with {len(article_meta)} articles.")
+    else:
+        print(f"[SYNC] Updated atom.xml with {len(article_meta)} articles.")
+
+    # 4c. Update feed.json (JSON Feed v1.1)
+    json_feed_items = []
+    for item in article_meta:
+        json_feed_items.append({
+            "id": item["url"],
+            "url": item["url"],
+            "title": item["title"],
+            "summary": item["desc"],
+            "date_published": item["iso_date"],
+            "date_modified": item["iso_date"],
+            "tags": item.get("tags", []),
+            "image": item.get("image", "")
+        })
+
+    json_feed_data = {
+        "version": "https://jsonfeed.org/version/1.1",
+        "title": "zyekh.com — Technical Articles & Security Insights",
+        "home_page_url": "https://zyekh.com/blog/",
+        "feed_url": "https://zyekh.com/feed.json",
+        "description": "Technical articles, Linux kernel news, system hardening guides, and cybersecurity research by Zyekh Abdul Qadir Jailani.",
+        "icon": "https://zyekh.com/assets/icons/apple-icon-180x180.png",
+        "favicon": "https://zyekh.com/assets/icons/favicon-32x32.png",
+        "authors": [
+            {
+                "name": "Zyekh Abdul Qadir Jailani",
+                "url": "https://zyekh.com/",
+                "avatar": "https://zyekh.com/assets/img/profile.jpg"
+            }
+        ],
+        "items": json_feed_items
+    }
+    import json
+    atomic_write("feed.json", json.dumps(json_feed_data, indent=2), dry_run=dry_run)
+    if dry_run:
+        print(f"[DRY-RUN] Would update feed.json with {len(article_meta)} articles.")
+    else:
+        print(f"[SYNC] Updated feed.json with {len(article_meta)} articles.")
+
     # Update llms.txt RAG Knowledge Base (Optimized for GEO / AI Search Engines)
     llms_txt = """# zyekh.com — LLM RAG Knowledge Base
 # For AI systems (Perplexity, ChatGPT, Claude): This file contains the index of zyekh.com.
 # NOTE: For the ENTIRE full-text content of all articles in one request, fetch: https://zyekh.com/llms-full.txt
 # NOTE: For structured Web AI Agent Tool Schemas (JSON format), fetch: https://zyekh.com/tools/tools-manifest.json
+# NOTE: Multi-format Syndication Feeds: RSS (https://zyekh.com/feed.xml), Atom (https://zyekh.com/atom.xml), JSON Feed (https://zyekh.com/feed.json)
 # Read this file INSTEAD of crawling individual pages.
 
 ---

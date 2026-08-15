@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>zyekh.com — Technical Articles &amp; Security Insights</title>
+  <subtitle>Technical articles, Linux kernel news, system hardening guides, and cybersecurity research by Zyekh Abdul Qadir Jailani.</subtitle>
+  <link href="https://zyekh.com/atom.xml" rel="self" type="application/atom+xml"/>
+  <link href="https://zyekh.com/blog/"/>
+  <id>https://zyekh.com/blog/</id>
+  <updated>2026-08-04T00:00:00Z</updated>
+  <author>
+    <name>Zyekh Abdul Qadir Jailani</name>
+    <email>zyekhabdulqadirjailani@zyekh.com</email>
+    <uri>https://zyekh.com/</uri>
+  </author>
+  <icon>https://zyekh.com/assets/icons/favicon-32x32.png</icon>
+  <logo>https://zyekh.com/assets/icons/apple-icon-180x180.png</logo>
+  <entry>
+    <title>Linux Auditd Blueprint: Real-Time Kernel Event Tracking &amp; Security Auditing</title>
+    <link href="https://zyekh.com/blog/auditd-kernel-event-monitoring-and-dfir-logging.html"/>
+    <id>https://zyekh.com/blog/auditd-kernel-event-monitoring-and-dfir-logging.html</id>
+    <updated>2026-08-04T00:00:00Z</updated>
+    <published>2026-08-04T00:00:00Z</published>
+    <summary>Security guide for configuring Linux Audit Framework (auditd) to log execve system calls, file integrity changes, and privilege escalation events.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Cyber Security"/>
+    <category term="Auditd DFIR"/>
+  </entry>
+  <entry>
+    <title>Process Isolation on Linux: Unprivileged User Namespaces &amp; Chroot Jails</title>
+    <link href="https://zyekh.com/blog/chroot-jail-and-unprivileged-namespaces-isolation.html"/>
+    <id>https://zyekh.com/blog/chroot-jail-and-unprivileged-namespaces-isolation.html</id>
+    <updated>2026-08-04T00:00:00Z</updated>
+    <published>2026-08-04T00:00:00Z</published>
+    <summary>Technical blueprint for configuring unprivileged user namespaces and chroot jails to sandbox untrusted services without full container runtimes.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="System Hardening"/>
+    <category term="Process Isolation"/>
+  </entry>
+  <entry>
+    <title>Cilium eBPF &amp; Tetragon: Cloud-Native Runtime Security &amp; Network Enforcement</title>
+    <link href="https://zyekh.com/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html"/>
+    <id>https://zyekh.com/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html</id>
+    <updated>2026-08-05T00:00:00Z</updated>
+    <published>2026-08-05T00:00:00Z</published>
+    <summary>Deep-dive guide on deploying Cilium eBPF for zero-trust network policy enforcement and Tetragon for real-time kernel event monitoring in Kubernetes.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Cloud Security"/>
+    <category term="Kubernetes &amp; eBPF"/>
+  </entry>
+  <entry>
+    <title>ColBERT Late Interaction: Advancing RAG Beyond Dense Embeddings</title>
+    <link href="https://zyekh.com/blog/colbert-late-interaction-advanced-rag.html"/>
+    <id>https://zyekh.com/blog/colbert-late-interaction-advanced-rag.html</id>
+    <updated>2026-08-09T00:00:00Z</updated>
+    <published>2026-08-09T00:00:00Z</published>
+    <summary>How late interaction retrieval models solve the lost-in-the-middle problem and dramatically improve Retrieval-Augmented Generation precision over standard single-vector embeddings.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="AI Engineering"/>
+    <category term="RAG"/>
+  </entry>
+  <entry>
+    <title>Container Image Signing &amp; SLSA Provenance Verification with Sigstore Cosign</title>
+    <link href="https://zyekh.com/blog/container-image-signing-and-slsa-provenance-with-cosign.html"/>
+    <id>https://zyekh.com/blog/container-image-signing-and-slsa-provenance-with-cosign.html</id>
+    <updated>2026-08-05T00:00:00Z</updated>
+    <published>2026-08-05T00:00:00Z</published>
+    <summary>Supply chain security guide on signing OCI container images keylessly and verifying SLSA build provenance using Sigstore Cosign and Rekor.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Supply Chain Security"/>
+    <category term="DevOps"/>
+  </entry>
+  <entry>
+    <title>DSPy: Replacing Prompt Engineering with Declarative Optimization Compilers</title>
+    <link href="https://zyekh.com/blog/dspy-declarative-prompting-optimization.html"/>
+    <id>https://zyekh.com/blog/dspy-declarative-prompting-optimization.html</id>
+    <updated>2026-08-09T00:00:00Z</updated>
+    <published>2026-08-09T00:00:00Z</published>
+    <summary>Why manual prompt tweaking is obsolete. Learn how to compile and optimize LM pipelines using DSPy declarative modules and metric-driven teleprompter algorithms.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="AI Engineering"/>
+    <category term="Prompting"/>
+  </entry>
+  <entry>
+    <title>High-Speed eBPF/XDP Packet Filtering for Linux Server DDoS Mitigation</title>
+    <link href="https://zyekh.com/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html"/>
+    <id>https://zyekh.com/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html</id>
+    <updated>2026-08-04T00:00:00Z</updated>
+    <published>2026-08-04T00:00:00Z</published>
+    <summary>Technical guide for writing eBPF eXpress Data Path (XDP) kernel programs to drop malicious DDoS traffic at the network driver level.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Linux Kernel"/>
+    <category term="XDP DDoS Defense"/>
+  </entry>
+  <entry>
+    <title>Automated Intrusion Prevention: Fail2ban Configuration for SSH &amp; Nginx Protection</title>
+    <link href="https://zyekh.com/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html"/>
+    <id>https://zyekh.com/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html</id>
+    <updated>2026-08-04T00:00:00Z</updated>
+    <published>2026-08-04T00:00:00Z</published>
+    <summary>Comprehensive blueprint for deploying Fail2ban to detect brute-force attacks, automate IP bans via iptables/nftables, and configure recidive long-term bans.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Cyber Security"/>
+    <category term="Fail2ban Defense"/>
+  </entry>
+  <entry>
+    <title>HTTP/3 &amp; QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks</title>
+    <link href="https://zyekh.com/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html"/>
+    <id>https://zyekh.com/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html</id>
+    <updated>2026-08-05T00:00:00Z</updated>
+    <published>2026-08-05T00:00:00Z</published>
+    <summary>Production blueprint for hardening HTTP/3 and QUIC transport protocols, mitigating 0-RTT replay vectors, and configuring UDP rate limiting.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Web Security"/>
+    <category term="Network Protocols"/>
+  </entry>
+  <entry>
+    <title>Kubernetes Pod Security Standards (PSS) &amp; Native Admission Control</title>
+    <link href="https://zyekh.com/blog/kubernetes-pod-security-standards-pss-and-admission-control.html"/>
+    <id>https://zyekh.com/blog/kubernetes-pod-security-standards-pss-and-admission-control.html</id>
+    <updated>2026-08-05T00:00:00Z</updated>
+    <published>2026-08-05T00:00:00Z</published>
+    <summary>Production guide on enforcing Privileged, Baseline, and Restricted Pod Security Standards (PSS) using native Kubernetes admission controllers.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Cloud Security"/>
+    <category term="Kubernetes"/>
+  </entry>
+  <entry>
+    <title>KV Cache INT4 Quantization for 1M+ Token Context Windows</title>
+    <link href="https://zyekh.com/blog/kv-cache-int4-quantization-long-context.html"/>
+    <id>https://zyekh.com/blog/kv-cache-int4-quantization-long-context.html</id>
+    <updated>2026-08-09T00:00:00Z</updated>
+    <published>2026-08-09T00:00:00Z</published>
+    <summary>Squeezing massive context windows into consumer GPUs by quantizing the Key-Value cache down to 4-bit precision without losing retrieval accuracy.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="AI Engineering"/>
+    <category term="Quantization"/>
+  </entry>
+  <entry>
+    <title>High-Throughput Linux Audit Logging with Vector &amp; ClickHouse DFIR Pipeline</title>
+    <link href="https://zyekh.com/blog/linux-audit-logging-with-vector-and-clickhouse-dfir.html"/>
+    <id>https://zyekh.com/blog/linux-audit-logging-with-vector-and-clickhouse-dfir.html</id>
+    <updated>2026-08-05T00:00:00Z</updated>
+    <published>2026-08-05T00:00:00Z</published>
+    <summary>Architecture guide on building a high-throughput Linux kernel audit logging pipeline using Vector log forwarder and ClickHouse for real-time DFIR forensics.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Security Monitoring"/>
+    <category term="DFIR"/>
+  </entry>
+  <entry>
+    <title>Linux Kernel Sysctl Hardening: Securing TCP/IP Network Stack against SYN Floods</title>
+    <link href="https://zyekh.com/blog/linux-kernel-sysctl-hardening-network-stack-security.html"/>
+    <id>https://zyekh.com/blog/linux-kernel-sysctl-hardening-network-stack-security.html</id>
+    <updated>2026-08-04T00:00:00Z</updated>
+    <published>2026-08-04T00:00:00Z</published>
+    <summary>Hardening guide for tuning Linux kernel sysctl parameters to defend against TCP SYN floods, IP spoofing, packet redirects, and memory exhaustion.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Linux Kernel"/>
+    <category term="Sysctl Hardening"/>
+  </entry>
+  <entry>
+    <title>Linux Landlock LSM: Unprivileged Application Sandboxing &amp; Access Control</title>
+    <link href="https://zyekh.com/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html"/>
+    <id>https://zyekh.com/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html</id>
+    <updated>2026-08-05T00:00:00Z</updated>
+    <published>2026-08-05T00:00:00Z</published>
+    <summary>Engineering guide on using the Landlock Linux Security Module to enforce unprivileged file system and network access control restrictions.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Linux Security"/>
+    <category term="Access Control"/>
+  </entry>
+  <entry>
+    <title>Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces</title>
+    <link href="https://zyekh.com/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html"/>
+    <id>https://zyekh.com/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html</id>
+    <updated>2026-08-05T00:00:00Z</updated>
+    <published>2026-08-05T00:00:00Z</published>
+    <summary>Step-by-step engineering blueprint for implementing Seccomp-BPF syscall filters to restrict Linux process capabilities and block zero-day kernel exploits.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Linux Security"/>
+    <category term="Process Isolation"/>
+  </entry>
+  <entry>
+    <title>Comprehensive Linux VPS Hardening Blueprint for 2026</title>
+    <link href="https://zyekh.com/blog/linux-vps-hardening-guide-2026.html"/>
+    <id>https://zyekh.com/blog/linux-vps-hardening-guide-2026.html</id>
+    <updated>2026-07-26T00:00:00Z</updated>
+    <published>2026-07-26T00:00:00Z</published>
+    <summary>Production-grade security blueprint for Debian and Ubuntu Linux servers. Includes SSH key enforcement, kernel sysctl parameters, UFW rate-limiting, Fail2Ban auditing, and automated updates.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="System Hardening"/>
+    <category term="Linux VPS"/>
+  </entry>
+  <entry>
+    <title>Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security</title>
+    <link href="https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html"/>
+    <id>https://zyekh.com/blog/minimalist-server-architecture-pure-css-and-static-hosting.html</id>
+    <updated>2026-07-10T00:00:00Z</updated>
+    <published>2026-07-10T00:00:00Z</published>
+    <summary>Architectural analysis comparing static edge hosting to monolithic server frameworks. Examines attack surface reduction, TTFB performance benchmarks, zero server maintenance, and pure CSS design systems.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Web Performance"/>
+    <category term="Static Architecture"/>
+  </entry>
+  <entry>
+    <title>Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing</title>
+    <link href="https://zyekh.com/blog/moe-serving-mixture-of-experts-routing.html"/>
+    <id>https://zyekh.com/blog/moe-serving-mixture-of-experts-routing.html</id>
+    <updated>2026-08-09T00:00:00Z</updated>
+    <published>2026-08-09T00:00:00Z</published>
+    <summary>Deep dive into the gating router mechanisms of Mixtral 8x7B and DeepSeek-V2, expert parallelism strategies, and VRAM memory offloading patterns across multi-GPU setups.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="AI Engineering"/>
+    <category term="Architecture"/>
+  </entry>
+  <entry>
+    <title>Multi-Agent Swarm Orchestration: Hierarchical Agentic Workflows</title>
+    <link href="https://zyekh.com/blog/multi-agent-swarm-orchestration-patterns.html"/>
+    <id>https://zyekh.com/blog/multi-agent-swarm-orchestration-patterns.html</id>
+    <updated>2026-08-09T00:00:00Z</updated>
+    <published>2026-08-09T00:00:00Z</published>
+    <summary>Designing recursive agent loops, tool-calling pipelines, state graph transitions, and autonomous swarm routing for complex software engineering automation.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="AI Engineering"/>
+    <category term="Agents"/>
+  </entry>
+  <entry>
+    <title>Nginx Reverse Proxy Security Hardening Blueprint for 2026</title>
+    <link href="https://zyekh.com/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html"/>
+    <id>https://zyekh.com/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html</id>
+    <updated>2026-08-03T00:00:00Z</updated>
+    <published>2026-08-03T00:00:00Z</published>
+    <summary>Production guide for hardening Nginx reverse proxies with TLS 1.3, rate limiting, buffer overflow defense, and security headers.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Web Security"/>
+    <category term="Nginx Hardening"/>
+  </entry>
+  <entry>
+    <title>OmniRouter Architecture: Resilient LLM Gateway Routing &amp; Fallback Pipelines</title>
+    <link href="https://zyekh.com/blog/omnirouter-llm-gateway-routing-fallback-patterns.html"/>
+    <id>https://zyekh.com/blog/omnirouter-llm-gateway-routing-fallback-patterns.html</id>
+    <updated>2026-08-09T00:00:00Z</updated>
+    <published>2026-08-09T00:00:00Z</published>
+    <summary>Advanced API routing techniques for multi-LLM architectures, mitigating rate limits, and ensuring speculative decoding fallbacks across OpenAI, Anthropic, and open-source nodes.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="AI Engineering"/>
+    <category term="Architecture"/>
+  </entry>
+  <entry>
+    <title>Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force</title>
+    <link href="https://zyekh.com/blog/pam-tally2-faillock-account-lockout-policy-guide.html"/>
+    <id>https://zyekh.com/blog/pam-tally2-faillock-account-lockout-policy-guide.html</id>
+    <updated>2026-08-04T00:00:00Z</updated>
+    <published>2026-08-04T00:00:00Z</published>
+    <summary>Security guide for configuring pam_faillock to prevent SSH and console brute-force authentication attacks on RHEL, Debian, and Ubuntu systems.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="System Hardening"/>
+    <category term="PAM Security"/>
+  </entry>
+  <entry>
+    <title>Rust in the Linux Kernel: Securing Core Subsystems &amp; Memory Safety</title>
+    <link href="https://zyekh.com/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html"/>
+    <id>https://zyekh.com/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html</id>
+    <updated>2026-08-05T00:00:00Z</updated>
+    <published>2026-08-05T00:00:00Z</published>
+    <summary>Comprehensive engineering guide on how Rust eliminates spatial and temporal memory vulnerabilities in modern Linux kernel drivers and network modules.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Linux Security"/>
+    <category term="Kernel Architecture"/>
+  </entry>
+  <entry>
+    <title>Implementing Strict Content Security Policy (CSP) &amp; Security Headers</title>
+    <link href="https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html"/>
+    <id>https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html</id>
+    <updated>2026-07-15T00:00:00Z</updated>
+    <published>2026-07-15T00:00:00Z</published>
+    <summary>Comprehensive technical guide for configuring strict Content Security Policy (CSP), HTTP Strict Transport Security (HSTS), X-Content-Type-Options, and Nginx security headers.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Web Security"/>
+    <category term="CSP Hardening"/>
+  </entry>
+  <entry>
+    <title>S-LoRA: Multiplexing Thousands of Fine-Tuned Adapters on a Single GPU</title>
+    <link href="https://zyekh.com/blog/slora-adapter-multiplexing-single-gpu.html"/>
+    <id>https://zyekh.com/blog/slora-adapter-multiplexing-single-gpu.html</id>
+    <updated>2026-08-09T00:00:00Z</updated>
+    <published>2026-08-09T00:00:00Z</published>
+    <summary>How Unified Paging and scalable LoRA adapter serving allows cloud platforms to host 10,000+ custom fine-tuned models concurrently on a single GPU without OOM errors.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="AI Engineering"/>
+    <category term="Performance"/>
+  </entry>
+  <entry>
+    <title>Short-Lived SSH Certificate Authentication with HashiCorp Vault CA</title>
+    <link href="https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html"/>
+    <id>https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html</id>
+    <updated>2026-08-05T00:00:00Z</updated>
+    <published>2026-08-05T00:00:00Z</published>
+    <summary>Zero-trust SSH architecture blueprint for eliminating static SSH public keys using HashiCorp Vault Certificate Authority and short-lived certificates.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Infrastructure Security"/>
+    <category term="SSH"/>
+  </entry>
+  <entry>
+    <title>Structured Output Generation: Enforcing JSON &amp; Regex at the Logits Level</title>
+    <link href="https://zyekh.com/blog/structured-output-generation-logits-constraints.html"/>
+    <id>https://zyekh.com/blog/structured-output-generation-logits-constraints.html</id>
+    <updated>2026-08-09T00:00:00Z</updated>
+    <published>2026-08-09T00:00:00Z</published>
+    <summary>Bypassing brittle prompt engineering by directly manipulating LLM token logits to mathematically guarantee valid JSON schema outputs without retry loops.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="AI Engineering"/>
+    <category term="Logits"/>
+  </entry>
+  <entry>
+    <title>Systemd Service Sandboxing: Restricting Process Capability &amp; System Calls</title>
+    <link href="https://zyekh.com/blog/systemd-service-sandboxing-and-security-hardening.html"/>
+    <id>https://zyekh.com/blog/systemd-service-sandboxing-and-security-hardening.html</id>
+    <updated>2026-08-04T00:00:00Z</updated>
+    <published>2026-08-04T00:00:00Z</published>
+    <summary>Production guide for sandboxing Linux daemons using systemd security directives like ProtectSystem, SystemCallFilter, and CapabilityBoundingSet.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="System Hardening"/>
+    <category term="Systemd Security"/>
+  </entry>
+  <entry>
+    <title>UFW Firewall Hardening: Advanced Rate Limiting &amp; Default-Deny Security Blueprint</title>
+    <link href="https://zyekh.com/blog/ufw-firewall-hardening-and-rate-limiting-blueprint-2026.html"/>
+    <id>https://zyekh.com/blog/ufw-firewall-hardening-and-rate-limiting-blueprint-2026.html</id>
+    <updated>2026-08-04T00:00:00Z</updated>
+    <published>2026-08-04T00:00:00Z</published>
+    <summary>Production guide for securing Linux servers using UFW with default-deny policies, custom application profiles, rate limiting, and interface isolation.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="System Hardening"/>
+    <category term="UFW Firewall"/>
+  </entry>
+  <entry>
+    <title>Understanding eBPF for Real-Time Linux Security Monitoring</title>
+    <link href="https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html"/>
+    <id>https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html</id>
+    <updated>2026-07-20T00:00:00Z</updated>
+    <published>2026-07-20T00:00:00Z</published>
+    <summary>Technical deep-dive on Extended Berkeley Packet Filter (eBPF) tracing, kprobes, tracepoints, bpftrace, and zero-overhead kernel runtime security monitoring.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Linux Kernel"/>
+    <category term="eBPF Monitoring"/>
+  </entry>
+  <entry>
+    <title>vLLM PagedAttention: Memory Optimization &amp; High-Throughput LLM Inference Tuning</title>
+    <link href="https://zyekh.com/blog/vllm-pagedattention-high-throughput-inference-tuning.html"/>
+    <id>https://zyekh.com/blog/vllm-pagedattention-high-throughput-inference-tuning.html</id>
+    <updated>2026-08-09T00:00:00Z</updated>
+    <published>2026-08-09T00:00:00Z</published>
+    <summary>Deep dive into OS-inspired virtual memory management for LLM KV caches, maximizing GPU utilization, and achieving 20x throughput scaling for production inference.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="AI Engineering"/>
+    <category term="Performance"/>
+  </entry>
+  <entry>
+    <title>WebGPU LLM Inference: Running 7B Models Natively in the Browser</title>
+    <link href="https://zyekh.com/blog/webgpu-llm-inference-browser-sandbox.html"/>
+    <id>https://zyekh.com/blog/webgpu-llm-inference-browser-sandbox.html</id>
+    <updated>2026-08-09T00:00:00Z</updated>
+    <published>2026-08-09T00:00:00Z</published>
+    <summary>Leveraging WebGPU compute shaders, TVM WebAssembly, and WGSL pipelines to run private local LLMs entirely within client-side browser sandboxes without server infrastructure.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="AI Engineering"/>
+    <category term="WebGPU"/>
+  </entry>
+  <entry>
+    <title>Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels &amp; Strict Firewall Rules</title>
+    <link href="https://zyekh.com/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html"/>
+    <id>https://zyekh.com/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html</id>
+    <updated>2026-08-04T00:00:00Z</updated>
+    <published>2026-08-04T00:00:00Z</published>
+    <summary>Step-by-step technical blueprint for creating encrypted private mesh networks between multi-cloud VPS nodes using WireGuard and UDP noise protocols.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Web Security"/>
+    <category term="WireGuard Mesh"/>
+  </entry>
+  <entry>
+    <title>Zero-Trust Microservices with WebAssembly (Wasm) Runtime Sandboxing</title>
+    <link href="https://zyekh.com/blog/zero-trust-microservices-with-wasm-runtime-sandboxing.html"/>
+    <id>https://zyekh.com/blog/zero-trust-microservices-with-wasm-runtime-sandboxing.html</id>
+    <updated>2026-08-05T00:00:00Z</updated>
+    <published>2026-08-05T00:00:00Z</published>
+    <summary>Architecture blueprint for running untrusted microservice code inside WebAssembly sandboxes with nanosecond startup times and linear memory bounds.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Cloud Security"/>
+    <category term="WebAssembly"/>
+  </entry>
+  <entry>
+    <title>Zero-Trust SSH Access Blueprint: FIDO2 Hardware Keys &amp; SSH Certificate Authority</title>
+    <link href="https://zyekh.com/blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html"/>
+    <id>https://zyekh.com/blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html</id>
+    <updated>2026-08-03T00:00:00Z</updated>
+    <published>2026-08-03T00:00:00Z</published>
+    <summary>Comprehensive technical blueprint for securing Linux SSH infrastructure using FIDO2/YubiKey hardware tokens, SSH Certificate Authority (SSH CA), and short-lived certificates.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Cyber Security"/>
+    <category term="Zero Trust SSH"/>
+  </entry>
+</feed>

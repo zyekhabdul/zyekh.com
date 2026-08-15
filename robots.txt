@@ -47,5 +47,10 @@ LLMs-Txt: https://zyekh.com/llms.txt
 LLMs-Full-Txt: https://zyekh.com/llms-full.txt
 Tools-Manifest: https://zyekh.com/tools/tools-manifest.json
 
+# Syndication Feed Endpoints (RSS 2.0, Atom 1.0 RFC 4287, JSON Feed v1.1)
+Feed-RSS: https://zyekh.com/feed.xml
+Feed-Atom: https://zyekh.com/atom.xml
+Feed-JSON: https://zyekh.com/feed.json
+
 # XML Sitemap
 Sitemap: https://zyekh.com/sitemap.xml

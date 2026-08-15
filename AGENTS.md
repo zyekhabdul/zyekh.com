@@ -184,4 +184,8 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
     - **Structured Machine Schema**: All client-side tools in `tools/*.html` MUST have their parameter schemas, execution models, and metadata automatically compiled to `tools/tools-manifest.json` via `scripts/generate_tools_manifest.py`.
     - **GEO & Agent Discovery Parity**: Direct references MUST be maintained in `llms.txt` and `robots.txt` (`Tools-Manifest`), and validated automatically under Check 18 of `verify_batch.py`.
 
+50. **MULTI-FORMAT FEED SYNDICATION & AUTODISCOVERY STANDARD**:
+    - **Tri-Feed Delivery**: All blog articles MUST be automatically syndicated across RSS 2.0 (`feed.xml`), RFC 4287 Atom 1.0 (`atom.xml`), and JSON Feed v1.1 (`feed.json`) via `sync_content.py`.
+    - **Discovery & Validation Parity**: Autodiscovery `<link rel="alternate">` tags MUST be injected across all HTML `<head>`, and validated in `verify_batch.py` Check 17 and Check 21.
+
 

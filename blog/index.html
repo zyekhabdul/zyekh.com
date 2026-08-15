@@ -45,6 +45,9 @@
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
 <link as="style" crossorigin="anonymous" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" rel="preload"/>
 <link as="script" crossorigin="anonymous" href="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" rel="preload"/>
+<link href="https://zyekh.com/feed.xml" rel="alternate" title="Zyekh RSS Feed" type="application/rss+xml"/>
+<link href="https://zyekh.com/atom.xml" rel="alternate" title="Zyekh Atom Feed" type="application/atom+xml"/>
+<link href="https://zyekh.com/feed.json" rel="alternate" title="Zyekh JSON Feed" type="application/feed+json"/>
 <meta content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-YNCLLwbOR2ZDdkJE2fawWSQQAdAbBxUbq6xUse6IkyE='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';" http-equiv="Content-Security-Policy"/>
 </head>
 <body>
@@ -68,27 +71,6 @@
 <div class="grid-2" id="articlesGrid">
 <div class="article-item" data-category="security linux">
 <article class="article-card">
-<a href="/blog/slora-adapter-multiplexing-single-gpu.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
-<div class="card-thumb-wrapper">
-<picture>
-<source srcset="/assets/img/slora_multiplex_hero.webp" type="image/webp"/>
-<img alt="S-LoRA: Multiplexing Thousands of Fine-Tuned Adapters on a Single GPU" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/slora_multiplex_hero.jpg" width="640"/>
-</picture>
-</div>
-<div class="tags-container"><span class="meta-tag">#AIEngineering</span><span class="meta-tag">#Performance</span></div>
-<h2 class="card-title">S-LoRA: Multiplexing Thousands of Fine-Tuned Adapters on a Single GPU</h2>
-<p class="article-excerpt">
-  How Unified Paging and scalable LoRA adapter serving allows cloud platforms to host 10,000+ custom fine-tuned models concurrently on a single GPU without OOM errors.
-</p>
-<div class="article-footer">
-<span>2026-08-09</span>
-<span>16 min read</span>
-</div>
-</a>
-</article>
-</div>
-<div class="article-item" data-category="security linux">
-<article class="article-card">
 <a href="/blog/structured-output-generation-logits-constraints.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
 <div class="card-thumb-wrapper">
 <picture>
@@ -110,21 +92,21 @@
 </div>
 <div class="article-item" data-category="security linux">
 <article class="article-card">
-<a href="/blog/multi-agent-swarm-orchestration-patterns.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
+<a href="/blog/kv-cache-int4-quantization-long-context.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
 <div class="card-thumb-wrapper">
 <picture>
-<source srcset="/assets/img/multiagent_swarm_hero.webp" type="image/webp"/>
-<img alt="Multi-Agent Swarm Orchestration: Hierarchical Agentic Workflows" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/multiagent_swarm_hero.jpg" width="640"/>
+<source srcset="/assets/img/kv_quantization_hero.webp" type="image/webp"/>
+<img alt="KV Cache INT4 Quantization for 1M+ Token Context Windows" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/kv_quantization_hero.jpg" width="640"/>
 </picture>
 </div>
-<div class="tags-container"><span class="meta-tag">#AIEngineering</span><span class="meta-tag">#Agents</span></div>
-<h2 class="card-title">Multi-Agent Swarm Orchestration: Hierarchical Agentic Workflows</h2>
+<div class="tags-container"><span class="meta-tag">#AIEngineering</span><span class="meta-tag">#Quantization</span></div>
+<h2 class="card-title">KV Cache INT4 Quantization for 1M+ Token Context Windows</h2>
 <p class="article-excerpt">
-  Designing recursive agent loops, tool-calling pipelines, state graph transitions, and autonomous swarm routing for complex software engineering automation.
+  Squeezing massive context windows into consumer GPUs by quantizing the Key-Value cache down to 4-bit precision without losing retrieval accuracy.
 </p>
 <div class="article-footer">
 <span>2026-08-09</span>
-<span>17 min read</span>
+<span>16 min read</span>
 </div>
 </a>
 </article>
@@ -142,6 +124,27 @@
 <h2 class="card-title">DSPy: Replacing Prompt Engineering with Declarative Optimization Compilers</h2>
 <p class="article-excerpt">
   Why manual prompt tweaking is obsolete. Learn how to compile and optimize LM pipelines using DSPy declarative modules and metric-driven teleprompter algorithms.
+</p>
+<div class="article-footer">
+<span>2026-08-09</span>
+<span>16 min read</span>
+</div>
+</a>
+</article>
+</div>
+<div class="article-item" data-category="security linux">
+<article class="article-card">
+<a href="/blog/slora-adapter-multiplexing-single-gpu.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
+<div class="card-thumb-wrapper">
+<picture>
+<source srcset="/assets/img/slora_multiplex_hero.webp" type="image/webp"/>
+<img alt="S-LoRA: Multiplexing Thousands of Fine-Tuned Adapters on a Single GPU" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/slora_multiplex_hero.jpg" width="640"/>
+</picture>
+</div>
+<div class="tags-container"><span class="meta-tag">#AIEngineering</span><span class="meta-tag">#Performance</span></div>
+<h2 class="card-title">S-LoRA: Multiplexing Thousands of Fine-Tuned Adapters on a Single GPU</h2>
+<p class="article-excerpt">
+  How Unified Paging and scalable LoRA adapter serving allows cloud platforms to host 10,000+ custom fine-tuned models concurrently on a single GPU without OOM errors.
 </p>
 <div class="article-footer">
 <span>2026-08-09</span>
@@ -173,42 +176,21 @@
 </div>
 <div class="article-item" data-category="security linux">
 <article class="article-card">
-<a href="/blog/webgpu-llm-inference-browser-sandbox.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
+<a href="/blog/multi-agent-swarm-orchestration-patterns.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
 <div class="card-thumb-wrapper">
 <picture>
-<source srcset="/assets/img/webgpu_llm_hero.webp" type="image/webp"/>
-<img alt="WebGPU LLM Inference: Running 7B Models Natively in the Browser" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/webgpu_llm_hero.jpg" width="640"/>
+<source srcset="/assets/img/multiagent_swarm_hero.webp" type="image/webp"/>
+<img alt="Multi-Agent Swarm Orchestration: Hierarchical Agentic Workflows" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/multiagent_swarm_hero.jpg" width="640"/>
 </picture>
 </div>
-<div class="tags-container"><span class="meta-tag">#AIEngineering</span><span class="meta-tag">#WebGPU</span></div>
-<h2 class="card-title">WebGPU LLM Inference: Running 7B Models Natively in the Browser</h2>
+<div class="tags-container"><span class="meta-tag">#AIEngineering</span><span class="meta-tag">#Agents</span></div>
+<h2 class="card-title">Multi-Agent Swarm Orchestration: Hierarchical Agentic Workflows</h2>
 <p class="article-excerpt">
-  Leveraging WebGPU compute shaders, TVM WebAssembly, and WGSL pipelines to run private local LLMs entirely within client-side browser sandboxes without server infrastructure.
+  Designing recursive agent loops, tool-calling pipelines, state graph transitions, and autonomous swarm routing for complex software engineering automation.
 </p>
 <div class="article-footer">
 <span>2026-08-09</span>
-<span>16 min read</span>
-</div>
-</a>
-</article>
-</div>
-<div class="article-item" data-category="security linux">
-<article class="article-card">
-<a href="/blog/omnirouter-llm-gateway-routing-fallback-patterns.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
-<div class="card-thumb-wrapper">
-<picture>
-<source srcset="/assets/img/omnirouter_hero.webp" type="image/webp"/>
-<img alt="OmniRouter Architecture: Resilient LLM Gateway Routing &amp; Fallback Pipelines" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/omnirouter_hero.jpg" width="640"/>
-</picture>
-</div>
-<div class="tags-container"><span class="meta-tag">#AIEngineering</span><span class="meta-tag">#Architecture</span></div>
-<h2 class="card-title">OmniRouter Architecture: Resilient LLM Gateway Routing &amp; Fallback Pipelines</h2>
-<p class="article-excerpt">
-  Advanced API routing techniques for multi-LLM architectures, mitigating rate limits, and ensuring speculative decoding fallbacks across OpenAI, Anthropic, and open-source nodes.
-</p>
-<div class="article-footer">
-<span>2026-08-09</span>
-<span>14 min read</span>
+<span>17 min read</span>
 </div>
 </a>
 </article>
@@ -226,6 +208,27 @@
 <h2 class="card-title">ColBERT Late Interaction: Advancing RAG Beyond Dense Embeddings</h2>
 <p class="article-excerpt">
   How late interaction retrieval models solve the lost-in-the-middle problem and dramatically improve Retrieval-Augmented Generation precision over standard single-vector embeddings.
+</p>
+<div class="article-footer">
+<span>2026-08-09</span>
+<span>16 min read</span>
+</div>
+</a>
+</article>
+</div>
+<div class="article-item" data-category="security linux">
+<article class="article-card">
+<a href="/blog/webgpu-llm-inference-browser-sandbox.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
+<div class="card-thumb-wrapper">
+<picture>
+<source srcset="/assets/img/webgpu_llm_hero.webp" type="image/webp"/>
+<img alt="WebGPU LLM Inference: Running 7B Models Natively in the Browser" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/webgpu_llm_hero.jpg" width="640"/>
+</picture>
+</div>
+<div class="tags-container"><span class="meta-tag">#AIEngineering</span><span class="meta-tag">#WebGPU</span></div>
+<h2 class="card-title">WebGPU LLM Inference: Running 7B Models Natively in the Browser</h2>
+<p class="article-excerpt">
+  Leveraging WebGPU compute shaders, TVM WebAssembly, and WGSL pipelines to run private local LLMs entirely within client-side browser sandboxes without server infrastructure.
 </p>
 <div class="article-footer">
 <span>2026-08-09</span>
@@ -257,59 +260,38 @@
 </div>
 <div class="article-item" data-category="security linux">
 <article class="article-card">
-<a href="/blog/kv-cache-int4-quantization-long-context.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
+<a href="/blog/omnirouter-llm-gateway-routing-fallback-patterns.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
 <div class="card-thumb-wrapper">
 <picture>
-<source srcset="/assets/img/kv_quantization_hero.webp" type="image/webp"/>
-<img alt="KV Cache INT4 Quantization for 1M+ Token Context Windows" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/kv_quantization_hero.jpg" width="640"/>
+<source srcset="/assets/img/omnirouter_hero.webp" type="image/webp"/>
+<img alt="OmniRouter Architecture: Resilient LLM Gateway Routing &amp; Fallback Pipelines" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/omnirouter_hero.jpg" width="640"/>
 </picture>
 </div>
-<div class="tags-container"><span class="meta-tag">#AIEngineering</span><span class="meta-tag">#Quantization</span></div>
-<h2 class="card-title">KV Cache INT4 Quantization for 1M+ Token Context Windows</h2>
+<div class="tags-container"><span class="meta-tag">#AIEngineering</span><span class="meta-tag">#Architecture</span></div>
+<h2 class="card-title">OmniRouter Architecture: Resilient LLM Gateway Routing &amp; Fallback Pipelines</h2>
 <p class="article-excerpt">
-  Squeezing massive context windows into consumer GPUs by quantizing the Key-Value cache down to 4-bit precision without losing retrieval accuracy.
+  Advanced API routing techniques for multi-LLM architectures, mitigating rate limits, and ensuring speculative decoding fallbacks across OpenAI, Anthropic, and open-source nodes.
 </p>
 <div class="article-footer">
 <span>2026-08-09</span>
-<span>16 min read</span>
+<span>14 min read</span>
 </div>
 </a>
 </article>
 </div>
-<div class="article-item" data-category="security hardening">
+<div class="article-item" data-category="security">
 <article class="article-card">
-<a href="/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
+<a href="/blog/container-image-signing-and-slsa-provenance-with-cosign.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
 <div class="card-thumb-wrapper">
 <picture>
-<source srcset="/assets/img/http3-quic-security.webp" type="image/webp"/>
-<img alt="HTTP/3 &amp; QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/http3-quic-security.jpg" width="640"/>
+<source srcset="/assets/img/cosign-image-signing.webp" type="image/webp"/>
+<img alt="Container Image Signing &amp; SLSA Provenance Verification with Sigstore Cosign" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/cosign-image-signing.jpg" width="640"/>
 </picture>
 </div>
-<div class="tags-container"><span class="meta-tag">#WebSecurity</span><span class="meta-tag">#NetworkProtocols</span></div>
-<h2 class="card-title">HTTP/3 &amp; QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks</h2>
+<div class="tags-container"><span class="meta-tag">#SupplyChainSecurity</span><span class="meta-tag">#DevOps</span></div>
+<h2 class="card-title">Container Image Signing &amp; SLSA Provenance Verification with Sigstore Cosign</h2>
 <p class="article-excerpt">
-  Production blueprint for hardening HTTP/3 and QUIC transport protocols, mitigating 0-RTT replay vectors, and configuring UDP rate limiting.
-</p>
-<div class="article-footer">
-<span>2026-08-05</span>
-<span>13 min read</span>
-</div>
-</a>
-</article>
-</div>
-<div class="article-item" data-category="security linux research">
-<article class="article-card">
-<a href="/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
-<div class="card-thumb-wrapper">
-<picture>
-<source srcset="/assets/img/cilium-ebpf-security.webp" type="image/webp"/>
-<img alt="Cilium eBPF &amp; Tetragon: Cloud-Native Runtime Security &amp; Network Enforcement" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/cilium-ebpf-security.jpg" width="640"/>
-</picture>
-</div>
-<div class="tags-container"><span class="meta-tag">#CloudSecurity</span><span class="meta-tag">#KuberneteseBPF</span></div>
-<h2 class="card-title">Cilium eBPF &amp; Tetragon: Cloud-Native Runtime Security &amp; Network Enforcement</h2>
-<p class="article-excerpt">
-  Deep-dive guide on deploying Cilium eBPF for zero-trust network policy enforcement and Tetragon for real-time kernel event monitoring in Kubernetes.
+  Supply chain security guide on signing OCI container images keylessly and verifying SLSA build provenance using Sigstore Cosign and Rekor.
 </p>
 <div class="article-footer">
 <span>2026-08-05</span>
@@ -360,6 +342,27 @@
 </a>
 </article>
 </div>
+<div class="article-item" data-category="security">
+<article class="article-card">
+<a href="/blog/kubernetes-pod-security-standards-pss-and-admission-control.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
+<div class="card-thumb-wrapper">
+<picture>
+<source srcset="/assets/img/k8s-pod-security.webp" type="image/webp"/>
+<img alt="Kubernetes Pod Security Standards (PSS) &amp; Native Admission Control" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/k8s-pod-security.jpg" width="640"/>
+</picture>
+</div>
+<div class="tags-container"><span class="meta-tag">#CloudSecurity</span><span class="meta-tag">#Kubernetes</span></div>
+<h2 class="card-title">Kubernetes Pod Security Standards (PSS) &amp; Native Admission Control</h2>
+<p class="article-excerpt">
+  Production guide on enforcing Privileged, Baseline, and Restricted Pod Security Standards (PSS) using native Kubernetes admission controllers.
+</p>
+<div class="article-footer">
+<span>2026-08-05</span>
+<span>13 min read</span>
+</div>
+</a>
+</article>
+</div>
 <div class="article-item" data-category="security hardening linux">
 <article class="article-card">
 <a href="/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
@@ -381,19 +384,19 @@
 </a>
 </article>
 </div>
-<div class="article-item" data-category="security">
+<div class="article-item" data-category="security hardening">
 <article class="article-card">
-<a href="/blog/kubernetes-pod-security-standards-pss-and-admission-control.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
+<a href="/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
 <div class="card-thumb-wrapper">
 <picture>
-<source srcset="/assets/img/k8s-pod-security.webp" type="image/webp"/>
-<img alt="Kubernetes Pod Security Standards (PSS) &amp; Native Admission Control" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/k8s-pod-security.jpg" width="640"/>
+<source srcset="/assets/img/http3-quic-security.webp" type="image/webp"/>
+<img alt="HTTP/3 &amp; QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/http3-quic-security.jpg" width="640"/>
 </picture>
 </div>
-<div class="tags-container"><span class="meta-tag">#CloudSecurity</span><span class="meta-tag">#Kubernetes</span></div>
-<h2 class="card-title">Kubernetes Pod Security Standards (PSS) &amp; Native Admission Control</h2>
+<div class="tags-container"><span class="meta-tag">#WebSecurity</span><span class="meta-tag">#NetworkProtocols</span></div>
+<h2 class="card-title">HTTP/3 &amp; QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks</h2>
 <p class="article-excerpt">
-  Production guide on enforcing Privileged, Baseline, and Restricted Pod Security Standards (PSS) using native Kubernetes admission controllers.
+  Production blueprint for hardening HTTP/3 and QUIC transport protocols, mitigating 0-RTT replay vectors, and configuring UDP rate limiting.
 </p>
 <div class="article-footer">
 <span>2026-08-05</span>
@@ -425,48 +428,6 @@
 </div>
 <div class="article-item" data-category="security linux">
 <article class="article-card">
-<a href="/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
-<div class="card-thumb-wrapper">
-<picture>
-<source srcset="/assets/img/rust-kernel-security.webp" type="image/webp"/>
-<img alt="Rust in the Linux Kernel: Securing Core Subsystems &amp; Memory Safety" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/rust-kernel-security.jpg" width="640"/>
-</picture>
-</div>
-<div class="tags-container"><span class="meta-tag">#LinuxSecurity</span><span class="meta-tag">#KernelArchitecture</span></div>
-<h2 class="card-title">Rust in the Linux Kernel: Securing Core Subsystems &amp; Memory Safety</h2>
-<p class="article-excerpt">
-  Comprehensive engineering guide on how Rust eliminates spatial and temporal memory vulnerabilities in modern Linux kernel drivers and network modules.
-</p>
-<div class="article-footer">
-<span>2026-08-05</span>
-<span>13 min read</span>
-</div>
-</a>
-</article>
-</div>
-<div class="article-item" data-category="security">
-<article class="article-card">
-<a href="/blog/container-image-signing-and-slsa-provenance-with-cosign.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
-<div class="card-thumb-wrapper">
-<picture>
-<source srcset="/assets/img/cosign-image-signing.webp" type="image/webp"/>
-<img alt="Container Image Signing &amp; SLSA Provenance Verification with Sigstore Cosign" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/cosign-image-signing.jpg" width="640"/>
-</picture>
-</div>
-<div class="tags-container"><span class="meta-tag">#SupplyChainSecurity</span><span class="meta-tag">#DevOps</span></div>
-<h2 class="card-title">Container Image Signing &amp; SLSA Provenance Verification with Sigstore Cosign</h2>
-<p class="article-excerpt">
-  Supply chain security guide on signing OCI container images keylessly and verifying SLSA build provenance using Sigstore Cosign and Rekor.
-</p>
-<div class="article-footer">
-<span>2026-08-05</span>
-<span>13 min read</span>
-</div>
-</a>
-</article>
-</div>
-<div class="article-item" data-category="security linux">
-<article class="article-card">
 <a href="/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
 <div class="card-thumb-wrapper">
 <picture>
@@ -478,6 +439,48 @@
 <h2 class="card-title">Linux Landlock LSM: Unprivileged Application Sandboxing &amp; Access Control</h2>
 <p class="article-excerpt">
   Engineering guide on using the Landlock Linux Security Module to enforce unprivileged file system and network access control restrictions.
+</p>
+<div class="article-footer">
+<span>2026-08-05</span>
+<span>13 min read</span>
+</div>
+</a>
+</article>
+</div>
+<div class="article-item" data-category="security linux research">
+<article class="article-card">
+<a href="/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
+<div class="card-thumb-wrapper">
+<picture>
+<source srcset="/assets/img/cilium-ebpf-security.webp" type="image/webp"/>
+<img alt="Cilium eBPF &amp; Tetragon: Cloud-Native Runtime Security &amp; Network Enforcement" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/cilium-ebpf-security.jpg" width="640"/>
+</picture>
+</div>
+<div class="tags-container"><span class="meta-tag">#CloudSecurity</span><span class="meta-tag">#KuberneteseBPF</span></div>
+<h2 class="card-title">Cilium eBPF &amp; Tetragon: Cloud-Native Runtime Security &amp; Network Enforcement</h2>
+<p class="article-excerpt">
+  Deep-dive guide on deploying Cilium eBPF for zero-trust network policy enforcement and Tetragon for real-time kernel event monitoring in Kubernetes.
+</p>
+<div class="article-footer">
+<span>2026-08-05</span>
+<span>13 min read</span>
+</div>
+</a>
+</article>
+</div>
+<div class="article-item" data-category="security linux">
+<article class="article-card">
+<a href="/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html" style="display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit;">
+<div class="card-thumb-wrapper">
+<picture>
+<source srcset="/assets/img/rust-kernel-security.webp" type="image/webp"/>
+<img alt="Rust in the Linux Kernel: Securing Core Subsystems &amp; Memory Safety" class="card-thumb-img" decoding="async" height="360" loading="lazy" src="/assets/img/rust-kernel-security.jpg" width="640"/>
+</picture>
+</div>
+<div class="tags-container"><span class="meta-tag">#LinuxSecurity</span><span class="meta-tag">#KernelArchitecture</span></div>
+<h2 class="card-title">Rust in the Linux Kernel: Securing Core Subsystems &amp; Memory Safety</h2>
+<p class="article-excerpt">
+  Comprehensive engineering guide on how Rust eliminates spatial and temporal memory vulnerabilities in modern Linux kernel drivers and network modules.
 </p>
 <div class="article-footer">
 <span>2026-08-05</span>

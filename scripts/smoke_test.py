@@ -57,6 +57,8 @@ def run_smoke_tests(port=None):
         ("/404.html", 200, "text/html", ["404", "Page Not Found"]),
         ("/sitemap.xml", 200, "xml", ["<urlset", "<loc>"]),
         ("/feed.xml", 200, "xml", ["<rss", "<channel>"]),
+        ("/atom.xml", 200, "xml", ["<feed", "<entry", "http://www.w3.org/2005/Atom"]),
+        ("/feed.json", 200, "json", ["https://jsonfeed.org/version/1.1", "items", "title"]),
         ("/llms.txt", 200, "text", ["zyekh.com", "Entity Identity"]),
         ("/llms-full.txt", 200, "text", ["# zyekh.com", "Security Researcher"]),
         ("/sw.js", 200, "javascript", ["CACHE_VERSION", "addEventListener"]),

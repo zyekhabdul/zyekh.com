@@ -199,7 +199,7 @@ def verify_all_articles():
 
     # Check 17: XML Feeds & Sitemap Integrity Audit
     import xml.etree.ElementTree as ET
-    print("\n[AUDIT] Running Check 17: XML Feeds & Sitemap Integrity Audit...")
+    print("\n[AUDIT] Running Check 17: XML Feeds, Atom, JSON Feed & Sitemap Integrity Audit...")
     xml_failures = 0
     try:
         feed_tree = ET.parse('feed.xml')
@@ -211,6 +211,34 @@ def verify_all_articles():
                 xml_failures += 1
     except Exception as e:
         print(f"[FAIL] feed.xml XML parse error: {e}")
+        xml_failures += 1
+
+    try:
+        atom_tree = ET.parse('atom.xml')
+        atom_ns = {'atom': 'http://www.w3.org/2005/Atom'}
+        atom_links = set(elem.get('href', '').strip() for elem in atom_tree.getroot().findall('atom:entry/atom:link', atom_ns) if elem.get('href'))
+        for a in articles:
+            expected_url = f"https://zyekh.com/{a.replace(os.sep, '/')}"
+            if expected_url not in atom_links:
+                print(f"[FAIL] Article missing from atom.xml: {expected_url}")
+                xml_failures += 1
+    except Exception as e:
+        print(f"[FAIL] atom.xml XML parse error: {e}")
+        xml_failures += 1
+
+    try:
+        feed_json_data = json.loads(open('feed.json', encoding='utf-8').read())
+        if feed_json_data.get("version") != "https://jsonfeed.org/version/1.1":
+            print(f"[FAIL] feed.json invalid version: {feed_json_data.get('version')}")
+            xml_failures += 1
+        json_item_urls = set(item.get('url', '') for item in feed_json_data.get('items', []))
+        for a in articles:
+            expected_url = f"https://zyekh.com/{a.replace(os.sep, '/')}"
+            if expected_url not in json_item_urls:
+                print(f"[FAIL] Article missing from feed.json: {expected_url}")
+                xml_failures += 1
+    except Exception as e:
+        print(f"[FAIL] feed.json JSON parse error: {e}")
         xml_failures += 1
 
     try:
