@@ -21,6 +21,9 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 - [ DONE ] **Safe Unicode Glyph Sanitization (`extract_card_manifest.py`)**: Normalisasi otomatis karakter smart quotes (`”`, `“`), em-dash (`—`), dan panah (`→`) ke format teks teknis bersih untuk mencegah glik/tofu `[?]`.
 - [ DONE ] **Bundled Local TTF Font Distribution (`assets/fonts/ttf/`)**: Pustaka font mandiri (`JetBrainsMono`, `DejaVuSans`) di repositori untuk menjamin rendering konsisten di semua OS dan CI/CD runner.
 - [ DONE ] **Automated Multi-Channel Broadcast Pipeline**: Orkestrasi otomatis `ping_indexers.py` (IndexNow Bing/Yandex) dan `scripts/syndicate.py` (Bluesky & Mastodon) pasca-rilis artikel.
+- [ DONE ] **Localhost Live HTTP Server Smoke Tester (Check 21)**: Pengujian live server ephemeral localhost via `scripts/smoke_test.py` terintegrasi ke QA Gate untuk memvalidasi seluruh routing arketipe, MIME types, anti-Clickjacking, dan anti-FOUC.
+- [ DONE ] **Atomic File Write Pattern & Dry-Run Mode**: Pola penulisan atomik file (`.tmp` + `os.replace`) dan simulasi `--dry-run` di `sync_content.py` untuk menjamin zero-corruption.
+- [ DONE ] **Strict Secret Masking & Error Trace Redaction**: Redaksi otomatis token Bearer, API keys, dan kata sandi di seluruh log error `scripts/syndicate.py` dan `run_pipeline.py`.
 - [ BACKLOG ] **Content Hash Cache-Busting on OpenGraph Tags**: Otomatis menyematkan hash query string `?v=<hash>` pada `og:image` di seluruh HTML agar crawler media sosial (Facebook, LinkedIn, Discord, Telegram) tidak menampilkan thumbnail kadaluarsa.
 - [ BACKLOG ] **Dynamic Canvas Vertical Budgeting**: Kalkulator layout dinamis fleksibel di Pillow compiler untuk auto-adjust padding ketika judul/konten artikel sangat panjang.
 

@@ -1,48 +1,48 @@
-# IMPLEMENTATION PLAN: LLM Token & GPU VRAM Inference Cost Calculator 2026
+# IMPLEMENTATION PLAN: Defense-in-Depth Systemic Hardening & Reliability Suite
 
-- **Feature**: In-Browser LLM Token & GPU VRAM Inference Cost Calculator (`/tools/llm-calculator.html`)
-- **Repository**: `zyekh.com` (`/home/fuckadmin/Projects/zyekh.com`)
-- **Theme**: Zero-Dependency, Local-First, Baseline 2024+, Strict No-Emoji
+- **Target Repository**: `zyekh.com` (`/home/fuckadmin/Projects/zyekh.com`)
+- **Theme**: Safety-First, Zero Over-engineering, Empirical Defense-in-Depth
 
 ---
 
-## Chunk 1: Create `tools/llm-calculator.html`
-- **Target File**: `tools/llm-calculator.html`
+## Chunk 1: Dry-Run Mode & Atomic Write Safety Guard in `sync_content.py`
+- **Target File**: `sync_content.py`
 - **Scope & Specifications**:
-  - Semantic HTML5 structure with `<site-nav active="tools"></site-nav>` and `.main-container`.
-  - Schema JSON-LD `SoftwareApplication` / `WebApplication`.
-  - Anti-FOUC script & Anti-Clickjacking headers.
-  - Interactive multi-model pricing engine (Claude 3.7, GPT-4.5, Gemini 2.0 Flash/Pro, DeepSeek-R1, Llama 3.3).
-  - Accurate GPU VRAM sizing model (Model weights + KV-Cache per context & batch size + CUDA overhead).
-  - In-browser subword token chunker with RAF-debounced visual boundary highlighter.
-  - Zero external dependencies. Pure standard CSS custom properties from `assets/css/shared.css`.
+  - Add CLI arguments `--dry-run` and `--bump-version`.
+  - When `--dry-run` is provided, print the exact proposed modifications (files to update, new cache version, sitemap counts) without writing to disk.
+  - Implement atomic write pattern (`write to .tmp then os.replace()`) to eliminate corrupted partial files during interruptions.
 - **Definition of Done (DoD)**:
-  - File exists with valid HTML5 and passing all accessibility/structural standards.
+  - `python3 sync_content.py --dry-run` executes cleanly, outputs predicted changes, and modifies 0 files.
+  - `python3 sync_content.py` executes atomic writes without error.
 
 ---
 
-## Chunk 2: Register Tool in `tools/index.html` & `search-index.json`
+## Chunk 2: Strict Secret Masking & Error Trace Redaction in `scripts/syndicate.py` & `run_pipeline.py`
 - **Target Files**:
-  - `tools/index.html`: Add `.tool-item` card following Standard B layout from `DESIGN_SYSTEM.md`.
-  - `search-index.json`: Add searchable metadata object for Command Palette (Ctrl+K).
+  - `scripts/syndicate.py`
+  - `run_pipeline.py`
+- **Scope & Specifications**:
+  - Build `sanitize_secret_log(text)` function that identifies and scrubs Bearer tokens, passwords, and private API keys from all error logs and stdout prints.
+  - Wrap remote API `HTTPError` exceptions to log status code and masked sanitized response bodies rather than raw payload dumps.
 - **Definition of Done (DoD)**:
-  - Tool appears in `tools/index.html` grid and searchable in Command Palette.
+  - `python3 scripts/syndicate.py --status` and `python3 run_pipeline.py --help` execute without error and log scrubbing is active.
 
 ---
 
-## Chunk 3: Update `IDEAS.md` Status
-- **Target File**: `IDEAS.md`
-- **Scope**: Mark `LLM Token & GPU Inference Cost Calculator 2026` as `[ DONE ]`.
+## Chunk 3: Localhost Smoke Tester & HTTP/DOM Suite (`scripts/smoke_test.py` & Check 21)
+- **Target Files**:
+  - `scripts/smoke_test.py`: Spawns a background `http.server` on an ephemeral localhost port, tests core page archetypes (`/`, `/about/`, `/contact/`, `/links/`, `/tools/`, `/tools/llm-calculator.html`, `/blog/`, `/blog/linux-vps-hardening-guide-2026.html`, `/blueprints/`, `/offline.html`, `/404.html`), checks HTTP 200/404, Content-Type, CSP headers, Anti-Clickjacking presence, and Anti-FOUC presence.
+  - `verify_batch.py`: Add **Check 21 (Localhost Live HTTP Server & Architecture Smoke Test)**.
 - **Definition of Done (DoD)**:
-  - `IDEAS.md` line reflects `[ DONE ]`.
+  - `python3 scripts/smoke_test.py` passes 100% of tested endpoints.
+  - `python3 verify_batch.py` (Checks 1-21) passes with 100% success.
 
 ---
 
-## Chunk 4: Automated Content Sync & QA Verification
-- **Target Execution**:
-  - Run `python3 sync_content.py` (bumps `sw.js` `CACHE_VERSION`, updates query strings across all HTML files, regenerates `sitemap.xml`, `feed.xml`, `llms.txt`).
-  - Run `python3 generate_llms_full.py`.
-  - Run `python3 verify_batch.py` & `python3 check_emojis.py`.
-  - Check local git status & commit checkpoint.
+## Chunk 4: Documentation, Roadmap & Obsidian RAG Memory Sync
+- **Target Files**:
+  - `IDEAS.md` (Update roadmap status)
+  - `AGENTS.md` / `GEMINI.md` (Codify Protocol 46 & 47)
+  - `00-AGY-Memory/zyekh.com/` (`STATE.md`, `DECISIONS.md`, `INDEX.md`)
 - **Definition of Done (DoD)**:
-  - 100% QA audit pass, 0 emojis, clean local commit.
+  - All documentation synchronized and committed locally.

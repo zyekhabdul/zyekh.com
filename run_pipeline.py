@@ -7,11 +7,21 @@ import sys
 import subprocess
 import os
 import json
+import re
 import urllib.request
 import argparse
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
+
+def sanitize_secret_log(text: str) -> str:
+    if not isinstance(text, str):
+        text = str(text)
+    text = re.sub(r'Bearer\s+[a-zA-Z0-9_\-\.]{10,}', 'Bearer [REDACTED_TOKEN]', text, flags=re.IGNORECASE)
+    text = re.sub(r'token\s*[:=]\s*["\']?[a-zA-Z0-9_\-\.]{10,}["\']?', 'token=[REDACTED]', text, flags=re.IGNORECASE)
+    text = re.sub(r'api[-_]?key\s*[:=]\s*["\']?[a-zA-Z0-9_\-\.]{10,}["\']?', 'api_key=[REDACTED]', text, flags=re.IGNORECASE)
+    text = re.sub(r'password\s*[:=]\s*["\']?[^"\'\s,]{6,}["\']?', 'password=[REDACTED]', text, flags=re.IGNORECASE)
+    return text
 
 def run_command(cmd, desc):
     print(f"\n[ PIPELINE STEP ] {desc}...")
@@ -80,7 +90,7 @@ def purge_cloudflare_cache():
             else:
                 print("[ WARN ] Cloudflare Purge Response:", data)
     except Exception as e:
-        print(f"[ ERROR ] Cloudflare Purge API Call Failed: {e}")
+        print(f"[ ERROR ] Cloudflare Purge API Call Failed: {sanitize_secret_log(e)}")
 
 def run_syndication(slug=None, generate_cards=False, sync_unposted=False):
     syndicate_script = BASE_DIR / "scripts" / "syndicate.py"
@@ -182,9 +192,9 @@ def main():
     if not args.skip_generate:
         run_command([sys.executable, "generate_batch.py"], "Generating Article HTML Files")
 
-    # 2. QA Audit (Strict 20-axis verification)
+    # 2. QA Audit (Strict 21-axis verification)
     if not args.skip_qa:
-        run_command([sys.executable, "verify_batch.py"], "Running 20-Axis QA Audit")
+        run_command([sys.executable, "verify_batch.py"], "Running 21-Axis QA Audit")
 
     # 3. Content & Cache Sync
     run_command([sys.executable, "sync_content.py"], "Synchronizing Sitemap, RSS, RAG & Cache Version")

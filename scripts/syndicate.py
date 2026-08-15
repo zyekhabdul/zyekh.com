@@ -64,6 +64,17 @@ DOMAIN_HASHTAG_MAP = {
     "chroot": ["#LinuxNamespaces", "#ContainerSecurity", "#Linux"]
 }
 
+def sanitize_secret_log(text: str) -> str:
+    if not isinstance(text, str):
+        text = str(text)
+    # Redact Bearer tokens, passwords, API keys
+    text = re.sub(r'Bearer\s+[a-zA-Z0-9_\-\.]{10,}', 'Bearer [REDACTED_TOKEN]', text, flags=re.IGNORECASE)
+    text = re.sub(r'token\s*[:=]\s*["\']?[a-zA-Z0-9_\-\.]{10,}["\']?', 'token=[REDACTED]', text, flags=re.IGNORECASE)
+    text = re.sub(r'api[-_]?key\s*[:=]\s*["\']?[a-zA-Z0-9_\-\.]{10,}["\']?', 'api_key=[REDACTED]', text, flags=re.IGNORECASE)
+    text = re.sub(r'password\s*[:=]\s*["\']?[^"\'\s,]{6,}["\']?', 'password=[REDACTED]', text, flags=re.IGNORECASE)
+    text = re.sub(r'access_jwt\s*[:=]\s*["\']?[a-zA-Z0-9_\-\.]{10,}["\']?', 'access_jwt=[REDACTED]', text, flags=re.IGNORECASE)
+    return text
+
 def load_dotenv():
     env_file = BASE_DIR / ".env"
     if env_file.exists():
@@ -323,7 +334,7 @@ def upload_mastodon_media(token, server, image_path, description=""):
             data = json.loads(resp.read().decode('utf-8'))
             return data.get('id')
     except Exception as err:
-        print(f"[ WARN ] Mastodon Media Upload Failed: {err}")
+        print(f"[ WARN ] Mastodon Media Upload Failed: {sanitize_secret_log(err)}")
         return None
 
 def format_mastodon_status(article: dict) -> str:
@@ -389,7 +400,7 @@ def publish_mastodon(article):
             print(f"[ SUCCESS ] Mastodon Post Published: {post_url}")
             return True
     except Exception as e:
-        print(f"[ ERROR ] Mastodon Publish Failed: {e}")
+        print(f"[ ERROR ] Mastodon Publish Failed: {sanitize_secret_log(e)}")
         return False
 
 def publish_devto(article):
@@ -456,7 +467,7 @@ def publish_devto(article):
             print(f"[ SUCCESS ] Dev.to Article {action_label}: {url}")
             return True
     except urllib.error.HTTPError as e:
-        err_msg = e.read().decode('utf-8')
+        err_msg = sanitize_secret_log(e.read().decode('utf-8'))
         if e.code == 429:
             print(f"[ WARN ] Dev.to Rate limited (429). Sleeping 32s before automatic retry...")
             time.sleep(32)
@@ -474,12 +485,12 @@ def publish_devto(article):
                     print(f"[ SUCCESS ] Dev.to Article {action_label} (Post-Retry): {url}")
                     return True
             except Exception as retry_err:
-                print(f"[ ERROR ] Dev.to Retry Failed: {retry_err}")
+                print(f"[ ERROR ] Dev.to Retry Failed: {sanitize_secret_log(retry_err)}")
                 return False
         print(f"[ ERROR ] Dev.to Publish Failed ({e.code}): {err_msg}")
         return False
     except Exception as e:
-        print(f"[ ERROR ] Dev.to Publish Failed: {e}")
+        print(f"[ ERROR ] Dev.to Publish Failed: {sanitize_secret_log(e)}")
         return False
 
 def resolve_bluesky_pds(handle_or_did):
@@ -593,7 +604,7 @@ def publish_bluesky(article):
             from scripts.generate_social_cards import generate_social_card
             generate_social_card(article, card_path, theme="light", mode="square")
         except Exception as err:
-            print(f"[ WARN ] Social Card auto-generation skipped: {err}")
+            print(f"[ WARN ] Social Card auto-generation skipped: {sanitize_secret_log(err)}")
 
     blob_ref = None
     if card_path.exists():
@@ -614,7 +625,7 @@ def publish_bluesky(article):
                 blob_ref = b_data.get('blob')
                 print(f"[ SUCCESS ] Bluesky Category Social Card Attached: {card_path.name}")
         except Exception as e:
-            print(f"[ WARN ] Bluesky Blob Upload Failed: {e}")
+            print(f"[ WARN ] Bluesky Blob Upload Failed: {sanitize_secret_log(e)}")
 
     # 3. Post Record with Embed
     post_endpoint = f"{pds_server.rstrip('/')}/xrpc/com.atproto.repo.createRecord"
@@ -662,11 +673,11 @@ def publish_bluesky(article):
             print(f"[ SUCCESS ] Bluesky Post Published: {uri}")
             return True
     except urllib.error.HTTPError as e:
-        err_msg = e.read().decode('utf-8')
+        err_msg = sanitize_secret_log(e.read().decode('utf-8'))
         print(f"[ ERROR ] Bluesky Post Failed ({e.code}): {err_msg}")
         return False
     except Exception as e:
-        print(f"[ ERROR ] Bluesky Post Failed: {e}")
+        print(f"[ ERROR ] Bluesky Post Failed: {sanitize_secret_log(e)}")
         return False
 
 def print_status_table():

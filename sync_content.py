@@ -9,6 +9,14 @@ from bs4 import BeautifulSoup
 import hashlib
 import base64
 
+def atomic_write(filepath, content, dry_run=False):
+    if dry_run:
+        return
+    tmp_path = filepath + ".tmp"
+    with open(tmp_path, 'w', encoding='utf-8') as f:
+        f.write(content)
+    os.replace(tmp_path, filepath)
+
 def generate_sri(filepath):
     if not os.path.exists(filepath): return ""
     with open(filepath, 'rb') as f:
@@ -20,7 +28,7 @@ def get_file_hash(filepath):
     with open(filepath, 'rb') as f:
         return hashlib.md5(f.read()).hexdigest()[:8]
 
-def minify_css(filepath):
+def minify_css(filepath, dry_run=False):
     if not os.path.exists(filepath): return ""
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
@@ -28,11 +36,10 @@ def minify_css(filepath):
     content = re.sub(r'\s*([\{\}\:\;\=,>~])\s*', r'\1', content)
     content = re.sub(r'\s+', ' ', content).strip()
     min_path = filepath.replace('.css', '.min.css')
-    with open(min_path, 'w', encoding='utf-8') as f:
-        f.write(content)
+    atomic_write(min_path, content, dry_run=dry_run)
     return min_path
 
-def minify_js(filepath):
+def minify_js(filepath, dry_run=False):
     if not os.path.exists(filepath): return ""
     with open(filepath, 'r', encoding='utf-8') as f:
         lines = f.readlines()
@@ -43,12 +50,14 @@ def minify_js(filepath):
         min_lines.append(l)
     content = '\n'.join(min_lines)
     min_path = filepath.replace('.js', '.min.js')
-    with open(min_path, 'w', encoding='utf-8') as f:
-        f.write(content)
+    atomic_write(min_path, content, dry_run=dry_run)
     return min_path
 
-def sync_all(bump_version=False):
-    print("[SYNC] Starting automated RAG, Sitemap, RSS & Cache Version Synchronization...")
+def sync_all(bump_version=False, dry_run=False):
+    if dry_run:
+        print("[DRY-RUN] Starting simulated RAG, Sitemap, RSS & Cache Version Synchronization (No disk modifications)...")
+    else:
+        print("[SYNC] Starting automated RAG, Sitemap, RSS & Cache Version Synchronization...")
 
     sw_path = "sw.js"
     sw_ver = "v126"
@@ -63,8 +72,11 @@ def sync_all(bump_version=False):
             today_str = datetime.date.today().strftime("%Y%m%d")
             new_full_ver = f"v={today_str}_{sw_ver}"
             sw_c = re.sub(r'CACHE_VERSION = "v=\d{8}_v\d+";', f'CACHE_VERSION = "{new_full_ver}";', sw_c)
-            open(sw_path, "w", encoding="utf-8").write(sw_c)
-            print(f"[SYNC] Auto-bumped sw.js CACHE_VERSION to: {new_full_ver}")
+            atomic_write(sw_path, sw_c, dry_run=dry_run)
+            if dry_run:
+                print(f"[DRY-RUN] Would auto-bump sw.js CACHE_VERSION to: {new_full_ver}")
+            else:
+                print(f"[SYNC] Auto-bumped sw.js CACHE_VERSION to: {new_full_ver}")
         elif m:
             sw_ver = f"v{m.group(1)}"
 
@@ -74,13 +86,13 @@ def sync_all(bump_version=False):
 
     # 2. Update HTML query version string and inject SRI hashes across all HTML files
     assets_map = {
-        "site-nav.js": minify_js("assets/js/site-nav.js"),
-        "article-actions.js": minify_js("assets/js/article-actions.js"),
+        "site-nav.js": minify_js("assets/js/site-nav.js", dry_run=dry_run),
+        "article-actions.js": minify_js("assets/js/article-actions.js", dry_run=dry_run),
         "marked.min.js": "assets/js/marked.min.js",
         "qrcode.min.js": "assets/js/qrcode.min.js",
-        "shared.css": minify_css("assets/css/shared.css"),
-        "blog.css": minify_css("assets/css/blog.css"),
-        "fonts.css": minify_css("assets/fonts/fonts.css")
+        "shared.css": minify_css("assets/css/shared.css", dry_run=dry_run),
+        "blog.css": minify_css("assets/css/blog.css", dry_run=dry_run),
+        "fonts.css": minify_css("assets/fonts/fonts.css", dry_run=dry_run)
     }
     
     html_files = sorted(glob.glob("**/*.html", recursive=True))
@@ -172,8 +184,11 @@ def sync_all(bump_version=False):
         if f.startswith("blog/") and f != "blog/index.html":
             c = re.sub(r'(<img[^>]*class=["\'][^"\']*article-hero-img[^"\']*["\'][^>]*)loading=["\']lazy["\']', r'\1loading="eager"', c)
 
-        open(f, "w", encoding="utf-8").write(c)
-    print(f"[SYNC] Updated query version ?v={new_ver} across {len(html_files)} HTML files.")
+        atomic_write(f, c, dry_run=dry_run)
+    if dry_run:
+        print(f"[DRY-RUN] Would update query version ?v={new_ver} across {len(html_files)} HTML files.")
+    else:
+        print(f"[SYNC] Updated query version ?v={new_ver} across {len(html_files)} HTML files.")
 
     # 3. Regenerate sitemap.xml dynamically using OS mtime (Rule 20 Compliance)
     urls_data = []
@@ -211,9 +226,11 @@ def sync_all(bump_version=False):
         sitemap_lines.append(f'  <url><loc>{url}</loc><lastmod>{lastmod}</lastmod><changefreq>{freq}</changefreq><priority>{prio}</priority></url>')
     sitemap_lines.append('</urlset>')
 
-    with open("sitemap.xml", "w", encoding="utf-8") as f:
-        f.write("\n".join(sitemap_lines))
-    print(f"[SYNC] Regenerated sitemap.xml with {len(urls_data)} URLs.")
+    atomic_write("sitemap.xml", "\n".join(sitemap_lines), dry_run=dry_run)
+    if dry_run:
+        print(f"[DRY-RUN] Would regenerate sitemap.xml with {len(urls_data)} URLs.")
+    else:
+        print(f"[SYNC] Regenerated sitemap.xml with {len(urls_data)} URLs.")
 
     # 4. Extract blog articles for RSS feed.xml & llms.txt
     article_meta = []
@@ -267,9 +284,11 @@ def sync_all(bump_version=False):
   </channel>
 </rss>
 """
-    with open("feed.xml", "w", encoding="utf-8") as f:
-        f.write(feed_xml)
-    print(f"[SYNC] Updated feed.xml with {len(article_meta)} articles.")
+    atomic_write("feed.xml", feed_xml, dry_run=dry_run)
+    if dry_run:
+        print(f"[DRY-RUN] Would update feed.xml with {len(article_meta)} articles.")
+    else:
+        print(f"[SYNC] Updated feed.xml with {len(article_meta)} articles.")
 
     # Update llms.txt RAG Knowledge Base (Optimized for GEO / AI Search Engines)
     llms_txt = """# zyekh.com — LLM RAG Knowledge Base
@@ -342,9 +361,11 @@ def sync_all(bump_version=False):
     llms_txt += "- \"eBPF security monitoring\" → https://zyekh.com/blog/understanding-linux-ebpf-security-monitoring.html\n"
     llms_txt += "- \"security researcher indonesia\" → https://zyekh.com (Zyekh Abdul Qadir Jailani)\n"
 
-    with open("llms.txt", "w", encoding="utf-8") as f:
-        f.write(llms_txt)
-    print("[SYNC] Updated llms.txt RAG knowledge base with rich Entity Identity, Stack, and Tool metadata.")
+    atomic_write("llms.txt", llms_txt, dry_run=dry_run)
+    if dry_run:
+        print("[DRY-RUN] Would update llms.txt RAG knowledge base with rich Entity Identity, Stack, and Tool metadata.")
+    else:
+        print("[SYNC] Updated llms.txt RAG knowledge base with rich Entity Identity, Stack, and Tool metadata.")
 
     # 4.9 Enforce root-relative paths for hero images in all article HTML files
     for a_file in glob.glob("blog/*.html"):
@@ -354,8 +375,7 @@ def sync_all(bump_version=False):
             n_cont = a_cont.replace('srcset="https://zyekh.com/assets/img/', 'srcset="/assets/img/')
             n_cont = n_cont.replace('src="https://zyekh.com/assets/img/', 'src="/assets/img/')
             if n_cont != a_cont:
-                with open(a_file, "w", encoding="utf-8") as out_f:
-                    out_f.write(n_cont)
+                atomic_write(a_file, n_cont, dry_run=dry_run)
         except Exception:
             pass
 
@@ -465,9 +485,11 @@ def sync_all(bump_version=False):
             html_out = str(soup_index)
             if not html_out.strip().lower().startswith("<!doctype html"):
                 html_out = "<!DOCTYPE html>\n" + html_out
-            with open(index_path, "w", encoding="utf-8") as f:
-                f.write(html_out)
-            print(f"[SYNC] Dynamically rendered {len(card_blocks)} article cards into {index_path}.")
+            atomic_write(index_path, html_out, dry_run=dry_run)
+            if dry_run:
+                print(f"[DRY-RUN] Would render {len(card_blocks)} article cards into {index_path}.")
+            else:
+                print(f"[SYNC] Dynamically rendered {len(card_blocks)} article cards into {index_path}.")
 
     # 6. Generate search-index.json for Command Palette
     search_index = []
@@ -499,11 +521,13 @@ def sync_all(bump_version=False):
         except Exception:
             pass
 
-    with open("search-index.json", "w", encoding="utf-8") as f:
-        json.dump(search_index, f)
-    print(f"[SYNC] Generated search-index.json with {len(search_index)} items.")
+    atomic_write("search-index.json", json.dumps(search_index, indent=2), dry_run=dry_run)
+    if dry_run:
+        print(f"[DRY-RUN] Would generate search-index.json with {len(search_index)} items.")
+    else:
+        print(f"[SYNC] Generated search-index.json with {len(search_index)} items.")
 
-    print("[SYNC] Synchronization completed successfully!")
+    print("[SYNC] Synchronization routine completed!")
 
 def purge_cloudflare_cache(zone_id="1427afa77c5824ee0c34b514260e2e5d"):
     import json, os, urllib.request
@@ -548,8 +572,14 @@ def purge_cloudflare_cache(zone_id="1427afa77c5824ee0c34b514260e2e5d"):
         return False
 
 if __name__ == "__main__":
-    import sys
-    sync_all(bump_version=True)
-    if "--purge-cf" in sys.argv:
+    import argparse
+    parser = argparse.ArgumentParser(description="zyekh.com Automated Content & Cache Synchronizer")
+    parser.add_argument("--dry-run", action="store_true", help="Simulate synchronization without modifying files on disk")
+    parser.add_argument("--no-bump", action="store_true", help="Do not bump Service Worker CACHE_VERSION")
+    parser.add_argument("--purge-cf", action="store_true", help="Purge Cloudflare CDN edge cache")
+    args = parser.parse_args()
+
+    sync_all(bump_version=not args.no_bump, dry_run=args.dry_run)
+    if args.purge_cf and not args.dry_run:
         purge_cloudflare_cache()
 

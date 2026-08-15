@@ -337,12 +337,24 @@ def verify_all_articles():
     if link_failures > 0:
         failures += link_failures
 
+    # Check 21: Localhost Live HTTP Server & Architecture Smoke Test
+    print("\n[ Check 21 ] Localhost Live HTTP Server & Architecture Smoke Test...")
+    try:
+        from scripts.smoke_test import run_smoke_tests
+        smoke_passed = run_smoke_tests()
+        if not smoke_passed:
+            print("[FAIL] Localhost live HTTP smoke test encountered routing/content failures.")
+            failures += 1
+    except Exception as e:
+        print(f"[FAIL] Exception during localhost smoke test execution: {e}")
+        failures += 1
+
     print("\n============================================================")
     if failures > 0:
         print(f"FAILED: {failures} QA audit violations detected across system.")
         sys.exit(1)
     else:
-        print(f"SUCCESS: All {len(articles)} articles and system assets passed 100% QA audit (Checks 1-20)!")
+        print(f"SUCCESS: All {len(articles)} articles, assets, and live server passed 100% QA audit (Checks 1-21)!")
         print("============================================================")
 
 if __name__ == "__main__":

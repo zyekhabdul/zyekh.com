@@ -1,5 +1,5 @@
 name: QA Master Gate
-run-name: 20-Axis Programmatic QA Gate Verification
+run-name: 21-Axis Programmatic QA Gate Verification
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
 
 jobs:
   verify:
-    name: Programmatic Quality Gate (Checks 1-20)
+    name: Programmatic Quality Gate (Checks 1-21)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository

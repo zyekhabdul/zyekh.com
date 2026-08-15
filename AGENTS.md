@@ -170,4 +170,14 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
     - **Automated Drip Scheduling**: Automated syndication CI/CD workflows (`.github/workflows/social-syndicate.yml`) MUST execute with `--limit 1` on a daily cron schedule (`0 14 * * *` — 14:00 UTC / 21:00 WIB, aligning with peak global developer & security engagement windows).
     - **Queue-Based Sequential Rollout**: Unposted articles in `data/syndication_history.json` form a FIFO queue processed strictly 1 item per scheduled day to maintain high-quality follower experience and prevent federated instance rate throttling.
 
+46. **ATOMIC FILE WRITE & DRY-RUN REVERSIBILITY STANDARD**:
+    - **Atomic Writes**: Any batch script modifying files across the repository (`sync_content.py`, `generate_batch.py`) MUST write to temporary `.tmp` buffers first and invoke `os.replace` to prevent corrupted partial files during unexpected interruptions.
+    - **Dry-Run Predictability**: Batch synchronizers MUST support `--dry-run` to output predicted filesystem changes without mutating disk contents.
+
+47. **STRICT CREDENTIAL MASKING & LOG REDACTION**:
+    - **Zero Plaintext Secret Ingestion in Logs**: All syndication, API orchestration, and Cloudflare purge scripts MUST pass exception messages and response bodies through `sanitize_secret_log()` before printing to stdout/stderr to eliminate token leakage.
+
+48. **LOCALHOST LIVE HTTP SMOKE TEST GATE (CHECK 21)**:
+    - **Ephemeral Localhost Validation**: QA Gate verification (`verify_batch.py`) MUST execute live HTTP probing against an ephemeral localhost server (`scripts/smoke_test.py`), validating 100% of tested archetype routes, MIME types, Anti-Clickjacking headers, and Anti-FOUC theme scripts.
+
 

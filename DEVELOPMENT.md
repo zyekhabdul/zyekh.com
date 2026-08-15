@@ -96,7 +96,7 @@ Setiap kali membangkitkan batch artikel baru untuk `zyekh.com`, WAJIB mengikuti 
 # 2. Bangkitkan file HTML artikel 100% SOP-compliant
 python3 generate_batch.py
 
-# 3. Jalankan audit QA otomatis 10-axis
+# 3. Jalankan audit QA otomatis 21-axis (termasuk live localhost HTTP server smoke test)
 python3 verify_batch.py
 
 # 4. Sinkronisasi sitemap.xml, feed.xml, llms.txt, sw.js CACHE_VERSION & query version HTML
@@ -115,14 +115,6 @@ Seluruh artikel yang dihasilkan WAJIB mematuhi **10 Komponen Wajib SOP Gold Stan
 Sebelum mengklaim tugas selesai atau mengirimkan laporan ke pengguna, AI WAJIB menjalankan skrip audit di terminal:
 
 ```bash
-python3 -c "
-import glob, os
-from bs4 import BeautifulSoup
-html_files = glob.glob('**/*.html', recursive=True)
-print(f'Auditing {len(html_files)} files...')
-for f in html_files:
-    soup = BeautifulSoup(open(f).read(), 'html.parser')
-    assert soup.find('site-nav'), f'Missing <site-nav> in {f}'
-print('[ VERIFIED ] ALL 32 HTML FILES VERIFIED COMPLIANT!')
-"
+python3 verify_batch.py
+python3 check_emojis.py
 ```

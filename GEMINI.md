@@ -33,6 +33,9 @@
 - **Headless Geometry Gate (Protocol 43)**: `validate_card_manifest.py` runs headless layout simulation to guarantee $\ge 20\text{px}$ footer clearance and zero border collisions.
 - **Persistent Syndication Ledger & Dynamic Domain Mapping (Protocol 44)**: Record all social broadcasts immutably in `data/syndication_history.json`, enforce zero zombie slugs via QA Check 19, route topics to `DOMAIN_HASHTAG_MAP`, and apply polite 2-3s rate-limit throttling in batch sync.
 - **Strict Social Publishing Cadence & Drip Standard (Protocol 45)**: Never flood feeds with bulk bursts. Automated daily cron (`.github/workflows/social-syndicate.yml`) executes at 14:00 UTC (21:00 WIB) with `--limit 1`, dripping unposted articles one-by-one from the FIFO queue.
+- **Atomic File Write & Dry-Run Standard (Protocol 46)**: Batch file modification loops must write to temporary `.tmp` buffers and use `os.replace` for atomic commits, supporting `--dry-run` to preview file mutations.
+- **Strict Credential Masking & Log Redaction (Protocol 47)**: Remote API and syndication exceptions must pass through `sanitize_secret_log()` to eliminate credential exposure in stdout/stderr.
+- **Localhost Live HTTP Smoke Test Gate (Protocol 48 / Check 21)**: QA verification must execute live HTTP probing against an ephemeral localhost server (`scripts/smoke_test.py`), validating 100% of tested archetype routes, MIME types, Anti-Clickjacking headers, and Anti-FOUC theme scripts.
 
 
 - **AUTONOMOUS INITIATIVE**: Always be highly proactive. Do not wait for the user to point out every problem. If you see a structural, UI/UX, or technical flaw, fix it immediately across all affected files without asking.
