@@ -628,6 +628,23 @@
     ],
     "url": "https://zyekh.com/tools/regex.html"
   },
+  "seccomp-generator": {
+    "slug": "seccomp-generator",
+    "title": "Container Security & OCI Seccomp Profile Generator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Generate production-grade Docker, Podman, and Kubernetes OCI Seccomp JSON filter profiles 100% client-side. Harden container runtimes against zero-day kernel exploits with zero-trust syscall whitelisting.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/seccomp-generator.html"
+  },
   "speculative-decoding": {
     "slug": "speculative-decoding",
     "title": "Speculative Decoding Simulator",

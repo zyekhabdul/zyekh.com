@@ -169,11 +169,11 @@ TOOL_MAPPINGS = {
         'btn': 'Calculate Audit Permissions ->'
     },
     'linux-seccomp-bpf-syscall-filtering-hardening-guide': {
-        'badge': '[ INTERACTIVE LAB // KERNEL SEC ]',
-        'title': 'eBPF Packet Filter & Syscall Evaluator',
-        'desc': 'Simulate BPF syscall filter bytecode generation, evaluate arch validation, and test strict default-kill policies.',
-        'url': '/tools/ebpf-evaluator.html',
-        'btn': 'Launch Syscall Evaluator ->'
+        'badge': '[ INTERACTIVE GENERATOR // SECCOMP ]',
+        'title': 'Container Security & OCI Seccomp Profile Generator',
+        'desc': 'Build zero-trust OCI Seccomp JSON filter profiles and Kubernetes SecurityContext manifests with workload whitelisting 100% offline.',
+        'url': '/tools/seccomp-generator.html',
+        'btn': 'Build Seccomp Profile ->'
     },
     'linux-landlock-lsm-unprivileged-sandboxing-blueprint': {
         'badge': '[ INTERACTIVE UTILITY // SYSADMIN ]',

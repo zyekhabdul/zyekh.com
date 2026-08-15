@@ -162,6 +162,10 @@ All tools execute 100% client-side in the user's browser with zero external serv
 - URL: https://zyekh.com/tools/regex.html
 - Description: Test Regular Expressions (RegEx) in real-time with pattern flags, match highlighting, and group extraction 100% client-side.
 
+### Container Security & OCI Seccomp Profile Generator
+- URL: https://zyekh.com/tools/seccomp-generator.html
+- Description: Generate production-grade Docker, Podman, and Kubernetes OCI Seccomp JSON filter profiles 100% client-side. Harden container runtimes against zero-day kernel exploits with zero-trust syscall whitelisting.
+
 ### Speculative Decoding Simulator
 - URL: https://zyekh.com/tools/speculative-decoding.html
 - Description: Interactive Speculative Decoding simulator & LLM inference latency calculator. Visualize draft model token acceptance, calculate expected speedup ratio, and analyze latency tradeoffs offline.

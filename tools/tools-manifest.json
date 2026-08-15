@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "description": "Structured machine-readable tool catalog and parameter schemas for Browser AI Agents & LLMs.",
   "platform": "https://zyekh.com",
-  "total_tools": 49,
-  "updated_at": "2026-08-15T21:34:42Z",
+  "total_tools": 50,
+  "updated_at": "2026-08-15T21:41:38Z",
   "tools": [
     {
       "id": "ai-token",
@@ -1631,6 +1631,61 @@
           "type": "string",
           "input_element": "textarea",
           "description": "Test String"
+        }
+      ]
+    },
+    {
+      "id": "seccomp-generator",
+      "name": "Container Security & OCI Seccomp Profile Generator",
+      "description": "Generate production-grade Docker, Podman, and Kubernetes OCI Seccomp JSON filter profiles 100% client-side. Harden container runtimes against zero-day kernel exploits with zero-trust syscall whitelisting.",
+      "category": "Security & Linux Systems",
+      "url": "https://zyekh.com/tools/seccomp-generator.html",
+      "execution": {
+        "type": "client_side_javascript",
+        "telemetry": "none",
+        "offline_ready": true,
+        "storage": "local_memory_or_localstorage"
+      },
+      "parameters": [
+        {
+          "name": "selDefaultAction",
+          "type": "string",
+          "input_element": "select",
+          "description": "Default Action (Non-whitelisted):",
+          "enum": [
+            "SCMP_ACT_ERRNO",
+            "SCMP_ACT_KILL_PROCESS",
+            "SCMP_ACT_LOG"
+          ]
+        },
+        {
+          "name": "selErrnoRet",
+          "type": "string",
+          "input_element": "select",
+          "description": "Errno Return Code:",
+          "enum": [
+            "EPERM",
+            "ENOSYS",
+            "EACCES"
+          ]
+        },
+        {
+          "name": "chkArchX64",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkarchx64"
+        },
+        {
+          "name": "chkArchArm64",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkarcharm64"
+        },
+        {
+          "name": "chkArchX86",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkarchx86"
         }
       ]
     },

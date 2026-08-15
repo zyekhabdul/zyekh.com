@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Container Security &amp; OCI Seccomp Profile Generator — Linux Syscall Sandbox Builder | zyekh.com</title>
+<meta content="Generate production-grade Docker, Podman, and Kubernetes OCI Seccomp JSON filter profiles 100% client-side. Harden container runtimes against zero-day kernel exploits with zero-trust syscall whitelisting." name="description"/>
+<meta content="seccomp generator, oci seccomp profile, docker seccomp json, kubernetes seccomp profile, linux syscall filter, scmp_act_errno, container security hardening" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/seccomp-generator.html" rel="canonical"/>
+<!-- Open Graph / Social -->
+<meta content="Container Security &amp; OCI Seccomp Profile Generator | zyekh.com" property="og:title"/>
+<meta content="Generate production-grade OCI Seccomp JSON profiles and Kubernetes security manifests 100% offline in browser." property="og:description"/>
+<meta content="https://zyekh.com/tools/seccomp-generator.html" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-seccomp-generator-dark-landscape.png?v=cf9829ed" property="og:image"/>
+<meta content="zyekh.com" property="og:site_name"/>
+<!-- Twitter Cards -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Container Security &amp; OCI Seccomp Profile Generator | zyekh.com" name="twitter:title"/>
+<meta content="Generate production-grade OCI Seccomp JSON profiles and Kubernetes security manifests 100% offline in browser." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-seccomp-generator-dark-landscape.png?v=cf9829ed" name="twitter:image"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://zyekh.com/tools/seccomp-generator.html#app",
+      "name": "Container Security & OCI Seccomp Profile Generator",
+      "description": "Interactive client-side Linux OCI Seccomp JSON profile builder for Docker, Podman, and Kubernetes container runtime sandboxing.",
+      "url": "https://zyekh.com/tools/seccomp-generator.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript and a modern web browser.",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Person",
+        "@id": "https://zyekh.com/#person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com"
+      },
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/tools/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/tools/seccomp-generator.html#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Seccomp Generator", "item": "https://zyekh.com/tools/seccomp-generator.html" }
+      ]
+    }
+  ]
+}
+</script>
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+<script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+<!-- Preload Styles & Scripts -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous"></script>
+<style>
+  .sec-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1.25rem; }
+  .sec-section-title { font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-color); text-transform: uppercase; letter-spacing: 0.05em; display: flex; justify-content: space-between; align-items: center; }
+  
+  .preset-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+  .preset-btn { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.45rem 0.85rem; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.15s ease; }
+  .preset-btn.active { background: var(--text-main); color: var(--bg-main); border-color: var(--text-main); }
+
+  .syscall-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 0.35rem; margin-bottom: 0.75rem; max-height: 190px; overflow-y: auto; padding: 0.4rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); }
+  .syscall-item { display: flex; align-items: center; gap: 0.35rem; font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--text-main); cursor: pointer; }
+
+  .code-tab-nav { display: flex; gap: 0.3rem; border-bottom: 1px solid var(--border-color); margin-bottom: 0.75rem; overflow-x: auto; }
+  .code-tab-btn { background: none; border: none; border-bottom: 2px solid transparent; padding: 0.4rem 0.75rem; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); cursor: pointer; white-space: nowrap; }
+  .code-tab-btn.active { color: var(--text-main); border-bottom-color: var(--text-main); }
+
+  .output-code { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; font-family: 'Fira Code', monospace; font-size: 0.82rem; line-height: 1.5; color: var(--text-main); height: 420px; overflow-y: auto; white-space: pre; }
+</style>
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous" as="script">
+  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
+  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-ylGHOnyhsLTul9Jmoz2/Z7QfYmyN0WmrQO40Up2GPZU='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+</head>
+<body>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">Seccomp Generator</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">CONTAINER SECURITY &amp; LINUX HARDENING</span>
+<h1 class="page-title">Container Security &amp; OCI Seccomp Profile Generator</h1>
+<p class="page-subtitle">Build zero-trust OCI Seccomp JSON filter profiles and Kubernetes SecurityContext manifests 100% client-side. Restrict Linux kernel syscall attack surfaces tailored to your container workload runtimes.</p>
+</header>
+<!-- Workload Presets -->
+<div class="preset-tabs">
+<button class="preset-btn active" data-preset="go" type="button">Go / Rust Static Binary</button>
+<button class="preset-btn" data-preset="node" type="button">Node.js V8 Runtime</button>
+<button class="preset-btn" data-preset="python" type="button">Python 3 Application</button>
+<button class="preset-btn" data-preset="nginx" type="button">Nginx Web Proxy</button>
+<button class="preset-btn" data-preset="custom" type="button">Custom Zero-Trust Sandbox</button>
+</div>
+<div class="grid-2" style="gap: 1.5rem; align-items: start;">
+<!-- Column 1: Filter Configuration -->
+<div>
+<!-- Core Settings -->
+<div class="sec-card">
+<h2 class="sec-section-title">[ 1. SECCOMP POLICY SPECIFICATION ]</h2>
+<div class="grid-2" style="gap: 0.75rem; margin-bottom: 0.75rem;">
+<div class="form-group">
+<label for="selDefaultAction" style="font-size:0.82rem; font-weight:600;">Default Action (Non-whitelisted):</label>
+<select id="selDefaultAction" style="width: 100%; font-family:'Fira Code',monospace;">
+<option selected="" value="SCMP_ACT_ERRNO">SCMP_ACT_ERRNO (Zero-Trust Block)</option>
+<option value="SCMP_ACT_KILL_PROCESS">SCMP_ACT_KILL_PROCESS (Strict Terminate)</option>
+<option value="SCMP_ACT_LOG">SCMP_ACT_LOG (Audit / Monitor Only)</option>
+</select>
+</div>
+<div class="form-group">
+<label for="selErrnoRet" style="font-size:0.82rem; font-weight:600;">Errno Return Code:</label>
+<select id="selErrnoRet" style="width: 100%; font-family:'Fira Code',monospace;">
+<option selected="" value="EPERM">EPERM (Operation Not Permitted)</option>
+<option value="ENOSYS">ENOSYS (Function Not Implemented)</option>
+<option value="EACCES">EACCES (Permission Denied)</option>
+</select>
+</div>
+</div>
+<div class="form-group mb-sm">
+<label style="font-size:0.82rem; font-weight:600; display:block; margin-bottom:0.25rem;">Target CPU Architectures:</label>
+<div style="display:flex; gap:0.75rem; font-family:'Fira Code',monospace; font-size:0.75rem;">
+<label><input checked="" id="chkArchX64" type="checkbox"/> x86_64</label>
+<label><input checked="" id="chkArchArm64" type="checkbox"/> aarch64 (ARM64)</label>
+<label><input id="chkArchX86" type="checkbox"/> x86 (32-bit)</label>
+</div>
+</div>
+</div>
+<!-- Granular Syscall Selection -->
+<div class="sec-card">
+<div class="sec-section-title">
+<span>[ 2. WHITELISTED SYSCALL GROUPS ]</span>
+<span id="lblSelectedCount" style="font-size:0.75rem; font-family:'Fira Code',monospace;">0 Syscalls Selected</span>
+</div>
+<div style="margin-bottom:0.6rem;">
+<div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); margin-bottom:0.2rem;">PROCESS LIFECYCLE &amp; THREADING:</div>
+<div class="syscall-grid" id="gridProcess"></div>
+</div>
+<div style="margin-bottom:0.6rem;">
+<div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); margin-bottom:0.2rem;">MEMORY &amp; VIRTUAL ALLOCATION:</div>
+<div class="syscall-grid" id="gridMemory"></div>
+</div>
+<div style="margin-bottom:0.6rem;">
+<div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); margin-bottom:0.2rem;">FILE SYSTEM &amp; DESCRIPTOR I/O:</div>
+<div class="syscall-grid" id="gridFilesystem"></div>
+</div>
+<div>
+<div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); margin-bottom:0.2rem;">NETWORK SOCKETS &amp; EVENT POLLING:</div>
+<div class="syscall-grid" id="gridNetwork"></div>
+</div>
+</div>
+</div>
+<!-- Column 2: Live Export Files -->
+<div>
+<div class="sec-card">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+<div class="code-tab-nav" style="border-bottom: none; margin-bottom: 0;">
+<button class="code-tab-btn active" data-tab="json" type="button">seccomp.json</button>
+<button class="code-tab-btn" data-tab="k8s" type="button">Kubernetes Pod.yaml</button>
+<button class="code-tab-btn" data-tab="docker" type="button">Docker CLI</button>
+<button class="code-tab-btn" data-tab="raw" type="button">Syscall List</button>
+</div>
+<div style="display: flex; gap: 0.4rem;">
+<button class="btn-tool" id="btnCopyCode" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" type="button">Copy Code</button>
+<button class="btn-tool" id="btnDownloadCode" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" type="button">Download</button>
+</div>
+</div>
+<div class="output-code" id="outputArea">Generating Seccomp OCI profile...</div>
+</div>
+<!-- Quick Security Invariants -->
+<div class="sec-card">
+<h3 class="sec-section-title" style="font-size: 0.85rem;">[ SECCOMP SECURITY INVARIANTS ]</h3>
+<ul style="font-size: 0.82rem; padding-left: 1.2rem; color: var(--text-muted); line-height: 1.6;">
+<li><strong>Zero-Trust Default Action:</strong> Always default to <code>SCMP_ACT_ERRNO</code> (EPERM) rather than allowing unhandled syscalls.</li>
+<li><strong>Blocked Dangerous Syscalls:</strong> Dangerous calls like <code>ptrace</code>, <code>bpf</code>, <code>mount</code>, <code>reboot</code>, <code>kexec_load</code>, and <code>sys_chroot</code> are eliminated from container runtime reach.</li>
+<li><strong>BPF JIT Execution:</strong> The Linux kernel compiles seccomp rules into direct BPF bytecode at container startup, adding sub-microsecond overhead to permitted syscalls.</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Related Architecture Resources -->
+<div class="sec-card" style="margin-top: 1rem;">
+<h3 class="sec-section-title" style="font-size: 0.85rem;">[ RELATED LINUX &amp; CONTAINER SECURITY RESOURCES ]</h3>
+<ul style="font-size: 0.85rem; padding-left: 1.2rem; color: var(--text-muted); line-height: 1.6;">
+<li><a href="/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html" style="color: var(--text-main); font-weight: 600;">Linux Seccomp BPF Syscall Filtering Hardening Guide</a></li>
+<li><a href="/blog/kubernetes-pod-security-standards-pss-and-admission-control.html" style="color: var(--text-main); font-weight: 600;">Kubernetes Pod Security Standards (PSS) &amp; Admission Control</a></li>
+<li><a href="/blog/container-image-signing-and-slsa-provenance-with-cosign.html" style="color: var(--text-main); font-weight: 600;">Container Image Signing &amp; SLSA Provenance with Cosign</a></li>
+<li><a href="/tools/linux-hardening-generator.html" style="color: var(--text-main); font-weight: 600;">Linux sysctl &amp; OpenSSH Hardening Configuration Builder</a></li>
+</ul>
+</div>
+</main>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 50;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+
+(function() {
+  'use strict';
+
+  var SYSCALL_DEFINITIONS = {
+    process: ['arch_prctl', 'clone', 'clone3', 'execve', 'execveat', 'exit', 'exit_group', 'fork', 'getpid', 'getppid', 'gettid', 'prctl', 'rseq', 'set_tid_address', 'vfork', 'wait4'],
+    memory: ['brk', 'madvise', 'mmap', 'mprotect', 'mremap', 'msync', 'munmap'],
+    filesystem: ['access', 'chdir', 'close', 'dup', 'dup2', 'dup3', 'faccessat', 'faccessat2', 'fcntl', 'fstat', 'fsync', 'ftruncate', 'getcwd', 'getdents64', 'ioctl', 'lseek', 'mkdir', 'newfstatat', 'openat', 'pipe2', 'read', 'readlink', 'readlinkat', 'readv', 'rename', 'stat', 'statx', 'unlink', 'unlinkat', 'write', 'writev'],
+    network: ['accept', 'accept4', 'bind', 'connect', 'epoll_create1', 'epoll_ctl', 'epoll_pwait', 'epoll_wait', 'getpeername', 'getsockname', 'getsockopt', 'listen', 'poll', 'ppoll', 'pselect6', 'recvfrom', 'recvmmsg', 'recvmsg', 'select', 'sendmmsg', 'sendmsg', 'sendto', 'setsockopt', 'shutdown', 'socket']
+  };
+
+  var PRESET_SYSCALLS = {
+    go: ['arch_prctl', 'clone', 'clone3', 'exit', 'exit_group', 'getpid', 'gettid', 'rseq', 'set_tid_address', 'madvise', 'mmap', 'mprotect', 'munmap', 'close', 'faccessat2', 'fcntl', 'fstat', 'getdents64', 'lseek', 'newfstatat', 'openat', 'pipe2', 'read', 'readv', 'write', 'writev', 'accept4', 'bind', 'connect', 'epoll_create1', 'epoll_ctl', 'epoll_pwait', 'epoll_wait', 'getpeername', 'getsockname', 'getsockopt', 'listen', 'recvfrom', 'recvmsg', 'sendmsg', 'sendto', 'setsockopt', 'socket'],
+    node: ['arch_prctl', 'clone', 'clone3', 'execve', 'exit', 'exit_group', 'getpid', 'getppid', 'gettid', 'prctl', 'rseq', 'set_tid_address', 'wait4', 'brk', 'madvise', 'mmap', 'mprotect', 'mremap', 'munmap', 'access', 'chdir', 'close', 'dup', 'dup2', 'dup3', 'faccessat', 'faccessat2', 'fcntl', 'fstat', 'fsync', 'getcwd', 'getdents64', 'ioctl', 'lseek', 'newfstatat', 'openat', 'pipe2', 'read', 'readlink', 'readlinkat', 'readv', 'stat', 'statx', 'unlink', 'unlinkat', 'write', 'writev', 'accept', 'accept4', 'bind', 'connect', 'epoll_create1', 'epoll_ctl', 'epoll_pwait', 'epoll_wait', 'getpeername', 'getsockname', 'getsockopt', 'listen', 'recvfrom', 'recvmsg', 'sendmsg', 'sendto', 'setsockopt', 'shutdown', 'socket'],
+    python: ['arch_prctl', 'clone', 'clone3', 'execve', 'execveat', 'exit', 'exit_group', 'fork', 'getpid', 'getppid', 'gettid', 'prctl', 'rseq', 'set_tid_address', 'wait4', 'brk', 'madvise', 'mmap', 'mprotect', 'munmap', 'access', 'chdir', 'close', 'dup', 'dup2', 'dup3', 'faccessat', 'faccessat2', 'fcntl', 'fstat', 'getcwd', 'getdents64', 'ioctl', 'lseek', 'newfstatat', 'openat', 'pipe2', 'read', 'readlink', 'readlinkat', 'readv', 'stat', 'statx', 'unlink', 'unlinkat', 'write', 'writev', 'accept', 'accept4', 'bind', 'connect', 'epoll_create1', 'epoll_ctl', 'epoll_pwait', 'epoll_wait', 'getpeername', 'getsockname', 'getsockopt', 'listen', 'poll', 'recvfrom', 'recvmsg', 'sendmsg', 'sendto', 'setsockopt', 'shutdown', 'socket'],
+    nginx: ['arch_prctl', 'clone', 'clone3', 'execve', 'exit', 'exit_group', 'fork', 'getpid', 'getppid', 'gettid', 'prctl', 'rseq', 'set_tid_address', 'wait4', 'brk', 'madvise', 'mmap', 'mprotect', 'munmap', 'access', 'close', 'dup2', 'faccessat2', 'fcntl', 'fstat', 'ioctl', 'lseek', 'newfstatat', 'openat', 'pipe2', 'read', 'readv', 'stat', 'write', 'writev', 'accept4', 'bind', 'connect', 'epoll_create1', 'epoll_ctl', 'epoll_pwait', 'epoll_wait', 'getpeername', 'getsockname', 'getsockopt', 'listen', 'recvfrom', 'recvmsg', 'sendmsg', 'sendto', 'setsockopt', 'shutdown', 'socket'],
+    custom: ['exit_group', 'mmap', 'mprotect', 'munmap', 'close', 'read', 'write']
+  };
+
+  var selectedSyscalls = new Set(PRESET_SYSCALLS.go);
+  var activeTab = 'json';
+  var activePreset = 'go';
+
+  // Elements
+  var selDefaultAction = document.getElementById('selDefaultAction');
+  var selErrnoRet = document.getElementById('selErrnoRet');
+  var chkArchX64 = document.getElementById('chkArchX64');
+  var chkArchArm64 = document.getElementById('chkArchArm64');
+  var chkArchX86 = document.getElementById('chkArchX86');
+  var lblSelectedCount = document.getElementById('lblSelectedCount');
+  var outputArea = document.getElementById('outputArea');
+  var btnCopyCode = document.getElementById('btnCopyCode');
+  var btnDownloadCode = document.getElementById('btnDownloadCode');
+
+  function renderSyscallCheckboxes() {
+    ['process', 'memory', 'filesystem', 'network'].forEach(function(cat) {
+      var grid = document.getElementById('grid' + cat.charAt(0).toUpperCase() + cat.slice(1));
+      grid.innerHTML = '';
+      SYSCALL_DEFINITIONS[cat].forEach(function(sc) {
+        var label = document.createElement('label');
+        label.className = 'syscall-item';
+        var isChecked = selectedSyscalls.has(sc) ? 'checked' : '';
+        label.innerHTML = '<input type="checkbox" value="' + sc + '" ' + isChecked + '> ' + sc;
+        label.querySelector('input').addEventListener('change', function(e) {
+          if (e.target.checked) {
+            selectedSyscalls.add(sc);
+          } else {
+            selectedSyscalls.delete(sc);
+          }
+          debouncedUpdate();
+        });
+        grid.appendChild(label);
+      });
+    });
+  }
+
+  function generateSeccompJson() {
+    var archs = [];
+    if (chkArchX64.checked) archs.push('SCMP_ARCH_X86_64');
+    if (chkArchArm64.checked) archs.push('SCMP_ARCH_AARCH64');
+    if (chkArchX86.checked) archs.push('SCMP_ARCH_X86');
+
+    var sortedSyscalls = Array.from(selectedSyscalls).sort();
+
+    var profile = {
+      defaultAction: selDefaultAction.value,
+      defaultErrnoRet: selDefaultAction.value === 'SCMP_ACT_ERRNO' ? 1 : undefined,
+      architectures: archs,
+      syscalls: [
+        {
+          names: sortedSyscalls,
+          action: 'SCMP_ACT_ALLOW',
+          args: [],
+          comment: 'Allowed workload syscall whitelist (' + sortedSyscalls.length + ' calls)'
+        }
+      ]
+    };
+
+    return JSON.stringify(profile, null, 2);
+  }
+
+  function generateK8sYaml() {
+    var lines = [];
+    lines.push('apiVersion: v1');
+    lines.push('kind: Pod');
+    lines.push('metadata:');
+    lines.push('  name: hardened-app-pod');
+    lines.push('  namespace: production');
+    lines.push('  labels:');
+    lines.push('    app.kubernetes.io/name: hardened-app');
+    lines.push('spec:');
+    lines.push('  securityContext:');
+    lines.push('    runAsNonRoot: true');
+    lines.push('    runAsUser: 10001');
+    lines.push('    runAsGroup: 10001');
+    lines.push('    seccompProfile:');
+    lines.push('      type: Localhost');
+    lines.push('      localhostProfile: profiles/seccomp-hardened.json');
+    lines.push('  containers:');
+    lines.push('  - name: app');
+    lines.push('    image: ghcr.io/org/app:v1.0.0');
+    lines.push('    securityContext:');
+    lines.push('      allowPrivilegeEscalation: false');
+    lines.push('      readOnlyRootFilesystem: true');
+    lines.push('      capabilities:');
+    lines.push('        drop:');
+    lines.push('        - ALL');
+    lines.push('    resources:');
+    lines.push('      limits:');
+    lines.push('        cpu: 500m');
+    lines.push('        memory: 256Mi');
+    lines.push('      requests:');
+    lines.push('        cpu: 100m');
+    lines.push('        memory: 64Mi');
+
+    return lines.join('\n');
+  }
+
+  function generateDockerCli() {
+    var lines = [];
+    lines.push('# 1. Save Seccomp JSON profile to host directory');
+    lines.push('mkdir -p /etc/docker/seccomp');
+    lines.push('cat << \'EOF\' > /etc/docker/seccomp/hardened.json');
+    lines.push(generateSeccompJson());
+    lines.push('EOF');
+    lines.push('chmod 644 /etc/docker/seccomp/hardened.json');
+    lines.push('');
+    lines.push('# 2. Run Container with Seccomp Sandbox and Read-Only RootFS');
+    lines.push('docker run -d \\');
+    lines.push('  --name hardened-app \\');
+    lines.push('  --security-opt seccomp=/etc/docker/seccomp/hardened.json \\');
+    lines.push('  --security-opt no-new-privileges:true \\');
+    lines.push('  --cap-drop=ALL \\');
+    lines.push('  --read-only \\');
+    lines.push('  --tmpfs /tmp:rw,noexec,nosuid,size=64m \\');
+    lines.push('  -p 8080:8080 \\');
+    lines.push('  app-image:latest');
+
+    return lines.join('\n');
+  }
+
+  function generateRawSyscalls() {
+    var sorted = Array.from(selectedSyscalls).sort();
+    return '# Total Whitelisted Syscalls: ' + sorted.length + '\n\n' + sorted.join('\n');
+  }
+
+  function updateOutput() {
+    lblSelectedCount.textContent = selectedSyscalls.size + ' Syscalls Selected';
+
+    if (activeTab === 'json') {
+      outputArea.textContent = generateSeccompJson();
+    } else if (activeTab === 'k8s') {
+      outputArea.textContent = generateK8sYaml();
+    } else if (activeTab === 'docker') {
+      outputArea.textContent = generateDockerCli();
+    } else if (activeTab === 'raw') {
+      outputArea.textContent = generateRawSyscalls();
+    }
+  }
+
+  var debouncedUpdate = window.debounceRAF(updateOutput, 50);
+
+  // Preset Buttons
+  document.querySelectorAll('.preset-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activePreset = btn.getAttribute('data-preset');
+
+      var list = PRESET_SYSCALLS[activePreset] || PRESET_SYSCALLS.go;
+      selectedSyscalls = new Set(list);
+      renderSyscallCheckboxes();
+      debouncedUpdate();
+    });
+  });
+
+  // Tab Buttons
+  document.querySelectorAll('.code-tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.code-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeTab = btn.getAttribute('data-tab');
+      debouncedUpdate();
+    });
+  });
+
+  selDefaultAction.addEventListener('change', debouncedUpdate);
+  selErrnoRet.addEventListener('change', debouncedUpdate);
+  chkArchX64.addEventListener('change', debouncedUpdate);
+  chkArchArm64.addEventListener('change', debouncedUpdate);
+  chkArchX86.addEventListener('change', debouncedUpdate);
+
+  btnCopyCode.addEventListener('click', function() {
+    var text = outputArea.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        var old = btnCopyCode.textContent;
+        btnCopyCode.textContent = '[ COPIED ]';
+        setTimeout(function() { btnCopyCode.textContent = old; }, 1500);
+      });
+    }
+  });
+
+  btnDownloadCode.addEventListener('click', function() {
+    var text = outputArea.textContent;
+    var filename = 'seccomp-profile.json';
+    var mime = 'application/json;charset=utf-8';
+
+    if (activeTab === 'k8s') {
+      filename = 'pod-seccomp.yaml';
+      mime = 'text/yaml;charset=utf-8';
+    } else if (activeTab === 'docker') {
+      filename = 'run-seccomp.sh';
+      mime = 'text/x-shellscript;charset=utf-8';
+    } else if (activeTab === 'raw') {
+      filename = 'syscall-whitelist.txt';
+      mime = 'text/plain;charset=utf-8';
+    }
+
+    var blob = new Blob([text], { type: mime });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  renderSyscallCheckboxes();
+  updateOutput();
+})();
+</script>
+</body>
+</html>

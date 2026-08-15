@@ -222,6 +222,12 @@
     "type": "Tool"
   },
   {
+    "title": "Container Security & OCI Seccomp Profile Generator",
+    "desc": "Generate production-grade Docker, Podman, and Kubernetes OCI Seccomp JSON filter profiles 100% client-side. Harden container runtimes against zero-day kernel exploits with zero-trust syscall whitelisting.",
+    "url": "/tools/seccomp-generator.html",
+    "type": "Tool"
+  },
+  {
     "title": "Speculative Decoding Simulator",
     "desc": "Interactive Speculative Decoding simulator & LLM inference latency calculator. Visualize draft model token acceptance, calculate expected speedup ratio, and analyze latency tradeoffs offline.",
     "url": "/tools/speculative-decoding.html",

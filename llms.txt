@@ -106,6 +106,7 @@
 - [QR Code Generator](https://zyekh.com/tools/qr.html): Generator QR code gratis dan instan. Masukkan teks atau URL, unduh gambar PNG. Tanpa upload ke server.
 - [Random Item Picker](https://zyekh.com/tools/random-picker.html): Acak undian online dari daftar nama. Cocok untuk giveaway, pembagian tugas, atau pilih pemenang.
 - [RegEx Live Tester & Match Inspector](https://zyekh.com/tools/regex.html): Test Regular Expressions (RegEx) in real-time with pattern flags, match highlighting, and group extraction 100% client-side.
+- [Container Security & OCI Seccomp Profile Generator](https://zyekh.com/tools/seccomp-generator.html): Generate production-grade Docker, Podman, and Kubernetes OCI Seccomp JSON filter profiles 100% client-side. Harden container runtimes against zero-day kernel exploits with zero-trust syscall whitelisting.
 - [Speculative Decoding Simulator](https://zyekh.com/tools/speculative-decoding.html): Interactive Speculative Decoding simulator & LLM inference latency calculator. Visualize draft model token acceptance, calculate expected speedup ratio, and analyze latency tradeoffs offline.
 - [Split Bill Calculator](https://zyekh.com/tools/split-bill.html): Hitung patungan tagihan makan atau acara. Bagi rata, tambah service charge dan pajak, langsung di browser.
 - [SQL Query Formatter & Beautifier](https://zyekh.com/tools/sql.html): Format, clean, and beautify complex SQL queries with standardized keyword indentation 100% offline & client-side in browser.
