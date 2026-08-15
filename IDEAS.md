@@ -41,7 +41,7 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 - [ BACKLOG ] **shop.zyekh.com Ecosystem Touchpoints**: Pemasangan touchpoints navigasi (`site-nav.js`), kartu unggulan di `links/index.html`, showcase card di `index.html`, dan contextual resource callouts pada artikel/blueprints terkait.
 - [ BACKLOG ] **Multi-Persona & Time-Jittered Multi-Account Syndication**: Upgrade `scripts/syndicate.py` untuk mengorkestrasi multi-akun media sosial dengan klaster sudut pandang berbeda (Authority, Curation, Utility Showcase), variasi copywriting otomatis, penundaan waktu acak (time-jitter), dan organic cross-engagement loop.
 - [ BACKLOG ] **Linux Security `sysctl` & `sshd` Hardening Config Builder**: Generator konfigurasi interaktif `/etc/sysctl.d/99-hardening.conf` dan `/etc/ssh/sshd_config.d/99-hardened.conf` berbasis use-case (`/tools/linux-hardening-generator.html`).
-- [ BACKLOG ] **GitHub Actions Automated CI QA Gate**: Workflow CI otomatis di GitHub Actions untuk memvalidasi `verify_batch.py` (18-axis) dan `check_emojis.py` pada setiap Pull Request/Commit (`.github/workflows/ci-qa-gate.yml`).
+- [ DONE ] **GitHub Actions Automated CI QA Gate**: Workflow CI otomatis di GitHub Actions untuk memvalidasi `verify_batch.py` (20-axis) pada setiap Pull Request/Commit (`.github/workflows/qa-gate.yml`).
 - [ BACKLOG ] **JSON Feed v1.1 & RFC 4287 Atom Feed Modernization**: Penambahan output sindikasi modern `feed.json` dan `atom.xml` di `sync_content.py`.
 - [ BACKLOG ] **Interactive Zero-Trust Architecture Topology Builder**: Utilitas visual Canvas/SVG murni di browser untuk merancang dan mengekspor topologi keamanan ke Mermaid Markdown, SVG, dan ASCII (`/blueprints/topology-builder.html`).
 
