@@ -45,32 +45,50 @@
       color: var(--text-main);
     }
 
-    .main-container {
+    .offline-wrapper {
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 2rem;
+      padding: 3rem 1.5rem;
       text-align: center;
-      max-width: 600px;
-      margin: 0 auto;
+      width: 100%;
     }
 
-    .icon-offline {
-      font-size: 4rem;
-      margin-bottom: 1rem;
+    .offline-card {
+      max-width: 640px;
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+    }
+
+    .offline-badge {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: var(--bg-main);
+      border: 1px solid var(--border-color);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.05em;
     }
 
     .title {
-      font-size: 2.5rem;
+      font-size: clamp(1.75rem, 4vw, 2.25rem);
+      font-weight: 700;
       margin: 0 0 1rem 0;
     }
 
     .desc {
       color: var(--text-muted);
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin: 0 0 2rem 0;
     }
 
     .btn-group {
@@ -82,20 +100,20 @@
 
     .btn {
       display: inline-block;
-      padding: 0.75rem 1.5rem;
-      border-radius: 8px;
+      padding: 0.65rem 1.25rem;
+      border-radius: 6px;
       text-decoration: none;
       font-weight: 600;
-      font-size: 1rem;
-      transition: all 0.2s ease;
-      background: var(--bg-card);
+      font-size: 0.95rem;
+      transition: var(--transition);
+      background: var(--bg-main);
       border: 1px solid var(--border-color);
       color: var(--text-main);
     }
 
     .btn:hover {
       border-color: var(--border-color-hover);
-      background: #141417;
+      color: var(--text-main);
     }
   </style>
 <!-- Structured Data JSON-LD -->
@@ -117,15 +135,19 @@
 <site-nav active="offline"></site-nav>
 <script defer="" src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
 <main class="main-container">
-<div class="icon-offline"></div>
-<h1 class="title">Anda sedang Offline</h1>
-<p class="desc">
-      Koneksi internet Anda sepertinya terputus. Tenang saja! Tools di zyekh.com menggunakan teknologi client-side. Beberapa tool yang pernah Anda buka mungkin masih tetap bisa berjalan tanpa internet.
-    </p>
-<div class="btn-group">
-<a class="btn" href="/">Kembali ke Home</a>
-<a class="btn" href="/tools/">Buka Tools Hub</a>
-</div>
+  <div class="offline-wrapper">
+    <div class="offline-card">
+      <span class="offline-badge">[ OFFLINE MODE ]</span>
+      <h1 class="title">Koneksi Internet Terputus</h1>
+      <p class="desc">
+        Tenang saja! Seluruh tools di <code>zyekh.com</code> berarsitektur <strong>Local-First</strong> (100% client-side execution). Halaman dan utilitas yang sudah tersimpan di cache Service Worker tetap dapat digunakan secara normal tanpa internet.
+      </p>
+      <div class="btn-group">
+        <a class="btn" href="/">Kembali ke Beranda</a>
+        <a class="btn" href="/tools/">Buka Tools Hub</a>
+      </div>
+    </div>
+  </div>
 </main>
 </body>
 </html>
