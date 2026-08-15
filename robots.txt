@@ -1,20 +1,50 @@
+# robots.txt for zyekh.com
+# Systems, Security, and AI Engineering Architecture Specification
+
 User-agent: *
 Allow: /
 
-# Explicit AI Agent Access
+# Explicit AI Search & Reasoning Crawlers Whitelist (Baseline 2025/2026)
 User-agent: GPTBot
 Allow: /
 
-User-agent: PerplexityBot
+User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ClaudeBot
 Allow: /
 
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 User-agent: Googlebot
 Allow: /
 
-# LLM-friendly: fetch /llms-full.txt for complete site knowledge in one request
-# https://zyekh.com/llms-full.txt
+User-agent: Bingbot
+Allow: /
 
+# LLM Direct Ingestion & RAG Endpoints
+# Fetch /llms.txt or /llms-full.txt for high-density knowledge base
+LLMs-Txt: https://zyekh.com/llms.txt
+LLMs-Full-Txt: https://zyekh.com/llms-full.txt
+
+# XML Sitemap
 Sitemap: https://zyekh.com/sitemap.xml
