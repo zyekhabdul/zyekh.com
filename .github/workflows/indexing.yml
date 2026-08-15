@@ -1,0 +1,58 @@
+name: Search Engine Indexing Pipeline
+run-name: Multi-Engine Indexing Sync (Google + IndexNow Bing/Yandex)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**/*.html'
+      - 'sitemap.xml'
+      - 'feed.xml'
+  workflow_dispatch:
+
+jobs:
+  indexnow:
+    name: Submit URLs to IndexNow (Bing, Yandex, Seznam, Naver)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run IndexNow Pinger
+        run: |
+          python3 ping_indexers.py
+
+  google-indexing:
+    name: Notify Google Indexing API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Extract Modified HTML Files
+        id: files
+        run: |
+          git diff --name-only HEAD^ HEAD > modified_files.txt || true
+          cat modified_files.txt
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Googleapis
+        run: npm install googleapis
+
+      - name: Run Google Indexing Script
+        if: env.GCP_CREDENTIALS != ''
+        env:
+          GCP_CREDENTIALS: ${{ secrets.GCP_INDEXING_CREDENTIALS }}
+        run: node .github/scripts/google-index.js
