@@ -149,7 +149,12 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
     - Card footers MUST remain neutral and non-promotional (`OPEN TECHNICAL ARCHITECTURE SPECIFICATION • SYSTEMS & SECURITY BLUEPRINT 2026`).
     - Footers MUST be wrapped in strict collision guards (`if footer_y >= content_bottom + 30px`), guaranteeing zero text overlapping with card borders or box bottoms.
 
+42. **AST-AWARE CODE SNIPPET SLICING & BRACE INTEGRITY STANDARD**:
+    - **Preserve Closing Braces**: Never strip standalone `}` from code blocks as it breaks function and struct closures.
+    - **Natural Syntactic Boundaries**: Multi-line code slices must terminate at natural boundaries (`};`, `}`, `;`) with 100% balanced `{` vs `}` counts.
+    - **No Trailing Empty Key Headers**: YAML/Config slices must never terminate on parent keys ending with `:` without children.
+    - **No Unclosed Opening Tokens**: Code snippets must not end with `{`, `(`, `[`, trailing continuation backslashes `\`, commas, or pipes.
 
-
-
-
+43. **HEADLESS GEOMETRY & ZERO COLLISION AUDIT GATE**:
+    - All manifest updates MUST pass `scripts/validate_card_manifest.py` before image compilation.
+    - The validator runs headless simulated rendering measuring actual font bounding boxes to guarantee $\ge 20\text{px}$ clearance between content bottom and footer, and zero border collisions across all 35 articles.

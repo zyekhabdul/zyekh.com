@@ -136,8 +136,13 @@ def verify_all_articles():
     print("\n[AUDIT] Running Check 16: Social Share Cards & Manifest Integrity Audit...")
     manifest_path = "data/social_cards_manifest.json"
     card_failures = 0
-    if not os.path.exists(manifest_path):
-        print(f"[FAIL] Manifest file missing: {manifest_path}")
+
+    # Execute deep manifest validator with AST brace balance and headless geometry gates
+    try:
+        from scripts.validate_card_manifest import validate_manifest
+        validate_manifest()
+    except Exception as e:
+        print(f"[FAIL] Manifest validation gate failed: {e}")
         card_failures += 1
     else:
         manifest_data = json.loads(open(manifest_path, encoding='utf-8').read())

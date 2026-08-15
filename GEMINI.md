@@ -29,9 +29,8 @@
 - **Dynamic Tight Box Height (Protocol 39)**: Box container heights must be computed dynamically from actual text lines to eliminate internal voids.
 - **Compact Cohesive Gaps (Protocol 40)**: Use tight fixed 24px component gaps instead of stretched empty spaces.
 - **Collision-Free Footer (Protocol 41)**: Wrap footers in strict collision guards and use neutral technical specification copy.
-
-
-
+- **AST-Aware Code Slicing (Protocol 42)**: Multi-line code slices must preserve closing braces `}` and never terminate on trailing `:` or unclosed opening tokens.
+- **Headless Geometry Gate (Protocol 43)**: `validate_card_manifest.py` runs headless layout simulation to guarantee $\ge 20\text{px}$ footer clearance and zero border collisions.
 
 - **AUTONOMOUS INITIATIVE**: Always be highly proactive. Do not wait for the user to point out every problem. If you see a structural, UI/UX, or technical flaw, fix it immediately across all affected files without asking.
 
