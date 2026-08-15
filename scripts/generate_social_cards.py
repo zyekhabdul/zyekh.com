@@ -227,10 +227,17 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         box_h = bar_h + 20 + (len(wrapped_code) * code_line_h) + 20
         p1_h = 68 + (total_inv_lines * inv_line_h) + (len(invariants) * 8) + 18
         p2_h = 68 + (total_met_lines * met_line_h) + (len(metrics) * 8) + 18
-
         gap_between_boxes = 24
 
-
+        # Dynamic Canvas Vertical Budgeting (Square 1:1)
+        footer_safe_limit = height - margin - 50
+        total_required_h = 20 + box_h + gap_between_boxes + p1_h + gap_between_boxes + p2_h + 40
+        if curr_y + total_required_h > footer_safe_limit:
+            overflow = (curr_y + total_required_h) - footer_safe_limit
+            gap_between_boxes = max(16, gap_between_boxes - (overflow // 6))
+            p1_h = max(p1_h - 12, p1_h - (overflow // 4))
+            p2_h = max(p2_h - 12, p2_h - (overflow // 4))
+            box_h = max(box_h - 14, box_h - (overflow // 4))
 
         # D. Terminal Architecture Window
         curr_y += 20
@@ -373,8 +380,12 @@ def generate_social_card(article_data, output_path: Path, theme="dark", mode="la
         total_met_lines = sum(len(w) for w in wrapped_mets)
         max_lines = max(total_inv_lines, total_met_lines)
 
-        # Dynamic box height: header + content lines + item gaps + bottom padding
+        # Dynamic Canvas Vertical Budgeting (Landscape 16:9)
+        footer_safe_limit = height - margin - 50
         bot_h = 48 + (max_lines * matrix_lh) + (max(len(invariants), len(metrics)) * 6) + 14
+        if curr_y + bot_h + 20 > footer_safe_limit:
+            matrix_lh = max(24, matrix_lh - 2)
+            bot_h = 42 + (max_lines * matrix_lh) + (max(len(invariants), len(metrics)) * 4) + 10
 
         # Left Column: All Architectural Invariants
         draw.rectangle([left_x, curr_y, left_x + col_w, curr_y + bot_h], fill=box_bg, outline=box_border, width=2)

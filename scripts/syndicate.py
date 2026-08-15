@@ -13,6 +13,7 @@ import datetime
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 from bs4 import BeautifulSoup
+import random
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 BLOG_DIR = BASE_DIR / "blog"
@@ -337,14 +338,32 @@ def upload_mastodon_media(token, server, image_path, description=""):
         print(f"[ WARN ] Mastodon Media Upload Failed: {sanitize_secret_log(err)}")
         return None
 
-def format_mastodon_status(article: dict) -> str:
+def resolve_persona(slug: str, requested: str = "authority") -> str:
+    if requested and requested != "auto":
+        return requested
+    personas = ["authority", "curation", "quick_tip"]
+    idx = sum(ord(c) for c in slug) % len(personas)
+    return personas[idx]
+
+def format_mastodon_status(article: dict, persona: str = "authority") -> str:
+    active_persona = resolve_persona(article.get('slug', ''), persona)
     takeaways = get_article_takeaways(article, max_items=2)
     tags = get_article_hashtags(article, max_tags=4)
     tags_str = ' '.join(tags)
 
-    status = f"{article['title']}\n\n{article['description']}"
-    if takeaways:
-        status += "\n\nKey Architecture:\n" + "\n".join([f"• {t}" for t in takeaways])
+    if active_persona == "curation":
+        status = f"[ PRODUCTION PLAYBOOK ]\n{article['title']}\n\n{article['description']}"
+        if takeaways:
+            status += "\n\nKey Takeaways:\n" + "\n".join([f"• {t}" for t in takeaways])
+    elif active_persona == "quick_tip":
+        status = f"[ ARCHITECTURE CHEATSHEET ]\n{article['title']}"
+        if takeaways:
+            status += f"\n\nInvariant: {takeaways[0]}"
+        status += f"\n\n{article['description']}"
+    else:  # authority (default)
+        status = f"{article['title']}\n\n{article['description']}"
+        if takeaways:
+            status += "\n\nKey Architecture:\n" + "\n".join([f"• {t}" for t in takeaways])
     
     status += f"\n\n[ Read Full Article -> ] {article['url']}\n\n{tags_str}"
     
@@ -354,7 +373,7 @@ def format_mastodon_status(article: dict) -> str:
         status = f"{article['title']}\n\n{article['description']}\n\n[ Read Full Article -> ] {article['url']}\n\n{tags_str}"
     return status
 
-def publish_mastodon(article):
+def publish_mastodon(article, persona: str = "authority"):
     load_dotenv()
     token = os.environ.get('MASTODON_ACCESS_TOKEN')
     server = os.environ.get('MASTODON_SERVER', 'https://infosec.exchange')
@@ -362,7 +381,7 @@ def publish_mastodon(article):
         print("[ WARN ] MASTODON_ACCESS_TOKEN not set in environment or .env file.")
         return False
 
-    status_text = format_mastodon_status(article)
+    status_text = format_mastodon_status(article, persona=persona)
     
     media_ids = []
     card_path = BASE_DIR / "assets" / "img" / "social-cards" / f"{article['slug']}-dark-landscape.png"
@@ -537,7 +556,8 @@ def extract_bsky_facets(text):
         })
     return facets
 
-def format_bluesky_post_text(title, description, url, tags, takeaways=None):
+def format_bluesky_post_text(title, description, url, tags, takeaways=None, persona="authority", slug=""):
+    active_persona = resolve_persona(slug, persona)
     tags_str = ' '.join(tags[:2])
     suffix = f'\n\n[ Read Full Article -> ] {url}'
     if tags_str:
@@ -547,8 +567,18 @@ def format_bluesky_post_text(title, description, url, tags, takeaways=None):
     
     budget = 280 - fixed_len
 
-    # Try high-density bullet format if budget permits
-    if takeaways and len(takeaways) > 0:
+    # Persona-aware bullet prefix
+    if active_persona == "curation" and takeaways and len(takeaways) > 0:
+        bullet = f"Playbook: {takeaways[0]}"
+        combined = f"{title}\n\n{bullet}"
+        if len(combined.encode('utf-8')) <= budget - 4:
+            return f"{combined}\n\n{suffix}"
+    elif active_persona == "quick_tip" and takeaways and len(takeaways) > 0:
+        bullet = f"Rule: {takeaways[0]}"
+        combined = f"{title}\n\n{bullet}"
+        if len(combined.encode('utf-8')) <= budget - 4:
+            return f"{combined}\n\n{suffix}"
+    elif takeaways and len(takeaways) > 0:
         bullet = f"• {takeaways[0]}"
         combined = f"{title}\n\n{bullet}"
         if len(combined.encode('utf-8')) <= budget - 4:
@@ -568,7 +598,7 @@ def format_bluesky_post_text(title, description, url, tags, takeaways=None):
     else:
         return f'{title}\n\n{suffix}'
 
-def publish_bluesky(article):
+def publish_bluesky(article, persona: str = "authority"):
     load_dotenv()
     handle = os.environ.get('BSKY_HANDLE')
     password = os.environ.get('BSKY_APP_PASSWORD')
@@ -779,6 +809,8 @@ def main():
     parser.add_argument("--status", action="store_true", help="Display syndication status overview table")
     parser.add_argument("--sync-unposted", action="store_true", help="Auto-publish unposted articles to all social APIs with rate limiting")
     parser.add_argument("--limit", "-n", type=int, default=0, help="Limit number of unposted articles to process in this run (e.g. --limit 1 for daily drip)")
+    parser.add_argument("--persona", type=str, choices=["authority", "curation", "quick_tip", "auto"], default="authority", help="Copywriting persona angle (authority, curation, quick_tip, or auto)")
+    parser.add_argument("--jitter", action="store_true", help="Enable randomized time-jitter delay (1.5s-4.5s) between API calls")
     parser.add_argument("--open", "-o", action="store_true", help="Auto-open submit tabs in browser")
     parser.add_argument("--publish-mastodon", action="store_true", help="Auto-publish status to Mastodon API")
     parser.add_argument("--publish-devto", action="store_true", help="Auto-publish article to Dev.to API")
@@ -806,24 +838,25 @@ def main():
         if args.limit and args.limit > 0:
             unposted = unposted[:args.limit]
 
-        print(f"\n[ BATCH SYNC ] Processing {len(unposted)} unposted/partially-posted article(s) (limit={args.limit or 'all'}).")
+        print(f"\n[ BATCH SYNC ] Processing {len(unposted)} unposted/partially-posted article(s) (limit={args.limit or 'all'}, persona={args.persona}, jitter={args.jitter}).")
         for idx, a in enumerate(unposted, 1):
             h = history.get(a['slug'], {})
             print(f"\n[{idx}/{len(unposted)}] Broadcasting: {a['slug']}")
             
+            jitter_delay = random.uniform(1.5, 4.0) if args.jitter else 2.0
             if 'mastodon' not in h:
-                publish_mastodon(a)
-                time.sleep(2)
+                publish_mastodon(a, persona=args.persona)
+                time.sleep(jitter_delay)
             if 'bluesky' not in h:
-                publish_bluesky(a)
-                time.sleep(2)
+                publish_bluesky(a, persona=args.persona)
+                time.sleep(jitter_delay)
             if 'devto' not in h:
                 publish_devto(a)
-                time.sleep(2)
+                time.sleep(jitter_delay)
             
             time.sleep(1)
 
-        print("\n✨ [ BATCH SYNC COMPLETE ] ✨\n")
+        print("\n[ BATCH SYNC COMPLETE ]\n")
         print_status_table()
         sys.exit(0)
 
@@ -845,13 +878,13 @@ def main():
     # Parallel API Execution via ThreadPoolExecutor
     publish_tasks = []
     if args.publish or args.publish_mastodon:
-        publish_tasks.append(("Mastodon", publish_mastodon))
+        publish_tasks.append(("Mastodon", lambda art: publish_mastodon(art, persona=args.persona)))
 
     if args.publish or args.publish_devto:
         publish_tasks.append(("Dev.to", publish_devto))
 
     if args.publish or args.publish_bsky:
-        publish_tasks.append(("Bluesky", publish_bluesky))
+        publish_tasks.append(("Bluesky", lambda art: publish_bluesky(art, persona=args.persona)))
 
     if publish_tasks:
         print("\n[ API PARALLEL PUBLISH ] Broadcasting to social APIs concurrently...")

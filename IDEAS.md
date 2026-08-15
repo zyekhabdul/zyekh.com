@@ -26,7 +26,7 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 - [ DONE ] **Strict Secret Masking & Error Trace Redaction**: Redaksi otomatis token Bearer, API keys, dan kata sandi di seluruh log error `scripts/syndicate.py` dan `run_pipeline.py`.
 - [ DONE ] **Content Hash Cache-Busting on OpenGraph & Twitter Tags**: Otomatis menyematkan hash query string `?v=<file_hash>` pada `og:image` dan `twitter:image` di seluruh 91 file HTML agar crawler media sosial (Facebook, LinkedIn, Discord, Telegram, X) tidak menampilkan thumbnail kadaluarsa.
 - [ DONE ] **Web AI Agent Tool Manifest (`/tools/tools-manifest.json`)**: Ekstraksi skema JSON terstruktur untuk seluruh 46 client-side tools (parameter, elemen form, model eksekusi client-side) untuk direct tool-calling oleh Browser AI agents (Claude Computer Use, ChatGPT Operator, Gemini Web Agent).
-- [ BACKLOG ] **Dynamic Canvas Vertical Budgeting**: Kalkulator layout dinamis fleksibel di Pillow compiler untuk auto-adjust padding ketika judul/konten artikel sangat panjang.
+- [ DONE ] **Dynamic Canvas Vertical Budgeting**: Kalkulator layout dinamis fleksibel di Pillow compiler untuk auto-adjust padding ketika judul/konten artikel sangat panjang.
 
 
 ## 3. Peningkatan Aksesibilitas & UX
@@ -43,7 +43,7 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 
 ## 5. Proposal Tambahan & Inovasi Fitur (Backlog Aktif)
 - [ DONE ] **shop.zyekh.com Ecosystem Touchpoints**: Pemasangan touchpoints navigasi (`site-nav.js`), kartu unggulan di `links/index.html`, footer navigation di `index.html` dan seluruh 91 HTML files, serta architecture resource callout di `blueprints/index.html`.
-- [ BACKLOG ] **Multi-Persona & Time-Jittered Multi-Account Syndication**: Upgrade `scripts/syndicate.py` untuk mengorkestrasi multi-akun media sosial dengan klaster sudut pandang berbeda (Authority, Curation, Utility Showcase), variasi copywriting otomatis, penundaan waktu acak (time-jitter), dan organic cross-engagement loop.
+- [ DONE ] **Multi-Persona & Time-Jittered Multi-Account Syndication**: Upgrade `scripts/syndicate.py` untuk mengorkestrasi multi-akun media sosial dengan klaster sudut pandang berbeda (Authority, Curation, Quick Tip), variasi copywriting otomatis, penundaan waktu acak (time-jitter 1.5s-4.5s), dan flag CLI `--persona` & `--jitter`.
 - [ BACKLOG ] **Linux Security `sysctl` & `sshd` Hardening Config Builder**: Generator konfigurasi interaktif `/etc/sysctl.d/99-hardening.conf` dan `/etc/ssh/sshd_config.d/99-hardened.conf` berbasis use-case (`/tools/linux-hardening-generator.html`).
 - [ DONE ] **GitHub Actions Automated CI QA Gate**: Workflow CI otomatis di GitHub Actions untuk memvalidasi `verify_batch.py` (20-axis) pada setiap Pull Request/Commit (`.github/workflows/qa-gate.yml`).
 - [ DONE ] **JSON Feed v1.1 & RFC 4287 Atom Feed Modernization**: Penambahan output sindikasi modern `feed.json` dan `atom.xml` di `sync_content.py`, autodiscovery `<link rel="alternate">` tags di 91 file HTML, integrasi robots.txt, sitemap.xml, llms.txt, dan QA Check 17.

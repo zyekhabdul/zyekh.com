@@ -188,4 +188,8 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
     - **Tri-Feed Delivery**: All blog articles MUST be automatically syndicated across RSS 2.0 (`feed.xml`), RFC 4287 Atom 1.0 (`atom.xml`), and JSON Feed v1.1 (`feed.json`) via `sync_content.py`.
     - **Discovery & Validation Parity**: Autodiscovery `<link rel="alternate">` tags MUST be injected across all HTML `<head>`, and validated in `verify_batch.py` Check 17 and Check 21.
 
+51. **MULTI-PERSONA SYNDICATION & DYNAMIC CANVAS BUDGETING STANDARD**:
+    - **Dynamic Vertical Budgeting**: `scripts/generate_social_cards.py` MUST dynamically compute `available_body_h` against the canvas bottom limit, scaling box gaps and line-heights to guarantee zero geometry collisions and $\ge 20\text{px}$ footer clearance across all articles.
+    - **Multi-Persona & Jittered Delivery**: `scripts/syndicate.py` MUST provide `--persona` angles (`authority`, `curation`, `quick_tip`, `auto`) and `--jitter` randomized delays (1.5s-4.5s) to avoid remote rate limiting and diversify copywriting angles.
+
 
