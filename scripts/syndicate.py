@@ -457,6 +457,25 @@ def publish_devto(article):
             return True
     except urllib.error.HTTPError as e:
         err_msg = e.read().decode('utf-8')
+        if e.code == 429:
+            print(f"[ WARN ] Dev.to Rate limited (429). Sleeping 32s before automatic retry...")
+            time.sleep(32)
+            try:
+                with urllib.request.urlopen(req, timeout=20) as resp:
+                    resp_data = json.loads(resp.read().decode('utf-8'))
+                    article_id = resp_data.get('id')
+                    url = resp_data.get('url', f"https://dev.to/zyekh/{article['slug']}")
+                    record_history(article['slug'], 'devto', {
+                        'id': article_id,
+                        'url': url,
+                        'updated_at': datetime.datetime.now(datetime.timezone.utc).isoformat()
+                    })
+                    action_label = "Updated" if method == 'PUT' else "Published"
+                    print(f"[ SUCCESS ] Dev.to Article {action_label} (Post-Retry): {url}")
+                    return True
+            except Exception as retry_err:
+                print(f"[ ERROR ] Dev.to Retry Failed: {retry_err}")
+                return False
         print(f"[ ERROR ] Dev.to Publish Failed ({e.code}): {err_msg}")
         return False
     except Exception as e:

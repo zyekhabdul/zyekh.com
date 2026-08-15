@@ -63,5 +63,515 @@
       "id": "117097304619818967",
       "url": "https://infosec.exchange/@zyekhabdul/117097304619818967"
     }
+  },
+  "chroot-jail-and-unprivileged-namespaces-isolation": {
+    "mastodon": {
+      "id": "117097441367941238",
+      "url": "https://infosec.exchange/@zyekhabdul/117097441367941238",
+      "posted_at": "2026-08-15T03:39:17.715515+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qrjp66o2j",
+      "cid": "bafyreihj4rdcw6tdq4qzo6qiezva24xsjwmaeubyijexzdueh7ptlibinu",
+      "posted_at": "2026-08-15T03:39:25.855671+00:00"
+    },
+    "devto": {
+      "id": 4400873,
+      "url": "https://dev.to/aomiqaza/process-isolation-on-linux-unprivileged-user-namespaces-chroot-jails-3d7f",
+      "updated_at": "2026-08-15T03:39:29.030012+00:00"
+    }
+  },
+  "cilium-ebpf-cloud-native-network-security-and-cilium-tetragon": {
+    "mastodon": {
+      "id": "117097442377553190",
+      "url": "https://infosec.exchange/@zyekhabdul/117097442377553190",
+      "posted_at": "2026-08-15T03:39:33.115465+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qrxfu2t2e",
+      "cid": "bafyreiddcceaihdmhcqphjp5kjr4qzdm335xp3pizao5kcwx6yzfadbzku",
+      "posted_at": "2026-08-15T03:39:40.254639+00:00"
+    },
+    "devto": {
+      "id": 4400875,
+      "url": "https://dev.to/aomiqaza/cilium-ebpf-tetragon-cloud-native-runtime-security-network-enforcement-o",
+      "updated_at": "2026-08-15T03:39:42.953623+00:00"
+    }
+  },
+  "colbert-late-interaction-advanced-rag": {
+    "mastodon": {
+      "id": "117097443288047411",
+      "url": "https://infosec.exchange/@zyekhabdul/117097443288047411",
+      "posted_at": "2026-08-15T03:39:47.008054+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qselfca2p",
+      "cid": "bafyreieu2c457ddodwd4hd4tg5pgcpzpyjtuhfmn2tscyqazjyfoq2q2ka",
+      "posted_at": "2026-08-15T03:39:54.062233+00:00"
+    },
+    "devto": {
+      "id": 4400914,
+      "url": "https://dev.to/aomiqaza/colbert-late-interaction-advancing-rag-beyond-dense-embeddings-3n1b",
+      "updated_at": "2026-08-15T03:46:39.227067+00:00"
+    }
+  },
+  "container-image-signing-and-slsa-provenance-with-cosign": {
+    "mastodon": {
+      "id": "117097444180952884",
+      "url": "https://infosec.exchange/@zyekhabdul/117097444180952884",
+      "posted_at": "2026-08-15T03:40:00.632864+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qsrqbrd23",
+      "cid": "bafyreibzzxicjbzewwdh5thm7fmxtfs5dnxviydekbne3honxx64yulkmm",
+      "posted_at": "2026-08-15T03:40:07.890210+00:00"
+    },
+    "devto": {
+      "id": 4400877,
+      "url": "https://dev.to/aomiqaza/container-image-signing-slsa-provenance-verification-with-sigstore-cosign-56ce",
+      "updated_at": "2026-08-15T03:40:10.540578+00:00"
+    }
+  },
+  "dspy-declarative-prompting-optimization": {
+    "mastodon": {
+      "id": "117097445100015996",
+      "url": "https://infosec.exchange/@zyekhabdul/117097445100015996",
+      "posted_at": "2026-08-15T03:40:14.688126+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qtaybxy2c",
+      "cid": "bafyreifzv4xzx4mfew6dvukhkavcvng4yubg3jve7dmrsdrtj4ci4g2wfi",
+      "posted_at": "2026-08-15T03:40:23.875205+00:00"
+    },
+    "devto": {
+      "id": 4400879,
+      "url": "https://dev.to/aomiqaza/dspy-replacing-prompt-engineering-with-declarative-optimization-compilers-1bja",
+      "updated_at": "2026-08-15T03:40:26.766003+00:00"
+    }
+  },
+  "fail2ban-intrusion-prevention-and-ssh-abuse-mitigation": {
+    "mastodon": {
+      "id": "117097446175793439",
+      "url": "https://infosec.exchange/@zyekhabdul/117097446175793439",
+      "posted_at": "2026-08-15T03:40:31.075164+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qtoxgky2c",
+      "cid": "bafyreieoe2slo6ry65txh46kez6yek5biokafcqovxqplvooqoeuk5mrly",
+      "posted_at": "2026-08-15T03:40:38.494290+00:00"
+    },
+    "devto": {
+      "id": 4400880,
+      "url": "https://dev.to/aomiqaza/automated-intrusion-prevention-fail2ban-configuration-for-ssh-nginx-protection-28kl",
+      "updated_at": "2026-08-15T03:40:41.629218+00:00"
+    }
+  },
+  "http3-quic-security-hardening-and-0rtt-mitigation-blueprint": {
+    "mastodon": {
+      "id": "117097447133175819",
+      "url": "https://infosec.exchange/@zyekhabdul/117097447133175819",
+      "posted_at": "2026-08-15T03:40:45.684451+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qu4my2p2j",
+      "cid": "bafyreifbfjm4uddwbrderbs4yj3jfec2z6ootj2uj6cw2x7pht2ex3p6oi",
+      "posted_at": "2026-08-15T03:40:53.031669+00:00"
+    },
+    "devto": {
+      "id": 4400916,
+      "url": "https://dev.to/aomiqaza/http3-quic-protocol-security-hardening-mitigating-0-rtt-replay-attacks-3p8e",
+      "updated_at": "2026-08-15T03:46:43.834487+00:00"
+    }
+  },
+  "kubernetes-pod-security-standards-pss-and-admission-control": {
+    "mastodon": {
+      "id": "117097448039674268",
+      "url": "https://infosec.exchange/@zyekhabdul/117097448039674268",
+      "posted_at": "2026-08-15T03:40:59.527127+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qujsegp2j",
+      "cid": "bafyreihh2pujerdenrv25zcqeeyht7twhd4ag7pmasva6f6lanjj2hstjq",
+      "posted_at": "2026-08-15T03:41:06.622089+00:00"
+    },
+    "devto": {
+      "id": 4400882,
+      "url": "https://dev.to/aomiqaza/kubernetes-pod-security-standards-pss-native-admission-control-na2",
+      "updated_at": "2026-08-15T03:41:09.951679+00:00"
+    }
+  },
+  "kv-cache-int4-quantization-long-context": {
+    "mastodon": {
+      "id": "117097448988434247",
+      "url": "https://infosec.exchange/@zyekhabdul/117097448988434247",
+      "posted_at": "2026-08-15T03:41:13.987057+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3quxjoob24",
+      "cid": "bafyreiekn3ssq23oregus7jm3o5jeaxeppul77kl4743ibim37jmw4nace",
+      "posted_at": "2026-08-15T03:41:21.019202+00:00"
+    },
+    "devto": {
+      "id": 4400883,
+      "url": "https://dev.to/aomiqaza/kv-cache-int4-quantization-for-1m-token-context-windows-3cge",
+      "updated_at": "2026-08-15T03:41:23.680583+00:00"
+    }
+  },
+  "linux-audit-logging-with-vector-and-clickhouse-dfir": {
+    "mastodon": {
+      "id": "117097449891137301",
+      "url": "https://infosec.exchange/@zyekhabdul/117097449891137301",
+      "posted_at": "2026-08-15T03:41:27.767876+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qvet5sf25",
+      "cid": "bafyreic7eckkmbyyya2vvnjhoofdbm5l6hingnodq4siskyck4v3jrwdya",
+      "posted_at": "2026-08-15T03:41:35.177196+00:00"
+    },
+    "devto": {
+      "id": 4400918,
+      "url": "https://dev.to/aomiqaza/high-throughput-linux-audit-logging-with-vector-clickhouse-dfir-pipeline-15l1",
+      "updated_at": "2026-08-15T03:47:31.847181+00:00"
+    }
+  },
+  "linux-kernel-sysctl-hardening-network-stack-security": {
+    "mastodon": {
+      "id": "117097450794793562",
+      "url": "https://infosec.exchange/@zyekhabdul/117097450794793562",
+      "posted_at": "2026-08-15T03:41:41.547704+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qvs53my2c",
+      "cid": "bafyreih3m2lilozjqrlyylj4fmwedysdpltyqkznn5e4yoxeyfzvysxpqu",
+      "posted_at": "2026-08-15T03:41:48.958821+00:00"
+    },
+    "devto": {
+      "id": 4400885,
+      "url": "https://dev.to/aomiqaza/linux-kernel-sysctl-hardening-securing-tcpip-network-stack-against-syn-floods-34fj",
+      "updated_at": "2026-08-15T03:41:51.834788+00:00"
+    }
+  },
+  "linux-landlock-lsm-unprivileged-sandboxing-blueprint": {
+    "mastodon": {
+      "id": "117097451770299700",
+      "url": "https://infosec.exchange/@zyekhabdul/117097451770299700",
+      "posted_at": "2026-08-15T03:41:56.435905+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qwa5tzk2y",
+      "cid": "bafyreidbqmfnpsi7jzsdxpksn6jwhebxbeotbtvfexanx67cla2jcfyqvi",
+      "posted_at": "2026-08-15T03:42:03.678490+00:00"
+    },
+    "devto": {
+      "id": 4400886,
+      "url": "https://dev.to/aomiqaza/linux-landlock-lsm-unprivileged-application-sandboxing-access-control-57ip",
+      "updated_at": "2026-08-15T03:42:06.362684+00:00"
+    }
+  },
+  "linux-seccomp-bpf-syscall-filtering-hardening-guide": {
+    "mastodon": {
+      "id": "117097452692175091",
+      "url": "https://infosec.exchange/@zyekhabdul/117097452692175091",
+      "posted_at": "2026-08-15T03:42:10.508020+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qwngxe72u",
+      "cid": "bafyreib7547ojp4nz4kt5jpzdglcb6dadpkbma4wqmmsvly5q5ri24425m",
+      "posted_at": "2026-08-15T03:42:17.582426+00:00"
+    },
+    "devto": {
+      "id": 4400919,
+      "url": "https://dev.to/aomiqaza/linux-seccomp-bpf-syscall-filtering-restricting-process-attack-surfaces-2fch",
+      "updated_at": "2026-08-15T03:47:35.575189+00:00"
+    }
+  },
+  "linux-vps-hardening-guide-2026": {
+    "mastodon": {
+      "id": "117097453606340929",
+      "url": "https://infosec.exchange/@zyekhabdul/117097453606340929",
+      "posted_at": "2026-08-15T03:42:24.456342+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qx2rirh2u",
+      "cid": "bafyreiexcy5aeacibql7qzc7rog7rjipdmlig7fwha2dmacida77mv2n4i",
+      "posted_at": "2026-08-15T03:42:31.743600+00:00"
+    },
+    "devto": {
+      "id": 4400888,
+      "url": "https://dev.to/aomiqaza/comprehensive-linux-vps-hardening-blueprint-for-2026-18gi",
+      "updated_at": "2026-08-15T03:42:35.014759+00:00"
+    }
+  },
+  "minimalist-server-architecture-pure-css-and-static-hosting": {
+    "mastodon": {
+      "id": "117097454571450530",
+      "url": "https://infosec.exchange/@zyekhabdul/117097454571450530",
+      "posted_at": "2026-08-15T03:42:39.188984+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qxivoip2u",
+      "cid": "bafyreigqczea75i7aq6vyzcbkijvkh674wd45r4nrpazevi4655ajtgqym",
+      "posted_at": "2026-08-15T03:42:46.466988+00:00"
+    },
+    "devto": {
+      "id": 4400892,
+      "url": "https://dev.to/aomiqaza/why-minimalist-static-hosting-outperforms-monolithic-frameworks-for-security-he2",
+      "updated_at": "2026-08-15T03:42:49.237682+00:00"
+    }
+  },
+  "moe-serving-mixture-of-experts-routing": {
+    "mastodon": {
+      "id": "117097455498495312",
+      "url": "https://infosec.exchange/@zyekhabdul/117097455498495312",
+      "posted_at": "2026-08-15T03:42:53.339088+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qxwcuju2t",
+      "cid": "bafyreihh2bln35ozf7jvzgmufnk2v4iuj6zam7ou6y6zpich6eph3yvcga",
+      "posted_at": "2026-08-15T03:43:00.410509+00:00"
+    },
+    "devto": {
+      "id": 4400921,
+      "url": "https://dev.to/aomiqaza/serving-mixture-of-experts-moe-memory-efficient-inference-routing-1l3b",
+      "updated_at": "2026-08-15T03:48:12.061461+00:00"
+    }
+  },
+  "multi-agent-swarm-orchestration-patterns": {
+    "mastodon": {
+      "id": "117097456455698151",
+      "url": "https://infosec.exchange/@zyekhabdul/117097456455698151",
+      "posted_at": "2026-08-15T03:43:07.925738+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qyebzva2p",
+      "cid": "bafyreifn6jq5cpt2l7v2xqaud3dhdhygzo4igqjuc4iyln6yufeq576eaa",
+      "posted_at": "2026-08-15T03:43:15.246766+00:00"
+    },
+    "devto": {
+      "id": 4400894,
+      "url": "https://dev.to/aomiqaza/multi-agent-swarm-orchestration-hierarchical-agentic-workflows-283e",
+      "updated_at": "2026-08-15T03:43:18.340975+00:00"
+    }
+  },
+  "nginx-reverse-proxy-security-hardening-blueprint-2026": {
+    "mastodon": {
+      "id": "117097457402217834",
+      "url": "https://infosec.exchange/@zyekhabdul/117097457402217834",
+      "posted_at": "2026-08-15T03:43:22.380271+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qyrybrs2m",
+      "cid": "bafyreihfvlzxmwdexg5jxosobfdjs6zhxw37rmaz4d6madj5bw5sqh7fgi",
+      "posted_at": "2026-08-15T03:43:29.480466+00:00"
+    },
+    "devto": {
+      "id": 4400896,
+      "url": "https://dev.to/aomiqaza/nginx-reverse-proxy-security-hardening-blueprint-for-2026-29c9",
+      "updated_at": "2026-08-15T03:43:32.261670+00:00"
+    }
+  },
+  "omnirouter-llm-gateway-routing-fallback-patterns": {
+    "mastodon": {
+      "id": "117097458316662154",
+      "url": "https://infosec.exchange/@zyekhabdul/117097458316662154",
+      "posted_at": "2026-08-15T03:43:36.325628+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qz7fd2h2j",
+      "cid": "bafyreic3slhbjviganseofpbcgxkpan4il2cxsdmvrs6i57gftxkjzc5gu",
+      "posted_at": "2026-08-15T03:43:43.495784+00:00"
+    },
+    "devto": {
+      "id": 4400923,
+      "url": "https://dev.to/aomiqaza/omnirouter-architecture-resilient-llm-gateway-routing-fallback-pipelines-12op",
+      "updated_at": "2026-08-15T03:48:16.249456+00:00"
+    }
+  },
+  "pam-tally2-faillock-account-lockout-policy-guide": {
+    "mastodon": {
+      "id": "117097459258170566",
+      "url": "https://infosec.exchange/@zyekhabdul/117097459258170566",
+      "posted_at": "2026-08-15T03:43:50.695093+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3qzn4mnm2t",
+      "cid": "bafyreihthdpsiwfux736ifutqproteuypu6cuntrc3xkqqwcdc3k4tiuqy",
+      "posted_at": "2026-08-15T03:43:57.941750+00:00"
+    },
+    "devto": {
+      "id": 4400898,
+      "url": "https://dev.to/aomiqaza/enforcing-linux-account-lockout-policies-with-pam-faillock-against-brute-force-18nd",
+      "updated_at": "2026-08-15T03:44:00.674824+00:00"
+    }
+  },
+  "securing-web-applications-with-strict-content-security-policy": {
+    "mastodon": {
+      "id": "117097460197170046",
+      "url": "https://infosec.exchange/@zyekhabdul/117097460197170046",
+      "posted_at": "2026-08-15T03:44:05.020779+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3r22w6up2u",
+      "cid": "bafyreigqdet5abu3ooiao26e2qcpasdrxcaqhzxmqow4xbr2xgepxcjqki",
+      "posted_at": "2026-08-15T03:44:12.426770+00:00"
+    },
+    "devto": {
+      "id": 4400899,
+      "url": "https://dev.to/aomiqaza/implementing-strict-content-security-policy-csp-security-headers-3d8e",
+      "updated_at": "2026-08-15T03:44:15.525234+00:00"
+    }
+  },
+  "slora-adapter-multiplexing-single-gpu": {
+    "mastodon": {
+      "id": "117097461157002220",
+      "url": "https://infosec.exchange/@zyekhabdul/117097461157002220",
+      "posted_at": "2026-08-15T03:44:19.680210+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3r2io6fi2p",
+      "cid": "bafyreic4pso5cfbiwk5mmrcc3mhvh6mdhg33eytezr7xzu55vb75aajygi",
+      "posted_at": "2026-08-15T03:44:26.782727+00:00"
+    },
+    "devto": {
+      "id": 4400926,
+      "url": "https://dev.to/aomiqaza/s-lora-multiplexing-thousands-of-fine-tuned-adapters-on-a-single-gpu-2c9e",
+      "updated_at": "2026-08-15T03:48:52.762819+00:00"
+    }
+  },
+  "ssh-certificates-vault-ca-short-lived-authentication": {
+    "mastodon": {
+      "id": "117097462050256870",
+      "url": "https://infosec.exchange/@zyekhabdul/117097462050256870",
+      "posted_at": "2026-08-15T03:44:33.341221+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3r2w5oqk2e",
+      "cid": "bafyreid72lfsfbnk43tnpxojl64faiitflfq44gpe7jo3lpv6dqo5u2j3y",
+      "posted_at": "2026-08-15T03:44:40.896467+00:00"
+    },
+    "devto": {
+      "id": 4400903,
+      "url": "https://dev.to/aomiqaza/short-lived-ssh-certificate-authentication-with-hashicorp-vault-ca-m6c",
+      "updated_at": "2026-08-15T03:44:43.687666+00:00"
+    }
+  },
+  "structured-output-generation-logits-constraints": {
+    "mastodon": {
+      "id": "117097463014657036",
+      "url": "https://infosec.exchange/@zyekhabdul/117097463014657036",
+      "posted_at": "2026-08-15T03:44:48.010548+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3r3dra2r25",
+      "cid": "bafyreietusdiiasrhqebhtix6xj32tvh7wcqt3d3zwmsh64t6sjz56stou",
+      "posted_at": "2026-08-15T03:44:55.436800+00:00"
+    },
+    "devto": {
+      "id": 4400904,
+      "url": "https://dev.to/aomiqaza/structured-output-generation-enforcing-json-regex-at-the-logits-level-36a",
+      "updated_at": "2026-08-15T03:44:58.119570+00:00"
+    }
+  },
+  "systemd-service-sandboxing-and-security-hardening": {
+    "mastodon": {
+      "id": "117097463964496587",
+      "url": "https://infosec.exchange/@zyekhabdul/117097463964496587",
+      "posted_at": "2026-08-15T03:45:02.506433+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3r3tffhi2f",
+      "cid": "bafyreiafjfrvbjvtrzj4tmms2odyius24ltqghaeyexl5hsasmqrrrp7vm",
+      "posted_at": "2026-08-15T03:45:11.578997+00:00"
+    },
+    "devto": {
+      "id": 4400905,
+      "url": "https://dev.to/aomiqaza/systemd-service-sandboxing-restricting-process-capability-system-calls-2klk",
+      "updated_at": "2026-08-15T03:45:14.325456+00:00"
+    }
+  },
+  "ufw-firewall-hardening-and-rate-limiting-blueprint-2026": {
+    "mastodon": {
+      "id": "117097465010555689",
+      "url": "https://infosec.exchange/@zyekhabdul/117097465010555689",
+      "posted_at": "2026-08-15T03:45:18.465480+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3r4ay4dr2b",
+      "cid": "bafyreie3bsr2uq7oac5qklrf7p5ukhz42f5efy7droyw2ruvqvnmgooxs4",
+      "posted_at": "2026-08-15T03:45:25.820675+00:00"
+    },
+    "devto": {
+      "id": 4400908,
+      "url": "https://dev.to/aomiqaza/ufw-firewall-hardening-advanced-rate-limiting-default-deny-security-blueprint-3hod",
+      "updated_at": "2026-08-15T03:45:28.896401+00:00"
+    }
+  },
+  "understanding-linux-ebpf-security-monitoring": {
+    "mastodon": {
+      "id": "117097465961513147",
+      "url": "https://infosec.exchange/@zyekhabdul/117097465961513147",
+      "posted_at": "2026-08-15T03:45:32.992188+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3r4ornfy2p",
+      "cid": "bafyreihgftizaivyyioqtiqlchgbedsqkblitfvdvvuihbr4mbuxxhvjoy",
+      "posted_at": "2026-08-15T03:45:40.330222+00:00"
+    },
+    "devto": {
+      "id": 4400927,
+      "url": "https://dev.to/aomiqaza/understanding-ebpf-for-real-time-linux-security-monitoring-3bfn",
+      "updated_at": "2026-08-15T03:48:56.831529+00:00"
+    }
+  },
+  "webgpu-llm-inference-browser-sandbox": {
+    "mastodon": {
+      "id": "117097466872269517",
+      "url": "https://infosec.exchange/@zyekhabdul/117097466872269517",
+      "posted_at": "2026-08-15T03:45:46.875550+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3r53zwfd2p",
+      "cid": "bafyreiglvcdhiytinmrj6qjuanh7zvxzbiomvo4oubfwaeu3sqyookkoci",
+      "posted_at": "2026-08-15T03:45:54.281458+00:00"
+    },
+    "devto": {
+      "id": 4400910,
+      "url": "https://dev.to/aomiqaza/webgpu-llm-inference-running-7b-models-natively-in-the-browser-521c",
+      "updated_at": "2026-08-15T03:45:57.122495+00:00"
+    }
+  },
+  "wireguard-vpn-tunneling-for-secure-vps-mesh-networks": {
+    "mastodon": {
+      "id": "117097467807313103",
+      "url": "https://infosec.exchange/@zyekhabdul/117097467807313103",
+      "posted_at": "2026-08-15T03:46:01.142362+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3r5jjjnx2u",
+      "cid": "bafyreiadyfuowsro6gffebam6755v6vzhlpi3ilqkozpmmxlscliw64vee",
+      "posted_at": "2026-08-15T03:46:08.437724+00:00"
+    },
+    "devto": {
+      "id": 4400912,
+      "url": "https://dev.to/aomiqaza/securing-vps-infrastructure-with-wireguard-mesh-vpn-tunnels-strict-firewall-rules-39ag",
+      "updated_at": "2026-08-15T03:46:11.366668+00:00"
+    }
+  },
+  "zero-trust-microservices-with-wasm-runtime-sandboxing": {
+    "mastodon": {
+      "id": "117097468744948263",
+      "url": "https://infosec.exchange/@zyekhabdul/117097468744948263",
+      "posted_at": "2026-08-15T03:46:15.448066+00:00"
+    },
+    "bluesky": {
+      "uri": "at://did:plc:5g2vcb3nvuvcezskgstcji22/app.bsky.feed.post/3mt3r5xrodj25",
+      "cid": "bafyreifinisgrh3wd2t5dzokvdhtjc3vuujn7cso7oqi7i6txkk2ur4qw4",
+      "posted_at": "2026-08-15T03:46:23.398461+00:00"
+    },
+    "devto": {
+      "id": 4400931,
+      "url": "https://dev.to/aomiqaza/zero-trust-microservices-with-webassembly-wasm-runtime-sandboxing-3h79",
+      "updated_at": "2026-08-15T03:49:32.944088+00:00"
+    }
   }
 }
