@@ -1,41 +1,39 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
-  <meta charset="UTF-8">
-  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <meta name="theme-color" content="#09090b">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Konverter Satuan &amp; Mata Uang | Zyekh</title>
-  <meta name="description" content="Konverter satuan panjang, berat, suhu, dan mata uang. Atur kurs sendiri — tanpa backend, langsung di browser.">
-  <meta name="keywords" content="unit converter, length converter, weight converter, temperature converter, measurement converter">
-  
-  <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
-  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous">
-  <!-- SEO & Social Meta Tags -->
-  <link rel="canonical" href="https://zyekh.com/tools/converter.html">
-  <meta property="og:title" content="Unit Converter Online — zyekh.com">
-  <meta property="og:description" content="Konversi satuan panjang, berat, suhu, dan digital data secara presisi gratis di browser.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://zyekh.com/tools/converter.html">
-  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
-  <meta property="og:site_name" content="zyekh.com">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Unit Converter Online — zyekh.com">
-  <meta name="twitter:description" content="Konversi satuan panjang, berat, suhu, dan digital data secara presisi gratis di browser.">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
-
-  <!-- Structured Data JSON-LD -->
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Konverter Satuan &amp; Mata Uang | Zyekh</title>
+<meta content="Konverter satuan panjang, berat, suhu, dan mata uang. Atur kurs sendiri — tanpa backend, langsung di browser." name="description"/>
+<meta content="unit converter, length converter, weight converter, temperature converter, measurement converter" name="keywords"/>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<!-- SEO & Social Meta Tags -->
+<link href="https://zyekh.com/tools/converter.html" rel="canonical"/>
+<meta content="Unit Converter Online — zyekh.com" property="og:title"/>
+<meta content="Konversi satuan panjang, berat, suhu, dan digital data secara presisi gratis di browser." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://zyekh.com/tools/converter.html" property="og:url"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-converter-dark-landscape.png" property="og:image"/>
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Unit Converter Online — zyekh.com" name="twitter:title"/>
+<meta content="Konversi satuan panjang, berat, suhu, dan digital data secara presisi gratis di browser." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-converter-dark-landscape.png" name="twitter:image"/>
+<!-- Structured Data JSON-LD -->
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
@@ -108,178 +106,165 @@ window.debounceRAF = function(fn, delay) {
   };
 };
 </script>
-  <style id="antiClickjack">body{display:none !important;}</style>
+<style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-                                                                                                                              <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" as="script">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-+wQx7aIWZh15T5V4JLVkmfXg48HMUFnV+COyXYfq0xM=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-5bZqTZV4xLBJ5+grMPyoxxgGkSthfWx+9C6EL6jT7U0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
-    <!-- Header Navigation -->
-    <!-- Header Navigation -->
-  <site-nav active="tools"></site-nav>
-
-  <main class="main-container">
-    <nav aria-label="Breadcrumb">
-      <ol class="breadcrumb">
-        <li><a href="/" class="breadcrumb-link">Home</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li aria-current="page" style="color:var(--text-main);">Unit & Currency Converter</li>
-      </ol>
-    </nav>
-    
-    <header class="page-header">
-      <span class="badge">GENERATORS & UTILITIES</span>
-      <h1 class="page-title">Unit & Currency Converter</h1>
-      <p class="page-subtitle">Convert length, weight, area, volume, temperature, and currency units client-side.</p>
-    </header>
-
-  <div class="tool-box">
-      <p>
-    <button type="button" onclick="tab('panjang')">Panjang</button>
-    <button type="button" onclick="tab('berat')">Berat</button>
-    <button type="button" onclick="tab('suhu')">Suhu</button>
-    <button type="button" onclick="tab('uang')">Mata Uang</button>
-  </p>
-
-  <div id="panjang">
-    <p>
-      <input type="number" id="p-in" value="1" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()"panjang')">
-      <select id="p-from" onchange="conv('panjang')">
-        <option value="m">meter</option>
-        <option value="km">kilometer</option>
-        <option value="cm">sentimeter</option>
-        <option value="mm">milimeter</option>
-        <option value="mi">mil</option>
-        <option value="ft">kaki</option>
-        <option value="in">inci</option>
-      </select>
-    </p>
-    <p><button type="button" onclick="swap('p')">⇅ tukar</button></p>
-    <p>
-      <input type="number" id="p-out" readonly>
-      <select id="p-to" onchange="conv('panjang')">
-        <option value="km">kilometer</option>
-        <option value="m" selected>meter</option>
-        <option value="cm">sentimeter</option>
-        <option value="mm">milimeter</option>
-        <option value="mi">mil</option>
-        <option value="ft">kaki</option>
-        <option value="in">inci</option>
-      </select>
-    </p>
-  </div>
-
-  <div id="berat" hidden>
-    <p>
-      <input type="number" id="b-in" value="1" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()"berat')">
-      <select id="b-from" onchange="conv('berat')">
-        <option value="kg">kilogram</option>
-        <option value="g">gram</option>
-        <option value="mg">miligram</option>
-        <option value="lb">pound</option>
-        <option value="oz">ons</option>
-      </select>
-    </p>
-    <p><button type="button" onclick="swap('b')">⇅ tukar</button></p>
-    <p>
-      <input type="number" id="b-out" readonly>
-      <select id="b-to" onchange="conv('berat')">
-        <option value="g">gram</option>
-        <option value="kg" selected>kilogram</option>
-        <option value="mg">miligram</option>
-        <option value="lb">pound</option>
-        <option value="oz">ons</option>
-      </select>
-    </p>
-  </div>
-
-  <div id="suhu" hidden>
-    <p>
-      <input type="number" id="t-in" value="0" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()"suhu')">
-      <select id="t-from" onchange="conv('suhu')">
-        <option value="C">°C</option>
-        <option value="F">°F</option>
-        <option value="K">Kelvin</option>
-      </select>
-    </p>
-    <p><button type="button" onclick="swap('t')">⇅ tukar</button></p>
-    <p>
-      <input type="number" id="t-out" readonly>
-      <select id="t-to" onchange="conv('suhu')">
-        <option value="F">°F</option>
-        <option value="C" selected>°C</option>
-        <option value="K">Kelvin</option>
-      </select>
-    </p>
-  </div>
-
-  <div id="uang" hidden>
-    <p>Atur kurs manual (1 unit mata uang asing = Rp):</p>
-    <p><label>USD <input type="number" id="rate-usd" value="16000" step="100" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()"uang')"></label></p>
-    <p><label>EUR <input type="number" id="rate-eur" value="17500" step="100" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()"uang')"></label></p>
-    <p><label>SGD <input type="number" id="rate-sgd" value="12000" step="100" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()"uang')"></label></p>
-    <p><label>JPY <input type="number" id="rate-jpy" value="105" step="1" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()"uang')"></label></p>
-    <hr>
-    <p>
-      <input type="number" id="u-in" value="100" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()"uang')">
-      <select id="u-from" onchange="conv('uang')">
-        <option value="IDR">IDR</option>
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="SGD">SGD</option>
-        <option value="JPY">JPY</option>
-      </select>
-    </p>
-    <p><button type="button" onclick="swap('u')">⇅ tukar</button></p>
-    <p>
-      <input type="number" id="u-out" readonly>
-      <select id="u-to" onchange="conv('uang')">
-        <option value="USD">USD</option>
-        <option value="IDR" selected>IDR</option>
-        <option value="EUR">EUR</option>
-        <option value="SGD">SGD</option>
-        <option value="JPY">JPY</option>
-      </select>
-    </p>
-  </div>
-
-  <p><small>Kurs mata uang diinput manual — bukan kurs real-time. Perbarui sesuai kurs terbaru.</small></p>
-    </div>
-  
-      <section class="seo-content-block seo-block">
-        <h2>Tentang Unit Converter Online zyekh.com</h2>
-        <p>Konversi satuan panjang, berat, suhu, dan digital data secara presisi gratis di browser. Didesain ringan, cepat, tanpa iklan mengganggu, serta mengutamakan privasi pengguna.</p>
-        
-        <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
-        <div class="faq-accordion">
-          <details class="faq-card">
-            <summary class="faq-summary">Apakah tool ini aman dan gratis?</summary>
-            <p class="faq-answer">Ya, 100% gratis dan aman karena diproses murni di perangkat lokal Anda.</p>
-          </details>
-        </div>
-      </section>
-
+<!-- Header Navigation -->
+<!-- Header Navigation -->
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">Unit &amp; Currency Converter</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">GENERATORS &amp; UTILITIES</span>
+<h1 class="page-title">Unit &amp; Currency Converter</h1>
+<p class="page-subtitle">Convert length, weight, area, volume, temperature, and currency units client-side.</p>
+</header>
+<div class="tool-box">
+<p>
+<button onclick="tab('panjang')" type="button">Panjang</button>
+<button onclick="tab('berat')" type="button">Berat</button>
+<button onclick="tab('suhu')" type="button">Suhu</button>
+<button onclick="tab('uang')" type="button">Mata Uang</button>
+</p>
+<div id="panjang">
+<p>
+<input id="p-in" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" panjang')"="" type="number" value="1"/>
+<select id="p-from" onchange="conv('panjang')">
+<option value="m">meter</option>
+<option value="km">kilometer</option>
+<option value="cm">sentimeter</option>
+<option value="mm">milimeter</option>
+<option value="mi">mil</option>
+<option value="ft">kaki</option>
+<option value="in">inci</option>
+</select>
+</p>
+<p><button onclick="swap('p')" type="button">⇅ tukar</button></p>
+<p>
+<input id="p-out" readonly="" type="number"/>
+<select id="p-to" onchange="conv('panjang')">
+<option value="km">kilometer</option>
+<option selected="" value="m">meter</option>
+<option value="cm">sentimeter</option>
+<option value="mm">milimeter</option>
+<option value="mi">mil</option>
+<option value="ft">kaki</option>
+<option value="in">inci</option>
+</select>
+</p>
+</div>
+<div hidden="" id="berat">
+<p>
+<input berat')"="" id="b-in" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" type="number" value="1"/>
+<select id="b-from" onchange="conv('berat')">
+<option value="kg">kilogram</option>
+<option value="g">gram</option>
+<option value="mg">miligram</option>
+<option value="lb">pound</option>
+<option value="oz">ons</option>
+</select>
+</p>
+<p><button onclick="swap('b')" type="button">⇅ tukar</button></p>
+<p>
+<input id="b-out" readonly="" type="number"/>
+<select id="b-to" onchange="conv('berat')">
+<option value="g">gram</option>
+<option selected="" value="kg">kilogram</option>
+<option value="mg">miligram</option>
+<option value="lb">pound</option>
+<option value="oz">ons</option>
+</select>
+</p>
+</div>
+<div hidden="" id="suhu">
+<p>
+<input id="t-in" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" suhu')"="" type="number" value="0"/>
+<select id="t-from" onchange="conv('suhu')">
+<option value="C">°C</option>
+<option value="F">°F</option>
+<option value="K">Kelvin</option>
+</select>
+</p>
+<p><button onclick="swap('t')" type="button">⇅ tukar</button></p>
+<p>
+<input id="t-out" readonly="" type="number"/>
+<select id="t-to" onchange="conv('suhu')">
+<option value="F">°F</option>
+<option selected="" value="C">°C</option>
+<option value="K">Kelvin</option>
+</select>
+</p>
+</div>
+<div hidden="" id="uang">
+<p>Atur kurs manual (1 unit mata uang asing = Rp):</p>
+<p><label>USD <input id="rate-usd" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" step="100" type="number" uang')"="" value="16000"/></label></p>
+<p><label>EUR <input id="rate-eur" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" step="100" type="number" uang')"="" value="17500"/></label></p>
+<p><label>SGD <input id="rate-sgd" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" step="100" type="number" uang')"="" value="12000"/></label></p>
+<p><label>JPY <input id="rate-jpy" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" step="1" type="number" uang')"="" value="105"/></label></p>
+<hr/>
+<p>
+<input id="u-in" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" type="number" uang')"="" value="100"/>
+<select id="u-from" onchange="conv('uang')">
+<option value="IDR">IDR</option>
+<option value="USD">USD</option>
+<option value="EUR">EUR</option>
+<option value="SGD">SGD</option>
+<option value="JPY">JPY</option>
+</select>
+</p>
+<p><button onclick="swap('u')" type="button">⇅ tukar</button></p>
+<p>
+<input id="u-out" readonly="" type="number"/>
+<select id="u-to" onchange="conv('uang')">
+<option value="USD">USD</option>
+<option selected="" value="IDR">IDR</option>
+<option value="EUR">EUR</option>
+<option value="SGD">SGD</option>
+<option value="JPY">JPY</option>
+</select>
+</p>
+</div>
+<p><small>Kurs mata uang diinput manual — bukan kurs real-time. Perbarui sesuai kurs terbaru.</small></p>
+</div>
+<section class="seo-content-block seo-block">
+<h2>Tentang Unit Converter Online zyekh.com</h2>
+<p>Konversi satuan panjang, berat, suhu, dan digital data secara presisi gratis di browser. Didesain ringan, cepat, tanpa iklan mengganggu, serta mengutamakan privasi pengguna.</p>
+<h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+<div class="faq-accordion">
+<details class="faq-card">
+<summary class="faq-summary">Apakah tool ini aman dan gratis?</summary>
+<p class="faq-answer">Ya, 100% gratis dan aman karena diproses murni di perangkat lokal Anda.</p>
+</details>
+</div>
+</section>
 </main>
-
-      <footer class="footer" role="contentinfo">
-    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-      <a href="/about/" class="text-muted text-sm">About</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/tools/" class="text-muted text-sm">42 Web Tools</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blog/" class="text-muted text-sm">25 Articles</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-    </div>
-  </footer>
-
-  <script>
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">42 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">25 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
+<script>
     const TO_M = { m: 1, km: 1000, cm: 0.01, mm: 0.001, mi: 1609.344, ft: 0.3048, in: 0.0254 };
     const TO_KG = { kg: 1, g: 0.001, mg: 0.000001, lb: 0.453592, oz: 0.0283495 };
     const PANELS = ['panjang', 'berat', 'suhu', 'uang'];
@@ -366,6 +351,6 @@ window.debounceRAF = function(fn, delay) {
 
     conv('panjang');
   </script>
-  <script src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" defer></script>
+<script defer="" src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
 </body>
 </html>

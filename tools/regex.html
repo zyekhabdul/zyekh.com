@@ -1,35 +1,33 @@
 <!DOCTYPE html>
+
 <html lang="id-ID">
 <head>
 <script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
-  <meta charset="UTF-8">
-  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <meta name="theme-color" content="#09090b">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RegEx Live Tester & Match Inspector — Offline Tool | Zyekh</title>
-  <meta name="description" content="Test Regular Expressions (RegEx) in real-time with pattern flags, match highlighting, and group extraction 100% client-side.">
-  <meta name="keywords" content="regex tester, regex online, regular expression checker, regex live preview, regex pattern tester, javascript regex, developer tool">
-  <meta name="author" content="Zyekh Abdul Qadir Jailani">
-  <link rel="canonical" href="https://zyekh.com/tools/regex.html">
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Open Graph -->
-  <meta property="og:site_name" content="zyekh.com">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="RegEx Live Tester & Match Inspector — Offline Tool | Zyekh">
-  <meta property="og:description" content="Test Regular Expressions (RegEx) in real-time with pattern flags, match highlighting, and group extraction 100% client-side.">
-  <meta property="og:url" content="https://zyekh.com/tools/regex.html">
-  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
-
-  <!-- Schema.org JSON-LD -->
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>RegEx Live Tester &amp; Match Inspector — Offline Tool | Zyekh</title>
+<meta content="Test Regular Expressions (RegEx) in real-time with pattern flags, match highlighting, and group extraction 100% client-side." name="description"/>
+<meta content="regex tester, regex online, regular expression checker, regex live preview, regex pattern tester, javascript regex, developer tool" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/regex.html" rel="canonical"/>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Open Graph -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="website" property="og:type"/>
+<meta content="RegEx Live Tester &amp; Match Inspector — Offline Tool | Zyekh" property="og:title"/>
+<meta content="Test Regular Expressions (RegEx) in real-time with pattern flags, match highlighting, and group extraction 100% client-side." property="og:description"/>
+<meta content="https://zyekh.com/tools/regex.html" property="og:url"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-regex-dark-landscape.png" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-regex-dark-landscape.png" name="twitter:image"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -65,13 +63,11 @@
     ]
   }
   </script>
-
-  <!-- Self-hosted Fonts & Styles -->
-  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous">
-
-  <style>
+<!-- Self-hosted Fonts & Styles -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<style>
     .regex-input-wrapper { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem; }
     input.regex-pattern { font-family: 'Fira Code', monospace; font-size: 0.95rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.65rem 1rem; flex: 1; }
     input.regex-flags { font-family: 'Fira Code', monospace; font-size: 0.95rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.65rem 0.75rem; width: 80px; text-align: center; }
@@ -95,80 +91,70 @@ window.debounceRAF = function(fn, delay) {
   };
 };
 </script>
-  <style id="antiClickjack">body{display:none !important;}</style>
+<style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-                                                                                                                              <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" as="script">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-+wQx7aIWZh15T5V4JLVkmfXg48HMUFnV+COyXYfq0xM=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-gUZxkz/dzjl0Ls5RfarX6DuXIg8Sl3Y/A4ZkKWcq+S0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
-  <site-nav active="tools"></site-nav>
-
-  <main class="main-container">
-    <nav aria-label="Breadcrumb">
-      <ol class="breadcrumb">
-        <li><a href="/" class="breadcrumb-link">Home</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li aria-current="page" style="color:var(--text-main);">RegEx Tester</li>
-      </ol>
-    </nav>
-
-    <header class="page-header">
-      <span class="badge">DEVELOPER UTILITIES</span>
-      <h1 class="page-title">RegEx Live Tester & Match Inspector</h1>
-      <p class="page-subtitle">Test Regular Expression patterns against sample text with real-time match highlighting, flags, and group extraction.</p>
-    </header>
-
-    <section class="tool-box">
-      <label for="regexPattern" style="font-weight:600;display:block;margin-bottom:0.4rem;">Regular Expression & Flags</label>
-      <div class="regex-input-wrapper">
-        <span style="font-family:'Fira Code',monospace;font-size:1.1rem;color:var(--text-muted);">/</span>
-        <input type="text" id="regexPattern" class="regex-pattern" placeholder="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" oninput="if(!this._d)this._d=debounceRAF(function(){testRegEx()},60);this._d()">
-        <span style="font-family:'Fira Code',monospace;font-size:1.1rem;color:var(--text-muted);">/</span>
-        <input type="text" id="regexFlags" class="regex-flags" value="g" placeholder="gi" oninput="if(!this._d)this._d=debounceRAF(function(){testRegEx()},60);this._d()">
-      </div>
-
-      <label for="regexTestText" style="font-weight:600;display:block;margin-bottom:0.4rem;">Test String</label>
-      <textarea id="regexTestText" class="regex-test" placeholder="Type or paste sample text here..." oninput="if(!this._d)this._d=debounceRAF(function(){testRegEx()},60);this._d()">Contact support at admin@zyekh.com or contact@security.org for assistance. Invalid email: user@domain.</textarea>
-
-      <div class="match-stats" id="matchStats">Matches: 0</div>
-      
-      <label style="font-weight:600;display:block;margin-bottom:0.4rem;">Match Highlighting Preview</label>
-      <div id="matchHighlight" class="match-highlight-box"></div>
-    </section>
-
-    <section class="seo-content-block seo-block" style="margin-top:2rem;">
-      <h2>Tentang Penguji RegEx (Regular Expression)</h2>
-      <p>Regular Expression (RegEx) adalah urutan karakter yang membentuk pola pencarian teks. Digunakan dalam validasi formulir, *text scraping*, pemrosesan log, dan penggantian substring kompleks secara presisi.</p>
-
-      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
-      <div class="faq-accordion">
-        <details class="faq-card">
-          <summary class="faq-summary">Apa arti flag `g`, `i`, `m` pada RegEx?</summary>
-          <p class="faq-answer"><code>g</code> (global): Mencari seluruh kecocokan dalam teks, tidak berhenti pada kecocokan pertama. <code>i</code> (case-insensitive): Mengabaikan perbedaan huruf besar/kecil. <code>m</code> (multiline): Mengubah karakter <code>^</code> dan <code>$</code> agar mencocokkan awal dan akhir setiap baris.</p>
-        </details>
-      </div>
-    </section>
-  </main>
-
-    <footer class="footer" role="contentinfo">
-    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-      <a href="/about/" class="text-muted text-sm">About</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/tools/" class="text-muted text-sm">42 Web Tools</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blog/" class="text-muted text-sm">25 Articles</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-    </div>
-  </footer>
-
-  <script>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">RegEx Tester</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">DEVELOPER UTILITIES</span>
+<h1 class="page-title">RegEx Live Tester &amp; Match Inspector</h1>
+<p class="page-subtitle">Test Regular Expression patterns against sample text with real-time match highlighting, flags, and group extraction.</p>
+</header>
+<section class="tool-box">
+<label for="regexPattern" style="font-weight:600;display:block;margin-bottom:0.4rem;">Regular Expression &amp; Flags</label>
+<div class="regex-input-wrapper">
+<span style="font-family:'Fira Code',monospace;font-size:1.1rem;color:var(--text-muted);">/</span>
+<input class="regex-pattern" id="regexPattern" oninput="if(!this._d)this._d=debounceRAF(function(){testRegEx()},60);this._d()" placeholder="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" type="text" value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/>
+<span style="font-family:'Fira Code',monospace;font-size:1.1rem;color:var(--text-muted);">/</span>
+<input class="regex-flags" id="regexFlags" oninput="if(!this._d)this._d=debounceRAF(function(){testRegEx()},60);this._d()" placeholder="gi" type="text" value="g"/>
+</div>
+<label for="regexTestText" style="font-weight:600;display:block;margin-bottom:0.4rem;">Test String</label>
+<textarea class="regex-test" id="regexTestText" oninput="if(!this._d)this._d=debounceRAF(function(){testRegEx()},60);this._d()" placeholder="Type or paste sample text here...">Contact support at admin@zyekh.com or contact@security.org for assistance. Invalid email: user@domain.</textarea>
+<div class="match-stats" id="matchStats">Matches: 0</div>
+<label style="font-weight:600;display:block;margin-bottom:0.4rem;">Match Highlighting Preview</label>
+<div class="match-highlight-box" id="matchHighlight"></div>
+</section>
+<section class="seo-content-block seo-block" style="margin-top:2rem;">
+<h2>Tentang Penguji RegEx (Regular Expression)</h2>
+<p>Regular Expression (RegEx) adalah urutan karakter yang membentuk pola pencarian teks. Digunakan dalam validasi formulir, *text scraping*, pemrosesan log, dan penggantian substring kompleks secara presisi.</p>
+<h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+<div class="faq-accordion">
+<details class="faq-card">
+<summary class="faq-summary">Apa arti flag `g`, `i`, `m` pada RegEx?</summary>
+<p class="faq-answer"><code>g</code> (global): Mencari seluruh kecocokan dalam teks, tidak berhenti pada kecocokan pertama. <code>i</code> (case-insensitive): Mengabaikan perbedaan huruf besar/kecil. <code>m</code> (multiline): Mengubah karakter <code>^</code> dan <code>$</code> agar mencocokkan awal dan akhir setiap baris.</p>
+</details>
+</div>
+</section>
+</main>
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">42 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">25 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
+<script>
     function testRegEx() {
       const patternStr = document.getElementById('regexPattern').value;
       const flagsStr = document.getElementById('regexFlags').value;
@@ -225,6 +211,6 @@ window.debounceRAF = function(fn, delay) {
     // Auto run on load
     document.addEventListener('DOMContentLoaded', testRegEx);
   </script>
-  <script src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" defer></script>
+<script defer="" src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
 </body>
 </html>

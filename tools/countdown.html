@@ -1,41 +1,39 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
-  <meta charset="UTF-8">
-  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <meta name="theme-color" content="#09090b">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Countdown Timer - Hitung Mundur ke Tanggal | Zyekh</title>
-  <meta name="description" content="Buat countdown timer instan ke tanggal atau waktu tertentu. Bagikan lewat URL, tanpa daftar akun.">
-  <meta name="keywords" content="countdown timer, event countdown, countdown clock, timer online, date countdown">
-  
-  <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
-  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous">
-  <!-- SEO & Social Meta Tags -->
-  <link rel="canonical" href="https://zyekh.com/tools/countdown.html">
-  <meta property="og:title" content="Countdown Timer Online — zyekh.com">
-  <meta property="og:description" content="Timer hitung mundur online gratis untuk acara, perayaan, ujian, dan tenggat waktu tugas.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://zyekh.com/tools/countdown.html">
-  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
-  <meta property="og:site_name" content="zyekh.com">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Countdown Timer Online — zyekh.com">
-  <meta name="twitter:description" content="Timer hitung mundur online gratis untuk acara, perayaan, ujian, dan tenggat waktu tugas.">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
-
-  <!-- Structured Data JSON-LD -->
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Countdown Timer - Hitung Mundur ke Tanggal | Zyekh</title>
+<meta content="Buat countdown timer instan ke tanggal atau waktu tertentu. Bagikan lewat URL, tanpa daftar akun." name="description"/>
+<meta content="countdown timer, event countdown, countdown clock, timer online, date countdown" name="keywords"/>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<!-- SEO & Social Meta Tags -->
+<link href="https://zyekh.com/tools/countdown.html" rel="canonical"/>
+<meta content="Countdown Timer Online — zyekh.com" property="og:title"/>
+<meta content="Timer hitung mundur online gratis untuk acara, perayaan, ujian, dan tenggat waktu tugas." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://zyekh.com/tools/countdown.html" property="og:url"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-countdown-dark-landscape.png" property="og:image"/>
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Countdown Timer Online — zyekh.com" name="twitter:title"/>
+<meta content="Timer hitung mundur online gratis untuk acara, perayaan, ujian, dan tenggat waktu tugas." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-countdown-dark-landscape.png" name="twitter:image"/>
+<!-- Structured Data JSON-LD -->
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
@@ -108,72 +106,65 @@ window.debounceRAF = function(fn, delay) {
   };
 };
 </script>
-  <style id="antiClickjack">body{display:none !important;}</style>
+<style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-                                                                                                                              <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" as="script">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-+wQx7aIWZh15T5V4JLVkmfXg48HMUFnV+COyXYfq0xM=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-RMQyQfcGdwzd+WNOG1HLPljG7Hh8nIctPawQ2CMQeNk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
-    <!-- Header Navigation -->
-    <!-- Header Navigation -->
-  <site-nav active="tools"></site-nav>
-
-  <main class="main-container">
-    <nav aria-label="Breadcrumb">
-      <ol class="breadcrumb">
-        <li><a href="/" class="breadcrumb-link">Home</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li aria-current="page" style="color:var(--text-main);">Countdown Timer</li>
-      </ol>
-    </nav>
-    
-    <header class="page-header">
-      <span class="badge">GENERATORS & UTILITIES</span>
-      <h1 class="page-title">Countdown Timer</h1>
-      <p class="page-subtitle">Customizable event countdown timer with alert sounds and real-time interval tracker.</p>
-    </header>
-  <div class="tool-box">
-      <p>
-    <label for="target">Target tanggal &amp; waktu</label><br>
-    <input type="datetime-local" id="target" oninput="if(!this._d)this._d=debounceRAF(function(){update()},60);this._d()">
-  </p>
-  <p id="display">Pilih tanggal di atas</p>
-    </div>
-  
-      <section class="seo-content-block seo-block">
-        <h2>Tentang Countdown Timer Online zyekh.com</h2>
-        <p>Timer hitung mundur online gratis untuk acara, perayaan, ujian, dan tenggat waktu tugas. Didesain ringan, cepat, tanpa iklan mengganggu, serta mengutamakan privasi pengguna.</p>
-        
-        <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
-        <div class="faq-accordion">
-          <details class="faq-card">
-            <summary class="faq-summary">Apakah tool ini aman dan gratis?</summary>
-            <p class="faq-answer">Ya, 100% gratis dan aman karena diproses murni di perangkat lokal Anda.</p>
-          </details>
-        </div>
-      </section>
-
+<!-- Header Navigation -->
+<!-- Header Navigation -->
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">Countdown Timer</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">GENERATORS &amp; UTILITIES</span>
+<h1 class="page-title">Countdown Timer</h1>
+<p class="page-subtitle">Customizable event countdown timer with alert sounds and real-time interval tracker.</p>
+</header>
+<div class="tool-box">
+<p>
+<label for="target">Target tanggal &amp; waktu</label><br/>
+<input id="target" oninput="if(!this._d)this._d=debounceRAF(function(){update()},60);this._d()" type="datetime-local"/>
+</p>
+<p id="display">Pilih tanggal di atas</p>
+</div>
+<section class="seo-content-block seo-block">
+<h2>Tentang Countdown Timer Online zyekh.com</h2>
+<p>Timer hitung mundur online gratis untuk acara, perayaan, ujian, dan tenggat waktu tugas. Didesain ringan, cepat, tanpa iklan mengganggu, serta mengutamakan privasi pengguna.</p>
+<h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+<div class="faq-accordion">
+<details class="faq-card">
+<summary class="faq-summary">Apakah tool ini aman dan gratis?</summary>
+<p class="faq-answer">Ya, 100% gratis dan aman karena diproses murni di perangkat lokal Anda.</p>
+</details>
+</div>
+</section>
 </main>
-
-      <footer class="footer" role="contentinfo">
-    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-      <a href="/about/" class="text-muted text-sm">About</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/tools/" class="text-muted text-sm">42 Web Tools</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blog/" class="text-muted text-sm">25 Articles</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-    </div>
-  </footer>
-
-  <script>
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">42 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">25 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
+<script>
     let timer;
 
     function parseHash() {
@@ -229,6 +220,6 @@ window.debounceRAF = function(fn, delay) {
     }
     update();
   </script>
-  <script src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" defer></script>
+<script defer="" src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
 </body>
 </html>

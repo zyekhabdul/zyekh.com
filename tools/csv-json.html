@@ -1,35 +1,33 @@
 <!DOCTYPE html>
+
 <html lang="id-ID">
 <head>
 <script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
-  <meta charset="UTF-8">
-  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <meta name="theme-color" content="#09090b">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CSV to JSON & SQL Converter — Offline Data Utility | Zyekh</title>
-  <meta name="description" content="Convert CSV and TSV tabular data into clean JSON arrays or SQL INSERT statements 100% offline & client-side in browser.">
-  <meta name="keywords" content="csv to json, csv to sql, tsv to json, csv converter, data converter, developer utility">
-  <meta name="author" content="Zyekh Abdul Qadir Jailani">
-  <link rel="canonical" href="https://zyekh.com/tools/csv-json.html">
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Open Graph -->
-  <meta property="og:site_name" content="zyekh.com">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="CSV to JSON & SQL Converter — Offline Data Utility | Zyekh">
-  <meta property="og:description" content="Convert CSV and TSV tabular data into clean JSON arrays or SQL INSERT statements 100% offline & client-side in browser.">
-  <meta property="og:url" content="https://zyekh.com/tools/csv-json.html">
-  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
-
-  <!-- Schema.org JSON-LD -->
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>CSV to JSON &amp; SQL Converter — Offline Data Utility | Zyekh</title>
+<meta content="Convert CSV and TSV tabular data into clean JSON arrays or SQL INSERT statements 100% offline &amp; client-side in browser." name="description"/>
+<meta content="csv to json, csv to sql, tsv to json, csv converter, data converter, developer utility" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/csv-json.html" rel="canonical"/>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Open Graph -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="website" property="og:type"/>
+<meta content="CSV to JSON &amp; SQL Converter — Offline Data Utility | Zyekh" property="og:title"/>
+<meta content="Convert CSV and TSV tabular data into clean JSON arrays or SQL INSERT statements 100% offline &amp; client-side in browser." property="og:description"/>
+<meta content="https://zyekh.com/tools/csv-json.html" property="og:url"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-csv-json-dark-landscape.png" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-csv-json-dark-landscape.png" name="twitter:image"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -65,13 +63,11 @@
     ]
   }
   </script>
-
-  <!-- Self-hosted Fonts & Styles -->
-  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous">
-
-  <style>
+<!-- Self-hosted Fonts & Styles -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<style>
     .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
     @media (max-width: 768px) { .grid-2-col { grid-template-columns: 1fr; } }
     textarea.csv-box { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; min-height: 260px; width: 100%; resize: vertical; }
@@ -93,104 +89,94 @@ window.debounceRAF = function(fn, delay) {
   };
 };
 </script>
-  <style id="antiClickjack">body{display:none !important;}</style>
+<style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-                                                                                                                              <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" as="script">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-+wQx7aIWZh15T5V4JLVkmfXg48HMUFnV+COyXYfq0xM=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-2OzB1d65xp5dGgvbKGa9+xXQM/KXfGPpcGRvujUdrSQ='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
-  <site-nav active="tools"></site-nav>
-
-  <main class="main-container">
-    <nav aria-label="Breadcrumb">
-      <ol class="breadcrumb">
-        <li><a href="/" class="breadcrumb-link">Home</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li aria-current="page" style="color:var(--text-main);">CSV Converter</li>
-      </ol>
-    </nav>
-
-    <header class="page-header">
-      <span class="badge">DEVELOPER UTILITIES</span>
-      <h1 class="page-title">CSV to JSON & SQL Converter</h1>
-      <p class="page-subtitle">Convert CSV and TSV tabular data to clean JSON arrays or SQL INSERT statements 100% offline.</p>
-    </header>
-
-    <section class="tool-box">
-      <div class="form-row">
-        <div class="form-item">
-          <label for="csvMode" style="font-weight:600;display:block;margin-bottom:0.4rem;">Target Output Format</label>
-          <select id="csvMode" onchange="convertCSV()" style="width:100%;">
-            <option value="json" selected>JSON Array of Objects</option>
-            <option value="sql">SQL INSERT Statements</option>
-          </select>
-        </div>
-
-        <div class="form-item">
-          <label for="csvDelimiter" style="font-weight:600;display:block;margin-bottom:0.4rem;">Delimiter</label>
-          <select id="csvDelimiter" onchange="convertCSV()" style="width:100%;">
-            <option value="," selected>Comma (,)</option>
-            <option value=";">Semicolon (;)</option>
-            <option value="\t">Tab (TSV)</option>
-          </select>
-        </div>
-
-        <div class="form-item" id="tableNameGroup" style="display:none;">
-          <label for="tableName" style="font-weight:600;display:block;margin-bottom:0.4rem;">SQL Table Name</label>
-          <input type="text" id="tableName" value="users" oninput="if(!this._d)this._d=debounceRAF(function(){convertCSV()},60);this._d()" style="width:100%;">
-        </div>
-      </div>
-
-      <div class="grid-2-col">
-        <div>
-          <label for="csvInput" style="font-weight:600;display:block;margin-bottom:0.4rem;">CSV / TSV Input Data</label>
-          <textarea id="csvInput" class="csv-box" placeholder="id,name,role,email&#10;1,Zyekh,Developer,zyekh@example.com&#10;2,Alice,Security,alice@example.com" oninput="if(!this._d)this._d=debounceRAF(function(){convertCSV()},60);this._d()"></textarea>
-        </div>
-
-        <div>
-          <label for="csvOutput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Converted Result</label>
-          <textarea id="csvOutput" class="csv-box" placeholder="Result will appear here..." readonly></textarea>
-        </div>
-      </div>
-
-      <div style="margin-top:1rem;">
-        <button type="button" onclick="copyCSVOutput()" id="btnCopyCSV">Copy Converted Result</button>
-      </div>
-    </section>
-
-    <section class="seo-content-block seo-block" style="margin-top:2rem;">
-      <h2>Tentang Konversi CSV ke JSON & SQL</h2>
-      <p>CSV (Comma-Separated Values) adalah format pertukaran data standar spreadsheet. Konverter ini memetakan baris header CSV menjadi kunci objek JSON atau kolom pada kueri <code>INSERT INTO</code> SQL untuk memudahkan migrasi data ke basis data PostgreSQL, MySQL, atau SQLite.</p>
-
-      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
-      <div class="faq-accordion">
-        <details class="faq-card">
-          <summary class="faq-summary">Apakah data tabel saya aman dari kebocoran?</summary>
-          <p class="faq-answer">Ya. Semua parsing baris dan pembuatan string JSON/SQL diproses 100% di browser lokal Anda tanpa jaringan backend.</p>
-        </details>
-      </div>
-    </section>
-  </main>
-
-    <footer class="footer" role="contentinfo">
-    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-      <a href="/about/" class="text-muted text-sm">About</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/tools/" class="text-muted text-sm">42 Web Tools</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blog/" class="text-muted text-sm">25 Articles</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-    </div>
-  </footer>
-
-  <script>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">CSV Converter</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">DEVELOPER UTILITIES</span>
+<h1 class="page-title">CSV to JSON &amp; SQL Converter</h1>
+<p class="page-subtitle">Convert CSV and TSV tabular data to clean JSON arrays or SQL INSERT statements 100% offline.</p>
+</header>
+<section class="tool-box">
+<div class="form-row">
+<div class="form-item">
+<label for="csvMode" style="font-weight:600;display:block;margin-bottom:0.4rem;">Target Output Format</label>
+<select id="csvMode" onchange="convertCSV()" style="width:100%;">
+<option selected="" value="json">JSON Array of Objects</option>
+<option value="sql">SQL INSERT Statements</option>
+</select>
+</div>
+<div class="form-item">
+<label for="csvDelimiter" style="font-weight:600;display:block;margin-bottom:0.4rem;">Delimiter</label>
+<select id="csvDelimiter" onchange="convertCSV()" style="width:100%;">
+<option selected="" value=",">Comma (,)</option>
+<option value=";">Semicolon (;)</option>
+<option value="\t">Tab (TSV)</option>
+</select>
+</div>
+<div class="form-item" id="tableNameGroup" style="display:none;">
+<label for="tableName" style="font-weight:600;display:block;margin-bottom:0.4rem;">SQL Table Name</label>
+<input id="tableName" oninput="if(!this._d)this._d=debounceRAF(function(){convertCSV()},60);this._d()" style="width:100%;" type="text" value="users"/>
+</div>
+</div>
+<div class="grid-2-col">
+<div>
+<label for="csvInput" style="font-weight:600;display:block;margin-bottom:0.4rem;">CSV / TSV Input Data</label>
+<textarea class="csv-box" id="csvInput" oninput="if(!this._d)this._d=debounceRAF(function(){convertCSV()},60);this._d()" placeholder="id,name,role,email
+1,Zyekh,Developer,zyekh@example.com
+2,Alice,Security,alice@example.com"></textarea>
+</div>
+<div>
+<label for="csvOutput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Converted Result</label>
+<textarea class="csv-box" id="csvOutput" placeholder="Result will appear here..." readonly=""></textarea>
+</div>
+</div>
+<div style="margin-top:1rem;">
+<button id="btnCopyCSV" onclick="copyCSVOutput()" type="button">Copy Converted Result</button>
+</div>
+</section>
+<section class="seo-content-block seo-block" style="margin-top:2rem;">
+<h2>Tentang Konversi CSV ke JSON &amp; SQL</h2>
+<p>CSV (Comma-Separated Values) adalah format pertukaran data standar spreadsheet. Konverter ini memetakan baris header CSV menjadi kunci objek JSON atau kolom pada kueri <code>INSERT INTO</code> SQL untuk memudahkan migrasi data ke basis data PostgreSQL, MySQL, atau SQLite.</p>
+<h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+<div class="faq-accordion">
+<details class="faq-card">
+<summary class="faq-summary">Apakah data tabel saya aman dari kebocoran?</summary>
+<p class="faq-answer">Ya. Semua parsing baris dan pembuatan string JSON/SQL diproses 100% di browser lokal Anda tanpa jaringan backend.</p>
+</details>
+</div>
+</section>
+</main>
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">42 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">25 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
+<script>
     function parseCSV(text, delim) {
       const lines = text.trim().split(/\r?\n/);
       if (lines.length < 2) return null;
@@ -253,6 +239,6 @@ window.debounceRAF = function(fn, delay) {
       } catch (err) {}
     }
   </script>
-  <script src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" defer></script>
+<script defer="" src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
 </body>
 </html>

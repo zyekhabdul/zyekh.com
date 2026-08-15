@@ -1,23 +1,23 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LLM Token & GPU VRAM Inference Cost Calculator 2026 | zyekh.com</title>
-  <meta name="description" content="Interactive 2026 LLM pricing comparison, API token cost estimator, and GPU VRAM hardware sizing calculator for Claude 3.7, GPT-4.5, DeepSeek-R1, Gemini 2.0, and Llama 3.3.">
-  <link rel="canonical" href="https://zyekh.com/tools/llm-calculator.html">
-  <meta property="og:title" content="LLM Token & GPU VRAM Inference Cost Calculator 2026 | zyekh.com">
-  <meta property="og:description" content="Compare LLM API token costs and calculate GPU VRAM requirements offline.">
-  <meta property="og:url" content="https://zyekh.com/tools/llm-calculator.html">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
-  <meta property="og:site_name" content="zyekh.com">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="LLM Token & GPU VRAM Inference Cost Calculator 2026 | zyekh.com">
-  <meta name="twitter:description" content="Compare LLM API token costs and calculate GPU VRAM requirements offline.">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
-
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LLM Token &amp; GPU VRAM Inference Cost Calculator 2026 | zyekh.com</title>
+<meta content="Interactive 2026 LLM pricing comparison, API token cost estimator, and GPU VRAM hardware sizing calculator for Claude 3.7, GPT-4.5, DeepSeek-R1, Gemini 2.0, and Llama 3.3." name="description"/>
+<link href="https://zyekh.com/tools/llm-calculator.html" rel="canonical"/>
+<meta content="LLM Token &amp; GPU VRAM Inference Cost Calculator 2026 | zyekh.com" property="og:title"/>
+<meta content="Compare LLM API token costs and calculate GPU VRAM requirements offline." property="og:description"/>
+<meta content="https://zyekh.com/tools/llm-calculator.html" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-llm-calculator-dark-landscape.png" property="og:image"/>
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="LLM Token &amp; GPU VRAM Inference Cost Calculator 2026 | zyekh.com" name="twitter:title"/>
+<meta content="Compare LLM API token costs and calculate GPU VRAM requirements offline." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-llm-calculator-dark-landscape.png" name="twitter:image"/>
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -33,12 +33,11 @@
     }
   }
   </script>
-
-  <style id="antiClickjack">body{display:none !important;}</style>
-  <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-  <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
-  <link rel="stylesheet" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous">
-  <style>
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+<script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<style>
     .calc-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; }
     .form-group { margin-bottom: 1.25rem; }
     .form-label { display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.4rem; }
@@ -75,304 +74,273 @@
     .hw-warn { background: rgba(234, 179, 8, 0.15); color: #fde047; border-color: #eab308; }
     .hw-alert { background: rgba(239, 68, 68, 0.15); color: #f87171; border-color: #ef4444; }
   </style>
-  <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" as="script">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-t/gLW3EW0VkQXohVbJqn1J+pKFUvYM6knUEnS671SIk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
-
-  <site-nav active="tools"></site-nav>
-
-  <main class="main-container">
-    <nav class="breadcrumb">
-      <li><a href="/" class="breadcrumb-link">Home</a></li>
-      <li class="breadcrumb-sep">/</li>
-      <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
-      <li class="breadcrumb-sep">/</li>
-      <li class="text-muted">LLM Token & GPU VRAM Cost Calculator</li>
-    </nav>
-
-    <header class="page-header">
-      <h1 class="page-title">LLM Token & GPU VRAM Cost Calculator</h1>
-      <p class="page-subtitle">Interactive 2026 multi-model API pricing comparison, token budget estimator, and GPU hardware VRAM sizing calculator for local and cloud inference.</p>
-    </header>
-
-    <div class="tab-bar">
-      <button type="button" class="tab-btn active" id="tabBtnApi" onclick="switchTab('api')">[ 1. API Pricing & Token Cost ]</button>
-      <button type="button" class="tab-btn" id="tabBtnVram" onclick="switchTab('vram')">[ 2. GPU VRAM & Hardware Sizer ]</button>
-      <button type="button" class="tab-btn" id="tabBtnVisual" onclick="switchTab('visual')">[ 3. Token Boundary Visualizer ]</button>
-    </div>
-
-    <!-- TAB 1: API Pricing Calculator -->
-    <div class="tab-panel active" id="panelApi">
-      <div class="grid-2" style="gap: 1.5rem;">
-        <div class="calc-card">
-          <h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 1rem;">[ PARAMETERS ] Token Workload</h2>
-
-          <div class="form-group">
-            <label class="form-label" for="selectModel">Target Model Preset:</label>
-            <select id="selectModel" class="form-control">
-              <option value="claude-3-7-sonnet" selected>Claude 3.7 Sonnet ($3.00 / $15.00)</option>
-              <option value="claude-3-5-haiku">Claude 3.5 Haiku ($0.80 / $4.00)</option>
-              <option value="gpt-4-5">GPT-4.5 Preview ($75.00 / $150.00)</option>
-              <option value="gpt-4o">GPT-4o ($2.50 / $10.00)</option>
-              <option value="gpt-4o-mini">GPT-4o mini ($0.15 / $0.60)</option>
-              <option value="gemini-2-flash">Gemini 2.0 Flash ($0.10 / $0.40)</option>
-              <option value="gemini-2-pro">Gemini 2.0 Pro ($1.25 / $5.00)</option>
-              <option value="deepseek-r1">DeepSeek-R1 ($0.55 / $2.19)</option>
-              <option value="deepseek-v3">DeepSeek-V3 ($0.14 / $0.28)</option>
-              <option value="llama-3-3-70b">Llama 3.3 70B ($0.59 / $0.79)</option>
-              <option value="custom">Custom Model Pricing</option>
-            </select>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li class="breadcrumb-sep">/</li>
+<li class="text-muted">LLM Token &amp; GPU VRAM Cost Calculator</li>
+</nav>
+<header class="page-header">
+<h1 class="page-title">LLM Token &amp; GPU VRAM Cost Calculator</h1>
+<p class="page-subtitle">Interactive 2026 multi-model API pricing comparison, token budget estimator, and GPU hardware VRAM sizing calculator for local and cloud inference.</p>
+</header>
+<div class="tab-bar">
+<button class="tab-btn active" id="tabBtnApi" onclick="switchTab('api')" type="button">[ 1. API Pricing &amp; Token Cost ]</button>
+<button class="tab-btn" id="tabBtnVram" onclick="switchTab('vram')" type="button">[ 2. GPU VRAM &amp; Hardware Sizer ]</button>
+<button class="tab-btn" id="tabBtnVisual" onclick="switchTab('visual')" type="button">[ 3. Token Boundary Visualizer ]</button>
+</div>
+<!-- TAB 1: API Pricing Calculator -->
+<div class="tab-panel active" id="panelApi">
+<div class="grid-2" style="gap: 1.5rem;">
+<div class="calc-card">
+<h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 1rem;">[ PARAMETERS ] Token Workload</h2>
+<div class="form-group">
+<label class="form-label" for="selectModel">Target Model Preset:</label>
+<select class="form-control" id="selectModel">
+<option selected="" value="claude-3-7-sonnet">Claude 3.7 Sonnet ($3.00 / $15.00)</option>
+<option value="claude-3-5-haiku">Claude 3.5 Haiku ($0.80 / $4.00)</option>
+<option value="gpt-4-5">GPT-4.5 Preview ($75.00 / $150.00)</option>
+<option value="gpt-4o">GPT-4o ($2.50 / $10.00)</option>
+<option value="gpt-4o-mini">GPT-4o mini ($0.15 / $0.60)</option>
+<option value="gemini-2-flash">Gemini 2.0 Flash ($0.10 / $0.40)</option>
+<option value="gemini-2-pro">Gemini 2.0 Pro ($1.25 / $5.00)</option>
+<option value="deepseek-r1">DeepSeek-R1 ($0.55 / $2.19)</option>
+<option value="deepseek-v3">DeepSeek-V3 ($0.14 / $0.28)</option>
+<option value="llama-3-3-70b">Llama 3.3 70B ($0.59 / $0.79)</option>
+<option value="custom">Custom Model Pricing</option>
+</select>
+</div>
+<div class="form-group" id="customPriceGroup" style="display: none;">
+<div style="display: flex; gap: 1rem;">
+<div style="flex: 1;">
+<label class="form-label" for="customInputPrice">Input $/1M:</label>
+<input class="form-control" id="customInputPrice" min="0" step="0.01" type="number" value="2.00"/>
+</div>
+<div style="flex: 1;">
+<label class="form-label" for="customOutputPrice">Output $/1M:</label>
+<input class="form-control" id="customOutputPrice" min="0" step="0.01" type="number" value="8.00"/>
+</div>
+</div>
+</div>
+<div class="form-group">
+<div class="form-label">
+<label for="inputPromptTokens">Prompt Tokens (Input):</label>
+<span class="form-val-display" id="dispPromptTokens">2,000 tokens</span>
+</div>
+<input id="inputPromptTokens" max="100000" min="100" step="100" type="range" value="2000"/>
+</div>
+<div class="form-group">
+<div class="form-label">
+<label for="inputCompTokens">Completion Tokens (Output):</label>
+<span class="form-val-display" id="dispCompTokens">500 tokens</span>
+</div>
+<input id="inputCompTokens" max="8000" min="50" step="50" type="range" value="500"/>
+</div>
+<div class="form-group">
+<div class="form-label">
+<label for="inputReqPerDay">Requests / Day:</label>
+<span class="form-val-display" id="dispReqPerDay">1,000 req/day</span>
+</div>
+<input id="inputReqPerDay" max="50000" min="10" step="50" type="range" value="1000"/>
+</div>
+</div>
+<!-- Result Summary -->
+<div class="calc-card">
+<h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 1rem;">[ ESTIMATED COST ] Pricing Output</h2>
+<div class="result-summary">
+<div class="result-card total">
+<div class="label">Monthly Estimated Cost</div>
+<div class="value" id="resMonthlyCost">$405.00</div>
+</div>
+<div class="result-card">
+<div class="label">Cost / Single Request</div>
+<div class="value" id="resCostPerReq">$0.01350</div>
+</div>
+<div class="result-card">
+<div class="label">Cost / 1,000 Requests</div>
+<div class="value" id="resCostPer1k">$13.50</div>
+</div>
+<div class="result-card">
+<div class="label">Daily Token Volume</div>
+<div class="value" id="resDailyTokens">2.5M Tok</div>
+</div>
+</div>
+<div class="callout" style="margin-top: 1.25rem;">
+<strong>[ NOTE ] Prompt Caching Benefit:</strong> For models supporting prompt caching (Anthropic, DeepSeek, Google), cache-hit tokens typically yield 75% to 90% discount on input pricing.
           </div>
-
-          <div class="form-group" id="customPriceGroup" style="display: none;">
-            <div style="display: flex; gap: 1rem;">
-              <div style="flex: 1;">
-                <label class="form-label" for="customInputPrice">Input $/1M:</label>
-                <input type="number" id="customInputPrice" class="form-control" value="2.00" step="0.01" min="0">
-              </div>
-              <div style="flex: 1;">
-                <label class="form-label" for="customOutputPrice">Output $/1M:</label>
-                <input type="number" id="customOutputPrice" class="form-control" value="8.00" step="0.01" min="0">
-              </div>
-            </div>
+</div>
+</div>
+<!-- Cross-Model Comparison Table -->
+<div class="calc-card">
+<h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 0.5rem;">[ BENCHMARK ] Multi-Model Cost Matrix (Monthly at Selected Volume)</h2>
+<div class="matrix-table-wrapper">
+<table class="matrix-table" id="tableModelComp">
+<thead>
+<tr>
+<th>Model</th>
+<th>Provider</th>
+<th>Input $/1M</th>
+<th>Output $/1M</th>
+<th>Cost / Req</th>
+<th>Monthly Cost</th>
+</tr>
+</thead>
+<tbody id="tableBodyModels">
+<!-- Dynamically Populated -->
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- TAB 2: GPU VRAM & Hardware Sizer -->
+<div class="tab-panel" id="panelVram">
+<div class="grid-2" style="gap: 1.5rem;">
+<div class="calc-card">
+<h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 1rem;">[ ARCHITECTURE ] Model &amp; KV-Cache Configuration</h2>
+<div class="form-group">
+<label class="form-label" for="selectModelArch">Base Model Architecture:</label>
+<select class="form-control" id="selectModelArch">
+<option value="llama-3-2-3b">Llama 3.2 3B (28 Layers, 3.2B Params)</option>
+<option selected="" value="llama-3-1-8b">Llama 3.1 8B (32 Layers, 8.0B Params)</option>
+<option value="qwen-2-5-14b">Qwen 2.5 14B (48 Layers, 14.7B Params)</option>
+<option value="qwen-2-5-32b">Qwen 2.5 32B (64 Layers, 32.5B Params)</option>
+<option value="llama-3-3-70b">Llama 3.3 70B (80 Layers, 70.6B Params)</option>
+<option value="deepseek-v3">DeepSeek-V3 / R1 (671B MoE, 37B Active)</option>
+</select>
+</div>
+<div class="form-group">
+<label class="form-label" for="selectWeightQuant">Weights Precision:</label>
+<select class="form-control" id="selectWeightQuant">
+<option value="16">FP16 / BF16 (16-bit, 2.0 Bytes/param)</option>
+<option value="8">FP8 / INT8 (8-bit, 1.0 Bytes/param)</option>
+<option selected="" value="4">INT4 / AWQ / GPTQ (4-bit, 0.5 Bytes/param)</option>
+<option value="4.5">GGUF Q4_K_M (approx 0.56 Bytes/param)</option>
+</select>
+</div>
+<div class="form-group">
+<div class="form-label">
+<label for="inputCtxLen">Context Window (Tokens):</label>
+<span class="form-val-display" id="dispCtxLen">32,768 tokens</span>
+</div>
+<select class="form-control" id="inputCtxLen">
+<option value="4096">4,096 tokens (4k)</option>
+<option value="8192">8,192 tokens (8k)</option>
+<option value="16384">16,384 tokens (16k)</option>
+<option selected="" value="32768">32,768 tokens (32k)</option>
+<option value="65536">65,536 tokens (64k)</option>
+<option value="131072">131,072 tokens (128k)</option>
+</select>
+</div>
+<div class="form-group">
+<div class="form-label">
+<label for="inputBatchSize">Concurrency (Batch Size):</label>
+<span class="form-val-display" id="dispBatchSize">4 concurrent streams</span>
+</div>
+<input id="inputBatchSize" max="32" min="1" step="1" type="range" value="4"/>
+</div>
+<div class="form-group">
+<label class="form-label" for="selectKvQuant">KV-Cache Precision:</label>
+<select class="form-control" id="selectKvQuant">
+<option value="2">FP16 KV-Cache (2.0 Bytes/elem)</option>
+<option selected="" value="1">FP8 KV-Cache (1.0 Byte/elem - PagedAttention)</option>
+<option value="0.5">INT4 KV-Cache (0.5 Bytes/elem)</option>
+</select>
+</div>
+</div>
+<!-- Hardware Sizing Results -->
+<div class="calc-card">
+<h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 1rem;">[ HARDWARE SPEC ] Required VRAM &amp; Sizing</h2>
+<div class="result-summary">
+<div class="result-card total">
+<div class="label">Total VRAM Required</div>
+<div class="value" id="resTotalVram">7.8 GB</div>
+</div>
+<div class="result-card">
+<div class="label">Model Weights VRAM</div>
+<div class="value" id="resWeightsVram">4.0 GB</div>
+</div>
+<div class="result-card">
+<div class="label">KV-Cache Memory</div>
+<div class="value" id="resKvVram">2.3 GB</div>
+</div>
+<div class="result-card">
+<div class="label">CUDA Context &amp; Overhead</div>
+<div class="value" id="resOverheadVram">1.5 GB</div>
+</div>
+</div>
+<div style="margin-top: 1.5rem;">
+<div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Recommended GPU Hardware Tier:</div>
+<div class="hardware-badge hw-ok" id="hwRecommendationBox">1x RTX 4060 Ti 16GB / Apple M3 24GB</div>
+</div>
+<div class="callout" style="margin-top: 1.25rem;">
+<strong>[ SIZING FORMULA ]</strong>: Total VRAM = (Weights_GB) + (2 × n_layers × n_kv_heads × d_head × seq_len × batch_size × kv_bytes) + CUDA_Context_Buffer.
           </div>
-
-          <div class="form-group">
-            <div class="form-label">
-              <label for="inputPromptTokens">Prompt Tokens (Input):</label>
-              <span class="form-val-display" id="dispPromptTokens">2,000 tokens</span>
-            </div>
-            <input type="range" id="inputPromptTokens" min="100" max="100000" value="2000" step="100">
-          </div>
-
-          <div class="form-group">
-            <div class="form-label">
-              <label for="inputCompTokens">Completion Tokens (Output):</label>
-              <span class="form-val-display" id="dispCompTokens">500 tokens</span>
-            </div>
-            <input type="range" id="inputCompTokens" min="50" max="8000" value="500" step="50">
-          </div>
-
-          <div class="form-group">
-            <div class="form-label">
-              <label for="inputReqPerDay">Requests / Day:</label>
-              <span class="form-val-display" id="dispReqPerDay">1,000 req/day</span>
-            </div>
-            <input type="range" id="inputReqPerDay" min="10" max="50000" value="1000" step="50">
-          </div>
-        </div>
-
-        <!-- Result Summary -->
-        <div class="calc-card">
-          <h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 1rem;">[ ESTIMATED COST ] Pricing Output</h2>
-
-          <div class="result-summary">
-            <div class="result-card total">
-              <div class="label">Monthly Estimated Cost</div>
-              <div class="value" id="resMonthlyCost">$405.00</div>
-            </div>
-            <div class="result-card">
-              <div class="label">Cost / Single Request</div>
-              <div class="value" id="resCostPerReq">$0.01350</div>
-            </div>
-            <div class="result-card">
-              <div class="label">Cost / 1,000 Requests</div>
-              <div class="value" id="resCostPer1k">$13.50</div>
-            </div>
-            <div class="result-card">
-              <div class="label">Daily Token Volume</div>
-              <div class="value" id="resDailyTokens">2.5M Tok</div>
-            </div>
-          </div>
-
-          <div class="callout" style="margin-top: 1.25rem;">
-            <strong>[ NOTE ] Prompt Caching Benefit:</strong> For models supporting prompt caching (Anthropic, DeepSeek, Google), cache-hit tokens typically yield 75% to 90% discount on input pricing.
-          </div>
-        </div>
-      </div>
-
-      <!-- Cross-Model Comparison Table -->
-      <div class="calc-card">
-        <h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 0.5rem;">[ BENCHMARK ] Multi-Model Cost Matrix (Monthly at Selected Volume)</h2>
-        <div class="matrix-table-wrapper">
-          <table class="matrix-table" id="tableModelComp">
-            <thead>
-              <tr>
-                <th>Model</th>
-                <th>Provider</th>
-                <th>Input $/1M</th>
-                <th>Output $/1M</th>
-                <th>Cost / Req</th>
-                <th>Monthly Cost</th>
-              </tr>
-            </thead>
-            <tbody id="tableBodyModels">
-              <!-- Dynamically Populated -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 2: GPU VRAM & Hardware Sizer -->
-    <div class="tab-panel" id="panelVram">
-      <div class="grid-2" style="gap: 1.5rem;">
-        <div class="calc-card">
-          <h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 1rem;">[ ARCHITECTURE ] Model & KV-Cache Configuration</h2>
-
-          <div class="form-group">
-            <label class="form-label" for="selectModelArch">Base Model Architecture:</label>
-            <select id="selectModelArch" class="form-control">
-              <option value="llama-3-2-3b">Llama 3.2 3B (28 Layers, 3.2B Params)</option>
-              <option value="llama-3-1-8b" selected>Llama 3.1 8B (32 Layers, 8.0B Params)</option>
-              <option value="qwen-2-5-14b">Qwen 2.5 14B (48 Layers, 14.7B Params)</option>
-              <option value="qwen-2-5-32b">Qwen 2.5 32B (64 Layers, 32.5B Params)</option>
-              <option value="llama-3-3-70b">Llama 3.3 70B (80 Layers, 70.6B Params)</option>
-              <option value="deepseek-v3">DeepSeek-V3 / R1 (671B MoE, 37B Active)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="selectWeightQuant">Weights Precision:</label>
-            <select id="selectWeightQuant" class="form-control">
-              <option value="16">FP16 / BF16 (16-bit, 2.0 Bytes/param)</option>
-              <option value="8">FP8 / INT8 (8-bit, 1.0 Bytes/param)</option>
-              <option value="4" selected>INT4 / AWQ / GPTQ (4-bit, 0.5 Bytes/param)</option>
-              <option value="4.5">GGUF Q4_K_M (approx 0.56 Bytes/param)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <div class="form-label">
-              <label for="inputCtxLen">Context Window (Tokens):</label>
-              <span class="form-val-display" id="dispCtxLen">32,768 tokens</span>
-            </div>
-            <select id="inputCtxLen" class="form-control">
-              <option value="4096">4,096 tokens (4k)</option>
-              <option value="8192">8,192 tokens (8k)</option>
-              <option value="16384">16,384 tokens (16k)</option>
-              <option value="32768" selected>32,768 tokens (32k)</option>
-              <option value="65536">65,536 tokens (64k)</option>
-              <option value="131072">131,072 tokens (128k)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <div class="form-label">
-              <label for="inputBatchSize">Concurrency (Batch Size):</label>
-              <span class="form-val-display" id="dispBatchSize">4 concurrent streams</span>
-            </div>
-            <input type="range" id="inputBatchSize" min="1" max="32" value="4" step="1">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="selectKvQuant">KV-Cache Precision:</label>
-            <select id="selectKvQuant" class="form-control">
-              <option value="2">FP16 KV-Cache (2.0 Bytes/elem)</option>
-              <option value="1" selected>FP8 KV-Cache (1.0 Byte/elem - PagedAttention)</option>
-              <option value="0.5">INT4 KV-Cache (0.5 Bytes/elem)</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Hardware Sizing Results -->
-        <div class="calc-card">
-          <h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 1rem;">[ HARDWARE SPEC ] Required VRAM & Sizing</h2>
-
-          <div class="result-summary">
-            <div class="result-card total">
-              <div class="label">Total VRAM Required</div>
-              <div class="value" id="resTotalVram">7.8 GB</div>
-            </div>
-            <div class="result-card">
-              <div class="label">Model Weights VRAM</div>
-              <div class="value" id="resWeightsVram">4.0 GB</div>
-            </div>
-            <div class="result-card">
-              <div class="label">KV-Cache Memory</div>
-              <div class="value" id="resKvVram">2.3 GB</div>
-            </div>
-            <div class="result-card">
-              <div class="label">CUDA Context & Overhead</div>
-              <div class="value" id="resOverheadVram">1.5 GB</div>
-            </div>
-          </div>
-
-          <div style="margin-top: 1.5rem;">
-            <div style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem;">Recommended GPU Hardware Tier:</div>
-            <div id="hwRecommendationBox" class="hardware-badge hw-ok">1x RTX 4060 Ti 16GB / Apple M3 24GB</div>
-          </div>
-
-          <div class="callout" style="margin-top: 1.25rem;">
-            <strong>[ SIZING FORMULA ]</strong>: Total VRAM = (Weights_GB) + (2 &times; n_layers &times; n_kv_heads &times; d_head &times; seq_len &times; batch_size &times; kv_bytes) + CUDA_Context_Buffer.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 3: Token Boundary Visualizer -->
-    <div class="tab-panel" id="panelVisual">
-      <div class="calc-card">
-        <h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 0.5rem;">[ INTERACTIVE ] In-Browser Subword Token Boundary Highlighter</h2>
-        <p class="text-muted" style="margin-bottom: 1rem;">Type or paste any prompt below to visualize subword splitting, token boundaries, and approximate token counts in real-time.</p>
-
-        <div class="form-group">
-          <label class="form-label" for="txtTokenInput">Input Text Prompt:</label>
-          <textarea id="txtTokenInput" class="form-control" rows="4" style="font-family: 'Fira Code', monospace; resize: vertical;">Implementing eBPF XDP kernel filters accelerates high-throughput packet routing while eliminating context-switch overhead across microservice clusters.</textarea>
-        </div>
-
-        <div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; font-family: 'Fira Code', monospace;">
-          <span><strong>Tokens:</strong> <span id="lblTokCount" style="color: #60a5fa;">23</span></span>
-          <span><strong>Characters:</strong> <span id="lblCharCount">149</span></span>
-          <span><strong>Bytes:</strong> <span id="lblByteCount">149 B</span></span>
-          <span><strong>Avg Chars/Token:</strong> <span id="lblRatio">6.5</span></span>
-        </div>
-
-        <div class="form-label">Visualized Token Chunks:</div>
-        <div class="token-preview-box" id="tokenChunksContainer">
-          <!-- Populated by JavaScript -->
-        </div>
-      </div>
-    </div>
-
-    <!-- Technical Article Links & Architecture Guide -->
-    <section class="seo-content-block" style="margin-top: 2rem;">
-      <h2 class="section-title">[ RELATED TECHNICAL GUIDES ] Deep-Dive References</h2>
-      <div class="grid-2" style="gap: 1rem;">
-        <div class="tool-item">
-          <a href="/blog/vllm-pagedattention-high-throughput-inference-tuning.html" class="tool-card">
-            <div>
-              <span class="tool-category">LLM RUNTIME</span>
-              <h3 class="tool-title">vLLM & PagedAttention Tuning</h3>
-              <p class="tool-desc">Eliminating KV-cache memory fragmentation and scaling throughput.</p>
-            </div>
-            <span class="tool-badge">Read Guide &rarr;</span>
-          </a>
-        </div>
-        <div class="tool-item">
-          <a href="/blog/kv-cache-int4-quantization-long-context.html" class="tool-card">
-            <div>
-              <span class="tool-category">QUANTIZATION</span>
-              <h3 class="tool-title">KV-Cache INT4 Quantization</h3>
-              <p class="tool-desc">Scaling 128k+ long context inference under constrained VRAM.</p>
-            </div>
-            <span class="tool-badge">Read Guide &rarr;</span>
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="nav-container">
-      <p>Zyekh's Zero-Dependency Web Hub &copy; 2026. 100% Local-First & Zero-Tracking.</p>
-    </div>
-  </footer>
-
-  <script src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
-  <script>
+</div>
+</div>
+</div>
+<!-- TAB 3: Token Boundary Visualizer -->
+<div class="tab-panel" id="panelVisual">
+<div class="calc-card">
+<h2 class="section-title" style="font-size: 1.15rem; margin-bottom: 0.5rem;">[ INTERACTIVE ] In-Browser Subword Token Boundary Highlighter</h2>
+<p class="text-muted" style="margin-bottom: 1rem;">Type or paste any prompt below to visualize subword splitting, token boundaries, and approximate token counts in real-time.</p>
+<div class="form-group">
+<label class="form-label" for="txtTokenInput">Input Text Prompt:</label>
+<textarea class="form-control" id="txtTokenInput" rows="4" style="font-family: 'Fira Code', monospace; resize: vertical;">Implementing eBPF XDP kernel filters accelerates high-throughput packet routing while eliminating context-switch overhead across microservice clusters.</textarea>
+</div>
+<div style="display: flex; gap: 1rem; margin-bottom: 1rem; font-size: 0.9rem; font-family: 'Fira Code', monospace;">
+<span><strong>Tokens:</strong> <span id="lblTokCount" style="color: #60a5fa;">23</span></span>
+<span><strong>Characters:</strong> <span id="lblCharCount">149</span></span>
+<span><strong>Bytes:</strong> <span id="lblByteCount">149 B</span></span>
+<span><strong>Avg Chars/Token:</strong> <span id="lblRatio">6.5</span></span>
+</div>
+<div class="form-label">Visualized Token Chunks:</div>
+<div class="token-preview-box" id="tokenChunksContainer">
+<!-- Populated by JavaScript -->
+</div>
+</div>
+</div>
+<!-- Technical Article Links & Architecture Guide -->
+<section class="seo-content-block" style="margin-top: 2rem;">
+<h2 class="section-title">[ RELATED TECHNICAL GUIDES ] Deep-Dive References</h2>
+<div class="grid-2" style="gap: 1rem;">
+<div class="tool-item">
+<a class="tool-card" href="/blog/vllm-pagedattention-high-throughput-inference-tuning.html">
+<div>
+<span class="tool-category">LLM RUNTIME</span>
+<h3 class="tool-title">vLLM &amp; PagedAttention Tuning</h3>
+<p class="tool-desc">Eliminating KV-cache memory fragmentation and scaling throughput.</p>
+</div>
+<span class="tool-badge">Read Guide →</span>
+</a>
+</div>
+<div class="tool-item">
+<a class="tool-card" href="/blog/kv-cache-int4-quantization-long-context.html">
+<div>
+<span class="tool-category">QUANTIZATION</span>
+<h3 class="tool-title">KV-Cache INT4 Quantization</h3>
+<p class="tool-desc">Scaling 128k+ long context inference under constrained VRAM.</p>
+</div>
+<span class="tool-badge">Read Guide →</span>
+</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="nav-container">
+<p>Zyekh's Zero-Dependency Web Hub © 2026. 100% Local-First &amp; Zero-Tracking.</p>
+</div>
+</footer>
+<script src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
+<script>
     const MODEL_DATABASE = [
       { id: "claude-3-7-sonnet", name: "Claude 3.7 Sonnet", provider: "Anthropic", inPrice: 3.00, outPrice: 15.00 },
       { id: "claude-3-5-haiku", name: "Claude 3.5 Haiku", provider: "Anthropic", inPrice: 0.80, outPrice: 4.00 },

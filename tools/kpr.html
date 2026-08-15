@@ -1,41 +1,39 @@
 <!DOCTYPE html>
+
 <html lang="id-ID">
 <head>
 <script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
-  <meta charset="UTF-8">
-  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <meta name="theme-color" content="#09090b">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kalkulator KPR &amp; Cicilan - Simulasi Angsuran Pinjaman | Zyekh</title>
-  <meta name="description" content="Simulasi cicilan KPR atau kendaraan. Hitung angsuran bulanan, total bunga, dan total pembayaran dari plafon, tenor, dan suku bunga.">
-  <meta name="keywords" content="simulasi KPR, kalkulator KPR, hitung cicilan rumah, kredit pemilikan rumah, angsuran KPR 2026">
-  
-  <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
-  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous">
-  <!-- SEO & Social Meta Tags -->
-  <link rel="canonical" href="https://zyekh.com/tools/kpr.html">
-  <meta property="og:title" content="Kalkulator Simulasi KPR Online — Hitung Angsuran Rumah | zyekh.com">
-  <meta property="og:description" content="Simulasi perhitungan angsuran KPR rumah (bunga fixed & floating), estimasi DP, total pinjaman, dan rincian tabel angsuran bulanan secara instan.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://zyekh.com/tools/kpr.html">
-  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
-  <meta property="og:site_name" content="zyekh.com">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Kalkulator Simulasi KPR Online — Hitung Angsuran Rumah | zyekh.com">
-  <meta name="twitter:description" content="Simulasi perhitungan angsuran KPR rumah (bunga fixed & floating), estimasi DP, total pinjaman, dan rincian tabel angsuran bulanan secara instan.">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
-
-  <!-- Structured Data JSON-LD -->
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Kalkulator KPR &amp; Cicilan - Simulasi Angsuran Pinjaman | Zyekh</title>
+<meta content="Simulasi cicilan KPR atau kendaraan. Hitung angsuran bulanan, total bunga, dan total pembayaran dari plafon, tenor, dan suku bunga." name="description"/>
+<meta content="simulasi KPR, kalkulator KPR, hitung cicilan rumah, kredit pemilikan rumah, angsuran KPR 2026" name="keywords"/>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<!-- SEO & Social Meta Tags -->
+<link href="https://zyekh.com/tools/kpr.html" rel="canonical"/>
+<meta content="Kalkulator Simulasi KPR Online — Hitung Angsuran Rumah | zyekh.com" property="og:title"/>
+<meta content="Simulasi perhitungan angsuran KPR rumah (bunga fixed &amp; floating), estimasi DP, total pinjaman, dan rincian tabel angsuran bulanan secara instan." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://zyekh.com/tools/kpr.html" property="og:url"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-kpr-dark-landscape.png" property="og:image"/>
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Kalkulator Simulasi KPR Online — Hitung Angsuran Rumah | zyekh.com" name="twitter:title"/>
+<meta content="Simulasi perhitungan angsuran KPR rumah (bunga fixed &amp; floating), estimasi DP, total pinjaman, dan rincian tabel angsuran bulanan secara instan." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-kpr-dark-landscape.png" name="twitter:image"/>
+<!-- Structured Data JSON-LD -->
+<script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
@@ -130,103 +128,92 @@ window.debounceRAF = function(fn, delay) {
   };
 };
 </script>
-  <style id="antiClickjack">body{display:none !important;}</style>
+<style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-                                                                                                                              <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" as="script">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-+wQx7aIWZh15T5V4JLVkmfXg48HMUFnV+COyXYfq0xM=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-XvD/Q7oJ0Qx6jG8O0NsnmihPktLU18yYqZgBAOfqNuU='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
-    <!-- Header Navigation -->
-    <!-- Header Navigation -->
-  <site-nav active="tools"></site-nav>
-
-  <main class="main-container">
-    <nav aria-label="Breadcrumb">
-      <ol class="breadcrumb">
-        <li><a href="/" class="breadcrumb-link">Home</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li aria-current="page" style="color:var(--text-main);">Mortgage (KPR) Calculator</li>
-      </ol>
-    </nav>
-    
-    <header class="page-header">
-      <span class="badge">FINANSIAL & SIMULASI</span>
-      <h1 class="page-title">Mortgage (KPR) Calculator</h1>
-      <p class="page-subtitle">Simulate mortgage installments, total interest, fixed vs floating rates, and loan table.</p>
-    </header>
-
-  <div class="tool-box">
-      <p>
-    <label for="plafon">Plafon pinjaman (Rp)</label><br>
-    <input type="number" id="plafon" min="0" step="1000000" placeholder="500000000" oninput="if(!this._d)this._d=debounceRAF(function(){calc()},60);this._d()">
-  </p>
-  <p>
-    <label for="bunga">Suku bunga efektif (% per tahun)</label><br>
-    <input type="number" id="bunga" min="0" max="30" step="0.1" value="8.5" oninput="if(!this._d)this._d=debounceRAF(function(){calc()},60);this._d()">
-  </p>
-  <p>
-    <label for="tenor">Tenor (tahun)</label><br>
-    <input type="number" id="tenor" min="1" max="30" value="15" oninput="if(!this._d)this._d=debounceRAF(function(){calc()},60);this._d()">
-  </p>
-  <p>
-    <label for="dp">Uang muka / DP (Rp, opsional)</label><br>
-    <input type="number" id="dp" min="0" step="1000000" value="0" oninput="if(!this._d)this._d=debounceRAF(function(){calc()},60);this._d()">
-  </p>
-
-  <table>
-    <tr><th>Pinjaman bersih</th><td id="pinjaman">—</td></tr>
-    <tr><th>Total bunga</th><td id="bungaTotal">—</td></tr>
-    <tr><th>Total bayar</th><td id="totalBayar">—</td></tr>
-    <tr><th>Angsuran per bulan</th><td id="angsuranOut"><strong>—</strong></td></tr>
-  </table>
-
-  <p><small>Simulasi angsuran tetap (annuity). Bunga efektif tahunan ÷ 12. Hasil estimasi — biaya admin, asuransi, dan provisi bank tidak termasuk.</small></p>
-    </div>
-  
-      <section class="seo-content-block seo-block">
-        <h2>Panduan Simulasi Kredit Pemilikan Rumah (KPR)</h2>
-        <p>Membeli rumah impian membutuhkan perencanaan finansial yang matang. <strong>Simulasi KPR Online zyekh.com</strong> membantu Anda mengestimasi besaran cicilan bulanan, porsi pokok, bunga, serta rasio kemampuan angsuran sebelum mengajukan kredit ke bank.</p>
-
-        <h3>Tips Mengatur Perencanaan KPR</h3>
-        <ul>
-          <li><strong>Rasio Cicilan Maksimal:</strong> Pastikan total cicilan utang bulanan Anda (termasuk KPR) tidak melebihi 30% - 35% dari total penghasilan bersih bulanan.</li>
-          <li><strong>Siapkan Dana Darurat &amp; Biaya KPR:</strong> Selain Down Payment (DP), siapkan dana tambahan sekitar 5% - 10% dari harga rumah untuk biaya provisi, notaris, asuransi jiwa/kebakaran, dan BPHTB.</li>
-        </ul>
-
-        <h3 class="mt-md">Pertanyaan Umum (FAQ KPR)</h3>
-        <div class="faq-accordion">
-          <details class="faq-card">
-            <summary class="faq-summary">Berapa DP minimal untuk KPR?</summary>
-            <p class="faq-answer">Besaran DP KPR bervariasi mulai dari 0% hingga 10%-20% tergantung pada regulasi Bank Indonesia (LTV) dan kebijakan masing-masing bank penyedia KPR.</p>
-          </details>
-          <details class="faq-card">
-            <summary class="faq-summary">Apakah simulasi KPR ini akurat?</summary>
-            <p class="faq-answer">Simulasi ini menggunakan perhitungan matematis standar perbankan. Hasil akhir angka persis kredit tergantung pada suku bunga riil dan analisa analis kredit bank.</p>
-          </details>
-        </div>
-      </section>
-
+<!-- Header Navigation -->
+<!-- Header Navigation -->
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">Mortgage (KPR) Calculator</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">FINANSIAL &amp; SIMULASI</span>
+<h1 class="page-title">Mortgage (KPR) Calculator</h1>
+<p class="page-subtitle">Simulate mortgage installments, total interest, fixed vs floating rates, and loan table.</p>
+</header>
+<div class="tool-box">
+<p>
+<label for="plafon">Plafon pinjaman (Rp)</label><br/>
+<input id="plafon" min="0" oninput="if(!this._d)this._d=debounceRAF(function(){calc()},60);this._d()" placeholder="500000000" step="1000000" type="number"/>
+</p>
+<p>
+<label for="bunga">Suku bunga efektif (% per tahun)</label><br/>
+<input id="bunga" max="30" min="0" oninput="if(!this._d)this._d=debounceRAF(function(){calc()},60);this._d()" step="0.1" type="number" value="8.5"/>
+</p>
+<p>
+<label for="tenor">Tenor (tahun)</label><br/>
+<input id="tenor" max="30" min="1" oninput="if(!this._d)this._d=debounceRAF(function(){calc()},60);this._d()" type="number" value="15"/>
+</p>
+<p>
+<label for="dp">Uang muka / DP (Rp, opsional)</label><br/>
+<input id="dp" min="0" oninput="if(!this._d)this._d=debounceRAF(function(){calc()},60);this._d()" step="1000000" type="number" value="0"/>
+</p>
+<table>
+<tr><th>Pinjaman bersih</th><td id="pinjaman">—</td></tr>
+<tr><th>Total bunga</th><td id="bungaTotal">—</td></tr>
+<tr><th>Total bayar</th><td id="totalBayar">—</td></tr>
+<tr><th>Angsuran per bulan</th><td id="angsuranOut"><strong>—</strong></td></tr>
+</table>
+<p><small>Simulasi angsuran tetap (annuity). Bunga efektif tahunan ÷ 12. Hasil estimasi — biaya admin, asuransi, dan provisi bank tidak termasuk.</small></p>
+</div>
+<section class="seo-content-block seo-block">
+<h2>Panduan Simulasi Kredit Pemilikan Rumah (KPR)</h2>
+<p>Membeli rumah impian membutuhkan perencanaan finansial yang matang. <strong>Simulasi KPR Online zyekh.com</strong> membantu Anda mengestimasi besaran cicilan bulanan, porsi pokok, bunga, serta rasio kemampuan angsuran sebelum mengajukan kredit ke bank.</p>
+<h3>Tips Mengatur Perencanaan KPR</h3>
+<ul>
+<li><strong>Rasio Cicilan Maksimal:</strong> Pastikan total cicilan utang bulanan Anda (termasuk KPR) tidak melebihi 30% - 35% dari total penghasilan bersih bulanan.</li>
+<li><strong>Siapkan Dana Darurat &amp; Biaya KPR:</strong> Selain Down Payment (DP), siapkan dana tambahan sekitar 5% - 10% dari harga rumah untuk biaya provisi, notaris, asuransi jiwa/kebakaran, dan BPHTB.</li>
+</ul>
+<h3 class="mt-md">Pertanyaan Umum (FAQ KPR)</h3>
+<div class="faq-accordion">
+<details class="faq-card">
+<summary class="faq-summary">Berapa DP minimal untuk KPR?</summary>
+<p class="faq-answer">Besaran DP KPR bervariasi mulai dari 0% hingga 10%-20% tergantung pada regulasi Bank Indonesia (LTV) dan kebijakan masing-masing bank penyedia KPR.</p>
+</details>
+<details class="faq-card">
+<summary class="faq-summary">Apakah simulasi KPR ini akurat?</summary>
+<p class="faq-answer">Simulasi ini menggunakan perhitungan matematis standar perbankan. Hasil akhir angka persis kredit tergantung pada suku bunga riil dan analisa analis kredit bank.</p>
+</details>
+</div>
+</section>
 </main>
-
-      <footer class="footer" role="contentinfo">
-    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-      <a href="/about/" class="text-muted text-sm">About</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/tools/" class="text-muted text-sm">42 Web Tools</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blog/" class="text-muted text-sm">25 Articles</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-    </div>
-  </footer>
-
-  <script>
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">42 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">25 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
+<script>
     function fmt(n) { return 'Rp ' + Math.round(n).toLocaleString('id-ID'); }
 
     function calc() {
@@ -254,6 +241,6 @@ window.debounceRAF = function(fn, delay) {
     }
     calc();
   </script>
-  <script src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" defer></script>
+<script defer="" src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
 </body>
 </html>

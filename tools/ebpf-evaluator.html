@@ -1,23 +1,23 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>eBPF XDP Packet Filter Evaluator — Kernel Firewall Simulator | zyekh.com</title>
-  <meta name="description" content="Interactive eBPF XDP network packet filter evaluator & DDoS mitigation simulator. Test XDP_DROP vs XDP_PASS, measure line-rate pps filtering efficiency offline.">
-  <link rel="canonical" href="https://zyekh.com/tools/ebpf-evaluator.html">
-  <meta property="og:title" content="eBPF XDP Packet Filter Evaluator | zyekh.com">
-  <meta property="og:description" content="Interactive eBPF XDP network packet filter & DDoS mitigation simulator.">
-  <meta property="og:url" content="https://zyekh.com/tools/ebpf-evaluator.html">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
-  <meta property="og:site_name" content="zyekh.com">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="eBPF XDP Packet Filter Evaluator | zyekh.com">
-  <meta name="twitter:description" content="Interactive eBPF XDP network packet filter & DDoS mitigation simulator.">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
-
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>eBPF XDP Packet Filter Evaluator — Kernel Firewall Simulator | zyekh.com</title>
+<meta content="Interactive eBPF XDP network packet filter evaluator &amp; DDoS mitigation simulator. Test XDP_DROP vs XDP_PASS, measure line-rate pps filtering efficiency offline." name="description"/>
+<link href="https://zyekh.com/tools/ebpf-evaluator.html" rel="canonical"/>
+<meta content="eBPF XDP Packet Filter Evaluator | zyekh.com" property="og:title"/>
+<meta content="Interactive eBPF XDP network packet filter &amp; DDoS mitigation simulator." property="og:description"/>
+<meta content="https://zyekh.com/tools/ebpf-evaluator.html" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-ebpf-evaluator-dark-landscape.png" property="og:image"/>
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="eBPF XDP Packet Filter Evaluator | zyekh.com" name="twitter:title"/>
+<meta content="Interactive eBPF XDP network packet filter &amp; DDoS mitigation simulator." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-ebpf-evaluator-dark-landscape.png" name="twitter:image"/>
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -33,12 +33,11 @@
     }
   }
   </script>
-
-  <style id="antiClickjack">body{display:none !important;}</style>
-  <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-  <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
-  <link rel="stylesheet" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous">
-  <style>
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+<script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<style>
     .sim-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; }
     .sim-slider-group { margin-bottom: 1.2rem; }
     .sim-slider-header { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.4rem; }
@@ -50,114 +49,99 @@
     .log-pass { color: #4ade80; }
     .log-tx { color: #60a5fa; }
   </style>
-  <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" as="script">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-EBLbMcTI40fa+dU69q0bYlGE50lzC+NJTPGO+JctdX0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
-
-  <site-nav active="tools"></site-nav>
-
-  <main class="main-container">
-    <nav class="breadcrumb">
-      <li><a href="/" class="breadcrumb-link">Home</a></li>
-      <li class="breadcrumb-sep">/</li>
-      <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
-      <li class="breadcrumb-sep">/</li>
-      <li class="text-muted">eBPF XDP Packet Filter Evaluator</li>
-    </nav>
-
-    <header class="page-header">
-      <h1 class="page-title">eBPF XDP Packet Filter Evaluator</h1>
-      <p class="page-subtitle">Interactive eBPF XDP kernel network packet filtering & DDoS mitigation simulator. Test XDP_DROP vs XDP_PASS decisions at line-rate without kernel compilation.</p>
-    </header>
-
-    <div class="grid-2" style="gap: 1.5rem;">
-      <!-- Controls -->
-      <div class="sim-card">
-        <h2 class="section-title" style="font-size: 1.2rem; margin-bottom: 1rem;">[ CONFIG ] eBPF Map & Rule Filter</h2>
-
-        <div class="form-group mb-sm">
-          <label for="inputBlacklist">Blacklisted Subnet / IP:</label>
-          <input type="text" id="inputBlacklist" value="198.51.100.0/24" placeholder="e.g. 192.168.1.100 or 10.0.0.0/8">
-        </div>
-
-        <div class="form-group mb-sm">
-          <label for="selectProtocol">Target Protocol Filter:</label>
-          <select id="selectProtocol">
-            <option value="ALL">ALL (TCP + UDP + ICMP)</option>
-            <option value="UDP" selected>UDP (Mitigate Amplification Attacks)</option>
-            <option value="TCP">TCP (Mitigate SYN Floods)</option>
-            <option value="ICMP">ICMP (Ping Flood Blocking)</option>
-          </select>
-        </div>
-
-        <div class="sim-slider-group">
-          <div class="sim-slider-header">
-            <span>DDoS Attack Intensity (PPS):</span>
-            <span class="sim-slider-val" id="valPps">1,500,000 pps</span>
-          </div>
-          <input type="range" id="inputPps" min="100000" max="5000000" value="1500000" step="100000">
-          <span class="text-muted-xs">Simulated packet rate arriving at NIC RX queue.</span>
-        </div>
-
-        <button type="button" id="btnSimulateBurst" class="btn-primary" style="margin-top: 0.5rem;">[ BURST SIMULATION ] Inject 20 Traffic Packets</button>
-      </div>
-
-      <!-- Results & Metrics -->
-      <div class="sim-card">
-        <h2 class="section-title" style="font-size: 1.2rem; margin-bottom: 1rem;">[ DECISION MATRIX ] Kernel Processing</h2>
-
-        <div class="result-summary">
-          <div class="result-card total">
-            <div class="label">XDP_DROP (Mitigated)</div>
-            <div class="value" id="resDropCount">14 pkts</div>
-          </div>
-          <div class="result-card">
-            <div class="label">XDP_PASS (To TCP/IP Stack)</div>
-            <div class="value" id="resPassCount">6 pkts</div>
-          </div>
-          <div class="result-card">
-            <div class="label">CPU Stack Savings</div>
-            <div class="value" id="resCpuSavings">98.2%</div>
-          </div>
-          <div class="result-card">
-            <div class="label">NIC Line Rate</div>
-            <div class="value" id="resLineRate">14.8M pps</div>
-          </div>
-        </div>
-
-        <h3 style="font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">[ KERNEL XDP LOG STREAM ]</h3>
-        <div class="pkt-log-box" id="pktLogBox">
-          <!-- Dynamic Log Entries -->
-        </div>
-      </div>
-    </div>
-
-    <!-- Technical Guide -->
-    <section class="seo-content-block">
-      <h2 class="section-title">[ ARCHITECTURE ] eBPF XDP vs iptables Architecture</h2>
-      <p class="text-muted">eBPF XDP (eXpress Data Path) executes BPF bytecode directly inside the network interface card (NIC) driver before socket buffer (`sk_buff`) memory allocation occurs. This enables line-rate packet drops without involving the Linux kernel TCP/IP stack.</p>
-
-      <div class="sim-card" style="margin-top: 1rem;">
-        <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">Action Codes & Performance Characteristics</h3>
-        <ul style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; padding-left: 1.2rem;">
-          <li><strong>XDP_DROP</strong>: Drops packet immediately at driver layer. Consumes 0 CPU memory allocation in network stack.</li>
-          <li><strong>XDP_PASS</strong>: Passes packet to standard Linux networking stack (`netif_receive_skb`).</li>
-          <li><strong>XDP_TX</strong>: Bounces packet back out of the same interface (useful for hairpin load balancing).</li>
-        </ul>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="nav-container">
-      <p>Zyekh's Zero-Dependency Web Hub &copy; 2026. 100% Local-First & Zero-Tracking.</p>
-    </div>
-  </footer>
-
-  <script src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
-  <script>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li class="breadcrumb-sep">/</li>
+<li class="text-muted">eBPF XDP Packet Filter Evaluator</li>
+</nav>
+<header class="page-header">
+<h1 class="page-title">eBPF XDP Packet Filter Evaluator</h1>
+<p class="page-subtitle">Interactive eBPF XDP kernel network packet filtering &amp; DDoS mitigation simulator. Test XDP_DROP vs XDP_PASS decisions at line-rate without kernel compilation.</p>
+</header>
+<div class="grid-2" style="gap: 1.5rem;">
+<!-- Controls -->
+<div class="sim-card">
+<h2 class="section-title" style="font-size: 1.2rem; margin-bottom: 1rem;">[ CONFIG ] eBPF Map &amp; Rule Filter</h2>
+<div class="form-group mb-sm">
+<label for="inputBlacklist">Blacklisted Subnet / IP:</label>
+<input id="inputBlacklist" placeholder="e.g. 192.168.1.100 or 10.0.0.0/8" type="text" value="198.51.100.0/24"/>
+</div>
+<div class="form-group mb-sm">
+<label for="selectProtocol">Target Protocol Filter:</label>
+<select id="selectProtocol">
+<option value="ALL">ALL (TCP + UDP + ICMP)</option>
+<option selected="" value="UDP">UDP (Mitigate Amplification Attacks)</option>
+<option value="TCP">TCP (Mitigate SYN Floods)</option>
+<option value="ICMP">ICMP (Ping Flood Blocking)</option>
+</select>
+</div>
+<div class="sim-slider-group">
+<div class="sim-slider-header">
+<span>DDoS Attack Intensity (PPS):</span>
+<span class="sim-slider-val" id="valPps">1,500,000 pps</span>
+</div>
+<input id="inputPps" max="5000000" min="100000" step="100000" type="range" value="1500000"/>
+<span class="text-muted-xs">Simulated packet rate arriving at NIC RX queue.</span>
+</div>
+<button class="btn-primary" id="btnSimulateBurst" style="margin-top: 0.5rem;" type="button">[ BURST SIMULATION ] Inject 20 Traffic Packets</button>
+</div>
+<!-- Results & Metrics -->
+<div class="sim-card">
+<h2 class="section-title" style="font-size: 1.2rem; margin-bottom: 1rem;">[ DECISION MATRIX ] Kernel Processing</h2>
+<div class="result-summary">
+<div class="result-card total">
+<div class="label">XDP_DROP (Mitigated)</div>
+<div class="value" id="resDropCount">14 pkts</div>
+</div>
+<div class="result-card">
+<div class="label">XDP_PASS (To TCP/IP Stack)</div>
+<div class="value" id="resPassCount">6 pkts</div>
+</div>
+<div class="result-card">
+<div class="label">CPU Stack Savings</div>
+<div class="value" id="resCpuSavings">98.2%</div>
+</div>
+<div class="result-card">
+<div class="label">NIC Line Rate</div>
+<div class="value" id="resLineRate">14.8M pps</div>
+</div>
+</div>
+<h3 style="font-size: 1rem; margin-top: 1.5rem; margin-bottom: 0.5rem;">[ KERNEL XDP LOG STREAM ]</h3>
+<div class="pkt-log-box" id="pktLogBox">
+<!-- Dynamic Log Entries -->
+</div>
+</div>
+</div>
+<!-- Technical Guide -->
+<section class="seo-content-block">
+<h2 class="section-title">[ ARCHITECTURE ] eBPF XDP vs iptables Architecture</h2>
+<p class="text-muted">eBPF XDP (eXpress Data Path) executes BPF bytecode directly inside the network interface card (NIC) driver before socket buffer (`sk_buff`) memory allocation occurs. This enables line-rate packet drops without involving the Linux kernel TCP/IP stack.</p>
+<div class="sim-card" style="margin-top: 1rem;">
+<h3 style="font-size: 1rem; margin-bottom: 0.5rem;">Action Codes &amp; Performance Characteristics</h3>
+<ul style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; padding-left: 1.2rem;">
+<li><strong>XDP_DROP</strong>: Drops packet immediately at driver layer. Consumes 0 CPU memory allocation in network stack.</li>
+<li><strong>XDP_PASS</strong>: Passes packet to standard Linux networking stack (`netif_receive_skb`).</li>
+<li><strong>XDP_TX</strong>: Bounces packet back out of the same interface (useful for hairpin load balancing).</li>
+</ul>
+</div>
+</section>
+</main>
+<footer class="footer">
+<div class="nav-container">
+<p>Zyekh's Zero-Dependency Web Hub © 2026. 100% Local-First &amp; Zero-Tracking.</p>
+</div>
+</footer>
+<script src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
+<script>
     (function() {
       const inputBlacklist = document.getElementById('inputBlacklist');
       const selectProtocol = document.getElementById('selectProtocol');

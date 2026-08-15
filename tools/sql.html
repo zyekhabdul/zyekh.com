@@ -1,35 +1,33 @@
 <!DOCTYPE html>
+
 <html lang="id-ID">
 <head>
 <script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
-  <meta charset="UTF-8">
-  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <meta name="theme-color" content="#09090b">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SQL Query Formatter & Beautifier — Offline Developer Utility | Zyekh</title>
-  <meta name="description" content="Format, clean, and beautify complex SQL queries with standardized keyword indentation 100% offline & client-side in browser.">
-  <meta name="keywords" content="sql formatter, sql beautifier, format sql query, sql minifier, format postgresql, format mysql, developer utility">
-  <meta name="author" content="Zyekh Abdul Qadir Jailani">
-  <link rel="canonical" href="https://zyekh.com/tools/sql.html">
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Open Graph -->
-  <meta property="og:site_name" content="zyekh.com">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="SQL Query Formatter & Beautifier — Offline Developer Utility | Zyekh">
-  <meta property="og:description" content="Format, clean, and beautify complex SQL queries with standardized keyword indentation 100% offline & client-side in browser.">
-  <meta property="og:url" content="https://zyekh.com/tools/sql.html">
-  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
-
-  <!-- Schema.org JSON-LD -->
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>SQL Query Formatter &amp; Beautifier — Offline Developer Utility | Zyekh</title>
+<meta content="Format, clean, and beautify complex SQL queries with standardized keyword indentation 100% offline &amp; client-side in browser." name="description"/>
+<meta content="sql formatter, sql beautifier, format sql query, sql minifier, format postgresql, format mysql, developer utility" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/sql.html" rel="canonical"/>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Open Graph -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="website" property="og:type"/>
+<meta content="SQL Query Formatter &amp; Beautifier — Offline Developer Utility | Zyekh" property="og:title"/>
+<meta content="Format, clean, and beautify complex SQL queries with standardized keyword indentation 100% offline &amp; client-side in browser." property="og:description"/>
+<meta content="https://zyekh.com/tools/sql.html" property="og:url"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-sql-dark-landscape.png" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-sql-dark-landscape.png" name="twitter:image"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -65,13 +63,11 @@
     ]
   }
   </script>
-
-  <!-- Self-hosted Fonts & Styles -->
-  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous">
-
-  <style>
+<!-- Self-hosted Fonts & Styles -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<style>
     .grid-2-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
     @media (max-width: 768px) { .grid-2-col { grid-template-columns: 1fr; } }
     textarea.sql-box { font-family: 'Fira Code', monospace; font-size: 0.85rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem; min-height: 260px; width: 100%; resize: vertical; }
@@ -92,82 +88,73 @@ window.debounceRAF = function(fn, delay) {
   };
 };
 </script>
-  <style id="antiClickjack">body{display:none !important;}</style>
+<style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-                                                                                                                              <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" as="script">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-+wQx7aIWZh15T5V4JLVkmfXg48HMUFnV+COyXYfq0xM=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-VwVGf4XB7UOtnPMKcNPIIWHftNokJDSKKUVj+Z7ZfYU='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
-  <site-nav active="tools"></site-nav>
-
-  <main class="main-container">
-    <nav aria-label="Breadcrumb">
-      <ol class="breadcrumb">
-        <li><a href="/" class="breadcrumb-link">Home</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li aria-current="page" style="color:var(--text-main);">SQL Formatter</li>
-      </ol>
-    </nav>
-
-    <header class="page-header">
-      <span class="badge">DEVELOPER UTILITIES</span>
-      <h1 class="page-title">SQL Query Formatter & Beautifier</h1>
-      <p class="page-subtitle">Format, clean, and beautify complex SQL queries with custom keyword casing 100% offline.</p>
-    </header>
-
-    <section class="tool-box">
-      <div class="btn-group">
-        <button type="button" onclick="formatSQL()">Format / Beautify SQL</button>
-        <button type="button" onclick="minifySQL()">Minify SQL (Single Line)</button>
-        <button type="button" onclick="copySQLResult()" id="btnCopySQL">Copy Output</button>
-      </div>
-
-      <div class="grid-2-col">
-        <div>
-          <label for="sqlInput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Unformatted SQL Input</label>
-          <textarea id="sqlInput" class="sql-box" placeholder="select u.id, u.name, p.title from users u inner join posts p on u.id = p.user_id where u.active = 1 order by u.created_at desc"></textarea>
-        </div>
-
-        <div>
-          <label for="sqlOutput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Formatted SQL Result</label>
-          <textarea id="sqlOutput" class="sql-box" placeholder="Formatted SQL will appear here..." readonly></textarea>
-        </div>
-      </div>
-    </section>
-
-    <section class="seo-content-block seo-block" style="margin-top:2rem;">
-      <h2>Tentang Format & Keindahan Kueri SQL</h2>
-      <p>Merapikan kueri SQL dengan membuat kata kunci kapital (<code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>JOIN</code>) dan penataan indentasi baris baru meningkatkan keterbacaan kode (*readability*), mempermudah proses debugging kueri basis data PostgreSQL, MySQL, dan SQLite.</p>
-
-      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
-      <div class="faq-accordion">
-        <details class="faq-card">
-          <summary class="faq-summary">Apakah kueri basis data saya aman dari kebocoran skema?</summary>
-          <p class="faq-answer">Ya. Semua pemformatan kata kunci dan baris kueri dilakukan 100% di browser lokal Anda tanpa koneksi backend.</p>
-        </details>
-      </div>
-    </section>
-  </main>
-
-    <footer class="footer" role="contentinfo">
-    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-      <a href="/about/" class="text-muted text-sm">About</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/tools/" class="text-muted text-sm">42 Web Tools</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blog/" class="text-muted text-sm">25 Articles</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-    </div>
-  </footer>
-
-  <script>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">SQL Formatter</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">DEVELOPER UTILITIES</span>
+<h1 class="page-title">SQL Query Formatter &amp; Beautifier</h1>
+<p class="page-subtitle">Format, clean, and beautify complex SQL queries with custom keyword casing 100% offline.</p>
+</header>
+<section class="tool-box">
+<div class="btn-group">
+<button onclick="formatSQL()" type="button">Format / Beautify SQL</button>
+<button onclick="minifySQL()" type="button">Minify SQL (Single Line)</button>
+<button id="btnCopySQL" onclick="copySQLResult()" type="button">Copy Output</button>
+</div>
+<div class="grid-2-col">
+<div>
+<label for="sqlInput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Unformatted SQL Input</label>
+<textarea class="sql-box" id="sqlInput" placeholder="select u.id, u.name, p.title from users u inner join posts p on u.id = p.user_id where u.active = 1 order by u.created_at desc"></textarea>
+</div>
+<div>
+<label for="sqlOutput" style="font-weight:600;display:block;margin-bottom:0.4rem;">Formatted SQL Result</label>
+<textarea class="sql-box" id="sqlOutput" placeholder="Formatted SQL will appear here..." readonly=""></textarea>
+</div>
+</div>
+</section>
+<section class="seo-content-block seo-block" style="margin-top:2rem;">
+<h2>Tentang Format &amp; Keindahan Kueri SQL</h2>
+<p>Merapikan kueri SQL dengan membuat kata kunci kapital (<code>SELECT</code>, <code>FROM</code>, <code>WHERE</code>, <code>JOIN</code>) dan penataan indentasi baris baru meningkatkan keterbacaan kode (*readability*), mempermudah proses debugging kueri basis data PostgreSQL, MySQL, dan SQLite.</p>
+<h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+<div class="faq-accordion">
+<details class="faq-card">
+<summary class="faq-summary">Apakah kueri basis data saya aman dari kebocoran skema?</summary>
+<p class="faq-answer">Ya. Semua pemformatan kata kunci dan baris kueri dilakukan 100% di browser lokal Anda tanpa koneksi backend.</p>
+</details>
+</div>
+</section>
+</main>
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">42 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">25 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
+<script>
     function formatSQL() {
       const input = document.getElementById('sqlInput').value;
       if (!input.trim()) return;
@@ -210,6 +197,6 @@ window.debounceRAF = function(fn, delay) {
       } catch (err) {}
     }
   </script>
-  <script src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" defer></script>
+<script defer="" src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="id-ID">
 <head>
 <script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
@@ -23,8 +24,8 @@
 <meta content="Offline Image Format Converter (WebP, JPG, PNG) | Zyekh" property="og:title"/>
 <meta content="Convert images locally in your browser to WebP, JPG, or PNG formats without uploading to any server. 100% client-side offline image conversion tool." property="og:description"/>
 <meta content="https://zyekh.com/tools/image-converter.html" property="og:url"/>
-<meta content="https://zyekh.com/assets/img/og-card.jpg" property="og:image"/>
-<meta content="https://zyekh.com/assets/img/og-card.jpg" name="twitter:image"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-image-converter-dark-landscape.png" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-image-converter-dark-landscape.png" name="twitter:image"/>
 <!-- Schema.org JSON-LD -->
 <script type="application/ld+json">
   {
@@ -81,9 +82,9 @@
     #downloadBtn { width: 100%; justify-content: center; font-size: 1rem; padding: 0.75rem; margin-top: 1rem; }
     .file-info { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; }
   </style>
-  <style id="antiClickjack">body{display:none !important;}</style>
+<style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-                                  <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" as="script">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-VCz3KBJEMkktr+a5Ampuuo9kgvZMcjxLSuZ9lgMIHXw='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
@@ -104,47 +105,41 @@
 <h1 class="page-title">Offline Image Format Converter</h1>
 <p class="page-subtitle">Convert images between WebP, JPG, and PNG formats directly in your browser without server uploads.</p>
 </header>
-
 <section class="tool-box">
-  <div class="converter-grid">
-    <div>
-      <div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
-        <svg style="width:48px;height:48px;color:var(--text-muted);margin-bottom:1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-        <h3 style="font-size:1.1rem;margin:0 0 0.5rem 0;">Click or Drag & Drop Image Here</h3>
-        <p style="font-size:0.85rem;color:var(--text-muted);margin:0;">Supports PNG, JPG, WebP, GIF, BMP</p>
-        <input type="file" id="fileInput" accept="image/*" style="display:none;" onchange="handleFileSelect(event)">
-      </div>
-      <div id="originalInfo" class="file-info"></div>
-      <img id="previewImg" class="img-preview" alt="Preview Image" />
-    </div>
-
-    <div class="controls-panel">
-      <div class="form-group">
-        <label>Output Format</label>
-        <select id="formatSelect" onchange="updateConversion()">
-          <option value="image/webp">WebP (Optimized for Web)</option>
-          <option value="image/jpeg">JPG / JPEG</option>
-          <option value="image/png">PNG (Lossless / Transparent)</option>
-        </select>
-      </div>
-
-      <div class="form-group" id="qualityGroup">
-        <label>Compression Quality (WebP/JPG only)</label>
-        <div class="range-wrap">
-          <input type="range" id="qualityRange" min="0.1" max="1.0" step="0.05" value="0.8" oninput="document.getElementById('qualityVal').textContent=Math.round(this.value*100)+'%'; updateConversion();">
-          <span id="qualityVal" class="range-val">80%</span>
-        </div>
-      </div>
-
-      <div id="outputInfo" class="file-info" style="margin-top:1.5rem;font-weight:600;color:var(--text-main);"></div>
-      
-      <button type="button" id="downloadBtn" onclick="downloadImage()" disabled>
+<div class="converter-grid">
+<div>
+<div class="upload-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+<svg fill="none" stroke="currentColor" style="width:48px;height:48px;color:var(--text-muted);margin-bottom:1rem;" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<h3 style="font-size:1.1rem;margin:0 0 0.5rem 0;">Click or Drag &amp; Drop Image Here</h3>
+<p style="font-size:0.85rem;color:var(--text-muted);margin:0;">Supports PNG, JPG, WebP, GIF, BMP</p>
+<input accept="image/*" id="fileInput" onchange="handleFileSelect(event)" style="display:none;" type="file"/>
+</div>
+<div class="file-info" id="originalInfo"></div>
+<img alt="Preview Image" class="img-preview" id="previewImg"/>
+</div>
+<div class="controls-panel">
+<div class="form-group">
+<label>Output Format</label>
+<select id="formatSelect" onchange="updateConversion()">
+<option value="image/webp">WebP (Optimized for Web)</option>
+<option value="image/jpeg">JPG / JPEG</option>
+<option value="image/png">PNG (Lossless / Transparent)</option>
+</select>
+</div>
+<div class="form-group" id="qualityGroup">
+<label>Compression Quality (WebP/JPG only)</label>
+<div class="range-wrap">
+<input id="qualityRange" max="1.0" min="0.1" oninput="document.getElementById('qualityVal').textContent=Math.round(this.value*100)+'%'; updateConversion();" step="0.05" type="range" value="0.8"/>
+<span class="range-val" id="qualityVal">80%</span>
+</div>
+</div>
+<div class="file-info" id="outputInfo" style="margin-top:1.5rem;font-weight:600;color:var(--text-main);"></div>
+<button disabled="" id="downloadBtn" onclick="downloadImage()" type="button">
         Download Converted Image
       </button>
-    </div>
-  </div>
+</div>
+</div>
 </section>
-
 <section class="seo-content-block seo-block" style="margin-top:2rem;">
 <h2>Tentang Konversi Gambar Offline</h2>
 <p>Tool ini memanfaatkan <strong>HTML5 Canvas API</strong> yang berjalan secara native di dalam web browser Anda. File gambar yang Anda unggah <strong>tidak pernah dikirim ke server manapun</strong>, sehingga privasi dan kerahasiaan data Anda 100% terjamin.</p>
@@ -153,20 +148,19 @@
 </section>
 </main>
 <footer class="footer" role="contentinfo">
-  <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-  <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-    <a href="/about/" class="text-muted text-sm">About</a>
-    <span class="text-muted text-sm">&middot;</span>
-    <a href="/tools/" class="text-muted text-sm">42 Web Tools</a>
-    <span class="text-muted text-sm">&middot;</span>
-    <a href="/blog/" class="text-muted text-sm">25 Articles</a>
-    <span class="text-muted text-sm">&middot;</span>
-    <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-    <span class="text-muted text-sm">&middot;</span>
-    <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-  </div>
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">42 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">25 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
 </footer>
-
 <script>
   let currentImage = null;
   let currentFileName = 'image';

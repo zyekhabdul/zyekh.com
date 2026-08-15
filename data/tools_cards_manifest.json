@@ -1,0 +1,784 @@
+{
+  "ai-token": {
+    "slug": "ai-token",
+    "title": "AI Prompt Token & API Cost Estimator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Estimate LLM prompt token counts and API costs for OpenAI GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, and Llama 3 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/ai-token.html"
+  },
+  "base64": {
+    "slug": "base64",
+    "title": "Base64 Encoder / Decoder & Image Base64",
+    "category": "DEVELOPER UTILITY",
+    "description": "Convert text or image files to Base64 strings and decode Base64 back to plain text 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/base64.html"
+  },
+  "case-converter": {
+    "slug": "case-converter",
+    "title": "Text Case Converter",
+    "category": "DEVELOPER UTILITY",
+    "description": "Konverter case teks online: UPPERCASE, lowercase, Title Case, kebab-case, snake_case, dan lainnya.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/case-converter.html"
+  },
+  "chmod-calculator": {
+    "slug": "chmod-calculator",
+    "title": "Linux Permissions & Chmod Calculator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Interactive Linux file permission and chmod octal calculator. Calculate 3-digit and 4-digit octal permissions (rwx, SUID, SGID, Sticky Bit) 100% client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/chmod-calculator.html"
+  },
+  "color": {
+    "slug": "color",
+    "title": "Color Palette & Converter",
+    "category": "DEVELOPER UTILITY",
+    "description": "Pratinjau warna dari kode hex. Bagikan lewat URL hash, lihat RGB dan kontras teks otomatis.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/color.html"
+  },
+  "converter": {
+    "slug": "converter",
+    "title": "Unit & Currency Converter",
+    "category": "DEVELOPER UTILITY",
+    "description": "Konverter satuan panjang, berat, suhu, dan mata uang. Atur kurs sendiri \u2014 tanpa backend, langsung di browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/converter.html"
+  },
+  "countdown": {
+    "slug": "countdown",
+    "title": "Countdown Timer",
+    "category": "DEVELOPER UTILITY",
+    "description": "Buat countdown timer instan ke tanggal atau waktu tertentu. Bagikan lewat URL, tanpa daftar akun.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/countdown.html"
+  },
+  "counter": {
+    "slug": "counter",
+    "title": "Word & Character Counter",
+    "category": "DEVELOPER UTILITY",
+    "description": "Penghitung kata dan karakter online gratis. Estimasi waktu baca untuk artikel Bahasa Indonesia.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/counter.html"
+  },
+  "cron": {
+    "slug": "cron",
+    "title": "Cron Expression Generator & Explainer",
+    "category": "DEVELOPER UTILITY",
+    "description": "Tool penerjemah & pembuat cron expression ke Bahasa Indonesia secara gratis, instant, dan client-side.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/cron.html"
+  },
+  "css-minifier": {
+    "slug": "css-minifier",
+    "title": "CSS Minifier & Formatter",
+    "category": "DEVELOPER UTILITY",
+    "description": "Compress CSS stylesheet files to save payload bandwidth or format minified CSS 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/css-minifier.html"
+  },
+  "csv-json": {
+    "slug": "csv-json",
+    "title": "CSV to JSON & SQL Converter",
+    "category": "DEVELOPER UTILITY",
+    "description": "Convert CSV and TSV tabular data into clean JSON arrays or SQL INSERT statements 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/csv-json.html"
+  },
+  "curl": {
+    "slug": "curl",
+    "title": "cURL Command to Code Converter",
+    "category": "DEVELOPER UTILITY",
+    "description": "Convert cURL commands to JavaScript Fetch, Python Requests, Go, Node.js, and PHP code 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/curl.html"
+  },
+  "dice": {
+    "slug": "dice",
+    "title": "Dice & Coin Flip",
+    "category": "DEVELOPER UTILITY",
+    "description": "Lempar dadu (1\u20136 atau custom) dan flip koin online. Acak aman dengan crypto, tanpa install.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/dice.html"
+  },
+  "diff-checker": {
+    "slug": "diff-checker",
+    "title": "Diff Checker",
+    "category": "DEVELOPER UTILITY",
+    "description": "Bandingkan perbedaan dua teks secara side-by-side. Diff checker online gratis, langsung di browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/diff-checker.html"
+  },
+  "ebpf-evaluator": {
+    "slug": "ebpf-evaluator",
+    "title": "eBPF XDP Packet Filter Evaluator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Interactive eBPF XDP network packet filter evaluator & DDoS mitigation simulator. Test XDP_DROP vs XDP_PASS, measure line-rate pps filtering efficiency offline.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/ebpf-evaluator.html"
+  },
+  "env": {
+    "slug": "env",
+    "title": ".env to JSON & Secret Redactor",
+    "category": "DEVELOPER UTILITY",
+    "description": "Convert environment variables (.env) to JSON objects or mask secret credentials (redact API keys) 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/env.html"
+  },
+  "epoch": {
+    "slug": "epoch",
+    "title": "Unix Epoch Timestamp Converter",
+    "category": "DEVELOPER UTILITY",
+    "description": "Convert Unix epoch timestamps to human-readable date formats (ISO 8601, WIB, UTC) and date to epoch seconds 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/epoch.html"
+  },
+  "hash": {
+    "slug": "hash",
+    "title": "Hash Generator & Checksum Inspector",
+    "category": "DEVELOPER UTILITY",
+    "description": "Generate SHA-256, SHA-512, SHA-1 cryptographic hashes and verify file checksums 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/hash.html"
+  },
+  "hmac": {
+    "slug": "hmac",
+    "title": "HMAC Signer & Signature Verifier",
+    "category": "DEVELOPER UTILITY",
+    "description": "Generate and verify HMAC-SHA256, HMAC-SHA512, and HMAC-SHA1 message signatures 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/hmac.html"
+  },
+  "html-entity": {
+    "slug": "html-entity",
+    "title": "HTML Entity Encoder & Decoder",
+    "category": "DEVELOPER UTILITY",
+    "description": "Encode special characters into safe HTML entities or decode HTML entities back to raw text 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/html-entity.html"
+  },
+  "image-converter": {
+    "slug": "image-converter",
+    "title": "Offline Image Format Converter",
+    "category": "DEVELOPER UTILITY",
+    "description": "Convert images locally in your browser to WebP, JPG, or PNG formats without uploading to any server. 100% client-side offline image conversion tool.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/image-converter.html"
+  },
+  "jht": {
+    "slug": "jht",
+    "title": "Kalkulator Saldo JHT 2026",
+    "category": "DEVELOPER UTILITY",
+    "description": "Hitung estimasi saldo & pencairan JHT BPJS Ketenagakerjaan (2% pekerja + 3.7% perusahaan) secara gratis, akurat, dan aman.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/jht.html"
+  },
+  "jkp": {
+    "slug": "jkp",
+    "title": "Kalkulator JKP 2026",
+    "category": "DEVELOPER UTILITY",
+    "description": "Simulasi perhitungan uang tunai JKP BPJS (45% & 25% upah maks 5 juta) selama 6 bulan untuk korban PHK.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/jkp.html"
+  },
+  "json": {
+    "slug": "json",
+    "title": "JSON Formatter, Validator & Tree Viewer",
+    "category": "DEVELOPER UTILITY",
+    "description": "Format, beautify, minify, validate, and inspect JSON structure interactively 100% client-side in browser. Safe, offline, zero data upload.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/json.html"
+  },
+  "jwt": {
+    "slug": "jwt",
+    "title": "JWT Token Decoder & Inspector",
+    "category": "DEVELOPER UTILITY",
+    "description": "Decode JSON Web Tokens (JWT) headers, claims payload, and expiration status 100% offline & safe client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/jwt.html"
+  },
+  "kpr": {
+    "slug": "kpr",
+    "title": "Mortgage (KPR) Calculator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Simulasi cicilan KPR atau kendaraan. Hitung angsuran bulanan, total bunga, dan total pembayaran dari plafon, tenor, dan suku bunga.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/kpr.html"
+  },
+  "llm-calculator": {
+    "slug": "llm-calculator",
+    "title": "LLM Token & GPU VRAM Cost Calculator",
+    "category": "LLM RUNTIME",
+    "description": "Interactive 2026 LLM pricing comparison, API token cost estimator, and GPU VRAM hardware sizing calculator for Claude 3.7, GPT-4.5, DeepSeek-R1, Gemini 2.0, and Llama 3.3.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/llm-calculator.html"
+  },
+  "lorem": {
+    "slug": "lorem",
+    "title": "Lorem Ipsum Generator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Generator lorem ipsum versi Bahasa Indonesia untuk placeholder desain dan mockup. Atur jumlah paragraf.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/lorem.html"
+  },
+  "markdown": {
+    "slug": "markdown",
+    "title": "Markdown Live Editor",
+    "category": "DEVELOPER UTILITY",
+    "description": "Preview markdown online gratis. Ketik markdown di kiri, lihat hasil render di kanan. Tanpa install.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/markdown.html"
+  },
+  "password": {
+    "slug": "password",
+    "title": "Secure Password Generator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Generator password acak yang aman. Atur panjang dan kompleksitas, salin langsung. Dibuat di browser, tidak dikirim ke server.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/password.html"
+  },
+  "pesangon": {
+    "slug": "pesangon",
+    "title": "Kalkulator Pesangon PHK 2026",
+    "category": "DEVELOPER UTILITY",
+    "description": "Hitung estimasi uang pesangon PHK, UPMK, UPH, dan kompensasi PKWT sesuai UU Cipta Kerja (PP 35/2021) secara gratis, akurat, dan privasi terjaga.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/pesangon.html"
+  },
+  "pomodoro": {
+    "slug": "pomodoro",
+    "title": "Pomodoro Focus Timer",
+    "category": "DEVELOPER UTILITY",
+    "description": "Timer Pomodoro online untuk fokus kerja. Atur durasi kerja dan istirahat, mode fullscreen.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/pomodoro.html"
+  },
+  "pph21": {
+    "slug": "pph21",
+    "title": "PPh 21 Tax Calculator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Kalkulator PPh 21 sederhana untuk gaji Indonesia. Hitung pajak penghasilan, take-home pay, atau bruto dari netto (estimasi).",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/pph21.html"
+  },
+  "qr": {
+    "slug": "qr",
+    "title": "QR Code Generator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Generator QR code gratis dan instan. Masukkan teks atau URL, unduh gambar PNG. Tanpa upload ke server.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/qr.html"
+  },
+  "random-picker": {
+    "slug": "random-picker",
+    "title": "Random Item Picker",
+    "category": "DEVELOPER UTILITY",
+    "description": "Acak undian online dari daftar nama. Cocok untuk giveaway, pembagian tugas, atau pilih pemenang.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/random-picker.html"
+  },
+  "regex": {
+    "slug": "regex",
+    "title": "RegEx Live Tester & Match Inspector",
+    "category": "DEVELOPER UTILITY",
+    "description": "Test Regular Expressions (RegEx) in real-time with pattern flags, match highlighting, and group extraction 100% client-side.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/regex.html"
+  },
+  "speculative-decoding": {
+    "slug": "speculative-decoding",
+    "title": "Speculative Decoding Simulator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Interactive Speculative Decoding simulator & LLM inference latency calculator. Visualize draft model token acceptance, calculate expected speedup ratio, and analyze latency tradeoffs offline.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/speculative-decoding.html"
+  },
+  "split-bill": {
+    "slug": "split-bill",
+    "title": "Split Bill Calculator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Hitung patungan tagihan makan atau acara. Bagi rata, tambah service charge dan pajak, langsung di browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/split-bill.html"
+  },
+  "sql": {
+    "slug": "sql",
+    "title": "SQL Query Formatter & Beautifier",
+    "category": "DEVELOPER UTILITY",
+    "description": "Format, clean, and beautify complex SQL queries with standardized keyword indentation 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/sql.html"
+  },
+  "subnet": {
+    "slug": "subnet",
+    "title": "IP Subnet & CIDR Calculator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Calculate IPv4 network ranges, subnet masks, broadcast addresses, wildcard masks, and usable host count 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/subnet.html"
+  },
+  "svg-converter": {
+    "slug": "svg-converter",
+    "title": "SVG Vector to CSS Data URI Converter",
+    "category": "DEVELOPER UTILITY",
+    "description": "Convert raw SVG vector markup into optimized CSS background Data URIs and Base64 strings 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/svg-converter.html"
+  },
+  "thr": {
+    "slug": "thr",
+    "title": "THR Calculator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Kalkulator THR online. Hitung Tunjangan Hari Raya pro-rata berdasarkan gaji dan masa kerja sesuai UU Ketenagakerjaan.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/thr.html"
+  },
+  "tts": {
+    "slug": "tts",
+    "title": "Text to Speech Synthesizer",
+    "category": "DEVELOPER UTILITY",
+    "description": "Ubah teks menjadi suara dengan Web Speech API browser. Gratis, tanpa upload, dukung Bahasa Indonesia.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/tts.html"
+  },
+  "url": {
+    "slug": "url",
+    "title": "URL Encoder / Decoder & Query Inspector",
+    "category": "DEVELOPER UTILITY",
+    "description": "Encode, decode, parse query string parameters, and strip tracking tags from URLs 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/url.html"
+  },
+  "uuid": {
+    "slug": "uuid",
+    "title": "UUID & ULID Bulk Generator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Generate cryptographically secure UUID v4, v1, and lexicographically sortable ULIDs in bulk 100% offline & client-side in browser.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/uuid.html"
+  },
+  "zakat": {
+    "slug": "zakat",
+    "title": "Zakat Calculator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Kalkulator zakat online: zakat maal (harta) dan zakat penghasilan. Nisab berdasarkan harga emas, perhitungan 2,5%.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/zakat.html"
+  }
+}

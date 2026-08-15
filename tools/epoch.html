@@ -1,35 +1,33 @@
 <!DOCTYPE html>
+
 <html lang="id-ID">
 <head>
 <script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
-  <meta charset="UTF-8">
-  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <meta name="theme-color" content="#09090b">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Unix Epoch Timestamp Converter — Offline Developer Tool | Zyekh</title>
-  <meta name="description" content="Convert Unix epoch timestamps to human-readable date formats (ISO 8601, WIB, UTC) and date to epoch seconds 100% offline & client-side in browser.">
-  <meta name="keywords" content="epoch converter, unix timestamp, timestamp to date, epoch to date, epoch seconds, timezone converter, developer utility">
-  <meta name="author" content="Zyekh Abdul Qadir Jailani">
-  <link rel="canonical" href="https://zyekh.com/tools/epoch.html">
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Open Graph -->
-  <meta property="og:site_name" content="zyekh.com">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Unix Epoch Timestamp Converter — Offline Developer Tool | Zyekh">
-  <meta property="og:description" content="Convert Unix epoch timestamps to human-readable date formats (ISO 8601, WIB, UTC) and date to epoch seconds 100% offline & client-side in browser.">
-  <meta property="og:url" content="https://zyekh.com/tools/epoch.html">
-  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
-
-  <!-- Schema.org JSON-LD -->
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Unix Epoch Timestamp Converter — Offline Developer Tool | Zyekh</title>
+<meta content="Convert Unix epoch timestamps to human-readable date formats (ISO 8601, WIB, UTC) and date to epoch seconds 100% offline &amp; client-side in browser." name="description"/>
+<meta content="epoch converter, unix timestamp, timestamp to date, epoch to date, epoch seconds, timezone converter, developer utility" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/epoch.html" rel="canonical"/>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Open Graph -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="website" property="og:type"/>
+<meta content="Unix Epoch Timestamp Converter — Offline Developer Tool | Zyekh" property="og:title"/>
+<meta content="Convert Unix epoch timestamps to human-readable date formats (ISO 8601, WIB, UTC) and date to epoch seconds 100% offline &amp; client-side in browser." property="og:description"/>
+<meta content="https://zyekh.com/tools/epoch.html" property="og:url"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-epoch-dark-landscape.png" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-epoch-dark-landscape.png" name="twitter:image"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -65,13 +63,11 @@
     ]
   }
   </script>
-
-  <!-- Self-hosted Fonts & Styles -->
-  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous">
-
-  <style>
+<!-- Self-hosted Fonts & Styles -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<style>
     .epoch-card { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; margin-bottom: 1rem; }
     .epoch-clock { font-family: 'Fira Code', monospace; font-size: 1.35rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem; }
     input.epoch-input { font-family: 'Fira Code', monospace; font-size: 0.95rem; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.65rem 1rem; width: 100%; margin-bottom: 0.75rem; }
@@ -94,85 +90,76 @@ window.debounceRAF = function(fn, delay) {
   };
 };
 </script>
-  <style id="antiClickjack">body{display:none !important;}</style>
+<style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-                                                                                                                              <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" as="script">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-+wQx7aIWZh15T5V4JLVkmfXg48HMUFnV+COyXYfq0xM=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-UNLUjf+6rzKA+g/L/YLDQYQZuHas85ahiXIj/DeGk1w='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
-  <site-nav active="tools"></site-nav>
-
-  <main class="main-container">
-    <nav aria-label="Breadcrumb">
-      <ol class="breadcrumb">
-        <li><a href="/" class="breadcrumb-link">Home</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li aria-current="page" style="color:var(--text-main);">Epoch Converter</li>
-      </ol>
-    </nav>
-
-    <header class="page-header">
-      <span class="badge">DEVELOPER UTILITIES</span>
-      <h1 class="page-title">Unix Epoch Timestamp Converter</h1>
-      <p class="page-subtitle">Convert Unix timestamps (seconds & milliseconds) to human-readable dates (ISO-8601, WIB, WITA, WIT, UTC) in real-time.</p>
-    </header>
-
-    <section class="tool-box">
-      <div class="epoch-card">
-        <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.25rem;">Current Real-Time Unix Epoch (Seconds)</div>
-        <div id="liveEpoch" class="epoch-clock">Loading live timestamp...</div>
-      </div>
-
-      <div class="form-group">
-        <label for="epochInput" style="font-weight:600;">Unix Timestamp (Detik atau Milidetik)</label>
-        <input type="text" id="epochInput" class="epoch-input" placeholder="Masukkan Unix timestamp (contoh: 1775150400)" oninput="if(!this._d)this._d=debounceRAF(function(){convertTimestamp()},60);this._d()">
-      </div>
-
-      <table class="result-table">
-        <tbody>
-          <tr><th>GMT / UTC</th><td id="outUTC">—</td></tr>
-          <tr><th>WIB (UTC+7)</th><td id="outWIB">—</td></tr>
-          <tr><th>WITA (UTC+8)</th><td id="outWITA">—</td></tr>
-          <tr><th>WIT (UTC+9)</th><td id="outWIT">—</td></tr>
-          <tr><th>ISO 8601 Format</th><td id="outISO" style="color:#38bdf8;">—</td></tr>
-          <tr><th>Relative Time</th><td id="outRelative" style="color:#4ade80;">—</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="seo-content-block seo-block" style="margin-top:2rem;">
-      <h2>Tentang Unix Epoch Timestamp</h2>
-      <p>Unix Epoch Timestamp merepresentasikan jumlah detik yang telah berlalu sejak 1 Januari 1970 00:00:00 UTC (dikenal sebagai Epoch Unix). Sistem operasi berbasis POSIX dan basis data modern menggunakan format ini untuk pencatatan waktu yang konsisten tanpa masalah zona waktu.</p>
-
-      <h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
-      <div class="faq-accordion">
-        <details class="faq-card">
-          <summary class="faq-summary">Bagaimana cara membedakan timestamp detik vs milidetik?</summary>
-          <p class="faq-answer">Timestamp detik biasanya terdiri dari 10 digit angka (contoh: <code>1775150400</code>), sedangkan timestamp milidetik (JavaScript <code>Date.now()</code>) terdiri dari 13 digit angka (contoh: <code>1775150400000</code>).</p>
-        </details>
-      </div>
-    </section>
-  </main>
-
-    <footer class="footer" role="contentinfo">
-    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-      <a href="/about/" class="text-muted text-sm">About</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/tools/" class="text-muted text-sm">42 Web Tools</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blog/" class="text-muted text-sm">25 Articles</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-    </div>
-  </footer>
-
-  <script>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">Epoch Converter</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">DEVELOPER UTILITIES</span>
+<h1 class="page-title">Unix Epoch Timestamp Converter</h1>
+<p class="page-subtitle">Convert Unix timestamps (seconds &amp; milliseconds) to human-readable dates (ISO-8601, WIB, WITA, WIT, UTC) in real-time.</p>
+</header>
+<section class="tool-box">
+<div class="epoch-card">
+<div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.25rem;">Current Real-Time Unix Epoch (Seconds)</div>
+<div class="epoch-clock" id="liveEpoch">Loading live timestamp...</div>
+</div>
+<div class="form-group">
+<label for="epochInput" style="font-weight:600;">Unix Timestamp (Detik atau Milidetik)</label>
+<input class="epoch-input" id="epochInput" oninput="if(!this._d)this._d=debounceRAF(function(){convertTimestamp()},60);this._d()" placeholder="Masukkan Unix timestamp (contoh: 1775150400)" type="text"/>
+</div>
+<table class="result-table">
+<tbody>
+<tr><th>GMT / UTC</th><td id="outUTC">—</td></tr>
+<tr><th>WIB (UTC+7)</th><td id="outWIB">—</td></tr>
+<tr><th>WITA (UTC+8)</th><td id="outWITA">—</td></tr>
+<tr><th>WIT (UTC+9)</th><td id="outWIT">—</td></tr>
+<tr><th>ISO 8601 Format</th><td id="outISO" style="color:#38bdf8;">—</td></tr>
+<tr><th>Relative Time</th><td id="outRelative" style="color:#4ade80;">—</td></tr>
+</tbody>
+</table>
+</section>
+<section class="seo-content-block seo-block" style="margin-top:2rem;">
+<h2>Tentang Unix Epoch Timestamp</h2>
+<p>Unix Epoch Timestamp merepresentasikan jumlah detik yang telah berlalu sejak 1 Januari 1970 00:00:00 UTC (dikenal sebagai Epoch Unix). Sistem operasi berbasis POSIX dan basis data modern menggunakan format ini untuk pencatatan waktu yang konsisten tanpa masalah zona waktu.</p>
+<h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+<div class="faq-accordion">
+<details class="faq-card">
+<summary class="faq-summary">Bagaimana cara membedakan timestamp detik vs milidetik?</summary>
+<p class="faq-answer">Timestamp detik biasanya terdiri dari 10 digit angka (contoh: <code>1775150400</code>), sedangkan timestamp milidetik (JavaScript <code>Date.now()</code>) terdiri dari 13 digit angka (contoh: <code>1775150400000</code>).</p>
+</details>
+</div>
+</section>
+</main>
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">42 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">25 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
+<script>
     function updateLiveClock() {
       const nowSec = Math.floor(Date.now() / 1000);
       document.getElementById('liveEpoch').textContent = nowSec;
@@ -232,6 +219,6 @@ window.debounceRAF = function(fn, delay) {
     // Auto convert default
     document.addEventListener('DOMContentLoaded', convertTimestamp);
   </script>
-  <script src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" defer></script>
+<script defer="" src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
 </body>
 </html>

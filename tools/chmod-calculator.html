@@ -1,35 +1,33 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
-  <meta charset="UTF-8">
-  <link rel="preload" href="/assets/fonts/outfit-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <meta name="theme-color" content="#09090b">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Linux Permissions &amp; Chmod Calculator — Offline Security Utility | Zyekh</title>
-  <meta name="description" content="Interactive Linux file permission and chmod octal calculator. Calculate 3-digit and 4-digit octal permissions (rwx, SUID, SGID, Sticky Bit) 100% client-side in browser.">
-  <meta name="keywords" content="chmod calculator, linux permissions, octal chmod, suid sgid sticky bit, rwx calculator, file permissions, sysadmin tool">
-  <meta name="author" content="Zyekh Abdul Qadir Jailani">
-  <link rel="canonical" href="https://zyekh.com/tools/chmod-calculator.html">
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="/assets/icons/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
-  <link rel="manifest" href="/manifest.json">
-
-  <!-- Open Graph -->
-  <meta property="og:site_name" content="zyekh.com">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Linux Permissions &amp; Chmod Calculator — Offline Security Utility | Zyekh">
-  <meta property="og:description" content="Calculate Linux file permissions, 3-digit and 4-digit octal notation (rwx, SUID, SGID, Sticky Bit) 100% offline &amp; client-side in browser.">
-  <meta property="og:url" content="https://zyekh.com/tools/chmod-calculator.html">
-  <meta property="og:image" content="https://zyekh.com/assets/img/og-card.jpg">
-  <meta name="twitter:image" content="https://zyekh.com/assets/img/og-card.jpg">
-
-  <!-- Schema.org JSON-LD -->
-  <script type="application/ld+json">
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Linux Permissions &amp; Chmod Calculator — Offline Security Utility | Zyekh</title>
+<meta content="Interactive Linux file permission and chmod octal calculator. Calculate 3-digit and 4-digit octal permissions (rwx, SUID, SGID, Sticky Bit) 100% client-side in browser." name="description"/>
+<meta content="chmod calculator, linux permissions, octal chmod, suid sgid sticky bit, rwx calculator, file permissions, sysadmin tool" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/chmod-calculator.html" rel="canonical"/>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Open Graph -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="website" property="og:type"/>
+<meta content="Linux Permissions &amp; Chmod Calculator — Offline Security Utility | Zyekh" property="og:title"/>
+<meta content="Calculate Linux file permissions, 3-digit and 4-digit octal notation (rwx, SUID, SGID, Sticky Bit) 100% offline &amp; client-side in browser." property="og:description"/>
+<meta content="https://zyekh.com/tools/chmod-calculator.html" property="og:url"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-chmod-calculator-dark-landscape.png" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-chmod-calculator-dark-landscape.png" name="twitter:image"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -65,14 +63,12 @@
     ]
   }
   </script>
-
-  <!-- Self-hosted Fonts & Styles -->
-  <link rel="preload" href="/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous">
-  <script defer src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
-
-  <style>
+<!-- Self-hosted Fonts & Styles -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous"></script>
+<style>
     .chmod-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
     .chmod-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.25rem; }
     .chmod-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-main); border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
@@ -99,134 +95,123 @@ window.debounceRAF = function(fn, delay) {
   };
 };
 </script>
-  <style id="antiClickjack">body{display:none !important;}</style>
+<style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-                                                                                                                              <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=9a1bbb05" integrity="sha384-utzu06gazS+K//u/Ck3T8Xt6Xf50HxwMa+yvuzfIGNMk+CNk+XRV7J1k3/5RvwJE" crossorigin="anonymous" as="script">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-+wQx7aIWZh15T5V4JLVkmfXg48HMUFnV+COyXYfq0xM=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-MTWGPQs8+0ksbot3Yi6PrxCGTCDaxe7+PF5d6mkWU+w='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
-  <site-nav active="tools"></site-nav>
-
-  <main class="main-container">
-    <nav aria-label="Breadcrumb">
-      <ol class="breadcrumb">
-        <li><a href="/" class="breadcrumb-link">Home</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li><a href="/tools/" class="breadcrumb-link">Tools</a></li>
-        <li class="breadcrumb-sep" aria-hidden="true">/</li>
-        <li aria-current="page" style="color:var(--text-main);">Chmod Calculator</li>
-      </ol>
-    </nav>
-
-    <header class="page-header">
-      <span class="badge">SECURITY UTILITIES</span>
-      <h1 class="page-title">Linux Permissions &amp; Chmod Calculator</h1>
-      <p class="page-subtitle">Interactive Linux permission matrix. Calculate 3-digit and 4-digit octal permissions (rwx, SUID, SGID, Sticky Bit) 100% offline &amp; client-side.</p>
-    </header>
-
-    <section class="tool-box">
-      <!-- Quick Presets -->
-      <div style="margin-bottom: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-        <span style="font-size:0.85rem; color:var(--text-muted); align-self:center; margin-right:0.5rem;">Presets:</span>
-        <button type="button" class="btn-action" onclick="setPreset('644')">644 (Standard File)</button>
-        <button type="button" class="btn-action" onclick="setPreset('755')">755 (Exec/Dir)</button>
-        <button type="button" class="btn-action" onclick="setPreset('600')">600 (Private Key)</button>
-        <button type="button" class="btn-action" onclick="setPreset('700')">700 (Private Dir)</button>
-        <button type="button" class="btn-action" onclick="setPreset('4755')">4755 (SUID Exec)</button>
-        <button type="button" class="btn-action" onclick="setPreset('1777')">1777 (Sticky /tmp)</button>
-      </div>
-
-      <!-- Interactive Checkbox Grid -->
-      <div class="chmod-grid">
-        <!-- Special Bits -->
-        <div class="chmod-card">
-          <div class="chmod-title">Special Flags</div>
-          <label class="perm-check"><input type="checkbox" id="suid" onchange="calculateChmod()"> SUID (Set User ID = 4)</label>
-          <label class="perm-check"><input type="checkbox" id="sgid" onchange="calculateChmod()"> SGID (Set Group ID = 2)</label>
-          <label class="perm-check"><input type="checkbox" id="sticky" onchange="calculateChmod()"> Sticky Bit (1)</label>
-        </div>
-
-        <!-- Owner -->
-        <div class="chmod-card">
-          <div class="chmod-title">Owner (User)</div>
-          <label class="perm-check"><input type="checkbox" id="u_r" checked onchange="calculateChmod()"> Read (r = 4)</label>
-          <label class="perm-check"><input type="checkbox" id="u_w" checked onchange="calculateChmod()"> Write (w = 2)</label>
-          <label class="perm-check"><input type="checkbox" id="u_x" onchange="calculateChmod()"> Execute (x = 1)</label>
-        </div>
-
-        <!-- Group -->
-        <div class="chmod-card">
-          <div class="chmod-title">Group</div>
-          <label class="perm-check"><input type="checkbox" id="g_r" checked onchange="calculateChmod()"> Read (r = 4)</label>
-          <label class="perm-check"><input type="checkbox" id="g_w" onchange="calculateChmod()"> Write (w = 2)</label>
-          <label class="perm-check"><input type="checkbox" id="g_x" onchange="calculateChmod()"> Execute (x = 1)</label>
-        </div>
-
-        <!-- Others -->
-        <div class="chmod-card">
-          <div class="chmod-title">Others (World)</div>
-          <label class="perm-check"><input type="checkbox" id="o_r" checked onchange="calculateChmod()"> Read (r = 4)</label>
-          <label class="perm-check"><input type="checkbox" id="o_w" onchange="calculateChmod()"> Write (w = 2)</label>
-          <label class="perm-check"><input type="checkbox" id="o_x" onchange="calculateChmod()"> Execute (x = 1)</label>
-        </div>
-      </div>
-
-      <!-- Calculated Results Box -->
-      <div class="result-display">
-        <div class="result-row">
-          <span class="result-label">Octal Notation (3-digit):</span>
-          <span class="result-val" id="octal3">644</span>
-        </div>
-        <div class="result-row">
-          <span class="result-label">Octal Notation (4-digit):</span>
-          <span class="result-val" id="octal4">0644</span>
-        </div>
-        <div class="result-row">
-          <span class="result-label">Symbolic String (ls -l):</span>
-          <span class="result-val" id="symbolic">-rw-r--r--</span>
-        </div>
-        <div class="result-row">
-          <span class="result-label">CLI Command Example:</span>
-          <span class="result-val" id="command">chmod 644 filename</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq-section" style="margin-top:2.5rem;">
-      <h2>Frequently Asked Questions (FAQ)</h2>
-      <details>
-        <summary>What is the difference between 3-digit and 4-digit chmod octal notation?</summary>
-        <p style="padding:1rem 1.25rem; margin:0; color:var(--text-muted);">
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">Chmod Calculator</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">SECURITY UTILITIES</span>
+<h1 class="page-title">Linux Permissions &amp; Chmod Calculator</h1>
+<p class="page-subtitle">Interactive Linux permission matrix. Calculate 3-digit and 4-digit octal permissions (rwx, SUID, SGID, Sticky Bit) 100% offline &amp; client-side.</p>
+</header>
+<section class="tool-box">
+<!-- Quick Presets -->
+<div style="margin-bottom: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+<span style="font-size:0.85rem; color:var(--text-muted); align-self:center; margin-right:0.5rem;">Presets:</span>
+<button class="btn-action" onclick="setPreset('644')" type="button">644 (Standard File)</button>
+<button class="btn-action" onclick="setPreset('755')" type="button">755 (Exec/Dir)</button>
+<button class="btn-action" onclick="setPreset('600')" type="button">600 (Private Key)</button>
+<button class="btn-action" onclick="setPreset('700')" type="button">700 (Private Dir)</button>
+<button class="btn-action" onclick="setPreset('4755')" type="button">4755 (SUID Exec)</button>
+<button class="btn-action" onclick="setPreset('1777')" type="button">1777 (Sticky /tmp)</button>
+</div>
+<!-- Interactive Checkbox Grid -->
+<div class="chmod-grid">
+<!-- Special Bits -->
+<div class="chmod-card">
+<div class="chmod-title">Special Flags</div>
+<label class="perm-check"><input id="suid" onchange="calculateChmod()" type="checkbox"/> SUID (Set User ID = 4)</label>
+<label class="perm-check"><input id="sgid" onchange="calculateChmod()" type="checkbox"/> SGID (Set Group ID = 2)</label>
+<label class="perm-check"><input id="sticky" onchange="calculateChmod()" type="checkbox"/> Sticky Bit (1)</label>
+</div>
+<!-- Owner -->
+<div class="chmod-card">
+<div class="chmod-title">Owner (User)</div>
+<label class="perm-check"><input checked="" id="u_r" onchange="calculateChmod()" type="checkbox"/> Read (r = 4)</label>
+<label class="perm-check"><input checked="" id="u_w" onchange="calculateChmod()" type="checkbox"/> Write (w = 2)</label>
+<label class="perm-check"><input id="u_x" onchange="calculateChmod()" type="checkbox"/> Execute (x = 1)</label>
+</div>
+<!-- Group -->
+<div class="chmod-card">
+<div class="chmod-title">Group</div>
+<label class="perm-check"><input checked="" id="g_r" onchange="calculateChmod()" type="checkbox"/> Read (r = 4)</label>
+<label class="perm-check"><input id="g_w" onchange="calculateChmod()" type="checkbox"/> Write (w = 2)</label>
+<label class="perm-check"><input id="g_x" onchange="calculateChmod()" type="checkbox"/> Execute (x = 1)</label>
+</div>
+<!-- Others -->
+<div class="chmod-card">
+<div class="chmod-title">Others (World)</div>
+<label class="perm-check"><input checked="" id="o_r" onchange="calculateChmod()" type="checkbox"/> Read (r = 4)</label>
+<label class="perm-check"><input id="o_w" onchange="calculateChmod()" type="checkbox"/> Write (w = 2)</label>
+<label class="perm-check"><input id="o_x" onchange="calculateChmod()" type="checkbox"/> Execute (x = 1)</label>
+</div>
+</div>
+<!-- Calculated Results Box -->
+<div class="result-display">
+<div class="result-row">
+<span class="result-label">Octal Notation (3-digit):</span>
+<span class="result-val" id="octal3">644</span>
+</div>
+<div class="result-row">
+<span class="result-label">Octal Notation (4-digit):</span>
+<span class="result-val" id="octal4">0644</span>
+</div>
+<div class="result-row">
+<span class="result-label">Symbolic String (ls -l):</span>
+<span class="result-val" id="symbolic">-rw-r--r--</span>
+</div>
+<div class="result-row">
+<span class="result-label">CLI Command Example:</span>
+<span class="result-val" id="command">chmod 644 filename</span>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="faq-section" style="margin-top:2.5rem;">
+<h2>Frequently Asked Questions (FAQ)</h2>
+<details>
+<summary>What is the difference between 3-digit and 4-digit chmod octal notation?</summary>
+<p style="padding:1rem 1.25rem; margin:0; color:var(--text-muted);">
           3-digit octal notation (e.g., 755) specifies permissions for Owner, Group, and Others. 4-digit octal notation (e.g., 0755 or 4755) includes the leading special bit (SUID=4, SGID=2, Sticky Bit=1).
         </p>
-      </details>
-      <details>
-        <summary>What is SUID and SGID in Linux permissions?</summary>
-        <p style="padding:1rem 1.25rem; margin:0; color:var(--text-muted);">
+</details>
+<details>
+<summary>What is SUID and SGID in Linux permissions?</summary>
+<p style="padding:1rem 1.25rem; margin:0; color:var(--text-muted);">
           SUID (Set User ID) allows a binary file to execute with the permissions of the file owner. SGID (Set Group ID) executes the binary with group permissions or enforces default group inheritance on directory contents.
         </p>
-      </details>
-    </section>
-  </main>
-
-    <footer class="footer" role="contentinfo">
-    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-      <a href="/about/" class="text-muted text-sm">About</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/tools/" class="text-muted text-sm">42 Web Tools</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blog/" class="text-muted text-sm">25 Articles</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-    </div>
-  </footer>
-
-  <script>
+</details>
+</section>
+</main>
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">42 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">25 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
+<script>
     function calculateChmod() {
       // Special bits
       const suid = document.getElementById('suid').checked ? 4 : 0;
