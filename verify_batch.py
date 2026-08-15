@@ -394,12 +394,24 @@ def verify_all_articles():
         print(f"[FAIL] Exception during localhost smoke test execution: {e}")
         failures += 1
 
+    # Check 22: Automated DOM Accessibility & WCAG 2.2 AA Contrast QA Check
+    print("\n[ Check 22 ] Automated DOM Accessibility & WCAG 2.2 AA Contrast Audit...")
+    try:
+        from scripts.audit_accessibility import run_accessibility_audit
+        a11y_passed = run_accessibility_audit(verbose=False)
+        if not a11y_passed:
+            print("[FAIL] Accessibility or color contrast violations detected.")
+            failures += 1
+    except Exception as e:
+        print(f"[FAIL] Exception during accessibility audit execution: {e}")
+        failures += 1
+
     print("\n============================================================")
     if failures > 0:
         print(f"FAILED: {failures} QA audit violations detected across system.")
         sys.exit(1)
     else:
-        print(f"SUCCESS: All {len(articles)} articles, assets, and live server passed 100% QA audit (Checks 1-21)!")
+        print(f"SUCCESS: All {len(articles)} articles, assets, and live server passed 100% QA audit (Checks 1-22)!")
         print("============================================================")
 
 if __name__ == "__main__":

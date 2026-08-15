@@ -5,7 +5,7 @@
   "description": "Structured machine-readable tool catalog and parameter schemas for Browser AI Agents & LLMs.",
   "platform": "https://zyekh.com",
   "total_tools": 51,
-  "updated_at": "2026-08-15T21:53:32Z",
+  "updated_at": "2026-08-15T21:58:05Z",
   "tools": [
     {
       "id": "ai-token",
@@ -843,7 +843,7 @@
           "name": "formatSelect",
           "type": "string",
           "input_element": "select",
-          "description": "Formatselect",
+          "description": "Output Format",
           "enum": [
             "image/webp",
             "image/jpeg",
@@ -854,7 +854,7 @@
           "name": "qualityRange",
           "type": "string",
           "input_element": "range",
-          "description": "Qualityrange"
+          "description": "Compression Quality (WebP/JPG only)"
         }
       ]
     },
@@ -2224,7 +2224,7 @@
           "name": "txtServerPubKey",
           "type": "string",
           "input_element": "text",
-          "description": "Txtserverpubkey"
+          "description": "Server Public Key (Auto-derived X25519):"
         },
         {
           "name": "selActiveClient",

@@ -135,7 +135,7 @@ window.debounceRAF = function(fn, delay) {
 <p class="page-subtitle">Free high-definition QR code generator with custom sizing and instant image rendering.</p>
 </header>
 <div class="tool-box">
-<p><textarea cols="40" id="in" oninput="if(!this._d)this._d=debounceRAF(function(){update()},60);this._d()" placeholder="Teks atau URL…" rows="4"></textarea></p>
+<p><textarea aria-label="Input text or URL for QR code generation" cols="40" id="in" oninput="if(!this._d)this._d=debounceRAF(function(){update()},60);this._d()" placeholder="Teks atau URL…" rows="4"></textarea></p>
 <p id="qr"></p>
 <p><button disabled="" id="dl" onclick="download()">Unduh PNG</button></p>
 </div>

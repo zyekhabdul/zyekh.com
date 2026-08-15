@@ -143,8 +143,8 @@ window.debounceRAF = function(fn, delay) {
 </p>
 <div id="panjang">
 <p>
-<input id="p-in" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" panjang')"="" type="number" value="1"/>
-<select id="p-from" onchange="conv('panjang')">
+<input aria-label="Nilai input panjang" id="p-in" oninput="if(!this._d)this._d=debounceRAF(function(){conv('panjang')},60);this._d()" type="number" value="1"/>
+<select aria-label="Satuan asal panjang" id="p-from" onchange="conv('panjang')">
 <option value="m">meter</option>
 <option value="km">kilometer</option>
 <option value="cm">sentimeter</option>
@@ -156,8 +156,8 @@ window.debounceRAF = function(fn, delay) {
 </p>
 <p><button onclick="swap('p')" type="button">⇅ tukar</button></p>
 <p>
-<input id="p-out" readonly="" type="number"/>
-<select id="p-to" onchange="conv('panjang')">
+<input aria-label="Hasil konversi panjang" id="p-out" readonly="" type="number"/>
+<select aria-label="Satuan tujuan panjang" id="p-to" onchange="conv('panjang')">
 <option value="km">kilometer</option>
 <option selected="" value="m">meter</option>
 <option value="cm">sentimeter</option>
@@ -170,8 +170,8 @@ window.debounceRAF = function(fn, delay) {
 </div>
 <div hidden="" id="berat">
 <p>
-<input berat')"="" id="b-in" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" type="number" value="1"/>
-<select id="b-from" onchange="conv('berat')">
+<input aria-label="Nilai input berat" id="b-in" oninput="if(!this._d)this._d=debounceRAF(function(){conv('berat')},60);this._d()" type="number" value="1"/>
+<select aria-label="Satuan asal berat" id="b-from" onchange="conv('berat')">
 <option value="kg">kilogram</option>
 <option value="g">gram</option>
 <option value="mg">miligram</option>
@@ -181,8 +181,8 @@ window.debounceRAF = function(fn, delay) {
 </p>
 <p><button onclick="swap('b')" type="button">⇅ tukar</button></p>
 <p>
-<input id="b-out" readonly="" type="number"/>
-<select id="b-to" onchange="conv('berat')">
+<input aria-label="Hasil konversi berat" id="b-out" readonly="" type="number"/>
+<select aria-label="Satuan tujuan berat" id="b-to" onchange="conv('berat')">
 <option value="g">gram</option>
 <option selected="" value="kg">kilogram</option>
 <option value="mg">miligram</option>
@@ -193,8 +193,8 @@ window.debounceRAF = function(fn, delay) {
 </div>
 <div hidden="" id="suhu">
 <p>
-<input id="t-in" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" suhu')"="" type="number" value="0"/>
-<select id="t-from" onchange="conv('suhu')">
+<input aria-label="Nilai input suhu" id="t-in" oninput="if(!this._d)this._d=debounceRAF(function(){conv('suhu')},60);this._d()" type="number" value="0"/>
+<select aria-label="Skala asal suhu" id="t-from" onchange="conv('suhu')">
 <option value="C">°C</option>
 <option value="F">°F</option>
 <option value="K">Kelvin</option>
@@ -202,8 +202,8 @@ window.debounceRAF = function(fn, delay) {
 </p>
 <p><button onclick="swap('t')" type="button">⇅ tukar</button></p>
 <p>
-<input id="t-out" readonly="" type="number"/>
-<select id="t-to" onchange="conv('suhu')">
+<input aria-label="Hasil konversi suhu" id="t-out" readonly="" type="number"/>
+<select aria-label="Skala tujuan suhu" id="t-to" onchange="conv('suhu')">
 <option value="F">°F</option>
 <option selected="" value="C">°C</option>
 <option value="K">Kelvin</option>
@@ -212,14 +212,14 @@ window.debounceRAF = function(fn, delay) {
 </div>
 <div hidden="" id="uang">
 <p>Atur kurs manual (1 unit mata uang asing = Rp):</p>
-<p><label>USD <input id="rate-usd" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" step="100" type="number" uang')"="" value="16000"/></label></p>
-<p><label>EUR <input id="rate-eur" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" step="100" type="number" uang')"="" value="17500"/></label></p>
-<p><label>SGD <input id="rate-sgd" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" step="100" type="number" uang')"="" value="12000"/></label></p>
-<p><label>JPY <input id="rate-jpy" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" step="1" type="number" uang')"="" value="105"/></label></p>
+<p><label>USD <input aria-label="Kurs USD ke IDR" id="rate-usd" oninput="if(!this._d)this._d=debounceRAF(function(){conv('uang')},60);this._d()" step="100" type="number" value="16000"/></label></p>
+<p><label>EUR <input aria-label="Kurs EUR ke IDR" id="rate-eur" oninput="if(!this._d)this._d=debounceRAF(function(){conv('uang')},60);this._d()" step="100" type="number" value="17500"/></label></p>
+<p><label>SGD <input aria-label="Kurs SGD ke IDR" id="rate-sgd" oninput="if(!this._d)this._d=debounceRAF(function(){conv('uang')},60);this._d()" step="100" type="number" value="12000"/></label></p>
+<p><label>JPY <input aria-label="Kurs JPY ke IDR" id="rate-jpy" oninput="if(!this._d)this._d=debounceRAF(function(){conv('uang')},60);this._d()" step="1" type="number" value="105"/></label></p>
 <hr/>
 <p>
-<input id="u-in" oninput="if(!this._d)this._d=debounceRAF(function(){conv(},60);this._d()" type="number" uang')"="" value="100"/>
-<select id="u-from" onchange="conv('uang')">
+<input aria-label="Jumlah uang input" id="u-in" oninput="if(!this._d)this._d=debounceRAF(function(){conv('uang')},60);this._d()" type="number" value="100"/>
+<select aria-label="Mata uang asal" id="u-from" onchange="conv('uang')">
 <option value="IDR">IDR</option>
 <option value="USD">USD</option>
 <option value="EUR">EUR</option>
@@ -229,8 +229,8 @@ window.debounceRAF = function(fn, delay) {
 </p>
 <p><button onclick="swap('u')" type="button">⇅ tukar</button></p>
 <p>
-<input id="u-out" readonly="" type="number"/>
-<select id="u-to" onchange="conv('uang')">
+<input aria-label="Hasil konversi mata uang" id="u-out" readonly="" type="number"/>
+<select aria-label="Mata uang tujuan" id="u-to" onchange="conv('uang')">
 <option value="USD">USD</option>
 <option selected="" value="IDR">IDR</option>
 <option value="EUR">EUR</option>

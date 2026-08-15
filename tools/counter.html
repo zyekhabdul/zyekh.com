@@ -135,7 +135,7 @@ window.debounceRAF = function(fn, delay) {
 <p class="page-subtitle">Real-time word, character, sentence, paragraph, and reading time counter.</p>
 </header>
 <div class="tool-box">
-<p><textarea cols="50" id="in" oninput="if(!this._d)this._d=debounceRAF(function(){update()},60);this._d()" placeholder="Tempel atau ketik teks di sini…" rows="10"></textarea></p>
+<p><textarea aria-label="Input text to count words and characters" cols="50" id="in" oninput="if(!this._d)this._d=debounceRAF(function(){update()},60);this._d()" placeholder="Tempel atau ketik teks di sini…" rows="10"></textarea></p>
 <table class="stats-table">
 <tr><th>Kata</th><td id="words">0</td></tr>
 <tr><th>Karakter (dengan spasi)</th><td id="chars">0</td></tr>

@@ -136,7 +136,7 @@ window.debounceRAF = function(fn, delay) {
 </header>
 <div class="tool-box">
 <p>
-<input id="picker" oninput="if(!this._d)this._d=debounceRAF(function(){fromPicker()},60);this._d()" type="color"/>
+<input aria-label="Color visual picker" id="picker" oninput="if(!this._d)this._d=debounceRAF(function(){fromPicker()},60);this._d()" type="color"/>
 <label for="hex">Hex</label>
 <input id="hex" maxlength="7" oninput="if(!this._d)this._d=debounceRAF(function(){fromHex()},60);this._d()" placeholder="#ff6600" type="text"/>
 </p>

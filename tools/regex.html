@@ -121,9 +121,9 @@ window.debounceRAF = function(fn, delay) {
 <label for="regexPattern" style="font-weight:600;display:block;margin-bottom:0.4rem;">Regular Expression &amp; Flags</label>
 <div class="regex-input-wrapper">
 <span style="font-family:'Fira Code',monospace;font-size:1.1rem;color:var(--text-muted);">/</span>
-<input class="regex-pattern" id="regexPattern" oninput="if(!this._d)this._d=debounceRAF(function(){testRegEx()},60);this._d()" placeholder="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" type="text" value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/>
+<input aria-label="Regular expression pattern" class="regex-pattern" id="regexPattern" oninput="if(!this._d)this._d=debounceRAF(function(){testRegEx()},60);this._d()" placeholder="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" type="text" value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/>
 <span style="font-family:'Fira Code',monospace;font-size:1.1rem;color:var(--text-muted);">/</span>
-<input class="regex-flags" id="regexFlags" oninput="if(!this._d)this._d=debounceRAF(function(){testRegEx()},60);this._d()" placeholder="gi" type="text" value="g"/>
+<input aria-label="Regular expression flags" class="regex-flags" id="regexFlags" oninput="if(!this._d)this._d=debounceRAF(function(){testRegEx()},60);this._d()" placeholder="gi" type="text" value="g"/>
 </div>
 <label for="regexTestText" style="font-weight:600;display:block;margin-bottom:0.4rem;">Test String</label>
 <textarea class="regex-test" id="regexTestText" oninput="if(!this._d)this._d=debounceRAF(function(){testRegEx()},60);this._d()" placeholder="Type or paste sample text here...">Contact support at admin@zyekh.com or contact@security.org for assistance. Invalid email: user@domain.</textarea>

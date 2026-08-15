@@ -156,7 +156,7 @@
 
         <!-- Node Add Controls -->
         <div class="toolbar-group">
-          <select id="selNodeType" style="font-size: 0.82rem; padding: 0.35rem 0.5rem; background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-main); border-radius: var(--radius-sm);">
+          <select aria-label="Node archetype category" id="selNodeType" style="font-size: 0.82rem; padding: 0.35rem 0.5rem; background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-main); border-radius: var(--radius-sm);">
             <option value="ingress">[ INGRESS ] Edge Gateway</option>
             <option value="proxy">[ PROXY ] Envoy / Envoy Wasm</option>
             <option value="identity">[ IDENTITY ] SPIFFE / Vault CA</option>
@@ -164,7 +164,7 @@
             <option value="service">[ SERVICE ] Backend Microservice</option>
             <option value="db">[ DATABASE ] Encrypted Storage</option>
           </select>
-          <input id="txtNodeName" placeholder="Node Name (e.g. Core API)" style="font-size: 0.82rem; padding: 0.35rem 0.6rem; background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-main); border-radius: var(--radius-sm); width: 140px;" type="text"/>
+          <input aria-label="Node name or identifier" id="txtNodeName" placeholder="Node Name (e.g. Core API)" style="font-size: 0.82rem; padding: 0.35rem 0.6rem; background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-main); border-radius: var(--radius-sm); width: 140px;" type="text"/>
           <button class="btn-tool" id="btnAddNode" style="background: var(--text-main); color: var(--bg-main);" type="button">+ Add Node</button>
           <button class="btn-tool" id="btnResetCanvas" type="button">Reset</button>
         </div>

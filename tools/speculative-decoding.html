@@ -79,7 +79,7 @@
 <span>Draft Acceptance Rate (α):</span>
 <span class="sim-slider-val" id="valAlpha">75%</span>
 </div>
-<input id="inputAlpha" max="95" min="10" step="1" type="range" value="75"/>
+<input aria-label="Draft Acceptance Rate alpha percentage" id="inputAlpha" max="95" min="10" step="1" type="range" value="75"/>
 <span class="text-muted-xs">Probability that target model accepts a draft token.</span>
 </div>
 <div class="sim-slider-group">
@@ -87,7 +87,7 @@
 <span>Lookahead Window (K):</span>
 <span class="sim-slider-val" id="valK">5 tokens</span>
 </div>
-<input id="inputK" max="10" min="1" step="1" type="range" value="5"/>
+<input aria-label="Lookahead window tokens count K" id="inputK" max="10" min="1" step="1" type="range" value="5"/>
 <span class="text-muted-xs">Number of tokens guessed by draft model per step.</span>
 </div>
 <div class="sim-slider-group">
@@ -95,7 +95,7 @@
 <span>Draft Latency (t_draft):</span>
 <span class="sim-slider-val" id="valTd">5 ms</span>
 </div>
-<input id="inputTd" max="20" min="1" step="1" type="range" value="5"/>
+<input aria-label="Draft model latency in milliseconds" id="inputTd" max="20" min="1" step="1" type="range" value="5"/>
 <span class="text-muted-xs">Time taken by draft model to generate 1 token.</span>
 </div>
 <div class="sim-slider-group">
@@ -103,7 +103,7 @@
 <span>Target Latency (t_target):</span>
 <span class="sim-slider-val" id="valTt">45 ms</span>
 </div>
-<input id="inputTt" max="150" min="20" step="5" type="range" value="45"/>
+<input aria-label="Target model latency in milliseconds" id="inputTt" max="150" min="20" step="5" type="range" value="45"/>
 <span class="text-muted-xs">Time taken by target model to verify 1 batch of tokens.</span>
 </div>
 <button class="btn-primary" id="btnResimulate" style="margin-top: 0.5rem;" type="button">[ SIMULATE STEP ] Generate Random Stream</button>

@@ -252,7 +252,7 @@ window.debounceRAF = function(fn, delay) {
 <h2>Penerjemah Cron (Cron Explainer)</h2>
 <div class="form-grid">
 <div class="form-group">
-<input id="cronInput" oninput="if(!this._d)this._d=debounceRAF(function(){processCron()},60);this._d()" placeholder="* * * * *" type="text" value="*/5 * * * *"/>
+<input aria-label="Cron schedule expression" id="cronInput" oninput="if(!this._d)this._d=debounceRAF(function(){processCron()},60);this._d()" placeholder="* * * * *" type="text" value="*/5 * * * *"/>
 <div class="error-msg" id="cronError">Format cron tidak valid. Harap gunakan 5 bagian (misal: * * * * *).</div>
 </div>
 <div class="cron-explanation" id="cronExplanation">
