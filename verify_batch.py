@@ -2,6 +2,9 @@
 import glob
 import os
 import sys
+import json
+import urllib.parse
+from pathlib import Path
 from bs4 import BeautifulSoup
 
 def verify_all_articles():
@@ -285,14 +288,64 @@ def verify_all_articles():
     if ledger_failures > 0:
         failures += ledger_failures
 
+    # Check 20: Site-Wide Internal Hyperlink & DOM Anchor Auditor
+    print("\n[AUDIT] Running Check 20: Site-Wide Internal Hyperlink & DOM Anchor Auditor...")
+    link_failures = 0
+    import urllib.parse
+    all_html_files = [f for f in glob.glob("**/*.html", recursive=True) if "node_modules" not in f]
+    for fpath in all_html_files:
+        try:
+            f_content = open(fpath, encoding='utf-8', errors='ignore').read()
+            f_soup = BeautifulSoup(f_content, 'html.parser')
+            local_dom_ids = set(el['id'] for el in f_soup.find_all(id=True))
+            for a in f_soup.find_all('a', href=True):
+                href = a['href'].strip()
+                if not href or href.startswith(('http://', 'https://', 'mailto:', 'tel:', 'javascript:')):
+                    continue
+                if href.startswith('#'):
+                    target_id = href[1:]
+                    if target_id and target_id not in local_dom_ids:
+                        print(f"[FAIL] {fpath}: Broken local anchor #{target_id}")
+                        link_failures += 1
+                    continue
+                parsed = urllib.parse.urlparse(href)
+                path = parsed.path
+                fragment = parsed.fragment
+                if path.startswith('/'):
+                    rel_p = path.lstrip('/')
+                else:
+                    rel_p = str(Path(fpath).parent / path)
+                if rel_p == '' or rel_p.endswith('/'):
+                    target_f = Path(rel_p) / 'index.html'
+                else:
+                    target_f = Path(rel_p)
+                    if not target_f.exists() and (Path(rel_p) / 'index.html').exists():
+                        target_f = Path(rel_p) / 'index.html'
+                if not target_f.exists():
+                    print(f"[FAIL] {fpath}: Broken link to {href} (file {target_f} missing)")
+                    link_failures += 1
+                elif fragment:
+                    t_content = target_f.read_text(encoding='utf-8', errors='ignore')
+                    t_soup = BeautifulSoup(t_content, 'html.parser')
+                    t_ids = set(el['id'] for el in t_soup.find_all(id=True))
+                    if fragment not in t_ids:
+                        print(f"[FAIL] {fpath}: Broken link anchor {href} (#{fragment} missing in {target_f})")
+                        link_failures += 1
+        except Exception as e:
+            print(f"[FAIL] {fpath}: Error auditing links: {e}")
+            link_failures += 1
+    if link_failures > 0:
+        failures += link_failures
+
     print("\n============================================================")
     if failures > 0:
         print(f"FAILED: {failures} QA audit violations detected across system.")
         sys.exit(1)
     else:
-        print(f"SUCCESS: All {len(articles)} articles and system assets passed 100% QA audit (Checks 1-19)!")
+        print(f"SUCCESS: All {len(articles)} articles and system assets passed 100% QA audit (Checks 1-20)!")
         print("============================================================")
 
 if __name__ == "__main__":
     verify_all_articles()
+
 
