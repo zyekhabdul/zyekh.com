@@ -276,6 +276,12 @@
     "type": "Tool"
   },
   {
+    "title": "WebGPU Shader & Inference Latency Profiler",
+    "desc": "Benchmark local GPU compute capabilities using native WebGPU API. Measure WGSL shader compilation latency, matrix multiplication GFLOPS throughput, and VRAM memory bandwidth 100% offline.",
+    "url": "/tools/webgpu-profiler.html",
+    "type": "Tool"
+  },
+  {
     "title": "Zakat Calculator",
     "desc": "Kalkulator zakat online: zakat maal (harta) dan zakat penghasilan. Nisab berdasarkan harga emas, perhitungan 2,5%.",
     "url": "/tools/zakat.html",

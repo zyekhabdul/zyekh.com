@@ -19,6 +19,7 @@ CATEGORY_MAP = {
     "llm": "AI & LLM Inference",
     "token": "AI & LLM Inference",
     "speculative": "AI & LLM Inference",
+    "webgpu": "AI & LLM Inference",
     "ebpf": "Security & Linux Systems",
     "chmod": "Security & Linux Systems",
     "linux-hardening": "Security & Linux Systems",

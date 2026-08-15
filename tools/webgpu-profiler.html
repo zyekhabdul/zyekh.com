@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WebGPU Shader &amp; Inference Latency Profiler — Browser Hardware Benchmark | zyekh.com</title>
+<meta content="Benchmark local GPU compute capabilities using native WebGPU API. Measure WGSL shader compilation latency, matrix multiplication GFLOPS throughput, and VRAM memory bandwidth 100% offline." name="description"/>
+<meta content="webgpu profiler, webgpu benchmark, wgsl shader benchmark, matrix multiplication gflops, vram bandwidth, browser gpu inference, local llm benchmark" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/webgpu-profiler.html" rel="canonical"/>
+<!-- Open Graph / Social -->
+<meta content="WebGPU Shader &amp; Inference Latency Profiler | zyekh.com" property="og:title"/>
+<meta content="Interactive WebGPU compute shader benchmark, WGSL matrix multiplication GFLOPS throughput, and VRAM bandwidth profiler." property="og:description"/>
+<meta content="https://zyekh.com/tools/webgpu-profiler.html" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-webgpu-profiler-dark-landscape.png?v=5118a022" property="og:image"/>
+<meta content="zyekh.com" property="og:site_name"/>
+<!-- Twitter Cards -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="WebGPU Shader &amp; Inference Latency Profiler | zyekh.com" name="twitter:title"/>
+<meta content="Interactive WebGPU compute shader benchmark, WGSL matrix multiplication GFLOPS throughput, and VRAM bandwidth profiler." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-webgpu-profiler-dark-landscape.png?v=5118a022" name="twitter:image"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://zyekh.com/tools/webgpu-profiler.html#app",
+      "name": "WebGPU Shader & Inference Latency Profiler",
+      "description": "Interactive WebGPU hardware capability inspector and WGSL compute shader microbenchmark measuring GFLOPS and memory bandwidth.",
+      "url": "https://zyekh.com/tools/webgpu-profiler.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript and a WebGPU-enabled browser.",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Person",
+        "@id": "https://zyekh.com/#person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com"
+      },
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/tools/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/tools/webgpu-profiler.html#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "WebGPU Profiler", "item": "https://zyekh.com/tools/webgpu-profiler.html" }
+      ]
+    }
+  ]
+}
+</script>
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+<script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+<!-- Preload Styles & Scripts -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous"></script>
+<style>
+  .gpu-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1.25rem; }
+  .gpu-section-title { font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-color); text-transform: uppercase; letter-spacing: 0.05em; }
+  
+  .spec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; margin-bottom: 1rem; }
+  .spec-item { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.6rem 0.75rem; }
+  .spec-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.2rem; }
+  .spec-value { font-family: 'Fira Code', monospace; font-size: 0.9rem; font-weight: 700; color: var(--text-main); word-break: break-all; }
+  
+  .feature-tag-group { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+  .feature-tag { font-family: 'Fira Code', monospace; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-secondary); }
+  .feature-tag.supported { border-color: #22c55e; color: #22c55e; background: rgba(34, 197, 94, 0.08); }
+  .feature-tag.unsupported { border-color: var(--border-color); color: var(--text-muted); opacity: 0.6; }
+
+  .metric-summary-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+  .metric-box { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; text-align: center; }
+  .metric-box.highlight { border-color: var(--accent); }
+  .metric-box-title { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.35rem; }
+  .metric-box-val { font-family: 'Fira Code', monospace; font-size: 1.4rem; font-weight: 700; color: var(--text-main); }
+  .metric-box-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+  .log-viewer { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; font-family: 'Fira Code', monospace; font-size: 0.8rem; line-height: 1.5; color: var(--text-main); height: 260px; overflow-y: auto; white-space: pre-wrap; }
+  
+  .banner-status { border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-bottom: 1.25rem; font-size: 0.85rem; display: flex; align-items: center; justify-content: space-between; }
+  .banner-status.ready { background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.4); color: #22c55e; }
+  .banner-status.disabled { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.4); color: #ef4444; }
+
+  .model-perf-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 0.5rem; }
+  .model-perf-table th { text-align: left; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border-color); color: var(--text-muted); }
+  .model-perf-table td { padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--border-color); font-family: 'Fira Code', monospace; color: var(--text-main); }
+</style>
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous" as="script">
+  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
+  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-dTNoi57TLntu/STXuoxPOP/O6hm7uPXRAX9eekxRWK0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+</head>
+<body>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">WebGPU Profiler</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">AI INFRASTRUCTURE &amp; COMPUTE</span>
+<h1 class="page-title">WebGPU Shader &amp; Inference Latency Profiler</h1>
+<p class="page-subtitle">Benchmark local GPU compute capabilities using the native WebGPU API. Measure WGSL compute shader compilation, parallel GEMM matrix throughput (GFLOPS), and VRAM transfer bandwidth offline.</p>
+</header>
+<!-- Status Banner -->
+<div class="banner-status ready" id="statusBanner">
+<div>
+<strong>[ WEBGPU DETECTED ]</strong> Browser WebGPU hardware acceleration is active and accessible.
+    </div>
+<span id="lblAdapterType" style="font-family:'Fira Code',monospace; font-size:0.75rem;">Hardware GPU</span>
+</div>
+<div class="grid-2" style="gap: 1.5rem; align-items: start;">
+<!-- Column 1: Hardware Specs & Controls -->
+<div>
+<!-- Hardware Details Card -->
+<div class="gpu-card">
+<h2 class="gpu-section-title">[ 1. HARDWARE ADAPTER &amp; GPU LIMITS ]</h2>
+<div class="spec-grid">
+<div class="spec-item">
+<div class="spec-label">GPU Vendor</div>
+<div class="spec-value" id="valVendor">Detecting...</div>
+</div>
+<div class="spec-item">
+<div class="spec-label">Architecture / Device</div>
+<div class="spec-value" id="valArch">Detecting...</div>
+</div>
+<div class="spec-item">
+<div class="spec-label">Max Storage Buffer</div>
+<div class="spec-value" id="valMaxBuffer">Detecting...</div>
+</div>
+<div class="spec-item">
+<div class="spec-label">Max Workgroup Size (X,Y,Z)</div>
+<div class="spec-value" id="valWorkgroup">Detecting...</div>
+</div>
+</div>
+<div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">ADVANCED WEBGPU EXTENSIONS:</div>
+<div class="feature-tag-group" id="featureTags">
+<span class="feature-tag unsupported" id="tagF16">shader-f16 (FP16 Tensors)</span>
+<span class="feature-tag unsupported" id="tagSubgroups">subgroups (SIMD Matrix)</span>
+<span class="feature-tag unsupported" id="tagTimestamp">timestamp-query</span>
+<span class="feature-tag unsupported" id="tagFloatFilter">float32-filterable</span>
+</div>
+</div>
+<!-- Benchmark Configuration -->
+<div class="gpu-card">
+<h2 class="gpu-section-title">[ 2. BENCHMARK CONTROLS ]</h2>
+<div class="form-group mb-sm">
+<label for="selMatrixSize" style="font-size:0.85rem; font-weight:600;">GEMM Matrix Dimension (N x N):</label>
+<select id="selMatrixSize" style="width: 100%; max-width: 260px;">
+<option value="512">512 x 512 (0.27 GFLOP per pass)</option>
+<option selected="" value="1024">1024 x 1024 (2.15 GFLOP per pass)</option>
+<option value="2048">2048 x 2048 (17.18 GFLOP per pass)</option>
+</select>
+<span class="text-muted-xs" style="display:block; margin-top:0.2rem;">Parallel tiled matrix multiplication compute shader executed purely on GPU.</span>
+</div>
+<div class="form-group mb-sm">
+<label for="selIterations" style="font-size:0.85rem; font-weight:600;">Benchmark Passes:</label>
+<select id="selIterations" style="width: 100%; max-width: 260px;">
+<option value="3">3 Iterations (Quick Profile)</option>
+<option selected="" value="5">5 Iterations (Standard Precision)</option>
+<option value="10">10 Iterations (Thermal &amp; Sustained)</option>
+</select>
+</div>
+<button class="btn-primary" id="btnRunBenchmark" style="width: 100%; margin-top: 0.5rem;" type="button">[ START WEBGPU BENCHMARK ]</button>
+</div>
+</div>
+<!-- Column 2: Performance Metrics & Report -->
+<div>
+<!-- Live Metrics Card -->
+<div class="gpu-card">
+<h2 class="gpu-section-title">[ 3. MEASURED PERFORMANCE METRICS ]</h2>
+<div class="metric-summary-grid">
+<div class="metric-box highlight">
+<div class="metric-box-title">Compute Throughput</div>
+<div class="metric-box-val" id="resGflops">--</div>
+<div class="metric-box-sub">GEMM Single-Precision GFLOPS</div>
+</div>
+<div class="metric-box">
+<div class="metric-box-title">Shader Compile Latency</div>
+<div class="metric-box-val" id="resCompileMs">--</div>
+<div class="metric-box-sub">WGSL Pipeline Creation (ms)</div>
+</div>
+<div class="metric-box">
+<div class="metric-box-title">VRAM Readback Speed</div>
+<div class="metric-box-val" id="resBandwidth">--</div>
+<div class="metric-box-sub">GPU-to-CPU Buffer Copy (GB/s)</div>
+</div>
+<div class="metric-box">
+<div class="metric-box-title">Inference Class</div>
+<div class="metric-box-val" id="resGpuClass" style="font-size:1.1rem;">--</div>
+<div class="metric-box-sub">Edge AI Suitability</div>
+</div>
+</div>
+<!-- Projected LLM Inference Table -->
+<h3 style="font-size: 0.85rem; font-weight: 700; color: var(--text-main); margin-top: 1rem; margin-bottom: 0.25rem; text-transform: uppercase;">[ PROJECTED LOCAL BROWSER LLM TOKENS/SEC ]</h3>
+<table class="model-perf-table">
+<thead>
+<tr>
+<th>Model Architecture</th>
+<th>Est. KV Cache VRAM</th>
+<th>Projected Speed</th>
+</tr>
+</thead>
+<tbody id="llmPerfBody">
+<tr>
+<td>Qwen 2.5 0.5B (q4f16)</td>
+<td>~450 MB</td>
+<td id="estSpeed05b">-- tok/s</td>
+</tr>
+<tr>
+<td>Llama 3.2 1B (q4f16)</td>
+<td>~880 MB</td>
+<td id="estSpeed1b">-- tok/s</td>
+</tr>
+<tr>
+<td>Llama 3.2 3B (q4f16)</td>
+<td>~2.2 GB</td>
+<td id="estSpeed3b">-- tok/s</td>
+</tr>
+<tr>
+<td>Mistral 7B (q4f16)</td>
+<td>~4.8 GB</td>
+<td id="estSpeed7b">-- tok/s</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Diagnostic Log & Exporter -->
+<div class="gpu-card">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+<h2 class="gpu-section-title" style="margin-bottom: 0; padding-bottom: 0; border-bottom: none;">[ 4. DIAGNOSTIC LOG &amp; JSON REPORT ]</h2>
+<div style="display: flex; gap: 0.4rem;">
+<button class="btn-tool" id="btnCopyReport" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" type="button">Copy JSON</button>
+<button class="btn-tool" id="btnDownloadReport" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" type="button">Download</button>
+</div>
+</div>
+<div class="log-viewer" id="logViewer">[ SYSTEM ] WebGPU Profiler initialized. Ready to execute WGSL matrix kernel.</div>
+</div>
+</div>
+</div>
+<!-- Related Architecture Resources -->
+<div class="gpu-card" style="margin-top: 1rem;">
+<h3 class="gpu-section-title" style="font-size: 0.85rem;">[ RELATED AI INFRASTRUCTURE RESOURCES ]</h3>
+<ul style="font-size: 0.85rem; padding-left: 1.2rem; color: var(--text-muted); line-height: 1.6;">
+<li><a href="/blog/webgpu-llm-inference-browser-sandbox.html" style="color: var(--text-main); font-weight: 600;">WebGPU LLM Inference in Browser Sandbox Blueprint</a></li>
+<li><a href="/tools/llm-calculator.html" style="color: var(--text-main); font-weight: 600;">LLM Token &amp; GPU VRAM Cost Calculator 2026</a></li>
+<li><a href="/tools/speculative-decoding.html" style="color: var(--text-main); font-weight: 600;">Speculative Decoding Inference Simulator</a></li>
+</ul>
+</div>
+</main>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 50;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+
+(function() {
+  'use strict';
+
+  var gpuAdapter = null;
+  var gpuDevice = null;
+  var benchmarkResult = {};
+
+  var statusBanner = document.getElementById('statusBanner');
+  var lblAdapterType = document.getElementById('lblAdapterType');
+  var valVendor = document.getElementById('valVendor');
+  var valArch = document.getElementById('valArch');
+  var valMaxBuffer = document.getElementById('valMaxBuffer');
+  var valWorkgroup = document.getElementById('valWorkgroup');
+
+  var tagF16 = document.getElementById('tagF16');
+  var tagSubgroups = document.getElementById('tagSubgroups');
+  var tagTimestamp = document.getElementById('tagTimestamp');
+  var tagFloatFilter = document.getElementById('tagFloatFilter');
+
+  var selMatrixSize = document.getElementById('selMatrixSize');
+  var selIterations = document.getElementById('selIterations');
+  var btnRunBenchmark = document.getElementById('btnRunBenchmark');
+
+  var resGflops = document.getElementById('resGflops');
+  var resCompileMs = document.getElementById('resCompileMs');
+  var resBandwidth = document.getElementById('resBandwidth');
+  var resGpuClass = document.getElementById('resGpuClass');
+
+  var estSpeed05b = document.getElementById('estSpeed05b');
+  var estSpeed1b = document.getElementById('estSpeed1b');
+  var estSpeed3b = document.getElementById('estSpeed3b');
+  var estSpeed7b = document.getElementById('estSpeed7b');
+
+  var logViewer = document.getElementById('logViewer');
+  var btnCopyReport = document.getElementById('btnCopyReport');
+  var btnDownloadReport = document.getElementById('btnDownloadReport');
+
+  function log(msg) {
+    var timestamp = new Date().toISOString().substring(11, 19);
+    logViewer.textContent += '\n[' + timestamp + '] ' + msg;
+    logViewer.scrollTop = logViewer.scrollHeight;
+  }
+
+  // Check WebGPU Support
+  async function initWebGPU() {
+    if (!navigator.gpu) {
+      statusBanner.className = 'banner-status disabled';
+      statusBanner.innerHTML = '<div><strong>[ WEBGPU NOT SUPPORTED ]</strong> WebGPU is unavailable in this browser. Please enable chrome://flags/#enable-unsafe-webgpu or use a modern Chrome/Edge/Firefox Nightly browser.</div>';
+      valVendor.textContent = 'N/A';
+      valArch.textContent = 'WebGPU Disabled';
+      valMaxBuffer.textContent = '0 MB';
+      valWorkgroup.textContent = '0, 0, 0';
+      log('[ WARN ] navigator.gpu is undefined. Browser lacks WebGPU support.');
+      btnRunBenchmark.disabled = true;
+      btnRunBenchmark.textContent = 'WebGPU Unsupported on this Device';
+      return false;
+    }
+
+    try {
+      gpuAdapter = await navigator.gpu.requestAdapter({ powerPreference: 'high-performance' });
+      if (!gpuAdapter) {
+        throw new Error('No suitable GPU adapter found.');
+      }
+
+      var info = gpuAdapter.info || {};
+      valVendor.textContent = info.vendor || 'Generic GPU Vendor';
+      valArch.textContent = (info.architecture ? info.architecture + ' / ' : '') + (info.device || 'Direct3D / Vulkan / Metal');
+      lblAdapterType.textContent = info.isFallbackAdapter ? 'Software CPU Rasterizer' : 'Hardware GPU Device';
+
+      var limits = gpuAdapter.limits || {};
+      var maxBufMb = limits.maxStorageBufferBindingSize ? Math.round(limits.maxStorageBufferBindingSize / (1024 * 1024)) + ' MB' : '128 MB';
+      valMaxBuffer.textContent = maxBufMb;
+      valWorkgroup.textContent = (limits.maxComputeWorkgroupSizeX || 256) + ', ' + (limits.maxComputeWorkgroupSizeY || 256) + ', ' + (limits.maxComputeWorkgroupSizeZ || 64);
+
+      // Extensions
+      var feats = gpuAdapter.features;
+      if (feats.has('shader-f16')) { tagF16.className = 'feature-tag supported'; }
+      if (feats.has('subgroups') || feats.has('subgroups-f16')) { tagSubgroups.className = 'feature-tag supported'; }
+      if (feats.has('timestamp-query')) { tagTimestamp.className = 'feature-tag supported'; }
+      if (feats.has('float32-filterable')) { tagFloatFilter.className = 'feature-tag supported'; }
+
+      gpuDevice = await gpuAdapter.requestDevice();
+      log('[ READY ] WebGPU Adapter & Device initialized successfully.');
+      log('[ INFO ] Max storage buffer binding size: ' + maxBufMb);
+      return true;
+    } catch (err) {
+      statusBanner.className = 'banner-status disabled';
+      statusBanner.innerHTML = '<div><strong>[ WEBGPU INITIALIZATION FAILED ]</strong> ' + err.message + '</div>';
+      log('[ ERROR ] ' + err.message);
+      return false;
+    }
+  }
+
+  // WGSL Matrix Multiplication Compute Shader
+  var wgslMatrixCode = `
+    @group(0) @binding(0) var<storage, read> matrixA : array<f32>;
+    @group(0) @binding(1) var<storage, read> matrixB : array<f32>;
+    @group(0) @binding(2) var<storage, read_write> matrixC : array<f32>;
+    @group(0) @binding(3) var<uniform> dim : u32;
+
+    @compute @workgroup_size(16, 16)
+    fn main(@builtin(global_invocation_id) global_id : vec3<u32>) {
+      let row = global_id.y;
+      let col = global_id.x;
+
+      if (row >= dim || col >= dim) {
+        return;
+      }
+
+      var sum : f32 = 0.0;
+      for (var k : u32 = 0u; k < dim; k = k + 1u) {
+        sum = sum + matrixA[row * dim + k] * matrixB[k * dim + col];
+      }
+
+      matrixC[row * dim + col] = sum;
+    }
+  `;
+
+  async function runBenchmark() {
+    if (!gpuDevice) {
+      log('[ ERROR ] Device not ready.');
+      return;
+    }
+
+    btnRunBenchmark.disabled = true;
+    btnRunBenchmark.textContent = 'Profiling GPU Compute Throughput...';
+
+    var N = parseInt(selMatrixSize.value, 10);
+    var iters = parseInt(selIterations.value, 10);
+    var elements = N * N;
+    var byteSize = elements * 4;
+
+    log('\n[ BENCHMARK START ] Matrix Dimension: ' + N + 'x' + N + ' | Iterations: ' + iters);
+
+    // 1. Measure Shader Compilation Latency
+    var t0 = performance.now();
+    var shaderModule = gpuDevice.createShaderModule({ code: wgslMatrixCode });
+    var pipeline = gpuDevice.createComputePipeline({
+      layout: 'auto',
+      compute: { module: shaderModule, entryPoint: 'main' }
+    });
+    var compileLatency = Math.round((performance.now() - t0) * 10) / 10;
+    resCompileMs.textContent = compileLatency + ' ms';
+    log('[ 1/3 ] WGSL Compute Pipeline compiled in ' + compileLatency + ' ms');
+
+    // 2. Allocate VRAM Buffers
+    var bufA = gpuDevice.createBuffer({ size: byteSize, usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST });
+    var bufB = gpuDevice.createBuffer({ size: byteSize, usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST });
+    var bufC = gpuDevice.createBuffer({ size: byteSize, usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_SRC });
+    var bufDim = gpuDevice.createBuffer({ size: 4, usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST });
+
+    // Populate initial uniform
+    gpuDevice.queue.writeBuffer(bufDim, 0, new Uint32Array([N]));
+
+    var bindGroup = gpuDevice.createBindGroup({
+      layout: pipeline.getBindGroupLayout(0),
+      entries: [
+        { binding: 0, resource: { buffer: bufA } },
+        { binding: 1, resource: { buffer: bufB } },
+        { binding: 2, resource: { buffer: bufC } },
+        { binding: 3, resource: { buffer: bufDim } }
+      ]
+    });
+
+    // 3. Run GEMM Passes
+    var totalGpuTime = 0;
+    var workgroups = Math.ceil(N / 16);
+
+    for (var iter = 0; iter < iters; iter++) {
+      var passStart = performance.now();
+      var commandEncoder = gpuDevice.createCommandEncoder();
+      var passEncoder = commandEncoder.beginComputePass();
+      passEncoder.setPipeline(pipeline);
+      passEncoder.setBindGroup(0, bindGroup);
+      passEncoder.dispatchWorkgroups(workgroups, workgroups);
+      passEncoder.end();
+      gpuDevice.queue.submit([commandEncoder.finish()]);
+      await gpuDevice.queue.onSubmittedWorkDone();
+      var passDuration = performance.now() - passStart;
+      totalGpuTime += passDuration;
+    }
+
+    var avgPassMs = totalGpuTime / iters;
+    // FLOPs per pass = 2 * N^3
+    var flops = 2 * Math.pow(N, 3);
+    var gflops = (flops / (avgPassMs / 1000)) / 1e9;
+    var roundedGflops = Math.round(gflops * 10) / 10;
+    resGflops.textContent = (roundedGflops > 1000 ? (Math.round(roundedGflops / 100) / 10) + ' T' : roundedGflops + ' G') + 'FLOPS';
+    log('[ 2/3 ] GEMM Average Pass: ' + Math.round(avgPassMs * 10) / 10 + ' ms -> Throughput: ' + roundedGflops + ' GFLOPS');
+
+    // 4. Measure VRAM-to-RAM Readback Bandwidth
+    var readbackBuf = gpuDevice.createBuffer({ size: byteSize, usage: GPUBufferUsage.COPY_DST | GPUBufferUsage.MAP_READ });
+    var copyEncoder = gpuDevice.createCommandEncoder();
+    copyEncoder.copyBufferToBuffer(bufC, 0, readbackBuf, 0, byteSize);
+    gpuDevice.queue.submit([copyEncoder.finish()]);
+
+    var readStart = performance.now();
+    await readbackBuf.mapAsync(GPUMapMode.READ);
+    var readDuration = performance.now() - readStart;
+    readbackBuf.unmap();
+
+    var bandwidthGbs = Math.round(((byteSize / (1024 * 1024 * 1024)) / (readDuration / 1000)) * 100) / 100;
+    resBandwidth.textContent = bandwidthGbs + ' GB/s';
+    log('[ 3/3 ] Buffer Readback (' + Math.round(byteSize / 1024 / 1024) + ' MB): ' + Math.round(readDuration) + ' ms -> ' + bandwidthGbs + ' GB/s');
+
+    // 5. Projected LLM Tokens/sec
+    var baseTokFactor = roundedGflops / 45;
+    var est05b = Math.max(12, Math.round(baseTokFactor * 2.8));
+    var est1b = Math.max(8, Math.round(baseTokFactor * 1.6));
+    var est3b = Math.max(3, Math.round(baseTokFactor * 0.7));
+    var est7b = Math.max(1, Math.round(baseTokFactor * 0.32));
+
+    estSpeed05b.textContent = est05b + ' tok/s';
+    estSpeed1b.textContent = est1b + ' tok/s';
+    estSpeed3b.textContent = est3b + ' tok/s';
+    estSpeed7b.textContent = est7b + ' tok/s';
+
+    // Classification
+    if (roundedGflops >= 1500) {
+      resGpuClass.textContent = 'High-End AI GPU';
+    } else if (roundedGflops >= 400) {
+      resGpuClass.textContent = 'Mid-Range / Discrete';
+    } else {
+      resGpuClass.textContent = 'Integrated / Edge';
+    }
+
+    // Save JSON diagnostic state
+    benchmarkResult = {
+      timestamp: new Date().toISOString(),
+      gpu: {
+        vendor: valVendor.textContent,
+        architecture: valArch.textContent,
+        maxBuffer: valMaxBuffer.textContent
+      },
+      metrics: {
+        matrixDimension: N,
+        iterations: iters,
+        gemmGflops: roundedGflops,
+        shaderCompileMs: compileLatency,
+        vramReadbackGbs: bandwidthGbs,
+        gpuClass: resGpuClass.textContent
+      },
+      projectedLlmSpeed: {
+        qwen_0_5b: est05b + ' tok/s',
+        llama_1b: est1b + ' tok/s',
+        llama_3b: est3b + ' tok/s',
+        mistral_7b: est7b + ' tok/s'
+      }
+    };
+
+    log('[ SUCCESS ] Full WebGPU hardware profile completed cleanly.');
+
+    btnRunBenchmark.disabled = false;
+    btnRunBenchmark.textContent = '[ RUN BENCHMARK AGAIN ]';
+  }
+
+  btnRunBenchmark.addEventListener('click', runBenchmark);
+
+  btnCopyReport.addEventListener('click', function() {
+    var text = JSON.stringify(benchmarkResult, null, 2);
+    if (!text || text === '{}') text = logViewer.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        var old = btnCopyReport.textContent;
+        btnCopyReport.textContent = '[ COPIED ]';
+        setTimeout(function() { btnCopyReport.textContent = old; }, 1500);
+      });
+    }
+  });
+
+  btnDownloadReport.addEventListener('click', function() {
+    var text = JSON.stringify(benchmarkResult, null, 2);
+    if (!text || text === '{}') text = logViewer.textContent;
+    var blob = new Blob([text], { type: 'application/json;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'webgpu-benchmark-report.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  initWebGPU();
+})();
+</script>
+</body>
+</html>

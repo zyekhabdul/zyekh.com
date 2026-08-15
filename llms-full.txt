@@ -198,6 +198,10 @@ All tools execute 100% client-side in the user's browser with zero external serv
 - URL: https://zyekh.com/tools/uuid.html
 - Description: Generate cryptographically secure UUID v4, v1, and lexicographically sortable ULIDs in bulk 100% offline & client-side in browser.
 
+### WebGPU Shader & Inference Latency Profiler
+- URL: https://zyekh.com/tools/webgpu-profiler.html
+- Description: Benchmark local GPU compute capabilities using native WebGPU API. Measure WGSL shader compilation latency, matrix multiplication GFLOPS throughput, and VRAM memory bandwidth 100% offline.
+
 ### Zakat Calculator
 - URL: https://zyekh.com/tools/zakat.html
 - Description: Kalkulator zakat online: zakat maal (harta) dan zakat penghasilan. Nisab berdasarkan harga emas, perhitungan 2,5%.

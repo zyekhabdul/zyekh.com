@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "description": "Structured machine-readable tool catalog and parameter schemas for Browser AI Agents & LLMs.",
   "platform": "https://zyekh.com",
-  "total_tools": 47,
-  "updated_at": "2026-08-15T21:28:26Z",
+  "total_tools": 48,
+  "updated_at": "2026-08-15T21:31:36Z",
   "tools": [
     {
       "id": "ai-token",
@@ -1935,6 +1935,43 @@
           "type": "string",
           "input_element": "textarea",
           "description": "Generated IDs will appear here..."
+        }
+      ]
+    },
+    {
+      "id": "webgpu-profiler",
+      "name": "WebGPU Shader & Inference Latency Profiler",
+      "description": "Benchmark local GPU compute capabilities using native WebGPU API. Measure WGSL shader compilation latency, matrix multiplication GFLOPS throughput, and VRAM memory bandwidth 100% offline.",
+      "category": "AI & LLM Inference",
+      "url": "https://zyekh.com/tools/webgpu-profiler.html",
+      "execution": {
+        "type": "client_side_javascript",
+        "telemetry": "none",
+        "offline_ready": true,
+        "storage": "local_memory_or_localstorage"
+      },
+      "parameters": [
+        {
+          "name": "selMatrixSize",
+          "type": "string",
+          "input_element": "select",
+          "description": "GEMM Matrix Dimension (N x N):",
+          "enum": [
+            "512",
+            "1024",
+            "2048"
+          ]
+        },
+        {
+          "name": "selIterations",
+          "type": "string",
+          "input_element": "select",
+          "description": "Benchmark Passes:",
+          "enum": [
+            "3",
+            "5",
+            "10"
+          ]
         }
       ]
     },

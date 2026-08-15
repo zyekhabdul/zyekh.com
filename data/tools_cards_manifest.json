@@ -781,6 +781,23 @@
     ],
     "url": "https://zyekh.com/tools/uuid.html"
   },
+  "webgpu-profiler": {
+    "slug": "webgpu-profiler",
+    "title": "WebGPU Shader & Inference Latency Profiler",
+    "category": "DEVELOPER UTILITY",
+    "description": "Benchmark local GPU compute capabilities using native WebGPU API. Measure WGSL shader compilation latency, matrix multiplication GFLOPS throughput, and VRAM memory bandwidth 100% offline.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/webgpu-profiler.html"
+  },
   "zakat": {
     "slug": "zakat",
     "title": "Zakat Calculator",

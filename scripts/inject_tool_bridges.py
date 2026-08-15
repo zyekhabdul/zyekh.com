@@ -71,11 +71,11 @@ TOOL_MAPPINGS = {
         'btn': 'Validate JSON Schema ->'
     },
     'webgpu-llm-inference-browser-sandbox': {
-        'badge': '[ INTERACTIVE TOOL // BROWSER AI ]',
-        'title': 'AI Token Counter & Browser Execution Benchmark',
-        'desc': 'Estimate client-side WebGPU shader memory overhead and token generation speed on local browser runtimes.',
-        'url': '/tools/ai-token.html',
-        'btn': 'Test Token Counter ->'
+        'badge': '[ INTERACTIVE BENCHMARK // WEBGPU ]',
+        'title': 'WebGPU Shader & Inference Latency Profiler',
+        'desc': 'Measure local GPU WGSL shader compilation speed, GEMM matrix GFLOPS throughput, and VRAM memory transfer bandwidth.',
+        'url': '/tools/webgpu-profiler.html',
+        'btn': 'Launch WebGPU Profiler ->'
     },
     'colbert-late-interaction-advanced-rag': {
         'badge': '[ INTERACTIVE TOOL // VECTOR OPS ]',

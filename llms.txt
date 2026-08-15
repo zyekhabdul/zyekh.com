@@ -115,6 +115,7 @@
 - [Text to Speech Synthesizer](https://zyekh.com/tools/tts.html): Ubah teks menjadi suara dengan Web Speech API browser. Gratis, tanpa upload, dukung Bahasa Indonesia.
 - [URL Encoder / Decoder & Query Inspector](https://zyekh.com/tools/url.html): Encode, decode, parse query string parameters, and strip tracking tags from URLs 100% offline & client-side in browser.
 - [UUID & ULID Bulk Generator](https://zyekh.com/tools/uuid.html): Generate cryptographically secure UUID v4, v1, and lexicographically sortable ULIDs in bulk 100% offline & client-side in browser.
+- [WebGPU Shader & Inference Latency Profiler](https://zyekh.com/tools/webgpu-profiler.html): Benchmark local GPU compute capabilities using native WebGPU API. Measure WGSL shader compilation latency, matrix multiplication GFLOPS throughput, and VRAM memory bandwidth 100% offline.
 - [Zakat Calculator](https://zyekh.com/tools/zakat.html): Kalkulator zakat online: zakat maal (harta) dan zakat penghasilan. Nisab berdasarkan harga emas, perhitungan 2,5%.
 
 ---
