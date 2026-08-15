@@ -205,6 +205,21 @@ def sync_all(bump_version=False, dry_run=False):
         if f.startswith("blog/") and f != "blog/index.html":
             c = re.sub(r'(<img[^>]*class=["\'][^"\']*article-hero-img[^"\']*["\'][^>]*)loading=["\']lazy["\']', r'\1loading="eager"', c)
 
+        # Standardize Footer Navigation Links and Counts
+        total_tools_count = len(glob.glob("tools/*.html")) - (1 if os.path.exists("tools/index.html") else 0)
+        total_articles_count = len(glob.glob("blog/*.html")) - (1 if os.path.exists("blog/index.html") else 0)
+
+        c = re.sub(r'(\d+)\s+Web Tools', f'{total_tools_count} Web Tools', c)
+        c = re.sub(r'(\d+)\s+Articles', f'{total_articles_count} Articles', c)
+
+        # Ensure Official Store link is included in footer navigation
+        if 'shop.zyekh.com' not in c and '<footer' in c:
+            c = re.sub(
+                r'(<a[^>]*href=["\']/blueprints/["\'][^>]*>Blueprints</a>\s*(?:<span[^>]*>[·&middot;]</span>|\s*·\s*|\s*&middot;\s*))',
+                r'\1\n<a class="text-muted text-sm" href="https://shop.zyekh.com" target="_blank" rel="noopener noreferrer">Official Store</a>\n<span class="text-muted text-sm">·</span>\n',
+                c
+            )
+
         atomic_write(f, c, dry_run=dry_run)
     if dry_run:
         print(f"[DRY-RUN] Would update query version ?v={new_ver} across {len(html_files)} HTML files.")

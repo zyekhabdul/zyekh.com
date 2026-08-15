@@ -42,7 +42,7 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 - [ BACKLOG ] **FP8 vs INT4 KV-Cache Quantization**: Memory bandwidth vs perplexity trade-offs in high-throughput inference.
 
 ## 5. Proposal Tambahan & Inovasi Fitur (Backlog Aktif)
-- [ BACKLOG ] **shop.zyekh.com Ecosystem Touchpoints**: Pemasangan touchpoints navigasi (`site-nav.js`), kartu unggulan di `links/index.html`, showcase card di `index.html`, dan contextual resource callouts pada artikel/blueprints terkait.
+- [ DONE ] **shop.zyekh.com Ecosystem Touchpoints**: Pemasangan touchpoints navigasi (`site-nav.js`), kartu unggulan di `links/index.html`, footer navigation di `index.html` dan seluruh 91 HTML files, serta architecture resource callout di `blueprints/index.html`.
 - [ BACKLOG ] **Multi-Persona & Time-Jittered Multi-Account Syndication**: Upgrade `scripts/syndicate.py` untuk mengorkestrasi multi-akun media sosial dengan klaster sudut pandang berbeda (Authority, Curation, Utility Showcase), variasi copywriting otomatis, penundaan waktu acak (time-jitter), dan organic cross-engagement loop.
 - [ BACKLOG ] **Linux Security `sysctl` & `sshd` Hardening Config Builder**: Generator konfigurasi interaktif `/etc/sysctl.d/99-hardening.conf` dan `/etc/ssh/sshd_config.d/99-hardened.conf` berbasis use-case (`/tools/linux-hardening-generator.html`).
 - [ DONE ] **GitHub Actions Automated CI QA Gate**: Workflow CI otomatis di GitHub Actions untuk memvalidasi `verify_batch.py` (20-axis) pada setiap Pull Request/Commit (`.github/workflows/qa-gate.yml`).

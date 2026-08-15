@@ -14,7 +14,8 @@ class SiteNav extends HTMLElement {
       { href: '/tools/',     label: 'Tools Hub',    key: 'tools' },
       { href: '/blog/',      label: 'Articles',     key: 'blog' },
       { href: '/blueprints/',label: 'Blueprints',   key: 'blueprints' },
-      { href: '/links/',      label: 'Link Hub',     key: 'links' },
+      { href: '/links/',     label: 'Link Hub',     key: 'links' },
+      { href: 'https://shop.zyekh.com', label: 'Store', key: 'shop', external: true },
       { href: '/about/',     label: 'About & Bio',  key: 'about' },
       { href: '/contact/',   label: 'Contact',      key: 'contact' }
     ];
@@ -23,7 +24,8 @@ class SiteNav extends HTMLElement {
       const cls = ['nav-link',
         l.key === active ? 'active' : ''
       ].filter(Boolean).join(' ');
-      return `<li><a href="${l.href}" class="${cls}" data-nav="${l.key}">${l.label}</a></li>`;
+      const extraAttr = l.external ? ' target="_blank" rel="noopener noreferrer"' : '';
+      return `<li><a href="${l.href}" class="${cls}" data-nav="${l.key}"${extraAttr}>${l.label}</a></li>`;
     }).join('');
 
     this.innerHTML = `
