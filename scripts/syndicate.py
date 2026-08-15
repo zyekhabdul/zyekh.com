@@ -179,9 +179,11 @@ def generate_hn_intent_url(title, url):
     return f"https://news.ycombinator.com/submitlink?u={encoded_url}&t={encoded_title}"
 
 def generate_mastodon_intent_url(title, url):
+    load_dotenv()
+    server = os.environ.get('MASTODON_SERVER', 'https://infosec.exchange').rstrip('/')
     text = f"{title}\n\n[ Read Full Article -> ] {url}\n\n#Security #Linux #DevOps #Engineering"
     encoded_text = urllib.parse.quote(text)
-    return f"https://infosec.exchange/share?text={encoded_text}"
+    return f"{server}/share?text={encoded_text}"
 
 def upload_mastodon_media(token, server, image_path, description=""):
     import uuid
