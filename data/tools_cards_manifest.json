@@ -730,6 +730,23 @@
     ],
     "url": "https://zyekh.com/tools/svg-converter.html"
   },
+  "systemd-generator": {
+    "slug": "systemd-generator",
+    "title": "Systemd Service Sandboxing & Security Override Generator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Generate production-ready systemd drop-in security override configurations (override.conf) and standalone service units 100% client-side. Calculate systemd-analyze security exposure ratings in real-time.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/systemd-generator.html"
+  },
   "thr": {
     "slug": "thr",
     "title": "THR Calculator",

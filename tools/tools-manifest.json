@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "description": "Structured machine-readable tool catalog and parameter schemas for Browser AI Agents & LLMs.",
   "platform": "https://zyekh.com",
-  "total_tools": 50,
-  "updated_at": "2026-08-15T21:41:38Z",
+  "total_tools": 51,
+  "updated_at": "2026-08-15T21:45:03Z",
   "tools": [
     {
       "id": "ai-token",
@@ -1845,6 +1845,153 @@
           "type": "string",
           "input_element": "textarea",
           "description": "CSS Data URI Result"
+        }
+      ]
+    },
+    {
+      "id": "systemd-generator",
+      "name": "Systemd Service Sandboxing & Security Override Generator",
+      "description": "Generate production-ready systemd drop-in security override configurations (override.conf) and standalone service units 100% client-side. Calculate systemd-analyze security exposure ratings in real-time.",
+      "category": "Security & Linux Systems",
+      "url": "https://zyekh.com/tools/systemd-generator.html",
+      "execution": {
+        "type": "client_side_javascript",
+        "telemetry": "none",
+        "offline_ready": true,
+        "storage": "local_memory_or_localstorage"
+      },
+      "parameters": [
+        {
+          "name": "txtServiceName",
+          "type": "string",
+          "input_element": "text",
+          "description": "Service Unit Name:"
+        },
+        {
+          "name": "txtExecStart",
+          "type": "string",
+          "input_element": "text",
+          "description": "ExecStart Binary Path:"
+        },
+        {
+          "name": "txtRwPaths",
+          "type": "string",
+          "input_element": "text",
+          "description": "ReadWritePaths (Writable Directories):"
+        },
+        {
+          "name": "chkProtectSystem",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkprotectsystem"
+        },
+        {
+          "name": "chkProtectHome",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkprotecthome"
+        },
+        {
+          "name": "chkPrivateTmp",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkprivatetmp"
+        },
+        {
+          "name": "chkPrivateDevices",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkprivatedevices"
+        },
+        {
+          "name": "chkProtectCgroups",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkprotectcgroups"
+        },
+        {
+          "name": "chkNoNewPriv",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chknonewpriv"
+        },
+        {
+          "name": "chkCapDrop",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkcapdrop"
+        },
+        {
+          "name": "chkDynamicUser",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkdynamicuser"
+        },
+        {
+          "name": "chkAmbientCap",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkambientcap"
+        },
+        {
+          "name": "chkProtectKernelTunables",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkprotectkerneltunables"
+        },
+        {
+          "name": "chkProtectKernelModules",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkprotectkernelmodules"
+        },
+        {
+          "name": "chkProtectKernelLogs",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkprotectkernellogs"
+        },
+        {
+          "name": "chkProtectClock",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkprotectclock"
+        },
+        {
+          "name": "chkMemDenyWxE",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkmemdenywxe"
+        },
+        {
+          "name": "chkLockPersonality",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chklockpersonality"
+        },
+        {
+          "name": "chkPrivateNetwork",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkprivatenetwork"
+        },
+        {
+          "name": "chkRestrictAddressFamilies",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chkrestrictaddressfamilies"
+        },
+        {
+          "name": "chkSystemCallFilter",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chksystemcallfilter"
+        },
+        {
+          "name": "chkSystemCallArch",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Chksystemcallarch"
         }
       ]
     },

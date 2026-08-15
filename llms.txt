@@ -112,6 +112,7 @@
 - [SQL Query Formatter & Beautifier](https://zyekh.com/tools/sql.html): Format, clean, and beautify complex SQL queries with standardized keyword indentation 100% offline & client-side in browser.
 - [IP Subnet & CIDR Calculator](https://zyekh.com/tools/subnet.html): Calculate IPv4 network ranges, subnet masks, broadcast addresses, wildcard masks, and usable host count 100% offline & client-side in browser.
 - [SVG Vector to CSS Data URI Converter](https://zyekh.com/tools/svg-converter.html): Convert raw SVG vector markup into optimized CSS background Data URIs and Base64 strings 100% offline & client-side in browser.
+- [Systemd Service Sandboxing & Security Override Generator](https://zyekh.com/tools/systemd-generator.html): Generate production-ready systemd drop-in security override configurations (override.conf) and standalone service units 100% client-side. Calculate systemd-analyze security exposure ratings in real-time.
 - [THR Calculator](https://zyekh.com/tools/thr.html): Kalkulator THR online. Hitung Tunjangan Hari Raya pro-rata berdasarkan gaji dan masa kerja sesuai UU Ketenagakerjaan.
 - [Text to Speech Synthesizer](https://zyekh.com/tools/tts.html): Ubah teks menjadi suara dengan Web Speech API browser. Gratis, tanpa upload, dukung Bahasa Indonesia.
 - [URL Encoder / Decoder & Query Inspector](https://zyekh.com/tools/url.html): Encode, decode, parse query string parameters, and strip tracking tags from URLs 100% offline & client-side in browser.

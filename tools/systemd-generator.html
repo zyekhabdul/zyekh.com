@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Systemd Service Sandboxing &amp; Security Override Generator — Linux Hardening Builder | zyekh.com</title>
+<meta content="Generate production-ready systemd drop-in security override configurations (override.conf) and standalone service units 100% client-side. Calculate systemd-analyze security exposure ratings in real-time." name="description"/>
+<meta content="systemd generator, systemd hardening generator, systemd-analyze security, override.conf generator, systemd sandboxing, protectsystem strict, nonewprivileges" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/systemd-generator.html" rel="canonical"/>
+<!-- Open Graph / Social -->
+<meta content="Systemd Service Sandboxing &amp; Security Override Generator | zyekh.com" property="og:title"/>
+<meta content="Generate production systemd security override drop-ins and calculate systemd-analyze exposure scores 100% offline." property="og:description"/>
+<meta content="https://zyekh.com/tools/systemd-generator.html" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-systemd-generator-dark-landscape.png?v=e0d7d579" property="og:image"/>
+<meta content="zyekh.com" property="og:site_name"/>
+<!-- Twitter Cards -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Systemd Service Sandboxing &amp; Security Override Generator | zyekh.com" name="twitter:title"/>
+<meta content="Generate production systemd security override drop-ins and calculate systemd-analyze exposure scores 100% offline." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-systemd-generator-dark-landscape.png?v=e0d7d579" name="twitter:image"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://zyekh.com/tools/systemd-generator.html#app",
+      "name": "Systemd Service Sandboxing & Security Override Generator",
+      "description": "Interactive client-side Linux systemd unit sandboxing generator and security exposure calculator.",
+      "url": "https://zyekh.com/tools/systemd-generator.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript and a modern web browser.",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Person",
+        "@id": "https://zyekh.com/#person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com"
+      },
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/tools/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/tools/systemd-generator.html#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Systemd Generator", "item": "https://zyekh.com/tools/systemd-generator.html" }
+      ]
+    }
+  ]
+}
+</script>
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+<script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+<!-- Preload Styles & Scripts -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous"></script>
+<style>
+  .sys-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1.25rem; }
+  .sys-section-title { font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.75rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border-color); text-transform: uppercase; letter-spacing: 0.05em; display: flex; justify-content: space-between; align-items: center; }
+  
+  .preset-tabs { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.25rem; }
+  .preset-btn { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.45rem 0.85rem; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.15s ease; }
+  .preset-btn.active { background: var(--text-main); color: var(--bg-main); border-color: var(--text-main); }
+
+  .directive-group { margin-bottom: 0.85rem; }
+  .directive-group-title { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.4rem; text-transform: uppercase; }
+  .directive-list { display: flex; flex-direction: column; gap: 0.35rem; }
+  .directive-item { display: flex; align-items: center; gap: 0.45rem; font-family: 'Fira Code', monospace; font-size: 0.78rem; color: var(--text-main); cursor: pointer; }
+  .directive-item input { cursor: pointer; }
+
+  .meter-box { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
+  .meter-score { font-family: 'Fira Code', monospace; font-size: 1.4rem; font-weight: 700; color: #22c55e; }
+  .meter-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
+
+  .code-tab-nav { display: flex; gap: 0.3rem; border-bottom: 1px solid var(--border-color); margin-bottom: 0.75rem; overflow-x: auto; }
+  .code-tab-btn { background: none; border: none; border-bottom: 2px solid transparent; padding: 0.4rem 0.75rem; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); cursor: pointer; white-space: nowrap; }
+  .code-tab-btn.active { color: var(--text-main); border-bottom-color: var(--text-main); }
+
+  .output-code { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; font-family: 'Fira Code', monospace; font-size: 0.82rem; line-height: 1.5; color: var(--text-main); height: 420px; overflow-y: auto; white-space: pre; }
+</style>
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous" as="script">
+  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
+  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-Aq9Y61hemYvA2h4aFKgVT5LwZII2TMl4WEMz8EIKrlQ='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+</head>
+<body>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">Systemd Generator</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">SYSTEMD HARDENING &amp; LINUX SANDBOXING</span>
+<h1 class="page-title">Systemd Service Sandboxing &amp; Security Override Generator</h1>
+<p class="page-subtitle">Generate production drop-in security overrides (override.conf) and standalone Linux systemd unit definitions. Calculate real-time systemd-analyze security exposure ratings without external dependencies.</p>
+</header>
+<!-- Workload Presets -->
+<div class="preset-tabs">
+<button class="preset-btn active" data-preset="web" type="button">Web / API Backend (Node/Go/Python)</button>
+<button class="preset-btn" data-preset="db" type="button">Database Server (Postgres/Redis)</button>
+<button class="preset-btn" data-preset="worker" type="button">Background Worker / Queue</button>
+<button class="preset-btn" data-preset="daemon" type="button">Minimal Daemon (DynamicUser)</button>
+<button class="preset-btn" data-preset="custom" type="button">Custom Sandboxing</button>
+</div>
+<div class="grid-2" style="gap: 1.5rem; align-items: start;">
+<!-- Column 1: Sandboxing Directives -->
+<div>
+<!-- Exposure Meter & General Service Info -->
+<div class="sys-card">
+<h2 class="sys-section-title">[ 1. SERVICE METADATA &amp; EXPOSURE ]</h2>
+<div class="meter-box">
+<div>
+<div class="meter-label">Estimated Security Exposure</div>
+<div id="lblExposureGrade" style="font-size: 0.8rem; color: var(--text-main); font-weight: 600;">[ SAFE // LOW RISK ]</div>
+</div>
+<div class="meter-score" id="valExposureScore">1.8 / 10</div>
+</div>
+<div class="grid-2" style="gap: 0.75rem; margin-bottom: 0.5rem;">
+<div class="form-group">
+<label for="txtServiceName" style="font-size:0.82rem; font-weight:600;">Service Unit Name:</label>
+<input id="txtServiceName" style="width: 100%; font-family:'Fira Code',monospace;" type="text" value="api-service"/>
+</div>
+<div class="form-group">
+<label for="txtExecStart" style="font-size:0.82rem; font-weight:600;">ExecStart Binary Path:</label>
+<input id="txtExecStart" style="width: 100%; font-family:'Fira Code',monospace;" type="text" value="/usr/bin/node /opt/app/server.js"/>
+</div>
+</div>
+<div class="form-group mb-sm">
+<label for="txtRwPaths" style="font-size:0.82rem; font-weight:600;">ReadWritePaths (Writable Directories):</label>
+<input id="txtRwPaths" style="width: 100%; font-family:'Fira Code',monospace;" type="text" value="/var/log/app /var/lib/app"/>
+</div>
+</div>
+<!-- Granular Directives Checklist -->
+<div class="sys-card">
+<h2 class="sys-section-title">[ 2. SANDBOXING DIRECTIVES CHECKLIST ]</h2>
+<!-- Filesystem Isolation -->
+<div class="directive-group">
+<div class="directive-group-title">FILESYSTEM MOUNT NAMESPACES:</div>
+<div class="directive-list">
+<label class="directive-item"><input checked="" data-weight="1.2" id="chkProtectSystem" type="checkbox"/> ProtectSystem=strict (Read-only /usr, /boot, /etc)</label>
+<label class="directive-item"><input checked="" data-weight="1.0" id="chkProtectHome" type="checkbox"/> ProtectHome=yes (Inaccessible /home &amp; /root)</label>
+<label class="directive-item"><input checked="" data-weight="0.8" id="chkPrivateTmp" type="checkbox"/> PrivateTmp=yes (Isolated temporary namespace)</label>
+<label class="directive-item"><input checked="" data-weight="0.8" id="chkPrivateDevices" type="checkbox"/> PrivateDevices=yes (Block physical device nodes)</label>
+<label class="directive-item"><input checked="" data-weight="0.6" id="chkProtectCgroups" type="checkbox"/> ProtectControlGroups=yes (Read-only /sys/fs/cgroup)</label>
+</div>
+</div>
+<!-- Privileges & Capabilities -->
+<div class="directive-group">
+<div class="directive-group-title">PRIVILEGE &amp; PROCESS ESCALATION:</div>
+<div class="directive-list">
+<label class="directive-item"><input checked="" data-weight="1.2" id="chkNoNewPriv" type="checkbox"/> NoNewPrivileges=yes (Block SUID bit escalation)</label>
+<label class="directive-item"><input checked="" data-weight="0.8" id="chkCapDrop" type="checkbox"/> CapabilityBoundingSet=CAP_NET_BIND_SERVICE (Drop kernel caps)</label>
+<label class="directive-item"><input data-weight="1.0" id="chkDynamicUser" type="checkbox"/> DynamicUser=yes (Allocate transient unprivileged UID)</label>
+<label class="directive-item"><input checked="" data-weight="0.6" id="chkAmbientCap" type="checkbox"/> AmbientCapabilities=CAP_NET_BIND_SERVICE (Low port bind)</label>
+</div>
+</div>
+<!-- Kernel & Hardware Protection -->
+<div class="directive-group">
+<div class="directive-group-title">KERNEL &amp; MEMORY HARDENING:</div>
+<div class="directive-list">
+<label class="directive-item"><input checked="" data-weight="0.8" id="chkProtectKernelTunables" type="checkbox"/> ProtectKernelTunables=yes (Read-only sysctl /proc/sys)</label>
+<label class="directive-item"><input checked="" data-weight="0.8" id="chkProtectKernelModules" type="checkbox"/> ProtectKernelModules=yes (Deny module loading)</label>
+<label class="directive-item"><input checked="" data-weight="0.6" id="chkProtectKernelLogs" type="checkbox"/> ProtectKernelLogs=yes (Deny dmesg ring buffer reads)</label>
+<label class="directive-item"><input checked="" data-weight="0.6" id="chkProtectClock" type="checkbox"/> ProtectClock=yes (Prevent modifying hardware RTC)</label>
+<label class="directive-item"><input checked="" data-weight="0.8" id="chkMemDenyWxE" type="checkbox"/> MemoryDenyWriteExecute=yes (Enforce W^X memory)</label>
+<label class="directive-item"><input checked="" data-weight="0.4" id="chkLockPersonality" type="checkbox"/> LockPersonality=yes (Lock execution personality)</label>
+</div>
+</div>
+<!-- Network & Syscall Filters -->
+<div class="directive-group" style="margin-bottom: 0;">
+<div class="directive-group-title">NETWORK &amp; SYSTEM CALL FILTERING:</div>
+<div class="directive-list">
+<label class="directive-item"><input data-weight="1.2" id="chkPrivateNetwork" type="checkbox"/> PrivateNetwork=yes (Complete network namespace isolation)</label>
+<label class="directive-item"><input checked="" data-weight="0.8" id="chkRestrictAddressFamilies" type="checkbox"/> RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6</label>
+<label class="directive-item"><input checked="" data-weight="0.8" id="chkSystemCallFilter" type="checkbox"/> SystemCallFilter=@system-service ~@privileged ~@resources</label>
+<label class="directive-item"><input checked="" data-weight="0.6" id="chkSystemCallArch" type="checkbox"/> SystemCallArchitectures=native (Block 32-bit compat)</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: Live Configuration Exporter -->
+<div>
+<div class="sys-card">
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+<div class="code-tab-nav" style="border-bottom: none; margin-bottom: 0;">
+<button class="code-tab-btn active" data-tab="dropin" type="button">override.conf</button>
+<button class="code-tab-btn" data-tab="service" type="button">Full .service</button>
+<button class="code-tab-btn" data-tab="commands" type="button">Deploy Commands</button>
+</div>
+<div style="display: flex; gap: 0.4rem;">
+<button class="btn-tool" id="btnCopyCode" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" type="button">Copy Code</button>
+<button class="btn-tool" id="btnDownloadCode" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;" type="button">Download</button>
+</div>
+</div>
+<div class="output-code" id="outputArea">Generating systemd configuration...</div>
+</div>
+<!-- Quick Security Invariants -->
+<div class="sys-card">
+<h3 class="sys-section-title" style="font-size: 0.85rem;">[ SYSTEMD SANDBOXING INVARIANTS ]</h3>
+<ul style="font-size: 0.82rem; padding-left: 1.2rem; color: var(--text-muted); line-height: 1.6;">
+<li><strong>Drop-In Override Architecture:</strong> Never edit upstream units in <code>/usr/lib/systemd/system/</code>. Always use drop-in overrides under <code>/etc/systemd/system/&lt;name&gt;.service.d/override.conf</code>.</li>
+<li><strong>Zero Privileged Capabilities:</strong> Dropping Linux capabilities and enforcing <code>NoNewPrivileges=yes</code> neutralizes local privilege escalation (LPE) CVEs.</li>
+<li><strong>Seccomp Syscall Whitelisting:</strong> <code>SystemCallFilter=@system-service ~@privileged</code> uses kernel eBPF/seccomp to block raw kernel exploitation attempts at zero performance penalty.</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Related Architecture Resources -->
+<div class="sys-card" style="margin-top: 1rem;">
+<h3 class="sys-section-title" style="font-size: 0.85rem;">[ RELATED LINUX &amp; SYSTEM HARDENING RESOURCES ]</h3>
+<ul style="font-size: 0.85rem; padding-left: 1.2rem; color: var(--text-muted); line-height: 1.6;">
+<li><a href="/blog/systemd-service-sandboxing-and-security-hardening.html" style="color: var(--text-main); font-weight: 600;">Systemd Service Sandboxing &amp; Security Hardening Blueprint</a></li>
+<li><a href="/blog/linux-vps-hardening-guide-2026.html" style="color: var(--text-main); font-weight: 600;">Linux VPS Security Hardening Guide 2026</a></li>
+<li><a href="/tools/linux-hardening-generator.html" style="color: var(--text-main); font-weight: 600;">Linux sysctl &amp; OpenSSH Hardening Configuration Builder</a></li>
+<li><a href="/tools/seccomp-generator.html" style="color: var(--text-main); font-weight: 600;">Container Security &amp; OCI Seccomp Profile Generator</a></li>
+</ul>
+</div>
+</main>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 50;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+
+(function() {
+  'use strict';
+
+  var activeTab = 'dropin';
+  var activePreset = 'web';
+
+  // Elements
+  var txtServiceName = document.getElementById('txtServiceName');
+  var txtExecStart = document.getElementById('txtExecStart');
+  var txtRwPaths = document.getElementById('txtRwPaths');
+  var valExposureScore = document.getElementById('valExposureScore');
+  var lblExposureGrade = document.getElementById('lblExposureGrade');
+  var outputArea = document.getElementById('outputArea');
+  var btnCopyCode = document.getElementById('btnCopyCode');
+  var btnDownloadCode = document.getElementById('btnDownloadCode');
+
+  // Checkboxes
+  var chkProtectSystem = document.getElementById('chkProtectSystem');
+  var chkProtectHome = document.getElementById('chkProtectHome');
+  var chkPrivateTmp = document.getElementById('chkPrivateTmp');
+  var chkPrivateDevices = document.getElementById('chkPrivateDevices');
+  var chkProtectCgroups = document.getElementById('chkProtectCgroups');
+  var chkNoNewPriv = document.getElementById('chkNoNewPriv');
+  var chkCapDrop = document.getElementById('chkCapDrop');
+  var chkDynamicUser = document.getElementById('chkDynamicUser');
+  var chkAmbientCap = document.getElementById('chkAmbientCap');
+  var chkProtectKernelTunables = document.getElementById('chkProtectKernelTunables');
+  var chkProtectKernelModules = document.getElementById('chkProtectKernelModules');
+  var chkProtectKernelLogs = document.getElementById('chkProtectKernelLogs');
+  var chkProtectClock = document.getElementById('chkProtectClock');
+  var chkMemDenyWxE = document.getElementById('chkMemDenyWxE');
+  var chkLockPersonality = document.getElementById('chkLockPersonality');
+  var chkPrivateNetwork = document.getElementById('chkPrivateNetwork');
+  var chkRestrictAddressFamilies = document.getElementById('chkRestrictAddressFamilies');
+  var chkSystemCallFilter = document.getElementById('chkSystemCallFilter');
+  var chkSystemCallArch = document.getElementById('chkSystemCallArch');
+
+  var allCheckboxes = [
+    chkProtectSystem, chkProtectHome, chkPrivateTmp, chkPrivateDevices, chkProtectCgroups,
+    chkNoNewPriv, chkCapDrop, chkDynamicUser, chkAmbientCap,
+    chkProtectKernelTunables, chkProtectKernelModules, chkProtectKernelLogs, chkProtectClock, chkMemDenyWxE, chkLockPersonality,
+    chkPrivateNetwork, chkRestrictAddressFamilies, chkSystemCallFilter, chkSystemCallArch
+  ];
+
+  function calculateExposure() {
+    var maxScore = 9.8;
+    var currentScore = maxScore;
+
+    allCheckboxes.forEach(function(cb) {
+      if (cb.checked) {
+        var weight = parseFloat(cb.getAttribute('data-weight') || '0.5');
+        currentScore -= weight;
+      }
+    });
+
+    currentScore = Math.max(0.4, Math.round(currentScore * 10) / 10);
+    valExposureScore.textContent = currentScore.toFixed(1) + ' / 10';
+
+    if (currentScore <= 2.5) {
+      valExposureScore.style.color = '#22c55e';
+      lblExposureGrade.textContent = '[ SAFE // LOW EXPOSURE ]';
+      lblExposureGrade.style.color = '#22c55e';
+    } else if (currentScore <= 5.5) {
+      valExposureScore.style.color = '#eab308';
+      lblExposureGrade.textContent = '[ MEDIUM // MODERATE EXPOSURE ]';
+      lblExposureGrade.style.color = '#eab308';
+    } else {
+      valExposureScore.style.color = '#ef4444';
+      lblExposureGrade.textContent = '[ UNSAFE // HIGH EXPOSURE ]';
+      lblExposureGrade.style.color = '#ef4444';
+    }
+  }
+
+  function generateDirectives() {
+    var lines = [];
+    if (chkNoNewPriv.checked) lines.push('NoNewPrivileges=yes');
+    if (chkProtectSystem.checked) lines.push('ProtectSystem=strict');
+    if (chkProtectHome.checked) lines.push('ProtectHome=yes');
+    if (chkPrivateTmp.checked) lines.push('PrivateTmp=yes');
+    if (chkPrivateDevices.checked) lines.push('PrivateDevices=yes');
+    if (chkProtectCgroups.checked) lines.push('ProtectControlGroups=yes');
+    if (txtRwPaths.value.trim()) lines.push('ReadWritePaths=' + txtRwPaths.value.trim());
+
+    if (chkDynamicUser.checked) {
+      lines.push('DynamicUser=yes');
+    } else {
+      lines.push('User=www-data');
+      lines.push('Group=www-data');
+    }
+
+    if (chkCapDrop.checked) lines.push('CapabilityBoundingSet=CAP_NET_BIND_SERVICE');
+    if (chkAmbientCap.checked) lines.push('AmbientCapabilities=CAP_NET_BIND_SERVICE');
+
+    if (chkProtectKernelTunables.checked) lines.push('ProtectKernelTunables=yes');
+    if (chkProtectKernelModules.checked) lines.push('ProtectKernelModules=yes');
+    if (chkProtectKernelLogs.checked) lines.push('ProtectKernelLogs=yes');
+    if (chkProtectClock.checked) lines.push('ProtectClock=yes');
+    if (chkMemDenyWxE.checked) lines.push('MemoryDenyWriteExecute=yes');
+    if (chkLockPersonality.checked) lines.push('LockPersonality=yes');
+
+    if (chkPrivateNetwork.checked) lines.push('PrivateNetwork=yes');
+    if (chkRestrictAddressFamilies.checked) lines.push('RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6');
+    if (chkSystemCallFilter.checked) lines.push('SystemCallFilter=@system-service ~@privileged ~@resources');
+    if (chkSystemCallArch.checked) lines.push('SystemCallArchitectures=native');
+
+    return lines;
+  }
+
+  function generateDropInConfig() {
+    var svc = txtServiceName.value.trim() || 'app';
+    var lines = [];
+    lines.push('# /etc/systemd/system/' + svc + '.service.d/override.conf — Generated by zyekh.com');
+    lines.push('# Hardened Systemd Sandboxing Configuration');
+    lines.push('');
+    lines.push('[Service]');
+    lines = lines.concat(generateDirectives());
+    return lines.join('\n');
+  }
+
+  function generateFullService() {
+    var svc = txtServiceName.value.trim() || 'app';
+    var exec = txtExecStart.value.trim() || '/usr/bin/node server.js';
+    var lines = [];
+    lines.push('# /etc/systemd/system/' + svc + '.service — Generated by zyekh.com');
+    lines.push('[Unit]');
+    lines.push('Description=' + svc + ' Production Hardened Service');
+    lines.push('After=network.target');
+    lines.push('Documentation=https://zyekh.com/blog/systemd-service-sandboxing-and-security-hardening.html');
+    lines.push('');
+    lines.push('[Service]');
+    lines.push('Type=simple');
+    lines.push('ExecStart=' + exec);
+    lines.push('Restart=on-failure');
+    lines.push('RestartSec=5s');
+    lines.push('LimitNOFILE=65535');
+    lines.push('');
+    lines.push('# Security & Sandboxing Directives');
+    lines = lines.concat(generateDirectives());
+    lines.push('');
+    lines.push('[Install]');
+    lines.push('WantedBy=multi-user.target');
+    return lines.join('\n');
+  }
+
+  function generateDeploymentCommands() {
+    var svc = txtServiceName.value.trim() || 'app';
+    var lines = [];
+    lines.push('# 1. Create drop-in override directory');
+    lines.push('sudo mkdir -p /etc/systemd/system/' + svc + '.service.d');
+    lines.push('');
+    lines.push('# 2. Write hardened sandboxing directives');
+    lines.push('sudo cat << \'EOF\' > /etc/systemd/system/' + svc + '.service.d/override.conf');
+    lines.push(generateDropInConfig());
+    lines.push('EOF');
+    lines.push('');
+    lines.push('# 3. Reload systemd daemon and restart service');
+    lines.push('sudo systemctl daemon-reload');
+    lines.push('sudo systemctl restart ' + svc);
+    lines.push('');
+    lines.push('# 4. Audit security exposure score');
+    lines.push('systemd-analyze security ' + svc);
+    return lines.join('\n');
+  }
+
+  function updateOutput() {
+    calculateExposure();
+
+    if (activeTab === 'dropin') {
+      outputArea.textContent = generateDropInConfig();
+    } else if (activeTab === 'service') {
+      outputArea.textContent = generateFullService();
+    } else if (activeTab === 'commands') {
+      outputArea.textContent = generateDeploymentCommands();
+    }
+  }
+
+  var debouncedUpdate = window.debounceRAF(updateOutput, 50);
+
+  // Apply Presets
+  function applyPreset(preset) {
+    activePreset = preset;
+    if (preset === 'web') {
+      txtServiceName.value = 'api-server';
+      txtExecStart.value = '/usr/bin/node /opt/app/server.js';
+      txtRwPaths.value = '/var/log/app /var/lib/app';
+      chkProtectSystem.checked = true;
+      chkProtectHome.checked = true;
+      chkPrivateTmp.checked = true;
+      chkPrivateDevices.checked = true;
+      chkProtectCgroups.checked = true;
+      chkNoNewPriv.checked = true;
+      chkCapDrop.checked = true;
+      chkDynamicUser.checked = false;
+      chkAmbientCap.checked = true;
+      chkProtectKernelTunables.checked = true;
+      chkProtectKernelModules.checked = true;
+      chkProtectKernelLogs.checked = true;
+      chkProtectClock.checked = true;
+      chkMemDenyWxE.checked = true;
+      chkLockPersonality.checked = true;
+      chkPrivateNetwork.checked = false;
+      chkRestrictAddressFamilies.checked = true;
+      chkSystemCallFilter.checked = true;
+      chkSystemCallArch.checked = true;
+    } else if (preset === 'db') {
+      txtServiceName.value = 'postgres-custom';
+      txtExecStart.value = '/usr/lib/postgresql/16/bin/postgres -D /var/lib/postgresql/16/main';
+      txtRwPaths.value = '/var/lib/postgresql /var/log/postgresql /run/postgresql';
+      chkProtectSystem.checked = true;
+      chkProtectHome.checked = true;
+      chkPrivateTmp.checked = true;
+      chkPrivateDevices.checked = true;
+      chkProtectCgroups.checked = true;
+      chkNoNewPriv.checked = true;
+      chkCapDrop.checked = false;
+      chkDynamicUser.checked = false;
+      chkAmbientCap.checked = false;
+      chkProtectKernelTunables.checked = true;
+      chkProtectKernelModules.checked = true;
+      chkProtectKernelLogs.checked = true;
+      chkProtectClock.checked = true;
+      chkMemDenyWxE.checked = false;
+      chkLockPersonality.checked = true;
+      chkPrivateNetwork.checked = false;
+      chkRestrictAddressFamilies.checked = true;
+      chkSystemCallFilter.checked = true;
+      chkSystemCallArch.checked = true;
+    } else if (preset === 'worker') {
+      txtServiceName.value = 'queue-worker';
+      txtExecStart.value = '/usr/bin/python3 /opt/worker/main.py';
+      txtRwPaths.value = '/var/log/worker /tmp';
+      chkProtectSystem.checked = true;
+      chkProtectHome.checked = true;
+      chkPrivateTmp.checked = true;
+      chkPrivateDevices.checked = true;
+      chkProtectCgroups.checked = true;
+      chkNoNewPriv.checked = true;
+      chkCapDrop.checked = true;
+      chkDynamicUser.checked = true;
+      chkAmbientCap.checked = false;
+      chkProtectKernelTunables.checked = true;
+      chkProtectKernelModules.checked = true;
+      chkProtectKernelLogs.checked = true;
+      chkProtectClock.checked = true;
+      chkMemDenyWxE.checked = true;
+      chkLockPersonality.checked = true;
+      chkPrivateNetwork.checked = false;
+      chkRestrictAddressFamilies.checked = true;
+      chkSystemCallFilter.checked = true;
+      chkSystemCallArch.checked = true;
+    } else if (preset === 'daemon') {
+      txtServiceName.value = 'minimal-daemon';
+      txtExecStart.value = '/usr/local/bin/daemon';
+      txtRwPaths.value = '';
+      chkProtectSystem.checked = true;
+      chkProtectHome.checked = true;
+      chkPrivateTmp.checked = true;
+      chkPrivateDevices.checked = true;
+      chkProtectCgroups.checked = true;
+      chkNoNewPriv.checked = true;
+      chkCapDrop.checked = true;
+      chkDynamicUser.checked = true;
+      chkAmbientCap.checked = false;
+      chkProtectKernelTunables.checked = true;
+      chkProtectKernelModules.checked = true;
+      chkProtectKernelLogs.checked = true;
+      chkProtectClock.checked = true;
+      chkMemDenyWxE.checked = true;
+      chkLockPersonality.checked = true;
+      chkPrivateNetwork.checked = true;
+      chkRestrictAddressFamilies.checked = true;
+      chkSystemCallFilter.checked = true;
+      chkSystemCallArch.checked = true;
+    }
+    debouncedUpdate();
+  }
+
+  // Preset Buttons
+  document.querySelectorAll('.preset-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      applyPreset(btn.getAttribute('data-preset'));
+    });
+  });
+
+  // Tab Buttons
+  document.querySelectorAll('.code-tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.code-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeTab = btn.getAttribute('data-tab');
+      debouncedUpdate();
+    });
+  });
+
+  allCheckboxes.forEach(function(cb) {
+    cb.addEventListener('change', debouncedUpdate);
+  });
+
+  txtServiceName.addEventListener('input', debouncedUpdate);
+  txtExecStart.addEventListener('input', debouncedUpdate);
+  txtRwPaths.addEventListener('input', debouncedUpdate);
+
+  btnCopyCode.addEventListener('click', function() {
+    var text = outputArea.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        var old = btnCopyCode.textContent;
+        btnCopyCode.textContent = '[ COPIED ]';
+        setTimeout(function() { btnCopyCode.textContent = old; }, 1500);
+      });
+    }
+  });
+
+  btnDownloadCode.addEventListener('click', function() {
+    var text = outputArea.textContent;
+    var svc = txtServiceName.value.trim() || 'app';
+    var filename = 'override.conf';
+    var mime = 'text/plain;charset=utf-8';
+
+    if (activeTab === 'service') {
+      filename = svc + '.service';
+    } else if (activeTab === 'commands') {
+      filename = 'deploy-hardening.sh';
+      mime = 'text/x-shellscript;charset=utf-8';
+    }
+
+    var blob = new Blob([text], { type: mime });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  updateOutput();
+})();
+</script>
+</body>
+</html>

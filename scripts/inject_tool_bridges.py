@@ -141,11 +141,11 @@ TOOL_MAPPINGS = {
         'btn': 'Calculate Sandbox Permissions ->'
     },
     'systemd-service-sandboxing-and-security-hardening': {
-        'badge': '[ INTERACTIVE UTILITY // SYSADMIN ]',
-        'title': 'Linux chmod & File Permissions Calculator',
-        'desc': 'Verify systemd ReadWritePaths and ProtectSystem file permissions for hardened service unit definitions.',
-        'url': '/tools/chmod-calculator.html',
-        'btn': 'Calculate Unit Permissions ->'
+        'badge': '[ INTERACTIVE GENERATOR // SYSTEMD ]',
+        'title': 'Systemd Service Sandboxing & Security Override Generator',
+        'desc': 'Build production-ready drop-in override.conf directives and calculate systemd-analyze security exposure ratings 100% offline.',
+        'url': '/tools/systemd-generator.html',
+        'btn': 'Generate Systemd Sandboxing ->'
     },
     'pam-tally2-faillock-account-lockout-policy-guide': {
         'badge': '[ INTERACTIVE UTILITY // AUTH SEC ]',
