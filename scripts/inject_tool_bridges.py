@@ -232,11 +232,11 @@ TOOL_MAPPINGS = {
         'btn': 'Generate Image Digests ->'
     },
     'kubernetes-pod-security-standards-pss-and-admission-control': {
-        'badge': '[ INTERACTIVE UTILITY // SYSADMIN ]',
-        'title': 'Linux chmod & File Permissions Calculator',
-        'desc': 'Calculate non-root UID/GID securityContext file permissions (runAsUser, fsGroup) for restricted Pod Security Standards.',
-        'url': '/tools/chmod-calculator.html',
-        'btn': 'Calculate Pod Permissions ->'
+        'badge': '[ INTERACTIVE GENERATOR // SECCOMP & K8S ]',
+        'title': 'Container Security & OCI Seccomp Profile Generator',
+        'desc': 'Build Kubernetes Pod securityContext.seccompProfile manifests and OCI syscall filter whitelists 100% offline.',
+        'url': '/tools/seccomp-generator.html',
+        'btn': 'Build K8s SecurityContext ->'
     },
     'zero-trust-microservices-with-wasm-runtime-sandboxing': {
         'badge': '[ INTERACTIVE UTILITY // CRYPTO ]',

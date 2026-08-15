@@ -192,4 +192,9 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
     - **Dynamic Vertical Budgeting**: `scripts/generate_social_cards.py` MUST dynamically compute `available_body_h` against the canvas bottom limit, scaling box gaps and line-heights to guarantee zero geometry collisions and $\ge 20\text{px}$ footer clearance across all articles.
     - **Multi-Persona & Jittered Delivery**: `scripts/syndicate.py` MUST provide `--persona` angles (`authority`, `curation`, `quick_tip`, `auto`) and `--jitter` randomized delays (1.5s-4.5s) to avoid remote rate limiting and diversify copywriting angles.
 
+52. **MANDATORY PRE-PROPOSAL DISCOVERY & ANTI-REDUNDANCY AUDIT STANDARD**:
+    - **Empirical Existence Verification Before Proposing**: Before proposing ANY new automation, workflow, script, or tool in chat or RFC proposals, the AI Agent MUST explicitly inspect the relevant directories (`.github/workflows/`, `scripts/`, `tools/`, `blueprints/`) using `list_dir` or `grep_search`.
+    - **Strict Prohibition of Phantom Backlog**: The AI MUST NEVER propose building a file, CI/CD action, or tool that already exists under a same or similar name (e.g. proposing `indexer-ping.yml` when `indexing.yml` is already implemented).
+    - **Single Source of Truth Inventory**: Proactive proposals must strictly state the current implementation state of the subsystem, citing existing file lines before suggesting enhancements.
+
 
