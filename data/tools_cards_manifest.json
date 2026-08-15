@@ -509,6 +509,23 @@
     ],
     "url": "https://zyekh.com/tools/markdown.html"
   },
+  "pam-generator": {
+    "slug": "pam-generator",
+    "title": "Linux PAM & Faillock Policy Generator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Generate production-ready Linux PAM authentication stack and pam_faillock account lockout policies 100% client-side. Configure brute-force thresholds, unlock durations, root protection, and pam.d integration.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/pam-generator.html"
+  },
   "password": {
     "slug": "password",
     "title": "Secure Password Generator",

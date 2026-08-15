@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Linux PAM &amp; Faillock Account Lockout Policy Generator — Security Hardening Builder | zyekh.com</title>
+<meta content="Generate production-ready Linux PAM authentication stack and pam_faillock account lockout policies 100% client-side. Configure brute-force thresholds, unlock durations, root protection, and pam.d integration." name="description"/>
+<meta content="pam generator, pam_faillock generator, pam_tally2 migration, account lockout policy linux, faillock.conf generator, pam hardening, brute force defense linux" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/pam-generator.html" rel="canonical"/>
+<!-- Open Graph / Social -->
+<meta content="Linux PAM &amp; Faillock Account Lockout Policy Generator | zyekh.com" property="og:title"/>
+<meta content="Build production Linux PAM authentication stacks and faillock.conf account lockout configurations 100% offline." property="og:description"/>
+<meta content="https://zyekh.com/tools/pam-generator.html" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-pam-generator-dark-landscape.png?v=e8748e87" property="og:image"/>
+<meta content="zyekh.com" property="og:site_name"/>
+<!-- Twitter Cards -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Linux PAM &amp; Faillock Account Lockout Policy Generator | zyekh.com" name="twitter:title"/>
+<meta content="Build production Linux PAM authentication stacks and faillock.conf account lockout configurations 100% offline." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-pam-generator-dark-landscape.png?v=e8748e87" name="twitter:image"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://zyekh.com/tools/pam-generator.html#app",
+      "name": "Linux PAM & Faillock Account Lockout Policy Generator",
+      "description": "Interactive client-side Linux PAM authentication and pam_faillock security policy generator.",
+      "url": "https://zyekh.com/tools/pam-generator.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript and a modern web browser.",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Person",
+        "@id": "https://zyekh.com/#person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com"
+      },
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/tools/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/tools/pam-generator.html#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "PAM Generator", "item": "https://zyekh.com/tools/pam-generator.html" }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Self-hosted Fonts -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<style>
+  .gen-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 1.5rem;
+    align-items: start;
+    margin-top: 1.5rem;
+  }
+  @media (max-width: 900px) {
+    .gen-grid { grid-template-columns: 1fr; }
+  }
+  .gen-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+  }
+  .section-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text-main);
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .preset-bar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  @media (max-width: 500px) {
+    .preset-bar { grid-template-columns: 1fr; }
+  }
+  .btn-preset {
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.5rem 0.6rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-align: center;
+    transition: var(--transition);
+  }
+  .btn-preset:hover {
+    border-color: var(--border-color-hover);
+    color: var(--text-main);
+  }
+  .btn-preset.active {
+    background: var(--text-main);
+    color: var(--bg-dark);
+    border-color: var(--text-main);
+  }
+  .param-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .param-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-main);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .param-desc {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .param-input {
+    width: 100%;
+    padding: 0.45rem 0.6rem;
+    font-size: 0.85rem;
+    font-family: 'Fira Code', monospace;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: var(--radius-sm);
+    box-sizing: border-box;
+  }
+  .param-input:focus {
+    outline: none;
+    border-color: var(--text-main);
+  }
+  .subsystem-group {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.01);
+  }
+  .subsystem-header {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .checkbox-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    line-height: 1.35;
+  }
+  .checkbox-item:last-child { margin-bottom: 0; }
+  .checkbox-item input[type="checkbox"] {
+    margin-top: 0.15rem;
+    accent-color: var(--accent);
+  }
+  .checkbox-item strong {
+    color: var(--text-main);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.78rem;
+  }
+  .score-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .score-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+  }
+  .score-badge.safe { background: rgba(16, 185, 129, 0.1); color: #34d399; border-color: #059669; }
+  .score-badge.medium { background: rgba(245, 158, 11, 0.1); color: #fbbf24; border-color: #d97706; }
+  .score-badge.unsafe { background: rgba(239, 68, 68, 0.1); color: #f87171; border-color: #dc2626; }
+  .tabs-nav {
+    display: flex;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.65rem;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--transition);
+  }
+  .tab-btn:hover { color: var(--text-main); }
+  .tab-btn.active {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-main);
+    font-weight: 600;
+  }
+  .code-viewer-wrap {
+    position: relative;
+    background: #000000;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .code-pre {
+    margin: 0;
+    padding: 1rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    color: #e4e4e7;
+    line-height: 1.55;
+    overflow-x: auto;
+    max-height: 480px;
+    white-space: pre;
+  }
+  .output-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+  .btn-action {
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.45rem 0.85rem;
+    background: var(--text-main);
+    color: var(--bg-dark);
+    border: 1px solid var(--text-main);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .btn-action:hover { opacity: 0.9; }
+  .btn-action.outline {
+    background: var(--bg-secondary);
+    color: var(--text-main);
+    border-color: var(--border-color);
+  }
+  .btn-action.outline:hover { border-color: var(--border-color-hover); }
+</style>
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+<script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+  <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous" as="script">
+  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
+  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-/nQ3ANMBzhm7udhY1P05V80k0Z1NyY3TNrnHe4LBz3E='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+</head>
+<body>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools Hub</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">PAM &amp; Faillock Generator</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">[ LINUX SECURITY &amp; AUTH OPS ]</span>
+<h1 class="page-title">Linux PAM &amp; Faillock Policy Generator</h1>
+<p class="page-subtitle">Generate production-grade PAM authentication stacks and pam_faillock account lockout policies to defend against brute-force attacks and credential spraying 100% offline.</p>
+</header>
+<div class="gen-grid">
+<!-- Left Column: Controls & Configuration -->
+<div>
+<div class="gen-card">
+<h2 class="section-title">
+<span>[ 1. SECURITY PRESET PROFILES ]</span>
+</h2>
+<div class="preset-bar">
+<button class="btn-preset active" data-preset="bastion" type="button">Enterprise Bastion</button>
+<button class="btn-preset" data-preset="production" type="button">Production Server</button>
+<button class="btn-preset" data-preset="ha" type="button">High Availability</button>
+<button class="btn-preset" data-preset="custom" type="button">Custom Policy</button>
+</div>
+<!-- Real-Time Resilience Meter -->
+<div class="score-card">
+<div>
+<div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:600;">Brute-Force Resilience</div>
+<div id="resilienceSummary" style="font-size:0.85rem; font-weight:700; color:var(--text-main); margin-top:0.15rem;">Max 3 Tries / 15m Lockout</div>
+</div>
+<div class="score-badge safe" id="resilienceBadge">[ HIGH RESILIENCE ]</div>
+</div>
+<!-- Parameters Section -->
+<h2 class="section-title">
+<span>[ 2. THRESHOLD &amp; INTERVAL DIRECTIVES ]</span>
+</h2>
+<div class="param-group">
+<label class="param-label" for="numDeny">
+<span>Failed Attempts Threshold (deny):</span>
+<span id="valDenyDisplay" style="font-family:'Fira Code',monospace; color:var(--text-muted);">3</span>
+</label>
+<div class="param-desc">Number of consecutive failed authentications before triggering an account lock.</div>
+<input aria-label="Failed attempts threshold deny count" class="param-input" id="numDeny" max="20" min="1" type="number" value="3"/>
+</div>
+<div class="param-group">
+<label class="param-label" for="numUnlockTime">
+<span>Lockout Duration (unlock_time, sec):</span>
+<span id="valUnlockDisplay" style="font-family:'Fira Code',monospace; color:var(--text-muted);">900s (15 min)</span>
+</label>
+<div class="param-desc">Duration in seconds that the account remains locked (0 = manual admin unlock only).</div>
+<input aria-label="Lockout duration in seconds" class="param-input" id="numUnlockTime" max="86400" min="0" step="30" type="number" value="900"/>
+</div>
+<div class="param-group">
+<label class="param-label" for="numFailInterval">
+<span>Failure Observation Window (fail_interval, sec):</span>
+<span id="valIntervalDisplay" style="font-family:'Fira Code',monospace; color:var(--text-muted);">900s (15 min)</span>
+</label>
+<div class="param-desc">Window of time in seconds within which consecutive failures are tracked.</div>
+<input aria-label="Failure observation window in seconds" class="param-input" id="numFailInterval" max="86400" min="60" step="30" type="number" value="900"/>
+</div>
+<div class="param-group">
+<label class="param-label" for="numRootUnlockTime">
+<span>Root Lockout Duration (root_unlock_time, sec):</span>
+<span id="valRootUnlockDisplay" style="font-family:'Fira Code',monospace; color:var(--text-muted);">1800s (30 min)</span>
+</label>
+<div class="param-desc">Separate lockout duration specifically applied to the root account when even_deny_root is enabled.</div>
+<input aria-label="Root account lockout duration in seconds" class="param-input" id="numRootUnlockTime" max="86400" min="0" step="30" type="number" value="1800"/>
+</div>
+<!-- Security Directives Toggles -->
+<div class="subsystem-group">
+<div class="subsystem-header">[ ADVANCED SECURITY DIRECTIVES ]</div>
+<label class="checkbox-item" for="chkEvenDenyRoot">
+<input checked="" id="chkEvenDenyRoot" type="checkbox"/>
+<div>
+<strong>even_deny_root</strong>: Enforce account lockout on the root user (prevents root brute-force attacks).
+</div>
+</label>
+<label class="checkbox-item" for="chkAudit">
+<input checked="" id="chkAudit" type="checkbox"/>
+<div>
+<strong>audit</strong>: Log username and failure count directly to the Linux audit subsystem (`auditd`).
+</div>
+</label>
+<label class="checkbox-item" for="chkSilent">
+<input checked="" id="chkSilent" type="checkbox"/>
+<div>
+<strong>silent</strong>: Suppress informative lockout messages to prevent username enumeration by attackers.
+</div>
+</label>
+<label class="checkbox-item" for="chkLocalUsersOnly">
+<input id="chkLocalUsersOnly" type="checkbox"/>
+<div>
+<strong>local_users_only</strong>: Apply lockout exclusively to local `/etc/passwd` accounts, bypassing LDAP/SSO.
+</div>
+</label>
+<label class="checkbox-item" for="chkNoDelay">
+<input id="chkNoDelay" type="checkbox"/>
+<div>
+<strong>nodelay</strong>: Suppress arbitrary PAM authentication delays on failed attempts (relies on faillock timing).
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Right Column: Output Formats & Exporters -->
+<div>
+<div class="gen-card">
+<div class="tabs-nav" role="tablist">
+<button class="tab-btn active" data-tab="faillock" role="tab" type="button">/etc/security/faillock.conf</button>
+<button class="tab-btn" data-tab="common-auth" role="tab" type="button">/etc/pam.d/common-auth</button>
+<button class="tab-btn" data-tab="cli" role="tab" type="button">faillock Admin CLI</button>
+<button class="tab-btn" data-tab="migration" role="tab" type="button">Legacy pam_tally2</button>
+</div>
+<div class="code-viewer-wrap">
+<pre class="code-pre" id="codeOutput"># Generating PAM Faillock configuration...</pre>
+</div>
+<div class="output-actions">
+<button class="btn-action outline" id="btnDownload" type="button">Download .conf</button>
+<button class="btn-action" id="btnCopy" type="button">Copy to Clipboard</button>
+</div>
+<div style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-muted); line-height: 1.5;">
+<strong>[ NOTE // DEPLOYMENT ]</strong>: On modern Linux distributions (Ubuntu 22.04+, Debian 12+, RHEL 8+, Rocky Linux 9+), configuring <code>/etc/security/faillock.conf</code> automatically applies to standard PAM stacks without manually editing <code>/etc/pam.d/</code> files.
+</div>
+</div>
+</div>
+</div>
+<!-- In-Depth Technical Guide -->
+<section class="seo-content-block" style="margin-top: 2rem;">
+<h2>Architecture: Linux Pluggable Authentication Modules (PAM) &amp; Faillock</h2>
+<p>
+The Linux Pluggable Authentication Modules (PAM) architecture provides dynamic, modular authentication abstraction across SSH, console login, `sudo`, and display managers. <strong>pam_faillock</strong> replaces the deprecated <strong>pam_tally2</strong> module, tracking consecutive failed authentication attempts in transient tally databases under <code>/var/run/faillock/</code> or <code>/run/faillock/</code>.
+</p>
+<h3>Key Security Directives Explained</h3>
+<div class="grid-2" style="gap: 1rem; margin-top: 1rem;">
+<div class="custom-card" style="padding: 1rem;">
+<h4 style="margin-top:0; font-size:0.9rem; color:var(--text-main);">even_deny_root &amp; root_unlock_time</h4>
+<p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+By default, PAM exempts the root account from lockout to prevent Denial-of-Service (DoS) attacks where an attacker intentionally locks out administrative access. Enabling <code>even_deny_root</code> combined with a dedicated <code>root_unlock_time</code> protects SSH jump hosts from root dictionary brute-force while allowing automated recovery.
+</p>
+</div>
+<div class="custom-card" style="padding: 1rem;">
+<h4 style="margin-top:0; font-size:0.9rem; color:var(--text-main);">silent &amp; User Enumeration Defense</h4>
+<p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+When an account is locked out, PAM can display explicit messages like <em>"Account locked due to 3 failed logins"</em>. Enabling the <code>silent</code> directive suppresses these messages, preventing external attackers from identifying which usernames exist on the target system.
+</p>
+</div>
+</div>
+<h3 style="margin-top: 1.5rem;">Managing Locked Accounts with the faillock CLI</h3>
+<p>Administrators can inspect and reset authentication tally records instantly without restarting any daemons:</p>
+<pre class="code-pre" style="border-radius: var(--radius-sm); margin-bottom: 1rem;"><code># View authentication failure records for a user:
+$ faillock --user devops_admin
+
+# View failure records across all accounts:
+$ faillock
+
+# Reset / unlock a specific user account:
+$ sudo faillock --user devops_admin --reset
+
+# Reset all locked accounts on the host:
+$ sudo faillock --reset</code></pre>
+</section>
+</main>
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">52 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">35 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="https://shop.zyekh.com" rel="noopener noreferrer" target="_blank">Official Store</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
+<script>
+(function() {
+  var currentPreset = 'bastion';
+  var activeTab = 'faillock';
+
+  var presets = {
+    bastion: {
+      deny: 3,
+      unlock_time: 900,
+      fail_interval: 900,
+      root_unlock_time: 1800,
+      even_deny_root: true,
+      audit: true,
+      silent: true,
+      local_users_only: false,
+      nodelay: false
+    },
+    production: {
+      deny: 5,
+      unlock_time: 600,
+      fail_interval: 900,
+      root_unlock_time: 900,
+      even_deny_root: true,
+      audit: true,
+      silent: true,
+      local_users_only: true,
+      nodelay: false
+    },
+    ha: {
+      deny: 10,
+      unlock_time: 300,
+      fail_interval: 300,
+      root_unlock_time: 600,
+      even_deny_root: false,
+      audit: true,
+      silent: false,
+      local_users_only: true,
+      nodelay: true
+    }
+  };
+
+  // DOM Elements
+  var numDeny = document.getElementById('numDeny');
+  var numUnlockTime = document.getElementById('numUnlockTime');
+  var numFailInterval = document.getElementById('numFailInterval');
+  var numRootUnlockTime = document.getElementById('numRootUnlockTime');
+  
+  var valDenyDisplay = document.getElementById('valDenyDisplay');
+  var valUnlockDisplay = document.getElementById('valUnlockDisplay');
+  var valIntervalDisplay = document.getElementById('valIntervalDisplay');
+  var valRootUnlockDisplay = document.getElementById('valRootUnlockDisplay');
+
+  var chkEvenDenyRoot = document.getElementById('chkEvenDenyRoot');
+  var chkAudit = document.getElementById('chkAudit');
+  var chkSilent = document.getElementById('chkSilent');
+  var chkLocalUsersOnly = document.getElementById('chkLocalUsersOnly');
+  var chkNoDelay = document.getElementById('chkNoDelay');
+
+  var codeOutput = document.getElementById('codeOutput');
+  var resilienceBadge = document.getElementById('resilienceBadge');
+  var resilienceSummary = document.getElementById('resilienceSummary');
+  var btnCopy = document.getElementById('btnCopy');
+  var btnDownload = document.getElementById('btnDownload');
+
+  function debounceRAF(fn, delay) {
+    delay = delay || 60;
+    var timer = null;
+    return function() {
+      var context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function() {
+        window.requestAnimationFrame(function() {
+          fn.apply(context, args);
+        });
+      }, delay);
+    };
+  }
+
+  function applyPreset(presetKey) {
+    var p = presets[presetKey];
+    if (!p) return;
+    currentPreset = presetKey;
+    
+    numDeny.value = p.deny;
+    numUnlockTime.value = p.unlock_time;
+    numFailInterval.value = p.fail_interval;
+    numRootUnlockTime.value = p.root_unlock_time;
+
+    chkEvenDenyRoot.checked = p.even_deny_root;
+    chkAudit.checked = p.audit;
+    chkSilent.checked = p.silent;
+    chkLocalUsersOnly.checked = p.local_users_only;
+    chkNoDelay.checked = p.nodelay;
+
+    document.querySelectorAll('.btn-preset').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-preset') === presetKey);
+    });
+
+    generateConfig();
+  }
+
+  function formatDuration(sec) {
+    if (sec === 0) return '0s (Permanent / Admin Reset)';
+    if (sec < 60) return sec + 's';
+    var mins = Math.floor(sec / 60);
+    var remainingSec = sec % 60;
+    return mins + 'm' + (remainingSec > 0 ? ' ' + remainingSec + 's' : '') + ' (' + sec + 's)';
+  }
+
+  function generateConfig() {
+    var deny = parseInt(numDeny.value, 10) || 3;
+    var unlock = parseInt(numUnlockTime.value, 10) || 0;
+    var interval = parseInt(numFailInterval.value, 10) || 900;
+    var rootUnlock = parseInt(numRootUnlockTime.value, 10) || 0;
+
+    var evenDenyRoot = chkEvenDenyRoot.checked;
+    var audit = chkAudit.checked;
+    var silent = chkSilent.checked;
+    var localOnly = chkLocalUsersOnly.checked;
+    var noDelay = chkNoDelay.checked;
+
+    valDenyDisplay.textContent = deny + ' attempts';
+    valUnlockDisplay.textContent = formatDuration(unlock);
+    valIntervalDisplay.textContent = formatDuration(interval);
+    valRootUnlockDisplay.textContent = formatDuration(rootUnlock);
+
+    // Calculate Resilience Rating
+    var resilienceText = 'Max ' + deny + ' Tries / ' + (unlock === 0 ? 'Permanent' : formatDuration(unlock)) + ' Lockout';
+    resilienceSummary.textContent = resilienceText;
+
+    if (deny <= 3 && unlock >= 600 && evenDenyRoot) {
+      resilienceBadge.textContent = '[ HIGH RESILIENCE // BASTION ]';
+      resilienceBadge.className = 'score-badge safe';
+    } else if (deny <= 5 && unlock >= 300) {
+      resilienceBadge.textContent = '[ BALANCED PRODUCTION ]';
+      resilienceBadge.className = 'score-badge medium';
+    } else {
+      resilienceBadge.textContent = '[ PERMISSIVE POLICY ]';
+      resilienceBadge.className = 'score-badge unsafe';
+    }
+
+    if (activeTab === 'faillock') {
+      var lines = [
+        '# /etc/security/faillock.conf',
+        '# Generated by Linux PAM & Faillock Policy Generator (zyekh.com)',
+        '# Compliance: CIS Benchmark, NIST SP 800-53 IA-5, PCI-DSS 8.1.6',
+        '',
+        '# Directory where failed attempt tallies are recorded',
+        'dir = /var/run/faillock',
+        '',
+        '# Number of consecutive failures allowed before account lockout',
+        'deny = ' + deny,
+        '',
+        '# Window of time in seconds within which failures are tracked',
+        'fail_interval = ' + interval,
+        '',
+        '# Duration in seconds of account lockout (0 = manual admin unlock only)',
+        'unlock_time = ' + unlock,
+        ''
+      ];
+
+      if (evenDenyRoot) {
+        lines.push('# Lockout root account on consecutive authentication failures');
+        lines.push('even_deny_root');
+        lines.push('');
+        if (rootUnlock > 0) {
+          lines.push('# Custom lockout duration for root account');
+          lines.push('root_unlock_time = ' + rootUnlock);
+          lines.push('');
+        }
+      }
+
+      if (audit) {
+        lines.push('# Log username and failures into auditd logs');
+        lines.push('audit');
+        lines.push('');
+      }
+
+      if (silent) {
+        lines.push('# Suppress informative failure messages to prevent user enumeration');
+        lines.push('silent');
+        lines.push('');
+      }
+
+      if (localOnly) {
+        lines.push('# Only enforce faillock for local /etc/passwd users (skip LDAP/SSO)');
+        lines.push('local_users_only');
+        lines.push('');
+      }
+
+      if (noDelay) {
+        lines.push('# Do not enforce arbitrary PAM delays on authentication failures');
+        lines.push('nodelay');
+        lines.push('');
+      }
+
+      codeOutput.textContent = lines.join('\n');
+    } else if (activeTab === 'common-auth') {
+      var pamLines = [
+        '# /etc/pam.d/common-auth (Ubuntu/Debian) or /etc/pam.d/system-auth (RHEL/Rocky)',
+        '# Generated by Linux PAM & Faillock Policy Generator (zyekh.com)',
+        '',
+        '# 1. Pre-authentication tally check (locks account before checking password):',
+        'auth    required    pam_faillock.so preauth' + (silent ? ' silent' : '') + (audit ? ' audit' : '') + (evenDenyRoot ? ' even_deny_root' : '') + ' deny=' + deny + ' unlock_time=' + unlock + ' fail_interval=' + interval,
+        '',
+        '# 2. Standard authentication modules:',
+        'auth    [success=1 default=bad] pam_unix.so nullok',
+        '',
+        '# 3. Post-authentication tally update on failure:',
+        'auth    [default=die] pam_faillock.so authfail' + (audit ? ' audit' : '') + (evenDenyRoot ? ' even_deny_root' : ''),
+        '',
+        '# 4. Successful login tally reset:',
+        'auth    sufficient  pam_faillock.so authsucc',
+        'auth    required    pam_deny.so',
+        '',
+        '# Account stack inclusion:',
+        'account required    pam_faillock.so'
+      ];
+      codeOutput.textContent = pamLines.join('\n');
+    } else if (activeTab === 'cli') {
+      var cliLines = [
+        '# ============================================================',
+        '#          LINUX FAILLOCK ADMINISTRATION CHEATSHEET            ',
+        '# ============================================================',
+        '',
+        '# 1. Check failed authentication records for a specific user:',
+        'faillock --user devops_user',
+        '',
+        '# 2. Check failed authentication records for ALL users:',
+        'faillock',
+        '',
+        '# 3. Reset / Unlock a locked user account immediately:',
+        'sudo faillock --user devops_user --reset',
+        '',
+        '# 4. Reset ALL locked user accounts across the system:',
+        'sudo faillock --reset',
+        '',
+        '# 5. Verify system journal authentication failures in real-time:',
+        'sudo journalctl -u ssh -f | grep -i faillock',
+        '',
+        '# 6. Verify auditd security log events for PAM failures:',
+        'sudo ausearch -m USER_AUTH -sv no --interpret'
+      ];
+      codeOutput.textContent = cliLines.join('\n');
+    } else if (activeTab === 'migration') {
+      var migLines = [
+        '# ============================================================',
+        '#       MIGRATION: DEPRECATED pam_tally2 -> pam_faillock       ',
+        '# ============================================================',
+        '# [ NOTE ] pam_tally and pam_tally2 have been removed in Linux PAM 1.4.0+',
+        '# (Ubuntu 22.04+, Debian 12+, RHEL 8+). Use pam_faillock instead.',
+        '',
+        '# LEGACY SYNTAX (DO NOT USE ON MODERN LINUX):',
+        '# auth required pam_tally2.so onerr=fail deny=' + deny + ' unlock_time=' + unlock + (evenDenyRoot ? ' even_deny_root' : ''),
+        '# account required pam_tally2.so',
+        '',
+        '# MODERN EQUIVALENT (/etc/security/faillock.conf):',
+        'dir = /var/run/faillock',
+        'deny = ' + deny,
+        'unlock_time = ' + unlock,
+        'fail_interval = ' + interval,
+        (evenDenyRoot ? 'even_deny_root\n' : '') +
+        (audit ? 'audit\n' : '') +
+        (silent ? 'silent\n' : '')
+      ];
+      codeOutput.textContent = migLines.join('\n');
+    }
+  }
+
+  var debouncedGen = debounceRAF(function() {
+    currentPreset = 'custom';
+    document.querySelectorAll('.btn-preset').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-preset') === 'custom');
+    });
+    generateConfig();
+  }, 60);
+
+  // Preset button listeners
+  document.querySelectorAll('.btn-preset').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      applyPreset(this.getAttribute('data-preset'));
+    });
+  });
+
+  // Tab navigation listeners
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      activeTab = this.getAttribute('data-tab');
+      document.querySelectorAll('.tab-btn').forEach(function(b) {
+        b.classList.toggle('active', b === btn);
+      });
+      generateConfig();
+    });
+  });
+
+  // Input listeners
+  numDeny.addEventListener('input', debouncedGen);
+  numUnlockTime.addEventListener('input', debouncedGen);
+  numFailInterval.addEventListener('input', debouncedGen);
+  numRootUnlockTime.addEventListener('input', debouncedGen);
+
+  chkEvenDenyRoot.addEventListener('change', debouncedGen);
+  chkAudit.addEventListener('change', debouncedGen);
+  chkSilent.addEventListener('change', debouncedGen);
+  chkLocalUsersOnly.addEventListener('change', debouncedGen);
+  chkNoDelay.addEventListener('change', debouncedGen);
+
+  // Copy button
+  btnCopy.addEventListener('click', function() {
+    navigator.clipboard.writeText(codeOutput.textContent).then(function() {
+      var orig = btnCopy.textContent;
+      btnCopy.textContent = '[ COPIED ]';
+      btnCopy.style.background = 'var(--text-muted)';
+      setTimeout(function() {
+        btnCopy.textContent = orig;
+        btnCopy.style.background = 'var(--text-main)';
+      }, 1500);
+    });
+  });
+
+  // Download button
+  btnDownload.addEventListener('click', function() {
+    var blob = new Blob([codeOutput.textContent], { type: 'text/plain;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = activeTab === 'faillock' ? 'faillock.conf' : (activeTab === 'common-auth' ? 'common-auth' : 'pam-commands.sh');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // Initial generation
+  applyPreset('bastion');
+})();
+</script>
+</body>
+</html>

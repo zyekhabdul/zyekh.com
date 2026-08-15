@@ -180,6 +180,12 @@
     "type": "Tool"
   },
   {
+    "title": "Linux PAM & Faillock Policy Generator",
+    "desc": "Generate production-ready Linux PAM authentication stack and pam_faillock account lockout policies 100% client-side. Configure brute-force thresholds, unlock durations, root protection, and pam.d integration.",
+    "url": "/tools/pam-generator.html",
+    "type": "Tool"
+  },
+  {
     "title": "Secure Password Generator",
     "desc": "Generator password acak yang aman. Atur panjang dan kompleksitas, salin langsung. Dibuat di browser, tidak dikirim ke server.",
     "url": "/tools/password.html",

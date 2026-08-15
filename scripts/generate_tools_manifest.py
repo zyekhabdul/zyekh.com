@@ -26,6 +26,7 @@ CATEGORY_MAP = {
     "wireguard": "Security & Linux Systems",
     "seccomp": "Security & Linux Systems",
     "systemd": "Security & Linux Systems",
+    "pam": "Security & Linux Systems",
     "hardening": "Security & Linux Systems",
     "subnet": "Security & Linux Systems",
     "curl": "Security & Linux Systems",

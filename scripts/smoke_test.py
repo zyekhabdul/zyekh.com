@@ -55,6 +55,7 @@ def run_smoke_tests(port=None):
         ("/tools/wireguard-generator.html", 200, "text/html", ["<title>", "antiClickjack", "localStorage.getItem"]),
         ("/tools/seccomp-generator.html", 200, "text/html", ["<title>", "antiClickjack", "localStorage.getItem"]),
         ("/tools/systemd-generator.html", 200, "text/html", ["<title>", "antiClickjack", "localStorage.getItem"]),
+        ("/tools/pam-generator.html", 200, "text/html", ["<title>", "antiClickjack", "localStorage.getItem"]),
         ("/blog/", 200, "text/html", ["<title>", "antiClickjack", "localStorage.getItem"]),
         ("/blog/linux-vps-hardening-guide-2026.html", 200, "text/html", ["<title>", "article", "antiClickjack"]),
         ("/blueprints/", 200, "text/html", ["<title>", "antiClickjack"]),

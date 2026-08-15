@@ -134,6 +134,10 @@ All tools execute 100% client-side in the user's browser with zero external serv
 - URL: https://zyekh.com/tools/markdown.html
 - Description: Preview markdown online gratis. Ketik markdown di kiri, lihat hasil render di kanan. Tanpa install.
 
+### Linux PAM & Faillock Policy Generator
+- URL: https://zyekh.com/tools/pam-generator.html
+- Description: Generate production-ready Linux PAM authentication stack and pam_faillock account lockout policies 100% client-side. Configure brute-force thresholds, unlock durations, root protection, and pam.d integration.
+
 ### Secure Password Generator
 - URL: https://zyekh.com/tools/password.html
 - Description: Generator password acak yang aman. Atur panjang dan kompleksitas, salin langsung. Dibuat di browser, tidak dikirim ke server.

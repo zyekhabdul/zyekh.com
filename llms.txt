@@ -99,6 +99,7 @@
 - [LLM Token & GPU VRAM Cost Calculator](https://zyekh.com/tools/llm-calculator.html): Interactive 2026 LLM pricing comparison, API token cost estimator, and GPU VRAM hardware sizing calculator for Claude 3.7, GPT-4.5, DeepSeek-R1, Gemini 2.0, and Llama 3.3.
 - [Lorem Ipsum Generator](https://zyekh.com/tools/lorem.html): Generator lorem ipsum versi Bahasa Indonesia untuk placeholder desain dan mockup. Atur jumlah paragraf.
 - [Markdown Live Editor](https://zyekh.com/tools/markdown.html): Preview markdown online gratis. Ketik markdown di kiri, lihat hasil render di kanan. Tanpa install.
+- [Linux PAM & Faillock Policy Generator](https://zyekh.com/tools/pam-generator.html): Generate production-ready Linux PAM authentication stack and pam_faillock account lockout policies 100% client-side. Configure brute-force thresholds, unlock durations, root protection, and pam.d integration.
 - [Secure Password Generator](https://zyekh.com/tools/password.html): Generator password acak yang aman. Atur panjang dan kompleksitas, salin langsung. Dibuat di browser, tidak dikirim ke server.
 - [Kalkulator Pesangon PHK 2026](https://zyekh.com/tools/pesangon.html): Hitung estimasi uang pesangon PHK, UPMK, UPH, dan kompensasi PKWT sesuai UU Cipta Kerja (PP 35/2021) secara gratis, akurat, dan privasi terjaga.
 - [Pomodoro Focus Timer](https://zyekh.com/tools/pomodoro.html): Timer Pomodoro online untuk fokus kerja. Atur durasi kerja dan istirahat, mode fullscreen.

@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "description": "Structured machine-readable tool catalog and parameter schemas for Browser AI Agents & LLMs.",
   "platform": "https://zyekh.com",
-  "total_tools": 51,
-  "updated_at": "2026-08-15T21:58:05Z",
+  "total_tools": 52,
+  "updated_at": "2026-08-15T22:13:33Z",
   "tools": [
     {
       "id": "ai-token",
@@ -1351,6 +1351,75 @@
           "type": "string",
           "input_element": "textarea",
           "description": "Markdown"
+        }
+      ]
+    },
+    {
+      "id": "pam-generator",
+      "name": "Linux PAM & Faillock Policy Generator",
+      "description": "Generate production-ready Linux PAM authentication stack and pam_faillock account lockout policies 100% client-side. Configure brute-force thresholds, unlock durations, root protection, and pam.d integration.",
+      "category": "Security & Linux Systems",
+      "url": "https://zyekh.com/tools/pam-generator.html",
+      "execution": {
+        "type": "client_side_javascript",
+        "telemetry": "none",
+        "offline_ready": true,
+        "storage": "local_memory_or_localstorage"
+      },
+      "parameters": [
+        {
+          "name": "numDeny",
+          "type": "number",
+          "input_element": "number",
+          "description": "Failed Attempts Threshold (deny):\n3"
+        },
+        {
+          "name": "numUnlockTime",
+          "type": "number",
+          "input_element": "number",
+          "description": "Lockout Duration (unlock_time, sec):\n900s (15 min)"
+        },
+        {
+          "name": "numFailInterval",
+          "type": "number",
+          "input_element": "number",
+          "description": "Failure Observation Window (fail_interval, sec):\n900s (15 min)"
+        },
+        {
+          "name": "numRootUnlockTime",
+          "type": "number",
+          "input_element": "number",
+          "description": "Root Lockout Duration (root_unlock_time, sec):\n1800s (30 min)"
+        },
+        {
+          "name": "chkEvenDenyRoot",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "even_deny_root: Enforce account lockout on the root user (prevents root brute-force attacks)."
+        },
+        {
+          "name": "chkAudit",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "audit: Log username and failure count directly to the Linux audit subsystem (`auditd`)."
+        },
+        {
+          "name": "chkSilent",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "silent: Suppress informative lockout messages to prevent username enumeration by attackers."
+        },
+        {
+          "name": "chkLocalUsersOnly",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "local_users_only: Apply lockout exclusively to local `/etc/passwd` accounts, bypassing LDAP/SSO."
+        },
+        {
+          "name": "chkNoDelay",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "nodelay: Suppress arbitrary PAM authentication delays on failed attempts (relies on faillock timing)."
         }
       ]
     },

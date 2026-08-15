@@ -148,11 +148,11 @@ TOOL_MAPPINGS = {
         'btn': 'Generate Systemd Sandboxing ->'
     },
     'pam-tally2-faillock-account-lockout-policy-guide': {
-        'badge': '[ INTERACTIVE UTILITY // AUTH SEC ]',
-        'title': 'Password Entropy & Strength Analyzer',
-        'desc': 'Evaluate cryptographic password entropy and test resilience against automated dictionary brute-force attacks.',
-        'url': '/tools/password.html',
-        'btn': 'Analyze Password Strength ->'
+        'badge': '[ INTERACTIVE GENERATOR // PAM & AUTH ]',
+        'title': 'Linux PAM & Faillock Policy Generator',
+        'desc': 'Build production-ready faillock.conf account lockout policies and PAM authentication stacks 100% offline.',
+        'url': '/tools/pam-generator.html',
+        'btn': 'Generate PAM & Faillock Policy ->'
     },
     'linux-audit-logging-with-vector-and-clickhouse-dfir': {
         'badge': '[ INTERACTIVE UTILITY // DFIR ]',
