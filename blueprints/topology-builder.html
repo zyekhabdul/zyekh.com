@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zero-Trust Architecture Topology Builder — Interactive Visual Blueprint | zyekh.com</title>
+<meta content="Visual node-graph designer for zero-trust microservices, eBPF kernel enforcement, Envoy proxies, and SPIFFE/Vault trust domains. 100% offline &amp; client-side SVG/Canvas editor." name="description"/>
+<meta content="zero trust architecture, topology builder, mermaid diagram generator, ebpf network topology, envoy proxy design, spiffe spire, vault ssh ca, cloud security blueprint" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/blueprints/topology-builder.html" rel="canonical"/>
+
+<!-- Open Graph / Social -->
+<meta content="Zero-Trust Architecture Topology Builder | zyekh.com" property="og:title"/>
+<meta content="Visual node-graph designer for zero-trust microservices, eBPF kernel enforcement, and mTLS meshes. Real-time Mermaid, SVG, and ASCII export." property="og:description"/>
+<meta content="https://zyekh.com/blueprints/topology-builder.html" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="https://zyekh.com/assets/img/cilium-ebpf-security.jpg?v=596a672f" property="og:image"/>
+<meta content="zyekh.com" property="og:site_name"/>
+
+<!-- Twitter Cards -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Zero-Trust Architecture Topology Builder | zyekh.com" name="twitter:title"/>
+<meta content="Visual node-graph designer for zero-trust microservices, eBPF kernel enforcement, and mTLS meshes. Real-time Mermaid, SVG, and ASCII export." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/cilium-ebpf-security.jpg?v=596a672f" name="twitter:image"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://zyekh.com/blueprints/topology-builder.html#app",
+      "name": "Zero-Trust Architecture Topology Builder",
+      "description": "Interactive visual node-graph designer for zero-trust microservice and kernel security architectures with live Mermaid, SVG, and ASCII export.",
+      "url": "https://zyekh.com/blueprints/topology-builder.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript. Runs entirely client-side.",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Person",
+        "@id": "https://zyekh.com/#person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com"
+      },
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/blueprints/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/blueprints/topology-builder.html#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Blueprints Hub", "item": "https://zyekh.com/blueprints/" },
+        { "@type": "ListItem", "position": 3, "name": "Topology Builder", "item": "https://zyekh.com/blueprints/topology-builder.html" }
+      ]
+    }
+  ]
+}
+</script>
+
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+<script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+
+<!-- Preload Styles & Scripts -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous"></script>
+
+<style>
+  .builder-layout { display: flex; flex-direction: column; gap: 1.25rem; }
+  .toolbar-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.25rem; }
+  .toolbar-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; }
+  .toolbar-group { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+  
+  .btn-tool { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-main); padding: 0.4rem 0.8rem; border-radius: var(--radius-sm); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.15s ease; }
+  .btn-tool:hover { background: var(--bg-card); border-color: var(--accent); }
+  .btn-tool.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  
+  .canvas-wrapper { position: relative; background: var(--code-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden; height: 540px; }
+  #topoCanvas { width: 100%; height: 100%; display: block; cursor: grab; user-select: none; }
+  #topoCanvas:active { cursor: grabbing; }
+  
+  /* SVG Node Styling */
+  .svg-node { cursor: move; }
+  .svg-node rect { fill: var(--bg-card); stroke: var(--border-color); stroke-width: 1.5; rx: 8; transition: stroke 0.15s ease; }
+  .svg-node:hover rect { stroke: var(--accent); }
+  .svg-node.selected rect { stroke: #3b82f6; stroke-width: 2.5; }
+  .svg-node text.node-title { fill: var(--text-main); font-family: 'Inter', -apple-system, sans-serif; font-size: 13px; font-weight: 700; }
+  .svg-node text.node-sub { fill: var(--text-muted); font-family: 'Fira Code', monospace; font-size: 10.5px; }
+  .svg-node text.node-badge { fill: var(--text-muted); font-family: 'Fira Code', monospace; font-size: 9.5px; font-weight: 600; }
+  .svg-node circle.status-dot { fill: #22c55e; }
+  .svg-node .btn-del { cursor: pointer; fill: #ef4444; opacity: 0.6; }
+  .svg-node .btn-del:hover { opacity: 1; }
+
+  /* SVG Links */
+  .svg-link { fill: none; stroke: var(--border-color); stroke-width: 2; stroke-dasharray: 4,4; transition: stroke 0.2s ease; }
+  .svg-link:hover { stroke: #3b82f6; stroke-width: 3; }
+  .svg-link.solid { stroke-dasharray: none; stroke: #3b82f6; }
+
+  /* Exporters Card */
+  .export-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.25rem; }
+  .export-tabs { display: flex; border-bottom: 1px solid var(--border-color); gap: 0.25rem; margin-bottom: 0.75rem; }
+  .export-tab-btn { background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--text-muted); padding: 0.5rem 0.85rem; font-size: 0.85rem; font-weight: 600; font-family: 'Fira Code', monospace; cursor: pointer; }
+  .export-tab-btn.active { color: var(--text-main); border-bottom-color: var(--accent); }
+  .export-pre { background: var(--code-bg); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; font-family: 'Fira Code', monospace; font-size: 0.82rem; line-height: 1.5; color: var(--text-main); height: 260px; overflow-y: auto; white-space: pre; word-break: normal; }
+  
+  .canvas-hint { position: absolute; bottom: 12px; left: 16px; font-family: 'Fira Code', monospace; font-size: 0.75rem; color: var(--text-muted); pointer-events: none; background: rgba(0,0,0,0.4); padding: 4px 8px; border-radius: 4px; }
+</style>
+
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous" as="script">
+  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
+  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-VTKMPwnuK26sDLfJcGEZK+DhS2jcMpjvzRmrfYHcjKk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+</head>
+<body>
+<site-nav active="blueprints"></site-nav>
+
+<main class="main-container">
+  <nav aria-label="Breadcrumb">
+    <ol class="breadcrumb">
+      <li><a class="breadcrumb-link" href="/">Home</a></li>
+      <li aria-hidden="true" class="breadcrumb-sep">/</li>
+      <li><a class="breadcrumb-link" href="/blueprints/">Blueprints</a></li>
+      <li aria-hidden="true" class="breadcrumb-sep">/</li>
+      <li aria-current="page" style="color:var(--text-main);">Zero-Trust Topology Builder</li>
+    </ol>
+  </nav>
+
+  <header class="page-header">
+    <span class="badge">INTERACTIVE ARCHITECTURE UTILITY</span>
+    <h1 class="page-title">Zero-Trust Architecture Topology Builder</h1>
+    <p class="page-subtitle">Interactive visual node-graph designer for zero-trust microservices, eBPF kernel enforcement, Envoy proxies, and SPIFFE/Vault trust domains. Live Mermaid.js, SVG vector, and ASCII flow export.</p>
+  </header>
+
+  <div class="builder-layout">
+    <!-- Toolbar -->
+    <div class="toolbar-card">
+      <div class="toolbar-row">
+        <!-- Presets -->
+        <div class="toolbar-group">
+          <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Preset:</span>
+          <button class="btn-tool active" data-preset="cloud-mesh" type="button">Cloud-Native mTLS Mesh</button>
+          <button class="btn-tool" data-preset="ebpf-lsm" type="button">eBPF Kernel LSM Defense</button>
+          <button class="btn-tool" data-preset="vault-bastion" type="button">Vault CA &amp; Bastion</button>
+          <button class="btn-tool" data-preset="edge-wasm" type="button">Edge AI &amp; Wasm Sandbox</button>
+        </div>
+
+        <!-- Node Add Controls -->
+        <div class="toolbar-group">
+          <select id="selNodeType" style="font-size: 0.82rem; padding: 0.35rem 0.5rem; background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-main); border-radius: var(--radius-sm);">
+            <option value="ingress">[ INGRESS ] Edge Gateway</option>
+            <option value="proxy">[ PROXY ] Envoy / Envoy Wasm</option>
+            <option value="identity">[ IDENTITY ] SPIFFE / Vault CA</option>
+            <option value="kernel">[ KERNEL ] eBPF Tetragon Probe</option>
+            <option value="service">[ SERVICE ] Backend Microservice</option>
+            <option value="db">[ DATABASE ] Encrypted Storage</option>
+          </select>
+          <input id="txtNodeName" placeholder="Node Name (e.g. Core API)" style="font-size: 0.82rem; padding: 0.35rem 0.6rem; background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-main); border-radius: var(--radius-sm); width: 140px;" type="text"/>
+          <button class="btn-tool" id="btnAddNode" style="background: var(--text-main); color: var(--bg-main);" type="button">+ Add Node</button>
+          <button class="btn-tool" id="btnResetCanvas" type="button">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive SVG Workspace -->
+    <div class="canvas-wrapper">
+      <svg id="topoCanvas" viewBox="0 0 1100 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern height="24" id="gridPattern" patternUnits="userSpaceOnUse" width="24">
+            <circle cx="1" cy="1" fill="var(--border-color)" opacity="0.35" r="1.2"></circle>
+          </pattern>
+          <marker id="arrow" markerHeight="8" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="6" refY="3">
+            <path d="M0,0 L0,6 L6,3 z" fill="#3b82f6"></path>
+          </marker>
+        </defs>
+        <rect fill="url(#gridPattern)" height="100%" width="100%"></rect>
+        <g id="linksLayer"></g>
+        <g id="nodesLayer"></g>
+      </svg>
+      <div class="canvas-hint">[ HINT ] Drag nodes to rearrange • Click node to link/unlink • Live exports update in real time</div>
+    </div>
+
+    <!-- Live Multi-Format Exporters -->
+    <div class="export-card">
+      <div class="toolbar-row" style="margin-bottom: 0.75rem;">
+        <div class="export-tabs" style="margin-bottom: 0;">
+          <button class="export-tab-btn active" id="tabMermaid" type="button">Mermaid.js Markdown</button>
+          <button class="export-tab-btn" id="tabSvg" type="button">Clean SVG Vector</button>
+          <button class="export-tab-btn" id="tabAscii" type="button">ASCII Network Map</button>
+          <button class="export-tab-btn" id="tabJson" type="button">JSON Topology Spec</button>
+        </div>
+        <div class="toolbar-group">
+          <button class="btn-primary" id="btnCopyExport" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;" type="button">Copy Output</button>
+          <button class="btn-secondary" id="btnDownloadExport" style="font-size: 0.8rem; padding: 0.35rem 0.75rem;" type="button">Download File</button>
+        </div>
+      </div>
+
+      <pre class="export-pre" id="exportPre"><code># Compiling topology output...</code></pre>
+    </div>
+
+    <!-- Related Security Architecture Resources -->
+    <div class="toolbar-card">
+      <h3 style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-top: 0; margin-bottom: 0.75rem; text-transform: uppercase;">[ RELATED ZERO-TRUST ARCHITECTURE BLUEPRINTS ]</h3>
+      <div class="grid-3" style="gap: 1rem;">
+        <div>
+          <a href="/blog/zero-trust-microservices-with-wasm-runtime-sandboxing.html" style="font-weight: 600; color: var(--text-main); text-decoration: none;">Zero-Trust Microservices with Wasm Sandboxing -&gt;</a>
+          <p class="text-muted-xs" style="margin-top: 0.25rem;">Isolate untrusted plugins and multi-tenant code in sub-millisecond linear memory boundaries.</p>
+        </div>
+        <div>
+          <a href="/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html" style="font-weight: 600; color: var(--text-main); text-decoration: none;">Cilium eBPF &amp; Tetragon Security Tracing -&gt;</a>
+          <p class="text-muted-xs" style="margin-top: 0.25rem;">Enforce kernel-level socket filters and real-time process termination without iptables.</p>
+        </div>
+        <div>
+          <a href="/blueprints/the-ultimate-linux-and-cloud-security-architecture-cheatsheet.html" style="font-weight: 600; color: var(--text-main); text-decoration: none;">The Ultimate Security Architecture Cheatsheet -&gt;</a>
+          <p class="text-muted-xs" style="margin-top: 0.25rem;">Pillar reference matrix indexing 25 verified production security blueprints.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 50;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+
+(function() {
+  'use strict';
+
+  var activeExportTab = 'mermaid';
+  var selectedNodeId = null;
+  var draggingNode = null;
+  var dragOffset = { x: 0, y: 0 };
+
+  var nodes = [];
+  var links = [];
+
+  var svgCanvas = document.getElementById('topoCanvas');
+  var nodesLayer = document.getElementById('nodesLayer');
+  var linksLayer = document.getElementById('linksLayer');
+  var exportPre = document.getElementById('exportPre');
+  var btnCopyExport = document.getElementById('btnCopyExport');
+  var btnDownloadExport = document.getElementById('btnDownloadExport');
+
+  var tabMermaid = document.getElementById('tabMermaid');
+  var tabSvg = document.getElementById('tabSvg');
+  var tabAscii = document.getElementById('tabAscii');
+  var tabJson = document.getElementById('tabJson');
+
+  var presetBtns = document.querySelectorAll('[data-preset]');
+  var selNodeType = document.getElementById('selNodeType');
+  var txtNodeName = document.getElementById('txtNodeName');
+  var btnAddNode = document.getElementById('btnAddNode');
+  var btnResetCanvas = document.getElementById('btnResetCanvas');
+
+  var typeMeta = {
+    ingress: { badge: 'INGRESS', sub: 'Edge Proxy TLS 1.3' },
+    proxy: { badge: 'ENVOY', sub: 'Wasm Security Filter' },
+    identity: { badge: 'IDENTITY', sub: 'SPIFFE / Vault CA' },
+    kernel: { badge: 'KERNEL', sub: 'eBPF Tetragon Probe' },
+    service: { badge: 'SERVICE', sub: 'Rust / Go Microservice' },
+    db: { badge: 'DATASTORE', sub: 'Encrypted DB / KV' }
+  };
+
+  var PRESETS = {
+    'cloud-mesh': {
+      nodes: [
+        { id: 'n1', type: 'ingress', name: 'Cloudflare Edge', x: 60, y: 180 },
+        { id: 'n2', type: 'proxy', name: 'Envoy Gateway', x: 280, y: 180 },
+        { id: 'n3', type: 'identity', name: 'SPIFFE / SPIRE CA', x: 280, y: 340 },
+        { id: 'n4', type: 'service', name: 'Core Order API', x: 540, y: 100 },
+        { id: 'n5', type: 'service', name: 'Payment Microservice', x: 540, y: 260 },
+        { id: 'n6', type: 'db', name: 'PostgreSQL (mTLS)', x: 820, y: 180 }
+      ],
+      links: [
+        { from: 'n1', to: 'n2' },
+        { from: 'n2', to: 'n4' },
+        { from: 'n2', to: 'n5' },
+        { from: 'n3', to: 'n4' },
+        { from: 'n3', to: 'n5' },
+        { from: 'n4', to: 'n6' },
+        { from: 'n5', to: 'n6' }
+      ]
+    },
+    'ebpf-lsm': {
+      nodes: [
+        { id: 'n1', type: 'ingress', name: 'NIC Driver RX', x: 60, y: 180 },
+        { id: 'n2', type: 'kernel', name: 'XDP DDoS Filter', x: 280, y: 180 },
+        { id: 'n3', type: 'kernel', name: 'Cilium Host Routing', x: 520, y: 180 },
+        { id: 'n4', type: 'kernel', name: 'Tetragon LSM Probe', x: 520, y: 340 },
+        { id: 'n5', type: 'service', name: 'Unprivileged Sandbox Pod', x: 780, y: 180 }
+      ],
+      links: [
+        { from: 'n1', to: 'n2' },
+        { from: 'n2', to: 'n3' },
+        { from: 'n3', to: 'n5' },
+        { from: 'n4', to: 'n5' }
+      ]
+    },
+    'vault-bastion': {
+      nodes: [
+        { id: 'n1', type: 'ingress', name: 'Developer Client', x: 60, y: 180 },
+        { id: 'n2', type: 'identity', name: 'HashiCorp Vault CA', x: 280, y: 80 },
+        { id: 'n3', type: 'proxy', name: 'Hardened SSH Bastion', x: 480, y: 180 },
+        { id: 'n4', type: 'service', name: 'Production Node Alpha', x: 760, y: 100 },
+        { id: 'n5', type: 'service', name: 'Production Node Beta', x: 760, y: 260 }
+      ],
+      links: [
+        { from: 'n1', to: 'n2' },
+        { from: 'n1', to: 'n3' },
+        { from: 'n2', to: 'n3' },
+        { from: 'n3', to: 'n4' },
+        { from: 'n3', to: 'n5' }
+      ]
+    },
+    'edge-wasm': {
+      nodes: [
+        { id: 'n1', type: 'ingress', name: 'Global Anycast Edge', x: 60, y: 180 },
+        { id: 'n2', type: 'proxy', name: 'Wasm Component Sandbox', x: 300, y: 180 },
+        { id: 'n3', type: 'service', name: 'GPU Inference Worker', x: 580, y: 100 },
+        { id: 'n4', type: 'db', name: 'Vector DB (ColBERT RAG)', x: 580, y: 260 },
+        { id: 'n5', type: 'db', name: 'Encrypted KV Cache', x: 840, y: 180 }
+      ],
+      links: [
+        { from: 'n1', to: 'n2' },
+        { from: 'n2', to: 'n3' },
+        { from: 'n2', to: 'n4' },
+        { from: 'n3', to: 'n5' },
+        { from: 'n4', to: 'n5' }
+      ]
+    }
+  };
+
+  function loadPreset(presetKey) {
+    var p = PRESETS[presetKey] || PRESETS['cloud-mesh'];
+    nodes = JSON.parse(JSON.stringify(p.nodes));
+    links = JSON.parse(JSON.stringify(p.links));
+    selectedNodeId = null;
+    renderCanvas();
+    updateExports();
+  }
+
+  function getNodeById(id) {
+    for (var i = 0; i < nodes.length; i++) {
+      if (nodes[i].id === id) return nodes[i];
+    }
+    return null;
+  }
+
+  function renderCanvas() {
+    // 1. Render Links
+    var linkHtml = '';
+    for (var i = 0; i < links.length; i++) {
+      var l = links[i];
+      var source = getNodeById(l.from);
+      var target = getNodeById(l.to);
+      if (source && target) {
+        var x1 = source.x + 190;
+        var y1 = source.y + 40;
+        var x2 = target.x;
+        var y2 = target.y + 40;
+
+        if (x1 > x2) {
+          x1 = source.x;
+          x2 = target.x + 190;
+        }
+
+        var dx = Math.abs(x2 - x1) * 0.45;
+        var cx1 = x1 < x2 ? x1 + dx : x1 - dx;
+        var cx2 = x1 < x2 ? x2 - dx : x2 + dx;
+
+        var d = 'M ' + x1 + ' ' + y1 + ' C ' + cx1 + ' ' + y1 + ', ' + cx2 + ' ' + y2 + ', ' + x2 + ' ' + y2;
+        linkHtml += '<path class="svg-link solid" d="' + d + '" marker-end="url(#arrow)"></path>';
+      }
+    }
+    linksLayer.innerHTML = linkHtml;
+
+    // 2. Render Nodes
+    var nodeHtml = '';
+    for (var j = 0; j < nodes.length; j++) {
+      var n = nodes[j];
+      var meta = typeMeta[n.type] || { badge: 'NODE', sub: 'Zero-Trust Subsystem' };
+      var isSel = n.id === selectedNodeId;
+
+      nodeHtml += '<g class="svg-node' + (isSel ? ' selected' : '') + '" data-id="' + n.id + '" transform="translate(' + n.x + ',' + n.y + ')">';
+      nodeHtml += '<rect width="190" height="80" rx="8"></rect>';
+      nodeHtml += '<circle class="status-dot" cx="16" cy="22" r="4.5"></circle>';
+      nodeHtml += '<text class="node-badge" x="28" y="25">' + meta.badge + '</text>';
+      nodeHtml += '<text class="btn-del" data-del="' + n.id + '" x="172" y="24" font-weight="700" font-size="14">✕</text>';
+      nodeHtml += '<text class="node-title" x="14" y="48">' + escapeXml(n.name) + '</text>';
+      nodeHtml += '<text class="node-sub" x="14" y="66">' + escapeXml(meta.sub) + '</text>';
+      nodeHtml += '</g>';
+    }
+    nodesLayer.innerHTML = nodeHtml;
+
+    bindNodeEvents();
+  }
+
+  function escapeXml(str) {
+    return (str || '').replace(/[<>&'"]/g, function(c) {
+      switch (c) {
+        case '<': return '&lt;';
+        case '>': return '&gt;';
+        case '&': return '&amp;';
+        case '\'': return '&apos;';
+        case '"': return '&quot;';
+      }
+    });
+  }
+
+  function bindNodeEvents() {
+    var nodeEls = nodesLayer.querySelectorAll('.svg-node');
+    nodeEls.forEach(function(el) {
+      var id = el.getAttribute('data-id');
+      
+      // Delete button click
+      var delBtn = el.querySelector('.btn-del');
+      if (delBtn) {
+        delBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          deleteNode(id);
+        });
+      }
+
+      // Node selection & linking click
+      el.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (selectedNodeId === null) {
+          selectedNodeId = id;
+        } else if (selectedNodeId === id) {
+          selectedNodeId = null;
+        } else {
+          toggleLink(selectedNodeId, id);
+          selectedNodeId = null;
+        }
+        renderCanvas();
+        updateExports();
+      });
+
+      // Dragging start
+      el.addEventListener('mousedown', function(e) {
+        if (e.target.classList.contains('btn-del')) return;
+        draggingNode = getNodeById(id);
+        var pt = getSvgCoordinates(e);
+        if (draggingNode) {
+          dragOffset.x = pt.x - draggingNode.x;
+          dragOffset.y = pt.y - draggingNode.y;
+        }
+      });
+    });
+  }
+
+  function getSvgCoordinates(e) {
+    var pt = svgCanvas.createSVGPoint();
+    pt.x = e.clientX;
+    pt.y = e.clientY;
+    return pt.matrixTransform(svgCanvas.getScreenCTM().inverse());
+  }
+
+  svgCanvas.addEventListener('mousemove', function(e) {
+    if (draggingNode) {
+      var pt = getSvgCoordinates(e);
+      draggingNode.x = Math.max(10, Math.min(900, Math.round(pt.x - dragOffset.x)));
+      draggingNode.y = Math.max(10, Math.min(430, Math.round(pt.y - dragOffset.y)));
+      renderCanvas();
+      updateExports();
+    }
+  });
+
+  window.addEventListener('mouseup', function() {
+    draggingNode = null;
+  });
+
+  svgCanvas.addEventListener('click', function(e) {
+    if (e.target === svgCanvas || e.target.tagName === 'rect') {
+      selectedNodeId = null;
+      renderCanvas();
+    }
+  });
+
+  function toggleLink(fromId, toId) {
+    for (var i = 0; i < links.length; i++) {
+      if ((links[i].from === fromId && links[i].to === toId) ||
+          (links[i].from === toId && links[i].to === fromId)) {
+        links.splice(i, 1);
+        return;
+      }
+    }
+    links.push({ from: fromId, to: toId });
+  }
+
+  function deleteNode(id) {
+    nodes = nodes.filter(function(n) { return n.id !== id; });
+    links = links.filter(function(l) { return l.from !== id && l.to !== id; });
+    if (selectedNodeId === id) selectedNodeId = null;
+    renderCanvas();
+    updateExports();
+  }
+
+  // --- Exporters ---
+  function generateMermaid() {
+    var out = ['%% Zero-Trust Architecture Specification 2026', '%% Generated offline via zyekh.com/blueprints/topology-builder.html', 'graph TD'];
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      var m = typeMeta[n.type] || { badge: 'NODE' };
+      var cleanTitle = n.name.replace(/["\n]/g, '');
+      out.push('  ' + n.id + '["[' + m.badge + '] ' + cleanTitle + '"]');
+    }
+    for (var j = 0; j < links.length; j++) {
+      var l = links[j];
+      out.push('  ' + l.from + ' -->|mTLS / WireGuard| ' + l.to);
+    }
+    return out.join('\n');
+  }
+
+  function generateAscii() {
+    var out = [
+      '====================================================================',
+      ' ZERO-TRUST ARCHITECTURE TOPOLOGY MAP (2026)',
+      ' Generated via zyekh.com/blueprints/topology-builder.html',
+      '====================================================================',
+      ''
+    ];
+    for (var i = 0; i < links.length; i++) {
+      var l = links[i];
+      var s = getNodeById(l.from);
+      var t = getNodeById(l.to);
+      if (s && t) {
+        var sMeta = typeMeta[s.type] ? '[' + typeMeta[s.type].badge + '] ' : '';
+        var tMeta = typeMeta[t.type] ? '[' + typeMeta[t.type].badge + '] ' : '';
+        out.push('  ' + sMeta + s.name + ' ===(encrypted mTLS)===> ' + tMeta + t.name);
+      }
+    }
+    if (links.length === 0) {
+      out.push('  [No connections established]');
+    }
+    return out.join('\n');
+  }
+
+  function generateSvgSource() {
+    return '<?xml version="1.0" encoding="utf-8"?>\n' + svgCanvas.outerHTML;
+  }
+
+  function generateJsonSpec() {
+    return JSON.stringify({
+      version: '2026.1',
+      generated_by: 'zyekh.com/blueprints/topology-builder.html',
+      nodes: nodes,
+      links: links
+    }, null, 2);
+  }
+
+  var updateExports = window.debounceRAF(function() {
+    if (activeExportTab === 'mermaid') {
+      exportPre.textContent = generateMermaid();
+    } else if (activeExportTab === 'svg') {
+      exportPre.textContent = generateSvgSource();
+    } else if (activeExportTab === 'ascii') {
+      exportPre.textContent = generateAscii();
+    } else if (activeExportTab === 'json') {
+      exportPre.textContent = generateJsonSpec();
+    }
+  }, 40);
+
+  // Tab switcher
+  tabMermaid.addEventListener('click', function() {
+    activeExportTab = 'mermaid';
+    [tabMermaid, tabSvg, tabAscii, tabJson].forEach(function(b) { b.classList.remove('active'); });
+    tabMermaid.classList.add('active');
+    updateExports();
+  });
+
+  tabSvg.addEventListener('click', function() {
+    activeExportTab = 'svg';
+    [tabMermaid, tabSvg, tabAscii, tabJson].forEach(function(b) { b.classList.remove('active'); });
+    tabSvg.classList.add('active');
+    updateExports();
+  });
+
+  tabAscii.addEventListener('click', function() {
+    activeExportTab = 'ascii';
+    [tabMermaid, tabSvg, tabAscii, tabJson].forEach(function(b) { b.classList.remove('active'); });
+    tabAscii.classList.add('active');
+    updateExports();
+  });
+
+  tabJson.addEventListener('click', function() {
+    activeExportTab = 'json';
+    [tabMermaid, tabSvg, tabAscii, tabJson].forEach(function(b) { b.classList.remove('active'); });
+    tabJson.classList.add('active');
+    updateExports();
+  });
+
+  // Copy button
+  btnCopyExport.addEventListener('click', function() {
+    var text = exportPre.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function() {
+        var old = btnCopyExport.textContent;
+        btnCopyExport.textContent = '[ COPIED ]';
+        setTimeout(function() { btnCopyExport.textContent = old; }, 1500);
+      });
+    }
+  });
+
+  // Download button
+  btnDownloadExport.addEventListener('click', function() {
+    var text = exportPre.textContent;
+    var ext = activeExportTab === 'mermaid' ? '.mmd' : activeExportTab === 'svg' ? '.svg' : activeExportTab === 'ascii' ? '.txt' : '.json';
+    var mime = activeExportTab === 'svg' ? 'image/svg+xml' : 'text/plain';
+    var blob = new Blob([text], { type: mime + ';charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'zero-trust-topology' + ext;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // Preset button listeners
+  presetBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      presetBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      var presetKey = btn.getAttribute('data-preset');
+      loadPreset(presetKey);
+    });
+  });
+
+  // Add node button
+  btnAddNode.addEventListener('click', function() {
+    var type = selNodeType.value;
+    var name = (txtNodeName.value || '').trim() || 'New Security Node';
+    var newId = 'n' + (nodes.length + 1) + '_' + Math.floor(Math.random() * 1000);
+    nodes.push({
+      id: newId,
+      type: type,
+      name: name,
+      x: 100 + Math.floor(Math.random() * 400),
+      y: 100 + Math.floor(Math.random() * 200)
+    });
+    txtNodeName.value = '';
+    renderCanvas();
+    updateExports();
+  });
+
+  // Reset button
+  btnResetCanvas.addEventListener('click', function() {
+    nodes = [];
+    links = [];
+    selectedNodeId = null;
+    renderCanvas();
+    updateExports();
+  });
+
+  // Initial load
+  loadPreset('cloud-mesh');
+})();
+</script>
+</body>
+</html>

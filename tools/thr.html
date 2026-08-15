@@ -18,20 +18,20 @@
 <link href="/manifest.json" rel="manifest"/>
 <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
 <link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
-<link crossorigin="anonymous" href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" rel="stylesheet"/>
-<link crossorigin="anonymous" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" rel="stylesheet"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
 <!-- SEO & Social Meta Tags -->
 <link href="https://zyekh.com/tools/thr.html" rel="canonical"/>
 <meta content="Kalkulator THR Online — Hitung Tunjangan Hari Raya Pro-Rata | zyekh.com" property="og:title"/>
 <meta content="Kalkulator THR Karyawan online gratis. Hitung Tunjangan Hari Raya pro-rata berdasarkan gaji dan masa kerja sesuai Permenaker No. 6 Tahun 2016." property="og:description"/>
 <meta content="website" property="og:type"/>
 <meta content="https://zyekh.com/tools/thr.html" property="og:url"/>
-<meta content="https://zyekh.com/assets/img/social-cards/tool-thr-dark-landscape.png" property="og:image"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-thr-dark-landscape.png?v=a4385ad8" property="og:image"/>
 <meta content="zyekh.com" property="og:site_name"/>
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="Kalkulator THR Online — Hitung Tunjangan Hari Raya Pro-Rata | zyekh.com" name="twitter:title"/>
 <meta content="Kalkulator THR Karyawan online gratis. Hitung Tunjangan Hari Raya pro-rata berdasarkan gaji dan masa kerja sesuai Permenaker No. 6 Tahun 2016." name="twitter:description"/>
-<meta content="https://zyekh.com/assets/img/social-cards/tool-thr-dark-landscape.png" name="twitter:image"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-thr-dark-landscape.png?v=a4385ad8" name="twitter:image"/>
 <!-- Structured Data JSON-LD -->
 <script type="application/ld+json">
 {
@@ -138,12 +138,12 @@ window.debounceRAF = function(fn, delay) {
 </script>
 <style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-<link as="style" crossorigin="anonymous" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" rel="preload"/>
-<link as="script" crossorigin="anonymous" href="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" rel="preload"/>
-<link href="https://zyekh.com/feed.xml" rel="alternate" title="Zyekh RSS Feed" type="application/rss+xml"/>
-<link href="https://zyekh.com/atom.xml" rel="alternate" title="Zyekh Atom Feed" type="application/atom+xml"/>
-<link href="https://zyekh.com/feed.json" rel="alternate" title="Zyekh JSON Feed" type="application/feed+json"/>
-<meta content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-+wQx7aIWZh15T5V4JLVkmfXg48HMUFnV+COyXYfq0xM=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-YGOturCgl4eeT1OZ88j9RXCMHHrVuQI6xO1O+53n79Y='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';" http-equiv="Content-Security-Policy"/>
+<link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous" as="script">
+  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
+  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-+wQx7aIWZh15T5V4JLVkmfXg48HMUFnV+COyXYfq0xM=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-YGOturCgl4eeT1OZ88j9RXCMHHrVuQI6xO1O+53n79Y='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
 <!-- Header Navigation -->
@@ -249,6 +249,6 @@ window.debounceRAF = function(fn, delay) {
     }
     calc();
   </script>
-<script crossorigin="anonymous" defer="" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" src="/assets/js/site-nav.min.js?v=d9dc72eb"></script>
+<script defer="" src="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous"></script>
 </body>
 </html>

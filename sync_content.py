@@ -252,6 +252,13 @@ def sync_all(bump_version=False, dry_run=False):
     urls_data.append((f"{base_url}/blueprints/", get_file_mtime_str("blueprints/index.html"), "weekly", "0.9"))
     urls_data.append((f"{base_url}/contact/", get_file_mtime_str("contact/index.html"), "weekly", "0.9"))
 
+    # Blueprints
+    for bp in sorted(glob.glob("blueprints/*.html")):
+        if bp == "blueprints/index.html":
+            continue
+        rel_path = bp.replace("\\", "/")
+        urls_data.append((f"{base_url}/{rel_path}", get_file_mtime_str(bp), "weekly", "0.85"))
+
     # Blog Articles
     for b in sorted(glob.glob("blog/*.html")):
         if b == "blog/index.html":

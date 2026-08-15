@@ -54,6 +54,7 @@ def run_smoke_tests(port=None):
         ("/blog/", 200, "text/html", ["<title>", "antiClickjack", "localStorage.getItem"]),
         ("/blog/linux-vps-hardening-guide-2026.html", 200, "text/html", ["<title>", "article", "antiClickjack"]),
         ("/blueprints/", 200, "text/html", ["<title>", "antiClickjack"]),
+        ("/blueprints/topology-builder.html", 200, "text/html", ["<title>", "antiClickjack", "localStorage.getItem"]),
         ("/offline.html", 200, "text/html", ["offline-card", "Offline"]),
         ("/404.html", 200, "text/html", ["404", "Page Not Found"]),
         ("/sitemap.xml", 200, "xml", ["<urlset", "<loc>"]),
