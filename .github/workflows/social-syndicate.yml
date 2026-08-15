@@ -1,7 +1,10 @@
 name: Social Media Syndication
-run-name: Multi-Channel Syndication Sync (Mastodon, Bluesky, Dev.to)
+run-name: Multi-Channel Syndication Drip (Mastodon, Bluesky, Dev.to)
 
 on:
+  schedule:
+    # Daily at 14:00 UTC (21:00 WIB) — optimal global developer/infosec engagement window
+    - cron: '0 14 * * *'
   push:
     branches:
       - main
@@ -9,15 +12,22 @@ on:
       - 'feed.xml'
       - 'data/social_cards_manifest.json'
   workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Number of unposted articles to syndicate (0 for all, 1 for single drip)'
+        required: false
+        default: '1'
 
 jobs:
   syndicate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -29,7 +39,7 @@ jobs:
         run: |
           pip install beautifulsoup4 pillow
 
-      - name: Broadcast Unposted Articles to Social APIs
+      - name: Broadcast Unposted Articles to Social APIs (Drip Mode)
         env:
           MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
           MASTODON_SERVER: ${{ secrets.MASTODON_SERVER || 'https://infosec.exchange' }}
@@ -40,4 +50,22 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: |
-          python3 scripts/syndicate.py --sync-unposted
+          LIMIT_ARG="${{ github.event.inputs.limit || '1' }}"
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            LIMIT_ARG="1"
+          fi
+          echo "[ DRIP SYNDICATION ] Running with limit: $LIMIT_ARG"
+          python3 scripts/syndicate.py --sync-unposted --limit "$LIMIT_ARG"
+
+      - name: Commit Updated Syndication History
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          if [ -n "$(git status --porcelain data/syndication_history.json)" ]; then
+            git add data/syndication_history.json
+            git commit -m "chore(syndication): update automated syndication history ledger [skip ci]"
+            git push
+          else
+            echo "No changes in syndication history ledger."
+          fi
+

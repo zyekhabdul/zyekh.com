@@ -766,7 +766,8 @@ def main():
     parser.add_argument("--latest", "-l", action="store_true", help="Syndicate the latest article")
     parser.add_argument("--slug", "-s", type=str, help="Specify article HTML filename or slug")
     parser.add_argument("--status", action="store_true", help="Display syndication status overview table")
-    parser.add_argument("--sync-unposted", action="store_true", help="Auto-publish all unposted articles to all social APIs with rate limiting")
+    parser.add_argument("--sync-unposted", action="store_true", help="Auto-publish unposted articles to all social APIs with rate limiting")
+    parser.add_argument("--limit", "-n", type=int, default=0, help="Limit number of unposted articles to process in this run (e.g. --limit 1 for daily drip)")
     parser.add_argument("--open", "-o", action="store_true", help="Auto-open submit tabs in browser")
     parser.add_argument("--publish-mastodon", action="store_true", help="Auto-publish status to Mastodon API")
     parser.add_argument("--publish-devto", action="store_true", help="Auto-publish article to Dev.to API")
@@ -791,7 +792,10 @@ def main():
             if 'mastodon' not in h or 'bluesky' not in h or 'devto' not in h:
                 unposted.append(a)
 
-        print(f"\n[ BATCH SYNC ] Found {len(unposted)} unposted/partially-posted articles.")
+        if args.limit and args.limit > 0:
+            unposted = unposted[:args.limit]
+
+        print(f"\n[ BATCH SYNC ] Processing {len(unposted)} unposted/partially-posted article(s) (limit={args.limit or 'all'}).")
         for idx, a in enumerate(unposted, 1):
             h = history.get(a['slug'], {})
             print(f"\n[{idx}/{len(unposted)}] Broadcasting: {a['slug']}")

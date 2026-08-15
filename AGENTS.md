@@ -165,3 +165,9 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
     - **Dynamic Domain Tag Targeting**: AI agents must route article topics to curated high-engagement domain hashtags via `DOMAIN_HASHTAG_MAP` (e.g. `#RustLang`, `#eBPF`, `#ZeroTrust`, `#WebAssembly`) rather than vague generic tags.
     - **Polite Batch Throttling**: Batch syndication commands (`--sync-unposted`) must enforce a 2-3s delay between API invocations to prevent remote rate-limit violations.
 
+45. **STRICT SOCIAL PUBLISHING CADENCE & DRIP STANDARD (ANTI-FLOOD ETIQUETTE)**:
+    - **No Timeline Flooding**: Never burst-broadcast more than 1 new article per day during routine automated updates. Bulk syndication of $>1$ post in a single execution is strictly reserved for initial foundational backlog synchronization.
+    - **Automated Drip Scheduling**: Automated syndication CI/CD workflows (`.github/workflows/social-syndicate.yml`) MUST execute with `--limit 1` on a daily cron schedule (`0 14 * * *` — 14:00 UTC / 21:00 WIB, aligning with peak global developer & security engagement windows).
+    - **Queue-Based Sequential Rollout**: Unposted articles in `data/syndication_history.json` form a FIFO queue processed strictly 1 item per scheduled day to maintain high-quality follower experience and prevent federated instance rate throttling.
+
+
