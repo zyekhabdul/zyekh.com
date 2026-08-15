@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Linux Auditd &amp; DFIR Event Rule Generator — Kernel Hardening Builder | zyekh.com</title>
+<meta content="Generate production-ready Linux auditd rules (audit.rules), auditd.conf daemon configs, and DFIR ausearch queries 100% client-side. CIS Benchmark and PCI-DSS compliance." name="description"/>
+<meta content="auditd generator, audit rules generator, linux auditd hardening, dfir linux auditd, ausearch cheatsheet, cis benchmark audit rules, pci dss auditd" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/auditd-generator.html" rel="canonical"/>
+<!-- Open Graph / Social -->
+<meta content="Linux Auditd &amp; DFIR Event Rule Generator | zyekh.com" property="og:title"/>
+<meta content="Build production Linux kernel audit rules, auditd.conf daemon configs, and ausearch queries 100% offline." property="og:description"/>
+<meta content="https://zyekh.com/tools/auditd-generator.html" property="og:url"/>
+<meta content="website" property="og:type"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-auditd-generator-dark-landscape.png?v=e06dbbbe" property="og:image"/>
+<meta content="zyekh.com" property="og:site_name"/>
+<!-- Twitter Cards -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Linux Auditd &amp; DFIR Event Rule Generator | zyekh.com" name="twitter:title"/>
+<meta content="Build production Linux kernel audit rules, auditd.conf daemon configs, and ausearch queries 100% offline." name="twitter:description"/>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-auditd-generator-dark-landscape.png?v=e06dbbbe" name="twitter:image"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://zyekh.com/tools/auditd-generator.html#app",
+      "name": "Linux Auditd & DFIR Event Rule Generator",
+      "description": "Interactive client-side Linux Kernel Audit rule generator and DFIR telemetry configuration builder.",
+      "url": "https://zyekh.com/tools/auditd-generator.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript and a modern web browser.",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "author": {
+        "@type": "Person",
+        "@id": "https://zyekh.com/#person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com"
+      },
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/tools/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/tools/auditd-generator.html#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Auditd Generator", "item": "https://zyekh.com/tools/auditd-generator.html" }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Self-hosted Fonts -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" rel="stylesheet"/>
+<style>
+  .gen-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 1.5rem;
+    align-items: start;
+    margin-top: 1.5rem;
+  }
+  @media (max-width: 900px) {
+    .gen-grid { grid-template-columns: 1fr; }
+  }
+  .gen-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+  }
+  .section-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text-main);
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .preset-bar {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  @media (max-width: 500px) {
+    .preset-bar { grid-template-columns: 1fr; }
+  }
+  .btn-preset {
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.5rem 0.6rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-align: center;
+    transition: var(--transition);
+  }
+  .btn-preset:hover {
+    border-color: var(--border-color-hover);
+    color: var(--text-main);
+  }
+  .btn-preset.active {
+    background: var(--text-main);
+    color: var(--bg-dark);
+    border-color: var(--text-main);
+  }
+  .param-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .param-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-main);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .param-desc {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  .param-input, .param-select {
+    width: 100%;
+    padding: 0.45rem 0.6rem;
+    font-size: 0.85rem;
+    font-family: 'Fira Code', monospace;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: var(--radius-sm);
+    box-sizing: border-box;
+  }
+  .param-input:focus, .param-select:focus {
+    outline: none;
+    border-color: var(--text-main);
+  }
+  .subsystem-group {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.85rem;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.01);
+  }
+  .subsystem-header {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .checkbox-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    line-height: 1.35;
+  }
+  .checkbox-item:last-child { margin-bottom: 0; }
+  .checkbox-item input[type="checkbox"] {
+    margin-top: 0.15rem;
+    accent-color: var(--accent);
+  }
+  .checkbox-item strong {
+    color: var(--text-main);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.78rem;
+  }
+  .score-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .score-badge {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+  }
+  .score-badge.safe { background: rgba(16, 185, 129, 0.1); color: #34d399; border-color: #059669; }
+  .score-badge.medium { background: rgba(245, 158, 11, 0.1); color: #fbbf24; border-color: #d97706; }
+  .score-badge.high { background: rgba(139, 92, 246, 0.1); color: #a78bfa; border-color: #7c3aed; }
+  .tabs-nav {
+    display: flex;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.65rem;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--transition);
+  }
+  .tab-btn:hover { color: var(--text-main); }
+  .tab-btn.active {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-main);
+    font-weight: 600;
+  }
+  .code-viewer-wrap {
+    position: relative;
+    background: #000000;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .code-pre {
+    margin: 0;
+    padding: 1rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    color: #e4e4e7;
+    line-height: 1.55;
+    overflow-x: auto;
+    max-height: 480px;
+    white-space: pre;
+  }
+  .output-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+  .btn-action {
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.45rem 0.85rem;
+    background: var(--text-main);
+    color: var(--bg-dark);
+    border: 1px solid var(--text-main);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .btn-action:hover { opacity: 0.9; }
+  .btn-action.outline {
+    background: var(--bg-secondary);
+    color: var(--text-main);
+    border-color: var(--border-color);
+  }
+  .btn-action.outline:hover { border-color: var(--border-color-hover); }
+</style>
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+<script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+  <link rel="preload" href="/assets/css/shared.min.css?v=4f1340ee" integrity="sha384-wS29cSQ+iiKrJlpVxA/cE0cXluSmVVQd6kqp6l2x6ldkGsdBodKerOTzGrTIroaA" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=d9dc72eb" integrity="sha384-7//DSoxged61MaU2dhWDOheOmGEsuL0Vi0HHOxgzha5Zgx2tx+3iUDKes2U1QQip" crossorigin="anonymous" as="script">
+  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
+  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0=' 'sha256-H88+/PfSM4kNPi8RIIGj5AKUzkoXtveyTudS8cyavfY='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+</head>
+<body>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools Hub</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">Auditd &amp; DFIR Generator</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">[ LINUX FORENSICS &amp; COMPLIANCE ]</span>
+<h1 class="page-title">Linux Auditd &amp; DFIR Rule Generator</h1>
+<p class="page-subtitle">Generate production Linux kernel auditd rulesets (audit.rules), daemon configurations (auditd.conf), and DFIR ausearch queries aligned with CIS Benchmark and PCI-DSS 100% offline.</p>
+</header>
+<div class="gen-grid">
+<!-- Left Column: Controls & Configuration -->
+<div>
+<div class="gen-card">
+<h2 class="section-title">
+<span>[ 1. COMPLIANCE &amp; THREAT PROFILES ]</span>
+</h2>
+<div class="preset-bar">
+<button class="btn-preset active" data-preset="cis" type="button">CIS Benchmark L2</button>
+<button class="btn-preset" data-preset="pcidss" type="button">PCI-DSS v4.0</button>
+<button class="btn-preset" data-preset="dfir" type="button">DFIR High-Fidelity</button>
+<button class="btn-preset" data-preset="custom" type="button">Custom Ruleset</button>
+</div>
+<!-- Real-Time Overhead Meter -->
+<div class="score-card">
+<div>
+<div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase; font-weight:600;">Telemetry Rate &amp; Impact</div>
+<div id="overheadSummary" style="font-size:0.85rem; font-weight:700; color:var(--text-main); margin-top:0.15rem;">Est. ~45 events/sec · ~120 MB/day</div>
+</div>
+<div class="score-badge safe" id="overheadBadge">[ BALANCED COMPLIANCE ]</div>
+</div>
+<!-- Parameters Section -->
+<h2 class="section-title">
+<span>[ 2. BUFFER &amp; KERNEL CONTROL FLAGS ]</span>
+</h2>
+<div class="param-group">
+<label class="param-label" for="selBuffer">
+<span>Backlog Buffer Size (-b):</span>
+<span style="font-family:'Fira Code',monospace; color:var(--text-muted);">events</span>
+</label>
+<div class="param-desc">Size of the kernel netlink audit queue buffer to prevent audit message loss under high load.</div>
+<select aria-label="Kernel audit backlog buffer size" class="param-select" id="selBuffer">
+<option value="8192">8,192 (Standard Production)</option>
+<option selected="" value="16384">16,384 (High Throughput / Bastion)</option>
+<option value="32768">32,768 (Extreme Burst Traffic)</option>
+</select>
+</div>
+<div class="param-group">
+<label class="param-label" for="selFailureMode">
+<span>Failure Mode (-f):</span>
+</label>
+<div class="param-desc">Action taken by the Linux kernel if the audit backlog buffer overflows.</div>
+<select aria-label="Audit buffer overflow failure mode" class="param-select" id="selFailureMode">
+<option value="0">0 (Silent - Discard dropped messages)</option>
+<option selected="" value="1">1 (Printk - Output kernel warning to dmesg)</option>
+<option value="2">2 (Panic - Halt kernel to prevent unlogged actions)</option>
+</select>
+</div>
+<div class="param-group">
+<label class="param-label" for="selImmutable">
+<span>Audit Configuration Lock (-e):</span>
+</label>
+<div class="param-desc">Enable kernel immutable mode to prevent attackers from disabling audit rules until reboot.</div>
+<select aria-label="Audit configuration lock flag" class="param-select" id="selImmutable">
+<option selected="" value="2">2 (Immutable - Rules cannot be altered until reboot)</option>
+<option value="1">1 (Mutable - Rules can be modified at runtime)</option>
+</select>
+</div>
+<!-- Subsystem Watch Directives -->
+<div class="subsystem-group">
+<div class="subsystem-header">[ SUBSYSTEM WATCH DIRECTIVES ]</div>
+<label class="checkbox-item" for="chkIdentity">
+<input checked="" id="chkIdentity" type="checkbox"/>
+<div>
+<strong>Identity &amp; Account Changes</strong>: Watch `/etc/passwd`, `/etc/shadow`, `/etc/group`, `/etc/gshadow` (tag: <code>identity</code>).
+</div>
+</label>
+<label class="checkbox-item" for="chkSudoPriv">
+<input checked="" id="chkSudoPriv" type="checkbox"/>
+<div>
+<strong>Privilege Escalation &amp; Sudo</strong>: Watch `/etc/sudoers`, `/etc/sudoers.d/`, `/etc/pam.d/` (tag: <code>priv_escalation</code>).
+</div>
+</label>
+<label class="checkbox-item" for="chkExecve">
+<input checked="" id="chkExecve" type="checkbox"/>
+<div>
+<strong>User Process Executions (execve)</strong>: Audit all command executions by non-root users (`auid&gt;=1000`) (tag: <code>exec_commands</code>).
+</div>
+</label>
+<label class="checkbox-item" for="chkPtrace">
+<input checked="" id="chkPtrace" type="checkbox"/>
+<div>
+<strong>Process Injection &amp; Debugging (ptrace)</strong>: Monitor memory tampering and process debugging (tag: <code>mem_injection</code>).
+</div>
+</label>
+<label class="checkbox-item" for="chkModules">
+<input checked="" id="chkModules" type="checkbox"/>
+<div>
+<strong>Kernel Module Loading/Unloading</strong>: Audit `init_module`, `finit_module`, `delete_module` (tag: <code>kernel_modules</code>).
+</div>
+</label>
+<label class="checkbox-item" for="chkMounts">
+<input checked="" id="chkMounts" type="checkbox"/>
+<div>
+<strong>Filesystem Mount Operations</strong>: Audit `mount` and `umount2` system calls (tag: <code>mounts</code>).
+</div>
+</label>
+<label class="checkbox-item" for="chkTime">
+<input checked="" id="chkTime" type="checkbox"/>
+<div>
+<strong>Time &amp; Clock Modifications</strong>: Audit `settimeofday`, `clock_settime`, `/etc/localtime` (tag: <code>time_change</code>).
+</div>
+</label>
+<label class="checkbox-item" for="chkNetwork">
+<input checked="" id="chkNetwork" type="checkbox"/>
+<div>
+<strong>Network Config &amp; Hostname</strong>: Watch `/etc/hosts`, `/etc/network/`, `sethostname` (tag: <code>system_locale</code>).
+</div>
+</label>
+<label class="checkbox-item" for="chkAuditTamper">
+<input checked="" id="chkAuditTamper" type="checkbox"/>
+<div>
+<strong>Audit Subsystem Tamper Defense</strong>: Watch `/var/log/audit/` and `/etc/audit/` for unauthorized write access (tag: <code>audit_tamper</code>).
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Right Column: Output Formats & Exporters -->
+<div>
+<div class="gen-card">
+<div class="tabs-nav" role="tablist">
+<button class="tab-btn active" data-tab="rules" role="tab" type="button">/etc/audit/rules.d/audit.rules</button>
+<button class="tab-btn" data-tab="daemon" role="tab" type="button">/etc/audit/auditd.conf</button>
+<button class="tab-btn" data-tab="cli" role="tab" type="button">ausearch DFIR Cheatsheet</button>
+<button class="tab-btn" data-tab="vector" role="tab" type="button">Vector Shipper Pipeline</button>
+</div>
+<div class="code-viewer-wrap">
+<pre class="code-pre" id="codeOutput"># Generating Linux Auditd configuration...</pre>
+</div>
+<div class="output-actions">
+<button class="btn-action outline" id="btnDownload" type="button">Download .rules</button>
+<button class="btn-action" id="btnCopy" type="button">Copy to Clipboard</button>
+</div>
+<div style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-muted); line-height: 1.5;">
+<strong>[ NOTE // IMMUTABILITY ]</strong>: When <code>-e 2</code> is active, the audit configuration is locked in kernel memory. Any attempt to modify or delete rules via <code>auditctl</code> will be rejected until the system is rebooted.
+</div>
+</div>
+</div>
+</div>
+<!-- In-Depth Technical Guide -->
+<section class="seo-content-block" style="margin-top: 2rem;">
+<h2>Architecture: Linux Kernel Audit Subsystem &amp; DFIR Telemetry</h2>
+<p>
+The Linux Audit Framework (<code>auditd</code>) operates at the kernel boundary via a dedicated Netlink socket, intercepting system calls before execution and generating high-integrity security telemetry. Unlike user-space logging daemons (such as standard syslog), kernel audit events cannot be bypassed by unprivileged users or stripped from process memory.
+</p>
+<h3>Key Audit Ruleset Dimensions</h3>
+<div class="grid-2" style="gap: 1rem; margin-top: 1rem;">
+<div class="custom-card" style="padding: 1rem;">
+<h4 style="margin-top:0; font-size:0.9rem; color:var(--text-main);">Process Injection &amp; ptrace Defense</h4>
+<p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+Attackers frequently use <code>ptrace</code> or memory dumping tools to extract credentials from memory (e.g. LSASS or SSH keys). Auditing <code>ptrace</code>, <code>process_vm_readv</code>, and <code>process_vm_writev</code> triggers immediate forensic alerts when unprivileged processes attempt inter-process memory inspection.
+</p>
+</div>
+<div class="custom-card" style="padding: 1rem;">
+<h4 style="margin-top:0; font-size:0.9rem; color:var(--text-main);">Immutable Kernel Lock (-e 2)</h4>
+<p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+Placing <code>-e 2</code> as the final line in <code>/etc/audit/rules.d/audit.rules</code> locks the audit configuration permanently in kernel space. Even an attacker who achieves full <code>root</code> privileges cannot disable the audit daemon or clear the active rule table without a hardware reboot.
+</p>
+</div>
+</div>
+<h3 style="margin-top: 1.5rem;">Forensic Investigation with ausearch &amp; aureport</h3>
+<p>Query audit logs efficiently using key tags without parsing raw log files:</p>
+<pre class="code-pre" style="border-radius: var(--radius-sm); margin-bottom: 1rem;"><code># Search all unauthorized file access failures:
+$ sudo ausearch --success no --interpret
+
+# Search for all executions tagged with 'exec_commands':
+$ sudo ausearch -k exec_commands --interpret
+
+# Generate an executive forensic summary of authentication events:
+$ sudo aureport --auth --summary
+
+# Track changes to user identities and passwords:
+$ sudo ausearch -k identity -ts today</code></pre>
+</section>
+</main>
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">53 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">35 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="https://shop.zyekh.com" rel="noopener noreferrer" target="_blank">Official Store</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
+<script>
+(function() {
+  var currentPreset = 'cis';
+  var activeTab = 'rules';
+
+  var presets = {
+    cis: {
+      buffer: '16384',
+      failureMode: '1',
+      immutable: '2',
+      identity: true,
+      sudoPriv: true,
+      execve: false,
+      ptrace: true,
+      modules: true,
+      mounts: true,
+      time: true,
+      network: true,
+      auditTamper: true
+    },
+    pcidss: {
+      buffer: '16384',
+      failureMode: '1',
+      immutable: '2',
+      identity: true,
+      sudoPriv: true,
+      execve: true,
+      ptrace: true,
+      modules: true,
+      mounts: true,
+      time: true,
+      network: true,
+      auditTamper: true
+    },
+    dfir: {
+      buffer: '32768',
+      failureMode: '1',
+      immutable: '2',
+      identity: true,
+      sudoPriv: true,
+      execve: true,
+      ptrace: true,
+      modules: true,
+      mounts: true,
+      time: true,
+      network: true,
+      auditTamper: true
+    }
+  };
+
+  // DOM Elements
+  var selBuffer = document.getElementById('selBuffer');
+  var selFailureMode = document.getElementById('selFailureMode');
+  var selImmutable = document.getElementById('selImmutable');
+
+  var chkIdentity = document.getElementById('chkIdentity');
+  var chkSudoPriv = document.getElementById('chkSudoPriv');
+  var chkExecve = document.getElementById('chkExecve');
+  var chkPtrace = document.getElementById('chkPtrace');
+  var chkModules = document.getElementById('chkModules');
+  var chkMounts = document.getElementById('chkMounts');
+  var chkTime = document.getElementById('chkTime');
+  var chkNetwork = document.getElementById('chkNetwork');
+  var chkAuditTamper = document.getElementById('chkAuditTamper');
+
+  var codeOutput = document.getElementById('codeOutput');
+  var overheadBadge = document.getElementById('overheadBadge');
+  var overheadSummary = document.getElementById('overheadSummary');
+  var btnCopy = document.getElementById('btnCopy');
+  var btnDownload = document.getElementById('btnDownload');
+
+  function debounceRAF(fn, delay) {
+    delay = delay || 60;
+    var timer = null;
+    return function() {
+      var context = this, args = arguments;
+      clearTimeout(timer);
+      timer = setTimeout(function() {
+        window.requestAnimationFrame(function() {
+          fn.apply(context, args);
+        });
+      }, delay);
+    };
+  }
+
+  function applyPreset(presetKey) {
+    var p = presets[presetKey];
+    if (!p) return;
+    currentPreset = presetKey;
+
+    selBuffer.value = p.buffer;
+    selFailureMode.value = p.failureMode;
+    selImmutable.value = p.immutable;
+
+    chkIdentity.checked = p.identity;
+    chkSudoPriv.checked = p.sudoPriv;
+    chkExecve.checked = p.execve;
+    chkPtrace.checked = p.ptrace;
+    chkModules.checked = p.modules;
+    chkMounts.checked = p.mounts;
+    chkTime.checked = p.time;
+    chkNetwork.checked = p.network;
+    chkAuditTamper.checked = p.auditTamper;
+
+    document.querySelectorAll('.btn-preset').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-preset') === presetKey);
+    });
+
+    generateConfig();
+  }
+
+  function generateConfig() {
+    var buffer = selBuffer.value;
+    var failureMode = selFailureMode.value;
+    var immutable = selImmutable.value;
+
+    var identity = chkIdentity.checked;
+    var sudoPriv = chkSudoPriv.checked;
+    var execve = chkExecve.checked;
+    var ptrace = chkPtrace.checked;
+    var modules = chkModules.checked;
+    var mounts = chkMounts.checked;
+    var time = chkTime.checked;
+    var network = chkNetwork.checked;
+    var auditTamper = chkAuditTamper.checked;
+
+    // Calculate Estimated Overhead
+    if (execve) {
+      overheadSummary.textContent = 'Est. ~120-250 events/sec · ~350-800 MB/day';
+      overheadBadge.textContent = '[ HIGH-FIDELITY DFIR ]';
+      overheadBadge.className = 'score-badge high';
+    } else {
+      overheadSummary.textContent = 'Est. ~20-50 events/sec · ~80-150 MB/day';
+      overheadBadge.textContent = '[ BALANCED COMPLIANCE ]';
+      overheadBadge.className = 'score-badge safe';
+    }
+
+    if (activeTab === 'rules') {
+      var lines = [
+        '# ============================================================',
+        '#  /etc/audit/rules.d/audit.rules',
+        '#  Generated by Linux Auditd & DFIR Event Rule Generator (zyekh.com)',
+        '#  Compliance: CIS Linux Benchmark L2, PCI-DSS v4.0, NIST SP 800-53',
+        '# ============================================================',
+        '',
+        '# 1. Delete all existing rules',
+        '-D',
+        '',
+        '# 2. Set buffer size & failure mode',
+        '-b ' + buffer,
+        '-f ' + failureMode,
+        '-r 0',
+        ''
+      ];
+
+      if (auditTamper) {
+        lines.push('# 3. Audit Subsystem Tamper Defense');
+        lines.push('-w /var/log/audit/ -p wa -k audit_tamper');
+        lines.push('-w /etc/audit/ -p wa -k audit_tamper');
+        lines.push('-w /etc/libaudit.conf -p wa -k audit_tamper');
+        lines.push('-w /etc/audisp/ -p wa -k audit_tamper');
+        lines.push('');
+      }
+
+      if (identity) {
+        lines.push('# 4. User and Group Identity Modification Watches');
+        lines.push('-w /etc/group -p wa -k identity');
+        lines.push('-w /etc/passwd -p wa -k identity');
+        lines.push('-w /etc/gshadow -p wa -k identity');
+        lines.push('-w /etc/shadow -p wa -k identity');
+        lines.push('-w /etc/security/opasswd -p wa -k identity');
+        lines.push('');
+      }
+
+      if (sudoPriv) {
+        lines.push('# 5. Privilege Escalation & Sudoers Configuration');
+        lines.push('-w /etc/sudoers -p wa -k priv_escalation');
+        lines.push('-w /etc/sudoers.d/ -p wa -k priv_escalation');
+        lines.push('-w /etc/pam.d/ -p wa -k priv_escalation');
+        lines.push('-w /etc/security/faillock.conf -p wa -k priv_escalation');
+        lines.push('');
+      }
+
+      if (time) {
+        lines.push('# 6. System Time and Clock Manipulation');
+        lines.push('-a always,exit -F arch=b64 -S adjtimex,settimeofday -k time_change');
+        lines.push('-a always,exit -F arch=b64 -S clock_settime -k time_change');
+        lines.push('-w /etc/localtime -p wa -k time_change');
+        lines.push('');
+      }
+
+      if (network) {
+        lines.push('# 7. Network Configuration and Hostname Modification');
+        lines.push('-a always,exit -F arch=b64 -S sethostname,setdomainname -k system_locale');
+        lines.push('-w /etc/issue -p wa -k system_locale');
+        lines.push('-w /etc/issue.net -p wa -k system_locale');
+        lines.push('-w /etc/hosts -p wa -k system_locale');
+        lines.push('-w /etc/network/ -p wa -k system_locale');
+        lines.push('-w /etc/netplan/ -p wa -k system_locale');
+        lines.push('-w /etc/resolv.conf -p wa -k system_locale');
+        lines.push('');
+      }
+
+      if (modules) {
+        lines.push('# 8. Kernel Module Loading and Unloading');
+        lines.push('-w /sbin/insmod -p x -k kernel_modules');
+        lines.push('-w /sbin/rmmod -p x -k kernel_modules');
+        lines.push('-w /sbin/modprobe -p x -k kernel_modules');
+        lines.push('-a always,exit -F arch=b64 -S init_module,finit_module -k kernel_modules');
+        lines.push('-a always,exit -F arch=b64 -S delete_module -k kernel_modules');
+        lines.push('');
+      }
+
+      if (mounts) {
+        lines.push('# 9. Filesystem Mount Operations');
+        lines.push('-a always,exit -F arch=b64 -S mount -F auid>=1000 -F auid!=unset -k mounts');
+        lines.push('-a always,exit -F arch=b64 -S umount2 -F auid>=1000 -F auid!=unset -k mounts');
+        lines.push('');
+      }
+
+      if (ptrace) {
+        lines.push('# 10. Process Injection and Debugging (ptrace)');
+        lines.push('-a always,exit -F arch=b64 -S ptrace -k mem_injection');
+        lines.push('-a always,exit -F arch=b64 -S process_vm_readv,process_vm_writev -k mem_injection');
+        lines.push('');
+      }
+
+      if (execve) {
+        lines.push('# 11. User Process Execution Auditing (All non-root execve)');
+        lines.push('-a always,exit -F arch=b64 -S execve -F auid>=1000 -F auid!=unset -k exec_commands');
+        lines.push('');
+      }
+
+      if (immutable === '2') {
+        lines.push('# 12. Make Configuration Immutable (Must be the last line)');
+        lines.push('-e 2');
+      } else {
+        lines.push('# 12. Enable Audit Subsystem (Mutable mode)');
+        lines.push('-e 1');
+      }
+
+      codeOutput.textContent = lines.join('\n');
+    } else if (activeTab === 'daemon') {
+      var confLines = [
+        '# ============================================================',
+        '#  /etc/audit/auditd.conf',
+        '#  Linux Audit Daemon Operational Configuration',
+        '# ============================================================',
+        '',
+        'local_events = yes',
+        'write_logs = yes',
+        'log_file = /var/log/audit/audit.log',
+        'log_group = adm',
+        'log_format = ENRICHED',
+        'flush = INCREMENTAL_ASYNC',
+        'freq = 50',
+        'max_log_file = 100',
+        'num_logs = 10',
+        'priority_boost = 4',
+        'name_format = HOSTNAME',
+        'max_log_file_action = ROTATE',
+        'space_left = 250',
+        'space_left_action = SYSLOG',
+        'verify_email = yes',
+        'action_mail_acct = root',
+        'admin_space_left = 100',
+        'admin_space_left_action = SUSPEND',
+        'disk_full_action = SUSPEND',
+        'disk_error_action = SUSPEND',
+        'use_auparse = yes'
+      ];
+      codeOutput.textContent = confLines.join('\n');
+    } else if (activeTab === 'cli') {
+      var cliLines = [
+        '# ============================================================',
+        '#          DFIR AUSEARCH & AUREPORT FORENSIC CHEATSHEET        ',
+        '# ============================================================',
+        '',
+        '# 1. Search for unauthorized access / permission denied events:',
+        'sudo ausearch -m AVC,USER_AUTH,SELINUX_ERR --success no -i',
+        '',
+        '# 2. Search for user identity modification events (passwd/shadow):',
+        'sudo ausearch -k identity -i',
+        '',
+        '# 3. Search for privilege escalation & sudoers file modifications:',
+        'sudo ausearch -k priv_escalation -i',
+        '',
+        '# 4. Search for process injection & ptrace debugging activity:',
+        'sudo ausearch -k mem_injection -i',
+        '',
+        '# 5. Search for kernel module loading (rootkit indicator):',
+        'sudo ausearch -k kernel_modules -i',
+        '',
+        '# 6. Generate summary reports for executive forensic audits:',
+        'sudo aureport --auth --summary',
+        'sudo aureport --executable --summary',
+        'sudo aureport --failed --summary',
+        '',
+        '# 7. Reload audit rules without reboot (only if not in -e 2 immutable mode):',
+        'sudo augenrules --load'
+      ];
+      codeOutput.textContent = cliLines.join('\n');
+    } else if (activeTab === 'vector') {
+      var vectorLines = [
+        '# ============================================================',
+        '#  /etc/vector/vector.yaml',
+        '#  Vector Pipeline: Ingest Linux Audit Logs -> ClickHouse / SIEM',
+        '# ============================================================',
+        '',
+        'sources:',
+        '  audit_logs:',
+        '    type: file',
+        '    include:',
+        '      - /var/log/audit/audit.log',
+        '    read_from: beginning',
+        '',
+        'transforms:',
+        '  parse_audit:',
+        '    type: remap',
+        '    inputs:',
+        '      - audit_logs',
+        '    source: |',
+        '      . = parse_linux_audit!(.message)',
+        '      .timestamp = now()',
+        '      .host = get_hostname!()',
+        '',
+        'sinks:',
+        '  clickhouse_dfir:',
+        '    type: clickhouse',
+        '    inputs:',
+        '      - parse_audit',
+        '    endpoint: "http://127.0.0.1:8123"',
+        '    database: "security_dfir"',
+        '    table: "auditd_events"',
+        '    compression: "gzip"',
+        '    auth:',
+        '      strategy: "basic"',
+        '      user: "${CLICKHOUSE_USER}"',
+        '      password: "${CLICKHOUSE_PASSWORD}"'
+      ];
+      codeOutput.textContent = vectorLines.join('\n');
+    }
+  }
+
+  var debouncedGen = debounceRAF(function() {
+    currentPreset = 'custom';
+    document.querySelectorAll('.btn-preset').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-preset') === 'custom');
+    });
+    generateConfig();
+  }, 60);
+
+  // Preset button listeners
+  document.querySelectorAll('.btn-preset').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      applyPreset(this.getAttribute('data-preset'));
+    });
+  });
+
+  // Tab navigation listeners
+  document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      activeTab = this.getAttribute('data-tab');
+      document.querySelectorAll('.tab-btn').forEach(function(b) {
+        b.classList.toggle('active', b === btn);
+      });
+      generateConfig();
+    });
+  });
+
+  // Input listeners
+  selBuffer.addEventListener('change', debouncedGen);
+  selFailureMode.addEventListener('change', debouncedGen);
+  selImmutable.addEventListener('change', debouncedGen);
+
+  chkIdentity.addEventListener('change', debouncedGen);
+  chkSudoPriv.addEventListener('change', debouncedGen);
+  chkExecve.addEventListener('change', debouncedGen);
+  chkPtrace.addEventListener('change', debouncedGen);
+  chkModules.addEventListener('change', debouncedGen);
+  chkMounts.addEventListener('change', debouncedGen);
+  chkTime.addEventListener('change', debouncedGen);
+  chkNetwork.addEventListener('change', debouncedGen);
+  chkAuditTamper.addEventListener('change', debouncedGen);
+
+  // Copy button
+  btnCopy.addEventListener('click', function() {
+    navigator.clipboard.writeText(codeOutput.textContent).then(function() {
+      var orig = btnCopy.textContent;
+      btnCopy.textContent = '[ COPIED ]';
+      btnCopy.style.background = 'var(--text-muted)';
+      setTimeout(function() {
+        btnCopy.textContent = orig;
+        btnCopy.style.background = 'var(--text-main)';
+      }, 1500);
+    });
+  });
+
+  // Download button
+  btnDownload.addEventListener('click', function() {
+    var blob = new Blob([codeOutput.textContent], { type: 'text/plain;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = activeTab === 'rules' ? 'audit.rules' : (activeTab === 'daemon' ? 'auditd.conf' : (activeTab === 'vector' ? 'vector.yaml' : 'ausearch-commands.sh'));
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // Initial generation
+  applyPreset('cis');
+})();
+</script>
+</body>
+</html>

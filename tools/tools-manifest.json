@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "description": "Structured machine-readable tool catalog and parameter schemas for Browser AI Agents & LLMs.",
   "platform": "https://zyekh.com",
-  "total_tools": 52,
-  "updated_at": "2026-08-15T22:13:33Z",
+  "total_tools": 53,
+  "updated_at": "2026-08-15T22:33:45Z",
   "tools": [
     {
       "id": "ai-token",
@@ -25,6 +25,107 @@
           "type": "string",
           "input_element": "textarea",
           "description": "AI Prompt / System Instruction Text"
+        }
+      ]
+    },
+    {
+      "id": "auditd-generator",
+      "name": "Linux Auditd & DFIR Rule Generator",
+      "description": "Generate production-ready Linux auditd rules (audit.rules), auditd.conf daemon configs, and DFIR ausearch queries 100% client-side. CIS Benchmark and PCI-DSS compliance.",
+      "category": "Security & Linux Systems",
+      "url": "https://zyekh.com/tools/auditd-generator.html",
+      "execution": {
+        "type": "client_side_javascript",
+        "telemetry": "none",
+        "offline_ready": true,
+        "storage": "local_memory_or_localstorage"
+      },
+      "parameters": [
+        {
+          "name": "selBuffer",
+          "type": "string",
+          "input_element": "select",
+          "description": "Backlog Buffer Size (-b):\nevents",
+          "enum": [
+            "8192",
+            "16384",
+            "32768"
+          ]
+        },
+        {
+          "name": "selFailureMode",
+          "type": "string",
+          "input_element": "select",
+          "description": "Failure Mode (-f):",
+          "enum": [
+            "0",
+            "1",
+            "2"
+          ]
+        },
+        {
+          "name": "selImmutable",
+          "type": "string",
+          "input_element": "select",
+          "description": "Audit Configuration Lock (-e):",
+          "enum": [
+            "2",
+            "1"
+          ]
+        },
+        {
+          "name": "chkIdentity",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Identity & Account Changes: Watch `/etc/passwd`, `/etc/shadow`, `/etc/group`, `/etc/gshadow` (tag: identity)."
+        },
+        {
+          "name": "chkSudoPriv",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Privilege Escalation & Sudo: Watch `/etc/sudoers`, `/etc/sudoers.d/`, `/etc/pam.d/` (tag: priv_escalation)."
+        },
+        {
+          "name": "chkExecve",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "User Process Executions (execve): Audit all command executions by non-root users (`auid>=1000`) (tag: exec_commands)."
+        },
+        {
+          "name": "chkPtrace",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Process Injection & Debugging (ptrace): Monitor memory tampering and process debugging (tag: mem_injection)."
+        },
+        {
+          "name": "chkModules",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Kernel Module Loading/Unloading: Audit `init_module`, `finit_module`, `delete_module` (tag: kernel_modules)."
+        },
+        {
+          "name": "chkMounts",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Filesystem Mount Operations: Audit `mount` and `umount2` system calls (tag: mounts)."
+        },
+        {
+          "name": "chkTime",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Time & Clock Modifications: Audit `settimeofday`, `clock_settime`, `/etc/localtime` (tag: time_change)."
+        },
+        {
+          "name": "chkNetwork",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Network Config & Hostname: Watch `/etc/hosts`, `/etc/network/`, `sethostname` (tag: system_locale)."
+        },
+        {
+          "name": "chkAuditTamper",
+          "type": "string",
+          "input_element": "checkbox",
+          "description": "Audit Subsystem Tamper Defense: Watch `/var/log/audit/` and `/etc/audit/` for unauthorized write access (tag: audit_tamper)."
         }
       ]
     },

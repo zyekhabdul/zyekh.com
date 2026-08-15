@@ -155,18 +155,18 @@ TOOL_MAPPINGS = {
         'btn': 'Generate PAM & Faillock Policy ->'
     },
     'linux-audit-logging-with-vector-and-clickhouse-dfir': {
-        'badge': '[ INTERACTIVE UTILITY // DFIR ]',
-        'title': 'Linux chmod & File Permissions Calculator',
-        'desc': 'Verify audit log file permissions (0600) and Vector pipeline socket access rules.',
-        'url': '/tools/chmod-calculator.html',
-        'btn': 'Calculate Log Permissions ->'
+        'badge': '[ INTERACTIVE GENERATOR // AUDITD & SIEM ]',
+        'title': 'Linux Auditd & DFIR Event Rule Generator',
+        'desc': 'Generate production Linux audit.rules, auditd.conf configs, and Vector log shipper ingestion pipelines 100% offline.',
+        'url': '/tools/auditd-generator.html',
+        'btn': 'Generate Auditd & Vector Config ->'
     },
     'auditd-kernel-event-monitoring-and-dfir-logging': {
-        'badge': '[ INTERACTIVE UTILITY // DFIR ]',
-        'title': 'Linux chmod & File Permissions Calculator',
-        'desc': 'Verify auditd immutable configuration permissions and audit log archive permissions.',
-        'url': '/tools/chmod-calculator.html',
-        'btn': 'Calculate Audit Permissions ->'
+        'badge': '[ INTERACTIVE GENERATOR // KERNEL AUDIT ]',
+        'title': 'Linux Auditd & DFIR Event Rule Generator',
+        'desc': 'Build CIS Benchmark L2 audit.rules, immutable kernel configs (-e 2), and ausearch forensic query commands 100% offline.',
+        'url': '/tools/auditd-generator.html',
+        'btn': 'Generate Kernel Audit Rules ->'
     },
     'linux-seccomp-bpf-syscall-filtering-hardening-guide': {
         'badge': '[ INTERACTIVE GENERATOR // SECCOMP ]',

@@ -6,6 +6,12 @@
     "type": "Tool"
   },
   {
+    "title": "Linux Auditd & DFIR Rule Generator",
+    "desc": "Generate production-ready Linux auditd rules (audit.rules), auditd.conf daemon configs, and DFIR ausearch queries 100% client-side. CIS Benchmark and PCI-DSS compliance.",
+    "url": "/tools/auditd-generator.html",
+    "type": "Tool"
+  },
+  {
     "title": "Base64 Encoder / Decoder & Image Base64",
     "desc": "Convert text or image files to Base64 strings and decode Base64 back to plain text 100% offline & client-side in browser.",
     "url": "/tools/base64.html",

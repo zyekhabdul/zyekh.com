@@ -70,6 +70,7 @@
 
 ## Privacy-First Client-Side Web Utilities (/tools/)
 - [AI Prompt Token & API Cost Estimator](https://zyekh.com/tools/ai-token.html): Estimate LLM prompt token counts and API costs for OpenAI GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, and Llama 3 100% offline & client-side in browser.
+- [Linux Auditd & DFIR Rule Generator](https://zyekh.com/tools/auditd-generator.html): Generate production-ready Linux auditd rules (audit.rules), auditd.conf daemon configs, and DFIR ausearch queries 100% client-side. CIS Benchmark and PCI-DSS compliance.
 - [Base64 Encoder / Decoder & Image Base64](https://zyekh.com/tools/base64.html): Convert text or image files to Base64 strings and decode Base64 back to plain text 100% offline & client-side in browser.
 - [Text Case Converter](https://zyekh.com/tools/case-converter.html): Konverter case teks online: UPPERCASE, lowercase, Title Case, kebab-case, snake_case, dan lainnya.
 - [Linux Permissions & Chmod Calculator](https://zyekh.com/tools/chmod-calculator.html): Interactive Linux file permission and chmod octal calculator. Calculate 3-digit and 4-digit octal permissions (rwx, SUID, SGID, Sticky Bit) 100% client-side in browser.
