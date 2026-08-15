@@ -8,12 +8,10 @@
       "auditddfir"
     ],
     "code_snippet": [
-      "# File Integrity Watch Rules",
-      "-w /etc/passwd -p wa -k identity_changes",
-      "-w /etc/shadow -p wa -k identity_changes",
-      "-w /etc/sudoers -p wa -k privilege_changes",
-      "-w /etc/sudoers.d/ -p wa -k privilege_changes",
-      "-w /var/log/tallylog -p wa -k auth_logs"
+      "# Install auditd on Debian/Ubuntu",
+      "systemctl enable --now auditd",
+      "# Verify audit daemon status",
+      "auditctl -s"
     ],
     "invariants": [
       "Execve Process Auditing: Track all executed commands across system users.",
@@ -35,12 +33,10 @@
       "processisolation"
     ],
     "code_snippet": [
-      "# Example systemd service with RootDirectory chroot",
-      "[Service]",
-      "RootDirectory=/srv/jail",
-      "ExecStart=/bin/myapp",
-      "User=nobody",
-      "Group=nogroup"
+      "# Launch isolated user and mount namespace",
+      "unshare --user --map-root-user --mount --fork /bin/bash",
+      "# Verify UID inside namespace",
+      "id"
     ],
     "invariants": [
       "User Namespaces (CLONE_NEWUSER): Map unprivileged user IDs to root inside isolated namespaces.",
@@ -62,14 +58,13 @@
       "kubernetesebpf"
     ],
     "code_snippet": [
-      "# Cilium NetworkPolicy enforcing L7 HTTP REST limits",
-      "apiVersion: \"cilium.io/v2\"",
-      "kind: CiliumNetworkPolicy",
-      "metadata:",
-      "  name: \"secure-api-gateway\"",
-      "  namespace: production",
-      "spec:",
-      "  endpointSelector:"
+      "# Install Cilium with eBPF Host Routing enabled",
+      "helm install cilium cilium/cilium \\",
+      "  --namespace kube-system \\",
+      "  --set kubeProxyReplacement=strict \\",
+      "  --set bpf.masquerade=true",
+      "# Audit Cilium eBPF status",
+      "cilium status --wait"
     ],
     "invariants": [
       "eBPF Network Bypass: Replace iptables overhead with socket-layer eBPF programs for microsecond latency.",
@@ -120,14 +115,14 @@
       "devops"
     ],
     "code_snippet": [
-      "# Kyverno ClusterPolicy: Enforce Cosign Image Signature Verification",
-      "apiVersion: kyverno.io/v1",
-      "kind: ClusterPolicy",
-      "metadata:",
-      "  name: verify-image-signature",
-      "spec:",
-      "  validationFailureAction: Enforce",
-      "  rules:"
+      "# Generate and Attach Signed SBOM Attestation",
+      "cosign attest --yes --predicate sbom.spdx.json \\",
+      "  --type spdx ghcr.io/zyekh/secure-api:v2.0.0",
+      "# Verify Container Image Signature Keylessly",
+      "cosign verify \\",
+      "  --certificate-identity \"https://github.com/zyekhabdul/zyekh.com/.github/workflows/deploy.yml@refs/heads/main\" \\",
+      "  --certificate-oidc-issuer \"https://token.actions.githubusercontent.com\" \\",
+      "  ghcr.io/zyekh/secure-api:v2.0.0"
     ],
     "invariants": [
       "Keyless Image Signing: Sign OCI container images in CI/CD using OIDC identity tokens (Fulcio CA) without managing private keys.",
@@ -183,9 +178,7 @@
       "    __uint(max_entries, 100000);",
       "    __type(key, __be32);",
       "    __type(value, __u64);",
-      "} blacklist SEC(\"maps\");",
-      "SEC(\"xdp\")",
-      "}"
+      "} blacklist SEC(\"maps\");"
     ],
     "invariants": [
       "XDP_DROP Early Decision: Drop malicious UDP/SYN floods before allocating sk_buff memory.",
@@ -207,14 +200,12 @@
       "fail2bandefense"
     ],
     "code_snippet": [
-      "# /etc/fail2ban/jail.local",
-      "[DEFAULT]",
-      "bantime  = 1h",
-      "findtime = 10m",
-      "maxretry = 5",
-      "banaction = ufw",
-      "ignoreip = 127.0.0.1/8 ::1 10.0.0.0/8 192.168.1.0/24",
-      "[sshd]"
+      "# Install Fail2ban daemon on Debian/Ubuntu",
+      "sudo apt-get update && sudo apt-get install -y fail2ban",
+      "# Enable and start Fail2ban systemd daemon",
+      "systemctl enable --now fail2ban",
+      "# Verify active status and global jail count",
+      "fail2ban-client status"
     ],
     "invariants": [
       "Jail Configuration: Override default settings safely using jail.local instead of jail.conf.",
@@ -265,14 +256,10 @@
       "kubernetes"
     ],
     "code_snippet": [
-      "# Compliant Restricted Pod Specification",
-      "apiVersion: v1",
-      "kind: Pod",
-      "metadata:",
-      "  name: secure-app-worker",
-      "  namespace: production-apps",
-      "spec:",
-      "  securityContext:"
+      "# Audit namespace Pod Security labels",
+      "kubectl get ns --show-labels | grep \"pod-security\"",
+      "# Test deployment rejection on non-compliant pod",
+      "kubectl apply -f non-compliant-pod.yaml"
     ],
     "invariants": [
       "Pod Security Levels: Enforce Privileged, Baseline, or Restricted security profiles at the namespace level.",
@@ -294,14 +281,12 @@
       "quantization"
     ],
     "code_snippet": [
-      "# PyTorch Per-Channel Asymmetric INT4 Quantization Pseudocode",
-      "import torch",
-      "def quantize_kv_cache_int4(tensor_fp16: torch.Tensor):",
-      "    # tensor_fp16: [num_heads, seq_len, head_dim]",
-      "    min_val = tensor_fp16.min(dim=-1, keepdim=True)[0]",
-      "    max_val = tensor_fp16.max(dim=-1, keepdim=True)[0]",
-      "    # Compute scale factor and zero point for 4-bit range (0 to 15)",
-      "    scale = (max_val - min_val) / 15.0"
+      "# vLLM Command Line for INT4 KV Cache Quantization",
+      "python3 -m vllm.entrypoints.openai.api_server \\",
+      "    --model meta-llama/Meta-Llama-3-8B-Instruct \\",
+      "    --kv-cache-dtype fp8 \\",
+      "    --gpu-memory-utilization 0.90 \\",
+      "    --max-model-len 65536"
     ],
     "invariants": [
       "VRAM Scaling Bottleneck: At 1 million tokens context length, the FP16 KV cache consumes over 32GB VRAM, exceeding model weights.",
@@ -323,14 +308,10 @@
       "dfir"
     ],
     "code_snippet": [
-      "# Vector Configuration (/etc/vector/vector.yaml)",
-      "sources:",
-      "  linux_audit:",
-      "    type: file",
-      "    include:",
-      "      - /var/log/audit/audit.log",
-      "    ignore_checkpoints: false",
-      "transforms:"
+      "# Inspect Vector top processing stats",
+      "vector top",
+      "# Audit ClickHouse table disk usage and row count",
+      "clickhouse-client --query \"SELECT count(), formatReadableSize(sum(data_compressed_bytes)) FROM system.parts WHERE table = 'audit_events'\""
     ],
     "invariants": [
       "High-Throughput Log Forwarding: Ingest 100,000+ audit events/sec using Vector written in Rust.",
@@ -352,14 +333,11 @@
       "sysctlhardening"
     ],
     "code_snippet": [
-      "# Memory protection and system safety",
-      "kernel.randomize_va_space = 2",
-      "kernel.dmesg_restrict = 1",
-      "kernel.kptr_restrict = 2",
-      "fs.protected_hardlinks = 1",
-      "fs.protected_symlinks = 1",
-      "fs.protected_fifos = 2",
-      "fs.protected_regular = 2"
+      "# Enable SYN flood defenses in sysctl",
+      "net.ipv4.tcp_syncookies = 1",
+      "net.ipv4.tcp_max_syn_backlog = 4096",
+      "net.ipv4.tcp_synack_retries = 2",
+      "net.ipv4.tcp_syn_retries = 2"
     ],
     "invariants": [
       "SYN Flood Protection: Enable tcp_syncookies and increase tcp_max_syn_backlog.",
@@ -381,14 +359,11 @@
       "accesscontrol"
     ],
     "code_snippet": [
-      "/* Construct Landlock Ruleset allowing read access to /tmp only */",
-      "struct landlock_ruleset_attr attr = {",
-      "    .handled_access_fs = LANDLOCK_ACCESS_FS_READ_FILE |",
-      "                         LANDLOCK_ACCESS_FS_READ_DIR |",
-      "                         LANDLOCK_ACCESS_FS_WRITE_FILE,",
-      "};",
-      "int ruleset_fd = landlock_create_ruleset(&attr, sizeof(attr), 0);",
-      "}"
+      "/* Enforce NO_NEW_PRIVS and lock down Landlock Sandbox */",
+      "prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);",
+      "syscall(__NR_landlock_restrict_self, ruleset_fd, 0);",
+      "close(ruleset_fd);",
+      "close(path_attr.parent_fd);"
     ],
     "invariants": [
       "Unprivileged Access Control: Restrict process filesystem and network access without requiring root (CAP_SYS_ADMIN) privileges.",
@@ -410,14 +385,10 @@
       "processisolation"
     ],
     "code_snippet": [
-      "// C Implementation of Seccomp-BPF Syscall Allowlist",
-      "int init_seccomp_sandbox() {",
-      "    // Initialize default-kill Seccomp context",
-      "    scmp_filter_ctx ctx = seccomp_init(SCMP_ACT_KILL);",
-      "    if (!ctx) return -1;",
-      "    // Allow essential system calls",
-      "    seccomp_rule_add(ctx, SCMP_ACT_ALLOW, SCMP_SYS(read), 0);",
-      "}"
+      "# Inspect process Seccomp status mode",
+      "grep -i \"Seccomp\" /proc/self/status",
+      "# Audit blocked syscall violations in dmesg audit logs",
+      "dmesg | grep -i \"SECCOMP\""
     ],
     "invariants": [
       "Syscall Attack Surface Reduction: Block unused system calls (e.g., ptrace, reboot, kexec_load) at the kernel boundary.",
@@ -439,14 +410,14 @@
       "linuxvps"
     ],
     "code_snippet": [
-      "# /etc/sysctl.d/99-vps-hardening.conf",
-      "# 1. IP Packet Forwarding & Routing Protection",
-      "net.ipv62.conf.all.accept_source_route = 0",
-      "net.ipv62.conf.default.accept_source_route = 0",
-      "net.ipv62.conf.all.accept_source_route = 0",
-      "# 2. ICMP Redirect Protection (Prevent MitM Packet Hijacking)",
-      "net.ipv62.conf.all.accept_redirects = 0",
-      "net.ipv62.conf.default.accept_redirects = 0"
+      "# Reset UFW rules to default state",
+      "sudo ufw --force reset",
+      "# Set default policies",
+      "sudo ufw default deny incoming",
+      "sudo ufw default allow outgoing",
+      "# Allow SSH with rate-limiting (max 6 connection attempts per 30 seconds)",
+      "sudo ufw limit 22/tcp comment 'SSH Rate Limited'",
+      "# Allow Web Server ports"
     ],
     "invariants": [
       "SSH Key Enforcement: Mandate Ed25519 SSH keys, disable root password login, and enforce modern cryptographic ciphers (ChaCha20-Poly1305 / AES-256-GCM).",
@@ -473,8 +444,6 @@
       "  --bg-dark: #09090b;",
       "  --text-main: #fafafa;",
       "  --border-color: #27272a;",
-      "/* Fluid H1 scaling without JavaScript or media query clutter */",
-      ".hero-title {",
       "}"
     ],
     "invariants": [
@@ -526,14 +495,14 @@
       "agents"
     ],
     "code_snippet": [
-      "# LangGraph Multi-Agent State Machine Definition",
-      "from typing import Annotated, TypedDict",
-      "from langgraph.graph import StateGraph, END",
-      "class SwarmState(TypedDict):",
-      "    task: str",
-      "    code: str",
-      "    review_status: str",
-      "    iteration_count: int"
+      "# Guardrail Implementation for Loop Termination",
+      "def evaluate_agent_output(state: SwarmState, output: str) -> str:",
+      "    if \"CRITICAL_SECURITY_VIOLATION\" in output:",
+      "        return END  # Immediate emergency termination",
+      "    if state[\"iteration_count\"] > 3:",
+      "        logger.warning(\"Agent budget exceeded. Fallback to human review.\")",
+      "        return \"human_approval_checkpoint\"",
+      "    return \"continue_loop\""
     ],
     "invariants": [
       "Single-Agent Limits: Monolithic single-agent loops fail on complex multi-step tasks due to context degradation and prompt confusion.",
@@ -555,14 +524,12 @@
       "nginxhardening"
     ],
     "code_snippet": [
-      "# Strict TLS 1.2 / TLS 1.3 configuration",
-      "ssl_protocols TLSv1.2 TLSv1.3;",
-      "ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384;",
-      "ssl_prefer_server_ciphers off;",
-      "ssl_session_timeout 1d;",
-      "ssl_session_cache shared:SSL:10m;",
-      "ssl_stapling on;",
-      "ssl_stapling_verify on;"
+      "# Mandatory Security Headers",
+      "add_header X-Frame-Options \"DENY\" always;",
+      "add_header X-Content-Type-Options \"nosniff\" always;",
+      "add_header Referrer-Policy \"strict-origin-when-cross-origin\" always;",
+      "add_header Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\" always;",
+      "add_header Permissions-Policy \"camera=(), microphone=(), geolocation=()\" always;"
     ],
     "invariants": [
       "Disable Nginx Server Tokens: Suppress server version disclosure in HTTP headers.",
@@ -584,14 +551,13 @@
       "architecture"
     ],
     "code_snippet": [
-      "// Example OmniRouter Configuration in YAML",
-      "routes:",
-      "  - match:",
-      "      intent: \"complex_reasoning\"",
-      "    backend: \"claude-3-5-sonnet\"",
-      "    fallback: [\"gpt-4o\", \"llama-3-70b-instruct\"]",
-      "  - match:",
-      "      intent: \"summarization\""
+      "# Pseudocode for Speculative Decoding loop",
+      "def speculative_decode(draft_model, target_model, prompt, k=4):",
+      "    draft_tokens = draft_model.generate(prompt, max_tokens=k)",
+      "    target_logits = target_model.forward(prompt + draft_tokens)",
+      "    verified_tokens = verify(draft_tokens, target_logits)",
+      "    if len(verified_tokens) == k:",
+      "        return verified_tokens"
     ],
     "invariants": [
       "Dynamic Gateway Routing: Route queries to specialized models based on semantic classification and latency metrics.",
@@ -729,14 +695,13 @@
       "ssh"
     ],
     "code_snippet": [
-      "# Enable SSH Secrets Engine in Vault",
-      "vault secrets enable -path=ssh-client-signer ssh",
-      "# Configure CA Keypair",
-      "vault write ssh-client-signer/config/ca generate_signing_key=true",
-      "# Export Vault CA Public Key for OpenSSH Hosts",
-      "vault read -field=public_key ssh-client-signer/config/ca > /etc/ssh/trusted-user-ca.pub",
-      "# Create Engineer Access Role",
-      "vault write ssh-client-signer/roles/devops"
+      "# Authenticate via OIDC SSO",
+      "vault login -method=oidc",
+      "# Generate signed SSH certificate",
+      "vault write -field=signed_key ssh-client-signer/sign/devops \\",
+      "    public_key=@~/.ssh/id_ed25519.pub > ~/.ssh/id_ed25519-cert.pub",
+      "# Connect to remote server using signed certificate",
+      "ssh -i ~/.ssh/id_ed25519-cert.pub -i ~/.ssh/id_ed25519 devops@vps.zyekh.com"
     ],
     "invariants": [
       "Zero Key Management: Eliminate authorized_keys management across server fleets by trusting a single Vault CA public key.",
@@ -758,14 +723,13 @@
       "logits"
     ],
     "code_snippet": [
-      "# Outlines Guaranteed JSON Generation with Pydantic",
-      "import outlines",
-      "from pydantic import BaseModel, Field",
-      "from typing import List",
-      "class VulnerabilityReport(BaseModel):",
-      "    cve_id: str = Field(description=\"CVE identifier format: CVE-YYYY-NNNN\")",
-      "    severity: str = Field(description=\"CRITICAL, HIGH, MEDIUM, or LOW\")",
-      "    affected_packages: List[str]"
+      "# PyTorch Custom Logit Masking Processor for JSON Validation",
+      "import torch",
+      "from transformers import LogitsProcessor",
+      "class JSONConstraintLogitsProcessor(LogitsProcessor):",
+      "    def __init__(self, fsm_grammar_engine, tokenizer):",
+      "        self.fsm = fsm_grammar_engine",
+      "        self.tokenizer = tokenizer"
     ],
     "invariants": [
       "Prompting Insecurity: Instructing an LLM to 'output valid JSON' fails unpredictably on complex schemas, causing JSON parse errors.",
@@ -816,14 +780,10 @@
       "ufwfirewall"
     ],
     "code_snippet": [
-      "# Reset UFW to clean state",
-      "ufw --force reset",
-      "# Set default traffic policies",
-      "ufw default deny incoming",
-      "ufw default allow outgoing",
-      "# Allow SSH on custom port with rate limiting",
-      "ufw limit 22/tcp comment 'SSH Rate Limited'",
-      "# Enable UFW logging"
+      "# Restrict custom SSH port with rate limiting",
+      "ufw limit 2222/tcp comment 'Custom SSH Port Limited'",
+      "# Inspect UFW active rules with rule numbers",
+      "ufw status numbered"
     ],
     "invariants": [
       "Strict Default-Deny Rules: Block all unrequested incoming connections while permitting stateful outbound traffic.",
@@ -851,6 +811,7 @@
       "    u32 pid = bpf_get_current_pid_tgid() >> 32;",
       "    bpf_printk(\"Execve triggered by PID %d\\n\", pid);",
       "    return 0;",
+      "}",
       "char LICENSE[] SEC(\"license\") = \"GPL\";"
     ],
     "invariants": [
@@ -930,14 +891,12 @@
       "wireguardmesh"
     ],
     "code_snippet": [
-      "# /etc/wireguard/wg0.conf on Web Server (Node B)",
-      "[Interface]",
-      "PrivateKey = <NODE_B_PRIVATE_KEY>",
-      "Address = 10.0.0.2/24",
-      "[Peer]",
-      "# Gateway Server (Node A)",
-      "PublicKey = <NODE_A_PUBLIC_KEY>",
-      "Endpoint = 203.0.113.10:51820"
+      "# Enable WireGuard UDP port on public interface eth0",
+      "ufw allow in on eth0 to any port 51820 proto udp comment 'WireGuard Handshakes'",
+      "# Allow all internal traffic on virtual interface wg0",
+      "ufw allow in on wg0 comment 'Internal Mesh Traffic'",
+      "# Bring up WireGuard interface",
+      "wg-quick up wg0"
     ],
     "invariants": [
       "Kernel-Level Performance: WireGuard executes inside Linux kernel space with minimal latency.",

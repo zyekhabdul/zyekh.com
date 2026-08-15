@@ -27,24 +27,24 @@ def sanitize_text(text: str) -> str:
 
 def extract_clean_code(raw_html: str) -> list[str]:
     pres = re.findall(r'<pre(?:.*?)><code(?:.*?)>(.*?)</code></pre>', raw_html, re.DOTALL)
-    if not pres:
-        pres = re.findall(r'<pre(?:.*?)>(.*?)</pre>', raw_html, re.DOTALL)
-        
+    # Extract code directly from raw HTML strings via regex (Protocol 33)
+    pre_matches = re.findall(r'<pre[^>]*>(.*?)</pre>', raw_html, re.DOTALL | re.IGNORECASE)
     candidate_blocks = []
-    for raw in pres:
+    
+    for raw in pre_matches:
         if any(bad in raw for bad in ["interactive-demo", "tool-container", "document.getElementById", "innerHTML", "addEventListener"]):
             continue
         unescaped = html.unescape(raw)
         clean = re.sub(r'<span[^>]*>', '', unescaped)
         clean = re.sub(r'</span>', '', clean)
         clean = re.sub(r'</?code[^>]*>', '', clean)
-        clean = re.sub(r'</?pre[^>]*>', '', clean)
         
         raw_lines = [l.rstrip() for l in clean.splitlines() if l.strip()]
-        # Strip orphan brackets at boundaries
+        # Strip only leading orphan brackets
         while raw_lines and raw_lines[0].strip() in ['{', '}', '(', ')']:
             raw_lines = raw_lines[1:]
-        while raw_lines and raw_lines[-1].strip() in ['{', '}', '(', ')']:
+        # Strip trailing orphan OPENING bracket if alone at end
+        while raw_lines and raw_lines[-1].strip() in ['{', '(', '[']:
             raw_lines = raw_lines[:-1]
             
         if len(raw_lines) >= 3:
@@ -61,21 +61,27 @@ def extract_clean_code(raw_html: str) -> list[str]:
         
     def score_block(b):
         text = "\n".join(b)
-        score = len(b)
-        if any(kw in text for kw in ["#", "//", "def ", "fn ", "struct ", "class ", "sudo ", "ssh-", "add_header", "ufw ", ":root"]):
-            score += 20
+        score = 0
+        if any(kw in text for kw in ["def ", "fn ", "struct ", "class ", "SEC(", "SELECT ", "add_header", "ruleset", "helm install", "cosign verify", ":root"]):
+            score += 50
+        if any(kw in text for kw in ["ProtectSystem", "faillock", "iptables", "ufw ", "ssh-keygen", "vault "]):
+            score += 40
+        if "# " in text or "// " in text or "/* " in text:
+            score += 15
         if not text.startswith("// XDP Action"):
-            score += 5
-        if not ("TTFB:" in text):
             score += 10
+        if "TTFB:" not in text:
+            score += 20
+        if 4 <= len(b) <= 8:
+            score += 30
         return score
 
     candidate_blocks.sort(key=score_block, reverse=True)
     best = candidate_blocks[0]
     
-    # Strip non-essential top imports if function or executable logic follows
-    has_logic = any(any(l.strip().startswith(kw) for kw in ["fn ", "def ", "class ", "struct ", "int ", "server ", "if ", "let "]) for l in best)
-    if has_logic and len(best) > 7:
+    # Strip non-essential top imports if function or struct follows
+    has_logic = any(any(l.strip().startswith(kw) for kw in ["fn ", "def ", "class ", "struct ", "int ", "server ", "if ", "let ", "SEC("]) for l in best)
+    if has_logic and len(best) > 8:
         filtered = []
         for l in best:
             s = l.strip()
@@ -85,35 +91,57 @@ def extract_clean_code(raw_html: str) -> list[str]:
         if len(filtered) >= 3:
             best = filtered
 
-    clean_best = [l for l in best if l.strip() not in ['{', '}', '(', ')']]
-    
-    if len(clean_best) <= 8:
-        selected = clean_best
+    # Determine optimal slice (max 8 lines)
+    if len(best) <= 8:
+        selected = list(best)
     else:
-        selected = clean_best[:8]
-        # Check brace balance
-        open_b = sum(l.count('{') for l in selected)
-        close_b = sum(l.count('}') for l in selected)
-        if open_b > close_b:
-            for next_line in clean_best[8:10]:
-                if '}' in next_line or 'Ok(' in next_line:
-                    selected = clean_best[:7] + [next_line]
-                    break
-            open_b = sum(l.count('{') for l in selected)
-            close_b = sum(l.count('}') for l in selected)
-            if open_b > close_b and not selected[-1].strip().startswith('}'):
-                selected[-1] = '}'
-        
-    if selected and selected[-1].strip().endswith('\\'):
-        selected[-1] = selected[-1].strip()[:-1].rstrip()
+        # Check if we can slice at a natural function/struct/statement boundary within 5..8 lines
+        sliced = None
+        for cut in range(8, 3, -1):
+            cand = best[:cut]
+            c_text = "\n".join(cand)
+            if c_text.count('{') == c_text.count('}') and cand[-1].strip() in ['}', '};', ';']:
+                sliced = cand
+                break
+        if sliced:
+            selected = sliced
+        else:
+            selected = best[:8]
+            c_text = "\n".join(selected)
+            open_b = c_text.count('{')
+            close_b = c_text.count('}')
+            if open_b > close_b:
+                for next_line in best[8:12]:
+                    if next_line.strip() in ['}', '};'] or 'Ok(' in next_line:
+                        selected = selected[:7] + [next_line]
+                        break
 
-    # Ensure continuation lines following '\' have proper indentation alignment
+    # Pop trailing unclosed function/block headers
+    while len(selected) > 3:
+        last = selected[-1].strip()
+        if last.endswith('{') or last.endswith(':') or last.startswith('SEC(') or last.endswith('\\'):
+            if not last.startswith(('#', '//', '/*')):
+                selected.pop()
+                continue
+        break
+
+    # Fix bracket balance if single unclosed function
+    c_text = "\n".join(selected)
+    if c_text.count('{') > c_text.count('}'):
+        selected.append('}')
+        if len(selected) > 8:
+            selected = selected[:7] + ['}']
+
+    # Multiline continuation alignment and brace cleanup
     aligned = []
     for i, line in enumerate(selected):
-        if i > 0 and selected[i-1].rstrip().endswith('\\'):
+        if line.strip() == '}':
+            line = '}'
+        elif i > 0 and selected[i-1].rstrip().endswith('\\'):
             if not line.startswith(' ') and not line.startswith('\t'):
                 line = '  ' + line
         aligned.append(line)
+        
     return aligned
 
 def extract_manifest():
