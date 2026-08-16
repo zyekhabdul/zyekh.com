@@ -58,6 +58,9 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 - [ BACKLOG ] **ENS (Ethereum Name Service) Contenthash Resolution**: Pemetaan domain ENS `zyekh.eth` ke snapshot IPFS CID terbaru.
 - [ BACKLOG ] **Cryptographic Content Provenance (Verifiable Signatures)**: Pembuatan SHA-256 digest dan signature digital untuk setiap artikel blog / RAG database untuk integritas data anti-tampering.
 
+## 7. AI Chatbot & Knowledge Base Assistant (Roadmap)
+- [ BACKLOG ] **Interactive Site AI Chatbot**: Asisten chatbot cerdas berbasis basis pengetahuan situs (`llms.txt` / `llms-full.txt`) dengan opsi arsitektur zero-dependency (Bring-Your-Own-Key / WebLLM in-browser WebGPU / API-driven) (detail teknis menyusul dari user).
+
 Seluruh ide di atas mematuhi prinsip ketiadaan dependensi eksternal, performa tinggi, dan bebas elemen bloat/emoji.
 
 
