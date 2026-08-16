@@ -49,6 +49,15 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 - [ DONE ] **JSON Feed v1.1 & RFC 4287 Atom Feed Modernization**: Penambahan output sindikasi modern `feed.json` dan `atom.xml` di `sync_content.py`, autodiscovery `<link rel="alternate">` tags di 91 file HTML, integrasi robots.txt, sitemap.xml, llms.txt, dan QA Check 17.
 - [ DONE ] **Interactive Zero-Trust Architecture Topology Builder**: Utilitas visual Canvas/SVG murni di browser untuk merancang dan mengekspor topologi keamanan ke Mermaid Markdown, SVG, dan ASCII (`/blueprints/topology-builder.html`).
 
+## 6. Web3, DeFi & Decentralized Infrastructure Suite (Roadmap)
+- [ BACKLOG ] **Smart Contract Security & EVM Bytecode Hardening**: Mitigasi Reentrancy, Read-Only Reentrancy, Storage Slot Collision, dan Formal Verification menggunakan Slither dan Halmos.
+- [ BACKLOG ] **MEV (Maximal Extractable Value) & Mempool Architecture**: Analisis Flashbots, Searchers, Sandwich Attacks, dan arsitektur Private RPC / MEV-Boost relay.
+- [ BACKLOG ] **Zero-Knowledge Proofs (zk-SNARKs vs zk-STARKs) in L2 Rollups**: Sirkuit verifikasi matematis, polynomial commitments, dan komparasi overhead komputasi Prover vs Verifier pada zkEVM.
+- [ BACKLOG ] **DeFi AMM Mathematics & Concentrated Liquidity**: Analisis matematis Constant Product Invariant ($x \cdot y = k$), tick spacing Uniswap v3, dan dynamic fee routing.
+- [ BACKLOG ] **Immutable Decentralized Archiving (IPFS / IPNS / Arweave Mirroring)**: Skrip otomatisasi build snapshot ke IPFS CID dan Arweave permaweb untuk preservasi knowledge base `llms.txt` tanpa runtime overhead ke browser pengunjung.
+- [ BACKLOG ] **ENS (Ethereum Name Service) Contenthash Resolution**: Pemetaan domain ENS `zyekh.eth` ke snapshot IPFS CID terbaru.
+- [ BACKLOG ] **Cryptographic Content Provenance (Verifiable Signatures)**: Pembuatan SHA-256 digest dan signature digital untuk setiap artikel blog / RAG database untuk integritas data anti-tampering.
+
 Seluruh ide di atas mematuhi prinsip ketiadaan dependensi eksternal, performa tinggi, dan bebas elemen bloat/emoji.
 
 
