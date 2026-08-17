@@ -158,7 +158,7 @@ def sync_all(bump_version=False, dry_run=False):
             hashes.append(f"'sha256-{b64}'")
         
         if hashes:
-            csp_meta = f'<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\' {" ".join(hashes)}; style-src \'self\' \'unsafe-inline\'; img-src \'self\' data: https:; font-src \'self\'; connect-src \'self\'; form-action \'self\'; frame-ancestors \'none\';">'
+            csp_meta = f'<meta http-equiv="Content-Security-Policy" content="default-src \'self\'; script-src \'self\' {" ".join(hashes)}; style-src \'self\' \'unsafe-inline\'; img-src \'self\' data: https:; font-src \'self\'; connect-src \'self\' https://api.zyekh.com https://chat.zyekh.com; form-action \'self\'; frame-ancestors \'none\';">'
             c = re.sub(r'<meta\s+[^>]*http-equiv=["\']Content-Security-Policy["\'][^>]*>\s*', '', c, flags=re.IGNORECASE)
             c = c.replace("</head>", f"  {csp_meta}\n</head>")
             
