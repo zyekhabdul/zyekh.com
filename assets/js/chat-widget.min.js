@@ -393,7 +393,7 @@
       }
     } catch (err) {
       removeTyping();
-      appendBotMessage('[ ERROR ] Gagal terhubung ke Central AI Server. Pastikan zyekh-ai-core sedang berjalan.');
+      appendBotMessage(`[ ERROR ] Gagal terhubung ke AI API (${err.message || 'Koneksi terputus'}). Pastikan backend aktif.`);
     } finally {
       sendBtn.disabled = false;
       chatInput.focus();

@@ -1,13 +1,13 @@
 /* zyekh.com Service Worker — Cache Strategy */
-const CACHE_VERSION = "v=20260817_v203";
+const CACHE_VERSION = "v=20260817_v204";
 const APP_CACHE = `zyekh-app-${CACHE_VERSION}`;
 const ASSETS_CACHE = `zyekh-assets-${CACHE_VERSION}`;
 
 const PRECACHE_APP = [
   '/offline.html',
-  '/assets/css/shared.min.css',
-  '/assets/js/site-nav.min.js',
-  '/assets/js/chat-widget.min.js'
+  '/assets/css/shared.min.css?v=20260817_v204',
+  '/assets/js/site-nav.min.js?v=20260817_v204',
+  '/assets/js/chat-widget.min.js?v=20260817_v204'
 ];
 const PRECACHE_ASSETS = [
   '/assets/fonts/fonts.css',
