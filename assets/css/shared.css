@@ -70,13 +70,13 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
 }
 
-[data-theme="light"] input[type="text"],
-[data-theme="light"] input[type="number"],
-[data-theme="light"] input[type="email"],
-[data-theme="light"] input[type="password"],
-[data-theme="light"] input[type="datetime-local"],
-[data-theme="light"] select,
-[data-theme="light"] textarea {
+[data-theme="light"] input[type="text"]:not([class*="zyekh-chat-"]),
+[data-theme="light"] input[type="number"]:not([class*="zyekh-chat-"]),
+[data-theme="light"] input[type="email"]:not([class*="zyekh-chat-"]),
+[data-theme="light"] input[type="password"]:not([class*="zyekh-chat-"]),
+[data-theme="light"] input[type="datetime-local"]:not([class*="zyekh-chat-"]),
+[data-theme="light"] select:not([class*="zyekh-chat-"]),
+[data-theme="light"] textarea:not([class*="zyekh-chat-"]) {
   background: #ffffff;
   border-color: #d4d4d8;
   color: #09090b;
@@ -91,13 +91,13 @@
 }
 
 [data-theme="light"] .btn-primary,
-[data-theme="light"] button[type="submit"] {
+[data-theme="light"] button[type="submit"]:not([class*="zyekh-chat-"]) {
   background-color: #09090b;
   color: #ffffff;
   border-color: #09090b;
 }
 [data-theme="light"] .btn-primary:hover,
-[data-theme="light"] button[type="submit"]:hover {
+[data-theme="light"] button[type="submit"]:not([class*="zyekh-chat-"]):hover {
   background-color: #27272a;
 }
 
@@ -542,13 +542,13 @@ section[id] { scroll-margin-top: 72px; }
 .card-grid-gap { padding: var(--space-sm); }
 
 /* ===================== Forms (tools pages) ===================== */
-input[type="text"],
-input[type="number"],
-input[type="email"],
-input[type="password"],
-input[type="datetime-local"],
-select,
-textarea {
+input[type="text"]:not([class*="zyekh-chat-"]),
+input[type="number"]:not([class*="zyekh-chat-"]),
+input[type="email"]:not([class*="zyekh-chat-"]),
+input[type="password"]:not([class*="zyekh-chat-"]),
+input[type="datetime-local"]:not([class*="zyekh-chat-"]),
+select:not([class*="zyekh-chat-"]),
+textarea:not([class*="zyekh-chat-"]) {
   background: var(--bg-dark);
   border: 1px solid var(--border-color);
   color: var(--text-main);
