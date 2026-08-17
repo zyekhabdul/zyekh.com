@@ -573,7 +573,7 @@ label {
   display: block;
   margin-bottom: 0.4rem;
 }
-button:not(.filter-btn):not(.theme-toggle):not(.nav-toggle):not(.copy-code-btn):not(.btn-share):not(.btn-action):not(.btn-sim) {
+button:not(.filter-btn):not(.theme-toggle):not(.nav-toggle):not(.copy-code-btn):not(.btn-share):not(.btn-action):not(.btn-sim):not([class*="zyekh-chat-"]) {
   background-color: var(--text-main);
   color: var(--bg-dark);
   font-weight: 600;
@@ -586,7 +586,7 @@ button:not(.filter-btn):not(.theme-toggle):not(.nav-toggle):not(.copy-code-btn):
   margin-bottom: 0.4rem;
   transition: background-color var(--transition);
 }
-button:not(.filter-btn):not(.theme-toggle):not(.nav-toggle):not(.copy-code-btn):not(.btn-share):not(.btn-action):not(.btn-sim):hover { background-color: #e4e4e7; }
+button:not(.filter-btn):not(.theme-toggle):not(.nav-toggle):not(.copy-code-btn):not(.btn-share):not(.btn-action):not(.btn-sim):not([class*="zyekh-chat-"]):hover { background-color: #e4e4e7; }
 
 /* ===================== Table ===================== */
 table {
@@ -1156,18 +1156,24 @@ dialog.cmd-palette::backdrop {
   display: flex;
   flex-direction: column;
 }
-.cmd-input {
-  background: transparent !important;
-  border: none !important;
-  border-bottom: 1px solid var(--border-color) !important;
-  border-radius: 0 !important;
-  padding: 1.25rem !important;
-  font-size: 1.1rem !important;
-  color: var(--text-main) !important;
-  margin: 0 !important;
+dialog.cmd-palette .cmd-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 0;
+  padding: 1.25rem;
+  font-size: 1.1rem;
+  color: var(--text-main);
+  margin: 0;
 }
-.cmd-input:focus {
+dialog.cmd-palette .cmd-input:focus {
   outline: none;
+  border-color: var(--border-color);
+}
+[data-theme="light"] dialog.cmd-palette .cmd-input {
+  background: transparent;
+  border-color: var(--border-color);
+  color: var(--text-main);
 }
 .cmd-results {
   max-height: 50vh;
@@ -1175,7 +1181,7 @@ dialog.cmd-palette::backdrop {
   padding: 0.5rem 0;
 }
 .cmd-item:hover, .cmd-item:focus {
-  background: var(--accent-glow) !important;
+  background: var(--accent-glow);
   outline: none;
 }
 
