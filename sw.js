@@ -6,7 +6,8 @@ const ASSETS_CACHE = `zyekh-assets-${CACHE_VERSION}`;
 const PRECACHE_APP = [
   '/offline.html',
   '/assets/css/shared.min.css',
-  '/assets/js/site-nav.min.js'
+  '/assets/js/site-nav.min.js',
+  '/assets/js/chat-widget.min.js'
 ];
 const PRECACHE_ASSETS = [
   '/assets/fonts/fonts.css',

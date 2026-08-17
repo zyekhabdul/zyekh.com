@@ -118,7 +118,7 @@
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
   <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
   <meta property="og:image" content="https://zyekh.com/assets/img/social-cards/securing-web-applications-with-strict-content-security-policy-dark-landscape.png?v=3b86f5fc">
   <meta property="og:image:secure_url" content="https://zyekh.com/assets/img/social-cards/securing-web-applications-with-strict-content-security-policy-dark-landscape.png?v=3b86f5fc">
   <meta property="og:image:type" content="image/png">
@@ -211,7 +211,7 @@
         Modern security standards mandate a <strong>Strict Nonce-Based CSP</strong> or <strong>Strict Hash-Based CSP</strong>:
       </p>
 <pre><code class="language-http"># Recommended Strict Nonce-Based Content Security Policy Header
-Content-Security-Policy: default-src 'none'; script-src 'nonce-rAnd0mN0nc3vAlu3' 'strict-dynamic'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests;</code></pre>
+Content-Security-Policy: default-src 'none'; script-src 'nonce-rAnd0mN0nc3vAlu3' 'strict-dynamic'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com https://api.zyekh.com https://chat.zyekh.com; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests;</code></pre>
 <p>Key directives breakdown:</p>
 <ul>
 <li><code>default-src 'none'</code>: Fallback rule denying all resource loading unless explicitly allowed.</li>
@@ -228,7 +228,7 @@ Content-Security-Policy: default-src 'none'; script-src 'nonce-rAnd0mN0nc3vAlu3'
 <pre><code class="language-nginx"># /etc/nginx/conf.d/security-headers.conf
 
 # Content Security Policy (Strict Nonce/Self Baseline)
-add_header Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests;" always;
+add_header Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com https://api.zyekh.com https://chat.zyekh.com; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests;" always;
 
 # HTTP Strict Transport Security (HSTS 2 Years + Preload)
 add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
