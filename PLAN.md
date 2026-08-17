@@ -1,44 +1,51 @@
-# PLAN: Linux Auditd & DFIR Event Rule Generator (/tools/auditd-generator.html)
+# RFC & PLAN: Modern CSS Cascade Layers (@layer) Architecture Refactoring
 
-## Objectives
-1. Build `tools/auditd-generator.html` — a zero-dependency, local-first Linux Kernel Audit (`auditd`) rule and daemon configuration builder with enterprise compliance profiles (CIS Benchmark Level 2, PCI-DSS v4.0, SOC2 / DFIR Forensics, Custom), granular subsystem watches, real-time performance overhead estimator, and multi-format exporters (`audit.rules`, `auditd.conf`, `ausearch` forensics cheatsheet, Vector log shipper pipeline).
-2. Compile deterministic 2400px social cards (16:9 Dark Landscape + 1:1 Light Square) via `scripts/generate_tools_social_cards.py`.
-3. Update `scripts/generate_tools_manifest.py` and compile `tools/tools-manifest.json` (**53 total tools milestone**).
-4. Register the tool in `tools/index.html` under `NETWORK SECURITY & LINUX SYSTEMS`.
-5. Update `scripts/inject_tool_bridges.py` to link `auditd-kernel-event-monitoring-and-dfir-logging.html` and `linux-audit-logging-with-vector-and-clickhouse-dfir.html` directly to `/tools/auditd-generator.html`.
-6. Update `scripts/smoke_test.py`, run `sync_content.py`, run 22-Axis QA Gate (`verify_batch.py`), 0-emoji audit (`check_emojis.py`), update Obsidian RAG, and record local git commit.
+## 1. Data-Backed Rationale (Why)
+- **Problem**: `assets/css/shared.css` historically styles bare HTML type selectors (`input[type="text"]`, `button`, `table`, `select`, `textarea`). This creates an uncontained global blast radius where every new widget, modal, or interactive tool inadvertently inherits unwanted margins (e.g. `margin-bottom: 0.8rem`) or button paddings, causing layout shifts and specificity collisions.
+- **Modern Baseline 2024+ Standard**: CSS Cascade Layers (`@layer`) explicitly decouples base browser element defaults from modular components by design. Styles defined in `@layer components` naturally and cleanly override `@layer base` regardless of selector specificity, completely eliminating specificity wars and the need for `:not(...)` exclusion chains.
+- **Preserved Core Philosophy**: Zero dependencies, 100% vanilla CSS, 0% framework bloat, 100% backward compatibility with all 53 tools and 35 blog articles.
+
+## 2. Impact & Risk Assessment
+- **Benefits**:
+  - Permanently eliminates global style bleeding into current and future interactive components.
+  - Removes fragile `:not(...)` selector chains.
+  - Maintains exact pixel-perfect design parity across all 99 HTML files.
+- **Risk & Blast Radius**: Modifying `shared.css` touches the entire repository.
+- **Mitigation Strategy**: Full empirical validation via 22-Axis QA Audit (`verify_batch.py`), 32 live localhost HTTP smoke tests (`scripts/smoke_test.py`), and WCAG 2.2 AA Contrast Checker (`scripts/audit_accessibility.py`).
 
 ---
 
-## Chunk 1: Build Interactive Tool (`tools/auditd-generator.html`)
-- **Target File**: `tools/auditd-generator.html`
+## 3. Hyper-Granular Task Breakdown (PLAN)
+
+### Chunk 1: Structure `assets/css/shared.css` into Modern CSS Cascade Layers
+- **Target File**: `assets/css/shared.css`
 - **Scope**:
-  - Full SEO/GEO tags, Schema.org `WebApplication` + `BreadcrumbList`, Anti-Clickjacking script, and Anti-FOUC theme script.
-  - Responsive 2-column layout:
-    - Left Column: Preset Selector (`CIS Level 2`, `PCI-DSS v4.0`, `DFIR Forensics`, `Custom`), Buffer & Failure Directives (`-b`, `-f`, `-e`), Subsystem Watch Toggles (Identity/Auth, Executions/Syscalls, Kernel Modules, Mounts, Time Modifications, Network Config, SUID/SGID), Performance Impact Meter (`[ LOW OVERHEAD ]`, `[ HIGH-FIDELITY DFIR ]`).
-    - Right Column: Live Output Tabs (`/etc/audit/rules.d/audit.rules`, `/etc/audit/auditd.conf`, `ausearch` / `aureport` CLI Commands, Vector Pipeline Config), 1-click clipboard copy (`[ COPIED ]`), and `.rules` file download.
-  - Debounced input event listeners (60ms) using `requestAnimationFrame`.
+  - Declare layer hierarchy at the top: `@layer reset, base, components, utilities;`
+  - Encapsulate CSS variables (`:root`, `[data-theme="light"]`) and global resets (`*`, `html`, `body`) inside `@layer reset`.
+  - Encapsulate generic element type selectors (`h1-h4`, `p`, `a`, `img`, `pre`, `code`, `table`, `input`, `button`, `select`, `textarea`, `details`, `summary`) inside `@layer base`.
+  - Encapsulate modular component classes (`.site-nav`, `.theme-toggle`, `.tool-card`, `.article-card`, `.custom-card`, `.cmd-palette`, `.faq-card`, `.filter-btn`, `.bento-card`, etc.) inside `@layer components`.
+  - Encapsulate utility and grid classes (`.grid-2`, `.grid-3`, `.flex-row`, `.text-muted`, `.w-full`, spacing helpers) inside `@layer utilities`.
+- **DoD**: Clean CSS layer syntax, valid CSS parsing, zero syntax errors.
 
-## Chunk 2: Compile Deterministic Social Cards & Manifest
+### Chunk 2: Streamline Widget & Component Selectors
 - **Target Files**:
-  - `scripts/generate_tools_manifest.py` (Add `"auditd": "Security & Linux Systems"`)
-  - `tools/tools-manifest.json` (53 tools)
-  - `assets/img/social-cards/tool-auditd-generator-dark-landscape.png` (2400x1260)
-  - `assets/img/social-cards/tool-auditd-generator-light-square.png` (2400x2400)
-- **DoD**: Manifest generated with 53 tools, cards compiled cleanly.
+  - `assets/css/shared.css`
+  - `assets/js/chat-widget.min.js`
+- **Scope**:
+  - Clean up long `:not(...)` chains from base button and input selectors.
+  - Verify `.zyekh-chat-input-area`, `.zyekh-chat-input`, and `.zyekh-chat-send` interact seamlessly with `@layer components`.
+- **DoD**: Zero `!important`, clean readable selectors, perfect vertical & horizontal centering.
 
-## Chunk 3: Ecosystem & Cross-Link Integration
+### Chunk 3: Master Asset Synchronization & 22-Axis QA Gate
 - **Target Files**:
-  - `tools/index.html` (Register Auditd Generator card in `.grid-3`)
-  - `scripts/inject_tool_bridges.py` (Map `auditd-kernel-event-monitoring-and-dfir-logging` and `linux-audit-logging-with-vector-and-clickhouse-dfir` to `/tools/auditd-generator.html`)
-- **DoD**: Tool card registered, tool bridges injected across 35 articles.
+  - `sync_content.py` (Execute automated minification `shared.min.css`, auto-bump `sw.js` `CACHE_VERSION`, update SRI SHA-384 hashes and `?v=...` query strings across all 99 HTML files).
+  - `verify_batch.py` (Run 22-axis QA gate including Check 21 live HTTP server smoke test on 32 archetype routes and Check 22 WCAG 2.2 AA contrast audit).
+  - `check_emojis.py` (Enforce 0 emoji compliance).
+- **DoD**: 100% QA checks pass (22/22 checks), zero regressions.
 
-## Chunk 4: QA Gate, Master Sync, Obsidian RAG & Checkpoint
+### Chunk 4: Obsidian RAG Sync & Local Git Checkpoint
 - **Target Files**:
-  - `scripts/smoke_test.py` (Add `/tools/auditd-generator.html` route)
-  - `sync_content.py` (Auto-bump `CACHE_VERSION`, update sitemap to 97 URLs, feeds, `llms.txt`)
-  - `generate_llms_full.py` (Regenerate `llms-full.txt`)
-  - `verify_batch.py` (Execute 22-Axis QA gate)
-  - `check_emojis.py` (Verify 0 emojis)
-  - Obsidian RAG Memory (`INDEX.md`, `STATE.md`, `DECISIONS.md` ADR-041, Session Log)
-- **DoD**: 100% QA checks pass (22 checks, 32 live smoke test routes, 0 emojis), git commit recorded locally (NO git push).
+  - `00-AGY-Memory/zyekh.com/DECISIONS.md` (Record ADR-043: CSS Cascade Layers `@layer` Modern Architecture Refactoring).
+  - `00-AGY-Memory/zyekh.com/STATE.md` (Update active state and commit hash).
+  - `00-AGY-Memory/zyekh.com/INDEX.md` (Sync commit timestamp).
+- **DoD**: Memory synchronized with latest commit hash, local commit created (Strictly NO git push).
