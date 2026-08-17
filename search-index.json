@@ -1,5 +1,17 @@
 [
   {
+    "title": "Zyekh AI Chat Web App (chat.zyekh.com)",
+    "desc": "Dedicated full-screen AI technical mentor, zero-trust advisor & security assistant",
+    "url": "https://chat.zyekh.com",
+    "type": "AI App"
+  },
+  {
+    "title": "Zyekh Official Store & Merch (shop.zyekh.com)",
+    "desc": "Developer apparel, system architecture blueprints & FOSS merchandise",
+    "url": "https://shop.zyekh.com",
+    "type": "Store"
+  },
+  {
     "title": "AI Prompt Token & API Cost Estimator",
     "desc": "Estimate LLM prompt token counts and API costs for OpenAI GPT-4o, Claude 3.5 Sonnet, Gemini 1.5 Pro, and Llama 3 100% offline & client-side in browser.",
     "url": "/tools/ai-token.html",

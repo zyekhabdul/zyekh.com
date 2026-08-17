@@ -677,6 +677,19 @@ def sync_all(bump_version=False, dry_run=False):
         except Exception:
             pass
 
+    search_index.insert(0, {
+        "title": "Zyekh AI Chat Web App (chat.zyekh.com)",
+        "desc": "Dedicated full-screen AI technical mentor, zero-trust advisor & security assistant",
+        "url": "https://chat.zyekh.com",
+        "type": "AI App"
+    })
+    search_index.insert(1, {
+        "title": "Zyekh Official Store & Merch (shop.zyekh.com)",
+        "desc": "Developer apparel, system architecture blueprints & FOSS merchandise",
+        "url": "https://shop.zyekh.com",
+        "type": "Store"
+    })
+
     atomic_write("search-index.json", json.dumps(search_index, indent=2), dry_run=dry_run)
     if dry_run:
         print(f"[DRY-RUN] Would generate search-index.json with {len(search_index)} items.")
