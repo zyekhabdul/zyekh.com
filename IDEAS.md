@@ -36,11 +36,17 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 - [ DONE ] **Native Dark/Light Theme Toggle**: Theming CSS Custom Properties merespons `prefers-color-scheme`.
 - [ DONE ] **Self-Hosted Link Hub (`/links/`)**: Pengganti Linktree murni Vanilla HTML5/CSS dengan microformats `rel="me"`.
 
-## 4. Ekspansi Konten GEO & Technical Deep-Dives (Batch 4 - Web3 & Cryptographic Architecture)
+## 4. Ekspansi Konten GEO & Technical Deep-Dives (Batch 4 - 10 Artikel Lengkap)
 - [ DONE ] **Smart Contract Security & EVM Bytecode Hardening**: Mitigasi Reentrancy, Read-Only Reentrancy, Storage Slot Collision, dan Formal Verification menggunakan Slither dan Halmos (`blog/smart-contract-security-and-evm-bytecode-hardening.html`).
 - [ DONE ] **MEV (Maximal Extractable Value) & Mempool Architecture**: Analisis Flashbots, Searchers, Sandwich Attacks, dan arsitektur Private RPC / MEV-Boost relay (`blog/mev-and-private-mempool-architecture-in-ethereum.html`).
 - [ DONE ] **Zero-Knowledge Proofs (zk-SNARKs vs zk-STARKs) in L2 Rollups**: Sirkuit verifikasi matematis, polynomial commitments, dan komparasi overhead komputasi Prover vs Verifier pada zkEVM (`blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html`).
 - [ DONE ] **DeFi AMM Mathematics & Concentrated Liquidity**: Analisis matematis Constant Product Invariant ($x \cdot y = k$), tick spacing Uniswap v3, dan dynamic fee routing (`blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html`).
+- [ DONE ] **Cross-Chain Bridges & Light Client Verification**: Arsitektur trustless light client, Merkle Mountain Ranges (MMR), IBC packet flows, dan ZK-light clients (`blog/cross-chain-bridges-and-light-client-cryptographic-verification.html`).
+- [ DONE ] **Account Abstraction (ERC-4337) & Paymaster Engineering**: UserOperation mempools, EntryPoint singleton execution loop, gas sponsorship paymaster, dan WebAuthn/Passkey hardware signing via RIP-7212 (`blog/account-abstraction-erc-4337-and-paymasters-architecture.html`).
+- [ DONE ] **Post-Quantum Cryptography (ML-KEM & ML-DSA Migration)**: FIPS 203 (ML-KEM / Kyber), FIPS 204 (ML-DSA / Dilithium), hybrid TLS 1.3 handshakes (X25519MLKEM768), dan mitigasi Harvest Now, Decrypt Later (`blog/post-quantum-cryptography-mldsa-and-mlkem-migration.html`).
+- [ DONE ] **Database Storage Engine Internals (LSM-Trees vs B+ Trees)**: Read/Write/Space Amplification Trilemma, in-place page updates vs append-only SSTables, MemTables, WAL, dan leveled compaction di RocksDB/Postgres (`blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html`).
+- [ DONE ] **Distributed Consensus Protocols (Raft, Multi-Paxos & Leaderless Quorums)**: State Machine Replication, split-brain mitigation, quorum overlap equations ($R + W > N$), dan Vector Clocks (`blog/distributed-consensus-raft-vs-paxos-and-leaderless-quorums.html`).
+- [ DONE ] **Speculative Decoding & Medusa Architecture**: Multi-token parallel LLM inference acceleration, speculative sampling math, tree-attention kernels, dan mitigasi bottleneck memory bandwidth GPU (`blog/speculative-decoding-and-medusa-multi-token-llm-serving.html`).
 
 ## 5. Proposal Tambahan & Inovasi Fitur (Backlog Aktif)
 - [ DONE ] **shop.zyekh.com Ecosystem Touchpoints**: Pemasangan touchpoints navigasi (`site-nav.js`), kartu unggulan di `links/index.html`, footer navigation di `index.html` dan seluruh 91 HTML files, serta architecture resource callout di `blueprints/index.html`.

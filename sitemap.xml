@@ -9,12 +9,16 @@
   <url><loc>https://zyekh.com/contact/</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blueprints/the-ultimate-linux-and-cloud-security-architecture-cheatsheet.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
   <url><loc>https://zyekh.com/blueprints/topology-builder.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://zyekh.com/blog/account-abstraction-erc-4337-and-paymasters-architecture.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/auditd-kernel-event-monitoring-and-dfir-logging.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/chroot-jail-and-unprivileged-namespaces-isolation.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/colbert-late-interaction-advanced-rag.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/container-image-signing-and-slsa-provenance-with-cosign.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/cross-chain-bridges-and-light-client-cryptographic-verification.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/distributed-consensus-raft-vs-paxos-and-leaderless-quorums.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/dspy-declarative-prompting-optimization.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -33,10 +37,12 @@
   <url><loc>https://zyekh.com/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/omnirouter-llm-gateway-routing-fallback-patterns.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/pam-tally2-faillock-account-lockout-policy-guide.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/post-quantum-cryptography-mldsa-and-mlkem-migration.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/securing-web-applications-with-strict-content-security-policy.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/slora-adapter-multiplexing-single-gpu.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/smart-contract-security-and-evm-bytecode-hardening.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://zyekh.com/blog/speculative-decoding-and-medusa-multi-token-llm-serving.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/structured-output-generation-logits-constraints.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://zyekh.com/blog/systemd-service-sandboxing-and-security-hardening.html</loc><lastmod>2026-08-18</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>

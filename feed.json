@@ -15,6 +15,19 @@
   ],
   "items": [
     {
+      "id": "https://zyekh.com/blog/account-abstraction-erc-4337-and-paymasters-architecture.html",
+      "url": "https://zyekh.com/blog/account-abstraction-erc-4337-and-paymasters-architecture.html",
+      "title": "Account Abstraction (ERC-4337): Smart Accounts, Bundlers & Paymaster Engineering",
+      "summary": "Deep dive into UserOperation mempools, Alt-Mempool consensus, gas sponsorship via Paymasters, and WebAuthn/passkey hardware signing for smart wallets.",
+      "date_published": "2026-08-18T00:00:00Z",
+      "date_modified": "2026-08-18T00:00:00Z",
+      "tags": [
+        "Web3 Architecture",
+        "EVM Engineering"
+      ],
+      "image": "https://zyekh.com/assets/img/social-cards/account-abstraction-erc-4337-and-paymasters-architecture-dark-landscape.png"
+    },
+    {
       "id": "https://zyekh.com/blog/auditd-kernel-event-monitoring-and-dfir-logging.html",
       "url": "https://zyekh.com/blog/auditd-kernel-event-monitoring-and-dfir-logging.html",
       "title": "Linux Auditd Blueprint: Real-Time Kernel Event Tracking & Security Auditing",
@@ -80,6 +93,32 @@
       "image": "https://zyekh.com/assets/img/social-cards/container-image-signing-and-slsa-provenance-with-cosign-dark-landscape.png"
     },
     {
+      "id": "https://zyekh.com/blog/cross-chain-bridges-and-light-client-cryptographic-verification.html",
+      "url": "https://zyekh.com/blog/cross-chain-bridges-and-light-client-cryptographic-verification.html",
+      "title": "Cross-Chain Bridges & Light Client Verification: Cryptographic State Proofs",
+      "summary": "Technical architecture of trustless cross-chain interoperability, Merkle Mountain Ranges (MMR), Tendermint/IBC light clients, and validity proof relays.",
+      "date_published": "2026-08-18T00:00:00Z",
+      "date_modified": "2026-08-18T00:00:00Z",
+      "tags": [
+        "Web3 Infrastructure",
+        "Distributed Systems"
+      ],
+      "image": "https://zyekh.com/assets/img/social-cards/cross-chain-bridges-and-light-client-cryptographic-verification-dark-landscape.png"
+    },
+    {
+      "id": "https://zyekh.com/blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html",
+      "url": "https://zyekh.com/blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html",
+      "title": "Database Storage Engine Internals: LSM-Trees vs B+ Trees Read/Write Amplification",
+      "summary": "Comparative analysis of RocksDB, Pebble, and PostgreSQL storage architectures: MemTables, Write-Ahead Logs (WAL), SSTables, Compaction algorithms, and I/O bottlenecks.",
+      "date_published": "2026-08-18T00:00:00Z",
+      "date_modified": "2026-08-18T00:00:00Z",
+      "tags": [
+        "Database Internals",
+        "Storage Engineering"
+      ],
+      "image": "https://zyekh.com/assets/img/social-cards/database-internals-lsm-trees-vs-b-trees-storage-engines-dark-landscape.png"
+    },
+    {
       "id": "https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html",
       "url": "https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html",
       "title": "DeFi AMM Mathematics & Concentrated Liquidity: Invariant Curves & Tick Spacing",
@@ -91,6 +130,19 @@
         "Quantitative Finance"
       ],
       "image": "https://zyekh.com/assets/img/social-cards/defi-amm-mathematics-and-concentrated-liquidity-mechanics-dark-landscape.png"
+    },
+    {
+      "id": "https://zyekh.com/blog/distributed-consensus-raft-vs-paxos-and-leaderless-quorums.html",
+      "url": "https://zyekh.com/blog/distributed-consensus-raft-vs-paxos-and-leaderless-quorums.html",
+      "title": "Distributed Consensus Deep-Dive: Raft, Multi-Paxos & Leaderless Quorum Systems",
+      "summary": "Formal breakdown of leader election, log replication, split-brain mitigation, quorum intersections (R + W > N), and Byzantine Fault Tolerance in distributed databases.",
+      "date_published": "2026-08-18T00:00:00Z",
+      "date_modified": "2026-08-18T00:00:00Z",
+      "tags": [
+        "Distributed Systems",
+        "Consensus Protocols"
+      ],
+      "image": "https://zyekh.com/assets/img/social-cards/distributed-consensus-raft-vs-paxos-and-leaderless-quorums-dark-landscape.png"
     },
     {
       "id": "https://zyekh.com/blog/dspy-declarative-prompting-optimization.html",
@@ -327,6 +379,19 @@
       "image": "https://zyekh.com/assets/img/social-cards/pam-tally2-faillock-account-lockout-policy-guide-dark-landscape.png"
     },
     {
+      "id": "https://zyekh.com/blog/post-quantum-cryptography-mldsa-and-mlkem-migration.html",
+      "url": "https://zyekh.com/blog/post-quantum-cryptography-mldsa-and-mlkem-migration.html",
+      "title": "Post-Quantum Cryptography: ML-KEM & ML-DSA Migration for TLS and Infrastructure",
+      "summary": "Practical engineering guide for deploying NIST-standardized lattice-based algorithms (FIPS 203/204), hybrid TLS handshakes, and quantum-resistant key exchange.",
+      "date_published": "2026-08-18T00:00:00Z",
+      "date_modified": "2026-08-18T00:00:00Z",
+      "tags": [
+        "Applied Cryptography",
+        "Quantum Security"
+      ],
+      "image": "https://zyekh.com/assets/img/social-cards/post-quantum-cryptography-mldsa-and-mlkem-migration-dark-landscape.png"
+    },
+    {
       "id": "https://zyekh.com/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html",
       "url": "https://zyekh.com/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html",
       "title": "Rust in the Linux Kernel: Securing Core Subsystems & Memory Safety",
@@ -377,6 +442,19 @@
         "EVM Architecture"
       ],
       "image": "https://zyekh.com/assets/img/social-cards/smart-contract-security-and-evm-bytecode-hardening-dark-landscape.png"
+    },
+    {
+      "id": "https://zyekh.com/blog/speculative-decoding-and-medusa-multi-token-llm-serving.html",
+      "url": "https://zyekh.com/blog/speculative-decoding-and-medusa-multi-token-llm-serving.html",
+      "title": "Speculative Decoding & Medusa Architecture: Multi-Token Parallel LLM Acceleration",
+      "summary": "Speeding up autoregressive LLM inference by 2-3x using draft verification trees, parallel speculative heads, and tree-attention masking kernels.",
+      "date_published": "2026-08-18T00:00:00Z",
+      "date_modified": "2026-08-18T00:00:00Z",
+      "tags": [
+        "AI Systems",
+        "High-Throughput Inference"
+      ],
+      "image": "https://zyekh.com/assets/img/social-cards/speculative-decoding-and-medusa-multi-token-llm-serving-dark-landscape.png"
     },
     {
       "id": "https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html",

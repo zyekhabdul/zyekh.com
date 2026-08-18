@@ -330,6 +330,12 @@
     "type": "Tool"
   },
   {
+    "title": "Account Abstraction (ERC-4337): Smart Accounts, Bundlers & Paymaster Engineering",
+    "desc": "Deep dive into UserOperation mempools, Alt-Mempool consensus, gas sponsorship via Paymasters, and WebAuthn/passkey hardware signing for smart wallets.",
+    "url": "/blog/account-abstraction-erc-4337-and-paymasters-architecture.html",
+    "type": "Article"
+  },
+  {
     "title": "Linux Auditd Blueprint: Real-Time Kernel Event Tracking & Security Auditing",
     "desc": "Security guide for configuring Linux Audit Framework (auditd) to log execve system calls, file integrity changes, and privilege escalation events.",
     "url": "/blog/auditd-kernel-event-monitoring-and-dfir-logging.html",
@@ -360,9 +366,27 @@
     "type": "Article"
   },
   {
+    "title": "Cross-Chain Bridges & Light Client Verification: Cryptographic State Proofs",
+    "desc": "Technical architecture of trustless cross-chain interoperability, Merkle Mountain Ranges (MMR), Tendermint/IBC light clients, and validity proof relays.",
+    "url": "/blog/cross-chain-bridges-and-light-client-cryptographic-verification.html",
+    "type": "Article"
+  },
+  {
+    "title": "Database Storage Engine Internals: LSM-Trees vs B+ Trees Read/Write Amplification",
+    "desc": "Comparative analysis of RocksDB, Pebble, and PostgreSQL storage architectures: MemTables, Write-Ahead Logs (WAL), SSTables, Compaction algorithms, and I/O bottlenecks.",
+    "url": "/blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html",
+    "type": "Article"
+  },
+  {
     "title": "DeFi AMM Mathematics & Concentrated Liquidity: Invariant Curves & Tick Spacing",
     "desc": "Mathematical derivation of Constant Product (x * y = k), concentrated liquidity virtual reserves, tick math, and dynamic swap fee routing in Uniswap v3/v4.",
     "url": "/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html",
+    "type": "Article"
+  },
+  {
+    "title": "Distributed Consensus Deep-Dive: Raft, Multi-Paxos & Leaderless Quorum Systems",
+    "desc": "Formal breakdown of leader election, log replication, split-brain mitigation, quorum intersections (R + W > N), and Byzantine Fault Tolerance in distributed databases.",
+    "url": "/blog/distributed-consensus-raft-vs-paxos-and-leaderless-quorums.html",
     "type": "Article"
   },
   {
@@ -474,6 +498,12 @@
     "type": "Article"
   },
   {
+    "title": "Post-Quantum Cryptography: ML-KEM & ML-DSA Migration for TLS and Infrastructure",
+    "desc": "Practical engineering guide for deploying NIST-standardized lattice-based algorithms (FIPS 203/204), hybrid TLS handshakes, and quantum-resistant key exchange.",
+    "url": "/blog/post-quantum-cryptography-mldsa-and-mlkem-migration.html",
+    "type": "Article"
+  },
+  {
     "title": "Rust in the Linux Kernel: Securing Core Subsystems & Memory Safety",
     "desc": "Comprehensive engineering guide on how Rust eliminates spatial and temporal memory vulnerabilities in modern Linux kernel drivers and network modules.",
     "url": "/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html",
@@ -495,6 +525,12 @@
     "title": "Smart Contract Security & EVM Bytecode Hardening: Formal Verification & Exploit Defense",
     "desc": "Comprehensive vulnerability mitigation blueprint covering Read-Only Reentrancy, Storage Slot Collision, and Halmos/Slither formal verification in Solidity.",
     "url": "/blog/smart-contract-security-and-evm-bytecode-hardening.html",
+    "type": "Article"
+  },
+  {
+    "title": "Speculative Decoding & Medusa Architecture: Multi-Token Parallel LLM Acceleration",
+    "desc": "Speeding up autoregressive LLM inference by 2-3x using draft verification trees, parallel speculative heads, and tree-attention masking kernels.",
+    "url": "/blog/speculative-decoding-and-medusa-multi-token-llm-serving.html",
     "type": "Article"
   },
   {

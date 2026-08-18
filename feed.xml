@@ -7,6 +7,13 @@
     <language>en-us</language>
     <atom:link href="https://zyekh.com/feed.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Account Abstraction (ERC-4337): Smart Accounts, Bundlers &amp; Paymaster Engineering</title>
+      <link>https://zyekh.com/blog/account-abstraction-erc-4337-and-paymasters-architecture.html</link>
+      <guid>https://zyekh.com/blog/account-abstraction-erc-4337-and-paymasters-architecture.html</guid>
+      <description>Deep dive into UserOperation mempools, Alt-Mempool consensus, gas sponsorship via Paymasters, and WebAuthn/passkey hardware signing for smart wallets.</description>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Linux Auditd Blueprint: Real-Time Kernel Event Tracking &amp; Security Auditing</title>
       <link>https://zyekh.com/blog/auditd-kernel-event-monitoring-and-dfir-logging.html</link>
       <guid>https://zyekh.com/blog/auditd-kernel-event-monitoring-and-dfir-logging.html</guid>
@@ -42,10 +49,31 @@
       <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
+      <title>Cross-Chain Bridges &amp; Light Client Verification: Cryptographic State Proofs</title>
+      <link>https://zyekh.com/blog/cross-chain-bridges-and-light-client-cryptographic-verification.html</link>
+      <guid>https://zyekh.com/blog/cross-chain-bridges-and-light-client-cryptographic-verification.html</guid>
+      <description>Technical architecture of trustless cross-chain interoperability, Merkle Mountain Ranges (MMR), Tendermint/IBC light clients, and validity proof relays.</description>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Database Storage Engine Internals: LSM-Trees vs B+ Trees Read/Write Amplification</title>
+      <link>https://zyekh.com/blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html</link>
+      <guid>https://zyekh.com/blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html</guid>
+      <description>Comparative analysis of RocksDB, Pebble, and PostgreSQL storage architectures: MemTables, Write-Ahead Logs (WAL), SSTables, Compaction algorithms, and I/O bottlenecks.</description>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>DeFi AMM Mathematics &amp; Concentrated Liquidity: Invariant Curves &amp; Tick Spacing</title>
       <link>https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html</link>
       <guid>https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html</guid>
       <description>Mathematical derivation of Constant Product (x * y = k), concentrated liquidity virtual reserves, tick math, and dynamic swap fee routing in Uniswap v3/v4.</description>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Distributed Consensus Deep-Dive: Raft, Multi-Paxos &amp; Leaderless Quorum Systems</title>
+      <link>https://zyekh.com/blog/distributed-consensus-raft-vs-paxos-and-leaderless-quorums.html</link>
+      <guid>https://zyekh.com/blog/distributed-consensus-raft-vs-paxos-and-leaderless-quorums.html</guid>
+      <description>Formal breakdown of leader election, log replication, split-brain mitigation, quorum intersections (R + W &gt; N), and Byzantine Fault Tolerance in distributed databases.</description>
       <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
@@ -175,6 +203,13 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
+      <title>Post-Quantum Cryptography: ML-KEM &amp; ML-DSA Migration for TLS and Infrastructure</title>
+      <link>https://zyekh.com/blog/post-quantum-cryptography-mldsa-and-mlkem-migration.html</link>
+      <guid>https://zyekh.com/blog/post-quantum-cryptography-mldsa-and-mlkem-migration.html</guid>
+      <description>Practical engineering guide for deploying NIST-standardized lattice-based algorithms (FIPS 203/204), hybrid TLS handshakes, and quantum-resistant key exchange.</description>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Rust in the Linux Kernel: Securing Core Subsystems &amp; Memory Safety</title>
       <link>https://zyekh.com/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html</link>
       <guid>https://zyekh.com/blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html</guid>
@@ -200,6 +235,13 @@
       <link>https://zyekh.com/blog/smart-contract-security-and-evm-bytecode-hardening.html</link>
       <guid>https://zyekh.com/blog/smart-contract-security-and-evm-bytecode-hardening.html</guid>
       <description>Comprehensive vulnerability mitigation blueprint covering Read-Only Reentrancy, Storage Slot Collision, and Halmos/Slither formal verification in Solidity.</description>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Speculative Decoding &amp; Medusa Architecture: Multi-Token Parallel LLM Acceleration</title>
+      <link>https://zyekh.com/blog/speculative-decoding-and-medusa-multi-token-llm-serving.html</link>
+      <guid>https://zyekh.com/blog/speculative-decoding-and-medusa-multi-token-llm-serving.html</guid>
+      <description>Speeding up autoregressive LLM inference by 2-3x using draft verification trees, parallel speculative heads, and tree-attention masking kernels.</description>
       <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>

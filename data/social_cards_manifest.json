@@ -1,4 +1,33 @@
 {
+  "account-abstraction-erc-4337-and-paymasters-architecture": {
+    "slug": "account-abstraction-erc-4337-and-paymasters-architecture",
+    "title": "Account Abstraction (ERC-4337): Smart Accounts, Bundlers & Paymaster Engineering",
+    "description": "Deep dive into UserOperation mempools, Alt-Mempool consensus, gas sponsorship via Paymasters, and WebAuthn/passkey hardware signing for smart wallets.",
+    "tags": [
+      "web3architecture",
+      "evmengineering"
+    ],
+    "code_snippet": [
+      "// Solidity: ERC-4337 UserOperation Memory Struct",
+      "struct UserOperation {",
+      "    address sender;",
+      "    uint256 nonce;",
+      "    bytes initCode;",
+      "    bytes callData;",
+      "    uint256 callGasLimit;",
+      "}"
+    ],
+    "invariants": [
+      "UserOperation Struct: Decouple transaction execution from ECDSA private keys using pseudo-transaction objects processed in an alt-mempool.",
+      "EntryPoint Contract: Act as the global singleton singleton orchestrator verifying and executing bundled operations atomically.",
+      "Paymaster Gas Sponsorship: Enable dApps to sponsor gas fees or accept ERC-20 tokens (USDC, DAI) for transaction settlement."
+    ],
+    "metrics": [
+      "Operational Impact: WebAuthn & Passkeys - Authenticate smart contract transactions using secure hardware enclaves (TouchID, FaceID) via P-256 RIP-7212 precompiles.",
+      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
+    ]
+  },
   "auditd-kernel-event-monitoring-and-dfir-logging": {
     "slug": "auditd-kernel-event-monitoring-and-dfir-logging",
     "title": "Linux Auditd Blueprint: Real-Time Kernel Event Tracking & Security Auditing",
@@ -135,6 +164,65 @@
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
+  "cross-chain-bridges-and-light-client-cryptographic-verification": {
+    "slug": "cross-chain-bridges-and-light-client-cryptographic-verification",
+    "title": "Cross-Chain Bridges & Light Client Verification: Cryptographic State Proofs",
+    "description": "Technical architecture of trustless cross-chain interoperability, Merkle Mountain Ranges (MMR), Tendermint/IBC light clients, and validity proof relays.",
+    "tags": [
+      "web3infrastructure",
+      "distributedsystems"
+    ],
+    "code_snippet": [
+      "// Rust: Light Client Header Verification Logic (Cosmos SDK / IBC)",
+      "pub fn verify_header(",
+      "    trusted_state: &TrustedConsensusState,",
+      "    untrusted_header: &Header,",
+      ") -> Result<(), VerificationError> {",
+      "    // Verify monotonic block height progression",
+      "    if untrusted_header.height <= trusted_state.height {",
+      "}",
+      "}"
+    ],
+    "invariants": [
+      "Light Client Verification: Validate consensus headers and state roots of remote blockchains inside smart contracts without full nodes.",
+      "Merkle Mountain Ranges (MMR): Efficient append-only cryptographic data structures enabling logarithmic inclusion proofs for historical headers.",
+      "IBC Protocol Architecture: Standardize trustless packet flow (ICS-20/ICS-04) through independent off-chain relayers."
+    ],
+    "metrics": [
+      "Operational Impact: ZK-Light Clients - Compress multi-signature validator set signatures into succinct SNARK proofs to reduce on-chain verification gas.",
+      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
+    ]
+  },
+  "database-internals-lsm-trees-vs-b-trees-storage-engines": {
+    "slug": "database-internals-lsm-trees-vs-b-trees-storage-engines",
+    "title": "Database Storage Engine Internals: LSM-Trees vs B+ Trees Read/Write Amplification",
+    "description": "Comparative analysis of RocksDB, Pebble, and PostgreSQL storage architectures: MemTables, Write-Ahead Logs (WAL), SSTables, Compaction algorithms, and I/O bottlenecks.",
+    "tags": [
+      "databaseinternals",
+      "storageengineering"
+    ],
+    "code_snippet": [
+      "// C: PostgreSQL Slotted Page Layout Header Structure",
+      "typedef struct PageHeaderData {",
+      "    PageXLogRecPtr pd_lsn;      // LSN: Log Sequence Number of last change",
+      "    uint16         pd_checksum; // Page checksum verification",
+      "    uint16         pd_flags;    // Page status flags",
+      "    LocationIndex  pd_lower;    // Offset to start of free space",
+      "    LocationIndex  pd_upper;    // Offset to end of free space (where line pointers grow)",
+      "}"
+    ],
+    "invariants": [
+      "Read/Write Amplification: Evaluate the fundamental physical storage trade-offs between update-in-place (B+ Trees) and append-only log structures (LSM-Trees).",
+      "B+ Tree Mechanics (Postgres/InnoDB): In-place page updates with WAL durability, minimizing read amplification (O(log_B N)) at the cost of high random I/O write amplification.",
+      "LSM-Tree Mechanics (RocksDB/Cassandra): Append sequential writes to in-memory MemTables and flush immutable SSTables to disk, optimizing write throughput at the cost of compaction overhead."
+    ],
+    "metrics": [
+      "Operational Impact: Compaction Strategies - Leveled vs Size-Tiered compaction algorithms, Bloom filter optimization, and NVMe SSD write-endurance profiling.",
+      "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste.",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
+    ]
+  },
   "defi-amm-mathematics-and-concentrated-liquidity-mechanics": {
     "slug": "defi-amm-mathematics-and-concentrated-liquidity-mechanics",
     "title": "DeFi AMM Mathematics & Concentrated Liquidity: Invariant Curves & Tick Spacing",
@@ -160,6 +248,34 @@
     ],
     "metrics": [
       "Operational Impact: Tick Index Calculation - Discretize price space into geometric price ticks (p(i) = 1.0001^i) with Q64.96 fixed-point arithmetic.",
+      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
+    ]
+  },
+  "distributed-consensus-raft-vs-paxos-and-leaderless-quorums": {
+    "slug": "distributed-consensus-raft-vs-paxos-and-leaderless-quorums",
+    "title": "Distributed Consensus Deep-Dive: Raft, Multi-Paxos & Leaderless Quorum Systems",
+    "description": "Formal breakdown of leader election, log replication, split-brain mitigation, quorum intersections (R + W > N), and Byzantine Fault Tolerance in distributed databases.",
+    "tags": [
+      "distributedsystems",
+      "consensusprotocols"
+    ],
+    "code_snippet": [
+      "// Python: Validating Dynamo Quorum Consistency Guarantees",
+      "def is_strong_consistency(replication_factor, read_quorum, write_quorum):",
+      "    N = replication_factor",
+      "    R = read_quorum",
+      "    W = write_quorum",
+      "    # Strict quorum overlap guarantees that read set always contains newest write",
+      "    return (R + W) > N"
+    ],
+    "invariants": [
+      "State Machine Replication (SMR): Ensure a distributed cluster of nodes executes the identical sequence of state transitions across network partitions.",
+      "Raft Consensus: Understand decomposed subproblems: Leader Election (randomized election timeouts), Log Replication, and Safety Invariants.",
+      "Paxos & Multi-Paxos: Two-phase protocol (Prepare/Promise, Accept/Accepted) driving foundational distributed systems (Google Spanner, Chubby)."
+    ],
+    "metrics": [
+      "Operational Impact: Leaderless Quorum Systems - Dynamo-style architectures enforcing overlap equations (R + W > N) with Vector Clocks and Read Repair.",
       "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
@@ -656,6 +772,35 @@
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
+  "post-quantum-cryptography-mldsa-and-mlkem-migration": {
+    "slug": "post-quantum-cryptography-mldsa-and-mlkem-migration",
+    "title": "Post-Quantum Cryptography: ML-KEM & ML-DSA Migration for TLS and Infrastructure",
+    "description": "Practical engineering guide for deploying NIST-standardized lattice-based algorithms (FIPS 203/204), hybrid TLS handshakes, and quantum-resistant key exchange.",
+    "tags": [
+      "appliedcryptography",
+      "quantumsecurity"
+    ],
+    "code_snippet": [
+      "// Rust: ML-KEM-768 Key Encapsulation Pipeline (liboqs / rust-pqcrypto)",
+      "fn perform_quantum_resistant_key_exchange() {",
+      "    // Alice generates ML-KEM keypair",
+      "    let (public_key, secret_key) = keypair();",
+      "    println!(\"[PQC] Generated ML-KEM-768 Public Key ({} bytes)\", public_key.as_bytes().len());",
+      "    // Bob encapsulates shared secret using Alice public key",
+      "    let (shared_secret_bob, ciphertext) = encapsulate(&public_key);",
+      "}"
+    ],
+    "invariants": [
+      "Harvest Now, Decrypt Later (HNDL): Adversaries are actively intercepting and storing encrypted traffic today to decrypt with future quantum computers (Shor Algorithm).",
+      "NIST FIPS Standardization: Understand FIPS 203 (ML-KEM / Crystals-Kyber) for key encapsulation and FIPS 204 (ML-DSA / Crystals-Dilithium) for digital signatures.",
+      "Lattice-Based Security (MLWE): Security rooted in the hardness of Module Learning with Errors (MLWE) over polynomial rings."
+    ],
+    "metrics": [
+      "Operational Impact: Hybrid TLS 1.3 Handshakes - Combine classical ECDH (X25519) with ML-KEM-768 (X25519MLKEM768) to protect against both classical implementation bugs and quantum attacks.",
+      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
+    ]
+  },
   "rust-in-linux-kernel-security-and-memory-safety-blueprint-2026": {
     "slug": "rust-in-linux-kernel-security-and-memory-safety-blueprint-2026",
     "title": "Rust in the Linux Kernel: Securing Core Subsystems & Memory Safety",
@@ -771,6 +916,35 @@
       "Operational Impact: Formal Verification - Mathematically prove contract invariants and absence of integer overflows using Halmos and Slither static analyzers.",
       "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
+    ]
+  },
+  "speculative-decoding-and-medusa-multi-token-llm-serving": {
+    "slug": "speculative-decoding-and-medusa-multi-token-llm-serving",
+    "title": "Speculative Decoding & Medusa Architecture: Multi-Token Parallel LLM Acceleration",
+    "description": "Speeding up autoregressive LLM inference by 2-3x using draft verification trees, parallel speculative heads, and tree-attention masking kernels.",
+    "tags": [
+      "aisystems",
+      "high-throughputinference"
+    ],
+    "code_snippet": [
+      "// Python: Speculative Sampling Rejection and Resampling Algorithm",
+      "def speculative_sample_step(target_logits, draft_logits, draft_token_id):",
+      "    p = np.exp(target_logits) / np.sum(np.exp(target_logits))",
+      "    q = np.exp(draft_logits) / np.sum(np.exp(draft_logits))",
+      "    # Accept / Reject Probability",
+      "    p_val = p[draft_token_id]",
+      "    q_val = q[draft_token_id]",
+      "    accept_prob = min(1.0, p_val / q_val)"
+    ],
+    "invariants": [
+      "Memory Bandwidth Wall: Standard LLM decoding is memory-bandwidth bound (reading gigabytes of model weights to generate 1 token per forward pass).",
+      "Draft-Target Verification: Use a lightweight draft model to generate K speculative tokens, verified simultaneously by the target model in a single GPU pass.",
+      "Medusa Multi-Head Architecture: Eliminate draft model overhead by attaching multiple parallel decoding heads directly to the base model backbone."
+    ],
+    "metrics": [
+      "Operational Impact: Tree-Attention Kernels - Verify non-linear candidate token trees in a single forward pass with customized causal 2D attention masks.",
+      "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste.",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
     ]
   },
   "ssh-certificates-vault-ca-short-lived-authentication": {

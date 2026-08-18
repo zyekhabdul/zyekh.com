@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Speculative Decoding & Medusa Architecture: Multi-Token Parallel LLM Acceleration — zyekh.com</title>
+<meta content="Speeding up autoregressive LLM inference by 2-3x using draft verification trees, parallel speculative heads, and tree-attention masking kernels." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/blog/speculative-decoding-and-medusa-multi-token-llm-serving.html" rel="canonical"/>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="Speculative Decoding & Medusa Architecture: Multi-Token Parallel LLM Acceleration" property="og:title"/>
+<meta content="Speeding up autoregressive LLM inference by 2-3x using draft verification trees, parallel speculative heads, and tree-attention masking kernels." property="og:description"/>
+<meta content="https://zyekh.com/blog/speculative-decoding-and-medusa-multi-token-llm-serving.html" property="og:url"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="2026-08-18T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<meta content="@zyekh" name="twitter:creator"/>
+<meta content="@zyekh" name="twitter:site"/>
+<meta content="Speculative Decoding & Medusa Architecture: Multi-Token Parallel LLM Acceleration" name="twitter:title"/>
+<meta content="Speeding up autoregressive LLM inference by 2-3x using draft verification trees, parallel speculative heads, and tree-attention masking kernels." name="twitter:description"/>
+<!-- Favicons & Manifest -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Speculative Decoding & Medusa Architecture: Multi-Token Parallel LLM Acceleration",
+      "description": "Speeding up autoregressive LLM inference by 2-3x using draft verification trees, parallel speculative heads, and tree-attention masking kernels.",
+      "url": "https://zyekh.com/blog/speculative-decoding-and-medusa-multi-token-llm-serving.html",
+      "image": "https://zyekh.com/assets/img/speculative-decoding-medusa-serving.jpg",
+      "datePublished": "2026-08-18",
+      "dateModified": "2026-08-18",
+      "wordCount": 1800,
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/blog/speculative-decoding-and-medusa-multi-token-llm-serving.html"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/blog/speculative-decoding-and-medusa-multi-token-llm-serving.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zyekh.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog & Articles",
+          "item": "https://zyekh.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Speculative Decoding & Medusa Architecture: Multi-Token Parallel LLM Acceleration",
+          "item": "https://zyekh.com/blog/speculative-decoding-and-medusa-multi-token-llm-serving.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does Speculative Decoding change the quality or accuracy of the LLM outputs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Because the target model evaluates the exact probability distribution of all draft tokens and resamples from the residual distribution upon rejection, the output is mathematically guaranteed to match the target model distribution identically."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is speculative decoding less effective on low-end GPUs or CPUs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Speculative decoding relies on spare GPU Tensor Core compute capacity while model weights are loaded from VRAM. On compute-bound hardware (such as CPUs or mobile chips), adding verification tokens increases total latency rather than masking memory bottlenecks."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Medusa differ from traditional draft-model speculative decoding?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Traditional speculative decoding requires running a separate smaller model (e.g. Llama-8B for Llama-70B). Medusa attaches lightweight single-layer heads directly to the base model backbone, eliminating the need to maintain or serve a second neural network."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/blog.min.css?v=1eb470b3" integrity="sha384-wnEjkEPBnaax3w1llsQyFN2j3IIOxSOTpt9lEkG0uW5ZnNWAQBH4zS0LsFp0LPKW" crossorigin="anonymous" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous"></script>
+<script defer="" src="/assets/js/article-actions.min.js?v=6cf0fa6c" integrity="sha384-7Zc8x9pMA4XVFbvKkDb77s0tC31UxKSpwWO9VZ/rbGTiNxaNERlsv1xKIPrVUHID" crossorigin="anonymous"></script>
+  <style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+  <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+  <link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous" as="script">
+  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
+  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
+  <meta property="og:image" content="https://zyekh.com/assets/img/social-cards/speculative-decoding-and-medusa-multi-token-llm-serving-dark-landscape.png?v=879c656f">
+  <meta property="og:image:secure_url" content="https://zyekh.com/assets/img/social-cards/speculative-decoding-and-medusa-multi-token-llm-serving-dark-landscape.png?v=879c656f">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="2400">
+  <meta property="og:image:height" content="1260">
+  <meta property="og:image:alt" content="Technical specification card for Speculative Decoding &amp; Medusa Architecture: Multi-Token Parallel LLM Acceleration">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/social-cards/speculative-decoding-and-medusa-multi-token-llm-serving-dark-landscape.png?v=879c656f">
+</head>
+<body>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+  <!-- Back to Blog -->
+  <a class="back-link" href="/blog/">← Back to Articles</a>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="meta-tag">AI Systems • High-Throughput Inference</span>
+    <h1 class="article-title">Speculative Decoding & Medusa Architecture: Multi-Token Parallel LLM Acceleration</h1>
+    <div class="article-meta">
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="2026-08-18T00:00:00Z">Published: 2026-08-18</time>
+        <span>14 min read (1800+ Words)</span>
+      </div>
+      <div class="article-actions">
+        <button class="btn-share" id="shareBtn" type="button">Share</button>
+        <button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
+        <button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Article Body Content -->
+  <main class="article-content">
+    <!-- Featured Hero Image -->
+    <figure class="article-hero-wrapper">
+      <picture>
+        <source srcset="/assets/img/speculative-decoding-medusa-serving.webp" type="image/webp"/>
+        <img alt="Speculative Decoding & Medusa Architecture: Multi-Token Parallel LLM Acceleration" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="/assets/img/speculative-decoding-medusa-serving.jpg" width="1280"/>
+      </picture>
+      <figcaption class="hero-caption">Speculative Decoding Tree-Attention Verification Pipeline and Medusa Heads</figcaption>
+    </figure>
+
+    <!-- Executive Summary / Takeaways Box -->
+    <div class="exec-summary">
+      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+      <ul>
+<li>Memory Bandwidth Wall: Standard LLM decoding is memory-bandwidth bound (reading gigabytes of model weights to generate 1 token per forward pass).</li>
+<li>Draft-Target Verification: Use a lightweight draft model to generate K speculative tokens, verified simultaneously by the target model in a single GPU pass.</li>
+<li>Medusa Multi-Head Architecture: Eliminate draft model overhead by attaching multiple parallel decoding heads directly to the base model backbone.</li>
+<li>Tree-Attention Kernels: Verify non-linear candidate token trees in a single forward pass with customized causal 2D attention masks.</li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc-card">
+      <div class="toc-title">Table of Contents</div>
+      <ol class="toc-list">
+<li><a href="#memory-bandwidth-bottleneck-in-autoregressive-llm">1. The Memory Bandwidth Wall in Autoregressive LLM Inference</a></li>
+<li><a href="#speculative-sampling-mathematics">2. Speculative Sampling Mathematics & Distribution Preservation</a></li>
+<li><a href="#medusa-architecture-and-heads">3. Medusa Architecture: Multi-Head Self-Speculation</a></li>
+<li><a href="#tree-attention-and-vllm-integration">4. Tree-Attention Kernels & High-Throughput Serving</a></li>
+<li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
+      </ol>
+    </nav>
+
+<h2 id="memory-bandwidth-bottleneck-in-autoregressive-llm">1. The Memory Bandwidth Wall in Autoregressive LLM Inference</h2>
+<p>In standard autoregressive Large Language Model (LLM) generation, generating each new token requires loading the entire model weights (e.g. 140GB for a 70B FP16 model) from High Bandwidth Memory (HBM) into GPU SRAM. Because arithmetic intensity during single-batch decoding is extremely low ($pprox 1	ext{ FLOP/byte}$), GPU Tensor Cores sit idle > 90% of the time waiting for memory transfers.</p>
+<p>Speculative Decoding breaks this bottleneck by shifting the generation paradigm from sequential token-by-token execution to parallel batch verification. A small, fast draft model generates $ candidate tokens rapidly, which the large target model verifies simultaneously in a single compute-bound forward pass.</p>
+<pre><code class="language-c">// Mathematical Speedup Formulation in Speculative Decoding
+// Let alpha = Acceptance rate per draft token (0.7 - 0.85)
+// Let K = Draft lookahead length (typically 4 - 6 tokens)
+// Expected accepted tokens per step E = (1 - alpha^(K+1)) / (1 - alpha)
+// Wall-clock speedup factor S = E / (1 + (T_draft * K / T_target))</code></pre>
+
+<h2 id="speculative-sampling-mathematics">2. Speculative Sampling Mathematics & Distribution Preservation</h2>
+<p>To ensure that speculative decoding outputs are mathematically identical to the target model native probability distribution (x)$, Leviathan et al. introduced Speculative Sampling.</p>
+<p>For each candidate token $ generated by draft distribution (x_i)$, the target model accepts $ with probability $\min\left(1, rac{p(x_i)}{q(x_i)}
+ight)$. If a token is rejected at index $, the target model resamples the replacement token from the normalized positive residual distribution $\max(0, p(x) - q(x))$, guaranteeing zero loss in output quality or perplexity.</p>
+<pre><code class="language-python">// Python: Speculative Sampling Rejection and Resampling Algorithm
+import numpy as np
+
+def speculative_sample_step(target_logits, draft_logits, draft_token_id):
+    p = np.exp(target_logits) / np.sum(np.exp(target_logits))
+    q = np.exp(draft_logits) / np.sum(np.exp(draft_logits))
+    
+    # Accept / Reject Probability
+    p_val = p[draft_token_id]
+    q_val = q[draft_token_id]
+    accept_prob = min(1.0, p_val / q_val)
+    
+    if np.random.rand() < accept_prob:
+        return True, draft_token_id
+    else:
+        # Resample from residual distribution (p - q)+
+        residual = np.maximum(0.0, p - q)
+        residual_prob = residual / np.sum(residual)
+        resampled_id = np.random.choice(len(residual_prob), p=residual_prob)
+        return False, resampled_id</code></pre>
+
+<h2 id="medusa-architecture-and-heads">3. Medusa Architecture: Multi-Head Self-Speculation</h2>
+<p>Deploying two separate models (draft + target) introduces operational complexity, VRAM fragmentation, and vocabulary synchronization overhead. Medusa solves this by augmenting the original model with multiple single-layer feed-forward heads (Medusa Heads) trained on top of the last hidden states.</p>
+<p>Head 1 predicts token +1$, Head 2 predicts +2$, and Head 3 predicts +3$ concurrently from the same feature representation, generating a multi-token speculative candidate tree with zero additional base model invocations.</p>
+<pre><code class="language-python">// PyTorch: Medusa Multi-Head Extension Architecture
+import torch
+import torch.nn as nn
+
+class MedusaHead(nn.Module):
+    def __init__(self, hidden_size, vocab_size, num_heads=4):
+        super().__init__()
+        self.heads = nn.ModuleList([
+            nn.Sequential(
+                nn.Linear(hidden_size, hidden_size),
+                nn.SiLU(),
+                nn.Linear(hidden_size, vocab_size, bias=False)
+            )
+            for _ in range(num_heads)
+        ])
+        
+    def forward(self, last_hidden_states):
+        # Returns list of logits for predictions at t+1, t+2, t+3, t+4
+        return [head(last_hidden_states) for head in self.heads]</code></pre>
+
+<h2 id="tree-attention-and-vllm-integration">4. Tree-Attention Kernels & High-Throughput Serving</h2>
+<p>Instead of validating a single linear token candidate chain, Medusa constructs a candidate Tree representing top-$ paths across all speculative heads. To process all tree nodes inside a single target attention forward pass without cross-branch contamination, the engine applies Tree Attention with a custom causal 2D Boolean mask.</p>
+<p>Integrated into high-throughput inference engines like vLLM and TensorRT-LLM, Tree-Attention speculative decoding achieves 2.2x - 2.8x speedup in real-world chat and coding benchmarks.</p>
+<pre><code class="language-bash"># Launching vLLM with Speculative Decoding Acceleration
+vllm serve meta-llama/Llama-3.1-70B-Instruct \n  --speculative-model meta-llama/Llama-3.1-8B-Instruct \n  --num-speculative-tokens 5 \n  --gpu-memory-utilization 0.92 \n  --max-model-len 8192</code></pre>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+<details>
+  <summary>Does Speculative Decoding change the quality or accuracy of the LLM outputs?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">No. Because the target model evaluates the exact probability distribution of all draft tokens and resamples from the residual distribution upon rejection, the output is mathematically guaranteed to match the target model distribution identically.</p>
+</details>
+<details>
+  <summary>Why is speculative decoding less effective on low-end GPUs or CPUs?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Speculative decoding relies on spare GPU Tensor Core compute capacity while model weights are loaded from VRAM. On compute-bound hardware (such as CPUs or mobile chips), adding verification tokens increases total latency rather than masking memory bottlenecks.</p>
+</details>
+<details>
+  <summary>How does Medusa differ from traditional draft-model speculative decoding?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Traditional speculative decoding requires running a separate smaller model (e.g. Llama-8B for Llama-70B). Medusa attaches lightweight single-layer heads directly to the base model backbone, eliminating the need to maintain or serve a second neural network.</p>
+</details>
+    </div>
+
+    <!-- Author Bio Card (EEAT & DFIR Branding) -->
+    <div class="author-card">
+      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+      <div class="author-info">
+        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener noreferrer" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener noreferrer" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener noreferrer" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="/.well-known/security.txt" rel="noopener noreferrer" style="font-weight:600" target="_blank">Security Policy</a> •
+          <a href="/gpg-key.asc" rel="noopener noreferrer" style="font-weight:600" target="_blank">PGP Key</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/ai-token.html">AI Token Calculator</a> dan <a class="blog-badge" href="/tools/cron.html">Cron Expression Builder</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
+</article>
+</body>
+</html>

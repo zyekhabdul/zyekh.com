@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Database Storage Engine Internals: LSM-Trees vs B+ Trees Read/Write Amplification — zyekh.com</title>
+<meta content="Comparative analysis of RocksDB, Pebble, and PostgreSQL storage architectures: MemTables, Write-Ahead Logs (WAL), SSTables, Compaction algorithms, and I/O bottlenecks." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html" rel="canonical"/>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="Database Storage Engine Internals: LSM-Trees vs B+ Trees Read/Write Amplification" property="og:title"/>
+<meta content="Comparative analysis of RocksDB, Pebble, and PostgreSQL storage architectures: MemTables, Write-Ahead Logs (WAL), SSTables, Compaction algorithms, and I/O bottlenecks." property="og:description"/>
+<meta content="https://zyekh.com/blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html" property="og:url"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="2026-08-18T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<meta content="@zyekh" name="twitter:creator"/>
+<meta content="@zyekh" name="twitter:site"/>
+<meta content="Database Storage Engine Internals: LSM-Trees vs B+ Trees Read/Write Amplification" name="twitter:title"/>
+<meta content="Comparative analysis of RocksDB, Pebble, and PostgreSQL storage architectures: MemTables, Write-Ahead Logs (WAL), SSTables, Compaction algorithms, and I/O bottlenecks." name="twitter:description"/>
+<!-- Favicons & Manifest -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Database Storage Engine Internals: LSM-Trees vs B+ Trees Read/Write Amplification",
+      "description": "Comparative analysis of RocksDB, Pebble, and PostgreSQL storage architectures: MemTables, Write-Ahead Logs (WAL), SSTables, Compaction algorithms, and I/O bottlenecks.",
+      "url": "https://zyekh.com/blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html",
+      "image": "https://zyekh.com/assets/img/database-storage-engines-lsm-btree.jpg",
+      "datePublished": "2026-08-18",
+      "dateModified": "2026-08-18",
+      "wordCount": 1900,
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zyekh.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog & Articles",
+          "item": "https://zyekh.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Database Storage Engine Internals: LSM-Trees vs B+ Trees Read/Write Amplification",
+          "item": "https://zyekh.com/blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "When should an engineering team choose an LSM-Tree engine over a B+ Tree?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LSM-Tree engines (RocksDB, Cassandra, ClickHouse) excel in write-heavy workloads (ingesting logs, time-series metrics, blockchain ledger transactions) where sustained write throughput and NVMe SSD write optimization are critical. B+ Trees (PostgreSQL, MySQL) excel in read-heavy and complex transactional relational workloads."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do Bloom Filters eliminate LSM-Tree read amplification?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A Bloom filter is an in-memory space-efficient bit array that tests set membership with zero false negatives. If the Bloom filter reports that a key is absent from an SSTable file, the engine skips disk I/O entirely."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do deletions in LSM-Trees initially increase disk usage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because SSTables on disk are immutable, a DELETE operation appends a Tombstone marker rather than removing data in place. Storage is only reclaimed when background compaction merges and discards obsolete tombstones."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/blog.min.css?v=1eb470b3" integrity="sha384-wnEjkEPBnaax3w1llsQyFN2j3IIOxSOTpt9lEkG0uW5ZnNWAQBH4zS0LsFp0LPKW" crossorigin="anonymous" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous"></script>
+<script defer="" src="/assets/js/article-actions.min.js?v=6cf0fa6c" integrity="sha384-7Zc8x9pMA4XVFbvKkDb77s0tC31UxKSpwWO9VZ/rbGTiNxaNERlsv1xKIPrVUHID" crossorigin="anonymous"></script>
+  <style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+  <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+  <link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous" as="script">
+  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
+  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
+  <meta property="og:image" content="https://zyekh.com/assets/img/social-cards/database-internals-lsm-trees-vs-b-trees-storage-engines-dark-landscape.png?v=dbcbc3cb">
+  <meta property="og:image:secure_url" content="https://zyekh.com/assets/img/social-cards/database-internals-lsm-trees-vs-b-trees-storage-engines-dark-landscape.png?v=dbcbc3cb">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="2400">
+  <meta property="og:image:height" content="1260">
+  <meta property="og:image:alt" content="Technical specification card for Database Storage Engine Internals: LSM-Trees vs B+ Trees Read/Write Amplification">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/social-cards/database-internals-lsm-trees-vs-b-trees-storage-engines-dark-landscape.png?v=dbcbc3cb">
+</head>
+<body>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+  <!-- Back to Blog -->
+  <a class="back-link" href="/blog/">← Back to Articles</a>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="meta-tag">Database Internals • Storage Engineering</span>
+    <h1 class="article-title">Database Storage Engine Internals: LSM-Trees vs B+ Trees Read/Write Amplification</h1>
+    <div class="article-meta">
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="2026-08-18T00:00:00Z">Published: 2026-08-18</time>
+        <span>16 min read (1900+ Words)</span>
+      </div>
+      <div class="article-actions">
+        <button class="btn-share" id="shareBtn" type="button">Share</button>
+        <button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
+        <button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Article Body Content -->
+  <main class="article-content">
+    <!-- Featured Hero Image -->
+    <figure class="article-hero-wrapper">
+      <picture>
+        <source srcset="/assets/img/database-storage-engines-lsm-btree.webp" type="image/webp"/>
+        <img alt="Database Storage Engine Internals: LSM-Trees vs B+ Trees Read/Write Amplification" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="/assets/img/database-storage-engines-lsm-btree.jpg" width="1280"/>
+      </picture>
+      <figcaption class="hero-caption">Storage Engine Architectural Comparison: Hierarchical B+ Tree vs Multi-Tier LSM-Tree</figcaption>
+    </figure>
+
+    <!-- Executive Summary / Takeaways Box -->
+    <div class="exec-summary">
+      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+      <ul>
+<li>Read/Write Amplification: Evaluate the fundamental physical storage trade-offs between update-in-place (B+ Trees) and append-only log structures (LSM-Trees).</li>
+<li>B+ Tree Mechanics (Postgres/InnoDB): In-place page updates with WAL durability, minimizing read amplification (O(log_B N)) at the cost of high random I/O write amplification.</li>
+<li>LSM-Tree Mechanics (RocksDB/Cassandra): Append sequential writes to in-memory MemTables and flush immutable SSTables to disk, optimizing write throughput at the cost of compaction overhead.</li>
+<li>Compaction Strategies: Leveled vs Size-Tiered compaction algorithms, Bloom filter optimization, and NVMe SSD write-endurance profiling.</li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc-card">
+      <div class="toc-title">Table of Contents</div>
+      <ol class="toc-list">
+<li><a href="#rwa-storage-engine-tradeoffs">1. Storage Engine Physics & The Amplification Trilemma</a></li>
+<li><a href="#b-tree-internals-and-wal">2. B+ Tree Internals: Page Buffers, Slotted Pages & WAL</a></li>
+<li><a href="#lsm-tree-architecture-and-sstables">3. LSM-Tree Mechanics: MemTables, SSTables & Bloom Filters</a></li>
+<li><a href="#compaction-algorithms-leveled-vs-tiered">4. Compaction Algorithms: Leveled Compaction vs Size-Tiered</a></li>
+<li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
+      </ol>
+    </nav>
+
+<h2 id="rwa-storage-engine-tradeoffs">1. Storage Engine Physics & The Amplification Trilemma</h2>
+<p>Every database storage engine operates under the fundamental Amplification Trilemma: balancing Read Amplification (bytes read from disk per logical byte requested), Write Amplification (bytes written to disk per logical byte modified), and Space Amplification (total disk space consumed relative to uncompressed raw data).</p>
+<p>Traditional relational engines (such as PostgreSQL and MySQL InnoDB) prioritize low Read Amplification by organizing data into balanced B+ Tree structures with in-place page updates. High-throughput time-series, log, and distributed storage engines (such as RocksDB, CockroachDB, and Cassandra) utilize Log-Structured Merge-Trees (LSM-Trees) to maximize sequential write throughput on modern NVMe drives.</p>
+<pre><code class="language-c">// Mathematical Definitions of Storage Engine Amplifications
+// --------------------------------------------------------------------
+// Write Amplification Factor (WAF) = Total Bytes Written to Disk / Logical Bytes Ingested
+// Read Amplification Factor (RAF)  = Total Bytes Read from Disk / Logical Bytes Retrieved
+// Space Amplification Factor (SAF) = Total Physical Storage Used / Uncompressed Raw Data Size</code></pre>
+
+<h2 id="b-tree-internals-and-wal">2. B+ Tree Internals: Page Buffers, Slotted Pages & WAL</h2>
+<p>A B+ Tree stores all key-value records in leaf pages linked sequentially, while internal nodes maintain high-fanout routing pointers. Pages are fixed in size (typically 8KB in PostgreSQL, 16KB in InnoDB).</p>
+<p>When a record is inserted or updated, the database modifies the in-memory buffer pool page. To guarantee ACID Durability without writing full random 8KB pages to disk on every transaction commit, the engine appends a compact record delta to the sequential Write-Ahead Log (WAL). Background checkpointing threads periodically flush dirty buffer pool pages to disk.</p>
+<pre><code class="language-c">// C: PostgreSQL Slotted Page Layout Header Structure
+typedef struct PageHeaderData {
+    PageXLogRecPtr pd_lsn;      // LSN: Log Sequence Number of last change
+    uint16         pd_checksum; // Page checksum verification
+    uint16         pd_flags;    // Page status flags
+    LocationIndex  pd_lower;    // Offset to start of free space
+    LocationIndex  pd_upper;    // Offset to end of free space (where line pointers grow)
+    LocationIndex  pd_special;  // Offset to special space (e.g. B-Tree leaf links)
+    ItemIdData     pd_linp[1];  // Array of item / line pointers
+} PageHeaderData;</code></pre>
+
+<h2 id="lsm-tree-architecture-and-sstables">3. LSM-Tree Mechanics: MemTables, SSTables & Bloom Filters</h2>
+<p>LSM-Trees eliminate random disk writes by buffering mutations in memory inside a Concurrent SkipList or Red-Black Tree called the MemTable. Once the MemTable reaches its capacity limit (e.g. 64MB), it is converted to an immutable MemTable and flushed sequentially to disk as a Level 0 (L0) Sorted String Table (SSTable).</p>
+<p>Because SSTables on disk are immutable, deleting a key involves writing a Tombstone record. To prevent read requests from scanning dozens of SSTable files on disk to find a single key, engines place a probabilistic Bloom Filter in memory for every SSTable, returning instantly if a key is guaranteed not to exist.</p>
+<pre><code class="language-go">// Go: Simplified Concurrent SkipList MemTable Node Structure
+type MemTableNode struct {
+    key   []byte
+    value []byte
+    tag   uint64 // Sequence number + OpType (Set / Delete Tombstone)
+    next  []*MemTableNode
+}
+
+type LSMReader struct {
+    memtable   *MemTable
+    sstLevels  [][]*SSTableReader
+}
+
+func (r *LSMReader) Get(key []byte) ([]byte, bool) {
+    if val, found := r.memtable.Lookup(key); found {
+        return val, true
+    }
+    // Fall back to level-by-level SSTable lookup guarded by Bloom filters
+    return r.searchSSTables(key)
+}</code></pre>
+
+<h2 id="compaction-algorithms-leveled-vs-tiered">4. Compaction Algorithms: Leveled Compaction vs Size-Tiered</h2>
+<p>Over time, accumulated SSTables degrade point lookup and range scan performance. Compaction is the background process that reads multiple overlapping SSTables, merges sorted keys, purges obsolete deleted tombstones, and outputs new non-overlapping SSTables at higher levels.</p>
+<p>In Leveled Compaction (default in RocksDB/LevelDB), each Level $ has a strict capacity limit (e.g.  = 10	ext{MB}, L_2 = 100	ext{MB}, L_3 = 1	ext{GB}$) and non-overlapping key ranges, minimizing Read Amplification and Space Amplification at the cost of higher Write Amplification ( pprox 10 - 30$).</p>
+<pre><code class="language-ini"># RocksDB Compaction & Memory Tuning (DBOptions / ColumnFamilyOptions)
+[Version]
+  rocksdb_version=9.1.0
+
+[DBOptions]
+  max_background_jobs=8
+  bytes_per_sync=1048576
+
+[CFOptions "default"]
+  write_buffer_size=67108864 # 64MB MemTable
+  max_write_buffer_number=4
+  target_file_size_base=67108864
+  level0_file_num_compaction_trigger=4
+  compaction_style=kCompactionStyleLevel</code></pre>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+<details>
+  <summary>When should an engineering team choose an LSM-Tree engine over a B+ Tree?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">LSM-Tree engines (RocksDB, Cassandra, ClickHouse) excel in write-heavy workloads (ingesting logs, time-series metrics, blockchain ledger transactions) where sustained write throughput and NVMe SSD write optimization are critical. B+ Trees (PostgreSQL, MySQL) excel in read-heavy and complex transactional relational workloads.</p>
+</details>
+<details>
+  <summary>How do Bloom Filters eliminate LSM-Tree read amplification?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">A Bloom filter is an in-memory space-efficient bit array that tests set membership with zero false negatives. If the Bloom filter reports that a key is absent from an SSTable file, the engine skips disk I/O entirely.</p>
+</details>
+<details>
+  <summary>Why do deletions in LSM-Trees initially increase disk usage?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Because SSTables on disk are immutable, a DELETE operation appends a Tombstone marker rather than removing data in place. Storage is only reclaimed when background compaction merges and discards obsolete tombstones.</p>
+</details>
+    </div>
+
+    <!-- Author Bio Card (EEAT & DFIR Branding) -->
+    <div class="author-card">
+      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+      <div class="author-info">
+        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener noreferrer" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener noreferrer" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener noreferrer" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="/.well-known/security.txt" rel="noopener noreferrer" style="font-weight:600" target="_blank">Security Policy</a> •
+          <a href="/gpg-key.asc" rel="noopener noreferrer" style="font-weight:600" target="_blank">PGP Key</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/diff-checker.html">Diff Checker</a> dan <a class="blog-badge" href="/tools/hash.html">Hash Generator</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
+</article>
+</body>
+</html>
