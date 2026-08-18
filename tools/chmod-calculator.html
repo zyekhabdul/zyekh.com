@@ -67,7 +67,7 @@
 <link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
 <link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
 <link href="/assets/css/shared.min.css?v=1fbbd83e" integrity="sha384-hnUCbk1eI/OTGHkcNRru7wFOQpitmQXypyIpLSNukL/81gjQkJLJn8kkiQX+W6Na" crossorigin="anonymous" rel="stylesheet"/>
-<script defer="" src="/assets/js/site-nav.min.js?v=e6e70cf3" integrity="sha384-x0Taes7cHSSqKupYMl9qDkV/5Vpyk1Bu5OLEwIuW+sg+7xNvdGNMP+nRwcr0sjs5" crossorigin="anonymous"></script>
+<script defer="" src="/assets/js/site-nav.min.js?v=3e28cf1a" integrity="sha384-sdQ2DI6GC6THB+q/s5j6ycmuJ7Xh1JNdqdzrzfaZDqbqOexRB5A6k44h+NeRoatc" crossorigin="anonymous"></script>
 <style>
     .chmod-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
     .chmod-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.25rem; }
@@ -98,7 +98,7 @@ window.debounceRAF = function(fn, delay) {
 <style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
 <link rel="preload" href="/assets/css/shared.min.css?v=1fbbd83e" integrity="sha384-hnUCbk1eI/OTGHkcNRru7wFOQpitmQXypyIpLSNukL/81gjQkJLJn8kkiQX+W6Na" crossorigin="anonymous" as="style">
-  <link rel="preload" href="/assets/js/site-nav.min.js?v=e6e70cf3" integrity="sha384-x0Taes7cHSSqKupYMl9qDkV/5Vpyk1Bu5OLEwIuW+sg+7xNvdGNMP+nRwcr0sjs5" crossorigin="anonymous" as="script">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=3e28cf1a" integrity="sha384-sdQ2DI6GC6THB+q/s5j6ycmuJ7Xh1JNdqdzrzfaZDqbqOexRB5A6k44h+NeRoatc" crossorigin="anonymous" as="script">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
   <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
@@ -177,9 +177,12 @@ window.debounceRAF = function(fn, delay) {
 <span class="result-label">Symbolic String (ls -l):</span>
 <span class="result-val" id="symbolic">-rw-r--r--</span>
 </div>
-<div class="result-row">
+<div class="result-row" style="display:flex;justify-content:space-between;align-items:center;">
 <span class="result-label">CLI Command Example:</span>
+<div style="display:flex;align-items:center;gap:0.5rem;">
 <span class="result-val" id="command">chmod 644 filename</span>
+<button type="button" class="btn-copy copy-code-btn" data-copy-target="#command" style="position:static;padding:0.15rem 0.5rem;font-size:0.75rem;">Copy</button>
+</div>
 </div>
 </div>
 </section>

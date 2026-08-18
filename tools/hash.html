@@ -91,7 +91,7 @@ window.debounceRAF = function(fn, delay) {
 <style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
 <link rel="preload" href="/assets/css/shared.min.css?v=1fbbd83e" integrity="sha384-hnUCbk1eI/OTGHkcNRru7wFOQpitmQXypyIpLSNukL/81gjQkJLJn8kkiQX+W6Na" crossorigin="anonymous" as="style">
-  <link rel="preload" href="/assets/js/site-nav.min.js?v=e6e70cf3" integrity="sha384-x0Taes7cHSSqKupYMl9qDkV/5Vpyk1Bu5OLEwIuW+sg+7xNvdGNMP+nRwcr0sjs5" crossorigin="anonymous" as="script">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=3e28cf1a" integrity="sha384-sdQ2DI6GC6THB+q/s5j6ycmuJ7Xh1JNdqdzrzfaZDqbqOexRB5A6k44h+NeRoatc" crossorigin="anonymous" as="script">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
   <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
@@ -122,15 +122,24 @@ window.debounceRAF = function(fn, delay) {
 <input id="fileChecksum" onchange="hashFile()" style="font-size:0.85rem;margin-top:0.3rem;" type="file"/>
 </div>
 <div class="hash-result-card">
-<div class="hash-label">SHA-256</div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.25rem;">
+<span class="hash-label">SHA-256</span>
+<button type="button" class="btn-copy copy-code-btn" data-copy-target="#sha256Out" style="position:static;padding:0.15rem 0.5rem;font-size:0.75rem;">Copy</button>
+</div>
 <div class="hash-val" id="sha256Out">—</div>
 </div>
 <div class="hash-result-card">
-<div class="hash-label">SHA-512</div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.25rem;">
+<span class="hash-label">SHA-512</span>
+<button type="button" class="btn-copy copy-code-btn" data-copy-target="#sha512Out" style="position:static;padding:0.15rem 0.5rem;font-size:0.75rem;">Copy</button>
+</div>
 <div class="hash-val" id="sha512Out">—</div>
 </div>
 <div class="hash-result-card">
-<div class="hash-label">SHA-1</div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.25rem;">
+<span class="hash-label">SHA-1</span>
+<button type="button" class="btn-copy copy-code-btn" data-copy-target="#sha1Out" style="position:static;padding:0.15rem 0.5rem;font-size:0.75rem;">Copy</button>
+</div>
 <div class="hash-val" id="sha1Out">—</div>
 </div>
 </section>
@@ -208,6 +217,6 @@ window.debounceRAF = function(fn, delay) {
       return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
   </script>
-<script defer="" src="/assets/js/site-nav.min.js?v=e6e70cf3" integrity="sha384-x0Taes7cHSSqKupYMl9qDkV/5Vpyk1Bu5OLEwIuW+sg+7xNvdGNMP+nRwcr0sjs5" crossorigin="anonymous"></script>
+<script defer="" src="/assets/js/site-nav.min.js?v=3e28cf1a" integrity="sha384-sdQ2DI6GC6THB+q/s5j6ycmuJ7Xh1JNdqdzrzfaZDqbqOexRB5A6k44h+NeRoatc" crossorigin="anonymous"></script>
 </body>
 </html>

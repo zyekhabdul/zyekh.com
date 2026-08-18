@@ -408,26 +408,44 @@ document.addEventListener('click', async (e) => {
     return;
   }
 
-  // Copy Code Button Delegation
-  const btn = e.target.closest('.copy-code-btn');
+  // Copy Code Button & Generic [data-copy-target] Delegation
+  const btn = e.target.closest('.copy-code-btn, .btn-copy, [data-copy-target]');
   if (!btn) return;
-  const pre = btn.closest('pre');
-  if (!pre) return;
 
-  const codeElement = pre.querySelector('code');
-  const codeText = codeElement ? codeElement.innerText : pre.innerText;
-  try {
-    await navigator.clipboard.writeText(codeText.trim());
-    btn.textContent = 'Copied!';
-    btn.style.borderColor = 'var(--text-main)';
-    btn.style.color = 'var(--text-main)';
-    setTimeout(() => {
-      btn.textContent = 'Copy';
-      btn.style.borderColor = 'var(--border-color)';
-      btn.style.color = 'var(--text-muted)';
-    }, 1800);
-  } catch (err) {
-    btn.textContent = 'Failed';
+  let textToCopy = '';
+  const targetSel = btn.getAttribute('data-copy-target');
+  if (targetSel) {
+    const targetEl = document.querySelector(targetSel);
+    if (targetEl) {
+      textToCopy = targetEl.value || targetEl.innerText || targetEl.textContent || '';
+    }
+  } else {
+    const pre = btn.closest('pre') || btn.parentElement?.querySelector('pre');
+    if (pre) {
+      const codeElement = pre.querySelector('code');
+      textToCopy = codeElement ? codeElement.innerText : pre.innerText;
+    } else {
+      const card = btn.closest('.hash-result-card, .tool-result, .output-card, tr');
+      const valEl = card?.querySelector('.hash-val, .output-val, code');
+      if (valEl) textToCopy = valEl.innerText || valEl.textContent || '';
+    }
+  }
+
+  if (textToCopy && textToCopy.trim() && textToCopy.trim() !== '—') {
+    try {
+      await navigator.clipboard.writeText(textToCopy.trim());
+      const origText = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.style.borderColor = 'var(--text-main)';
+      btn.style.color = 'var(--text-main)';
+      setTimeout(() => {
+        btn.textContent = origText || 'Copy';
+        btn.style.borderColor = 'var(--border-color)';
+        btn.style.color = 'var(--text-muted)';
+      }, 1800);
+    } catch (err) {
+      btn.textContent = 'Failed';
+    }
   }
 });
 
