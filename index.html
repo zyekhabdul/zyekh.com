@@ -81,9 +81,10 @@
 
     .bento-main-tools { grid-column: span 8; }
     .bento-sidebar { grid-column: span 4; }
+    .bento-third { grid-column: span 4; }
     .bento-half { grid-column: span 6; }
 
-    .quick-tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; margin-top: 1rem; }
+    .quick-tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 0.75rem; margin-top: 1rem; }
     .quick-tool-pill {
       background: var(--bg-dark);
       border: 1px solid var(--border-color);
@@ -134,9 +135,25 @@
 <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.4rem;"><a href="/tools/" style="color:inherit;text-decoration:none;">Web Utility Tools Hub</a></h2>
 <p style="color:var(--text-muted);font-size:0.9rem;">Fast, privacy-first developer &amp; financial calculators running 100% offline in browser.</p>
 <div class="quick-tools-grid" id="quickToolsGrid">
-<a class="quick-tool-pill" href="/tools/json.html">
-<span class="quick-tool-cat">DEV UTILITY</span>
-              JSON Formatter
+<a class="quick-tool-pill" href="/tools/llm-calculator.html">
+<span class="quick-tool-cat">AI INFRASTRUCTURE</span>
+              LLM Cost Calculator
+            </a>
+<a class="quick-tool-pill" href="/tools/webgpu-profiler.html">
+<span class="quick-tool-cat">AI INFRASTRUCTURE</span>
+              WebGPU Profiler
+            </a>
+<a class="quick-tool-pill" href="/tools/linux-hardening-generator.html">
+<span class="quick-tool-cat">SECURITY</span>
+              Linux Hardening
+            </a>
+<a class="quick-tool-pill" href="/tools/seccomp-generator.html">
+<span class="quick-tool-cat">CONTAINER SECURITY</span>
+              Seccomp Generator
+            </a>
+<a class="quick-tool-pill" href="/tools/wireguard-generator.html">
+<span class="quick-tool-cat">NETWORKING</span>
+              WireGuard VPN
             </a>
 <a class="quick-tool-pill" href="/tools/jwt.html">
 <span class="quick-tool-cat">SECURITY</span>
@@ -146,17 +163,9 @@
 <span class="quick-tool-cat">NETWORKING</span>
               IP Subnet Calculator
             </a>
-<a class="quick-tool-pill" href="/tools/password.html">
-<span class="quick-tool-cat">SECURITY</span>
-              Password Generator
-            </a>
-<a class="quick-tool-pill" href="/tools/cron.html">
+<a class="quick-tool-pill" href="/tools/json.html">
 <span class="quick-tool-cat">DEV UTILITY</span>
-              Cron Expression Helper
-            </a>
-<a class="quick-tool-pill" href="/tools/base64.html">
-<span class="quick-tool-cat">DEV UTILITY</span>
-              Base64 Encoder
+              JSON Formatter
             </a>
 </div>
 </div>
@@ -164,45 +173,58 @@
 <!-- Bento 2: Command Blueprints Hub (Span 4) -->
 <a class="bento-card bento-sidebar" href="/blueprints/">
 <div>
-<span class="badge">NEW FEATURE HUB</span>
+<span class="badge">SECURITY BLUEPRINTS</span>
 <h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.3rem;">Command Blueprints</h2>
 <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.5;">
-            Production-ready eBPF network policies, kernel sandbox rulesets, and one-liner hardening commands.
+            Production-ready eBPF network policies, kernel sandbox rulesets, and interactive zero-trust topology builder.
           </p>
 <div style="margin-top:1rem;font-size:0.85rem;color:var(--text-muted);">
-            • Cilium &amp; Tetragon Policy<br/>
-            • Vault SSH CA Setup<br/>
-            • Landlock &amp; Seccomp Sandbox
+            • Interactive Topology Builder<br/>
+            • Cilium &amp; Tetragon eBPF Tracing<br/>
+            • Vault SSH CA &amp; PAM Hardening
           </div>
 </div>
 <div style="margin-top:1.25rem;">
 <span class="cta-link-text">Launch Blueprints →</span>
 </div>
 </a>
-<!-- Bento 3: OmniRouter LLM Gateway (Span 6) -->
-<a class="bento-card bento-half" href="/blog/omnirouter-llm-gateway-routing-fallback-patterns.html">
+<!-- Bento 3: Post-Quantum Cryptography (Span 4) -->
+<a class="bento-card bento-third" href="/blog/post-quantum-cryptography-mldsa-and-mlkem-migration.html">
 <div>
-<span class="badge">AI ARCHITECTURE 2026</span>
-<h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.25rem;">OmniRouter Architecture: Resilient LLM Gateway</h2>
-<p style="color:var(--text-muted);font-size:0.88rem;line-height:1.5;">
+<span class="badge">APPLIED CRYPTOGRAPHY</span>
+<h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.2rem;">Post-Quantum Cryptography: ML-KEM &amp; ML-DSA</h2>
+<p style="color:var(--text-muted);font-size:0.85rem;line-height:1.5;">
+            FIPS 203/204 lattice-based primitives, hybrid TLS 1.3 handshakes, and migration blueprints against HNDL attacks.
+          </p>
+</div>
+<div style="margin-top:1rem;">
+<span class="cta-link-text">Read Deep-Dive →</span>
+</div>
+</a>
+<!-- Bento 4: OmniRouter LLM Gateway (Span 4) -->
+<a class="bento-card bento-third" href="/blog/omnirouter-llm-gateway-routing-fallback-patterns.html">
+<div>
+<span class="badge">AI ARCHITECTURE</span>
+<h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.2rem;">OmniRouter: Resilient LLM Gateway</h2>
+<p style="color:var(--text-muted);font-size:0.85rem;line-height:1.5;">
             Advanced API routing techniques for multi-LLM architectures, mitigating rate limits, and speculative decoding fallbacks.
           </p>
 </div>
 <div style="margin-top:1rem;">
-<span class="cta-link-text">Read Article →</span>
+<span class="cta-link-text">Read Deep-Dive →</span>
 </div>
 </a>
-<!-- Bento 4: vLLM PagedAttention (Span 6) -->
-<a class="bento-card bento-half" href="/blog/vllm-pagedattention-high-throughput-inference-tuning.html">
+<!-- Bento 5: vLLM PagedAttention (Span 4) -->
+<a class="bento-card bento-third" href="/blog/vllm-pagedattention-high-throughput-inference-tuning.html">
 <div>
 <span class="badge">HIGH-THROUGHPUT AI</span>
-<h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.25rem;">vLLM PagedAttention: Memory Optimization</h2>
-<p style="color:var(--text-muted);font-size:0.88rem;line-height:1.5;">
-            OS-inspired virtual memory management for LLM KV caches, eliminating fragmentation and achieving 20x throughput scaling.
+<h2 style="margin:0.5rem 0 0.25rem 0;font-size:1.2rem;">vLLM PagedAttention: Memory Optimization</h2>
+<p style="color:var(--text-muted);font-size:0.85rem;line-height:1.5;">
+            Virtual memory management for LLM KV caches, eliminating fragmentation and achieving 20x throughput scaling.
           </p>
 </div>
 <div style="margin-top:1rem;">
-<span class="cta-link-text">Read Article →</span>
+<span class="cta-link-text">Read Deep-Dive →</span>
 </div>
 </a>
 </section>

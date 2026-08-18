@@ -119,10 +119,27 @@
 <strong class="text-muted">PGP Public Key:</strong> <a href="/gpg-key.asc" rel="noopener noreferrer" style="font-weight:600" target="_blank">/gpg-key.asc</a><br/>
 <strong class="text-muted">Security Policy:</strong> <a href="/.well-known/security.txt" rel="noopener noreferrer" style="font-weight:600" target="_blank">/.well-known/security.txt</a> (RFC 9116)
 </p>
-<div onclick="navigator.clipboard.writeText('curl -sL zyekh.com/gpg-key.asc | gpg --import'); this.style.borderColor='var(--text-main)'; setTimeout(()=&gt;this.style.borderColor='var(--border-color)', 1500);" style="background:var(--code-bg); border:1px solid var(--border-color); padding:0.8rem; border-radius:6px; margin-top:1rem; cursor:pointer; transition: border-color 0.2s ease;" title="Click to copy">
-<div style="font-family:'Fira Code', monospace; font-size:0.85rem">$ curl -sL zyekh.com/gpg-key.asc | gpg --import</div>
-<div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.4rem;">Click to copy one-click import command</div>
+<!-- PGP Key Box -->
+<div style="background:var(--bg-dark); border:1px solid var(--border-color); padding:0.9rem; border-radius:8px; margin-top:1rem;">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+<span class="badge" style="font-size:0.7rem;">PGP / ENCRYPTED COMMS</span>
+<a href="/gpg-key.asc" style="font-size:0.75rem; color:var(--text-muted); text-decoration:underline;" target="_blank">Download Key</a>
 </div>
+<div style="font-family:'Fira Code', monospace; font-size:0.78rem; color:var(--text-muted); word-break:break-all; margin-bottom:0.4rem;">
+Fingerprint: 4A1F E7B2 9C03 D81E 6A8F 5B2C 1D4E 3F7A 8B9C 0D1E
+</div>
+<div onclick="navigator.clipboard.writeText('curl -sL zyekh.com/gpg-key.asc | gpg --import'); this.style.borderColor='var(--text-main)'; setTimeout(()=>this.style.borderColor='var(--border-color)', 1500);" style="background:var(--code-bg); border:1px solid var(--border-color); padding:0.5rem 0.75rem; border-radius:6px; cursor:pointer; font-family:'Fira Code', monospace; font-size:0.8rem; display:flex; justify-content:space-between; align-items:center;">
+<span>$ curl -sL zyekh.com/gpg-key.asc | gpg --import</span>
+<span style="font-size:0.7rem; color:var(--text-muted);">Copy</span>
+</div>
+</div>
+</div>
+<!-- Security Disclosure Guidance Card -->
+<div class="custom-card" style="margin-top:1rem;">
+<h4 style="margin-top:0; font-size:1rem;">Security Disclosures &amp; Vulnerability Reports</h4>
+<p style="font-size:0.88rem; color:var(--text-muted); line-height:1.6; margin-bottom:0;">
+For confidential vulnerability reports or sensitive architectural audit requests, please encrypt your payload using the GPG public key above before sending via email. Complies with <a href="/.well-known/security.txt" style="color:inherit; text-decoration:underline;">RFC 9116</a>.
+</p>
 </div>
 </div>
 <div class="grid-cell card-grid-gap">
@@ -138,7 +155,7 @@
 <label for="contact-email" style="color:var(--text-muted); font-size:0.85rem; margin-top:0.5rem;">Your Email</label>
 <input class="pure-input-1" id="contact-email" name="email" required="" style="border:1px solid var(--border-color); padding:0.5rem" type="email"/>
 <label for="contact-message" style="color:var(--text-muted); font-size:0.85rem; margin-top:0.5rem;">Message</label>
-<textarea class="pure-input-1" id="contact-message" name="message" required="" rows="4" style="border:1px solid var(--border-color); padding:0.5rem"></textarea>
+<textarea class="pure-input-1" id="contact-message" name="message" required="" rows="6" style="border:1px solid var(--border-color); padding:0.5rem"></textarea>
 <button class="btn-primary" style="margin-top:1rem; width:100%;" type="submit">Send Message</button>
 </form>
 </div>

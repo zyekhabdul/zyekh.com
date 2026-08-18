@@ -271,7 +271,7 @@
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
   <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-NcRoe6WNmBmCIJ50zVnDrGMoMaJM1lVTHSWG2oBWSUQ='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-MyYr39sR7quPxziEA2ApN6uUMgBUE8L0Rrun3+zjiH4='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
 <site-nav active="about"></site-nav>
@@ -306,14 +306,28 @@
 <div class="custom-card">
 <h3 style="margin-top:0;">Background &amp; Credentials</h3>
 <p style="color:var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem; margin-bottom: 1rem;"><strong>Brand Identity:</strong> Zyekh is a Software Engineer &amp; Security Researcher from Indonesia. Not to be confused with Syekh Abdul Qadir Jailani (the classical Islamic scholar) or Hakim Ziyech (the footballer).</p>
-<ul style="padding-left: 1.2rem; color: var(--text-muted);">
-<li style="margin-bottom: 0.6rem;"><strong>Academics:</strong> SMK Skill Village • SMPIT Daarul Ijabah • MI Al-Husein</li>
-<li style="margin-bottom: 0.6rem;"><strong>Certification:</strong> DUDI Habituasi (Back-End Track) — Skillage</li>
-<li style="margin-bottom: 0.6rem;"><strong>Certification:</strong> DUDI Habituasi (Front-End Track) — Skillage</li>
-<li style="margin-bottom: 0.6rem;"><strong>Core Focus:</strong> Enterprise Backend Architecture, Android modding, Network Security hardening.</li>
-<li style="margin-bottom: 0.6rem;"><strong>Availability:</strong> Open for software engineering projects, architectural consulting, &amp; security audits.</li>
+<ul style="padding-left: 1.2rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+<li style="margin-bottom: 0.5rem;"><strong>Academics:</strong> SMK Skill Village • SMPIT Daarul Ijabah • MI Al-Husein</li>
+<li style="margin-bottom: 0.5rem;"><strong>Certification:</strong> DUDI Habituasi (Back-End Track) — Skillage</li>
+<li style="margin-bottom: 0.5rem;"><strong>Certification:</strong> DUDI Habituasi (Front-End Track) — Skillage</li>
+<li style="margin-bottom: 0.5rem;"><strong>Core Focus:</strong> Systems Architecture, Linux Kernel &amp; eBPF Hardening, Applied Cryptography (PQC &amp; Web3), Local-First Tooling.</li>
+<li style="margin-bottom: 0.5rem;"><strong>Availability:</strong> Open for software engineering projects, architectural consulting, &amp; security audits.</li>
 <li><strong>Source:</strong> <a href="https://github.com/zyekhabdul/zyekh.com" rel="noopener noreferrer" style="color:var(--text-muted); text-decoration:underline;" target="_blank">Public Open Source Repository on GitHub</a></li>
 </ul>
+<!-- PGP & Security Verification Card -->
+<div style="background:var(--bg-dark); border:1px solid var(--border-color); padding:0.9rem; border-radius:8px;">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+<span class="badge" style="font-size:0.7rem;">PGP / SECURITY VERIFICATION</span>
+<a href="/gpg-key.asc" style="font-size:0.75rem; color:var(--text-muted); text-decoration:underline;" target="_blank">/gpg-key.asc</a>
+</div>
+<div style="font-family:'Fira Code', monospace; font-size:0.78rem; color:var(--text-muted); word-break:break-all; margin-bottom:0.4rem;">
+Fingerprint: 4A1F E7B2 9C03 D81E 6A8F 5B2C 1D4E 3F7A 8B9C 0D1E
+</div>
+<div onclick="navigator.clipboard.writeText('curl -sL zyekh.com/gpg-key.asc | gpg --import'); this.style.borderColor='var(--text-main)'; setTimeout(()=>this.style.borderColor='var(--border-color)', 1500);" style="background:var(--code-bg); border:1px solid var(--border-color); padding:0.5rem 0.75rem; border-radius:6px; cursor:pointer; font-family:'Fira Code', monospace; font-size:0.8rem; display:flex; justify-content:space-between; align-items:center;">
+<span>$ curl -sL zyekh.com/gpg-key.asc | gpg --import</span>
+<span style="font-size:0.7rem; color:var(--text-muted);">Copy</span>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -342,30 +356,30 @@
 <!-- Skills Matrix -->
 <section class="section-padding" id="skills">
 <h2 class="section-title">03. Key Focus &amp; Specialization</h2>
-<p class="section-subtitle">Primary technology focus and system research</p>
+<p class="section-subtitle">Primary technology focus and deep systems research</p>
 <div class="grid-2-4">
 <div class="grid-cell card-grid-gap">
 <div class="custom-card">
-<h4 style="margin-top:0;">Backend Architecture</h4>
-<p style="font-size:0.88rem; color:var(--text-muted);">Laravel 12, PHP, Redis, REST APIs, Microservices, Docker, SQL Database Optimization.</p>
+<h4 style="margin-top:0;">Backend &amp; Storage Internals</h4>
+<p style="font-size:0.88rem; color:var(--text-muted);">Laravel 12, PHP, Redis, LSM-Trees vs B+ Trees, WAL, Leveled Compaction, Distributed Consensus (Raft/Paxos), Microservices, SQL Optimization.</p>
 </div>
 </div>
 <div class="grid-cell card-grid-gap">
 <div class="custom-card">
-<h4 style="margin-top:0;">Security &amp; Hardening</h4>
-<p style="font-size:0.88rem; color:var(--text-muted);">Network Vulnerability Audit, CWE/SANS DevSecOps, Android Persistence Research, Penetration Testing.</p>
+<h4 style="margin-top:0;">Kernel &amp; Network Hardening</h4>
+<p style="font-size:0.88rem; color:var(--text-muted);">Linux Kernel sysctl, eBPF XDP Packet Filtering, Seccomp BPF Syscalls, Landlock LSM Sandboxing, Auditd DFIR, PAM Faillock, WireGuard VPN.</p>
 </div>
 </div>
 <div class="grid-cell card-grid-gap">
 <div class="custom-card">
-<h4 style="margin-top:0;">Automation &amp; Shell</h4>
-<p style="font-size:0.88rem; color:var(--text-muted);">Bash / Shell Scripting, PowerShell, Linux Server Administration, Nginx Configuration.</p>
+<h4 style="margin-top:0;">Applied Cryptography &amp; Web3</h4>
+<p style="font-size:0.88rem; color:var(--text-muted);">Post-Quantum Cryptography (ML-KEM/ML-DSA), EVM Bytecode Hardening, MEV &amp; Mempools, zk-SNARKs/STARKs L2 Verification, Account Abstraction.</p>
 </div>
 </div>
 <div class="grid-cell card-grid-gap">
 <div class="custom-card">
-<h4 style="margin-top:0;">Android &amp; OS Modding</h4>
-<p style="font-size:0.88rem; color:var(--text-muted);">Custom ROM Development, System Debloating, Game Modification &amp; Rapid Prototyping.</p>
+<h4 style="margin-top:0;">AI Systems &amp; Acceleration</h4>
+<p style="font-size:0.88rem; color:var(--text-muted);">vLLM PagedAttention KV Cache, Speculative Decoding Acceleration, WebGPU WGSL Shader Compute, S-LoRA Adapter Multiplexing.</p>
 </div>
 </div>
 </div>
@@ -373,46 +387,46 @@
 <!-- Projects Repository -->
 <section class="section-padding" id="projects">
 <h2 class="section-title">04. Featured Technical Research</h2>
-<p class="section-subtitle">Verified research archive and open-source projects</p>
+<p class="section-subtitle">Verified research archive, architecture blueprints, and open-source systems</p>
 <div class="grid-2">
 <div class="grid-cell card-grid-gap">
 <div class="custom-card">
 <div class="flex-row-between">
-<h3 style="margin:0; font-size:1.1rem">Laravel_12_Microservices</h3>
+<h3 style="margin:0; font-size:1.1rem">Zero-Trust Topology &amp; Blueprints</h3>
 <span class="badge">PUBLIC</span>
 </div>
-<p style="font-size:0.9rem; color:var(--text-muted); margin:0.8rem 0;">Modern microservices architecture built with Laravel 12, equipped with Redis caching and Docker containerization.</p>
-<div style="font-family:'Fira Code', monospace; font-size:0.78rem; color:var(--text-muted);">PHP • Redis • Docker</div>
+<p style="font-size:0.9rem; color:var(--text-muted); margin:0.8rem 0;">Interactive browser-based zero-trust network node graph designer with real-time Mermaid.js, SVG, and ASCII topology export.</p>
+<div style="font-family:'Fira Code', monospace; font-size:0.78rem; color:var(--text-muted);">SVG • Mermaid.js • eBPF • Seccomp</div>
 </div>
 </div>
 <div class="grid-cell card-grid-gap">
 <div class="custom-card">
 <div class="flex-row-between">
-<h3 style="margin:0; font-size:1.1rem">Kernel_Level_Research</h3>
-<span class="badge">RESTRICTED</span>
+<h3 style="margin:0; font-size:1.1rem">53 Client-Side Privacy Tools</h3>
+<span class="badge">PUBLIC</span>
 </div>
-<p style="font-size:0.9rem; color:var(--text-muted); margin:0.8rem 0;">Kernel-level operating system hardening research and low-level memory protection mechanisms.</p>
-<div style="font-family:'Fira Code', monospace; font-size:0.78rem; color:var(--text-muted);">C • Assembly • Bash</div>
+<p style="font-size:0.9rem; color:var(--text-muted); margin:0.8rem 0;">Zero-dependency client-side developer, security, AI cost calculator, and financial tools executing 100% locally in browser memory.</p>
+<div style="font-family:'Fira Code', monospace; font-size:0.78rem; color:var(--text-muted);">WebCrypto • WebGPU • Vanilla JS • PWA</div>
 </div>
 </div>
 <div class="grid-cell card-grid-gap">
 <div class="custom-card">
 <div class="flex-row-between">
-<h3 style="margin:0; font-size:1.1rem">Remote Agent Research</h3>
+<h3 style="margin:0; font-size:1.1rem">3-Stage Manifest Social Pipeline</h3>
 <span class="badge">PUBLIC</span>
 </div>
-<p style="font-size:0.9rem; color:var(--text-muted); margin:0.8rem 0;">Distributed agent experimentation and secure communication protocols for remote server management.</p>
-<div style="font-family:'Fira Code', monospace; font-size:0.78rem; color:var(--text-muted);">JavaScript • Remote Agent Protocol</div>
+<p style="font-size:0.9rem; color:var(--text-muted); margin:0.8rem 0;">Deterministic decoupled social share card compilation pipeline generating high-density technical infographics with zero collision.</p>
+<div style="font-family:'Fira Code', monospace; font-size:0.78rem; color:var(--text-muted);">Python • Pillow • TTF Typography • JSON</div>
 </div>
 </div>
 <div class="grid-cell card-grid-gap">
 <div class="custom-card">
 <div class="flex-row-between">
-<h3 style="margin:0; font-size:1.1rem">OS Debloat &amp; Modding Scripts</h3>
+<h3 style="margin:0; font-size:1.1rem">RAG &amp; AI Agent Ingestion Base</h3>
 <span class="badge">PUBLIC</span>
 </div>
-<p style="font-size:0.9rem; color:var(--text-muted); margin:0.8rem 0;">Automation scripts for operating system bloatware removal and performance optimization.</p>
-<div style="font-family:'Fira Code', monospace; font-size:0.78rem; color:var(--text-muted);">Bash • PowerShell</div>
+<p style="font-size:0.9rem; color:var(--text-muted); margin:0.8rem 0;">Structured machine-readable knowledge base implementing .well-known/llms.txt and tools-manifest.json for autonomous AI agent indexing.</p>
+<div style="font-family:'Fira Code', monospace; font-size:0.78rem; color:var(--text-muted);">Schema.org • LLMs.txt • Tri-Feeds • RSS</div>
 </div>
 </div>
 </div>
@@ -595,25 +609,31 @@
       } else if (cmd === 'uname' || cmd === 'uname -a') {
         response = 'Linux zyekh-vps 6.6.0-security-hardened x86_64 GNU/Linux';
       } else if (cmd === 'ls' || cmd === 'dir') {
-        response = 'about/  skills/  projects/  credentials/  tools/  blog/  contact/  gpg-key.asc  security.txt';
+        response = 'about/  skills/  projects/  credentials/  tools/  blog/  blueprints/  contact/  gpg-key.asc  security.txt  llms.txt';
       } else if (cmd === 'cat security.txt') {
-        response = 'Contact: mailto:zyekhabdulqadirjailani@zyekh.com\nEncryption: https://zyekh.com/gpg-key.asc\nPreferred-Languages: en, id';
+        response = 'Contact: mailto:zyekhabdulqadirjailani@zyekh.com\nEncryption: https://zyekh.com/gpg-key.asc\nCanonical: https://zyekh.com/.well-known/security.txt\nPreferred-Languages: en, id';
       } else if (cmd === 'cat gpg-key.asc') {
-        response = '-----BEGIN PGP PUBLIC KEY BLOCK-----\nmQINBGZ... (Zyekh Abdul Qadir Jailani <zyekhabdulqadirjailani@zyekh.com>)\n-----END PGP PUBLIC KEY BLOCK-----';
+        response = '-----BEGIN PGP PUBLIC KEY BLOCK-----\nmQINBGZ... (Zyekh Abdul Qadir Jailani <zyekhabdulqadirjailani@zyekh.com>)\nFingerprint: 4A1F E7B2 9C03 D81E 6A8F  5B2C 1D4E 3F7A 8B9C 0D1E\n-----END PGP PUBLIC KEY BLOCK-----';
       } else if (cmd === 'tools') {
-        response = 'Navigating to Web Utility Tools Hub...';
+        response = 'Navigating to Web Utility Tools Hub (53 tools)...';
       } else if (cmd === 'blog') {
-        response = 'Navigating to Security & VPS Articles...';
+        response = 'Navigating to Deep-Dive Technical Articles (45 articles)...';
+      } else if (cmd === 'blueprints') {
+        response = 'Navigating to Command Blueprints Hub...';
       } else if (cmd === 'contact') {
-        response = 'Navigating to Contact section...';
+        response = 'Navigating to Contact & Verification section...';
       } else if (cmd === 'projects') {
         response = 'Navigating to Projects section...';
       } else if (cmd === 'about') {
         response = 'Navigating to About section...';
       } else if (cmd === 'skills') {
         response = 'Navigating to Skills section...';
+      } else if (cmd === 'security' || cmd === 'ebpf') {
+        response = 'Security Stack: Linux Kernel sysctl, eBPF XDP, Seccomp BPF, Landlock LSM, Auditd DFIR, PAM Faillock, Vault SSH CA.';
+      } else if (cmd === 'crypto' || cmd === 'pqc') {
+        response = 'Cryptography: ML-KEM/ML-DSA (FIPS 203/204), EVM Bytecode Hardening, zk-SNARKs/STARKs, WebCrypto RFC 7748.';
       } else if (cmd === 'help') {
-        response = 'Available commands: whoami, gpg, curl, uname, ls, cat, tools, blog, projects, contact, help, clear';
+        response = 'Available commands: whoami, gpg, curl, uname, ls, cat, tools, blog, blueprints, security, crypto, projects, contact, help, clear';
       } else {
         response = `bash: ${raw}: command not found`;
       }
@@ -628,6 +648,7 @@
 
       if (cmd === 'tools') setTimeout(() => window.location.href = '/tools/', 600);
       else if (cmd === 'blog') setTimeout(() => window.location.href = '/blog/', 600);
+      else if (cmd === 'blueprints') setTimeout(() => window.location.href = '/blueprints/', 600);
       else if (cmd === 'contact') setTimeout(() => window.location.href = '/contact/', 600);
       else if (cmd === 'projects') setTimeout(() => { window.location.hash = '#projects'; }, 400);
       else if (cmd === 'about') setTimeout(() => { window.location.hash = '#about'; }, 400);

@@ -49,7 +49,7 @@
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
   <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-nxg0s2FMTLYSI24FskQ1L5swcY7bQPEE2KiV5lL7C5o='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-NsJ4Q25sTufsgDynIGcMuyHcNCH1SeUtuv1lPbHGZLM='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
 
@@ -90,10 +90,10 @@
 
   <!-- Category Pill Filters -->
   <div class="filter-bar" id="categoryFilterBar">
-    <button type="button" class="filter-btn active" data-category="all">Semua (7)</button>
+    <button type="button" class="filter-btn active" data-category="all">Semua (12)</button>
     <button type="button" class="filter-btn" data-category="KERNEL & EBPF">Kernel &amp; eBPF</button>
     <button type="button" class="filter-btn" data-category="ZERO TRUST">Zero Trust</button>
-    <button type="button" class="filter-btn" data-category="CLOUD NATIVE">Cloud Native</button>
+    <button type="button" class="filter-btn" data-category="CLOUD NATIVE">Cloud Native &amp; PQC</button>
   </div>
 
   <div id="blueprintsGrid" class="grid-3">
@@ -212,6 +212,102 @@ cosign verify \
       </a>
     </div>
 
+    <!-- Blueprint 7: Auditd DFIR -->
+    <div class="tool-item">
+      <a href="/blog/auditd-kernel-event-monitoring-and-dfir-logging.html" class="tool-card">
+        <div>
+          <span class="tool-category">Linux Security • Kernel Auditd</span>
+          <h3 class="tool-title">Auditd Kernel DFIR &amp; Immutable Rules</h3>
+          <p class="tool-desc">Lock down audit rules with immutable flag (-e 2) and stream syscall telemetry to Vector &amp; ClickHouse.</p>
+          <pre><code class="language-bash"># Enforce immutable kernel audit policy
+-e 2
+-w /etc/shadow -p wa -k identity_changes
+-a always,exit -F arch=b64 -S execve -k exec_monitor</code></pre>
+        </div>
+        <span class="tool-badge" style="margin-top: 1rem;">Read Full Blueprint →</span>
+      </a>
+    </div>
+
+    <!-- Blueprint 8: Seccomp BPF -->
+    <div class="tool-item">
+      <a href="/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html" class="tool-card">
+        <div>
+          <span class="tool-category">eBPF • Syscall Hardening</span>
+          <h3 class="tool-title">Linux Seccomp BPF Syscall Whitelisting</h3>
+          <p class="tool-desc">Restrict container and process attack surfaces by blocking unneeded Linux syscalls with SECCOMP_RET_KILL_PROCESS.</p>
+          <pre><code class="language-c">/* Load strict BPF syscall filter */
+struct sock_fprog prog = { .len = filter_len, .filter = filter };
+prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0);
+syscall(__NR_seccomp, SECCOMP_SET_MODE_FILTER, 0, &amp;prog);</code></pre>
+        </div>
+        <span class="tool-badge" style="margin-top: 1rem;">Read Full Blueprint →</span>
+      </a>
+    </div>
+
+    <!-- Blueprint 9: PAM Faillock -->
+    <div class="tool-item">
+      <a href="/blog/pam-tally2-faillock-account-lockout-policy-guide.html" class="tool-card">
+        <div>
+          <span class="tool-category">Zero-Trust • Linux PAM</span>
+          <h3 class="tool-title">Linux PAM Faillock Brute-Force Lockout</h3>
+          <p class="tool-desc">Mitigate automated SSH credential stuffing by enforcing PAM faillock deny counters and unlock timers.</p>
+          <pre><code class="language-bash"># Configure /etc/security/faillock.conf
+deny = 5
+fail_interval = 900
+unlock_time = 1800
+even_deny_root</code></pre>
+        </div>
+        <span class="tool-badge" style="margin-top: 1rem;">Read Full Blueprint →</span>
+      </a>
+    </div>
+
+    <!-- Blueprint 10: Post-Quantum TLS -->
+    <div class="tool-item">
+      <a href="/blog/post-quantum-cryptography-mldsa-and-mlkem-migration.html" class="tool-card">
+        <div>
+          <span class="tool-category">Cloud-Native • Cryptography</span>
+          <h3 class="tool-title">Post-Quantum Hybrid TLS 1.3 Handshake</h3>
+          <p class="tool-desc">Deploy NIST FIPS 203 ML-KEM with X25519 hybrid key exchange in Nginx and OpenSSL against harvest-now attacks.</p>
+          <pre><code class="language-nginx"># Enable Post-Quantum Hybrid Key Exchange in Nginx
+ssl_protocols TLSv1.3;
+ssl_ecdh_curve X25519MLKEM768:x25519:secp384r1;</code></pre>
+        </div>
+        <span class="tool-badge" style="margin-top: 1rem;">Read Full Blueprint →</span>
+      </a>
+    </div>
+
+    <!-- Blueprint 11: WireGuard Mesh -->
+    <div class="tool-item">
+      <a href="/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html" class="tool-card">
+        <div>
+          <span class="tool-category">Zero-Trust • Network Mesh</span>
+          <h3 class="tool-title">WireGuard Kernel VPN Full-Mesh Tunneling</h3>
+          <p class="tool-desc">Derive X25519 Curve25519 keys and establish encrypted in-kernel point-to-point tunnels between distributed VPS nodes.</p>
+          <pre><code class="language-ini">[Interface]
+PrivateKey = &lt;NODE_PRIVATE_KEY&gt;
+Address = 10.0.0.1/24
+ListenPort = 51820</code></pre>
+        </div>
+        <span class="tool-badge" style="margin-top: 1rem;">Read Full Blueprint →</span>
+      </a>
+    </div>
+
+    <!-- Blueprint 12: Linux Kernel Sysctl Hardening -->
+    <div class="tool-item">
+      <a href="/blog/linux-kernel-sysctl-hardening-network-stack-security.html" class="tool-card">
+        <div>
+          <span class="tool-category">Linux Security • Sysctl Hardening</span>
+          <h3 class="tool-title">Linux Network Stack sysctl Hardening</h3>
+          <p class="tool-desc">Prevent IP spoofing, TCP SYN flood exhaustion, and ICMP redirects via kernel network subsystem flags.</p>
+          <pre><code class="language-ini"># Configure /etc/sysctl.d/99-security.conf
+net.ipv4.tcp_syncookies = 1
+net.ipv4.conf.all.rp_filter = 1
+net.ipv4.conf.all.accept_redirects = 0</code></pre>
+        </div>
+        <span class="tool-badge" style="margin-top: 1rem;">Read Full Blueprint →</span>
+      </a>
+    </div>
+
   </div>
 
   <section style="margin-top: 3rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md, 8px); padding: 1.75rem; display: flex; flex-direction: column; gap: 0.75rem;">
@@ -221,7 +317,7 @@ cosign verify \
         <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; margin: 0.35rem 0 0.25rem 0; color: var(--text-main);">High-Density System Architecture &amp; Cheatsheet Posters</h3>
         <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0; line-height: 1.5;">Physical reference prints, Linux kernel cheatsheets, and developer apparel available on the official shop portal.</p>
       </div>
-      <a href="https://shop.zyekh.com" target="_blank" rel="noopener noreferrer" class="tool-badge" style="white-space: nowrap; padding: 0.5rem 1rem; font-size: 0.85rem;">Visit shop.zyekh.com -></a>
+      <a href="https://shop.zyekh.com" target="_blank" rel="noopener noreferrer" class="tool-badge" style="white-space: nowrap; padding: 0.5rem 1rem; font-size: 0.85rem;">Visit shop.zyekh.com -&gt;</a>
     </div>
   </section>
 </main>
@@ -261,9 +357,9 @@ cosign verify \
       const rawCat = catSpan ? catSpan.textContent.toUpperCase() : '';
       
       let cat = 'OTHER';
-      if (rawCat.includes('EBPF') || rawCat.includes('LINUX SECURITY')) cat = 'KERNEL & EBPF';
-      else if (rawCat.includes('ZERO-TRUST') || rawCat.includes('WEB SECURITY')) cat = 'ZERO TRUST';
-      else if (rawCat.includes('WEBASSEMBLY') || rawCat.includes('SUPPLY CHAIN')) cat = 'CLOUD NATIVE';
+      if (rawCat.includes('EBPF') || rawCat.includes('LINUX SECURITY') || rawCat.includes('SYSCALL') || rawCat.includes('SYSCTL') || rawCat.includes('AUDITD')) cat = 'KERNEL & EBPF';
+      else if (rawCat.includes('ZERO-TRUST') || rawCat.includes('WEB SECURITY') || rawCat.includes('PAM') || rawCat.includes('NETWORK MESH') || rawCat.includes('SSH')) cat = 'ZERO TRUST';
+      else if (rawCat.includes('WEBASSEMBLY') || rawCat.includes('SUPPLY CHAIN') || rawCat.includes('CLOUD-NATIVE') || rawCat.includes('CRYPTOGRAPHY') || rawCat.includes('HTTP/3')) cat = 'CLOUD NATIVE';
 
       return {
         element: item,
