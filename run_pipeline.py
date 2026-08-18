@@ -126,9 +126,130 @@ def run_syndication(slug=None, generate_cards=False, sync_unposted=False):
 
     subprocess.run(cmd, cwd=str(BASE_DIR), check=False)
 
+def run_doctor():
+    """
+    Unified Workspace Health & Anti-Hallucination Diagnostic Doctor.
+    Scans entire repository state and prints empirical truth matrix.
+    """
+    import glob
+    print("\n============================================================")
+    print("      ZYEKH.COM WORKSPACE HEALTH & DIAGNOSTIC DOCTOR        ")
+    print("============================================================\n")
+
+    # 1. Mandatory Root Files Audit
+    required_files = [
+        "GEMINI.md", "AGENTS.md", "DEVELOPMENT.md",
+        "DESIGN_SYSTEM.md", "STANDAR_ATURAN_AI_VPS.md", "README.md",
+        "sw.js", "sitemap.xml", "robots.txt", "llms.txt", "llms-full.txt"
+    ]
+    print("[ SECTION 1 ] MANDATORY GOVERNANCE FILES")
+    for rf in required_files:
+        p = BASE_DIR / rf
+        if p.exists():
+            print(f"  • [ OK ] {rf:<28} ({p.stat().st_size} bytes)")
+        else:
+            print(f"  • [ FAIL ] {rf:<28} (MISSING)")
+
+    # 2. Service Worker & Cache Synchronization Matrix
+    print("\n[ SECTION 2 ] SERVICE WORKER & ASSET CACHE SYNCHRONIZATION")
+    sw_file = BASE_DIR / "sw.js"
+    sw_version = "UNKNOWN"
+    if sw_file.exists():
+        m = re.search(r"CACHE_VERSION\s*=\s*['\"]([^'\"]+)['\"]", sw_file.read_text(encoding='utf-8'))
+        if m:
+            sw_version = m.group(1)
+    print(f"  • Active Service Worker CACHE_VERSION : {sw_version}")
+
+    html_files = sorted(glob.glob(str(BASE_DIR / "**/*.html"), recursive=True))
+    html_files = [f for f in html_files if "/.git/" not in f]
+    desync_files = []
+    for hf in html_files:
+        c = open(hf, encoding='utf-8', errors='ignore').read()
+        nav_v = re.findall(r'site-nav\.js\?v=([^\'\"\s>]+)', c)
+        css_v = re.findall(r'shared\.css\?v=([^\'\"\s>]+)', c)
+        versions = set(nav_v + css_v)
+        if len(versions) > 1:
+            desync_files.append((os.path.relpath(hf, BASE_DIR), "Multiple query versions in same file: " + ",".join(versions)))
+
+    if not desync_files:
+        print(f"  • [ OK ] All {len(html_files)} HTML files have uniform asset query versions.")
+    else:
+        print(f"  • [ WARN ] Detected {len(desync_files)} files with query version desynchronization:")
+        for df, reason in desync_files[:5]:
+            print(f"    - {df}: {reason}")
+
+    # 3. Content Inventory & Parity Check
+    print("\n[ SECTION 3 ] CONTENT INVENTORY & RAG PARITY")
+    blog_articles = [f for f in glob.glob(str(BASE_DIR / "blog/*.html")) if not f.endswith("blog/index.html")]
+    tools_html = [f for f in glob.glob(str(BASE_DIR / "tools/*.html")) if not f.endswith("tools/index.html")]
+
+    # Sitemap count
+    sitemap_count = 0
+    sitemap_file = BASE_DIR / "sitemap.xml"
+    if sitemap_file.exists():
+        sitemap_count = len(re.findall(r'<loc>', sitemap_file.read_text(encoding='utf-8')))
+
+    # Search index count
+    search_count = 0
+    search_file = BASE_DIR / "search-index.json"
+    if search_file.exists():
+        try:
+            search_count = len(json.loads(search_file.read_text(encoding='utf-8')))
+        except Exception:
+            pass
+
+    # Tools manifest count
+    tools_manifest_count = 0
+    tools_manifest_file = BASE_DIR / "tools" / "tools-manifest.json"
+    if tools_manifest_file.exists():
+        try:
+            tools_manifest_count = len(json.loads(tools_manifest_file.read_text(encoding='utf-8')).get("tools", []))
+        except Exception:
+            pass
+
+    # Social cards manifest count
+    cards_manifest_count = 0
+    cards_manifest_file = BASE_DIR / "data" / "social_cards_manifest.json"
+    if cards_manifest_file.exists():
+        try:
+            cards_manifest_data = json.loads(cards_manifest_file.read_text(encoding='utf-8'))
+            cards_manifest_count = len(cards_manifest_data.get("articles", cards_manifest_data))
+        except Exception:
+            pass
+
+    print(f"  • Blog Deep-Dive Articles  : {len(blog_articles)} files")
+    print(f"  • Client-Side Tools        : {len(tools_html)} files")
+    print(f"  • Sitemap XML URLs         : {sitemap_count} URLs")
+    print(f"  • Search Index Entries     : {search_count} items")
+    print(f"  • Tools Manifest Registry  : {tools_manifest_count} tools registered")
+    print(f"  • Social Cards Manifest    : {cards_manifest_count} articles registered")
+
+    # 4. Git & Working Tree Status
+    print("\n[ SECTION 4 ] REPOSITORY & GIT STATUS")
+    git_branch = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], capture_output=True, text=True, cwd=str(BASE_DIR)).stdout.strip()
+    git_commit = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, cwd=str(BASE_DIR)).stdout.strip()[:8]
+    git_status = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, cwd=str(BASE_DIR)).stdout.strip()
+
+    print(f"  • Git Active Branch        : {git_branch}")
+    print(f"  • Git Latest Commit Hash   : {git_commit}")
+    if not git_status:
+        print("  • Working Tree State       : [ CLEAN ] (No uncommitted changes)")
+    else:
+        modified_count = len(git_status.splitlines())
+        print(f"  • Working Tree State       : [ MODIFIED ] ({modified_count} uncommitted items)")
+
+    print("\n============================================================")
+    print("[ STATUS ] Doctor Diagnostic Scan Completed Successfully!")
+    print("============================================================\n")
+
 def main():
     parser = argparse.ArgumentParser(
         description="Zyekh.com Master Publishing & Automation Pipeline Orchestrator"
+    )
+    parser.add_argument(
+        "--doctor",
+        action="store_true",
+        help="Run comprehensive health, parity and anti-hallucination diagnostic scan"
     )
     parser.add_argument(
         "--skip-generate",
@@ -177,6 +298,11 @@ def main():
     )
 
     args = parser.parse_args()
+
+    # Standalone Doctor Health Diagnostic mode
+    if args.doctor:
+        run_doctor()
+        return
 
     print("============================================================")
     print("      ZYEKH.COM AUTOMATED PUBLISHING PIPELINE               ")

@@ -125,12 +125,17 @@ def extract_clean_code(raw_html: str) -> list[str]:
                 continue
         break
 
-    # Fix bracket balance if single unclosed function
+    # Fix bracket balance if unclosed function/block exists
     c_text = "\n".join(selected)
-    if c_text.count('{') > c_text.count('}'):
-        selected.append('}')
-        if len(selected) > 8:
-            selected = selected[:7] + ['}']
+    diff = c_text.count('{') - c_text.count('}')
+    if diff > 0:
+        if len(selected) + diff > 8:
+            selected = selected[:8 - diff]
+        # Recompute diff after possible truncation
+        diff = "\n".join(selected).count('{') - "\n".join(selected).count('}')
+        while diff > 0:
+            selected.append('}')
+            diff -= 1
 
     # Multiline continuation alignment and brace cleanup
     aligned = []

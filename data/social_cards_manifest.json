@@ -218,6 +218,64 @@
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
+  "flashattention-3-asynchronous-fp8-warp-specialization": {
+    "slug": "flashattention-3-asynchronous-fp8-warp-specialization",
+    "title": "FlashAttention-3 Architecture: Asynchronous FP8 Tensor Cores & Warp-Specialization",
+    "description": "Deep-dive into NVIDIA Hopper H100 hardware innovations, Tensor Memory Accelerator (TMA), and warp-specialized asynchronous software pipelining for ultra-low latency attention computation.",
+    "tags": [
+      "llmserving",
+      "gpuarchitecture"
+    ],
+    "code_snippet": [
+      "# Serving Engine Configuration with FlashAttention-3",
+      "python3 -m vllm.entrypoints.openai.api_server \\",
+      "    --model meta-llama/Meta-Llama-3-70B-Instruct \\",
+      "    --gpu-memory-utilization 0.95 \\",
+      "    --kv-cache-dtype fp8_e4m3 \\",
+      "    --attention-backend FLASHATTN3 \\",
+      "    --max-model-len 65536 \\",
+      "    --tensor-parallel-size 4"
+    ],
+    "invariants": [
+      "Warp Specialization: Separate Producer and Consumer warps to decouple asynchronous global-to-shared memory loads from Tensor Core GEMM operations.",
+      "TMA Hardware Acceleration: Utilize Hopper Tensor Memory Accelerator (TMA) hardware units for direct asynchronous multi-dimensional tensor transfers bypassing register files.",
+      "Asynchronous Softmax Overlap: Interleave softmax exponentiation directly with subsequent matrix multiplications to eliminate pipeline bubbles."
+    ],
+    "metrics": [
+      "Operational Impact: FP8 Mixed-Precision Scaling - Leverage FP8 (E4M3/E5M2) tensor cores with block-wise scaling factors to achieve 2x throughput over standard BF16 attention.",
+      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
+    ]
+  },
+  "fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth": {
+    "slug": "fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth",
+    "title": "FP8 vs INT4 KV-Cache Quantization: Memory Bandwidth vs Perplexity Trade-offs",
+    "description": "Comprehensive comparative analysis of FP8 (E4M3/E5M2) vs INT4 grouped quantization for long-context KV cache memory reduction in high-throughput LLM serving.",
+    "tags": [
+      "llmserving",
+      "quantization"
+    ],
+    "code_snippet": [
+      "# Python Mathematical Model for KV Cache Memory Size",
+      "def compute_kv_cache_gb(layers, kv_heads, head_dim, seq_len, batch_size, bytes_per_elem):",
+      "    # KV Cache Formula: 2 (K+V) * layers * kv_heads * head_dim * seq_len * batch_size * bytes",
+      "    total_bytes = 2 * layers * kv_heads * head_dim * seq_len * batch_size * bytes_per_elem",
+      "    return total_bytes / (1024 ** 3)",
+      "# Example: Llama-3-70B (64 layers, 8 KV heads, head_dim 128, 64k tokens, batch 1)",
+      "fp16_size = compute_kv_cache_gb(64, 8, 128, 65536, 1, 2.0)  # 16-bit: 16.0 GB",
+      "fp8_size  = compute_kv_cache_gb(64, 8, 128, 65536, 1, 1.0)  # 8-bit:  8.0 GB"
+    ],
+    "invariants": [
+      "KV Cache Memory Bottleneck: Long-context inference (32k-128k tokens) is strictly bounded by KV cache VRAM capacity and memory bandwidth.",
+      "FP8 Quantization (E4M3): Delivers 2x memory reduction with zero noticeable perplexity loss and native hardware tensor core execution.",
+      "INT4 Grouped Quantization: Delivers 4x memory reduction enabling extreme context lengths on consumer/single-GPU nodes, with minor degradation in reasoning benchmarks."
+    ],
+    "metrics": [
+      "Operational Impact: Throughput vs Latency Trade-offs - FP8 maximizes batched token throughput on H100/A100 GPUs, while INT4 maximizes concurrency under severe VRAM constraints.",
+      "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste.",
+      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
+    ]
+  },
   "http3-quic-security-hardening-and-0rtt-mitigation-blueprint": {
     "slug": "http3-quic-security-hardening-and-0rtt-mitigation-blueprint",
     "title": "HTTP/3 & QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks",
@@ -373,6 +431,36 @@
     "metrics": [
       "Operational Impact: Inherited Security Rules - Landlock rules automatically apply to all child processes spawned by the sandboxed process.",
       "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
+    ]
+  },
+  "linux-lsm-bpf-runtime-security-policies-and-kernel-hooks": {
+    "slug": "linux-lsm-bpf-runtime-security-policies-and-kernel-hooks",
+    "title": "Linux LSM BPF: Dynamic Kernel Security Policies Without Kernel Recompilation",
+    "description": "Practical engineering guide for writing and enforcing programmable eBPF Linux Security Module (LSM) hooks to block unauthorized syscalls and file tampering in real time.",
+    "tags": [
+      "linuxsecurity",
+      "ebpfarchitecture"
+    ],
+    "code_snippet": [
+      "// eBPF LSM Program: Block Binary Execution in /tmp",
+      "char LICENSE[] SEC(\"license\") = \"GPL\";",
+      "SEC(\"lsm/bprm_check_security\")",
+      "int BPF_PROG(restrict_tmp_execution, struct linux_binprm *bprm) {",
+      "    char filename[256];",
+      "    int ret = bpf_d_path(&bprm->file->f_path, filename, sizeof(filename));",
+      "    if (ret < 0) {",
+      "}",
+      "}"
+    ],
+    "invariants": [
+      "LSM BPF Integration: Attach eBPF programs directly into Linux Security Module hooks (bprm_check_security, file_open, socket_connect).",
+      "Zero Kernel Modification: Deploy mandatory access control (MAC) policies dynamically without custom kernel compilation or rebooting nodes.",
+      "Runtime Syscall Blocking: Return standard Linux error codes (-EPERM / -EACCES) directly from BPF programs to block malicious operations before execution."
+    ],
+    "metrics": [
+      "Operational Impact: Container Process Sandboxing - Enforce path-based and cgroup-scoped execution locks on unprivileged cloud microservices.",
+      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
@@ -639,7 +727,7 @@
     "code_snippet": [
       "# /etc/nginx/conf.d/security-headers.conf",
       "# Content Security Policy (Strict Nonce/Self Baseline)",
-      "add_header Content-Security-Policy \"default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests;\" always;",
+      "add_header Content-Security-Policy \"default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com https://api.zyekh.com https://chat.zyekh.com; frame-ancestors 'none'; base-uri 'none'; form-action 'self'; upgrade-insecure-requests;\" always;",
       "# HTTP Strict Transport Security (HSTS 2 Years + Preload)",
       "add_header Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\" always;",
       "# Prevent MIME-Sniffing Exploits",
@@ -851,6 +939,34 @@
       "Inference Impact: High-throughput token optimization with zero memory fragmentation.",
       "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste.",
       "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
+    ]
+  },
+  "wasm-component-model-polyglot-sandboxing-on-edge-workers": {
+    "slug": "wasm-component-model-polyglot-sandboxing-on-edge-workers",
+    "title": "Wasm Component Model: Polyglot Sandboxing for High-Density Edge Compute",
+    "description": "Architectural blueprint for building zero-trust polyglot micro-services with the WebAssembly Component Model and WIT interfaces on edge runtime workers.",
+    "tags": [
+      "zerotrust",
+      "edgecomputing"
+    ],
+    "code_snippet": [
+      "// Rust Implementation of WIT Token Verifier Component",
+      "struct SecurityComponent;",
+      "impl Guest for SecurityComponent {",
+      "    fn verify_token(raw_jwt: String, public_key_pem: String) -> Result<TokenPayload, VerificationStatus> {",
+      "        // Secure in-memory cryptographic verification",
+      "}",
+      "}"
+    ],
+    "invariants": [
+      "Wasm Component Model: Compose heterogeneous modules written in Rust, Go, Python, and C++ into a single isolated execution sandbox.",
+      "WIT Interface Standards: Define language-neutral WebAssembly Interface Type (WIT) contracts for seamless cross-language data exchange.",
+      "High-Density Multi-Tenancy: Achieve sub-millisecond cold starts (< 1ms) and minimal memory footprints (< 2MB) per sandboxed tenant worker."
+    ],
+    "metrics": [
+      "Operational Impact: Capability Security - Restrict network, filesystem, and environment access strictly through explicit WASI capability interfaces.",
+      "Runtime Sandboxing: Wasm linear memory sandbox with sub-millisecond cold starts.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
   "webgpu-llm-inference-browser-sandbox": {

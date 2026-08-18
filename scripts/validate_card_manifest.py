@@ -14,8 +14,10 @@ def validate_manifest():
     data = json.loads(MANIFEST_FILE.read_text(encoding='utf-8'))
     print(f"[ VALIDATION ] Auditing {len(data)} articles in manifest...")
 
-    if len(data) != 35:
-        print(f"[ ERROR ] Expected 35 articles, found {len(data)}")
+    import glob
+    blog_count = len([f for f in glob.glob(str(BASE_DIR / "blog/*.html")) if not f.endswith("blog/index.html")])
+    if len(data) != blog_count:
+        print(f"[ ERROR ] Expected {blog_count} articles, found {len(data)}")
         sys.exit(1)
 
     # Initialize font engine for headless geometry simulation
@@ -150,7 +152,7 @@ def validate_manifest():
             print(f"  - {e}")
         sys.exit(1)
 
-    print("\n[ PASS ] 100% Quality Audit Passed! All 35 articles have complete, verified, deterministic metadata and zero geometry collisions.")
+    print(f"\n[ PASS ] 100% Quality Audit Passed! All {len(data)} articles have complete, verified, deterministic metadata and zero geometry collisions.")
 
 if __name__ == "__main__":
     validate_manifest()

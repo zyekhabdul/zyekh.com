@@ -85,8 +85,8 @@ def generate_article_html(article_data, current_cache_ver=None):
     faq_elements = []
     faq_schema_items = []
     for faq in faqs:
-        q = faq['question']
-        a = faq['answer']
+        q = faq.get('question') or faq.get('q') or ''
+        a = faq.get('answer') or faq.get('a') or ''
         faq_elements.append(f"""<details>
   <summary>{q}</summary>
   <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">{a}</p>
@@ -105,7 +105,13 @@ def generate_article_html(article_data, current_cache_ver=None):
     # 4. Related Tools HTML
     tools_links_html = []
     for tool in related_tools:
-        tools_links_html.append(f'<a class="blog-badge" href="{tool["url"]}">{tool["name"]}</a>')
+        if isinstance(tool, dict):
+            t_url = tool.get('url', '/tools/')
+            t_name = tool.get('name', 'Tool')
+        else:
+            t_url = f"/tools/{tool}" if not tool.startswith('/tools/') else tool
+            t_name = os.path.splitext(os.path.basename(tool))[0].replace('-', ' ').title()
+        tools_links_html.append(f'<a class="blog-badge" href="{t_url}">{t_name}</a>')
     tools_text = " dan ".join(tools_links_html) if tools_links_html else '<a class="blog-badge" href="/tools/password.html">Secure Password Generator</a>'
 
     # Schema JSON-LD Graph

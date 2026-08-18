@@ -27,7 +27,8 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 - [ DONE ] **Content Hash Cache-Busting on OpenGraph & Twitter Tags**: Otomatis menyematkan hash query string `?v=<file_hash>` pada `og:image` dan `twitter:image` di seluruh 91 file HTML agar crawler media sosial (Facebook, LinkedIn, Discord, Telegram, X) tidak menampilkan thumbnail kadaluarsa.
 - [ DONE ] **Web AI Agent Tool Manifest (`/tools/tools-manifest.json`)**: Ekstraksi skema JSON terstruktur untuk seluruh 46 client-side tools (parameter, elemen form, model eksekusi client-side) untuk direct tool-calling oleh Browser AI agents (Claude Computer Use, ChatGPT Operator, Gemini Web Agent).
 - [ DONE ] **Dynamic Canvas Vertical Budgeting**: Kalkulator layout dinamis fleksibel di Pillow compiler untuk auto-adjust padding ketika judul/konten artikel sangat panjang.
-
+- [ DONE ] **Unified Workspace Health Diagnostic Doctor (`run_pipeline.py --doctor`)**: Generator matriks ground-truth deterministik untuk mengaudit cache version sync, manifest parity, sitemap count, dan git state.
+- [ DONE ] **Automated SOP-Compliant Tool Scaffolder (`scripts/create_tool.py`)**: Generator template tool client-side zero-dependency dengan integrasi otomatis manifest, Schema JSON-LD, and design tokens.
 
 ## 3. Peningkatan Aksesibilitas & UX
 - [ DONE ] **Command Palette / Quick Search (Ctrl+K)**: Pencarian cepat berbasis Vanilla JS untuk 46+ tools.
@@ -36,10 +37,10 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 - [ DONE ] **Self-Hosted Link Hub (`/links/`)**: Pengganti Linktree murni Vanilla HTML5/CSS dengan microformats `rel="me"`.
 
 ## 4. Ekspansi Konten GEO & Technical Deep-Dives (Batch 4)
-- [ BACKLOG ] **FlashAttention-3 Deep Dive**: Asynchronous FP8 Tensor Cores & Warp-Specialization in Hopper Architecture.
-- [ BACKLOG ] **Linux LSM BPF Security Policies**: Runtime kernel security hooks without kernel module recompilation.
-- [ BACKLOG ] **Wasm Component Model Polyglot Sandboxing**: Secure sandboxing on Cloudflare Edge Workers.
-- [ BACKLOG ] **FP8 vs INT4 KV-Cache Quantization**: Memory bandwidth vs perplexity trade-offs in high-throughput inference.
+- [ DONE ] **FlashAttention-3 Deep Dive**: Asynchronous FP8 Tensor Cores & Warp-Specialization in Hopper Architecture (`blog/flashattention-3-asynchronous-fp8-warp-specialization.html`).
+- [ DONE ] **Linux LSM BPF Security Policies**: Runtime kernel security hooks without kernel module recompilation (`blog/linux-lsm-bpf-runtime-security-policies-and-kernel-hooks.html`).
+- [ DONE ] **Wasm Component Model Polyglot Sandboxing**: Secure sandboxing on Cloudflare Edge Workers (`blog/wasm-component-model-polyglot-sandboxing-on-edge-workers.html`).
+- [ DONE ] **FP8 vs INT4 KV-Cache Quantization**: Memory bandwidth vs perplexity trade-offs in high-throughput inference (`blog/fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth.html`).
 
 ## 5. Proposal Tambahan & Inovasi Fitur (Backlog Aktif)
 - [ DONE ] **shop.zyekh.com Ecosystem Touchpoints**: Pemasangan touchpoints navigasi (`site-nav.js`), kartu unggulan di `links/index.html`, footer navigation di `index.html` dan seluruh 91 HTML files, serta architecture resource callout di `blueprints/index.html`.

@@ -63,6 +63,20 @@
       <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
+      <title>FlashAttention-3 Architecture: Asynchronous FP8 Tensor Cores &amp; Warp-Specialization</title>
+      <link>https://zyekh.com/blog/flashattention-3-asynchronous-fp8-warp-specialization.html</link>
+      <guid>https://zyekh.com/blog/flashattention-3-asynchronous-fp8-warp-specialization.html</guid>
+      <description>Deep-dive into NVIDIA Hopper H100 hardware innovations, Tensor Memory Accelerator (TMA), and warp-specialized asynchronous software pipelining for ultra-low latency attention computation.</description>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>FP8 vs INT4 KV-Cache Quantization: Memory Bandwidth vs Perplexity Trade-offs</title>
+      <link>https://zyekh.com/blog/fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth.html</link>
+      <guid>https://zyekh.com/blog/fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth.html</guid>
+      <description>Comprehensive comparative analysis of FP8 (E4M3/E5M2) vs INT4 grouped quantization for long-context KV cache memory reduction in high-throughput LLM serving.</description>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>HTTP/3 &amp; QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks</title>
       <link>https://zyekh.com/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html</link>
       <guid>https://zyekh.com/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html</guid>
@@ -103,6 +117,13 @@
       <guid>https://zyekh.com/blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html</guid>
       <description>Engineering guide on using the Landlock Linux Security Module to enforce unprivileged file system and network access control restrictions.</description>
       <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Linux LSM BPF: Dynamic Kernel Security Policies Without Kernel Recompilation</title>
+      <link>https://zyekh.com/blog/linux-lsm-bpf-runtime-security-policies-and-kernel-hooks.html</link>
+      <guid>https://zyekh.com/blog/linux-lsm-bpf-runtime-security-policies-and-kernel-hooks.html</guid>
+      <description>Practical engineering guide for writing and enforcing programmable eBPF Linux Security Module (LSM) hooks to block unauthorized syscalls and file tampering in real time.</description>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces</title>
@@ -222,6 +243,13 @@
       <guid>https://zyekh.com/blog/vllm-pagedattention-high-throughput-inference-tuning.html</guid>
       <description>Deep dive into OS-inspired virtual memory management for LLM KV caches, maximizing GPU utilization, and achieving 20x throughput scaling for production inference.</description>
       <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Wasm Component Model: Polyglot Sandboxing for High-Density Edge Compute</title>
+      <link>https://zyekh.com/blog/wasm-component-model-polyglot-sandboxing-on-edge-workers.html</link>
+      <guid>https://zyekh.com/blog/wasm-component-model-polyglot-sandboxing-on-edge-workers.html</guid>
+      <description>Architectural blueprint for building zero-trust polyglot micro-services with the WebAssembly Component Model and WIT interfaces on edge runtime workers.</description>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>WebGPU LLM Inference: Running 7B Models Natively in the Browser</title>

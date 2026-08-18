@@ -119,6 +119,32 @@
       "image": "https://zyekh.com/assets/img/social-cards/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation-dark-landscape.png"
     },
     {
+      "id": "https://zyekh.com/blog/flashattention-3-asynchronous-fp8-warp-specialization.html",
+      "url": "https://zyekh.com/blog/flashattention-3-asynchronous-fp8-warp-specialization.html",
+      "title": "FlashAttention-3 Architecture: Asynchronous FP8 Tensor Cores & Warp-Specialization",
+      "summary": "Deep-dive into NVIDIA Hopper H100 hardware innovations, Tensor Memory Accelerator (TMA), and warp-specialized asynchronous software pipelining for ultra-low latency attention computation.",
+      "date_published": "2026-08-18T00:00:00Z",
+      "date_modified": "2026-08-18T00:00:00Z",
+      "tags": [
+        "LLM Serving",
+        "GPU Architecture"
+      ],
+      "image": "https://zyekh.com/assets/img/social-cards/flashattention-3-asynchronous-fp8-warp-specialization-dark-landscape.png"
+    },
+    {
+      "id": "https://zyekh.com/blog/fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth.html",
+      "url": "https://zyekh.com/blog/fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth.html",
+      "title": "FP8 vs INT4 KV-Cache Quantization: Memory Bandwidth vs Perplexity Trade-offs",
+      "summary": "Comprehensive comparative analysis of FP8 (E4M3/E5M2) vs INT4 grouped quantization for long-context KV cache memory reduction in high-throughput LLM serving.",
+      "date_published": "2026-08-18T00:00:00Z",
+      "date_modified": "2026-08-18T00:00:00Z",
+      "tags": [
+        "LLM Serving",
+        "Quantization"
+      ],
+      "image": "https://zyekh.com/assets/img/social-cards/fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth-dark-landscape.png"
+    },
+    {
       "id": "https://zyekh.com/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html",
       "url": "https://zyekh.com/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html",
       "title": "HTTP/3 & QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks",
@@ -195,6 +221,19 @@
         "Access Control"
       ],
       "image": "https://zyekh.com/assets/img/social-cards/linux-landlock-lsm-unprivileged-sandboxing-blueprint-dark-landscape.png"
+    },
+    {
+      "id": "https://zyekh.com/blog/linux-lsm-bpf-runtime-security-policies-and-kernel-hooks.html",
+      "url": "https://zyekh.com/blog/linux-lsm-bpf-runtime-security-policies-and-kernel-hooks.html",
+      "title": "Linux LSM BPF: Dynamic Kernel Security Policies Without Kernel Recompilation",
+      "summary": "Practical engineering guide for writing and enforcing programmable eBPF Linux Security Module (LSM) hooks to block unauthorized syscalls and file tampering in real time.",
+      "date_published": "2026-08-18T00:00:00Z",
+      "date_modified": "2026-08-18T00:00:00Z",
+      "tags": [
+        "Linux Security",
+        "eBPF Architecture"
+      ],
+      "image": "https://zyekh.com/assets/img/social-cards/linux-lsm-bpf-runtime-security-policies-and-kernel-hooks-dark-landscape.png"
     },
     {
       "id": "https://zyekh.com/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html",
@@ -416,6 +455,19 @@
         "Performance"
       ],
       "image": "https://zyekh.com/assets/img/social-cards/vllm-pagedattention-high-throughput-inference-tuning-dark-landscape.png"
+    },
+    {
+      "id": "https://zyekh.com/blog/wasm-component-model-polyglot-sandboxing-on-edge-workers.html",
+      "url": "https://zyekh.com/blog/wasm-component-model-polyglot-sandboxing-on-edge-workers.html",
+      "title": "Wasm Component Model: Polyglot Sandboxing for High-Density Edge Compute",
+      "summary": "Architectural blueprint for building zero-trust polyglot micro-services with the WebAssembly Component Model and WIT interfaces on edge runtime workers.",
+      "date_published": "2026-08-18T00:00:00Z",
+      "date_modified": "2026-08-18T00:00:00Z",
+      "tags": [
+        "Zero Trust",
+        "Edge Computing"
+      ],
+      "image": "https://zyekh.com/assets/img/social-cards/wasm-component-model-polyglot-sandboxing-on-edge-workers-dark-landscape.png"
     },
     {
       "id": "https://zyekh.com/blog/webgpu-llm-inference-browser-sandbox.html",

@@ -126,6 +126,34 @@
     <category term="Fail2ban Defense"/>
   </entry>
   <entry>
+    <title>FlashAttention-3 Architecture: Asynchronous FP8 Tensor Cores &amp; Warp-Specialization</title>
+    <link href="https://zyekh.com/blog/flashattention-3-asynchronous-fp8-warp-specialization.html"/>
+    <id>https://zyekh.com/blog/flashattention-3-asynchronous-fp8-warp-specialization.html</id>
+    <updated>2026-08-18T00:00:00Z</updated>
+    <published>2026-08-18T00:00:00Z</published>
+    <summary>Deep-dive into NVIDIA Hopper H100 hardware innovations, Tensor Memory Accelerator (TMA), and warp-specialized asynchronous software pipelining for ultra-low latency attention computation.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="LLM Serving"/>
+    <category term="GPU Architecture"/>
+  </entry>
+  <entry>
+    <title>FP8 vs INT4 KV-Cache Quantization: Memory Bandwidth vs Perplexity Trade-offs</title>
+    <link href="https://zyekh.com/blog/fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth.html"/>
+    <id>https://zyekh.com/blog/fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth.html</id>
+    <updated>2026-08-18T00:00:00Z</updated>
+    <published>2026-08-18T00:00:00Z</published>
+    <summary>Comprehensive comparative analysis of FP8 (E4M3/E5M2) vs INT4 grouped quantization for long-context KV cache memory reduction in high-throughput LLM serving.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="LLM Serving"/>
+    <category term="Quantization"/>
+  </entry>
+  <entry>
     <title>HTTP/3 &amp; QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks</title>
     <link href="https://zyekh.com/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html"/>
     <id>https://zyekh.com/blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html</id>
@@ -208,6 +236,20 @@
     </author>
     <category term="Linux Security"/>
     <category term="Access Control"/>
+  </entry>
+  <entry>
+    <title>Linux LSM BPF: Dynamic Kernel Security Policies Without Kernel Recompilation</title>
+    <link href="https://zyekh.com/blog/linux-lsm-bpf-runtime-security-policies-and-kernel-hooks.html"/>
+    <id>https://zyekh.com/blog/linux-lsm-bpf-runtime-security-policies-and-kernel-hooks.html</id>
+    <updated>2026-08-18T00:00:00Z</updated>
+    <published>2026-08-18T00:00:00Z</published>
+    <summary>Practical engineering guide for writing and enforcing programmable eBPF Linux Security Module (LSM) hooks to block unauthorized syscalls and file tampering in real time.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Linux Security"/>
+    <category term="eBPF Architecture"/>
   </entry>
   <entry>
     <title>Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces</title>
@@ -446,6 +488,20 @@
     </author>
     <category term="AI Engineering"/>
     <category term="Performance"/>
+  </entry>
+  <entry>
+    <title>Wasm Component Model: Polyglot Sandboxing for High-Density Edge Compute</title>
+    <link href="https://zyekh.com/blog/wasm-component-model-polyglot-sandboxing-on-edge-workers.html"/>
+    <id>https://zyekh.com/blog/wasm-component-model-polyglot-sandboxing-on-edge-workers.html</id>
+    <updated>2026-08-18T00:00:00Z</updated>
+    <published>2026-08-18T00:00:00Z</published>
+    <summary>Architectural blueprint for building zero-trust polyglot micro-services with the WebAssembly Component Model and WIT interfaces on edge runtime workers.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Zero Trust"/>
+    <category term="Edge Computing"/>
   </entry>
   <entry>
     <title>WebGPU LLM Inference: Running 7B Models Natively in the Browser</title>
