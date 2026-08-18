@@ -423,12 +423,24 @@ def verify_all_articles():
         print(f"[FAIL] Exception during metric parity audit: {e}")
         failures += 1
 
+    # Check 24: CSS Performance, Rendering Anti-Patterns & WebKit Reset Auditor
+    print("\n[ Check 24 ] CSS Performance, Rendering Anti-Patterns & WebKit Reset Audit...")
+    try:
+        from scripts.audit_css_perf import audit_css_performance
+        css_passed = audit_css_performance(verbose=False)
+        if not css_passed:
+            print("[FAIL] CSS performance or rendering anti-pattern violations detected.")
+            failures += 1
+    except Exception as e:
+        print(f"[FAIL] Exception during CSS performance audit execution: {e}")
+        failures += 1
+
     print("\n============================================================")
     if failures > 0:
         print(f"FAILED: {failures} QA audit violations detected across system.")
         sys.exit(1)
     else:
-        print(f"SUCCESS: All {len(articles)} articles, assets, and live server passed 100% QA audit (Checks 1-23)!")
+        print(f"SUCCESS: All {len(articles)} articles, assets, and live server passed 100% QA audit (Checks 1-24)!")
         print("============================================================")
 
 if __name__ == "__main__":

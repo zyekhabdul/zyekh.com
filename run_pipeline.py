@@ -330,9 +330,9 @@ def main():
     if not args.skip_generate:
         run_command([sys.executable, "generate_batch.py"], "Generating Article HTML Files")
 
-    # 2. QA Audit (Strict 23-axis verification)
+    # 2. QA Audit (Strict 24-axis verification)
     if not args.skip_qa:
-        run_command([sys.executable, "verify_batch.py"], "Running 23-Axis QA Audit")
+        run_command([sys.executable, "verify_batch.py"], "Running 24-Axis QA Audit")
 
     # 3. Content & Cache Sync
     run_command([sys.executable, "sync_content.py"], "Synchronizing Sitemap, RSS, RAG & Cache Version")
