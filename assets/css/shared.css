@@ -192,27 +192,47 @@
 
   /* Base Buttons */
   button {
-    background-color: var(--text-main);
-    color: var(--bg-dark);
+    background-color: #fafafa;
+    color: #09090b;
     font-weight: 600;
     border-radius: var(--radius-md);
     padding: 0.55rem 1.2rem;
-    border: 1px solid var(--accent-white);
+    border: 1px solid #fafafa;
     cursor: pointer;
     font-family: 'Inter', system-ui, sans-serif;
     margin-right: 0.4rem;
     margin-bottom: 0.4rem;
-    transition: background-color var(--transition);
+    transition: background-color var(--transition), color var(--transition), border-color var(--transition);
   }
-  button:hover { background-color: #e4e4e7; }
+  button:hover,
+  button:focus-visible {
+    background-color: #e4e4e7;
+    color: #09090b;
+    border-color: #e4e4e7;
+  }
+  button:active {
+    background-color: #d4d4d8;
+    color: #09090b;
+    border-color: #d4d4d8;
+    transform: scale(0.98);
+  }
 
-  [data-theme="light"] button[type="submit"] {
+  [data-theme="light"] button {
     background-color: #09090b;
     color: #ffffff;
     border-color: #09090b;
   }
-  [data-theme="light"] button[type="submit"]:hover {
+  [data-theme="light"] button:hover,
+  [data-theme="light"] button:focus-visible {
     background-color: #27272a;
+    color: #ffffff;
+    border-color: #27272a;
+  }
+  [data-theme="light"] button:active {
+    background-color: #3f3f46;
+    color: #ffffff;
+    border-color: #3f3f46;
+    transform: scale(0.98);
   }
 
   /* Base Tables */
@@ -521,20 +541,49 @@
     display: inline-flex;
     align-items: center;
     gap: var(--space-sm);
-    background-color: var(--text-main);
-    color: var(--bg-dark);
+    background-color: #fafafa;
+    color: #09090b;
     font-weight: 600;
     border-radius: var(--radius-md);
     padding: 0.65rem var(--space-lg);
-    border: 1px solid var(--accent-white);
+    border: 1px solid #fafafa;
     text-decoration: none;
     cursor: pointer;
-    transition: background-color var(--transition);
+    transition: background-color var(--transition), color var(--transition), border-color var(--transition);
     font-family: 'Inter', system-ui, sans-serif;
     font-size: 0.95rem;
     margin: 0;
   }
-  .btn-primary:hover { background-color: #e4e4e7; }
+  .btn-primary:hover,
+  .btn-primary:focus-visible {
+    background-color: #e4e4e7;
+    color: #09090b;
+    border-color: #e4e4e7;
+  }
+  .btn-primary:active {
+    background-color: #d4d4d8;
+    color: #09090b;
+    border-color: #d4d4d8;
+    transform: scale(0.98);
+  }
+  [data-theme="light"] .btn-primary {
+    background-color: #09090b;
+    color: #ffffff;
+    border-color: #09090b;
+  }
+  [data-theme="light"] .btn-primary:hover,
+  [data-theme="light"] .btn-primary:focus-visible {
+    background-color: #27272a;
+    color: #ffffff;
+    border-color: #27272a;
+  }
+  [data-theme="light"] .btn-primary:active {
+    background-color: #3f3f46;
+    color: #ffffff;
+    border-color: #3f3f46;
+    transform: scale(0.98);
+  }
+
   .btn-secondary {
     display: inline-flex;
     align-items: center;
@@ -547,12 +596,28 @@
     padding: 0.65rem var(--space-lg);
     text-decoration: none;
     cursor: pointer;
-    transition: border-color var(--transition);
+    transition: border-color var(--transition), background-color var(--transition), color var(--transition);
     font-family: 'Inter', system-ui, sans-serif;
     font-size: 0.95rem;
     margin: 0;
   }
-  .btn-secondary:hover { border-color: var(--border-hover); background-color: var(--bg-card); }
+  .btn-secondary:hover,
+  .btn-secondary:focus-visible {
+    border-color: var(--border-hover);
+    background-color: var(--bg-card);
+    color: var(--text-main);
+  }
+  [data-theme="light"] .btn-secondary {
+    background-color: #ffffff;
+    border-color: #d4d4d8;
+    color: #09090b;
+  }
+  [data-theme="light"] .btn-secondary:hover,
+  [data-theme="light"] .btn-secondary:focus-visible {
+    border-color: #71717a;
+    background-color: #f4f4f5;
+    color: #09090b;
+  }
 
   /* Cards */
   .custom-card {
