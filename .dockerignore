@@ -1,0 +1,6 @@
+.git
+.github
+*.py
+*.md
+batch_data.json
+batch_data_template.json
