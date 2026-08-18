@@ -35,7 +35,8 @@ class SiteNav extends HTMLElement {
             <a href="/" class="brand-logo">zyekh.com</a>
             <div class="nav-search" id="navSearch">
               <input type="search" id="navSearchInput" class="nav-search-input" placeholder="Search... (Ctrl+K)" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="navSearchResults" aria-label="Search tools and articles">
-              <kbd class="nav-search-kbd">Ctrl+K</kbd>
+              <kbd class="nav-search-kbd" id="navSearchKbd">Ctrl+K</kbd>
+              <button type="button" class="nav-search-clear" id="navSearchClear" aria-label="Clear search" style="display:none;">&times;</button>
               <div id="navSearchResults" class="nav-search-dropdown" role="listbox" style="display:none;"></div>
             </div>
           </div>
@@ -93,10 +94,14 @@ class SiteNav extends HTMLElement {
     const themeBtn = this.querySelector('#themeToggle');
     if (themeBtn) {
       themeBtn.addEventListener('click', () => {
+        document.documentElement.classList.add('theme-transitioning');
         const isLight = document.documentElement.getAttribute('data-theme') === 'light';
         const nextTheme = isLight ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', nextTheme);
         localStorage.setItem('theme', nextTheme);
+        setTimeout(() => {
+          document.documentElement.classList.remove('theme-transitioning');
+        }, 300);
       });
     }
 
@@ -290,6 +295,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
     updateProgress();
   }
+
+  // Desktop Table of Contents (TOC) Active Scroll-Spy via IntersectionObserver
+  const articleHeadings = document.querySelectorAll('.article-body h2[id], .article-body h3[id], .article-content h2[id], .article-content h3[id]');
+  const tocLinks = document.querySelectorAll('.toc-card a, .toc-list a, .article-toc a');
+  if (articleHeadings.length > 0 && tocLinks.length > 0) {
+    const headingMap = new Map();
+    tocLinks.forEach(link => {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        headingMap.set(href.slice(1), link);
+      }
+    });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          const activeLink = headingMap.get(id);
+          if (activeLink) {
+            tocLinks.forEach(l => l.classList.remove('active-toc-item'));
+            activeLink.classList.add('active-toc-item');
+          }
+        }
+      });
+    }, { rootMargin: '0px 0px -65% 0px', threshold: 0.1 });
+    articleHeadings.forEach(h => observer.observe(h));
+  }
+
+  // Global Keyboard Productivity Handler: Ctrl+Enter / Cmd+Enter execution in Tool textareas
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      const activeEl = document.activeElement;
+      if (activeEl && (activeEl.tagName === 'TEXTAREA' || activeEl.tagName === 'INPUT')) {
+        const container = activeEl.closest('.tool-box, .tool-container, form, main') || document;
+        const actionBtn = container.querySelector(
+          'button.btn-primary, button[type="submit"], input[type="submit"], ' +
+          'button[id*="calc"], button[id*="format"], button[id*="generate"], button[id*="convert"], button[id*="decode"], button[id*="run"], button[id*="eval"], button[id*="btn"]'
+        );
+        if (actionBtn && typeof actionBtn.click === 'function') {
+          e.preventDefault();
+          actionBtn.click();
+          actionBtn.classList.add('btn-active-flash');
+          setTimeout(() => actionBtn.classList.remove('btn-active-flash'), 200);
+        }
+      }
+    }
+  });
+
+  // Global Auto-Growing Textarea Elasticity for Utility Tools
+  document.addEventListener('input', (e) => {
+    if (e.target.tagName === 'TEXTAREA' && (e.target.closest('.tool-box') || e.target.classList.contains('auto-expand') || e.target.closest('.tool-container'))) {
+      e.target.style.height = 'auto';
+      const nextH = Math.min(e.target.scrollHeight, 480);
+      if (nextH > 50) {
+        e.target.style.height = nextH + 'px';
+      }
+    }
+  });
 });
 
 // Single Event Delegation listener for all copy buttons, share buttons & native lightboxes
@@ -398,7 +460,29 @@ document.addEventListener('click', async (e) => {
     const searchContainer = document.getElementById('navSearch');
     const input = document.getElementById('navSearchInput');
     const dropdown = document.getElementById('navSearchResults');
+    const clearBtn = document.getElementById('navSearchClear');
+    const kbd = document.getElementById('navSearchKbd');
     if (!input || !dropdown) return;
+
+    function syncClearButton() {
+      if (input.value.trim().length > 0) {
+        if (clearBtn) clearBtn.style.display = 'inline-flex';
+        if (kbd) kbd.style.display = 'none';
+      } else {
+        if (clearBtn) clearBtn.style.display = 'none';
+        if (kbd && window.innerWidth > 540) kbd.style.display = 'inline-block';
+      }
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        input.value = '';
+        syncClearButton();
+        closeDropdown();
+        input.focus();
+      });
+    }
 
     function closeDropdown() {
       dropdown.style.display = 'none';
@@ -423,7 +507,18 @@ document.addEventListener('click', async (e) => {
       });
     }
 
-    function renderDropdown(items, sectionTitle) {
+    function highlightTokens(text, tokens) {
+      let escaped = escapeHTML(text);
+      if (!tokens || tokens.length === 0) return escaped;
+      tokens.forEach(t => {
+        if (!t || t.length < 2) return;
+        const reg = new RegExp('(' + t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+        escaped = escaped.replace(reg, '<mark class="search-match">$1</mark>');
+      });
+      return escaped;
+    }
+
+    function renderDropdown(items, sectionTitle, tokens) {
       if (!items || items.length === 0) {
         dropdown.innerHTML = '<div class="nav-search-empty">[ NO RESULTS FOUND ]</div>';
         dropdown.style.display = 'block';
@@ -441,8 +536,8 @@ document.addEventListener('click', async (e) => {
         <a href="${escapeHTML(item.url)}" id="nav-opt-${idx}" class="nav-search-item" role="option" aria-selected="false">
           <span class="nav-search-type">${escapeHTML((item.type || 'PAGE').toUpperCase())}</span>
           <div class="nav-search-text">
-            <strong class="nav-search-title">${escapeHTML(item.title)}</strong>
-            <small class="nav-search-desc">${escapeHTML(item.desc || '')}</small>
+            <strong class="nav-search-title">${highlightTokens(item.title, tokens)}</strong>
+            <small class="nav-search-desc">${highlightTokens(item.desc || '', tokens)}</small>
           </div>
         </a>
       `).join('');
@@ -468,7 +563,7 @@ document.addEventListener('click', async (e) => {
         return tokens.every(t => corpus.includes(t));
       }).slice(0, 8);
 
-      renderDropdown(filtered, 'Search Results');
+      renderDropdown(filtered, 'Search Results', tokens);
     }
 
     input.addEventListener('focus', () => {
@@ -506,6 +601,7 @@ document.addEventListener('click', async (e) => {
     });
 
     input.addEventListener('input', (ev) => {
+      syncClearButton();
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
         filterAndRender(ev.target.value);

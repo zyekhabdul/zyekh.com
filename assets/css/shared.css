@@ -95,6 +95,18 @@
     overflow: hidden;
   }
 
+  :focus-visible {
+    outline: 2px solid var(--text-main);
+    outline-offset: 2px;
+  }
+
+  .theme-transitioning,
+  .theme-transitioning *,
+  .theme-transitioning *::before,
+  .theme-transitioning *::after {
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, fill 0.25s ease, stroke 0.25s ease !important;
+  }
+
   @view-transition {
     navigation: auto;
   }
@@ -1027,12 +1039,83 @@
     text-overflow: ellipsis;
     line-height: 1.2;
   }
-  .nav-search-empty {
-    padding: 1rem 0.85rem;
+  .nav-search-clear {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     color: var(--text-muted);
-    font-family: 'Fira Code', monospace;
-    font-size: 0.78rem;
-    text-align: center;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    line-height: 1;
+    padding: 0;
+    transition: all var(--transition);
+    z-index: 2;
+  }
+  .nav-search-clear:hover {
+    color: var(--text-main);
+    border-color: var(--text-main);
+  }
+  .search-match {
+    background: var(--border-color);
+    color: var(--text-main);
+    font-weight: 600;
+    padding: 0 0.15rem;
+    border-radius: 2px;
+  }
+
+  /* Table of Contents Scroll-Spy Active Indicator */
+  .toc-card a.active-toc-item,
+  .toc-list a.active-toc-item,
+  .article-toc a.active-toc-item {
+    color: var(--text-main) !important;
+    font-weight: 700;
+    border-left: 2px solid var(--text-main);
+    padding-left: 0.5rem;
+    transition: all var(--transition);
+  }
+
+  /* Native Architecture Diagram Lightbox Modal */
+  .lightbox-modal {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    background: rgba(9, 9, 11, 0.94);
+    backdrop-filter: blur(16px);
+    padding: 1rem;
+    max-width: 95vw;
+    max-height: 95vh;
+    outline: none;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox-modal[open] {
+    display: flex;
+  }
+  .lightbox-modal::backdrop {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+  }
+  [data-theme="light"] .lightbox-modal {
+    background: rgba(255, 255, 255, 0.96);
+    border-color: #d4d4d8;
+  }
+
+  /* Micro-interactions */
+  .btn-active-flash {
+    transform: scale(0.97) !important;
+    border-color: var(--text-main) !important;
+  }
+  .copy-code-btn:active {
+    transform: scale(0.95);
   }
 }
 
