@@ -32,27 +32,13 @@ class SiteNav extends HTMLElement {
       <header class="header-nav">
         <div class="nav-container">
           <a href="/" class="brand-logo">zyekh.com</a>
-          <div class="nav-actions-mobile">
-            <button class="search-toggle" id="searchToggleMobile" aria-label="Search" title="Search (Ctrl+K)" type="button">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;display:block;">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-            </button>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-              <span class="hamburger-bar"></span>
-              <span class="hamburger-bar"></span>
-              <span class="hamburger-bar"></span>
-            </button>
-          </div>
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+            <span class="hamburger-bar"></span>
+          </button>
           <nav class="nav-menu" id="navMenu">
             <ul class="nav-list">${listItems}</ul>
-            <button class="search-toggle search-toggle-desktop" id="searchToggleDesktop" aria-label="Search" title="Search (Ctrl+K)" type="button">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;display:block;">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-            </button>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
               <span class="theme-icon-light">MODE: LIGHT</span>
               <span class="theme-icon-dark">MODE: DARK</span>
@@ -528,9 +514,9 @@ document.addEventListener('click', async (e) => {
     }
   });
 
-  // Global click delegate for search triggers
+  // Optional click delegate for any element with data-action="open-search"
   document.addEventListener('click', (e) => {
-    if (e.target.closest('#searchToggle, #searchToggleMobile, #searchToggleDesktop, [data-action="open-search"]')) {
+    if (e.target.closest('[data-action="open-search"]')) {
       e.preventDefault();
       openCmdPalette();
     }

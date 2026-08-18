@@ -900,51 +900,6 @@
     border-color: var(--border-color);
     color: var(--text-main);
   }
-  .nav-actions-mobile {
-    display: none;
-    align-items: center;
-    gap: 6px;
-  }
-  @media (max-width: 960px) {
-    .nav-actions-mobile {
-      display: flex;
-    }
-    .search-toggle-desktop {
-      display: none;
-    }
-  }
-
-  .search-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    box-sizing: border-box;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    color: var(--text-muted);
-    border-radius: var(--radius-md, 6px);
-    cursor: pointer;
-    transition: border-color var(--transition, 0.2s), color var(--transition, 0.2s), background-color var(--transition, 0.2s);
-    margin-left: 0.5rem;
-    flex-shrink: 0;
-    padding: 0;
-  }
-  .search-toggle:hover {
-    border-color: var(--border-hover);
-    color: var(--text-main);
-    background: var(--bg-card);
-  }
-  [data-theme="light"] .search-toggle {
-    background: #ffffff;
-    border-color: #d4d4d8;
-    color: #3f3f46;
-  }
-  [data-theme="light"] .search-toggle:hover {
-    border-color: #71717a;
-    color: #09090b;
-  }
 
   .cmd-results {
     max-height: 50vh;
