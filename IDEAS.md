@@ -88,6 +88,20 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 ## 10. Advanced Provenance & Integrity Infrastructure
 - [ BACKLOG ] **Cryptographic Content Provenance Manifest**: Generator otomatis digest SHA-256 dan signature GPG/Ed25519 untuk setiap artikel blog, file feeds, dan `llms.txt` yang terekam pada manifest tanda tangan terverifikasi (`provenance-manifest.json`).
 
+## 11. Core Landing Pages Optimization & UI/UX Refinement (User Directive)
+- [ BACKLOG ] **Home Landing Page (`index.html`) Refinement**:
+  - Efisiensi DOM: Audit layout containment, eliminasi redundansi inline styling, dan optimasi LCP hero rendering.
+  - Quick Metrics Sync: Penyelarasan counter metrik (53 Client-Side Tools, 45 Deep-Dive Articles, 100% Offline-Capable).
+  - Modern Visual Hierarchy: Typography tracking, dynamic responsive cards, dan fluid grid alignment.
+- [ BACKLOG ] **About & Experience Page (`about/index.html`) Refinement**:
+  - Structured Timeline: Pembaruan riwayat riset sistem (Web3, eBPF, ZK-Rollups, Post-Quantum Cryptography).
+  - PGP / Security Verification Card: Tampilan verifikasi kunci publik GPG yang lebih scannable dan copyable.
+- [ BACKLOG ] **Contact & Verification Page (`contact/index.html`) Refinement**:
+  - Direct PGP encrypted contact instructions dan zero-tracking secure comms guidance.
+- [ BACKLOG ] **Tools Hub (`tools/index.html`) & Blueprints (`blueprints/index.html`) Optimization**:
+  - Peningkatan filtering kategori tools (Security, Cryptography, Web3, Linux, Network, Text).
+  - Peningkatan keyboard accessibility (Ctrl+K palette navigation) dan instant search indexing.
+
 Seluruh ide di atas mematuhi prinsip ketiadaan dependensi eksternal, performa tinggi, dan bebas elemen bloat/emoji.
 
 
