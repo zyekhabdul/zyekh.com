@@ -32,13 +32,27 @@ class SiteNav extends HTMLElement {
       <header class="header-nav">
         <div class="nav-container">
           <a href="/" class="brand-logo">zyekh.com</a>
-          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
-            <span class="hamburger-bar"></span>
-            <span class="hamburger-bar"></span>
-            <span class="hamburger-bar"></span>
-          </button>
+          <div class="nav-actions-mobile">
+            <button class="search-toggle" id="searchToggleMobile" aria-label="Search" title="Search (Ctrl+K)" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;display:block;">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+              <span class="hamburger-bar"></span>
+              <span class="hamburger-bar"></span>
+              <span class="hamburger-bar"></span>
+            </button>
+          </div>
           <nav class="nav-menu" id="navMenu">
             <ul class="nav-list">${listItems}</ul>
+            <button class="search-toggle search-toggle-desktop" id="searchToggleDesktop" aria-label="Search" title="Search (Ctrl+K)" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;display:block;">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </button>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
               <span class="theme-icon-light">MODE: LIGHT</span>
               <span class="theme-icon-dark">MODE: DARK</span>
@@ -358,70 +372,167 @@ document.addEventListener('click', async (e) => {
   }
 });
 
-// Native Zero-Dependency Command Palette (Ctrl+K)
-document.addEventListener('keydown', (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-    e.preventDefault();
-    let dialog = document.getElementById('cmdPalette');
-    if (!dialog) {
-      dialog = document.createElement('dialog');
-      dialog.id = 'cmdPalette';
-      dialog.className = 'cmd-palette';
-      dialog.innerHTML = `
-        <div class="cmd-container">
-          <input type="text" id="cmdInput" class="cmd-input" placeholder="Search 42+ tools and 25+ articles..." autocomplete="off">
-          <div id="cmdResults" class="cmd-results"></div>
-        </div>
-      `;
-      document.body.appendChild(dialog);
-      
-      const input = dialog.querySelector('#cmdInput');
-      const results = dialog.querySelector('#cmdResults');
-      let searchData = null;
+// Native Zero-Dependency Command Palette (Ctrl+K & Search Triggers)
+(function () {
+  let searchData = null;
+  let dialog = null;
+  let selectedIndex = -1;
 
-      dialog.addEventListener('click', (ev) => {
-        if (ev.target === dialog) dialog.close();
-      });
-
-      let debounceTimer;
-      input.addEventListener('input', (ev) => {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-          const q = ev.target.value.toLowerCase().trim();
-          if (!q) { results.innerHTML = ''; return; }
-          if (!searchData) return;
-          const filtered = searchData.filter(item => 
-            item.title.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q)
-          ).slice(0, 8); // Top 8 results
-          
-          if (filtered.length === 0) {
-            results.innerHTML = '<div class="cmd-empty" style="padding:1rem;color:var(--text-muted);text-align:center;">No results found.</div>';
-            return;
-          }
-          
-          results.innerHTML = filtered.map(item => `
-            <a href="${item.url}" class="cmd-item" style="display:flex;gap:1rem;padding:0.75rem;border-bottom:1px solid var(--border-color);text-decoration:none;color:var(--text-main);align-items:center;">
-              <span class="cmd-type" style="font-size:0.7rem;padding:0.2rem 0.4rem;background:var(--bg-card);border-radius:4px;border:1px solid var(--border-color);">${item.type.toUpperCase()}</span>
-              <div class="cmd-text" style="display:flex;flex-direction:column;gap:0.25rem;">
-                <strong style="font-size:0.9rem;">${item.title}</strong>
-                <small style="font-size:0.75rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:300px;">${item.desc}</small>
-              </div>
-            </a>
-          `).join('');
-        }, 100);
-      });
-
-      fetch('/search-index.json').then(r => r.json()).then(data => {
+  function preloadSearchData() {
+    if (searchData) return Promise.resolve(searchData);
+    return fetch('/search-index.json')
+      .then(r => r.json())
+      .then(data => {
         searchData = data;
-      }).catch(() => {});
+        return data;
+      })
+      .catch(() => []);
+  }
+
+  // Preload on idle or after short timeout
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => preloadSearchData());
+  } else {
+    setTimeout(preloadSearchData, 1000);
+  }
+
+  function initCmdPalette() {
+    if (dialog) return dialog;
+    dialog = document.createElement('dialog');
+    dialog.id = 'cmdPalette';
+    dialog.className = 'cmd-palette';
+    dialog.innerHTML = `
+      <div class="cmd-container">
+        <input type="text" id="cmdInput" class="cmd-input" placeholder="Search 53+ tools, 35+ articles, AI chat (Ctrl+K)..." autocomplete="off" aria-label="Search tools and articles">
+        <div id="cmdResults" class="cmd-results" role="listbox"></div>
+      </div>
+    `;
+    document.body.appendChild(dialog);
+
+    const input = dialog.querySelector('#cmdInput');
+    const results = dialog.querySelector('#cmdResults');
+
+    dialog.addEventListener('click', (ev) => {
+      if (ev.target === dialog) closeCmdPalette();
+    });
+
+    function updateSelection() {
+      const allItems = results.querySelectorAll('.cmd-item');
+      allItems.forEach((el, idx) => {
+        if (idx === selectedIndex) {
+          el.classList.add('selected');
+          el.scrollIntoView({ block: 'nearest' });
+        } else {
+          el.classList.remove('selected');
+        }
+      });
     }
-    
-    if (!dialog.open) {
-      dialog.showModal();
-      document.getElementById('cmdInput').value = '';
-      document.getElementById('cmdResults').innerHTML = '';
-      // Small delay to ensure focus works after rendering
-      setTimeout(() => document.getElementById('cmdInput').focus(), 10);
+
+    input.addEventListener('keydown', (ev) => {
+      const items = results.querySelectorAll('.cmd-item');
+      if (ev.key === 'ArrowDown') {
+        ev.preventDefault();
+        if (items.length > 0) {
+          selectedIndex = (selectedIndex + 1) % items.length;
+          updateSelection();
+        }
+      } else if (ev.key === 'ArrowUp') {
+        ev.preventDefault();
+        if (items.length > 0) {
+          selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+          updateSelection();
+        }
+      } else if (ev.key === 'Enter') {
+        ev.preventDefault();
+        if (selectedIndex >= 0 && items[selectedIndex]) {
+          items[selectedIndex].click();
+        } else if (items.length > 0) {
+          items[0].click();
+        }
+      } else if (ev.key === 'Escape') {
+        closeCmdPalette();
+      }
+    });
+
+    let debounceTimer;
+    input.addEventListener('input', (ev) => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(async () => {
+        const q = ev.target.value.toLowerCase().trim();
+        selectedIndex = -1;
+        if (!q) {
+          results.innerHTML = '';
+          return;
+        }
+        const data = await preloadSearchData();
+        const filtered = (data || []).filter(item =>
+          item.title.toLowerCase().includes(q) || (item.desc && item.desc.toLowerCase().includes(q))
+        ).slice(0, 8);
+
+        if (filtered.length === 0) {
+          results.innerHTML = '<div class="cmd-empty" style="padding:1.25rem;color:var(--text-muted);text-align:center;font-size:0.9rem;">No matching tools or articles found.</div>';
+          return;
+        }
+
+        results.innerHTML = filtered.map(item => `
+          <a href="${item.url}" class="cmd-item" role="option">
+            <span class="cmd-type">${(item.type || 'PAGE').toUpperCase()}</span>
+            <div class="cmd-text">
+              <strong class="cmd-title">${item.title}</strong>
+              <small class="cmd-desc">${item.desc || ''}</small>
+            </div>
+          </a>
+        `).join('');
+
+        selectedIndex = 0;
+        updateSelection();
+      }, 50);
+    });
+
+    results.addEventListener('click', (ev) => {
+      const item = ev.target.closest('.cmd-item');
+      if (item) {
+        closeCmdPalette();
+      }
+    });
+
+    return dialog;
+  }
+
+  function openCmdPalette() {
+    const d = initCmdPalette();
+    if (!d.open) {
+      d.showModal();
+      const input = d.querySelector('#cmdInput');
+      input.value = '';
+      d.querySelector('#cmdResults').innerHTML = '';
+      selectedIndex = -1;
+      setTimeout(() => input.focus(), 15);
+      preloadSearchData();
     }
   }
-});
+
+  function closeCmdPalette() {
+    if (dialog && dialog.open) {
+      dialog.close();
+    }
+  }
+
+  window.openCmdPalette = openCmdPalette;
+
+  // Global keydown shortcut
+  document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      openCmdPalette();
+    }
+  });
+
+  // Global click delegate for search triggers
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#searchToggle, #searchToggleMobile, #searchToggleDesktop, [data-action="open-search"]')) {
+      e.preventDefault();
+      openCmdPalette();
+    }
+  });
+})();
