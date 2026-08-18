@@ -94,14 +94,18 @@ class SiteNav extends HTMLElement {
     const themeBtn = this.querySelector('#themeToggle');
     if (themeBtn) {
       themeBtn.addEventListener('click', () => {
-        document.documentElement.classList.add('theme-transitioning');
-        const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-        const nextTheme = isLight ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', nextTheme);
-        localStorage.setItem('theme', nextTheme);
-        setTimeout(() => {
-          document.documentElement.classList.remove('theme-transitioning');
-        }, 300);
+        const toggleTheme = () => {
+          const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+          const nextTheme = isLight ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', nextTheme);
+          localStorage.setItem('theme', nextTheme);
+        };
+
+        if (document.startViewTransition) {
+          document.startViewTransition(toggleTheme);
+        } else {
+          toggleTheme();
+        }
       });
     }
 
