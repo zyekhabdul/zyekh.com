@@ -867,6 +867,7 @@
     max-width: 600px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.5);
     top: 15vh;
+    bottom: auto;
     margin: 0 auto;
   }
   [data-theme="light"] dialog.cmd-palette {
@@ -901,6 +902,14 @@
     color: var(--text-main);
   }
 
+  .cmd-section-title {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    padding: 0.5rem 1rem 0.25rem 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
   .cmd-results {
     max-height: 50vh;
     overflow-y: auto;
