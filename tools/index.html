@@ -18,7 +18,7 @@
 <!-- Self-hosted Fonts (WOFF2 — no external DNS) -->
 <link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
 <link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
-<link href="/assets/css/shared.min.css?v=1e856513" integrity="sha384-dAHCSt5M0J86CbBj319eKgIUECowOPUJX/CYphANoWaGfDYcQit3pV0V1yZty987" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=e376273a" integrity="sha384-p833OdJiMcAfo6+5aPffZJIcS+xKkvV+QWb5zsoz+Ih2MugyNkXfK/rMP/Y+8OHp" crossorigin="anonymous" rel="stylesheet"/>
 <!-- SEO & Social Meta Tags -->
 <link href="https://zyekh.com/tools/" rel="canonical"/>
 <meta content="Web Utility Tools Hub — Client-Side Privacy Tools | zyekh.com" property="og:title"/>
@@ -54,12 +54,12 @@
   </script>
 <style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-<link rel="preload" href="/assets/css/shared.min.css?v=1e856513" integrity="sha384-dAHCSt5M0J86CbBj319eKgIUECowOPUJX/CYphANoWaGfDYcQit3pV0V1yZty987" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=e376273a" integrity="sha384-p833OdJiMcAfo6+5aPffZJIcS+xKkvV+QWb5zsoz+Ih2MugyNkXfK/rMP/Y+8OHp" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=3e28cf1a" integrity="sha384-sdQ2DI6GC6THB+q/s5j6ycmuJ7Xh1JNdqdzrzfaZDqbqOexRB5A6k44h+NeRoatc" crossorigin="anonymous" as="script">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
   <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-MhVaBKaztto3h49EFBQBlf0pWQVIz6WbRz9AxeSNTJo='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-yDlybqxJUIkd5cYtQd+X9kLMxoJRFtXt3Cb+fBfKM00='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
 <!-- Navigation Bar -->
@@ -743,12 +743,19 @@
       });
     });
 
-    // Feature: Local Bookmarking (Pinned Tools)
-    const PIN_KEY = 'zyekh_pinned_tools';
-    let pinnedTools = JSON.parse(localStorage.getItem(PIN_KEY) || '[]');
+    // Feature: Local Bookmarking & Homepage Pinning
+    const PIN_KEY = 'pinnedTools';
+    function getPinned() {
+      try { return JSON.parse(localStorage.getItem(PIN_KEY) || '[]'); } catch (e) { return []; }
+    }
+    let pinnedTools = getPinned();
 
     function savePins() {
       localStorage.setItem(PIN_KEY, JSON.stringify(pinnedTools));
+    }
+
+    function isPinned(path) {
+      return pinnedTools.some(t => t.path === path);
     }
 
     function sortTools() {
@@ -762,45 +769,48 @@
       items.forEach(item => grid.appendChild(item));
     }
 
-    // Inject Pin buttons dynamically
+    const pinSvgActive = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>';
+    const pinSvgInactive = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>';
+
+    // Inject Pin buttons on tool cards
     toolItems.forEach(item => {
       const aElem = item.querySelector('a.tool-card');
       if (!aElem) return;
       const href = aElem.getAttribute('href');
+      const titleElem = item.querySelector('.tool-title');
+      const catElem = item.querySelector('.tool-category');
+      const title = titleElem ? titleElem.textContent.trim() : '';
+      const cat = catElem ? catElem.textContent.trim() : 'TOOL';
       
       const pinBtn = document.createElement('button');
+      pinBtn.type = 'button';
       pinBtn.className = 'pin-btn';
-      pinBtn.title = "Pin/Unpin Tool";
-      const pinSvgActive = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
-      const pinSvgInactive = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
       
-      const isPinned = pinnedTools.includes(href);
-      pinBtn.innerHTML = isPinned ? pinSvgActive : pinSvgInactive;
-      pinBtn.style.color = isPinned ? 'var(--primary-color)' : 'var(--text-muted)';
-      if (isPinned) item.classList.add('pinned-tool');
-      
-      aElem.style.position = 'relative';
+      const pinned = isPinned(href);
+      pinBtn.innerHTML = pinned ? pinSvgActive : pinSvgInactive;
+      pinBtn.title = pinned ? 'Unpin from Home' : 'Pin to Home';
+      pinBtn.setAttribute('aria-label', pinned ? 'Unpin tool from Home' : 'Pin tool to Home');
+      if (pinned) item.classList.add('pinned-tool');
       
       pinBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         
-        const idx = pinnedTools.indexOf(href);
+        pinnedTools = getPinned();
+        const idx = pinnedTools.findIndex(t => t.path === href);
         if (idx > -1) {
           pinnedTools.splice(idx, 1);
           pinBtn.innerHTML = pinSvgInactive;
-          pinBtn.style.color = 'var(--text-muted)';
+          pinBtn.title = 'Pin to Home';
+          pinBtn.setAttribute('aria-label', 'Pin tool to Home');
           item.classList.remove('pinned-tool');
         } else {
-          pinnedTools.push(href);
+          pinnedTools.push({ path: href, title: title, cat: cat });
           pinBtn.innerHTML = pinSvgActive;
-          pinBtn.style.color = 'var(--primary-color)';
+          pinBtn.title = 'Unpin from Home';
+          pinBtn.setAttribute('aria-label', 'Unpin tool from Home');
           item.classList.add('pinned-tool');
         }
-        
-        // Add minimal animation scale
-        pinBtn.style.transform = 'scale(1.2)';
-        setTimeout(() => pinBtn.style.transform = 'scale(1)', 150);
         
         savePins();
         sortTools();
@@ -809,8 +819,10 @@
       aElem.appendChild(pinBtn);
     });
     
-    // Sort initially
-    sortTools();
+    // Initial sort if pins exist
+    if (pinnedTools.length > 0) {
+      sortTools();
+    }
   </script>
 <script defer="" src="/assets/js/site-nav.min.js?v=3e28cf1a" integrity="sha384-sdQ2DI6GC6THB+q/s5j6ycmuJ7Xh1JNdqdzrzfaZDqbqOexRB5A6k44h+NeRoatc" crossorigin="anonymous"></script>
 </body>

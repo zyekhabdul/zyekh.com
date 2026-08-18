@@ -415,6 +415,8 @@
   .nav-backdrop.active { display: block; opacity: 1; }
 
   @media (max-width: 960px) {
+    .nav-brand-group { gap: 0.75rem; }
+    .nav-search-input { width: clamp(110px, 30vw, 140px); }
     .nav-toggle { display: flex; }
     .nav-menu {
       position: fixed;
@@ -692,6 +694,7 @@
     margin-bottom: 0;
   }
   .tool-card {
+    position: relative;
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
@@ -759,6 +762,41 @@
   }
   .tool-card pre code { font-size: inherit; }
 
+  .pin-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition), transform 0.15s ease;
+    line-height: 1;
+    z-index: 5;
+    margin: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .pin-btn:hover {
+    color: var(--text-main);
+    transform: scale(1.2);
+  }
+  .pinned-tool .pin-btn,
+  .pin-btn.pinned {
+    color: var(--text-main);
+  }
+  [data-theme="light"] .pin-btn {
+    color: #71717a;
+  }
+  [data-theme="light"] .pin-btn:hover,
+  [data-theme="light"] .pinned-tool .pin-btn {
+    color: #09090b;
+  }
+
   /* Filter Bar & Pills */
   .filter-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; margin-bottom: 1.5rem; align-items: center; }
   .filter-btn {
@@ -807,9 +845,9 @@
   [data-theme="light"] .filter-btn.active,
   [data-theme="light"] .filter-btn.active:focus,
   [data-theme="light"] .filter-btn.active:hover {
-    background: #09090b;
-    border: 1px solid #09090b;
-    color: #ffffff;
+    background: #f4f4f5;
+    border: 1.5px solid #18181b;
+    color: #09090b;
     font-weight: 600;
   }
 
@@ -960,15 +998,14 @@
     border-radius: var(--radius-md);
     font-size: 0.8rem;
     font-family: 'Inter', system-ui, sans-serif;
-    width: 200px;
+    width: 190px;
     height: 30px;
     box-sizing: border-box;
     margin: 0;
     margin-bottom: 0;
-    transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease;
+    transition: border-color 0.2s ease;
   }
   .nav-search-input:focus {
-    width: 260px;
     border-color: var(--border-hover);
     outline: none;
   }
