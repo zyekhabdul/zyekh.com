@@ -68,6 +68,26 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 ## 7. AI Chatbot & Knowledge Base Assistant (Roadmap)
 - [ BACKLOG ] **Interactive Site AI Chatbot**: Asisten chatbot cerdas berbasis basis pengetahuan situs (`llms.txt` / `llms-full.txt`) dengan opsi arsitektur zero-dependency (Bring-Your-Own-Key / WebLLM in-browser WebGPU / API-driven) (detail teknis menyusul dari user).
 
+## 8. Ekspansi Konten GEO & Technical Deep-Dives (Batch 5 - 10 Artikel Roadmap)
+- [ BACKLOG ] **EIP-4844 Proto-Danksharding & Blobspace Architecture**: Analisis ephemeral data blobs, KZG polynomial commitments, blob fee markets (`blob_base_fee`), Point Evaluation Precompile (0x0A), dan skalabilitas data availability L2 Rollups (`blog/eip-4844-proto-danksharding-and-blobspace-architecture.html`).
+- [ BACKLOG ] **Solana Sealevel Parallel Runtime & Transaction Pipeline**: Memory model non-overlapping accounts, Gulf Stream mempool-less forwarding, Pipeline transaction processing (TPU/TVU), Proof of History (PoH) verifiable delay functions, dan mitigasi state lock contention (`blog/solana-sealevel-parallel-runtime-and-transaction-pipeline.html`).
+- [ BACKLOG ] **Cosmos Tendermint / CometBFT Consensus & IBC Relayers**: State Machine Replication BFT 2/3 voting power, deterministic finality, light client state verification, packet commitment proofs, dan ICS-20 token transfers (`blog/cosmos-tendermint-cometbft-and-ibc-relayers-architecture.html`).
+- [ BACKLOG ] **Fully Homomorphic Encryption (FHE) & Confidential EVM Computing**: Komputasi terenkripsi di atas ciphertext, TFHE / CKKS schemes, bootstrapping noise reduction, FHE coprocessors, dan confidential smart contracts (`blog/fully-homomorphic-encryption-fhe-and-confidential-evm-computing.html`).
+- [ BACKLOG ] **Restaking Mechanics & Actively Validated Services (EigenLayer AVS)**: Pooled economic security, dual staking, slashing conditions, operator delegation, Attestation layers, dan komparasi native restaking vs liquid restaking tokens (LRT) (`blog/restaking-mechanics-and-actively-validated-services-eigenlayer-avs.html`).
+- [ BACKLOG ] **Decentralized Oracle Networks (Chainlink DON vs Pyth Pull Oracles)**: Push vs Pull oracle architectures, threshold signatures (OCR2 / Off-Chain Reporting), high-frequency financial feeds, Wormhole cross-chain attestation, dan mitigasi flash crash oracle manipulation (`blog/decentralized-oracle-networks-chainlink-don-vs-pyth-pull-oracles.html`).
+- [ BACKLOG ] **Bitcoin Lightning Network HTLCs & Payment Channel Factories**: Hashed Time-Locked Contracts, channel balance rebalancing, Eltoo penalty-less state updates, Taproot channel factories, dan routing onion packets via Sphinx (`blog/bitcoin-lightning-network-htlcs-and-payment-channel-factories.html`).
+- [ BACKLOG ] **Threshold Cryptography (MPC-TSS vs Multi-sig Wallets)**: Shamir Secret Sharing, GG20 / FROST threshold signature schemes, distributed key generation (DKG), off-chain signing vs on-chain verification gas efficiency, dan wallet disaster recovery models (`blog/threshold-cryptography-mpc-tss-vs-multi-sig-wallets.html`).
+- [ BACKLOG ] **Decentralized Storage Internals (IPFS BitSwap, Filecoin & Arweave)**: Content Addressing (CIDs), Directed Acyclic Graphs (UnixFS DAG), BitSwap peer exchange protocols, Proof of Spacetime (PoSt), Proof of Replication (PoRep), dan SPoRA (Succinct Proofs of Random Access) permaweb mechanics (`blog/decentralized-storage-internals-ipfs-filecoin-and-arweave.html`).
+- [ BACKLOG ] **ZK-Rollup Sequencer Decentralization & Shared Sequencing**: Centralized sequencer single-point-of-failure risks, Based Rollups (L1 sequencing), Espresso / Radius shared sequencer networks, PBS for L2, dan atomic cross-rollup composability (`blog/zk-rollup-sequencer-decentralization-and-shared-sequencing.html`).
+
+## 9. Ekspansi Client-Side Web3 & Cryptography Security Tools
+- [ BACKLOG ] **Solidity Storage Slot & Layout Calculator**: Tool interaktif murni di browser untuk memetakan packing variabel Solidity, mapping slot keccak256 hash calculation, dynamic array pointers, dan validasi ERC-7201 namespaced storage (`/tools/solidity-storage-calculator.html`).
+- [ BACKLOG ] **Ethereum ABI & Calldata Encoder / Decoder**: Utilitas parser calldata offline untuk mendecode function selector (4 bytes), parsing parameter kompleks (tuples, dynamic arrays), dan generate calldata payload untuk transaksi multisig (`/tools/abi-decoder.html`).
+- [ BACKLOG ] **Ed25519 & Secp256k1 WebCrypto Keypair Generator**: Generator pasangan kunci publik/privat kriptografis murni berbasis WebCrypto API lokal tanpa dependensi eksternal, lengkap dengan validasi checksum address (`/tools/crypto-keypair-generator.html`).
+
+## 10. Advanced Provenance & Integrity Infrastructure
+- [ BACKLOG ] **Cryptographic Content Provenance Manifest**: Generator otomatis digest SHA-256 dan signature GPG/Ed25519 untuk setiap artikel blog, file feeds, dan `llms.txt` yang terekam pada manifest tanda tangan terverifikasi (`provenance-manifest.json`).
+
 Seluruh ide di atas mematuhi prinsip ketiadaan dependensi eksternal, performa tinggi, dan bebas elemen bloat/emoji.
 
 
