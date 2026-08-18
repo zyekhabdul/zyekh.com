@@ -1,8 +1,58 @@
-/* zyekh.com — Article Actions (Share, Download .md, Download .pdf) */
+/* zyekh.com — Article Actions (Share, Download .md, Download .pdf, Scroll Progress & 1-Click Code Copy) */
 document.addEventListener('DOMContentLoaded', function () {
   var shareBtn = document.getElementById('shareBtn');
   var downloadMdBtn = document.getElementById('downloadMdBtn');
   var downloadPdfBtn = document.getElementById('downloadPdfBtn');
+
+  // 1. Reading Progress Bar
+  var progressBar = document.querySelector('.reading-progress-bar');
+  if (!progressBar) {
+    progressBar = document.createElement('div');
+    progressBar.className = 'reading-progress-bar';
+    document.body.appendChild(progressBar);
+  }
+  var updateProgress = function () {
+    var winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    progressBar.style.width = scrolled + '%';
+  };
+  window.addEventListener('scroll', function () {
+    window.requestAnimationFrame(updateProgress);
+  }, { passive: true });
+
+  // 2. 1-Click Copy Code Snippets
+  var codeBlocks = document.querySelectorAll('.article-content pre');
+  codeBlocks.forEach(function (pre) {
+    if (pre.parentElement && pre.parentElement.classList.contains('code-block-wrapper')) return;
+    var wrapper = document.createElement('div');
+    wrapper.className = 'code-block-wrapper';
+    pre.parentNode.insertBefore(wrapper, pre);
+    wrapper.appendChild(pre);
+
+    var copyBtn = document.createElement('button');
+    copyBtn.type = 'button';
+    copyBtn.className = 'copy-code-btn';
+    copyBtn.setAttribute('aria-label', 'Copy code snippet to clipboard');
+    copyBtn.textContent = '[ COPY ]';
+
+    copyBtn.addEventListener('click', function () {
+      var code = pre.querySelector('code');
+      var textToCopy = code ? code.innerText : pre.innerText;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(textToCopy).then(function () {
+          copyBtn.textContent = '[ COPIED ]';
+          copyBtn.classList.add('copied');
+          setTimeout(function () {
+            copyBtn.textContent = '[ COPY ]';
+            copyBtn.classList.remove('copied');
+          }, 2000);
+        }).catch(function () {});
+      }
+    });
+
+    wrapper.appendChild(copyBtn);
+  });
 
   if (shareBtn) {
     shareBtn.addEventListener('click', function () {

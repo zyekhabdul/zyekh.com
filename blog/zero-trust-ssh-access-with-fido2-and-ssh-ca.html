@@ -108,12 +108,12 @@
 </script>
 <link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
 <link href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" rel="stylesheet"/>
-<link href="/assets/css/blog.min.css?v=1eb470b3" integrity="sha384-wnEjkEPBnaax3w1llsQyFN2j3IIOxSOTpt9lEkG0uW5ZnNWAQBH4zS0LsFp0LPKW" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/blog.min.css?v=24f8ee5d" integrity="sha384-FHcCAed8NnoQ8PJalL8EaebbRRV2RQjKmhkwFkQ+AbHy8Uj7cfNB2x+qbKQvygTw" crossorigin="anonymous" rel="stylesheet"/>
 <script defer="" src="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous"></script>
-<script defer="" src="/assets/js/article-actions.min.js?v=6cf0fa6c" integrity="sha384-7Zc8x9pMA4XVFbvKkDb77s0tC31UxKSpwWO9VZ/rbGTiNxaNERlsv1xKIPrVUHID" crossorigin="anonymous"></script>
-  <style id="antiClickjack">body{display:none !important;}</style>
+<script defer="" src="/assets/js/article-actions.min.js?v=08e3ed60" integrity="sha384-vxj8HnyBDfHF87frqcywrS+Iipxk78yQh0UWUf9O5bDIULyCBSLTOd0a1JnFUb0Q" crossorigin="anonymous"></script>
+<style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-              <link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous" as="script">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
@@ -144,12 +144,11 @@
 <span>By Zyekh Abdul Qadir Jailani</span>
 <time class="meta-item" datetime="2026-08-03T00:00:00Z">Published: August 3, 2026</time>
 <span>8 min read (1,250+ Words)</span>
-
 </div><div class="article-actions">
-        <button class="btn-share" id="shareBtn" type="button">Share</button>
-        <button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
-        <button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
-      </div></div>
+<button class="btn-share" id="shareBtn" type="button">Share</button>
+<button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
+<button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
+</div></div>
 </header>
 <!-- Article Body Content -->
 <main class="article-content">
@@ -184,7 +183,7 @@
 </ol>
 </nav>
 <p>Traditional SSH key management across growing server fleets suffers from a critical flaw: <strong>static public key sprawl</strong>. Managing thousands of <code>~/.ssh/authorized_keys</code> files across production instances creates massive administrative overhead, increases the blast radius of compromised developer workstations, and makes offboarding security audits nearly impossible.</p>
-<p>A true <strong>Zero-Trust SSH Access Model</strong> replaces static SSH keys with two cryptographic pillars:</p>
+<p>A true <strong>Zero-Trust SSH Access Model</strong> replaces static SSH keys with two cryptographic pillars: Short-lived authentication claims and cryptographic identity assertions can be decoded with our <a href="/tools/jwt.html">JWT Token Inspector</a>.</p>
 <ul>
 <li><strong>FIDO2 / Security Key Hardware Tokens</strong> (<code>ed25519-sk</code>): Private key material never leaves the physical YubiKey token and requires physical touch plus user PIN.</li>
 <li><strong>SSH Certificate Authority (SSH CA)</strong>: Short-lived SSH certificates (e.g., valid for 8 hours) signed by a centralized CA key, eliminating manual <code>authorized_keys</code> deployment.</li>
@@ -269,47 +268,50 @@ ssh -i id_ed25519_sk -i id_ed25519_sk-cert.pub engineer@server.company.com</code
 </div>
 </div>
 </div>
-                                    <!-- Contextual Interactive Tool Bridge -->
-    <div class="article-cross-links tool-bridge-card">
-      <div class="tool-bridge-info">
-        <span class="tool-bridge-badge">[ INTERACTIVE TOOL // CRYPTO ]</span>
-        <h4 class="tool-bridge-title">Cryptographic Hash & Key Fingerprint Generator</h4>
-        <p class="tool-bridge-desc">Compute SHA-256 public key fingerprints and verify cryptographic checksums for SSH CA certificates.</p>
-      </div>
-      <a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -></a>
-    </div>
+<!-- Contextual Interactive Tool Bridge -->
+<div class="article-cross-links tool-bridge-card">
+<div class="tool-bridge-info">
+<span class="tool-bridge-badge">[ INTERACTIVE TOOL // CRYPTO ]</span>
+<h4 class="tool-bridge-title">Cryptographic Hash &amp; Key Fingerprint Generator</h4>
+<p class="tool-bridge-desc">Compute SHA-256 public key fingerprints and verify cryptographic checksums for SSH CA certificates.</p>
+</div>
+<a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -&gt;</a>
+</div>
+<a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/hash.html">Generate Key Fingerprints -&gt;</a>
+
 </main>
 <!-- Footer -->
-  <footer class="footer" role="contentinfo">
-    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-      <a href="/about/" class="text-muted text-sm">About</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/tools/" class="text-muted text-sm">53 Web Tools</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blog/" class="text-muted text-sm">45 Articles</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-    </div>
-  </footer>
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">53 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">45 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="https://shop.zyekh.com" target="_blank" rel="noopener noreferrer">Official Store</a>
+<span class="text-muted text-sm">·</span>
+
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
 </article>
 </body>
 </html>

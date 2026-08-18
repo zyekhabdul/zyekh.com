@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
@@ -6,15 +7,14 @@
 <link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
 <meta content="#09090b" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels & Strict Firewall Rules — zyekh.com</title>
+<title>Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels &amp; Strict Firewall Rules — zyekh.com</title>
 <meta content="Step-by-step technical blueprint for creating encrypted private mesh networks between multi-cloud VPS nodes using WireGuard and UDP noise protocols." name="description"/>
 <meta content="Zyekh Abdul Qadir Jailani" name="author"/>
 <link href="https://zyekh.com/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html" rel="canonical"/>
-
 <!-- Open Graph / Social Meta Tags -->
 <meta content="zyekh.com" property="og:site_name"/>
 <meta content="article" property="og:type"/>
-<meta content="Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels & Strict Firewall Rules" property="og:title"/>
+<meta content="Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels &amp; Strict Firewall Rules" property="og:title"/>
 <meta content="Step-by-step technical blueprint for creating encrypted private mesh networks between multi-cloud VPS nodes using WireGuard and UDP noise protocols." property="og:description"/>
 <meta content="https://zyekh.com/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html" property="og:url"/>
 <meta content="https://zyekh.com" property="article:publisher"/>
@@ -22,7 +22,7 @@
 <meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
 <meta content="@zyekh" name="twitter:creator"/>
 <meta content="@zyekh" name="twitter:site"/>
-<meta content="Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels & Strict Firewall Rules" name="twitter:title"/>
+<meta content="Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels &amp; Strict Firewall Rules" name="twitter:title"/>
 <meta content="Step-by-step technical blueprint for creating encrypted private mesh networks between multi-cloud VPS nodes using WireGuard and UDP noise protocols." name="twitter:description"/>
 <!-- Favicons & Manifest -->
 <link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
@@ -30,7 +30,6 @@
 <link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
 <link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="/manifest.json" rel="manifest"/>
-
 <!-- Schema.org JSON-LD -->
 <script type="application/ld+json">
 {
@@ -111,12 +110,12 @@
 </script>
 <link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
 <link href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" rel="stylesheet"/>
-<link href="/assets/css/blog.min.css?v=1eb470b3" integrity="sha384-wnEjkEPBnaax3w1llsQyFN2j3IIOxSOTpt9lEkG0uW5ZnNWAQBH4zS0LsFp0LPKW" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/blog.min.css?v=24f8ee5d" integrity="sha384-FHcCAed8NnoQ8PJalL8EaebbRRV2RQjKmhkwFkQ+AbHy8Uj7cfNB2x+qbKQvygTw" crossorigin="anonymous" rel="stylesheet"/>
 <script defer="" src="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous"></script>
-<script defer="" src="/assets/js/article-actions.min.js?v=6cf0fa6c" integrity="sha384-7Zc8x9pMA4XVFbvKkDb77s0tC31UxKSpwWO9VZ/rbGTiNxaNERlsv1xKIPrVUHID" crossorigin="anonymous"></script>
-  <style id="antiClickjack">body{display:none !important;}</style>
+<script defer="" src="/assets/js/article-actions.min.js?v=08e3ed60" integrity="sha384-vxj8HnyBDfHF87frqcywrS+Iipxk78yQh0UWUf9O5bDIULyCBSLTOd0a1JnFUb0Q" crossorigin="anonymous"></script>
+<style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-              <link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous" as="script">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
@@ -127,86 +126,78 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="2400">
   <meta property="og:image:height" content="1260">
-  <meta property="og:image:alt" content="Technical specification card for Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels &amp; Strict Firewall Rules">
+  <meta property="og:image:alt" content="Technical specification card for Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels &amp;amp; Strict Firewall Rules">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://zyekh.com/assets/img/social-cards/wireguard-vpn-tunneling-for-secure-vps-mesh-networks-dark-landscape.png?v=01d56bf8">
 </head>
 <body>
 <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
 <div class="reading-progress-bar"></div>
-
 <!-- Header Navigation -->
 <site-nav active="blog"></site-nav>
-
 <article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
-  <!-- Back to Blog -->
-  <a class="back-link" href="/blog/">← Back to Articles</a>
-
-  <!-- Article Header -->
-  <header class="article-header">
-    <span class="meta-tag">Web Security • WireGuard Mesh</span>
-    <h1 class="article-title">Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels & Strict Firewall Rules</h1>
-    <div class="article-meta">
-      <div class="meta-info">
-        <span>By Zyekh Abdul Qadir Jailani</span>
-        <time class="meta-item" datetime="2026-08-04T00:00:00Z">Published: 2026-08-04</time>
-        <span>14 min read (1500+ Words)</span>
-      </div>
-      <div class="article-actions">
-        <button class="btn-share" id="shareBtn" type="button">Share</button>
-        <button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
-        <button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Article Body Content -->
-  <main class="article-content">
-    <!-- Featured Hero Image -->
-    <figure class="article-hero-wrapper">
-      <picture>
-        <source srcset="/assets/img/wireguard-mesh.webp" type="image/webp"/>
-        <img alt="Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels & Strict Firewall Rules" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="/assets/img/wireguard-mesh.jpg" width="1280"/>
-      </picture>
-      <figcaption class="hero-caption">WireGuard Encrypted Private Mesh Interconnect for Multi-Cloud Servers</figcaption>
-    </figure>
-
-    <!-- Executive Summary / Takeaways Box -->
-    <div class="exec-summary">
-      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
-      <ul>
+<!-- Back to Blog -->
+<a class="back-link" href="/blog/">← Back to Articles</a>
+<!-- Article Header -->
+<header class="article-header">
+<span class="meta-tag">Web Security • WireGuard Mesh</span>
+<h1 class="article-title">Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels &amp; Strict Firewall Rules</h1>
+<div class="article-meta">
+<div class="meta-info">
+<span>By Zyekh Abdul Qadir Jailani</span>
+<time class="meta-item" datetime="2026-08-04T00:00:00Z">Published: 2026-08-04</time>
+<span>14 min read (1500+ Words)</span>
+</div>
+<div class="article-actions">
+<button class="btn-share" id="shareBtn" type="button">Share</button>
+<button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
+<button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
+</div>
+</div>
+</header>
+<!-- Article Body Content -->
+<main class="article-content">
+<!-- Featured Hero Image -->
+<figure class="article-hero-wrapper">
+<picture>
+<source srcset="/assets/img/wireguard-mesh.webp" type="image/webp"/>
+<img alt="Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels &amp; Strict Firewall Rules" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="/assets/img/wireguard-mesh.jpg" width="1280"/>
+</picture>
+<figcaption class="hero-caption">WireGuard Encrypted Private Mesh Interconnect for Multi-Cloud Servers</figcaption>
+</figure>
+<!-- Executive Summary / Takeaways Box -->
+<div class="exec-summary">
+<div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+<ul>
 <li>Kernel-Level Performance: WireGuard executes inside Linux kernel space with minimal latency.</li>
 <li>Noise Protocol Framework: Cryptographic handshakes ensure perfect forward secrecy.</li>
 <li>Interface Isolation: Bind internal database and backend traffic strictly to WireGuard IP (10.0.0.x).</li>
 <li>Automated Peer Routing: Configure AllowedIPs to enforce point-to-point mesh routing.</li>
-      </ul>
-    </div>
-
-    <!-- Table of Contents -->
-    <nav class="toc-card">
-      <div class="toc-title">Table of Contents</div>
-      <ol class="toc-list">
-<li><a href="#wireguard-architecture">1. Cryptographic Principles of WireGuard & Noise Protocol</a></li>
+</ul>
+</div>
+<!-- Table of Contents -->
+<nav class="toc-card">
+<div class="toc-title">Table of Contents</div>
+<ol class="toc-list">
+<li><a href="#wireguard-architecture">1. Cryptographic Principles of WireGuard &amp; Noise Protocol</a></li>
 <li><a href="#wireguard-configuration">2. Configuring Interface Parameters in /etc/wireguard/wg0.conf</a></li>
 <li><a href="#wireguard-peer-setup">3. Connecting Remote Multi-Cloud Peer Nodes</a></li>
 <li><a href="#wireguard-backend-binding">4. Binding Internal Backend Services Strictly to Mesh IPs</a></li>
-<li><a href="#wireguard-firewall-rules">5. Firewall Isolation & Routing Table Tuning</a></li>
-<li><a href="#wireguard-verification">6. Performance Benchmark & Troubleshooting Verification</a></li>
+<li><a href="#wireguard-firewall-rules">5. Firewall Isolation &amp; Routing Table Tuning</a></li>
+<li><a href="#wireguard-verification">6. Performance Benchmark &amp; Troubleshooting Verification</a></li>
 <li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
-      </ol>
-    </nav>
-
-<h2 id="wireguard-architecture">1. Cryptographic Principles of WireGuard & Noise Protocol</h2>
+</ol>
+</nav>
+<h2 id="wireguard-architecture">1. Cryptographic Principles of WireGuard &amp; Noise Protocol</h2>
 <p>Traditional VPN protocols like IPSec and OpenVPN suffer from extreme complexity, legacy cipher negotiation, and heavy codebase sizes exceeding 100,000 lines of C code.</p>
-<p>WireGuard features an ultra-lean codebase under 4,000 lines of C. It runs directly inside Linux kernel space and relies on modern fixed cryptographic primitives: Curve25519 for ECDH, ChaCha20 for symmetric encryption, Poly1305 for authentication, and BLAKE2s for hashing.</p>
+<p>WireGuard features an ultra-lean codebase under 4,000 lines of C. It runs directly inside Linux kernel space and relies on modern fixed cryptographic primitives: Curve25519 for ECDH, ChaCha20 for symmetric encryption, Poly1305 for authentication, and BLAKE2s for hashing. Private mesh VPN address allocations and peer IP blocks can be calculated via our <a href="/tools/subnet.html">Subnet &amp; CIDR Calculator</a>.</p>
 <p>WireGuard uses the Noise IK protocol framework, responding only to packets carrying valid cryptographic signatures, making WireGuard servers completely invisible to unauthenticated UDP port scanners.</p>
 <p>This silent response architecture eliminates port scanning visibility across public cloud infrastructure.</p>
 <pre><code class="language-bash"># Generate WireGuard private and public key pairs
-wg genkey | tee privatekey | wg pubkey > publickey
+wg genkey | tee privatekey | wg pubkey &gt; publickey
 
 # Secure private key file permissions
 chmod 600 privatekey</code></pre>
-
 <h2 id="wireguard-configuration">2. Configuring Interface Parameters in /etc/wireguard/wg0.conf</h2>
 <p>WireGuard interfaces are configured using simple INI-style configuration files in /etc/wireguard/wg0.conf.</p>
 <p>Each node defines its own local [Interface] parameters (private key, virtual IP address, listening UDP port) and a series of [Peer] sections for remote nodes.</p>
@@ -214,31 +205,29 @@ chmod 600 privatekey</code></pre>
 <p>Configuring 10.0.0.0/24 in AllowedIPs enables secure point-to-point mesh routing between multi-cloud instances.</p>
 <pre><code class="language-ini"># /etc/wireguard/wg0.conf on Gateway Server (Node A)
 [Interface]
-PrivateKey = <NODE_A_PRIVATE_KEY>
+PrivateKey = <node_a_private_key>
 Address = 10.0.0.1/24
 ListenPort = 51820
 
 [Peer]
 # Web Server (Node B)
-PublicKey = <NODE_B_PUBLIC_KEY>
-AllowedIPs = 10.0.0.2/32</code></pre>
-
+PublicKey = <node_b_public_key>
+AllowedIPs = 10.0.0.2/32</node_b_public_key></node_a_private_key></code></pre>
 <h2 id="wireguard-peer-setup">3. Connecting Remote Multi-Cloud Peer Nodes</h2>
 <p>On Node B (Web Server), configure the peer connection pointing back to Node A's public IP and UDP port.</p>
 <p>Setting PersistentKeepalive = 25 sends a periodic silent ping every 25 seconds, keeping NAT sessions and firewall state tables open on cloud provider gateways.</p>
 <p>This ensures continuous tunnel connectivity without requiring re-authentication handshakes.</p>
 <pre><code class="language-ini"># /etc/wireguard/wg0.conf on Web Server (Node B)
 [Interface]
-PrivateKey = <NODE_B_PRIVATE_KEY>
+PrivateKey = <node_b_private_key>
 Address = 10.0.0.2/24
 
 [Peer]
 # Gateway Server (Node A)
-PublicKey = <NODE_A_PUBLIC_KEY>
+PublicKey = <node_a_public_key>
 Endpoint = 203.0.113.10:51820
 AllowedIPs = 10.0.0.0/24
-PersistentKeepalive = 25</code></pre>
-
+PersistentKeepalive = 25</node_a_public_key></node_b_private_key></code></pre>
 <h2 id="wireguard-backend-binding">4. Binding Internal Backend Services Strictly to Mesh IPs</h2>
 <p>Once the WireGuard interface (wg0) is established, reconfigure database servers (PostgreSQL, MySQL, Redis) and internal API gateways to listen exclusively on the private WireGuard IP (e.g., 10.0.0.1).</p>
 <p>This ensures internal infrastructure services are completely unreachable from public IPv4/IPv6 internet interfaces, even if firewall rules are misconfigured.</p>
@@ -248,8 +237,7 @@ listen_addresses = '10.0.0.1'
 
 # /etc/redis/redis.conf
 bind 10.0.0.1</code></pre>
-
-<h2 id="wireguard-firewall-rules">5. Firewall Isolation & Routing Table Tuning</h2>
+<h2 id="wireguard-firewall-rules">5. Firewall Isolation &amp; Routing Table Tuning</h2>
 <p>Configure UFW or iptables rules to allow UDP traffic on port 51820 exclusively for WireGuard handshake packets, while permitting unrestricted internal communication over the wg0 interface.</p>
 <p>Using interface-specific firewall rules isolates private tunnel traffic from external network interfaces.</p>
 <pre><code class="language-bash"># Enable WireGuard UDP port on public interface eth0
@@ -260,8 +248,7 @@ ufw allow in on wg0 comment 'Internal Mesh Traffic'
 
 # Bring up WireGuard interface
 wg-quick up wg0</code></pre>
-
-<h2 id="wireguard-verification">6. Performance Benchmark & Troubleshooting Verification</h2>
+<h2 id="wireguard-verification">6. Performance Benchmark &amp; Troubleshooting Verification</h2>
 <p>Inspect WireGuard active tunnel status, handshake timestamps, and transfer metrics using the wg command.</p>
 <p>Verify ICMP connectivity across private mesh IP endpoints using ping.</p>
 <p>Benchmark network throughput using iperf3 over the WireGuard interface.</p>
@@ -273,78 +260,77 @@ ping 10.0.0.2
 
 # Benchmark throughput over WireGuard mesh
 iperf3 -c 10.0.0.2</code></pre>
-
-    <!-- FAQ Section -->
-    <div class="faq-section">
-      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+<!-- FAQ Section -->
+<div class="faq-section">
+<h2 id="faq">Frequently Asked Questions (FAQ)</h2>
 <details>
-  <summary>Why is WireGuard faster than OpenVPN?</summary>
-  <p class="faq-answer">WireGuard has fewer than 4,000 lines of code running natively inside kernel space, avoiding context switching overhead.</p>
+<summary>Why is WireGuard faster than OpenVPN?</summary>
+<p class="faq-answer">WireGuard has fewer than 4,000 lines of code running natively inside kernel space, avoiding context switching overhead.</p>
 </details>
 <details>
-  <summary>What happens if a WireGuard endpoint IP address changes?</summary>
-  <p class="faq-answer">WireGuard automatically updates the endpoint IP when it receives a cryptographically authenticated packet from the new IP.</p>
+<summary>What happens if a WireGuard endpoint IP address changes?</summary>
+<p class="faq-answer">WireGuard automatically updates the endpoint IP when it receives a cryptographically authenticated packet from the new IP.</p>
 </details>
-    </div>
-
-    <!-- Author Bio Card (EEAT & DFIR Branding) -->
-    <div class="author-card">
-      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
-      <div class="author-info">
-        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
-        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
-        <div class="author-social-links note-sm" style="margin-top:0\.4rem;">
-          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
+</div>
+<!-- Author Bio Card (EEAT & DFIR Branding) -->
+<div class="author-card">
+<img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+<div class="author-info">
+<h4>Written by Zyekh Abdul Qadir Jailani</h4>
+<p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+<div class="author-social-links note-sm" style="margin-top:0\.4rem;">
+<a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
           <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
           <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
           <a href="mailto:zyekhabdulqadirjailani@zyekh.com" style="font-weight:600">Email</a> •
           <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
-        </div>
-      </div>
-    </div>
+</div>
+</div>
+</div>
+<!-- Contextual Interactive Tool Bridge -->
+<div class="article-cross-links tool-bridge-card">
+<div class="tool-bridge-info">
+<span class="tool-bridge-badge">[ INTERACTIVE GENERATOR // VPN ]</span>
+<h4 class="tool-bridge-title">WireGuard Mesh &amp; Keypair Configuration Generator</h4>
+<p class="tool-bridge-desc">Generate production wg0.conf gateway files, client peer profiles, and Curve25519 (X25519) cryptographic keypairs 100% offline.</p>
+</div>
+<a class="tool-bridge-btn" href="/tools/wireguard-generator.html">Launch WireGuard Generator -&gt;</a>
+</div>
+<a class="tool-bridge-btn" href="/tools/wireguard-generator.html">Launch WireGuard Generator -&gt;</a>
 
-                                        <!-- Contextual Interactive Tool Bridge -->
-    <div class="article-cross-links tool-bridge-card">
-      <div class="tool-bridge-info">
-        <span class="tool-bridge-badge">[ INTERACTIVE GENERATOR // VPN ]</span>
-        <h4 class="tool-bridge-title">WireGuard Mesh & Keypair Configuration Generator</h4>
-        <p class="tool-bridge-desc">Generate production wg0.conf gateway files, client peer profiles, and Curve25519 (X25519) cryptographic keypairs 100% offline.</p>
-      </div>
-      <a class="tool-bridge-btn" href="/tools/wireguard-generator.html">Launch WireGuard Generator -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/wireguard-generator.html">Launch WireGuard Generator -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/wireguard-generator.html">Launch WireGuard Generator -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/wireguard-generator.html">Launch WireGuard Generator -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/wireguard-generator.html">Launch WireGuard Generator -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/wireguard-generator.html">Launch WireGuard Generator -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/subnet.html">Calculate WireGuard CIDR -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/subnet.html">Calculate WireGuard CIDR -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/subnet.html">Calculate WireGuard CIDR -></a>
-    </div>
-  </main>
+<a class="tool-bridge-btn" href="/tools/wireguard-generator.html">Launch WireGuard Generator -&gt;</a>
 
-  <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-      <a href="/about/" class="text-muted text-sm">About</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/tools/" class="text-muted text-sm">53 Web Tools</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blog/" class="text-muted text-sm">45 Articles</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-    </div>
-  </footer>
+<a class="tool-bridge-btn" href="/tools/wireguard-generator.html">Launch WireGuard Generator -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/wireguard-generator.html">Launch WireGuard Generator -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/wireguard-generator.html">Launch WireGuard Generator -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate WireGuard CIDR -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate WireGuard CIDR -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate WireGuard CIDR -&gt;</a>
+
+</main>
+<!-- Footer -->
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">53 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">45 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="https://shop.zyekh.com" target="_blank" rel="noopener noreferrer">Official Store</a>
+<span class="text-muted text-sm">·</span>
+
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
 </article>
 </body>
 </html>

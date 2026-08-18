@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
@@ -6,15 +7,14 @@
 <link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
 <meta content="#09090b" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>UFW Firewall Hardening: Advanced Rate Limiting & Default-Deny Security Blueprint — zyekh.com</title>
+<title>UFW Firewall Hardening: Advanced Rate Limiting &amp; Default-Deny Security Blueprint — zyekh.com</title>
 <meta content="Production guide for securing Linux servers using UFW with default-deny policies, custom application profiles, rate limiting, and interface isolation." name="description"/>
 <meta content="Zyekh Abdul Qadir Jailani" name="author"/>
 <link href="https://zyekh.com/blog/ufw-firewall-hardening-and-rate-limiting-blueprint-2026.html" rel="canonical"/>
-
 <!-- Open Graph / Social Meta Tags -->
 <meta content="zyekh.com" property="og:site_name"/>
 <meta content="article" property="og:type"/>
-<meta content="UFW Firewall Hardening: Advanced Rate Limiting & Default-Deny Security Blueprint" property="og:title"/>
+<meta content="UFW Firewall Hardening: Advanced Rate Limiting &amp; Default-Deny Security Blueprint" property="og:title"/>
 <meta content="Production guide for securing Linux servers using UFW with default-deny policies, custom application profiles, rate limiting, and interface isolation." property="og:description"/>
 <meta content="https://zyekh.com/blog/ufw-firewall-hardening-and-rate-limiting-blueprint-2026.html" property="og:url"/>
 <meta content="https://zyekh.com" property="article:publisher"/>
@@ -22,7 +22,7 @@
 <meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
 <meta content="@zyekh" name="twitter:creator"/>
 <meta content="@zyekh" name="twitter:site"/>
-<meta content="UFW Firewall Hardening: Advanced Rate Limiting & Default-Deny Security Blueprint" name="twitter:title"/>
+<meta content="UFW Firewall Hardening: Advanced Rate Limiting &amp; Default-Deny Security Blueprint" name="twitter:title"/>
 <meta content="Production guide for securing Linux servers using UFW with default-deny policies, custom application profiles, rate limiting, and interface isolation." name="twitter:description"/>
 <!-- Favicons & Manifest -->
 <link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
@@ -30,7 +30,6 @@
 <link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
 <link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="/manifest.json" rel="manifest"/>
-
 <!-- Schema.org JSON-LD -->
 <script type="application/ld+json">
 {
@@ -111,12 +110,12 @@
 </script>
 <link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
 <link href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" rel="stylesheet"/>
-<link href="/assets/css/blog.min.css?v=1eb470b3" integrity="sha384-wnEjkEPBnaax3w1llsQyFN2j3IIOxSOTpt9lEkG0uW5ZnNWAQBH4zS0LsFp0LPKW" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/blog.min.css?v=24f8ee5d" integrity="sha384-FHcCAed8NnoQ8PJalL8EaebbRRV2RQjKmhkwFkQ+AbHy8Uj7cfNB2x+qbKQvygTw" crossorigin="anonymous" rel="stylesheet"/>
 <script defer="" src="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous"></script>
-<script defer="" src="/assets/js/article-actions.min.js?v=6cf0fa6c" integrity="sha384-7Zc8x9pMA4XVFbvKkDb77s0tC31UxKSpwWO9VZ/rbGTiNxaNERlsv1xKIPrVUHID" crossorigin="anonymous"></script>
-  <style id="antiClickjack">body{display:none !important;}</style>
+<script defer="" src="/assets/js/article-actions.min.js?v=08e3ed60" integrity="sha384-vxj8HnyBDfHF87frqcywrS+Iipxk78yQh0UWUf9O5bDIULyCBSLTOd0a1JnFUb0Q" crossorigin="anonymous"></script>
+<style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-              <link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous" as="script">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
@@ -127,78 +126,71 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="2400">
   <meta property="og:image:height" content="1260">
-  <meta property="og:image:alt" content="Technical specification card for UFW Firewall Hardening: Advanced Rate Limiting &amp; Default-Deny Security Blueprint">
+  <meta property="og:image:alt" content="Technical specification card for UFW Firewall Hardening: Advanced Rate Limiting &amp;amp; Default-Deny Security Blueprint">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://zyekh.com/assets/img/social-cards/ufw-firewall-hardening-and-rate-limiting-blueprint-2026-dark-landscape.png?v=07f25250">
 </head>
 <body>
 <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
 <div class="reading-progress-bar"></div>
-
 <!-- Header Navigation -->
 <site-nav active="blog"></site-nav>
-
 <article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
-  <!-- Back to Blog -->
-  <a class="back-link" href="/blog/">← Back to Articles</a>
-
-  <!-- Article Header -->
-  <header class="article-header">
-    <span class="meta-tag">System Hardening • UFW Firewall</span>
-    <h1 class="article-title">UFW Firewall Hardening: Advanced Rate Limiting & Default-Deny Security Blueprint</h1>
-    <div class="article-meta">
-      <div class="meta-info">
-        <span>By Zyekh Abdul Qadir Jailani</span>
-        <time class="meta-item" datetime="2026-08-04T00:00:00Z">Published: 2026-08-04</time>
-        <span>12 min read (1500+ Words)</span>
-      </div>
-      <div class="article-actions">
-        <button class="btn-share" id="shareBtn" type="button">Share</button>
-        <button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
-        <button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Article Body Content -->
-  <main class="article-content">
-    <!-- Featured Hero Image -->
-    <figure class="article-hero-wrapper">
-      <picture>
-        <source srcset="/assets/img/ufw-firewall.webp" type="image/webp"/>
-        <img alt="UFW Firewall Hardening: Advanced Rate Limiting & Default-Deny Security Blueprint" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="/assets/img/ufw-firewall.jpg" width="1280"/>
-      </picture>
-      <figcaption class="hero-caption">UFW Firewall Traffic Isolation & Rate Limiting Blueprint</figcaption>
-    </figure>
-
-    <!-- Executive Summary / Takeaways Box -->
-    <div class="exec-summary">
-      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
-      <ul>
+<!-- Back to Blog -->
+<a class="back-link" href="/blog/">← Back to Articles</a>
+<!-- Article Header -->
+<header class="article-header">
+<span class="meta-tag">System Hardening • UFW Firewall</span>
+<h1 class="article-title">UFW Firewall Hardening: Advanced Rate Limiting &amp; Default-Deny Security Blueprint</h1>
+<div class="article-meta">
+<div class="meta-info">
+<span>By Zyekh Abdul Qadir Jailani</span>
+<time class="meta-item" datetime="2026-08-04T00:00:00Z">Published: 2026-08-04</time>
+<span>12 min read (1500+ Words)</span>
+</div>
+<div class="article-actions">
+<button class="btn-share" id="shareBtn" type="button">Share</button>
+<button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
+<button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
+</div>
+</div>
+</header>
+<!-- Article Body Content -->
+<main class="article-content">
+<!-- Featured Hero Image -->
+<figure class="article-hero-wrapper">
+<picture>
+<source srcset="/assets/img/ufw-firewall.webp" type="image/webp"/>
+<img alt="UFW Firewall Hardening: Advanced Rate Limiting &amp; Default-Deny Security Blueprint" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="/assets/img/ufw-firewall.jpg" width="1280"/>
+</picture>
+<figcaption class="hero-caption">UFW Firewall Traffic Isolation &amp; Rate Limiting Blueprint</figcaption>
+</figure>
+<!-- Executive Summary / Takeaways Box -->
+<div class="exec-summary">
+<div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+<ul>
 <li>Strict Default-Deny Rules: Block all unrequested incoming connections while permitting stateful outbound traffic.</li>
 <li>Native SSH Rate Limiting: Enforce ufw limit to block IP addresses making 6+ connections within 30 seconds.</li>
 <li>Custom Application Profiles: Define precise port and protocol definitions in /etc/ufw/applications.d/.</li>
 <li>Routed Packet Filtering: Restrict IPv4/IPv6 forwarding across network bridges and container interfaces.</li>
-      </ul>
-    </div>
-
-    <!-- Table of Contents -->
-    <nav class="toc-card">
-      <div class="toc-title">Table of Contents</div>
-      <ol class="toc-list">
+</ul>
+</div>
+<!-- Table of Contents -->
+<nav class="toc-card">
+<div class="toc-title">Table of Contents</div>
+<ol class="toc-list">
 <li><a href="#ufw-default-deny-setup">1. Establishing Default-Deny Baseline Policies</a></li>
-<li><a href="#ufw-rate-limiting-ssh">2. Advanced SSH Rate Limiting & Brute-Force Prevention</a></li>
+<li><a href="#ufw-rate-limiting-ssh">2. Advanced SSH Rate Limiting &amp; Brute-Force Prevention</a></li>
 <li><a href="#ufw-app-profiles">3. Defining Custom Application Profiles</a></li>
-<li><a href="#ufw-interface-isolation">4. Interface Isolation & Subnet Access Control</a></li>
-<li><a href="#ufw-logging-tuning">5. Logging Calibration & Logrotate Management</a></li>
-<li><a href="#ufw-audit-verification">6. Verification & Security Audit Checklist</a></li>
+<li><a href="#ufw-interface-isolation">4. Interface Isolation &amp; Subnet Access Control</a></li>
+<li><a href="#ufw-logging-tuning">5. Logging Calibration &amp; Logrotate Management</a></li>
+<li><a href="#ufw-audit-verification">6. Verification &amp; Security Audit Checklist</a></li>
 <li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
-      </ol>
-    </nav>
-
+</ol>
+</nav>
 <h2 id="ufw-default-deny-setup">1. Establishing Default-Deny Baseline Policies</h2>
 <p>Unused open ports are primary targets for automated port scanners. A strict firewall baseline mandates dropping all incoming traffic by default unless explicitly allowed.</p>
-<p>When default-deny incoming is enforced, Linux drops all TCP SYN requests and UDP packets to closed ports without sending ICMP unreachable responses, preventing port scanning reconnaissance.</p>
+<p>When default-deny incoming is enforced, Linux drops all TCP SYN requests and UDP packets to closed ports without sending ICMP unreachable responses, preventing port scanning reconnaissance. Allowed network CIDR blocks and IP mask ranges can be computed using our <a href="/tools/subnet.html">Subnet Calculator</a>.</p>
 <p>Execute the following baseline initialization sequence on production Debian and Ubuntu instances:</p>
 <pre><code class="language-bash"># Reset UFW to clean state
 ufw --force reset
@@ -213,8 +205,7 @@ ufw limit 22/tcp comment 'SSH Rate Limited'
 # Enable UFW logging
 ufw logging low
 ufw --force enable</code></pre>
-
-<h2 id="ufw-rate-limiting-ssh">2. Advanced SSH Rate Limiting & Brute-Force Prevention</h2>
+<h2 id="ufw-rate-limiting-ssh">2. Advanced SSH Rate Limiting &amp; Brute-Force Prevention</h2>
 <p>Automated bots scan IPv4 CIDR blocks continuously for open port 22. Standard ufw allow 22/tcp leaves the SSH port vulnerable to sustained password guessing and handshake attacks.</p>
 <p>The ufw limit directive leverages iptables recent module to track connection attempts per IP address. If an IP address attempts 6 or more connections within a 30-second window, UFW automatically drops packets from that IP address.</p>
 <p>For maximum security, combine ufw limit with custom SSH listening ports to eliminate 99% of automated scanner noise.</p>
@@ -223,7 +214,6 @@ ufw limit 2222/tcp comment 'Custom SSH Port Limited'
 
 # Inspect UFW active rules with rule numbers
 ufw status numbered</code></pre>
-
 <h2 id="ufw-app-profiles">3. Defining Custom Application Profiles</h2>
 <p>Instead of specifying raw port numbers directly in shell scripts, define structured application profiles in /etc/ufw/applications.d/. Profiles standardize firewall configurations across fleet management tooling.</p>
 <p>Application profiles specify the title, description, and exact TCP/UDP ports required by a service.</p>
@@ -236,18 +226,16 @@ ports=80,443/tcp
 
 # Apply application profile
 ufw allow CustomWebserver</code></pre>
-
-<h2 id="ufw-interface-isolation">4. Interface Isolation & Subnet Access Control</h2>
+<h2 id="ufw-interface-isolation">4. Interface Isolation &amp; Subnet Access Control</h2>
 <p>Multi-homed cloud instances connected to public internet interfaces and private VPC networks must restrict management access strictly to private interfaces.</p>
 <p>Configuring interface-specific rules prevents administrative ports (e.g., Redis on 6379, Postgres on 5432) from exposing bindings to public IPv4 addresses.</p>
-<p>Use in on <interface> directives to bind rules to specific network interfaces like eth1 or wireguard wg0.</p>
+<p>Use in on <interface> directives to bind rules to specific network interfaces like eth1 or wireguard wg0.</interface></p>
 <pre><code class="language-bash"># Allow PostgreSQL strictly on private VPC interface eth1
 ufw allow in on eth1 to any port 5432 proto tcp comment 'Private DB Access'
 
 # Allow WireGuard VPN traffic on public interface eth0
 ufw allow in on eth0 to any port 51820 proto udp comment 'WireGuard Public VPN'</code></pre>
-
-<h2 id="ufw-logging-tuning">5. Logging Calibration & Logrotate Management</h2>
+<h2 id="ufw-logging-tuning">5. Logging Calibration &amp; Logrotate Management</h2>
 <p>Uncalibrated firewall logging can fill server root disks rapidly during heavy DDoS attacks. UFW supports five logging levels: off, low, medium, high, and full.</p>
 <p>Logging level low records all blocked packets that violate default policy, plus matching logged rules. Logs are saved to /var/log/ufw.log.</p>
 <p>Ensure logrotate compresses UFW log files daily to preserve disk headroom.</p>
@@ -256,87 +244,85 @@ ufw logging low
 
 # Tail live UFW blocked packets
 tail -f /var/log/ufw.log | grep '[UFW BLOCK]'</code></pre>
-
-<h2 id="ufw-audit-verification">6. Verification & Security Audit Checklist</h2>
+<h2 id="ufw-audit-verification">6. Verification &amp; Security Audit Checklist</h2>
 <p>Verify UFW active status, rule numbers, and default policies using verbose status outputs.</p>
 <p>Test firewall rule enforcement from an external client using nmap port scans.</p>
 <pre><code class="language-bash"># Verify UFW status and rules
 ufw status verbose
 
 # External port audit with nmap
-nmap -sS -p 22,80,443,5432 <SERVER_IP></code></pre>
-
-    <!-- FAQ Section -->
-    <div class="faq-section">
-      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+nmap -sS -p 22,80,443,5432 <server_ip></server_ip></code></pre>
+<!-- FAQ Section -->
+<div class="faq-section">
+<h2 id="faq">Frequently Asked Questions (FAQ)</h2>
 <details>
-  <summary>Does UFW override iptables rules defined by Docker?</summary>
-  <p class="faq-answer">Docker bypasses standard UFW user rules by inserting iptables rules directly into the DOCKER chain. Use ufw-docker or configure daemon.json iptables: false for strict isolation.</p>
+<summary>Does UFW override iptables rules defined by Docker?</summary>
+<p class="faq-answer">Docker bypasses standard UFW user rules by inserting iptables rules directly into the DOCKER chain. Use ufw-docker or configure daemon.json iptables: false for strict isolation.</p>
 </details>
 <details>
-  <summary>What is the difference between ufw allow and ufw limit?</summary>
-  <p class="faq-answer">ufw allow permits unlimited connections, while ufw limit denies connections if an IP address attempts 6+ connections within 30 seconds.</p>
+<summary>What is the difference between ufw allow and ufw limit?</summary>
+<p class="faq-answer">ufw allow permits unlimited connections, while ufw limit denies connections if an IP address attempts 6+ connections within 30 seconds.</p>
 </details>
-    </div>
-
-    <!-- Author Bio Card (EEAT & DFIR Branding) -->
-    <div class="author-card">
-      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
-      <div class="author-info">
-        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
-        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
-        <div class="author-social-links note-sm" style="margin-top:0\.4rem;">
-          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
+</div>
+<!-- Author Bio Card (EEAT & DFIR Branding) -->
+<div class="author-card">
+<img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+<div class="author-info">
+<h4>Written by Zyekh Abdul Qadir Jailani</h4>
+<p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+<div class="author-social-links note-sm" style="margin-top:0\.4rem;">
+<a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
           <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
           <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
           <a href="mailto:zyekhabdulqadirjailani@zyekh.com" style="font-weight:600">Email</a> •
           <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
-        </div>
-      </div>
-    </div>
+</div>
+</div>
+</div>
+<!-- Contextual Interactive Tool Bridge -->
+<div class="article-cross-links tool-bridge-card">
+<div class="tool-bridge-info">
+<span class="tool-bridge-badge">[ INTERACTIVE CALCULATOR // SECURITY ]</span>
+<h4 class="tool-bridge-title">CIDR Subnet &amp; IP Range Calculator</h4>
+<p class="tool-bridge-desc">Generate precise CIDR subnet ranges for UFW firewall allow/deny rules and rate-limiting blocks.</p>
+</div>
+<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -&gt;</a>
+</div>
+<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -&gt;</a>
 
-                                        <!-- Contextual Interactive Tool Bridge -->
-    <div class="article-cross-links tool-bridge-card">
-      <div class="tool-bridge-info">
-        <span class="tool-bridge-badge">[ INTERACTIVE CALCULATOR // SECURITY ]</span>
-        <h4 class="tool-bridge-title">CIDR Subnet & IP Range Calculator</h4>
-        <p class="tool-bridge-desc">Generate precise CIDR subnet ranges for UFW firewall allow/deny rules and rate-limiting blocks.</p>
-      </div>
-      <a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -></a>
-    </div>
-  </main>
+<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -&gt;</a>
 
-  <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-      <a href="/about/" class="text-muted text-sm">About</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/tools/" class="text-muted text-sm">53 Web Tools</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blog/" class="text-muted text-sm">45 Articles</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-    </div>
-  </footer>
+<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Firewall CIDR -&gt;</a>
+
+</main>
+<!-- Footer -->
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">53 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">45 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="https://shop.zyekh.com" target="_blank" rel="noopener noreferrer">Official Store</a>
+<span class="text-muted text-sm">·</span>
+
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
 </article>
 </body>
 </html>

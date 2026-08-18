@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
@@ -6,15 +7,14 @@
 <link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
 <meta content="#09090b" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Systemd Service Sandboxing: Restricting Process Capability & System Calls — zyekh.com</title>
+<title>Systemd Service Sandboxing: Restricting Process Capability &amp; System Calls — zyekh.com</title>
 <meta content="Production guide for sandboxing Linux daemons using systemd security directives like ProtectSystem, SystemCallFilter, and CapabilityBoundingSet." name="description"/>
 <meta content="Zyekh Abdul Qadir Jailani" name="author"/>
 <link href="https://zyekh.com/blog/systemd-service-sandboxing-and-security-hardening.html" rel="canonical"/>
-
 <!-- Open Graph / Social Meta Tags -->
 <meta content="zyekh.com" property="og:site_name"/>
 <meta content="article" property="og:type"/>
-<meta content="Systemd Service Sandboxing: Restricting Process Capability & System Calls" property="og:title"/>
+<meta content="Systemd Service Sandboxing: Restricting Process Capability &amp; System Calls" property="og:title"/>
 <meta content="Production guide for sandboxing Linux daemons using systemd security directives like ProtectSystem, SystemCallFilter, and CapabilityBoundingSet." property="og:description"/>
 <meta content="https://zyekh.com/blog/systemd-service-sandboxing-and-security-hardening.html" property="og:url"/>
 <meta content="https://zyekh.com" property="article:publisher"/>
@@ -22,7 +22,7 @@
 <meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
 <meta content="@zyekh" name="twitter:creator"/>
 <meta content="@zyekh" name="twitter:site"/>
-<meta content="Systemd Service Sandboxing: Restricting Process Capability & System Calls" name="twitter:title"/>
+<meta content="Systemd Service Sandboxing: Restricting Process Capability &amp; System Calls" name="twitter:title"/>
 <meta content="Production guide for sandboxing Linux daemons using systemd security directives like ProtectSystem, SystemCallFilter, and CapabilityBoundingSet." name="twitter:description"/>
 <!-- Favicons & Manifest -->
 <link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
@@ -30,7 +30,6 @@
 <link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
 <link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="/manifest.json" rel="manifest"/>
-
 <!-- Schema.org JSON-LD -->
 <script type="application/ld+json">
 {
@@ -111,12 +110,12 @@
 </script>
 <link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
 <link href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" rel="stylesheet"/>
-<link href="/assets/css/blog.min.css?v=1eb470b3" integrity="sha384-wnEjkEPBnaax3w1llsQyFN2j3IIOxSOTpt9lEkG0uW5ZnNWAQBH4zS0LsFp0LPKW" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/blog.min.css?v=24f8ee5d" integrity="sha384-FHcCAed8NnoQ8PJalL8EaebbRRV2RQjKmhkwFkQ+AbHy8Uj7cfNB2x+qbKQvygTw" crossorigin="anonymous" rel="stylesheet"/>
 <script defer="" src="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous"></script>
-<script defer="" src="/assets/js/article-actions.min.js?v=6cf0fa6c" integrity="sha384-7Zc8x9pMA4XVFbvKkDb77s0tC31UxKSpwWO9VZ/rbGTiNxaNERlsv1xKIPrVUHID" crossorigin="anonymous"></script>
-  <style id="antiClickjack">body{display:none !important;}</style>
+<script defer="" src="/assets/js/article-actions.min.js?v=08e3ed60" integrity="sha384-vxj8HnyBDfHF87frqcywrS+Iipxk78yQh0UWUf9O5bDIULyCBSLTOd0a1JnFUb0Q" crossorigin="anonymous"></script>
+<style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-              <link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous" as="script">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
@@ -127,65 +126,59 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="2400">
   <meta property="og:image:height" content="1260">
-  <meta property="og:image:alt" content="Technical specification card for Systemd Service Sandboxing: Restricting Process Capability &amp; System Calls">
+  <meta property="og:image:alt" content="Technical specification card for Systemd Service Sandboxing: Restricting Process Capability &amp;amp; System Calls">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://zyekh.com/assets/img/social-cards/systemd-service-sandboxing-and-security-hardening-dark-landscape.png?v=135426b1">
 </head>
 <body>
 <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
 <div class="reading-progress-bar"></div>
-
 <!-- Header Navigation -->
 <site-nav active="blog"></site-nav>
-
 <article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
-  <!-- Back to Blog -->
-  <a class="back-link" href="/blog/">← Back to Articles</a>
-
-  <!-- Article Header -->
-  <header class="article-header">
-    <span class="meta-tag">System Hardening • Systemd Security</span>
-    <h1 class="article-title">Systemd Service Sandboxing: Restricting Process Capability & System Calls</h1>
-    <div class="article-meta">
-      <div class="meta-info">
-        <span>By Zyekh Abdul Qadir Jailani</span>
-        <time class="meta-item" datetime="2026-08-04T00:00:00Z">Published: 2026-08-04</time>
-        <span>13 min read (1500+ Words)</span>
-      </div>
-      <div class="article-actions">
-        <button class="btn-share" id="shareBtn" type="button">Share</button>
-        <button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
-        <button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
-      </div>
-    </div>
-  </header>
-
-  <!-- Article Body Content -->
-  <main class="article-content">
-    <!-- Featured Hero Image -->
-    <figure class="article-hero-wrapper">
-      <picture>
-        <source srcset="/assets/img/systemd-sandboxing.webp" type="image/webp"/>
-        <img alt="Systemd Service Sandboxing: Restricting Process Capability & System Calls" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="/assets/img/systemd-sandboxing.jpg" width="1280"/>
-      </picture>
-      <figcaption class="hero-caption">Systemd Service Process Isolation & System Call Filtering</figcaption>
-    </figure>
-
-    <!-- Executive Summary / Takeaways Box -->
-    <div class="exec-summary">
-      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
-      <ul>
+<!-- Back to Blog -->
+<a class="back-link" href="/blog/">← Back to Articles</a>
+<!-- Article Header -->
+<header class="article-header">
+<span class="meta-tag">System Hardening • Systemd Security</span>
+<h1 class="article-title">Systemd Service Sandboxing: Restricting Process Capability &amp; System Calls</h1>
+<div class="article-meta">
+<div class="meta-info">
+<span>By Zyekh Abdul Qadir Jailani</span>
+<time class="meta-item" datetime="2026-08-04T00:00:00Z">Published: 2026-08-04</time>
+<span>13 min read (1500+ Words)</span>
+</div>
+<div class="article-actions">
+<button class="btn-share" id="shareBtn" type="button">Share</button>
+<button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
+<button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
+</div>
+</div>
+</header>
+<!-- Article Body Content -->
+<main class="article-content">
+<!-- Featured Hero Image -->
+<figure class="article-hero-wrapper">
+<picture>
+<source srcset="/assets/img/systemd-sandboxing.webp" type="image/webp"/>
+<img alt="Systemd Service Sandboxing: Restricting Process Capability &amp; System Calls" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="/assets/img/systemd-sandboxing.jpg" width="1280"/>
+</picture>
+<figcaption class="hero-caption">Systemd Service Process Isolation &amp; System Call Filtering</figcaption>
+</figure>
+<!-- Executive Summary / Takeaways Box -->
+<div class="exec-summary">
+<div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+<ul>
 <li>FileSystem Protection: Set ProtectSystem=strict and ProtectHome=yes to enforce read-only mount namespaces.</li>
 <li>Privilege Restriction: Mandate NoNewPrivileges=yes to block suid escalation.</li>
 <li>Capability Bounding: Restrict Linux capabilities using CapabilityBoundingSet=.</li>
 <li>System Call Filtering: Block dangerous syscalls via SystemCallFilter=@system-service.</li>
-      </ul>
-    </div>
-
-    <!-- Table of Contents -->
-    <nav class="toc-card">
-      <div class="toc-title">Table of Contents</div>
-      <ol class="toc-list">
+</ul>
+</div>
+<!-- Table of Contents -->
+<nav class="toc-card">
+<div class="toc-title">Table of Contents</div>
+<ol class="toc-list">
 <li><a href="#systemd-vulnerabilities">1. The Danger of Unrestricted System Daemons</a></li>
 <li><a href="#systemd-filesystem-protection">2. Enforcing Read-Only File System Mount Namespaces</a></li>
 <li><a href="#systemd-privilege-restriction">3. Privilege Escalation Prevention via NoNewPrivileges</a></li>
@@ -193,18 +186,16 @@
 <li><a href="#systemd-syscall-filtering">5. Filtering Dangerous Kernel System Calls (Seccomp)</a></li>
 <li><a href="#systemd-audit-score">6. Automated Security Audit Scores with systemd-analyze</a></li>
 <li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
-      </ol>
-    </nav>
-
+</ol>
+</nav>
 <h2 id="systemd-vulnerabilities">1. The Danger of Unrestricted System Daemons</h2>
 <p>Traditional Linux daemons running as system services often possess full access to the entire root file system, user home directories, and kernel syscall interfaces.</p>
-<p>If an application vulnerability (such as a remote code execution in web application gateways) is exploited, the attacker inherits the full permissions of the daemon, allowing them to read sensitive files in /etc/ or modify system binaries.</p>
+<p>If an application vulnerability (such as a remote code execution in web application gateways) is exploited, the attacker inherits the full permissions of the daemon, allowing them to read sensitive files in /etc/ or modify system binaries. Filesystem sandbox restrictions and directory masks can be verified with our <a href="/tools/chmod-calculator.html">Linux Chmod Calculator</a>.</p>
 <p>Systemd provides built-in process isolation directives using Linux kernel namespaces, cgroups, and seccomp filters without needing Docker or heavy container runtimes.</p>
 <p>Sandboxing services at the systemd layer creates isolated execution environments, preventing lateral movement during security incidents.</p>
 <p>Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance.</p>
 <pre><code class="language-bash"># Inspect security score of an active service unit
 systemd-analyze security nginx.service</code></pre>
-
 <h2 id="systemd-filesystem-protection">2. Enforcing Read-Only File System Mount Namespaces</h2>
 <p>The ProtectSystem directive creates a private mount namespace for the service, mounting system directories as read-only.</p>
 <p>Setting ProtectSystem=strict mounts the entire file system hierarchy as read-only for the process, except for explicit paths specified in ReadWritePaths=.</p>
@@ -219,7 +210,6 @@ ReadWritePaths=/var/log/myapp /var/lib/myapp
 PrivateTmp=yes
 ProtectKernelTunables=yes
 ProtectKernelModules=yes</code></pre>
-
 <h2 id="systemd-privilege-restriction">3. Privilege Escalation Prevention via NoNewPrivileges</h2>
 <p>Attacker payloads often attempt privilege escalation by executing SUID binaries (like sudo or pkexec) from within compromised service processes.</p>
 <p>Setting NoNewPrivileges=yes ensures that the process and any child processes it spawns can never gain new privileges through setuid/setgid bits or file capabilities.</p>
@@ -233,17 +223,15 @@ ProtectKernelTunables=yes
 ProtectKernelModules=yes
 ProtectControlGroups=yes
 MemoryDenyWriteExecute=yes</code></pre>
-
 <h2 id="systemd-capability-bounding">4. Restricting Linux Capabilities</h2>
 <p>Linux divides root privileges into distinct capabilities (e.g., CAP_NET_ADMIN, CAP_SYS_ADMIN, CAP_NET_BIND_SERVICE). Unrestricted daemons retain all capabilities.</p>
 <p>The CapabilityBoundingSet directive defines an explicit whitelist of capabilities allowed for the service process. All other capabilities are dropped permanently during process startup.</p>
 <p>Dropping unnecessary root capabilities ensures that compromised daemons cannot load kernel modules, manipulate network routing tables, or mount raw file systems.</p>
 <p>Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance.</p>
-<pre><code class="language-ini"># Allow binding low ports (<1024) but drop all other root capabilities
+<pre><code class="language-ini"># Allow binding low ports (&lt;1024) but drop all other root capabilities
 [Service]
 CapabilityBoundingSet=CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_BIND_SERVICE</code></pre>
-
 <h2 id="systemd-syscall-filtering">5. Filtering Dangerous Kernel System Calls (Seccomp)</h2>
 <p>Linux exposes over 300 kernel system calls. Most web applications and background services require fewer than 40 syscalls.</p>
 <p>The SystemCallFilter directive uses seccomp to block dangerous syscalls like ptrace, reboot, or kexec_load. Systemd provides predefined syscall groups like @system-service and @sandbox.</p>
@@ -254,7 +242,6 @@ AmbientCapabilities=CAP_NET_BIND_SERVICE</code></pre>
 SystemCallFilter=@system-service
 SystemCallFilter=~@privileged @resources
 SystemCallErrorNumber=EPERM</code></pre>
-
 <h2 id="systemd-audit-score">6. Automated Security Audit Scores with systemd-analyze</h2>
 <p>Systemd includes an automated security analyzer that evaluates unit file directives against security best practices and outputs an audit score.</p>
 <p>Run systemd-analyze security to inspect all active services on the system and identify unhardened daemons needing isolation overrides.</p>
@@ -266,78 +253,77 @@ systemd-analyze security
 # Reload systemd daemon to apply unit overrides
 systemctl daemon-reload
 systemctl restart myapp.service</code></pre>
-
-    <!-- FAQ Section -->
-    <div class="faq-section">
-      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+<!-- FAQ Section -->
+<div class="faq-section">
+<h2 id="faq">Frequently Asked Questions (FAQ)</h2>
 <details>
-  <summary>How do I inspect the security score of a systemd unit?</summary>
-  <p class="faq-answer">Run systemd-analyze security <unit-name> to view an automated 1-10 security audit score.</p>
+<summary>How do I inspect the security score of a systemd unit?</summary>
+<p class="faq-answer">Run systemd-analyze security <unit-name> to view an automated 1-10 security audit score.</unit-name></p>
 </details>
 <details>
-  <summary>What happens if a process calls a blocked SystemCallFilter syscall?</summary>
-  <p class="faq-answer">By default, seccomp terminates the process with SIGSYS. Setting SystemCallErrorNumber=EPERM returns an Operation Not Permitted error code instead.</p>
+<summary>What happens if a process calls a blocked SystemCallFilter syscall?</summary>
+<p class="faq-answer">By default, seccomp terminates the process with SIGSYS. Setting SystemCallErrorNumber=EPERM returns an Operation Not Permitted error code instead.</p>
 </details>
-    </div>
-
-    <!-- Author Bio Card (EEAT & DFIR Branding) -->
-    <div class="author-card">
-      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
-      <div class="author-info">
-        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
-        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
-        <div class="author-social-links note-sm" style="margin-top:0\.4rem;">
-          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
+</div>
+<!-- Author Bio Card (EEAT & DFIR Branding) -->
+<div class="author-card">
+<img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+<div class="author-info">
+<h4>Written by Zyekh Abdul Qadir Jailani</h4>
+<p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+<div class="author-social-links note-sm" style="margin-top:0\.4rem;">
+<a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
           <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
           <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
           <a href="mailto:zyekhabdulqadirjailani@zyekh.com" style="font-weight:600">Email</a> •
           <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
-        </div>
-      </div>
-    </div>
+</div>
+</div>
+</div>
+<!-- Contextual Interactive Tool Bridge -->
+<div class="article-cross-links tool-bridge-card">
+<div class="tool-bridge-info">
+<span class="tool-bridge-badge">[ INTERACTIVE GENERATOR // SYSTEMD ]</span>
+<h4 class="tool-bridge-title">Systemd Service Sandboxing &amp; Security Override Generator</h4>
+<p class="tool-bridge-desc">Build production-ready drop-in override.conf directives and calculate systemd-analyze security exposure ratings 100% offline.</p>
+</div>
+<a class="tool-bridge-btn" href="/tools/systemd-generator.html">Generate Systemd Sandboxing -&gt;</a>
+</div>
+<a class="tool-bridge-btn" href="/tools/systemd-generator.html">Generate Systemd Sandboxing -&gt;</a>
 
-                                        <!-- Contextual Interactive Tool Bridge -->
-    <div class="article-cross-links tool-bridge-card">
-      <div class="tool-bridge-info">
-        <span class="tool-bridge-badge">[ INTERACTIVE GENERATOR // SYSTEMD ]</span>
-        <h4 class="tool-bridge-title">Systemd Service Sandboxing & Security Override Generator</h4>
-        <p class="tool-bridge-desc">Build production-ready drop-in override.conf directives and calculate systemd-analyze security exposure ratings 100% offline.</p>
-      </div>
-      <a class="tool-bridge-btn" href="/tools/systemd-generator.html">Generate Systemd Sandboxing -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/systemd-generator.html">Generate Systemd Sandboxing -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/systemd-generator.html">Generate Systemd Sandboxing -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/systemd-generator.html">Generate Systemd Sandboxing -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/chmod-calculator.html">Calculate Unit Permissions -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/chmod-calculator.html">Calculate Unit Permissions -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/chmod-calculator.html">Calculate Unit Permissions -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/chmod-calculator.html">Calculate Unit Permissions -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/chmod-calculator.html">Calculate Unit Permissions -></a>
-    </div>
-  </main>
+<a class="tool-bridge-btn" href="/tools/systemd-generator.html">Generate Systemd Sandboxing -&gt;</a>
 
-  <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-      <a href="/about/" class="text-muted text-sm">About</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/tools/" class="text-muted text-sm">53 Web Tools</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blog/" class="text-muted text-sm">45 Articles</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-    </div>
-  </footer>
+<a class="tool-bridge-btn" href="/tools/systemd-generator.html">Generate Systemd Sandboxing -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/chmod-calculator.html">Calculate Unit Permissions -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/chmod-calculator.html">Calculate Unit Permissions -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/chmod-calculator.html">Calculate Unit Permissions -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/chmod-calculator.html">Calculate Unit Permissions -&gt;</a>
+
+<a class="tool-bridge-btn" href="/tools/chmod-calculator.html">Calculate Unit Permissions -&gt;</a>
+
+</main>
+<!-- Footer -->
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">53 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">45 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="https://shop.zyekh.com" target="_blank" rel="noopener noreferrer">Official Store</a>
+<span class="text-muted text-sm">·</span>
+
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
 </article>
 </body>
 </html>

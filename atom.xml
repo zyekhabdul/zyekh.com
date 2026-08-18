@@ -397,7 +397,7 @@
     <id>https://zyekh.com/blog/pam-tally2-faillock-account-lockout-policy-guide.html</id>
     <updated>2026-08-04T00:00:00Z</updated>
     <published>2026-08-04T00:00:00Z</published>
-    <summary>Security guide for configuring pam_faillock to prevent SSH and console brute-force authentication attacks on RHEL, Debian, and Ubuntu systems.</summary>
+    <summary>Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force</summary>
     <author>
       <name>Zyekh Abdul Qadir Jailani</name>
       <uri>https://zyekh.com/</uri>
