@@ -224,6 +224,18 @@ def run_doctor():
     print(f"  • Tools Manifest Registry  : {tools_manifest_count} tools registered")
     print(f"  • Social Cards Manifest    : {cards_manifest_count} articles registered")
 
+    # Metric Parity Check
+    try:
+        from scripts.ground_truth import get_authoritative_ground_truth, audit_metric_parity
+        gt = get_authoritative_ground_truth()
+        gt_errs = audit_metric_parity(gt)
+        if not gt_errs:
+            print("  • Metric Parity Status     : [ 100% PASS ] (Zero Metric Drift across core pages)")
+        else:
+            print(f"  • Metric Parity Status     : [ FAIL ] ({len(gt_errs)} drift violations detected)")
+    except Exception as err:
+        print(f"  • Metric Parity Status     : [ WARN ] Could not audit ground truth ({err})")
+
     # 4. Git & Working Tree Status
     print("\n[ SECTION 4 ] REPOSITORY & GIT STATUS")
     git_branch = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], capture_output=True, text=True, cwd=str(BASE_DIR)).stdout.strip()
@@ -259,12 +271,12 @@ def main():
     parser.add_argument(
         "--skip-qa",
         action="store_true",
-        help="Skip QA audit step (verify_batch.py)"
+        help="Skip QA audit (verify_batch.py)"
     )
     parser.add_argument(
         "--skip-indexnow",
         action="store_true",
-        help="Skip IndexNow search engine ping (ping_indexers.py)"
+        help="Skip IndexNow ping submission"
     )
     parser.add_argument(
         "--syndicate",
@@ -318,9 +330,9 @@ def main():
     if not args.skip_generate:
         run_command([sys.executable, "generate_batch.py"], "Generating Article HTML Files")
 
-    # 2. QA Audit (Strict 21-axis verification)
+    # 2. QA Audit (Strict 23-axis verification)
     if not args.skip_qa:
-        run_command([sys.executable, "verify_batch.py"], "Running 21-Axis QA Audit")
+        run_command([sys.executable, "verify_batch.py"], "Running 23-Axis QA Audit")
 
     # 3. Content & Cache Sync
     run_command([sys.executable, "sync_content.py"], "Synchronizing Sitemap, RSS, RAG & Cache Version")

@@ -384,6 +384,28 @@ def cmd_verify(args):
         print("[ERROR] Verification audit failed.")
         sys.exit(res.returncode)
 
+def cmd_ground_truth(args):
+    """Run authoritative ground truth snapshot & metric parity check."""
+    from scripts.ground_truth import get_authoritative_ground_truth, print_summary, audit_metric_parity, find_tool, find_article
+    gt = get_authoritative_ground_truth()
+    if args.check:
+        errors = audit_metric_parity(gt)
+        if errors:
+            print("\n[ FAIL ] Metric Parity Audit Failed:")
+            for e in errors:
+                print(f"  • {e}")
+            sys.exit(1)
+        else:
+            print("\n[ PASS ] 100% Metric parity verified across all core pages.")
+            return
+    if args.find_tool:
+        find_tool(gt, args.find_tool)
+        return
+    if args.find_article:
+        find_article(gt, args.find_article)
+        return
+    print_summary(gt)
+
 def main():
     parser = argparse.ArgumentParser(description="Unified CLI Content Manager for zyekh.com")
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
@@ -416,8 +438,15 @@ def main():
     p_build.set_defaults(func=cmd_build)
     
     # 6. Verify command
-    p_verify = subparsers.add_parser("verify", help="Run 22-axis QA audit & emoji checks")
+    p_verify = subparsers.add_parser("verify", help="Run 23-axis QA audit & emoji checks")
     p_verify.set_defaults(func=cmd_verify)
+
+    # 7. Ground Truth & Metric Parity command
+    p_truth = subparsers.add_parser("truth", aliases=["doctor", "ground-truth"], help="Inspect authoritative ground truth & metric parity")
+    p_truth.add_argument("--check", action="store_true", help="Audit all files for metric drift")
+    p_truth.add_argument("--find-tool", type=str, help="Search tool by name/slug")
+    p_truth.add_argument("--find-article", type=str, help="Search article by name/slug")
+    p_truth.set_defaults(func=cmd_ground_truth)
     
     args = parser.parse_args()
     if not args.command:

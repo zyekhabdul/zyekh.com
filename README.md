@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-  <strong>42 Local-First, Zero-Dependency Developer & Financial Tools. Built entirely with Vanilla JS/CSS.</strong>
+  <strong>53 Local-First, Zero-Dependency Developer & Financial Tools. Built entirely with Vanilla JS/CSS.</strong>
 </p>
 
 <p align="center">
@@ -33,7 +33,7 @@ This repository is a counter-movement:
 - **Zero Tracking:** No Google Analytics, no telemetry. 
 - **100% Local Execution:** Every tool runs purely in your browser. Disconnect from the internet, and they still work via Service Worker caching (PWA).
 
-## [ TOOLS ] The 42 Tools (`/tools/`)
+## [ TOOLS ] The 53 Tools (`/tools/`)
 
 You can view the full suite at [zyekh.com/tools](https://zyekh.com/tools).
 

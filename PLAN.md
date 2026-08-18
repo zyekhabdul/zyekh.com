@@ -1,76 +1,55 @@
-# PLAN: Eksekusi Refinement & Optimasi Halaman Inti (Core Landing Pages) — Seksi 11 IDEAS.md
+# PLAN: Implementasi Ground-Truth Metric Parity & Anti-AI Hallucination Engine (Opsi 2)
 
 ## [ 1. DATA-BACKED RATIONALE & OBJECTIVE ]
-- **Latar Belakang**: Seiring ekspansi repositori ke 53 Client-Side Tools, 45 Deep-Dive Technical Articles, 25+ Security Blueprints, dan RAG Knowledge Base, halaman inti portal (`index.html`, `about/index.html`, `contact/index.html`, `tools/index.html`, `blueprints/index.html`) memerlukan sinkronisasi metrik, penguatan visual hierarchy, pembaruan riset sistem (Web3, eBPF, ZK, PQC, LLM Inference), dan integrasi panduan komunikasi terenkripsi PGP.
-- **Tujuan**: Memperbarui dan menyelaraskan 5 halaman inti tersebut dengan standar Baseline 2024+, Zero-Emoji, WCAG 2.2 AA accessibility, dan zero-dependency vanilla architecture.
+- **Latar Belakang**: Seiring ekspansi repositori secara berkelanjutan, AI coding agent sering rentan mengalami halusinasi metrik (*metric drift* seperti mengutip jumlah tools/artikel lama) atau mengasumsikan nama file / link internal yang tidak eksis (*phantom URLs*).
+- **Tujuan**: Membangun engine verifikasi *ground-truth* deterministik mandiri (`scripts/ground_truth.py`) dan mengintegrasikannya sebagai **Check 23** di `verify_batch.py` serta CLI sub-command di `manage_articles.py` dan `run_pipeline.py`.
 
 ---
 
 ## [ 2. HYPER-GRANULAR EXECUTION CHUNKS ]
 
-### Chunk 1: Home Landing Page (`index.html`) Refinement & Visual Hierarchy
-* **Target File**: `index.html`
+### Chunk 1: Pembuatan Core Ground-Truth Engine (`scripts/ground_truth.py`)
+* **Target File**: `scripts/ground_truth.py`
 * **Scope**:
-  1. Penyelarasan counter metrik hero: 53 Client-Side Tools, 45 Deep-Dive Articles, 25+ Security Blueprints, dan RAG Knowledge Base (`llms.txt`).
-  2. Optimalisasi Bento Grid: Tambahkan touchpoint terstruktur yang menyeimbangkan showcase Web Tools, Command Blueprints, Deep-Dive Research, dan Topology Builder.
-  3. Perbarui quick-tool pills agar menampilkan representasi tools mutakhir (LLM Calculator, WebGPU Profiler, Linux Hardening, Seccomp Generator, JWT, Subnet).
-  4. Perbarui Schema.org `WebSite` JSON-LD agar selaras dengan 53 tools dan 45 articles.
+  1. Ekstrak data absolut langsung dari filesystem (OS metadata & parsing struktur):
+     - `tools/*.html` count (53 tools, exclude `index.html`).
+     - `blog/*.html` count (45 articles, exclude `index.html`).
+     - `blueprints/index.html` card count (12 blueprints).
+     - `sitemap.xml` URL count (107 URLs).
+     - `feed.xml` / `atom.xml` / `feed.json` count (45 items).
+     - `tools/tools-manifest.json` count (53 tools).
+     - `sw.js` active `CACHE_VERSION`.
+  2. Implementasikan flag CLI:
+     - `--summary`: Output ringkas berdensitas tinggi (< 40 baris / < 200 token) untuk *prompt context grounding* AI.
+     - `--json`: Output mesin JSON terstruktur untuk otomasi tool calling.
+     - `--check`: Linter penegakan konsistensi metrik pada `index.html`, `README.md`, `about/index.html`, `tools/index.html`, `blueprints/index.html`, `llms.txt`, dan footer global.
+     - `--find-tool <query>` & `--find-article <query>`: Pencocokan deterministik nama/slug resmi untuk eliminasi *hallucinated cross-links*.
+  3. Pastikan kepatuhan Strict Zero-Emoji dan standarisasi ASCII / text tags (`[ VERIFIED ]`, `[ WARN ]`, `[ PASS ]`).
 
-### Chunk 2: About & Experience Page (`about/index.html`) Research Timeline & PGP Card
-* **Target File**: `about/index.html`
+### Chunk 2: Integrasi Check 23 ke Programmatic QA Gate (`verify_batch.py`)
+* **Target File**: `verify_batch.py`
 * **Scope**:
-  1. Perbarui **Key Focus & Specialization** dengan klaster riset terkini:
-     - *Backend & Distributed Systems* (Laravel 12, Redis, LSM-Trees/B+ Trees, Raft/Paxos consensus, Microservices).
-     - *Kernel & Network Hardening* (eBPF XDP, Seccomp BPF, Landlock LSM, Auditd DFIR, PAM Faillock, WireGuard mesh).
-     - *Applied Cryptography & Web3* (EVM bytecode security, MEV architecture, zk-SNARKs/STARKs, Post-Quantum ML-KEM/ML-DSA).
-     - *AI Systems & Hardware Acceleration* (vLLM PagedAttention, Speculative Decoding, WebGPU WGSL compute, S-LoRA).
-  2. Perbarui **Featured Technical Research** mencakup proyek open-source dan sistem riset terverifikasi.
-  3. Modernisasi **PGP / Security Verification Card** dengan fingerprint GPG scannable dan copyable, serta command `curl -sL zyekh.com/gpg-key.asc | gpg --import`.
-  4. Tingkatkan command parser **Developer Console** untuk mendukung perintah `blueprints`, `crypto`, `security`, `pqc`, `ebpf`, dan `clear`.
+  1. Tambahkan fungsi `check_metric_parity()` yang memanggil validasi `scripts/ground_truth.py` secara langsung.
+  2. Pastikan kegagalan sinkronisasi metrik di halaman utama akan menggagalkan QA Gate sebelum commit/rilis.
 
-### Chunk 3: Contact & Verification Page (`contact/index.html`) Refinement & Secure Comms Guidance
-* **Target File**: `contact/index.html`
+### Chunk 3: Integrasi CLI ke `manage_articles.py` dan `run_pipeline.py`
+* **Target Files**: `manage_articles.py`, `run_pipeline.py`
 * **Scope**:
-  1. Tambahkan seksi panduan **PGP Encrypted Communications** untuk pelaporan vulnerability (RFC 9116 / `security.txt`) dan konsultasi arsitektur sensitif.
-  2. Sempurnakan tampilan card channels verifikasi: LinkedIn, GitHub, Mastodon, Discord, Primary Email, GPG Key, RFC 9116 Security Policy.
-  3. Pastikan layout grid, input styling, dan responsivitas mobile selaras 100% dengan `shared.css`.
+  1. Tambahkan command `manage_articles.py truth` atau `ground-truth` yang mencetak status ground truth deterministik.
+  2. Perbarui `run_pipeline.py --doctor` agar memvalidasi metrik via `scripts/ground_truth.py`.
 
-### Chunk 4: Tools Hub (`tools/index.html`) Category Filtering & Search Optimization
-* **Target File**: `tools/index.html`
+### Chunk 4: Verifikasi Kualitas Otomatis & Localhost Smoke Test
 * **Scope**:
-  1. Restrukturisasi kategori filter pill bar agar mencakup seluruh spektrum 53 tools:
-     - `Semua (53)`
-     - `Security & Linux Hardening`
-     - `AI & LLM Infrastructure`
-     - `Developer Utilities`
-     - `Finansial & Pajak`
-     - `Teks & Format`
-     - `Generators & Web3`
-  2. Pastikan mapping `data-category` dan `data-title` pada seluruh 53 `tool-item` sinkron dengan kategori baru.
-  3. Verifikasi performa instant search filtering dan count counter real-time.
-
-### Chunk 5: Blueprints Hub (`blueprints/index.html`) Blueprint Indexing & Category Alignment
-* **Target File**: `blueprints/index.html`
-* **Scope**:
-  1. Perbarui category pill filters: `Semua`, `Kernel & eBPF`, `Zero Trust & Sandboxing`, `Linux Hardening`, `Cloud Native`.
-  2. Sinkronkan katalog blueprint cards dengan artikel-artikel blueprint batch terbaru (Auditd DFIR, PAM Faillock, Linux Hardening sysctl/sshd, WireGuard Mesh, Seccomp BPF, Systemd Sandboxing, Post-Quantum TLS).
-  3. Pastikan live search dan category filtering berjalan mulus tanpa lag.
-
-### Chunk 6: Pipeline Synchronization, QA Audit & Obsidian Memory Sync
-* **Target Files**: `sync_content.py`, `IDEAS.md`, `DECISIONS.md`, `00-AGY-Memory/zyekh-com/STATE.md`
-* **Scope**:
-  1. Jalankan `python3 sync_content.py` untuk otomatis bump `CACHE_VERSION` di `sw.js`, memperbarui query versioning `?v=...`, dan sync sitemap/feeds.
-  2. Jalankan verifikasi 22-axis QA Gate: `python3 verify_batch.py`.
-  3. Jalankan audit zero-emoji: `python3 check_emojis.py`.
-  4. Jalankan live localhost smoke test: `python3 scripts/smoke_test.py`.
-  5. Perbarui `IDEAS.md` (tandai backlog Seksi 11 sebagai `[ DONE ]`) dan catat ADR di `DECISIONS.md` serta checkpoint di Obsidian RAG.
+  1. Jalankan `python3 scripts/ground_truth.py --check` dan `python3 scripts/ground_truth.py --summary`.
+  2. Jalankan `python3 verify_batch.py` (23 Checks QA Gate 100% PASS).
+  3. Jalankan `python3 check_emojis.py`.
+  4. Jalankan `python3 scripts/smoke_test.py`.
+  5. Local git commit dan update Obsidian RAG checkpoint.
 
 ---
 
 ## [ 3. DEFINITION OF DONE (DoD) ]
-- [ ] Kelima halaman inti (`index.html`, `about/`, `contact/`, `tools/`, `blueprints/`) telah direfine dan tersinkronisasi 100%.
-- [ ] Seluruh metrik konsisten (53 Tools, 45 Articles, Zero-Trust Blueprints, RAG Base).
-- [ ] Kategori filter di `tools/index.html` dan `blueprints/index.html` mencakup seluruh katalog baru secara presisi.
-- [ ] GPG key card & secure communications guidance terpasang rapi di `about/` dan `contact/`.
-- [ ] Lolos 100% QA Gate 22-Axis (`verify_batch.py`), Zero-Emoji audit (`check_emojis.py`), dan Smoke Test (`smoke_test.py`).
-- [ ] Sinkronisasi cache version dan query string HTML via `sync_content.py`.
+- [ ] Berkas `scripts/ground_truth.py` terimplementasi penuh dengan dukungan flag `--summary`, `--json`, `--check`, `--find-tool`, `--find-article`.
+- [ ] Check 23 (Site-Wide Metric Parity & Anti-Hallucination Audit) aktif dan lolos 100% di `verify_batch.py`.
+- [ ] `manage_articles.py` dan `run_pipeline.py` terintegrasi dengan engine ground truth.
+- [ ] 0 Error, 0 Violations, 0 Emojis di seluruh repositori.

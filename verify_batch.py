@@ -406,12 +406,29 @@ def verify_all_articles():
         print(f"[FAIL] Exception during accessibility audit execution: {e}")
         failures += 1
 
+    # Check 23: Site-Wide Metric Parity & Anti-Hallucination Audit
+    print("\n[ Check 23 ] Site-Wide Metric Parity & Anti-Hallucination Audit...")
+    try:
+        from scripts.ground_truth import get_authoritative_ground_truth, audit_metric_parity
+        gt = get_authoritative_ground_truth()
+        gt_errors = audit_metric_parity(gt)
+        if gt_errors:
+            print(f"[FAIL] Metric parity or anti-hallucination violations detected ({len(gt_errors)} issues):")
+            for err in gt_errors:
+                print(f"  • {err}")
+            failures += len(gt_errors)
+        else:
+            print(f"[PASS] 100% Metric parity verified across all core pages (Tools: {gt['tools_count']}, Articles: {gt['articles_count']}, Blueprints: {gt['blueprints_count']}).")
+    except Exception as e:
+        print(f"[FAIL] Exception during metric parity audit: {e}")
+        failures += 1
+
     print("\n============================================================")
     if failures > 0:
         print(f"FAILED: {failures} QA audit violations detected across system.")
         sys.exit(1)
     else:
-        print(f"SUCCESS: All {len(articles)} articles, assets, and live server passed 100% QA audit (Checks 1-22)!")
+        print(f"SUCCESS: All {len(articles)} articles, assets, and live server passed 100% QA audit (Checks 1-23)!")
         print("============================================================")
 
 if __name__ == "__main__":

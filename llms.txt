@@ -141,7 +141,7 @@
 - **Performance:** Service Worker, Speculation Rules API, Navigation Preload
 - **Security:** Strict CSP, Automated Subresource Integrity (SRI), Anti-Clickjacking
 - **SEO & GEO:** Schema.org JSON-LD, Open Graph, llms.txt, IndexNow
-- **Privacy:** All 43 tools run 100% client-side, zero analytics, zero tracking
+- **Privacy:** All 53 tools run 100% client-side, zero analytics, zero tracking
 
 ---
 

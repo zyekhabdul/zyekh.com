@@ -505,7 +505,7 @@ def sync_all(bump_version=False, dry_run=False):
     llms_txt += "- **Performance:** Service Worker, Speculation Rules API, Navigation Preload\n"
     llms_txt += "- **Security:** Strict CSP, Automated Subresource Integrity (SRI), Anti-Clickjacking\n"
     llms_txt += "- **SEO & GEO:** Schema.org JSON-LD, Open Graph, llms.txt, IndexNow\n"
-    llms_txt += "- **Privacy:** All 43 tools run 100% client-side, zero analytics, zero tracking\n"
+    llms_txt += f"- **Privacy:** All {total_tools_count} tools run 100% client-side, zero analytics, zero tracking\n"
 
     llms_txt += "\n---\n\n## Quick Reference for AI Assistants\n"
     llms_txt += "If a user asks about:\n"
