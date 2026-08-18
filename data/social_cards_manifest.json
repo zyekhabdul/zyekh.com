@@ -318,12 +318,14 @@
       "xdpddosdefense"
     ],
     "code_snippet": [
+      "#include",
+      "#include",
+      "#include",
+      "#include",
       "struct {",
       "    __uint(type, BPF_MAP_TYPE_HASH);",
       "    __uint(max_entries, 100000);",
-      "    __type(key, __be32);",
-      "    __type(value, __u64);",
-      "} blacklist SEC(\"maps\");"
+      "}"
     ],
     "invariants": [
       "XDP_DROP Early Decision: Drop malicious UDP/SYN floods before allocating sk_buff memory.",
@@ -555,22 +557,21 @@
       "linuxvps"
     ],
     "code_snippet": [
-      "# Reset UFW rules to default state",
-      "sudo ufw --force reset",
-      "# Set default policies",
-      "sudo ufw default deny incoming",
-      "sudo ufw default allow outgoing",
-      "# Allow SSH with rate-limiting (max 6 connection attempts per 30 seconds)",
-      "sudo ufw limit 22/tcp comment 'SSH Rate Limited'",
-      "# Allow Web Server ports"
+      "# /etc/security/faillock.conf",
+      "dir = /var/run/faillock",
+      "audit",
+      "silent",
+      "denytick = 3",
+      "unlock_time = 900",
+      "fail_interval = 900"
     ],
     "invariants": [
-      "SSH Key Enforcement: Mandate Ed25519 SSH keys, disable root password login, and enforce modern cryptographic ciphers (ChaCha20-Poly1305 / AES-256-GCM).",
-      "Kernel Network Hardening: Configure sysctl to block TCP SYN floods, IP source routing, ICMP redirects, and reverse path spoofing.",
-      "Firewall & Rate Limiting: Implement Uncomplicated Firewall (UFW) with default-deny inbound rules and SSH brute-force rate limits."
+      "SSH Key Enforcement:Mandate Ed25519 SSH keys, disable root password login, and enforce modern cryptographic ciphers (ChaCha20-Poly1305 / AES-256-GCM).",
+      "Kernel Network Hardening:Configuresysctlto block TCP SYN floods, IP source routing, ICMP redirects, and reverse path spoofing.",
+      "Firewall & Rate Limiting:Implement Uncomplicated Firewall (UFW) with default-deny inbound rules and SSH brute-force rate limits."
     ],
     "metrics": [
-      "Operational Impact: Automated Intrusion Prevention - Deploy fail2ban and auditd for continuous log analysis and kernel event tracking.",
+      "Operational Impact: Automated Intrusion Prevention - Deployfail2banandauditdfor continuous log analysis and kernel event tracking.",
       "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
@@ -612,17 +613,16 @@
       "staticarchitecture"
     ],
     "code_snippet": [
-      "/* Native CSS Fluid Typography & Container Standardization */",
-      ":root {",
-      "  --bg-dark: #09090b;",
-      "  --text-main: #fafafa;",
-      "  --border-color: #27272a;",
+      "location ~* \\.(?:css|js|woff2|webp|jpg|png|svg)$ {",
+      "    expires 1y;",
+      "    add_header Cache-Control \"public, immutable, max-age=31536000\";",
+      "    access_log off;",
       "}"
     ],
     "invariants": [
-      "Zero Attack Surface: Eliminating server-side runtime engines (PHP, Node.js) and SQL databases removes SQLi, RCE, and session vulnerabilities.",
-      "Sub-20ms TTFB: Serving pre-rendered HTML/CSS directly from CDN edge memory delivers instant global load times without backend processing delay.",
-      "Zero Infrastructure Maintenance: No database patching, runtime updates, or server reboot cycles required."
+      "Zero Attack Surface:Eliminating server-side runtime engines (PHP, Node.js) and SQL databases removes SQLi, RCE, and session vulnerabilities.",
+      "Sub-20ms TTFB:Serving pre-rendered HTML/CSS directly from CDN edge memory delivers instant global load times without backend processing delay.",
+      "Zero Infrastructure Maintenance:No database patching, runtime updates, or server reboot cycles required."
     ],
     "metrics": [
       "Operational Impact: Extreme Sustainability & Scalability - Static assets handle traffic surges effortlessly without autoscaling costs or server crashes.",
@@ -746,7 +746,7 @@
   "pam-tally2-faillock-account-lockout-policy-guide": {
     "slug": "pam-tally2-faillock-account-lockout-policy-guide",
     "title": "Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force",
-    "description": "Security guide for configuring pam_faillock to prevent SSH and console brute-force authentication attacks on RHEL, Debian, and Ubuntu systems.",
+    "description": "Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force.",
     "tags": [
       "systemhardening",
       "pamsecurity"
@@ -849,12 +849,12 @@
       "# Frame Options (Anti-Clickjacking)"
     ],
     "invariants": [
-      "XSS Mitigation: Content Security Policy (CSP) stops Cross-Site Scripting by restricting script execution to cryptographically nonced or hashed scripts.",
-      "Clickjacking Defense: X-Frame-Options: DENY and frame-ancestors 'none' prevent malicious iframe embedding.",
-      "Strict Transport Security: Enforce HTTPS and HSTS preloading with max-age=63072000; includeSubDomains; preload."
+      "XSS Mitigation:Content Security Policy (CSP) stops Cross-Site Scripting by restricting script execution to cryptographically nonced or hashed scripts.",
+      "Clickjacking Defense:X-Frame-Options: DENYandframe-ancestors 'none'prevent malicious iframe embedding.",
+      "Strict Transport Security:Enforce HTTPS and HSTS preloading withmax-age=63072000; includeSubDomains; preload."
     ],
     "metrics": [
-      "Operational Impact: MIME Sniffing Defense - X-Content-Type-Options: nosniff prevents browsers from misinterpreting non-executable files as executable scripts.",
+      "Operational Impact: MIME Sniffing Defense - X-Content-Type-Options: nosniffprevents browsers from misinterpreting non-executable files as executable scripts.",
       "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
@@ -1066,22 +1066,19 @@
       "ebpfmonitoring"
     ],
     "code_snippet": [
-      "// C code using eBPF CO-RE struct relocation",
-      "SEC(\"kprobe/sys_execve\")",
-      "int BPF_KPROBE(trace_exec, const char *filename) {",
-      "    u32 pid = bpf_get_current_pid_tgid() >> 32;",
-      "    bpf_printk(\"Execve triggered by PID %d\\n\", pid);",
-      "    return 0;",
-      "}",
-      "char LICENSE[] SEC(\"license\") = \"GPL\";"
+      "// Declaring a BPF Ring Buffer in C",
+      "struct {",
+      "    __uint(type, BPF_MAP_TYPE_RINGBUF);",
+      "    __uint(max_entries, 256 * 1024 /* 256 KB */);",
+      "} events SEC(\".maps\");"
     ],
     "invariants": [
-      "Kernel-Level Visibility: eBPF enables non-intrusive tracing of system calls, process executions, network packets, and file I/O directly within kernel space.",
-      "Zero Context-Switch Overhead: In-kernel JIT-compiled execution avoids costly user-to-kernel space context switches.",
-      "Safety-Verified Execution: The in-kernel eBPF verifier proves program safety (no memory corruption, no infinite loops) prior to loading."
+      "Kernel-Level Visibility:eBPF enables non-intrusive tracing of system calls, process executions, network packets, and file I/O directly within kernel space.",
+      "Zero Context-Switch Overhead:In-kernel JIT-compiled execution avoids costly user-to-kernel space context switches.",
+      "Safety-Verified Execution:The in-kernel eBPF verifier proves program safety (no memory corruption, no infinite loops) prior to loading."
     ],
     "metrics": [
-      "Operational Impact: Real-Time Threat Detection - Hook into kprobes, uprobes, and tracepoints to catch container breakouts and rootkit persistence instantly.",
+      "Operational Impact: Real-Time Threat Detection - Hook intokprobes,uprobes, andtracepointsto catch container breakouts and rootkit persistence instantly.",
       "Packet Processing: In-kernel JIT bytecode evaluation with zero context-switch overhead.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
@@ -1234,18 +1231,17 @@
       "zerotrustssh"
     ],
     "code_snippet": [
-      "# Sign engineer's public key valid for 8 hours for principal 'admin-role'",
-      "ssh-keygen -s /etc/ssh/ca/ssh_user_ca \\",
-      "  -I \"engineer@company.com\" \\",
-      "  -n \"admin-role\" \\",
+      "# Sign an engineer key for 8 hours of access",
+      "ssh-keygen -s /etc/ssh/ssh_user_ca \\",
+      "  -I engineer_john \\",
+      "  -n \"ubuntu,admin\" \\",
       "  -V +8h \\",
-      "  -z 20260803001 \\",
-      "  id_ed25519_sk.pub"
+      "  ~/.ssh/id_ed25519_sk.pub"
     ],
     "invariants": [
-      "Eliminate Static Keys: Migrate from static authorized_keys deployment to short-lived SSH Certificates.",
-      "FIDO2 Hardware Bound: Enforce ed25519-sk key pairs tied to physical security tokens (YubiKey/FIDO2).",
-      "Centralized Authority: Use an offline SSH Certificate Authority (CA) to sign user access requests with automatic 8-hour expiration."
+      "Eliminate Static Keys:Migrate from staticauthorized_keysdeployment to short-lived SSH Certificates.",
+      "FIDO2 Hardware Bound:Enforceed25519-skkey pairs tied to physical security tokens (YubiKey/FIDO2).",
+      "Centralized Authority:Use an offline SSH Certificate Authority (CA) to sign user access requests with automatic 8-hour expiration."
     ],
     "metrics": [
       "Operational Impact: Zero Administrative Sprawl - Adding or revoking user permissions requires zero modifications on target servers.",

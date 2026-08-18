@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
 <meta charset="utf-8"/>
 <link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
 <meta content="#09090b" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force — zyekh.com</title>
-<meta content="Security guide for configuring  using the interactive <a href="/tools/pam-generator.html">PAM Faillock Config Generator</a>pam_faillock to prevent SSH and console brute-force authentication attacks on RHEL, Debian, and Ubuntu systems." name="description"/>
+<meta content="Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force" name="description"/>
 <meta content="Zyekh Abdul Qadir Jailani" name="author"/>
 <link href="https://zyekh.com/blog/pam-tally2-faillock-account-lockout-policy-guide.html" rel="canonical"/>
 
@@ -15,7 +14,7 @@
 <meta content="zyekh.com" property="og:site_name"/>
 <meta content="article" property="og:type"/>
 <meta content="Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force" property="og:title"/>
-<meta content="Security guide for configuring pam_faillock to prevent SSH and console brute-force authentication attacks on RHEL, Debian, and Ubuntu systems." property="og:description"/>
+<meta content="Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force" property="og:description"/>
 <meta content="https://zyekh.com/blog/pam-tally2-faillock-account-lockout-policy-guide.html" property="og:url"/>
 <meta content="https://zyekh.com" property="article:publisher"/>
 <meta content="2026-08-04T00:00:00Z" property="article:published_time"/>
@@ -23,13 +22,15 @@
 <meta content="@zyekh" name="twitter:creator"/>
 <meta content="@zyekh" name="twitter:site"/>
 <meta content="Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force" name="twitter:title"/>
-<meta content="Security guide for configuring pam_faillock to prevent SSH and console brute-force authentication attacks on RHEL, Debian, and Ubuntu systems." name="twitter:description"/>
+<meta content="Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force" name="twitter:description"/>
 <!-- Favicons & Manifest -->
 <link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
 <link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
 <link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="/manifest.json" rel="manifest"/>
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
 
 <!-- Schema.org JSON-LD -->
 <script type="application/ld+json">
@@ -39,12 +40,12 @@
     {
       "@type": "TechArticle",
       "headline": "Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force",
-      "description": "Security guide for configuring pam_faillock to prevent SSH and console brute-force authentication attacks on RHEL, Debian, and Ubuntu systems.",
+      "description": "Enforcing Linux Account Lockout Policies with PAM Faillock against Brute Force",
       "url": "https://zyekh.com/blog/pam-tally2-faillock-account-lockout-policy-guide.html",
-      "image": "https://zyekh.com/assets/img/pam-faillock.jpg",
+      "image": "/assets/img/pam-faillock.jpg",
       "datePublished": "2026-08-04",
       "dateModified": "2026-08-04",
-      "wordCount": 1500,
+      "wordCount": 852,
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
@@ -93,7 +94,7 @@
           "name": "How do I check and reset failed login attempts for a user?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Run faillock --user <username> to view attempt counts, and faillock --user <username> --reset to unlock."
+            "text": "Run faillock --userto view attempt counts, and faillock --user--reset to unlock."
           }
         },
         {
@@ -114,14 +115,13 @@
 <link href="/assets/css/blog.min.css?v=24f8ee5d" integrity="sha384-FHcCAed8NnoQ8PJalL8EaebbRRV2RQjKmhkwFkQ+AbHy8Uj7cfNB2x+qbKQvygTw" crossorigin="anonymous" rel="stylesheet"/>
 <script defer="" src="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous"></script>
 <script defer="" src="/assets/js/article-actions.min.js?v=08e3ed60" integrity="sha384-vxj8HnyBDfHF87frqcywrS+Iipxk78yQh0UWUf9O5bDIULyCBSLTOd0a1JnFUb0Q" crossorigin="anonymous"></script>
-  <style id="antiClickjack">body{display:none !important;}</style>
-<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-              <link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
+  <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+  <link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous" as="script">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
   <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
   <meta property="og:image" content="https://zyekh.com/assets/img/social-cards/pam-tally2-faillock-account-lockout-policy-guide-dark-landscape.png?v=21e51388">
   <meta property="og:image:secure_url" content="https://zyekh.com/assets/img/social-cards/pam-tally2-faillock-account-lockout-policy-guide-dark-landscape.png?v=21e51388">
   <meta property="og:image:type" content="image/png">
@@ -150,7 +150,7 @@
       <div class="meta-info">
         <span>By Zyekh Abdul Qadir Jailani</span>
         <time class="meta-item" datetime="2026-08-04T00:00:00Z">Published: 2026-08-04</time>
-        <span>13 min read (1500+ Words)</span>
+        <span>12 min read (852+ Words)</span>
       </div>
       <div class="article-actions">
         <button class="btn-share" id="shareBtn" type="button">Share</button>
@@ -263,11 +263,11 @@ faillock --user ubuntu --reset</code></pre>
       <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
 <details>
   <summary>How do I check and reset failed login attempts for a user?</summary>
-  <p class="faq-answer">Run faillock --user <username> to view attempt counts, and faillock --user <username> --reset to unlock.</p>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Run faillock --userto view attempt counts, and faillock --user--reset to unlock.</p>
 </details>
 <details>
   <summary>Will pam_faillock lock out users logging in via SSH public keys?</summary>
-  <p class="faq-answer">No. SSH public key authentication bypasses PAM auth modules entirely. pam_faillock only affects password-based authentication attempts.</p>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">No. SSH public key authentication bypasses PAM auth modules entirely. pam_faillock only affects password-based authentication attempts.</p>
 </details>
     </div>
 
@@ -277,57 +277,28 @@ faillock --user ubuntu --reset</code></pre>
       <div class="author-info">
         <h4>Written by Zyekh Abdul Qadir Jailani</h4>
         <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
-        <div class="author-social-links note-sm" style="margin-top:0\.4rem;">
-          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
-          <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
-          <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
-          <a href="mailto:zyekhabdulqadirjailani@zyekh.com" style="font-weight:600">Email</a> •
-          <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener noreferrer" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener noreferrer" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener noreferrer" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="/.well-known/security.txt" rel="noopener noreferrer" style="font-weight:600" target="_blank">Security Policy</a> •
+          <a href="/gpg-key.asc" rel="noopener noreferrer" style="font-weight:600" target="_blank">PGP Key</a>
         </div>
       </div>
     </div>
 
-                                        <!-- Contextual Interactive Tool Bridge -->
-    <div class="article-cross-links tool-bridge-card">
-      <div class="tool-bridge-info">
-        <span class="tool-bridge-badge">[ INTERACTIVE GENERATOR // PAM & AUTH ]</span>
-        <h4 class="tool-bridge-title">Linux PAM & Faillock Policy Generator</h4>
-        <p class="tool-bridge-desc">Build production-ready faillock.conf account lockout policies and PAM authentication stacks 100% offline.</p>
-      </div>
-      <a class="tool-bridge-btn" href="/tools/pam-generator.html">Generate PAM & Faillock Policy -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/pam-generator.html">Generate PAM & Faillock Policy -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/password.html">Analyze Password Strength -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/password.html">Analyze Password Strength -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/password.html">Analyze Password Strength -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/password.html">Analyze Password Strength -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/password.html">Analyze Password Strength -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/password.html">Analyze Password Strength -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/password.html">Analyze Password Strength -></a>
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/pam-generator.html">Generate PAM & Faillock Policy -></a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
     </div>
   </main>
 
   <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-      <a href="/about/" class="text-muted text-sm">About</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/tools/" class="text-muted text-sm">53 Web Tools</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blog/" class="text-muted text-sm">45 Articles</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-    </div>
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
   </footer>
 </article>
 </body>

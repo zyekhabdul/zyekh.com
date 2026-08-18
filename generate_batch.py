@@ -208,6 +208,8 @@ def generate_article_html(article_data, current_cache_ver=None):
 <link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
 <link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="/manifest.json" rel="manifest"/>
+<style id="antiClickjack">body{{display:none !important;}}</style>
+<script type="text/javascript">if(self===top){{var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}}else{{top.location=self.location;}}</script>
 
 <!-- Schema.org JSON-LD -->
 <script type="application/ld+json">
@@ -254,7 +256,7 @@ def generate_article_html(article_data, current_cache_ver=None):
     <figure class="article-hero-wrapper">
       <picture>
         <source srcset="{hero_img_rel.replace('.jpg', '.webp')}" type="image/webp"/>
-        <img alt="{title}" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="lazy" src="{hero_img_rel}" width="1280"/>
+        <img alt="{title}" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="{hero_img_rel}" width="1280"/>
       </picture>
       <figcaption class="hero-caption">{hero_caption}</figcaption>
     </figure>

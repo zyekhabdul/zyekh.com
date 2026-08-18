@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
 <meta charset="utf-8"/>
 <link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
 <meta content="#09090b" name="theme-color"/>
@@ -11,6 +9,7 @@
 <meta content="Production guide for hardening Nginx reverse proxies with TLS 1.3, rate limiting, buffer overflow defense, and security headers." name="description"/>
 <meta content="Zyekh Abdul Qadir Jailani" name="author"/>
 <link href="https://zyekh.com/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html" rel="canonical"/>
+
 <!-- Open Graph / Social Meta Tags -->
 <meta content="zyekh.com" property="og:site_name"/>
 <meta content="article" property="og:type"/>
@@ -30,6 +29,9 @@
 <link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
 <link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="/manifest.json" rel="manifest"/>
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+
 <!-- Schema.org JSON-LD -->
 <script type="application/ld+json">
 {
@@ -40,10 +42,10 @@
       "headline": "Nginx Reverse Proxy Security Hardening Blueprint for 2026",
       "description": "Production guide for hardening Nginx reverse proxies with TLS 1.3, rate limiting, buffer overflow defense, and security headers.",
       "url": "https://zyekh.com/blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html",
-      "image": "https://zyekh.com/assets/img/nginx-security.jpg",
+      "image": "/assets/img/nginx-security.jpg",
       "datePublished": "2026-08-03",
       "dateModified": "2026-08-03",
-      "wordCount": 1400,
+      "wordCount": 898,
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
@@ -113,14 +115,13 @@
 <link href="/assets/css/blog.min.css?v=24f8ee5d" integrity="sha384-FHcCAed8NnoQ8PJalL8EaebbRRV2RQjKmhkwFkQ+AbHy8Uj7cfNB2x+qbKQvygTw" crossorigin="anonymous" rel="stylesheet"/>
 <script defer="" src="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous"></script>
 <script defer="" src="/assets/js/article-actions.min.js?v=08e3ed60" integrity="sha384-vxj8HnyBDfHF87frqcywrS+Iipxk78yQh0UWUf9O5bDIULyCBSLTOd0a1JnFUb0Q" crossorigin="anonymous"></script>
-<style id="antiClickjack">body{display:none !important;}</style>
-<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-<link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
+  <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+  <link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous" as="script">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
   <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
   <meta property="og:image" content="https://zyekh.com/assets/img/social-cards/nginx-reverse-proxy-security-hardening-blueprint-2026-dark-landscape.png?v=5dda1cdf">
   <meta property="og:image:secure_url" content="https://zyekh.com/assets/img/social-cards/nginx-reverse-proxy-security-hardening-blueprint-2026-dark-landscape.png?v=5dda1cdf">
   <meta property="og:image:type" content="image/png">
@@ -133,62 +134,69 @@
 <body>
 <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
 <div class="reading-progress-bar"></div>
+
 <!-- Header Navigation -->
 <site-nav active="blog"></site-nav>
+
 <article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
-<!-- Back to Blog -->
-<a class="back-link" href="/blog/">← Back to Articles</a>
-<!-- Article Header -->
-<header class="article-header">
-<span class="meta-tag">Web Security • Nginx Hardening</span>
-<h1 class="article-title">Nginx Reverse Proxy Security Hardening Blueprint for 2026</h1>
-<div class="article-meta">
-<div class="meta-info">
-<span>By Zyekh Abdul Qadir Jailani</span>
-<time class="meta-item" datetime="2026-08-03T00:00:00Z">Published: 2026-08-03</time>
-<span>10 min read (1400+ Words)</span>
-</div>
-<div class="article-actions">
-<button class="btn-share" id="shareBtn" type="button">Share</button>
-<button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
-<button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
-</div>
-</div>
-</header>
-<!-- Article Body Content -->
-<main class="article-content">
-<!-- Featured Hero Image -->
-<figure class="article-hero-wrapper">
-<picture>
-<source srcset="/assets/img/nginx-security.webp" type="image/webp"/>
-<img alt="Nginx Reverse Proxy Security Hardening Blueprint for 2026" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="/assets/img/nginx-security.jpg" width="1280"/>
-</picture>
-<figcaption class="hero-caption">Production Nginx Security Configuration Blueprint for Cloud Instances</figcaption>
-</figure>
-<!-- Executive Summary / Takeaways Box -->
-<div class="exec-summary">
-<div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
-<ul>
+  <!-- Back to Blog -->
+  <a class="back-link" href="/blog/">← Back to Articles</a>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="meta-tag">Web Security • Nginx Hardening</span>
+    <h1 class="article-title">Nginx Reverse Proxy Security Hardening Blueprint for 2026</h1>
+    <div class="article-meta">
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="2026-08-03T00:00:00Z">Published: 2026-08-03</time>
+        <span>12 min read (898+ Words)</span>
+      </div>
+      <div class="article-actions">
+        <button class="btn-share" id="shareBtn" type="button">Share</button>
+        <button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
+        <button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Article Body Content -->
+  <main class="article-content">
+    <!-- Featured Hero Image -->
+    <figure class="article-hero-wrapper">
+      <picture>
+        <source srcset="/assets/img/nginx-security.webp" type="image/webp"/>
+        <img alt="Nginx Reverse Proxy Security Hardening Blueprint for 2026" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="/assets/img/nginx-security.jpg" width="1280"/>
+      </picture>
+      <figcaption class="hero-caption">Production Nginx Security Configuration Blueprint for Cloud Instances</figcaption>
+    </figure>
+
+    <!-- Executive Summary / Takeaways Box -->
+    <div class="exec-summary">
+      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+      <ul>
 <li>Disable Nginx Server Tokens: Suppress server version disclosure in HTTP headers.</li>
 <li>Buffer Overflow Defense: Restrict client_body_buffer_size and client_max_body_size.</li>
 <li>Rate Limiting: Implement limit_req_zone to mitigate HTTP flood attacks.</li>
 <li>TLS 1.3 Strict Ciphers: Mandate ECDHE-ECDSA-AES128-GCM-SHA256 and modern TLS protocols.</li>
-</ul>
-</div>
-<!-- Table of Contents -->
-<nav class="toc-card">
-<div class="toc-title">Table of Contents</div>
-<ol class="toc-list">
-<li><a href="#server-tokens-disabling">1. Disabling Server Tokens &amp; Information Disclosure</a></li>
-<li><a href="#buffer-overflow-defense">2. Buffer Size Allocation &amp; HTTP Request Body Limits</a></li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc-card">
+      <div class="toc-title">Table of Contents</div>
+      <ol class="toc-list">
+<li><a href="#server-tokens-disabling">1. Disabling Server Tokens & Information Disclosure</a></li>
+<li><a href="#buffer-overflow-defense">2. Buffer Size Allocation & HTTP Request Body Limits</a></li>
 <li><a href="#rate-limiting-http-floods">3. Mitigating HTTP Floods via Rate Limiting Zones</a></li>
-<li><a href="#tls-hardening-ciphers">4. TLS 1.3 Enforcement &amp; Cipher Suite Hardening</a></li>
+<li><a href="#tls-hardening-ciphers">4. TLS 1.3 Enforcement & Cipher Suite Hardening</a></li>
 <li><a href="#security-headers-setup">5. Injecting Mandatory HTTP Security Headers</a></li>
-<li><a href="#verification-and-audit">6. Verification &amp; Security Audit Checklist</a></li>
+<li><a href="#verification-and-audit">6. Verification & Security Audit Checklist</a></li>
 <li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
-</ol>
-</nav>
-<h2 id="server-tokens-disabling">1. Disabling Server Tokens &amp; Information Disclosure</h2>
+      </ol>
+    </nav>
+
+<h2 id="server-tokens-disabling">1. Disabling Server Tokens & Information Disclosure</h2>
 <p>By default, Nginx broadcasts its exact version number in HTTP response headers and 40x/50x error pages (e.g., Server: nginx/1.24.0). Attackers use this version information to query public CVE databases for unpatched vulnerabilities.</p>
 <p>Suppressing server tokens is the first step in reducing information leakage across public endpoints. When server_tokens is disabled, Nginx strips the version number from all HTTP response headers and standard error pages. HTTP request headers, TLS ciphers, and rate-limit responses can be tested using our <a href="/tools/curl.html">Curl Command Builder</a>.</p>
 <p>In production environments with headers-more-nginx-module installed, you can also completely purge the 'Server' header string to prevent fingerprinting.</p>
@@ -197,7 +205,8 @@ http {
     server_tokens off;
     more_clear_headers Server;
 }</code></pre>
-<h2 id="buffer-overflow-defense">2. Buffer Size Allocation &amp; HTTP Request Body Limits</h2>
+
+<h2 id="buffer-overflow-defense">2. Buffer Size Allocation & HTTP Request Body Limits</h2>
 <p>Unrestricted buffer sizes expose Nginx worker processes to memory exhaustion and buffer overflow exploits. Excessive client payload sizes allow attackers to fill RAM buffers, triggering kernel OOM (Out Of Memory) killers.</p>
 <p>To defend against large payload POST attacks and slowloris attempts, enforce explicit limits on client body buffers, header buffers, and max payload sizes.</p>
 <p>If a client sends a request larger than client_max_body_size, Nginx immediately returns HTTP status 413 (Payload Too Large) without attempting to buffer data to disk.</p>
@@ -206,6 +215,7 @@ client_body_buffer_size 16k;
 client_header_buffer_size 1k;
 client_max_body_size 8M;
 large_client_header_buffers 2 1k;</code></pre>
+
 <h2 id="rate-limiting-http-floods">3. Mitigating HTTP Floods via Rate Limiting Zones</h2>
 <p>Layer 7 HTTP flood attacks attempt to exhaust Nginx worker connections by sending thousands of requests per second. Configuring rate-limiting zones using limit_req_zone enforces request thresholds per IP address.</p>
 <p>The limit_req_zone directive uses the leaky bucket algorithm. Requests exceeding the defined rate are buffered up to the burst limit; additional requests above burst are dropped immediately with HTTP status 503 (Service Unavailable).</p>
@@ -218,7 +228,8 @@ location / {
     limit_req zone=one burst=20 nodelay;
     proxy_pass http://127.0.0.1:8080;
 }</code></pre>
-<h2 id="tls-hardening-ciphers">4. TLS 1.3 Enforcement &amp; Cipher Suite Hardening</h2>
+
+<h2 id="tls-hardening-ciphers">4. TLS 1.3 Enforcement & Cipher Suite Hardening</h2>
 <p>Legacy TLS protocols (TLS 1.0 and TLS 1.1) and weak ciphers (RC4, 3DES) contain cryptographic flaws vulnerable to POODLE, BEAST, and SWEET32 attacks. Production reverse proxies must enforce TLS 1.2 and TLS 1.3 exclusively.</p>
 <p>Mandating modern ciphers ensures Perfect Forward Secrecy (PFS), protecting intercepted traffic from decryption even if the server's private key is compromised in the future.</p>
 <p>Configure strict session caching and enable OCSP stapling to minimize TLS handshake latency for mobile clients.</p>
@@ -230,6 +241,7 @@ ssl_session_timeout 1d;
 ssl_session_cache shared:SSL:10m;
 ssl_stapling on;
 ssl_stapling_verify on;</code></pre>
+
 <h2 id="security-headers-setup">5. Injecting Mandatory HTTP Security Headers</h2>
 <p>HTTP security headers instruct client browsers to enforce strict security policies, blocking XSS, clickjacking, MIME-sniffing, and credential interception.</p>
 <p>Add strict headers across all server blocks using the add_header directive with the always flag to ensure headers are sent on error responses as well.</p>
@@ -239,7 +251,8 @@ add_header X-Content-Type-Options "nosniff" always;
 add_header Referrer-Policy "strict-origin-when-cross-origin" always;
 add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
 add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;</code></pre>
-<h2 id="verification-and-audit">6. Verification &amp; Security Audit Checklist</h2>
+
+<h2 id="verification-and-audit">6. Verification & Security Audit Checklist</h2>
 <p>After applying Nginx security hardening configurations, verify syntax correctness using nginx -t before reloading the daemon.</p>
 <p>Use cURL to audit response headers and SSL Labs to verify TLS cipher suite compliance.</p>
 <pre><code class="language-bash"># Test configuration syntax and reload Nginx
@@ -247,77 +260,49 @@ systemctl reload nginx
 
 # Audit HTTP response headers with cURL
 curl -I https://zyekh.com/</code></pre>
-<!-- FAQ Section -->
-<div class="faq-section">
-<h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
 <details>
-<summary>What is the difference between limit_req and limit_conn in Nginx?</summary>
-<p class="faq-answer">limit_req limits the rate of incoming HTTP requests per second, while limit_conn limits the total number of simultaneous active TCP connections per IP.</p>
+  <summary>What is the difference between limit_req and limit_conn in Nginx?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">limit_req limits the rate of incoming HTTP requests per second, while limit_conn limits the total number of simultaneous active TCP connections per IP.</p>
 </details>
 <details>
-<summary>Why use ssl_prefer_server_ciphers off in TLS 1.3?</summary>
-<p class="faq-answer">In TLS 1.3, cipher negotiation is simplified and setting ssl_prefer_server_ciphers off allows clients to choose their most optimized cipher suite safely.</p>
+  <summary>Why use ssl_prefer_server_ciphers off in TLS 1.3?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">In TLS 1.3, cipher negotiation is simplified and setting ssl_prefer_server_ciphers off allows clients to choose their most optimized cipher suite safely.</p>
 </details>
-</div>
-<!-- Author Bio Card (EEAT & DFIR Branding) -->
-<div class="author-card">
-<img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
-<div class="author-info">
-<h4>Written by Zyekh Abdul Qadir Jailani</h4>
-<p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
-<div class="author-social-links note-sm" style="margin-top:0\.4rem;">
-<a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
-          <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
-          <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
-          <a href="mailto:zyekhabdulqadirjailani@zyekh.com" style="font-weight:600">Email</a> •
-          <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
-</div>
-</div>
-</div>
-<!-- Contextual Interactive Tool Bridge -->
-<div class="article-cross-links tool-bridge-card">
-<div class="tool-bridge-info">
-<span class="tool-bridge-badge">[ INTERACTIVE TOOL // WEB SEC ]</span>
-<h4 class="tool-bridge-title">cURL Command Builder &amp; Security Header Tester</h4>
-<p class="tool-bridge-desc">Generate hardened cURL commands to verify TLS 1.3 handshakes, HSTS, CSP, and reverse proxy upstream headers.</p>
-</div>
-<a class="tool-bridge-btn" href="/tools/curl.html">Build cURL Header Check -&gt;</a>
-</div>
-<a class="tool-bridge-btn" href="/tools/curl.html">Build cURL Header Check -&gt;</a>
+    </div>
 
-<a class="tool-bridge-btn" href="/tools/curl.html">Build cURL Header Check -&gt;</a>
+    <!-- Author Bio Card (EEAT & DFIR Branding) -->
+    <div class="author-card">
+      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+      <div class="author-info">
+        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener noreferrer" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener noreferrer" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener noreferrer" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="/.well-known/security.txt" rel="noopener noreferrer" style="font-weight:600" target="_blank">Security Policy</a> •
+          <a href="/gpg-key.asc" rel="noopener noreferrer" style="font-weight:600" target="_blank">PGP Key</a>
+        </div>
+      </div>
+    </div>
 
-<a class="tool-bridge-btn" href="/tools/curl.html">Build cURL Header Check -&gt;</a>
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/curl.html">Build cURL Header Check -></a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
+    </div>
+  </main>
 
-<a class="tool-bridge-btn" href="/tools/curl.html">Build cURL Header Check -&gt;</a>
-
-<a class="tool-bridge-btn" href="/tools/curl.html">Build cURL Header Check -&gt;</a>
-
-<a class="tool-bridge-btn" href="/tools/curl.html">Build cURL Header Check -&gt;</a>
-
-<a class="tool-bridge-btn" href="/tools/curl.html">Build cURL Header Check -&gt;</a>
-
-<a class="tool-bridge-btn" href="/tools/curl.html">Build cURL Header Check -&gt;</a>
-
-</main>
-<!-- Footer -->
-<footer class="footer" role="contentinfo">
-<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-<a class="text-muted text-sm" href="/about/">About</a>
-<span class="text-muted text-sm">·</span>
-<a class="text-muted text-sm" href="/tools/">53 Web Tools</a>
-<span class="text-muted text-sm">·</span>
-<a class="text-muted text-sm" href="/blog/">45 Articles</a>
-<span class="text-muted text-sm">·</span>
-<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
-<span class="text-muted text-sm">·</span>
-<a class="text-muted text-sm" href="https://shop.zyekh.com" target="_blank" rel="noopener noreferrer">Official Store</a>
-<span class="text-muted text-sm">·</span>
-
-<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
-</div>
-</footer>
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
 </article>
 </body>
 </html>

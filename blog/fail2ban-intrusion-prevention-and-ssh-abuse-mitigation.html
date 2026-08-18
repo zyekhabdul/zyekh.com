@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
 <meta charset="utf-8"/>
 <link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
 <meta content="#09090b" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Automated Intrusion Prevention: Fail2ban Configuration for SSH &amp; Nginx Protection — zyekh.com</title>
+<title>Automated Intrusion Prevention: Fail2ban Configuration for SSH & Nginx Protection — zyekh.com</title>
 <meta content="Comprehensive blueprint for deploying Fail2ban to detect brute-force attacks, automate IP bans via iptables/nftables, and configure recidive long-term bans." name="description"/>
 <meta content="Zyekh Abdul Qadir Jailani" name="author"/>
 <link href="https://zyekh.com/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html" rel="canonical"/>
+
 <!-- Open Graph / Social Meta Tags -->
 <meta content="zyekh.com" property="og:site_name"/>
 <meta content="article" property="og:type"/>
-<meta content="Automated Intrusion Prevention: Fail2ban Configuration for SSH &amp; Nginx Protection" property="og:title"/>
+<meta content="Automated Intrusion Prevention: Fail2ban Configuration for SSH & Nginx Protection" property="og:title"/>
 <meta content="Comprehensive blueprint for deploying Fail2ban to detect brute-force attacks, automate IP bans via iptables/nftables, and configure recidive long-term bans." property="og:description"/>
 <meta content="https://zyekh.com/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html" property="og:url"/>
 <meta content="https://zyekh.com" property="article:publisher"/>
@@ -22,7 +21,7 @@
 <meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
 <meta content="@zyekh" name="twitter:creator"/>
 <meta content="@zyekh" name="twitter:site"/>
-<meta content="Automated Intrusion Prevention: Fail2ban Configuration for SSH &amp; Nginx Protection" name="twitter:title"/>
+<meta content="Automated Intrusion Prevention: Fail2ban Configuration for SSH & Nginx Protection" name="twitter:title"/>
 <meta content="Comprehensive blueprint for deploying Fail2ban to detect brute-force attacks, automate IP bans via iptables/nftables, and configure recidive long-term bans." name="twitter:description"/>
 <!-- Favicons & Manifest -->
 <link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
@@ -30,6 +29,9 @@
 <link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
 <link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="/manifest.json" rel="manifest"/>
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+
 <!-- Schema.org JSON-LD -->
 <script type="application/ld+json">
 {
@@ -40,10 +42,10 @@
       "headline": "Automated Intrusion Prevention: Fail2ban Configuration for SSH & Nginx Protection",
       "description": "Comprehensive blueprint for deploying Fail2ban to detect brute-force attacks, automate IP bans via iptables/nftables, and configure recidive long-term bans.",
       "url": "https://zyekh.com/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html",
-      "image": "https://zyekh.com/assets/img/fail2ban-defense.jpg",
+      "image": "/assets/img/fail2ban-defense.jpg",
       "datePublished": "2026-08-04",
       "dateModified": "2026-08-04",
-      "wordCount": 1550,
+      "wordCount": 1034,
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
@@ -92,7 +94,7 @@
           "name": "How do I unban an IP address locked out by Fail2ban?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Execute fail2ban-client set sshd unbanip <IP_ADDRESS> to remove the ban rule immediately."
+            "text": "Execute fail2ban-client set sshd unbanipto remove the ban rule immediately."
           }
         },
         {
@@ -113,94 +115,101 @@
 <link href="/assets/css/blog.min.css?v=24f8ee5d" integrity="sha384-FHcCAed8NnoQ8PJalL8EaebbRRV2RQjKmhkwFkQ+AbHy8Uj7cfNB2x+qbKQvygTw" crossorigin="anonymous" rel="stylesheet"/>
 <script defer="" src="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous"></script>
 <script defer="" src="/assets/js/article-actions.min.js?v=08e3ed60" integrity="sha384-vxj8HnyBDfHF87frqcywrS+Iipxk78yQh0UWUf9O5bDIULyCBSLTOd0a1JnFUb0Q" crossorigin="anonymous"></script>
-<style id="antiClickjack">body{display:none !important;}</style>
-<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-<link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
+  <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+  <link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous" as="script">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
   <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
   <meta property="og:image" content="https://zyekh.com/assets/img/social-cards/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation-dark-landscape.png?v=8901c828">
   <meta property="og:image:secure_url" content="https://zyekh.com/assets/img/social-cards/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation-dark-landscape.png?v=8901c828">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="2400">
   <meta property="og:image:height" content="1260">
-  <meta property="og:image:alt" content="Technical specification card for Automated Intrusion Prevention: Fail2ban Configuration for SSH &amp;amp; Nginx Protection">
+  <meta property="og:image:alt" content="Technical specification card for Automated Intrusion Prevention: Fail2ban Configuration for SSH &amp; Nginx Protection">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://zyekh.com/assets/img/social-cards/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation-dark-landscape.png?v=8901c828">
 </head>
 <body>
 <!-- Pure CSS Scroll-Driven Reading Progress Bar -->
 <div class="reading-progress-bar"></div>
+
 <!-- Header Navigation -->
 <site-nav active="blog"></site-nav>
+
 <article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
-<!-- Back to Blog -->
-<a class="back-link" href="/blog/">← Back to Articles</a>
-<!-- Article Header -->
-<header class="article-header">
-<span class="meta-tag">Cyber Security • Fail2ban Defense</span>
-<h1 class="article-title">Automated Intrusion Prevention: Fail2ban Configuration for SSH &amp; Nginx Protection</h1>
-<div class="article-meta">
-<div class="meta-info">
-<span>By Zyekh Abdul Qadir Jailani</span>
-<time class="meta-item" datetime="2026-08-04T00:00:00Z">Published: 2026-08-04</time>
-<span>14 min read (1550+ Words)</span>
-</div>
-<div class="article-actions">
-<button class="btn-share" id="shareBtn" type="button">Share</button>
-<button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
-<button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
-</div>
-</div>
-</header>
-<!-- Article Body Content -->
-<main class="article-content">
-<!-- Featured Hero Image -->
-<figure class="article-hero-wrapper">
-<picture>
-<source srcset="/assets/img/fail2ban-defense.webp" type="image/webp"/>
-<img alt="Automated Intrusion Prevention: Fail2ban Configuration for SSH &amp; Nginx Protection" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="/assets/img/fail2ban-defense.jpg" width="1280"/>
-</picture>
-<figcaption class="hero-caption">Fail2ban Automated Intrusion Detection &amp; IP Banning Architecture</figcaption>
-</figure>
-<!-- Executive Summary / Takeaways Box -->
-<div class="exec-summary">
-<div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
-<ul>
+  <!-- Back to Blog -->
+  <a class="back-link" href="/blog/">← Back to Articles</a>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="meta-tag">Cyber Security • Fail2ban Defense</span>
+    <h1 class="article-title">Automated Intrusion Prevention: Fail2ban Configuration for SSH & Nginx Protection</h1>
+    <div class="article-meta">
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="2026-08-04T00:00:00Z">Published: 2026-08-04</time>
+        <span>12 min read (1034+ Words)</span>
+      </div>
+      <div class="article-actions">
+        <button class="btn-share" id="shareBtn" type="button">Share</button>
+        <button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
+        <button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Article Body Content -->
+  <main class="article-content">
+    <!-- Featured Hero Image -->
+    <figure class="article-hero-wrapper">
+      <picture>
+        <source srcset="/assets/img/fail2ban-defense.webp" type="image/webp"/>
+        <img alt="Automated Intrusion Prevention: Fail2ban Configuration for SSH & Nginx Protection" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="/assets/img/fail2ban-defense.jpg" width="1280"/>
+      </picture>
+      <figcaption class="hero-caption">Fail2ban Automated Intrusion Detection & IP Banning Architecture</figcaption>
+    </figure>
+
+    <!-- Executive Summary / Takeaways Box -->
+    <div class="exec-summary">
+      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+      <ul>
 <li>Jail Configuration: Override default settings safely using jail.local instead of jail.conf.</li>
 <li>Recidive Jails: Deploy long-term (1-week+) bans for repeat offender IP addresses.</li>
 <li>Nginx 40x Log Monitoring: Ban aggressive web scanners triggering repeated 404/403 HTTP errors.</li>
 <li>NFTables Backend: Migrate from legacy iptables actions to high-performance nftables banning.</li>
-</ul>
-</div>
-<!-- Table of Contents -->
-<nav class="toc-card">
-<div class="toc-title">Table of Contents</div>
-<ol class="toc-list">
-<li><a href="#fail2ban-architecture">1. Fail2ban Architecture &amp; Log Parsing Engine</a></li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc-card">
+      <div class="toc-title">Table of Contents</div>
+      <ol class="toc-list">
+<li><a href="#fail2ban-architecture">1. Fail2ban Architecture & Log Parsing Engine</a></li>
 <li><a href="#fail2ban-jail-local">2. Deploying Production Jails via jail.local</a></li>
 <li><a href="#fail2ban-recidive-jail">3. Recidive Jails for Persistent Repeat Attackers</a></li>
 <li><a href="#fail2ban-nginx-scanners">4. Mitigating Web Scanners via Nginx Log Filters</a></li>
-<li><a href="#fail2ban-nftables-backend">5. NFTables Backend &amp; High-Performance Action Tuning</a></li>
-<li><a href="#fail2ban-admin-cli">6. Administration &amp; Unban Command Reference</a></li>
+<li><a href="#fail2ban-nftables-backend">5. NFTables Backend & High-Performance Action Tuning</a></li>
+<li><a href="#fail2ban-admin-cli">6. Administration & Unban Command Reference</a></li>
 <li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
-</ol>
-</nav>
-<h2 id="fail2ban-architecture">1. Fail2ban Architecture &amp; Log Parsing Engine</h2>
+      </ol>
+    </nav>
+
+<h2 id="fail2ban-architecture">1. Fail2ban Architecture & Log Parsing Engine</h2>
 <p>Fail2ban acts as an automated intrusion prevention framework for Linux systems. It operates by continuously monitoring system log files (such as /var/log/auth.log, /var/log/syslog, or systemd journald) for failed authentication attempts matching regular expression filters (failregex).</p>
 <p>When an IP address exceeds the defined threshold of failed login attempts within a specified observation window (findtime), Fail2ban dynamically invokes netfilter firewall actions to block the attacking IP address for a duration defined by bantime. Account lockout thresholds and brute-force mitigation rules can be generated via our <a href="/tools/pam-generator.html">Linux PAM Faillock Config Generator</a>.</p>
 <p>Log parsing runs asynchronously via systemd journald or pyinotify file system watchers. This decoupled architecture guarantees minimal CPU overhead even on high-throughput web server instances processing millions of requests daily.</p>
 <p>By automating firewall responses at the network boundary, Fail2ban prevents credential guessing, SSH dictionary attacks, and HTTP layer-7 scanning bots from compromising user accounts or consuming CPU resources.</p>
 <pre><code class="language-bash"># Install Fail2ban daemon on Debian/Ubuntu
-sudo apt-get update &amp;&amp; sudo apt-get install -y fail2ban
+sudo apt-get update && sudo apt-get install -y fail2ban
 
 # Enable and start Fail2ban systemd daemon
 systemctl enable --now fail2ban
 
 # Verify active status and global jail count
 fail2ban-client status</code></pre>
+
 <h2 id="fail2ban-jail-local">2. Deploying Production Jails via jail.local</h2>
 <p>Never modify the default /etc/fail2ban/jail.conf file directly. Package upgrades by system package managers will overwrite jail.conf, discarding custom security rules.</p>
 <p>Instead, create /etc/fail2ban/jail.local to override default settings safely. Parameters specified in jail.local automatically take precedence over jail.conf settings.</p>
@@ -219,6 +228,7 @@ enabled = true
 port    = ssh
 logpath = %(sshd_log)s
 backend = systemd</code></pre>
+
 <h2 id="fail2ban-recidive-jail">3. Recidive Jails for Persistent Repeat Attackers</h2>
 <p>Automated botnets are designed to bypass standard short ban windows. Once a 1-hour ban expires, botnet clients resume password guessing attacks at calculated intervals to stay under rate limit thresholds.</p>
 <p>The recidive jail solves this persistent threat by monitoring Fail2ban's own log file (/var/log/fail2ban.log). If an IP address is banned multiple times across any jail within a 1-day observation window, recidive triggers a long-term persistent ban (e.g., 7 days or 30 days).</p>
@@ -231,13 +241,14 @@ banaction = ufw
 findtime = 1d
 maxretry = 2
 bantime  = 7d</code></pre>
+
 <h2 id="fail2ban-nginx-scanners">4. Mitigating Web Scanners via Nginx Log Filters</h2>
 <p>Automated web vulnerability scanners search public web servers for exposed environment configuration files (.env), database management panels (phpMyAdmin), and unpatched CMS logins, flooding Nginx access logs with HTTP 404, 403, and 400 error codes.</p>
 <p>Create a custom Fail2ban filter in /etc/fail2ban/filter.d/nginx-noscript.conf to match scanner URI request patterns and automatically ban offensive IP addresses.</p>
 <p>This prevents web scanners from consuming web server worker processes and backend database connection pools.</p>
 <pre><code class="language-ini"># Create custom filter /etc/fail2ban/filter.d/nginx-noscript.conf
 [Definition]
-failregex = ^<host> -.* "GET /.*(\..*|phpmyadmin|wp-login|\.env|\.git) HTTP/.*" (404|403|400)
+failregex = ^ -.* "GET /.*(\..*|phpmyadmin|wp-login|\.env|\.git) HTTP/.*" (404|403|400)
 ignoreregex =
 
 # Configure jail entry in /etc/fail2ban/jail.local
@@ -247,15 +258,17 @@ port     = http,https
 logpath  = /var/log/nginx/access.log
 maxretry = 6
 findtime = 1m
-bantime  = 24h</host></code></pre>
-<h2 id="fail2ban-nftables-backend">5. NFTables Backend &amp; High-Performance Action Tuning</h2>
+bantime  = 24h</code></pre>
+
+<h2 id="fail2ban-nftables-backend">5. NFTables Backend & High-Performance Action Tuning</h2>
 <p>Legacy Fail2ban actions append individual iptables rules for every single banned IP address. Over time, long iptables rule chains increase packet processing latency for legitimate network traffic.</p>
 <p>Configuring banaction = nftables-multiport instructs Fail2ban to insert banned IP addresses into native nftables sets. Nftables set lookups execute in constant time O(1), maintaining fast packet filtering throughput regardless of ban count.</p>
 <pre><code class="language-ini"># Configure high-performance nftables backend in /etc/fail2ban/jail.local
 [DEFAULT]
 banaction = nftables-multiport
 banaction_allports = nftables-allports</code></pre>
-<h2 id="fail2ban-admin-cli">6. Administration &amp; Unban Command Reference</h2>
+
+<h2 id="fail2ban-admin-cli">6. Administration & Unban Command Reference</h2>
 <p>System administrators can inspect active jail health, query banned IP lists, and manually unban accidental administrator lockouts using the fail2ban-client CLI utility.</p>
 <p>Always test configuration changes using fail2ban-client reload to ensure settings apply cleanly without dropping active bans.</p>
 <pre><code class="language-bash"># Inspect overall daemon status and active jails
@@ -269,77 +282,49 @@ fail2ban-client set sshd unbanip 192.168.1.100
 
 # Reload Fail2ban configuration dynamically
 fail2ban-client reload</code></pre>
-<!-- FAQ Section -->
-<div class="faq-section">
-<h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
 <details>
-<summary>How do I unban an IP address locked out by Fail2ban?</summary>
-<p class="faq-answer">Execute fail2ban-client set sshd unbanip <ip_address> to remove the ban rule immediately.</ip_address></p>
+  <summary>How do I unban an IP address locked out by Fail2ban?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Execute fail2ban-client set sshd unbanipto remove the ban rule immediately.</p>
 </details>
 <details>
-<summary>Why use nftables instead of iptables for Fail2ban?</summary>
-<p class="faq-answer">nftables uses hashed set lookups with O(1) complexity, maintaining high network performance even with tens of thousands of banned IPs.</p>
+  <summary>Why use nftables instead of iptables for Fail2ban?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">nftables uses hashed set lookups with O(1) complexity, maintaining high network performance even with tens of thousands of banned IPs.</p>
 </details>
-</div>
-<!-- Author Bio Card (EEAT & DFIR Branding) -->
-<div class="author-card">
-<img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
-<div class="author-info">
-<h4>Written by Zyekh Abdul Qadir Jailani</h4>
-<p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
-<div class="author-social-links note-sm" style="margin-top:0\.4rem;">
-<a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
-          <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
-          <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
-          <a href="mailto:zyekhabdulqadirjailani@zyekh.com" style="font-weight:600">Email</a> •
-          <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
-</div>
-</div>
-</div>
-<!-- Contextual Interactive Tool Bridge -->
-<div class="article-cross-links tool-bridge-card">
-<div class="tool-bridge-info">
-<span class="tool-bridge-badge">[ INTERACTIVE CALCULATOR // SECURITY ]</span>
-<h4 class="tool-bridge-title">CIDR Subnet &amp; IP Mask Calculator</h4>
-<p class="tool-bridge-desc">Calculate ignoreip CIDR ranges and subnet boundaries for fail2ban intrusion prevention filters.</p>
-</div>
-<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate IgnoreIP Subnets -&gt;</a>
-</div>
-<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate IgnoreIP Subnets -&gt;</a>
+    </div>
 
-<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate IgnoreIP Subnets -&gt;</a>
+    <!-- Author Bio Card (EEAT & DFIR Branding) -->
+    <div class="author-card">
+      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+      <div class="author-info">
+        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener noreferrer" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener noreferrer" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener noreferrer" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="/.well-known/security.txt" rel="noopener noreferrer" style="font-weight:600" target="_blank">Security Policy</a> •
+          <a href="/gpg-key.asc" rel="noopener noreferrer" style="font-weight:600" target="_blank">PGP Key</a>
+        </div>
+      </div>
+    </div>
 
-<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate IgnoreIP Subnets -&gt;</a>
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/subnet.html">Calculate IgnoreIP Subnets -></a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
+    </div>
+  </main>
 
-<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate IgnoreIP Subnets -&gt;</a>
-
-<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate IgnoreIP Subnets -&gt;</a>
-
-<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate IgnoreIP Subnets -&gt;</a>
-
-<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate IgnoreIP Subnets -&gt;</a>
-
-<a class="tool-bridge-btn" href="/tools/subnet.html">Calculate IgnoreIP Subnets -&gt;</a>
-
-</main>
-<!-- Footer -->
-<footer class="footer" role="contentinfo">
-<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-<a class="text-muted text-sm" href="/about/">About</a>
-<span class="text-muted text-sm">·</span>
-<a class="text-muted text-sm" href="/tools/">53 Web Tools</a>
-<span class="text-muted text-sm">·</span>
-<a class="text-muted text-sm" href="/blog/">45 Articles</a>
-<span class="text-muted text-sm">·</span>
-<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
-<span class="text-muted text-sm">·</span>
-<a class="text-muted text-sm" href="https://shop.zyekh.com" target="_blank" rel="noopener noreferrer">Official Store</a>
-<span class="text-muted text-sm">·</span>
-
-<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
-</div>
-</footer>
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
 </article>
 </body>
 </html>

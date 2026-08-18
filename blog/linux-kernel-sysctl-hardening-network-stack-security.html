@@ -1,7 +1,6 @@
- (generated automatically using our <a href="/tools/linux-hardening-generator.html">Linux Hardening Config Builder</a>)<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
 <meta charset="utf-8"/>
 <link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
 <meta content="#09090b" name="theme-color"/>
@@ -30,6 +29,8 @@
 <link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
 <link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
 <link href="/manifest.json" rel="manifest"/>
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
 
 <!-- Schema.org JSON-LD -->
 <script type="application/ld+json">
@@ -41,10 +42,10 @@
       "headline": "Linux Kernel Sysctl Hardening: Securing TCP/IP Network Stack against SYN Floods",
       "description": "Hardening guide for tuning Linux kernel sysctl parameters to defend against TCP SYN floods, IP spoofing, packet redirects, and memory exhaustion.",
       "url": "https://zyekh.com/blog/linux-kernel-sysctl-hardening-network-stack-security.html",
-      "image": "https://zyekh.com/assets/img/sysctl-hardening.jpg",
+      "image": "/assets/img/sysctl-hardening.jpg",
       "datePublished": "2026-08-04",
       "dateModified": "2026-08-04",
-      "wordCount": 1600,
+      "wordCount": 909,
       "inLanguage": "en-US",
       "author": {
         "@type": "Person",
@@ -114,14 +115,13 @@
 <link href="/assets/css/blog.min.css?v=24f8ee5d" integrity="sha384-FHcCAed8NnoQ8PJalL8EaebbRRV2RQjKmhkwFkQ+AbHy8Uj7cfNB2x+qbKQvygTw" crossorigin="anonymous" rel="stylesheet"/>
 <script defer="" src="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous"></script>
 <script defer="" src="/assets/js/article-actions.min.js?v=08e3ed60" integrity="sha384-vxj8HnyBDfHF87frqcywrS+Iipxk78yQh0UWUf9O5bDIULyCBSLTOd0a1JnFUb0Q" crossorigin="anonymous"></script>
-  <style id="antiClickjack">body{display:none !important;}</style>
-<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-              <link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
+  <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+  <link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous" as="script">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
   <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
   <meta property="og:image" content="https://zyekh.com/assets/img/social-cards/linux-kernel-sysctl-hardening-network-stack-security-dark-landscape.png?v=cc31f96a">
   <meta property="og:image:secure_url" content="https://zyekh.com/assets/img/social-cards/linux-kernel-sysctl-hardening-network-stack-security-dark-landscape.png?v=cc31f96a">
   <meta property="og:image:type" content="image/png">
@@ -150,7 +150,7 @@
       <div class="meta-info">
         <span>By Zyekh Abdul Qadir Jailani</span>
         <time class="meta-item" datetime="2026-08-04T00:00:00Z">Published: 2026-08-04</time>
-        <span>14 min read (1600+ Words)</span>
+        <span>12 min read (909+ Words)</span>
       </div>
       <div class="article-actions">
         <button class="btn-share" id="shareBtn" type="button">Share</button>
@@ -266,11 +266,11 @@ sysctl kernel.randomize_va_space</code></pre>
       <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
 <details>
   <summary>How do I apply sysctl changes without rebooting the server?</summary>
-  <p class="faq-answer">Run sysctl --system to reload all configuration files in /etc/sysctl.d/ dynamically.</p>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Run sysctl --system to reload all configuration files in /etc/sysctl.d/ dynamically.</p>
 </details>
 <details>
   <summary>What is the difference between rp_filter = 1 and rp_filter = 2?</summary>
-  <p class="faq-answer">rp_filter = 1 enforces strict reverse path check (packet must arrive on the best route interface), while rp_filter = 2 enforces loose check (packet dropped only if unreachable via any interface).</p>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">rp_filter = 1 enforces strict reverse path check (packet must arrive on the best route interface), while rp_filter = 2 enforces loose check (packet dropped only if unreachable via any interface).</p>
 </details>
     </div>
 
@@ -280,57 +280,28 @@ sysctl kernel.randomize_va_space</code></pre>
       <div class="author-info">
         <h4>Written by Zyekh Abdul Qadir Jailani</h4>
         <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
-        <div class="author-social-links note-sm" style="margin-top:0\.4rem;">
-          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener" style="font-weight:600" target="_blank">LinkedIn</a> •
-          <a href="https://github.com/zyekhabdul" rel="noopener" style="font-weight:600" target="_blank">GitHub</a> •
-          <a href="https://discord.gg/jDmerBugvu" rel="noopener" style="font-weight:600" target="_blank">Discord</a> •
-          <a href="mailto:zyekhabdulqadirjailani@zyekh.com" style="font-weight:600">Email</a> •
-          <a href="/gpg-key.asc" style="font-weight:600" target="_blank">PGP Key</a>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener noreferrer" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener noreferrer" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener noreferrer" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="/.well-known/security.txt" rel="noopener noreferrer" style="font-weight:600" target="_blank">Security Policy</a> •
+          <a href="/gpg-key.asc" rel="noopener noreferrer" style="font-weight:600" target="_blank">PGP Key</a>
         </div>
       </div>
     </div>
 
-                                        <!-- Contextual Interactive Tool Bridge -->
-    <div class="article-cross-links tool-bridge-card">
-      <div class="tool-bridge-info">
-        <span class="tool-bridge-badge">[ INTERACTIVE GENERATOR // SECURITY ]</span>
-        <h4 class="tool-bridge-title">Linux sysctl & SSH Hardening Config Generator</h4>
-        <p class="tool-bridge-desc">Build production-ready 99-hardening.conf kernel parameters and OpenSSH daemon configs tailored to your workloads.</p>
-      </div>
-      <a class="tool-bridge-btn" href="/tools/linux-hardening-generator.html">Build sysctl & SSH Configs -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/linux-hardening-generator.html">Build sysctl & SSH Configs -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/linux-hardening-generator.html">Build sysctl & SSH Configs -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/linux-hardening-generator.html">Build sysctl & SSH Configs -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/linux-hardening-generator.html">Build sysctl & SSH Configs -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/linux-hardening-generator.html">Build sysctl & SSH Configs -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/linux-hardening-generator.html">Build sysctl & SSH Configs -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/linux-hardening-generator.html">Build sysctl & SSH Configs -></a>
-    </div>
-      <a class="tool-bridge-btn" href="/tools/subnet.html">Calculate Network Subnets -></a>
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/linux-hardening-generator.html">Build sysctl & SSH Configs -></a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
     </div>
   </main>
 
   <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-    <div style="margin-bottom: 0.75rem;">&copy; 2026 <strong>zyekh.com</strong> — Portal Hub</div>
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
-      <a href="/about/" class="text-muted text-sm">About</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/tools/" class="text-muted text-sm">53 Web Tools</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blog/" class="text-muted text-sm">45 Articles</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/blueprints/" class="text-muted text-sm">Blueprints</a>
-      <span class="text-muted text-sm">&middot;</span>
-      <a href="/llms.txt" class="text-muted text-sm">llms.txt (RAG Base)</a>
-    </div>
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
   </footer>
 </article>
 </body>
