@@ -200,6 +200,8 @@
 <p>Unused open ports are primary targets for automated port scanners. A strict firewall baseline mandates dropping all incoming traffic by default unless explicitly allowed.</p>
 <p>When default-deny incoming is enforced, Linux drops all TCP SYN requests and UDP packets to closed ports without sending ICMP unreachable responses, preventing port scanning reconnaissance. Allowed network CIDR blocks and IP mask ranges can be computed using our <a href="/tools/subnet.html">Subnet Calculator</a>.</p>
 <p>Execute the following baseline initialization sequence on production Debian and Ubuntu instances:</p>
+<p>Managing firewall access on internet-exposed virtual machines requires granular, stateful rule definitions.</p>
+<p>Uncomplicated Firewall (UFW) simplifies nftables and iptables management, allowing engineers to enforce rate-limiting rules on SSH (ufw limit) and restrict management ingress exclusively to trusted VPN subnets.</p>
 <pre><code class="language-bash"># Reset UFW to clean state
 ufw --force reset
 

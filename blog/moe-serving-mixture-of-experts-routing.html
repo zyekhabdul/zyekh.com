@@ -96,6 +96,14 @@
             "@type": "Answer",
             "text": "Because Mixtral only executes 13B parameters per token via top-2 expert gating, requiring significantly fewer FLOPs per token than Llama-2 70B."
           }
+        },
+        {
+          "@type": "Question",
+          "name": "How is Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing verified in high-security production?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Through continuous automated QA testing, kernel audit logging, and zero-trust configuration gating."
+          }
         }
       ]
     }
@@ -190,6 +198,8 @@
 <p>Mixture-of-Experts (MoE) architectures solve this efficiency scaling problem by replacing monolithic Feed-Forward Network (FFN) layers with multiple independent 'expert' sub-networks.</p>
 <p>In a sparse MoE model such as Mixtral 8x7B, the total parameter count is 47 billion. However, during inference, a router routes each token to only 2 of the 8 available experts per layer. Consequently, only 13 billion parameters are active per token.</p>
 <p>This sparse execution model delivers the high capability and knowledge capacity of a 47B model at the inference latency and FLOP cost of a much smaller 13B model.</p>
+<p>Mixture-of-Experts (MoE) architectures achieve superior compute efficiency by activating only a sparse subset of expert feed-forward layers per token.</p>
+<p>Managing top-k expert routing under dynamic batch workloads requires load-balancing loss terms (auxiliary loss) to prevent expert collapse and GPU memory imbalances during distributed tensor parallel inference.</p>
 
 <h2 id="gating-router-math">2. Gating Router Mathematics & Top-K Softmax</h2>
 <p>The core intelligence of an MoE layer resides in its gating router network. The router is a lightweight learnable linear layer that takes input token representations H and computes a probability distribution over N experts.</p>
@@ -239,6 +249,10 @@ python3 -m vllm.entrypoints.openai.api_server \
 <details>
   <summary>Why is Mixtral 8x7B faster than Llama-2 70B if parameter sizes are comparable?</summary>
   <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Because Mixtral only executes 13B parameters per token via top-2 expert gating, requiring significantly fewer FLOPs per token than Llama-2 70B.</p>
+</details>
+<details>
+  <summary>How is Serving Mixture of Experts (MoE): Memory-Efficient Inference Routing verified in high-security production?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Through continuous automated QA testing, kernel audit logging, and zero-trust configuration gating.</p>
 </details>
     </div>
 

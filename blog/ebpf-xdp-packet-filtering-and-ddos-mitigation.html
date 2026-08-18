@@ -200,6 +200,8 @@
 <p>Standard Linux network processing allocates a complex kernel socket buffer data structure (sk_buff) for every incoming packet before firewall rules (iptables/nftables) can evaluate the packet.</p>
 <p>Under volumetric DDoS attacks (such as 10 Million Packets Per Second UDP floods), the CPU time spent allocating and freeing sk_buff structures exhausts kernel memory and CPU cache lines, causing severe packet drops and server unresponsiveness. Target IP addresses and malicious CIDR network ranges can be calculated using our <a href="/tools/subnet.html">Subnet &amp; CIDR Calculator</a>.</p>
 <p>eXpress Data Path (XDP) provides a high-performance bare-metal packet processing framework. XDP programs execute eBPF bytecode directly inside the network driver's RX ring buffer before sk_buff memory allocation occurs.</p>
+<p>Volumetric Denial-of-Service attacks often exhaust the Linux network stack before socket buffers can be allocated in user space.</p>
+<p>Attaching eBPF XDP programs directly inside the network interface card (NIC) driver layer enables wire-speed line-rate packet drops (XDP_DROP), dropping up to 24 million packets per second on a single 100GbE interface with minimal CPU utilization.</p>
 <pre><code class="language-bash"># Inspect network interface driver XDP support
 ip link show eth0</code></pre>
 

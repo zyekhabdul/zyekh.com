@@ -96,6 +96,14 @@
             "@type": "Answer",
             "text": "No. When deployed as a sidecar or within the same VPC, the routing overhead is typically under 2 milliseconds, which is negligible compared to standard LLM generation times."
           }
+        },
+        {
+          "@type": "Question",
+          "name": "How is OmniRouter Architecture: Resilient LLM Gateway Routing & Fallback Pipelines verified in production environments?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "By executing automated regression tests, monitoring runtime telemetry, and validating zero-trust policy compliance."
+          }
         }
       ]
     }
@@ -248,6 +256,10 @@ def speculative_decode(draft_model, target_model, prompt, k=4):
 <details>
   <summary>Does OmniRouter introduce significant network latency?</summary>
   <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">No. When deployed as a sidecar or within the same VPC, the routing overhead is typically under 2 milliseconds, which is negligible compared to standard LLM generation times.</p>
+</details>
+<details>
+  <summary>How is OmniRouter Architecture: Resilient LLM Gateway Routing & Fallback Pipelines verified in production environments?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">By executing automated regression tests, monitoring runtime telemetry, and validating zero-trust policy compliance.</p>
 </details>
     </div>
 

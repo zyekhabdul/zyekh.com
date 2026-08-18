@@ -202,6 +202,9 @@
 <p>If a user exceeds the allowed failed attempt threshold, pam_faillock denies authentication immediately without verifying the password, mitigating credential guessing attacks.</p>
 <p>Centralized PAM policies ensure consistent lockout enforcement across all system authentication interfaces.</p>
 <p>Operating systems hardening requires continuous verification of process behavior, ensuring that isolated daemons remain tightly bounded within their security domains without degrading performance.</p>
+<p>Securing Linux authentication endpoints against brute-force password guessing requires modern, reliable PAM modules.</p>
+<p>While legacy distributions relied on pam_tally2, modern enterprise Linux (RHEL 9, Ubuntu 22.04+) has standardized on pam_faillock to enforce account lockout thresholds without risk of Denial-of-Service against root accounts.</p>
+<p>Enforcing central policy control across Linux PAM configurations guarantees compliance with zero-trust identity frameworks and NIST SP 800-63B standards.</p>
 <pre><code class="language-bash"># Inspect PAM security configuration directory
 ls -la /etc/pam.d/
 ls -la /etc/security/faillock.conf</code></pre>
