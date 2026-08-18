@@ -39,17 +39,17 @@
 }
 </script>
 <link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
-<link href="/assets/css/shared.min.css?v=1fbbd83e" integrity="sha384-hnUCbk1eI/OTGHkcNRru7wFOQpitmQXypyIpLSNukL/81gjQkJLJn8kkiQX+W6Na" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=1e856513" integrity="sha384-dAHCSt5M0J86CbBj319eKgIUECowOPUJX/CYphANoWaGfDYcQit3pV0V1yZty987" crossorigin="anonymous" rel="stylesheet"/>
 <link href="/assets/css/blog.min.css?v=24f8ee5d" integrity="sha384-FHcCAed8NnoQ8PJalL8EaebbRRV2RQjKmhkwFkQ+AbHy8Uj7cfNB2x+qbKQvygTw" crossorigin="anonymous" rel="stylesheet"/>
 <script defer="" src="/assets/js/site-nav.min.js?v=3e28cf1a" integrity="sha384-sdQ2DI6GC6THB+q/s5j6ycmuJ7Xh1JNdqdzrzfaZDqbqOexRB5A6k44h+NeRoatc" crossorigin="anonymous"></script>
   <style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-              <link rel="preload" href="/assets/css/shared.min.css?v=1fbbd83e" integrity="sha384-hnUCbk1eI/OTGHkcNRru7wFOQpitmQXypyIpLSNukL/81gjQkJLJn8kkiQX+W6Na" crossorigin="anonymous" as="style">
+              <link rel="preload" href="/assets/css/shared.min.css?v=1e856513" integrity="sha384-dAHCSt5M0J86CbBj319eKgIUECowOPUJX/CYphANoWaGfDYcQit3pV0V1yZty987" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=3e28cf1a" integrity="sha384-sdQ2DI6GC6THB+q/s5j6ycmuJ7Xh1JNdqdzrzfaZDqbqOexRB5A6k44h+NeRoatc" crossorigin="anonymous" as="script">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
   <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-NsJ4Q25sTufsgDynIGcMuyHcNCH1SeUtuv1lPbHGZLM='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-SmfPL+eAt1/ouQC3O8ZIlq9UKhK4Jel2MpmgdnuDnjU='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
 </head>
 <body>
 
@@ -84,13 +84,13 @@
 
   <!-- Filter & Search -->
   <div class="search-filter-box">
-    <input type="text" id="searchInput" class="search-input" placeholder="Cari blueprint (contoh: eBPF, ssh, wasm, cosign)..." aria-label="Search command blueprints">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search blueprints (e.g. eBPF, ssh, wasm, cosign)..." aria-label="Search command blueprints">
     <p id="searchCounter" style="margin-top: 0.75rem; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0;"></p>
   </div>
 
   <!-- Category Pill Filters -->
   <div class="filter-bar" id="categoryFilterBar">
-    <button type="button" class="filter-btn active" data-category="all">Semua (12)</button>
+    <button type="button" class="filter-btn active" data-category="all">All Blueprints (12)</button>
     <button type="button" class="filter-btn" data-category="KERNEL & EBPF">Kernel &amp; eBPF</button>
     <button type="button" class="filter-btn" data-category="ZERO TRUST">Zero Trust</button>
     <button type="button" class="filter-btn" data-category="CLOUD NATIVE">Cloud Native &amp; PQC</button>
@@ -98,7 +98,7 @@
 
   <div id="blueprintsGrid" class="grid-3">
     <div id="noResultsMsg" style="display: none; width: 100%; padding: 2rem; text-align: center; color: var(--text-muted); background: var(--bg-card); border-radius: 8px; border: 1px dashed var(--border-color); margin: 0.5rem;">
-      Blueprint tidak ditemukan. Coba kata kunci lain.
+      No blueprints found matching your query. Try another search term.
     </div>
 
     <!-- Interactive Topology Builder -->
@@ -385,7 +385,7 @@ net.ipv4.conf.all.accept_redirects = 0</code></pre>
       });
 
       if (searchCounter) {
-        searchCounter.textContent = `Menampilkan ${visibleCount} dari ${totalItems} blueprints`;
+        searchCounter.textContent = `Showing ${visibleCount} of ${totalItems} blueprints`;
       }
       if (noResultsMsg) {
         noResultsMsg.style.display = visibleCount === 0 ? 'block' : 'none';
@@ -393,7 +393,7 @@ net.ipv4.conf.all.accept_redirects = 0</code></pre>
     }
 
     if (searchCounter) {
-      searchCounter.textContent = `Menampilkan ${totalItems} dari ${totalItems} blueprints`;
+      searchCounter.textContent = `Showing ${totalItems} of ${totalItems} blueprints`;
     }
 
     if (searchInput) {

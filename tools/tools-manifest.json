@@ -5,7 +5,7 @@
   "description": "Structured machine-readable tool catalog and parameter schemas for Browser AI Agents & LLMs.",
   "platform": "https://zyekh.com",
   "total_tools": 53,
-  "updated_at": "2026-08-18T08:06:46Z",
+  "updated_at": "2026-08-18T09:54:54Z",
   "tools": [
     {
       "id": "ai-token",

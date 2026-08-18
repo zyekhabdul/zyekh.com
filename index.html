@@ -52,59 +52,10 @@
 <!-- Self-hosted Fonts & Styles -->
 <link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
 <link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
-<link href="/assets/css/shared.min.css?v=1fbbd83e" integrity="sha384-hnUCbk1eI/OTGHkcNRru7wFOQpitmQXypyIpLSNukL/81gjQkJLJn8kkiQX+W6Na" crossorigin="anonymous" rel="stylesheet"/>
-<style>
-    .portal-hero { text-align: center; padding: 3rem 0 2rem 0; }
-
-    /* Bento Grid Layout & Clickable Link Cards */
-    .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.25rem; margin-bottom: 3rem; }
-    @media (max-width: 960px) { .bento-grid { display: flex; flex-direction: column; } }
-
-    .bento-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      text-decoration: none;
-      color: inherit;
-      box-sizing: border-box;
-      width: 100%;
-      transition: transform 0.2s, border-color 0.2s, background-color 0.2s;
-    }
-    .bento-card:hover {
-      border-color: var(--border-color-hover);
-      transform: translateY(-3px);
-    }
-
-    .bento-main-tools { grid-column: span 8; }
-    .bento-sidebar { grid-column: span 4; }
-    .bento-third { grid-column: span 4; }
-    .bento-half { grid-column: span 6; }
-
-    .quick-tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 0.75rem; margin-top: 1rem; }
-    .quick-tool-pill {
-      background: var(--bg-dark);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 0.65rem 0.85rem;
-      color: var(--text-main);
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 500;
-      display: block;
-      transition: all 0.2s;
-    }
-    .quick-tool-pill:hover { border-color: var(--text-main); }
-    .quick-tool-cat { font-size: 0.7rem; color: var(--text-muted); display: block; font-family: 'Fira Code', monospace; text-transform: uppercase; margin-bottom: 0.15rem; }
-    .cta-link-text { font-size: 0.85rem; color: var(--text-muted); text-decoration: none; font-weight: 600; transition: color 0.2s; }
-    .bento-card:hover .cta-link-text { color: var(--text-main); }
-  </style>
+<link href="/assets/css/shared.min.css?v=1e856513" integrity="sha384-dAHCSt5M0J86CbBj319eKgIUECowOPUJX/CYphANoWaGfDYcQit3pV0V1yZty987" crossorigin="anonymous" rel="stylesheet"/>
 <style id="antiClickjack">body{display:none !important;}</style>
 <script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
-<link rel="preload" href="/assets/css/shared.min.css?v=1fbbd83e" integrity="sha384-hnUCbk1eI/OTGHkcNRru7wFOQpitmQXypyIpLSNukL/81gjQkJLJn8kkiQX+W6Na" crossorigin="anonymous" as="style">
+<link rel="preload" href="/assets/css/shared.min.css?v=1e856513" integrity="sha384-dAHCSt5M0J86CbBj319eKgIUECowOPUJX/CYphANoWaGfDYcQit3pV0V1yZty987" crossorigin="anonymous" as="style">
   <link rel="preload" href="/assets/js/site-nav.min.js?v=3e28cf1a" integrity="sha384-sdQ2DI6GC6THB+q/s5j6ycmuJ7Xh1JNdqdzrzfaZDqbqOexRB5A6k44h+NeRoatc" crossorigin="anonymous" as="script">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
@@ -115,8 +66,8 @@
 <!-- Navigation Bar -->
 <site-nav active="home"></site-nav>
 <main class="main-container">
-<!-- Portal Hero Header -->
-<header class="portal-hero">
+<!-- Portal Header -->
+<header class="page-header" style="text-align:center;margin-bottom:2.5rem;">
 <span class="badge">MINIMALIST ARCHITECTURE &amp; SECURITY PORTAL</span>
 <h1 class="page-title" style="font-size:clamp(1.8rem, 4.5vw, 3rem);margin-top:0.5rem;">All-in-One Tech &amp; Security Portal Hub</h1>
 <p class="page-subtitle" style="max-width:680px;margin:0.5rem auto 0 auto;">
