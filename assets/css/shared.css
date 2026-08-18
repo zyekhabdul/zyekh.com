@@ -417,6 +417,11 @@
   @media (max-width: 960px) {
     .nav-brand-group { gap: 0.75rem; }
     .nav-search-input { width: clamp(110px, 30vw, 140px); }
+    .nav-search-dropdown {
+      right: 0;
+      left: auto;
+      width: min(320px, calc(100vw - 2rem));
+    }
     .nav-toggle { display: flex; }
     .nav-menu {
       position: fixed;
@@ -1130,29 +1135,67 @@
   }
   .nav-search-clear {
     position: absolute;
-    right: 6px;
+    right: 7px;
     top: 0;
     bottom: 0;
     margin: auto 0;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
+    background: transparent;
+    border: none;
     color: var(--text-muted);
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
+    border-radius: var(--radius-sm);
+    width: 20px;
+    height: 20px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 0.85rem;
-    line-height: 1;
     padding: 0;
-    transition: all var(--transition);
+    transition: color var(--transition), background-color var(--transition);
     z-index: 2;
   }
   .nav-search-clear:hover {
     color: var(--text-main);
-    border-color: var(--text-main);
+    background: var(--bg-card);
+  }
+  [data-theme="light"] .nav-search-clear {
+    color: #71717a;
+  }
+  [data-theme="light"] .nav-search-clear:hover {
+    color: #09090b;
+    background: #f4f4f5;
+  }
+  .nav-search-empty {
+    padding: 1.5rem 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+  }
+  .nav-search-empty-icon {
+    color: var(--text-muted);
+    opacity: 0.6;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-search-empty-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-main);
+  }
+  .nav-search-empty-desc {
+    font-size: 0.76rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    max-width: 260px;
+    word-break: break-word;
+  }
+  .nav-search-empty-desc strong {
+    color: var(--text-main);
   }
   .search-match {
     background: var(--border-color);
