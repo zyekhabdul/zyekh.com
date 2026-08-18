@@ -33,8 +33,7 @@ class SiteNav extends HTMLElement {
         <div class="nav-container">
           <div class="nav-brand-group">
             <a href="/" class="brand-logo">zyekh.com</a>
-            <div class="nav-search" id="navSearch">
-              <input type="search" id="navSearchInput" class="nav-search-input" placeholder="Search... (Ctrl+K)" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="navSearchResults" aria-label="Search tools and articles">
+            <div class="nav-search" id="navSearch"><input type="search" id="navSearchInput" class="nav-search-input" placeholder="Search..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="navSearchResults" aria-label="Search tools and articles">
               <button type="button" class="nav-search-clear" id="navSearchClear" aria-label="Clear search" style="display:none;">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -44,7 +43,7 @@ class SiteNav extends HTMLElement {
               <div id="navSearchResults" class="nav-search-dropdown" role="listbox" style="display:none;"></div>
             </div>
           </div>
-          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu" type="button">
             <span class="hamburger-bar"></span>
             <span class="hamburger-bar"></span>
             <span class="hamburger-bar"></span>
@@ -66,26 +65,6 @@ class SiteNav extends HTMLElement {
   }
 
   _initNav() {
-    // Inject Speculation Rules API for 0ms Instant Page Pre-rendering (Chromium Baseline 2024+)
-    if (!document.querySelector('script[type="speculationrules"]')) {
-      const specScript = document.createElement('script');
-      specScript.type = 'speculationrules';
-      specScript.textContent = JSON.stringify({
-        prerender: [
-          {
-            source: 'document',
-            where: {
-              and: [
-                { href_matches: '/*' }
-              ]
-            },
-            eagerness: 'moderate'
-          }
-        ]
-      });
-      document.head.appendChild(specScript);
-    }
-
     // Centralized Service Worker Registration (Clean & Lightweight)
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -106,7 +85,13 @@ class SiteNav extends HTMLElement {
         };
 
         if (document.startViewTransition) {
-          document.startViewTransition(toggleTheme);
+          try {
+            const transition = document.startViewTransition(toggleTheme);
+            if (transition && transition.ready) transition.ready.catch(() => {});
+            if (transition && transition.finished) transition.finished.catch(() => {});
+          } catch {
+            toggleTheme();
+          }
         } else {
           toggleTheme();
         }

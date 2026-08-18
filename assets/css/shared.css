@@ -14,7 +14,9 @@
 
     /* Colors — 100% Pure Monochrome System */
     --bg-dark:           #09090b;
+    --bg-main:           #09090b;
     --bg-card:           #141417;
+    --bg-secondary:      #18181b;
     --border-color:      #27272a;
     --border-color-hover:#52525b;
     --border-hover:      #52525b;
@@ -47,7 +49,9 @@
   [data-theme="light"] {
     color-scheme: light;
     --bg-dark:           #f0f0f3;
+    --bg-main:           #ffffff;
     --bg-card:           #ffffff;
+    --bg-secondary:      #f4f4f5;
     --border-color:      #d4d4d8;
     --border-color-hover:#71717a;
     --border-hover:      #71717a;
@@ -617,6 +621,51 @@
     border-color: #71717a;
     background-color: #f4f4f5;
     color: #09090b;
+  }
+
+  /* Preset Tabs & Tool Buttons */
+  .preset-btn,
+  .btn-preset,
+  .profile-btn,
+  .btn-tool {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 0.45rem 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+    text-decoration: none;
+    margin: 0;
+  }
+  .preset-btn:hover,
+  .btn-preset:hover,
+  .profile-btn:hover,
+  .btn-tool:hover {
+    border-color: var(--border-hover);
+    color: var(--text-main);
+  }
+  .preset-btn.active,
+  .btn-preset.active,
+  .profile-btn.active,
+  .btn-tool.active {
+    background-color: #fafafa;
+    color: #09090b;
+    border-color: #fafafa;
+    font-weight: 700;
+  }
+  [data-theme="light"] .preset-btn.active,
+  [data-theme="light"] .btn-preset.active,
+  [data-theme="light"] .profile-btn.active,
+  [data-theme="light"] .btn-tool.active {
+    background-color: #09090b;
+    color: #ffffff;
+    border-color: #09090b;
   }
 
   /* Cards */
