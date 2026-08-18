@@ -84,6 +84,20 @@
     <category term="DevOps"/>
   </entry>
   <entry>
+    <title>DeFi AMM Mathematics &amp; Concentrated Liquidity: Invariant Curves &amp; Tick Spacing</title>
+    <link href="https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html"/>
+    <id>https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html</id>
+    <updated>2026-08-18T00:00:00Z</updated>
+    <published>2026-08-18T00:00:00Z</published>
+    <summary>Mathematical derivation of Constant Product (x * y = k), concentrated liquidity virtual reserves, tick math, and dynamic swap fee routing in Uniswap v3/v4.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="DeFi Engineering"/>
+    <category term="Quantitative Finance"/>
+  </entry>
+  <entry>
     <title>DSPy: Replacing Prompt Engineering with Declarative Optimization Compilers</title>
     <link href="https://zyekh.com/blog/dspy-declarative-prompting-optimization.html"/>
     <id>https://zyekh.com/blog/dspy-declarative-prompting-optimization.html</id>
@@ -124,34 +138,6 @@
     </author>
     <category term="Cyber Security"/>
     <category term="Fail2ban Defense"/>
-  </entry>
-  <entry>
-    <title>FlashAttention-3 Architecture: Asynchronous FP8 Tensor Cores &amp; Warp-Specialization</title>
-    <link href="https://zyekh.com/blog/flashattention-3-asynchronous-fp8-warp-specialization.html"/>
-    <id>https://zyekh.com/blog/flashattention-3-asynchronous-fp8-warp-specialization.html</id>
-    <updated>2026-08-18T00:00:00Z</updated>
-    <published>2026-08-18T00:00:00Z</published>
-    <summary>Deep-dive into NVIDIA Hopper H100 hardware innovations, Tensor Memory Accelerator (TMA), and warp-specialized asynchronous software pipelining for ultra-low latency attention computation.</summary>
-    <author>
-      <name>Zyekh Abdul Qadir Jailani</name>
-      <uri>https://zyekh.com/</uri>
-    </author>
-    <category term="LLM Serving"/>
-    <category term="GPU Architecture"/>
-  </entry>
-  <entry>
-    <title>FP8 vs INT4 KV-Cache Quantization: Memory Bandwidth vs Perplexity Trade-offs</title>
-    <link href="https://zyekh.com/blog/fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth.html"/>
-    <id>https://zyekh.com/blog/fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth.html</id>
-    <updated>2026-08-18T00:00:00Z</updated>
-    <published>2026-08-18T00:00:00Z</published>
-    <summary>Comprehensive comparative analysis of FP8 (E4M3/E5M2) vs INT4 grouped quantization for long-context KV cache memory reduction in high-throughput LLM serving.</summary>
-    <author>
-      <name>Zyekh Abdul Qadir Jailani</name>
-      <uri>https://zyekh.com/</uri>
-    </author>
-    <category term="LLM Serving"/>
-    <category term="Quantization"/>
   </entry>
   <entry>
     <title>HTTP/3 &amp; QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks</title>
@@ -238,20 +224,6 @@
     <category term="Access Control"/>
   </entry>
   <entry>
-    <title>Linux LSM BPF: Dynamic Kernel Security Policies Without Kernel Recompilation</title>
-    <link href="https://zyekh.com/blog/linux-lsm-bpf-runtime-security-policies-and-kernel-hooks.html"/>
-    <id>https://zyekh.com/blog/linux-lsm-bpf-runtime-security-policies-and-kernel-hooks.html</id>
-    <updated>2026-08-18T00:00:00Z</updated>
-    <published>2026-08-18T00:00:00Z</published>
-    <summary>Practical engineering guide for writing and enforcing programmable eBPF Linux Security Module (LSM) hooks to block unauthorized syscalls and file tampering in real time.</summary>
-    <author>
-      <name>Zyekh Abdul Qadir Jailani</name>
-      <uri>https://zyekh.com/</uri>
-    </author>
-    <category term="Linux Security"/>
-    <category term="eBPF Architecture"/>
-  </entry>
-  <entry>
     <title>Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces</title>
     <link href="https://zyekh.com/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html"/>
     <id>https://zyekh.com/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html</id>
@@ -278,6 +250,20 @@
     </author>
     <category term="System Hardening"/>
     <category term="Linux VPS"/>
+  </entry>
+  <entry>
+    <title>MEV &amp; Private Mempool Architecture: Flashbots, Searchers &amp; Order Flow Defense</title>
+    <link href="https://zyekh.com/blog/mev-and-private-mempool-architecture-in-ethereum.html"/>
+    <id>https://zyekh.com/blog/mev-and-private-mempool-architecture-in-ethereum.html</id>
+    <updated>2026-08-18T00:00:00Z</updated>
+    <published>2026-08-18T00:00:00Z</published>
+    <summary>Technical analysis of Maximal Extractable Value (MEV), block builder auctions, sandwich attack mitigation, and MEV-Boost private RPC relay pipelines.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="DeFi Infrastructure"/>
+    <category term="Cryptoeconomics"/>
   </entry>
   <entry>
     <title>Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security</title>
@@ -406,6 +392,20 @@
     <category term="Performance"/>
   </entry>
   <entry>
+    <title>Smart Contract Security &amp; EVM Bytecode Hardening: Formal Verification &amp; Exploit Defense</title>
+    <link href="https://zyekh.com/blog/smart-contract-security-and-evm-bytecode-hardening.html"/>
+    <id>https://zyekh.com/blog/smart-contract-security-and-evm-bytecode-hardening.html</id>
+    <updated>2026-08-18T00:00:00Z</updated>
+    <published>2026-08-18T00:00:00Z</published>
+    <summary>Comprehensive vulnerability mitigation blueprint covering Read-Only Reentrancy, Storage Slot Collision, and Halmos/Slither formal verification in Solidity.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Web3 Security"/>
+    <category term="EVM Architecture"/>
+  </entry>
+  <entry>
     <title>Short-Lived SSH Certificate Authentication with HashiCorp Vault CA</title>
     <link href="https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html"/>
     <id>https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html</id>
@@ -490,20 +490,6 @@
     <category term="Performance"/>
   </entry>
   <entry>
-    <title>Wasm Component Model: Polyglot Sandboxing for High-Density Edge Compute</title>
-    <link href="https://zyekh.com/blog/wasm-component-model-polyglot-sandboxing-on-edge-workers.html"/>
-    <id>https://zyekh.com/blog/wasm-component-model-polyglot-sandboxing-on-edge-workers.html</id>
-    <updated>2026-08-18T00:00:00Z</updated>
-    <published>2026-08-18T00:00:00Z</published>
-    <summary>Architectural blueprint for building zero-trust polyglot micro-services with the WebAssembly Component Model and WIT interfaces on edge runtime workers.</summary>
-    <author>
-      <name>Zyekh Abdul Qadir Jailani</name>
-      <uri>https://zyekh.com/</uri>
-    </author>
-    <category term="Zero Trust"/>
-    <category term="Edge Computing"/>
-  </entry>
-  <entry>
     <title>WebGPU LLM Inference: Running 7B Models Natively in the Browser</title>
     <link href="https://zyekh.com/blog/webgpu-llm-inference-browser-sandbox.html"/>
     <id>https://zyekh.com/blog/webgpu-llm-inference-browser-sandbox.html</id>
@@ -530,6 +516,20 @@
     </author>
     <category term="Web Security"/>
     <category term="WireGuard Mesh"/>
+  </entry>
+  <entry>
+    <title>Zero-Knowledge Proofs in L2 Rollups: zk-SNARKs vs zk-STARKs Mathematical Architecture</title>
+    <link href="https://zyekh.com/blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html"/>
+    <id>https://zyekh.com/blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html</id>
+    <updated>2026-08-18T00:00:00Z</updated>
+    <published>2026-08-18T00:00:00Z</published>
+    <summary>In-depth comparative analysis of algebraic polynomial commitments, prover compute overhead, recursive circuits, and on-chain verification gas limits in zkEVMs.</summary>
+    <author>
+      <name>Zyekh Abdul Qadir Jailani</name>
+      <uri>https://zyekh.com/</uri>
+    </author>
+    <category term="Cryptography"/>
+    <category term="Zero-Knowledge"/>
   </entry>
   <entry>
     <title>Zero-Trust Microservices with WebAssembly (Wasm) Runtime Sandboxing</title>

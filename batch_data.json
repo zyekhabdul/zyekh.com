@@ -1971,352 +1971,376 @@
     ]
   },
   {
-    "slug": "flashattention-3-asynchronous-fp8-warp-specialization",
-    "title": "FlashAttention-3 Architecture: Asynchronous FP8 Tensor Cores & Warp-Specialization",
-    "subtitle": "Deep-dive into NVIDIA Hopper H100 hardware innovations, Tensor Memory Accelerator (TMA), and warp-specialized asynchronous software pipelining for ultra-low latency attention computation.",
-    "category": "LLM Serving • GPU Architecture",
+    "slug": "smart-contract-security-and-evm-bytecode-hardening",
+    "title": "Smart Contract Security & EVM Bytecode Hardening: Formal Verification & Exploit Defense",
+    "subtitle": "Comprehensive vulnerability mitigation blueprint covering Read-Only Reentrancy, Storage Slot Collision, and Halmos/Slither formal verification in Solidity.",
+    "category": "Web3 Security • EVM Architecture",
     "tags": [
-      "#FlashAttention",
-      "#HopperArchitecture",
-      "#FP8Quantization",
-      "#GPUEngineering"
+      "#Solidity",
+      "#SmartContractSecurity",
+      "#EVM",
+      "#FormalVerification"
     ],
     "date_published": "2026-08-18",
     "read_time_mins": 14,
     "word_count": 1850,
-    "hero_image": "https://zyekh.com/assets/img/flashattention3_hopper_hero.jpg",
-    "hero_caption": "Hopper Tensor Memory Accelerator (TMA) and Asynchronous Warp-Specialized Pipeline",
+    "hero_image": "https://zyekh.com/assets/img/evm-security-hardening.jpg",
+    "hero_caption": "EVM Bytecode Hardening and Storage Slot Collision Defense Architecture",
     "exec_summary": [
-      "Warp Specialization: Separate Producer and Consumer warps to decouple asynchronous global-to-shared memory loads from Tensor Core GEMM operations.",
-      "TMA Hardware Acceleration: Utilize Hopper Tensor Memory Accelerator (TMA) hardware units for direct asynchronous multi-dimensional tensor transfers bypassing register files.",
-      "Asynchronous Softmax Overlap: Interleave softmax exponentiation directly with subsequent matrix multiplications to eliminate pipeline bubbles.",
-      "FP8 Mixed-Precision Scaling: Leverage FP8 (E4M3/E5M2) tensor cores with block-wise scaling factors to achieve 2x throughput over standard BF16 attention."
+      "Reentrancy Defense: Implement Checks-Effects-Interactions (CEI) patterns alongside transient storage (TSTORE / TLOAD) reentrancy guards.",
+      "Read-Only Reentrancy: Mitigate cross-contract price oracle manipulation by protecting view functions during active state updates.",
+      "Storage Layout Verification: Prevent storage collision vulnerabilities in upgradeable proxy contracts using ERC-7201 namespaced storage.",
+      "Formal Verification: Mathematically prove contract invariants and absence of integer overflows using Halmos and Slither static analyzers."
     ],
     "sections": [
       {
-        "id": "hopper-hardware-bottlenecks",
-        "h2_title": "1. Memory Bandwidth Limits & Hopper Architecture Innovations",
+        "id": "evm-execution-model-vulnerabilities",
+        "h2_title": "1. EVM Execution Model & Low-Level Reentrancy Vectors",
         "content_paragraphs": [
-          "Standard multi-head attention and grouped-query attention (GQA) mechanisms in transformer architectures are strictly memory-bound operations. In conventional FlashAttention-2, while tiling techniques eliminate redundant high-bandwidth memory (HBM3) roundtrips by keeping intermediate query-key dot products in Shared Memory (SRAM), performance on modern NVIDIA Hopper (H100/H200) GPUs remains constrained by synchronization barriers and register allocation bottlenecks.",
-          "The NVIDIA Hopper architecture introduces transformative silicon-level primitives, most notably the Tensor Memory Accelerator (TMA) and Asynchronous Transaction Barriers. TMA enables the GPU to execute multi-dimensional tensor loads and stores directly between Global Memory (HBM3) and Shared Memory (SRAM) using dedicated hardware engines, completely eliminating the need for streaming multiprocessor (SM) threads to manually issue address calculations and load instructions.",
-          "FlashAttention-3 leverages these architectural capabilities by redesigning the computational pipeline from the ground up, transitioning from synchronous thread-block execution to an asynchronous producer-consumer warp-specialized model.",
-          "This architectural shift achieves up to 1.5x to 2.0x speedups over FlashAttention-2, delivering near-theoretical compute utilization across massive context lengths in production LLM inference engines."
+          "The Ethereum Virtual Machine (EVM) operates as a deterministic, stack-based state machine. In Solidity smart contracts, external call opcodes (such as CALL, DELEGATECALL, and STATICCALL) transfer execution control flow to external contracts before current execution frames finish state updates. If contract state is mutated after an external call, malicious contracts can recursively re-enter the caller and drain funds.",
+          "While standard reentrancy vulnerabilities targeting state-modifying functions are widely understood, Read-Only Reentrancy poses an insidious threat to modern DeFi protocols. In Read-Only Reentrancy, an attacker exploits a state-modifying function in a core pool (e.g. burning liquidity tokens) and re-enters a third-party lending protocol during the callback. The lending protocol invokes an unprotected view function (such as get_virtual_price()) while reserves are temporarily imbalanced, calculating inflated collateral valuations.",
+          "Mitigating read-only reentrancy requires protocols to implement global reentrancy flags or utilize EIP-1153 Transient Storage opcodes (TSTORE and TLOAD) to enforce execution locks across both state-modifying and view functions at minimal gas cost."
         ],
-        "code_block": "// CUDA / C++ TMA Asynchronous Copy Descriptor Setup\n#include <cuda_runtime.h>\n#include <cute/tensor.hpp>\n\n// Initialize Hopper Tensor Memory Accelerator (TMA) Box Descriptor\n__device__ void init_tma_async_copy(const float* global_ptr, float* smem_ptr, int dim_k, int dim_v) {\n    // Configure 2D TMA Tensor Map Descriptor\n    CUtensorMap tensor_map;\n    uint64_t gmem_address = reinterpret_cast<uint64_t>(global_ptr);\n    uint32_t smem_box_dim[2] = {128, 64};\n    \n    // Asynchronous transfer directly into Shared Memory without register intermediate\n    asm volatile(\n        \"cp.async.bulk.tensor.2d.shared::cluster.global.tile.mbarrier::complete_tx::bytes [%0], [%1, {%2, %3}], [%4];\"\n        : \n        : \"r\"(smem_ptr), \"l\"(gmem_address), \"r\"(dim_k), \"r\"(dim_v), \"r\"(128 * 64 * sizeof(float))\n        : \"memory\"\n    );\n}",
-        "code_language": "cpp"
+        "code_block": "// Solidity: Transient Storage Reentrancy Guard (EIP-1153)\npragma solidity ^0.8.24;\n\ncontract TransientReentrancyGuard {\n    bytes32 private constant REENTRANCY_SLOT = keccak256(\"zyekh.security.reentrancy.guard\");\n\n    modifier nonReentrant() {\n        assembly {\n            if tload(REENTRANCY_SLOT) {\n                revert(0, 0)\n            }\n            tstore(REENTRANCY_SLOT, 1)\n        }\n        _;\n        assembly {\n            tstore(REENTRANCY_SLOT, 0)\n        }\n    }\n}",
+        "code_language": "solidity"
       },
       {
-        "id": "warp-specialized-pipelining",
-        "h2_title": "2. Producer-Consumer Warp Specialization & Register Allocation",
+        "id": "upgradeable-proxy-storage-collisions",
+        "h2_title": "2. Upgradeable Proxy Patterns & ERC-7201 Storage Collision Defense",
         "content_paragraphs": [
-          "In previous GPU programming models, all 32 threads within a warp executed both memory loading and arithmetic compute instructions sequentially. When threads stall on memory load latencies or barrier synchronizations, Tensor Core execution units remain idle, wasting computational cycles.",
-          "FlashAttention-3 implements Warp Specialization: individual warps within a thread block are assigned dedicated, distinct roles. A single warp is designated as the Producer Warp, responsible exclusively for programming TMA descriptors and issuing asynchronous global memory transactions. The remaining warps are designated as Consumer Warps, executing FP8/BF16 matrix multiplication (MMA) and Softmax math.",
-          "Because Producer Warps do not perform matrix multiplications, they require significantly fewer vector registers, allowing the CUDA compiler to allocate a larger register file budget (up to 256 registers per thread) exclusively to Consumer Warps. This eliminates register spilling to local memory, preserving maximum execution throughput."
+          "Upgradeable smart contracts (such as UUPS and Transparent Proxy patterns) decouple contract logic from state storage by using DELEGATECALL to execute implementation bytecode inside the proxy storage context. In conventional proxy patterns, adding new state variables in child or parent contracts alters sequential storage slot indexing (slot 0, slot 1), causing catastrophic storage collision between implementation upgrades.",
+          "ERC-7201 (Namespaced Storage Layout) standardizes a deterministic hashing formula for locating isolated storage roots: keccak256(keccak256(namespace_id) - 1) & ~0xff. By defining distinct 32-byte storage namespaces for each module, upgradeable contracts guarantee that state variables remain strictly isolated across arbitrary inheritance hierarchies without overlapping slots."
         ],
-        "code_block": "// Producer-Consumer Warp Specialization Dispatch\n__device__ void warp_specialized_attention_loop(int warp_id, int num_tiles) {\n    if (warp_id == 0) {\n        // Producer Warp: Issue asynchronous TMA loads for upcoming tiles\n        for (int tile = 0; tile < num_tiles; ++tile) {\n            issue_tma_load_tile(tile);\n            cuda::barrier::arrive_and_wait();\n        }\n    } else {\n        // Consumer Warps: Execute FP8 Tensor Core WGMMA instructions\n        for (int tile = 0; tile < num_tiles; ++tile) {\n            cuda::barrier::wait();\n            execute_wgmma_gemm_tile(tile);\n            compute_online_softmax_update(tile);\n        }\n    }\n}",
-        "code_language": "cpp"
+        "code_block": "// Solidity: ERC-7201 Namespaced Storage Implementation\npragma solidity ^0.8.24;\n\ncontract SecureVaultV1 {\n    struct MainStorage {\n        mapping(address => uint256) balances;\n        uint256 totalDeposited;\n        bool isPaused;\n    }\n\n    // keccak256(abi.encode(uint256(keccak256(\"zyekh.storage.vault.v1\")) - 1)) & ~bytes32(uint256(0xff))\n    bytes32 private constant STORAGE_LOCATION = 0x8a92b15e47d1b392a10e7136f73449339e1a16b9b33a5cfc02b1f8c148200000;\n\n    function _getMainStorage() private pure returns (MainStorage storage $) {\n        assembly {\n            $.slot := STORAGE_LOCATION\n        }\n    }\n}",
+        "code_language": "solidity"
       },
       {
-        "id": "fp8-quantization-and-incoherent-scaling",
-        "h2_title": "3. FP8 GEMM Acceleration with Block-Wise Dynamic Scaling",
+        "id": "formal-verification-with-halmos",
+        "h2_title": "3. Formal Verification & Symbolic Testing with Halmos",
         "content_paragraphs": [
-          "NVIDIA Hopper features FP8 Tensor Cores capable of delivering double the raw FLOPS of standard BF16 Tensor Cores. However, naive FP8 matrix multiplication across attention matrices causes catastrophic degradation in attention softmax distributions due to outlier activations and limited dynamic range in 8-bit floating point formats (E4M3 and E5M2).",
-          "FlashAttention-3 resolves this numerical instability through Block-Wise Dynamic Scaling. Instead of applying a single per-tensor scaling factor, the kernel computes local dynamic scaling factors across 128x128 tiles in shared memory, preserving dynamic range in outlier token clusters.",
-          "Furthermore, intermediate accumulator matrices are preserved in high-precision FP32 registers throughout the online softmax normalization loop, rounding down to FP8 only during final tile writeback to global memory."
+          "Unit testing and fuzz testing (Foundry / Echidna) explore thousands of randomized inputs, but they cannot prove the absolute absence of critical vulnerabilities across infinite input spaces. Formal verification translates smart contract bytecode into mathematical constraints (First-Order Logic / SMT formulas), allowing automated SMT solvers (Z3 / CVC5) to prove that specified security invariants hold true across all possible execution paths.",
+          "Using Halmos (a symbolic execution engine for EVM bytecode), security engineers write formal properties in standard Solidity syntax. Halmos executes contracts symbolically, verifying whether invariant failure assertions are reachable under any sequence of transactions."
         ],
-        "code_block": "// FP8 Block-Wise Quantization Scaling Kernel\nimport torch\n\ndef quantize_fp8_blockwise(tensor: torch.Tensor, block_size: int = 128):\n    # Calculate per-block absolute maximum values\n    shape = tensor.shape\n    reshaped = tensor.view(-1, block_size)\n    amax = torch.amax(torch.abs(reshaped), dim=1, keepdim=True).clamp(min=1e-8)\n    \n    # E4M3 dynamic range maximum represents 448.0\n    scale = 448.0 / amax\n    fp8_tensor = (reshaped * scale).to(torch.float8_e4m3fn)\n    \n    return fp8_tensor.view(shape), scale",
-        "code_language": "python"
+        "code_block": "// Halmos Formal Invariant Property Test in Solidity\npragma solidity ^0.8.24;\n\nimport \"forge-std/Test.sol\";\nimport \"../src/SecureVault.sol\";\n\ncontract VaultFormalProof is Test {\n    SecureVault vault;\n\n    function check_solvency_invariant(uint256 depositAmount, address user) public {\n        vm.assume(depositAmount > 0 && depositAmount < 1e28);\n        vm.assume(user != address(0));\n        \n        uint256 prevTotal = vault.totalDeposited();\n        vault.deposit(user, depositAmount);\n        \n        // Invariant: Total deposited must strictly equal previous total + deposit amount\n        assert(vault.totalDeposited() == prevTotal + depositAmount);\n    }\n}",
+        "code_language": "solidity"
       },
       {
-        "id": "production-deployment-benchmarks",
-        "h2_title": "4. Inference Latency Benchmarks & vLLM Serving Integration",
+        "id": "automated-audit-pipeline-integration",
+        "h2_title": "4. Slither Static Analysis & CI/CD Security Gate",
         "content_paragraphs": [
-          "Integrating FlashAttention-3 into high-throughput LLM serving frameworks (such as vLLM, TensorRT-LLM, and SGLang) yields immediate reductions in Time-To-First-Token (TTFT) and decode latency across 128k+ token context windows.",
-          "In empirical benchmarks conducted on NVIDIA H100 SXM5 80GB GPUs running Llama-3-70B and DeepSeek-V3 architectures, FlashAttention-3 achieves over 740 TFLOPS (85% of theoretical Hopper FP8 peak) compared to 380 TFLOPS on FlashAttention-2 BF16.",
-          "Production deployment requires CUDA 12.4+, TensorRT-LLM 0.11+, and PyTorch 2.4+ builds compiled with Hopper SM90a architecture support."
+          "Integrating automated static analysis into continuous integration pipelines detects common vulnerability patterns (such as unchecked low-level calls, uninitialized state pointers, and strict balance equality checks) prior to testnet deployment.",
+          "Combining Slither AST analyzers with Slither printer plugins produces automated vulnerability matrices and function visibility reports, establishing defense-in-depth security verification for decentralized applications."
         ],
-        "code_block": "# Serving Engine Configuration with FlashAttention-3\npython3 -m vllm.entrypoints.openai.api_server \\\n    --model meta-llama/Meta-Llama-3-70B-Instruct \\\n    --gpu-memory-utilization 0.95 \\\n    --kv-cache-dtype fp8_e4m3 \\\n    --attention-backend FLASHATTN3 \\\n    --max-model-len 65536 \\\n    --tensor-parallel-size 4",
+        "code_block": "# Slither Automated Security Audit & Triage Pipeline\nslither . --json data/slither_audit.json \\n    --filter-paths \"lib/|node_modules/\" \\n    --exclude-low \\n    --exclude-informational \\n    --fail-on-pedantic\n\n# Run Symbolic Formal Verification with Halmos\nhalmos --function check_solvency_invariant",
         "code_language": "bash"
       }
     ],
     "faqs": [
       {
-        "question": "How does FlashAttention-3 differ fundamentally from FlashAttention-2?",
-        "answer": "FlashAttention-3 is specifically optimized for NVIDIA Hopper architecture, introducing Producer-Consumer Warp Specialization, hardware Tensor Memory Accelerator (TMA) asynchronous copy instructions, and block-wise FP8 GEMM arithmetic to double compute throughput."
+        "question": "How does Transient Storage (EIP-1153) reduce reentrancy guard gas costs?",
+        "answer": "Traditional reentrancy guards write to cold storage (SSTORE costing 20,000 gas, SLOAD costing 2,100 gas). Transient storage (TSTORE / TLOAD) operates exclusively in memory during the transaction frame, reducing gas consumption to only 100 gas per operation while clearing state automatically after transaction execution."
       },
       {
-        "question": "Does FlashAttention-3 support older GPUs like Ampere (A100) or Ada Lovelace (RTX 4090)?",
-        "answer": "No. The core speedups of FlashAttention-3 rely on hardware TMA units and SM90a asynchronous transaction barriers that exist exclusively on NVIDIA Hopper (H100/H200/GH200) and Blackwell (B200) GPUs. Older architectures fall back to FlashAttention-2."
+        "question": "What is the main difference between fuzzing and formal verification?",
+        "answer": "Fuzzing tests pseudo-random concrete inputs to discover edge-case crashes but cannot guarantee 100% path coverage. Formal verification translates contract logic into mathematical SMT proofs, proving rigorously whether a security invariant holds across all possible inputs."
       },
       {
-        "question": "What is the perplexity impact of using FP8 in FlashAttention-3?",
-        "answer": "Due to block-wise scaling and FP32 intermediate accumulation during online softmax calculation, empirical testing shows zero statistically significant increase in perplexity across standard language modeling benchmarks."
+        "question": "Why is Read-Only Reentrancy dangerous for oracle integrations?",
+        "answer": "Read-Only Reentrancy does not modify the attacked contract state during the callback, but it leaves external view functions reporting skewed prices while intermediate balances are imbalanced, allowing attackers to borrow assets against artificially inflated collateral valuations."
       }
     ],
     "related_tools": [
-      "llm-calculator.html",
-      "webgpu-profiler.html",
-      "speculative-decoding.html"
+      {
+        "name": "JWT Decoder & Inspector",
+        "url": "/tools/jwt.html",
+        "desc": "Decode and inspect JSON Web Tokens."
+      },
+      {
+        "name": "Hash Generator",
+        "url": "/tools/hash.html",
+        "desc": "Calculate Keccak-256 and SHA-256 digests."
+      }
     ]
   },
   {
-    "slug": "linux-lsm-bpf-runtime-security-policies-and-kernel-hooks",
-    "title": "Linux LSM BPF: Dynamic Kernel Security Policies Without Kernel Recompilation",
-    "subtitle": "Practical engineering guide for writing and enforcing programmable eBPF Linux Security Module (LSM) hooks to block unauthorized syscalls and file tampering in real time.",
-    "category": "Linux Security • eBPF Architecture",
+    "slug": "mev-and-private-mempool-architecture-in-ethereum",
+    "title": "MEV & Private Mempool Architecture: Flashbots, Searchers & Order Flow Defense",
+    "subtitle": "Technical analysis of Maximal Extractable Value (MEV), block builder auctions, sandwich attack mitigation, and MEV-Boost private RPC relay pipelines.",
+    "category": "DeFi Infrastructure • Cryptoeconomics",
     "tags": [
-      "#LinuxKernel",
-      "#LSMBPF",
-      "#CyberSecurity",
-      "#ZeroTrust"
-    ],
-    "date_published": "2026-08-18",
-    "read_time_mins": 12,
-    "word_count": 1650,
-    "hero_image": "https://zyekh.com/assets/img/lsm_bpf_security_hero.jpg",
-    "hero_caption": "Linux LSM BPF Kernel Security Hook Interception and Enforcement Gateway",
-    "exec_summary": [
-      "LSM BPF Integration: Attach eBPF programs directly into Linux Security Module hooks (bprm_check_security, file_open, socket_connect).",
-      "Zero Kernel Modification: Deploy mandatory access control (MAC) policies dynamically without custom kernel compilation or rebooting nodes.",
-      "Runtime Syscall Blocking: Return standard Linux error codes (-EPERM / -EACCES) directly from BPF programs to block malicious operations before execution.",
-      "Container Process Sandboxing: Enforce path-based and cgroup-scoped execution locks on unprivileged cloud microservices."
-    ],
-    "sections": [
-      {
-        "id": "lsm-bpf-architecture-overview",
-        "h2_title": "1. LSM BPF Architecture & The Evolution of Linux Security Modules",
-        "content_paragraphs": [
-          "Traditional Linux Mandatory Access Control (MAC) frameworks such as SELinux and AppArmor enforce security policies through static rulesets defined in specialized configuration languages. While robust, modifying these policies requires extensive compilation, manual policy relabeling, and complex domain transition definitions that are ill-suited for dynamic Kubernetes cloud environments.",
-          "Starting in Linux Kernel 5.7, LSM BPF (Linux Security Module via BPF) integrates the eBPF runtime directly into the kernel security hook infrastructure. Rather than relying on rigid static modules, system administrators and security engineers can write, verify, and load programmable C / Rust BPF programs that attach directly to security hooks across process execution, file systems, and network sockets.",
-          "When an LSM hook is triggered, the attached eBPF program executes in bounded execution time with kernel memory safety guarantees, inspecting arguments and returning 0 (allow) or -EPERM (deny).",
-          "This enables programmable, context-aware kernel security enforcement that can adapt to container namespaces, process lineages, and cryptographic token states in real time."
-        ],
-        "code_block": "// Enabling BPF in Linux Security Modules Configuration\n# Verify active LSM modules in running kernel\ncat /sys/kernel/security/lsm\n# Output should include: lockdown,capability,landlock,yama,bpf\n\n# If bpf is missing, add to kernel commandline (/etc/default/grub):\n# GRUB_CMDLINE_LINUX=\"lsm=lockdown,capability,landlock,yama,bpf\"\nupdate-grub && reboot",
-        "code_language": "bash"
-      },
-      {
-        "id": "writing-bprm-check-security-hook",
-        "h2_title": "2. Blocking Unauthorized Binary Execution with bprm_check_security",
-        "content_paragraphs": [
-          "A critical attack vector in compromised container environments is binary execution from writeable directories (such as /tmp, /dev/shm, or /var/tmp). Attackers frequently download malicious ELF droppers or shellscripts into world-writable directories and invoke them directly.",
-          "By attaching an LSM BPF program to the bprm_check_security hook (triggered whenever the execve or execveat system calls are invoked), we can inspect the file path, verify the process binary signature, and reject execution attempts with -EPERM before the process image is allocated in user space."
-        ],
-        "code_block": "// eBPF LSM Program: Block Binary Execution in /tmp\n#include <vmlinux.h>\n#include <bpf/bpf_helpers.h>\n#include <bpf/bpf_tracing.h>\n\nchar LICENSE[] SEC(\"license\") = \"GPL\";\n\nSEC(\"lsm/bprm_check_security\")\nint BPF_PROG(restrict_tmp_execution, struct linux_binprm *bprm) {\n    char filename[256];\n    int ret = bpf_d_path(&bprm->file->f_path, filename, sizeof(filename));\n    if (ret < 0) {\n        return 0; // Allow if path resolution fails safely\n    }\n\n    // Check if binary execution originates from /tmp or /dev/shm\n    if (filename[0] == '/' && filename[1] == 't' && filename[2] == 'm' && filename[3] == 'p') {\n        bpf_printk(\"[LSM-BPF] Blocked unauthorized exec from /tmp: %s\\n\", filename);\n        return -1; // -EPERM\n    }\n\n    return 0; // Allow safe execution\n}",
-        "code_language": "c"
-      },
-      {
-        "id": "file-tampering-protection",
-        "h2_title": "3. File Tampering Defense & Immutability Enforcement",
-        "content_paragraphs": [
-          "Protecting sensitive configuration files (such as /etc/passwd, /etc/shadow, and /etc/ssh/sshd_config) from unauthorized writes—even by compromised root processes—is a hallmark of zero-trust host hardening.",
-          "Attaching to the file_open or inode_permission LSM hooks allows security teams to enforce immutable file constraints. When a write flag (O_WRONLY, O_RDWR, O_APPEND) is detected on protected path inodes, the BPF program cross-references the calling process UID and binary path against an audited whitelist, terminating unauthorized modifications immediately."
-        ],
-        "code_block": "// eBPF LSM Program: Enforce Read-Only Immutability on /etc/passwd\nSEC(\"lsm/file_open\")\nint BPF_PROG(protect_etc_passwd, struct file *file) {\n    char filename[256];\n    int ret = bpf_d_path(&file->f_path, filename, sizeof(filename));\n    if (ret < 0) return 0;\n\n    // Check if open mode requests write permissions\n    if ((file->f_flags & (O_WRONLY | O_RDWR | O_CREAT | O_TRUNC))) {\n        if (bpf_strncmp(filename, 12, \"/etc/passwd\") == 0) {\n            // Block unauthorized modification\n            bpf_printk(\"[SECURITY ALERT] Unauthorized write attempt on /etc/passwd\\n\");\n            return -13; // -EACCES\n        }\n    }\n    return 0;\n}",
-        "code_language": "c"
-      },
-      {
-        "id": "production-deployment-and-telemetry",
-        "h2_title": "4. Compiling with Clang/LLVM & Systemd Production Service",
-        "content_paragraphs": [
-          "Compiling LSM BPF programs requires modern LLVM/Clang toolchains and BPF CO-RE (Compile-Once Run-Everywhere) BTF support enabled in the host kernel. Using libbpf, we can compile our C source directly to an ELF object file and load it at boot time via systemd.",
-          "Loaded BPF LSM programs are tracked via bpftool, providing instant operational verification of running security policies and ring buffer event counters without adding overhead to high-throughput servers."
-        ],
-        "code_block": "# Compile LSM BPF Program using BPF CO-RE\nclang -g -O2 -target bpf -D__TARGET_ARCH_x86 -I/usr/include/x86_64-linux-gnu -c lsm_security.bpf.c -o lsm_security.bpf.o\n\n# Load and Pin Program into BPF FileSystem\nbpftool prog load lsm_security.bpf.o /sys/fs/bpf/lsm_security type lsm\n\n# Verify active LSM attachment\nbpftool prog list --json | jq '.[] | select(.type==\"lsm\")'",
-        "code_language": "bash"
-      }
-    ],
-    "faqs": [
-      {
-        "question": "How does LSM BPF differ from Seccomp-BPF?",
-        "answer": "Seccomp-BPF filters system calls globally at the process boundary based on syscall numbers and raw integer register arguments. LSM BPF operates deep inside the Linux kernel with full access to rich kernel data structures (dentry, inode, task_struct, socket), enabling semantic path-based and capability-based policy enforcement."
-      },
-      {
-        "question": "Can an LSM BPF program crash the Linux kernel?",
-        "answer": "No. All eBPF programs must pass the rigorous Linux kernel BPF verifier prior to loading. The verifier proves memory bounds, disallows unbounded loops, and guarantees that the program cannot cause kernel panics or corrupt kernel memory."
-      },
-      {
-        "question": "What is the performance overhead of running LSM BPF in production?",
-        "answer": "Because eBPF bytecode is JIT-compiled into native x86_64/ARM64 machine code, hook execution latency is measured in nanoseconds (typically under 20-40ns per hook evaluation), making it imperceptible in production workloads."
-      }
-    ],
-    "related_tools": [
-      "ebpf-evaluator.html",
-      "linux-hardening-generator.html",
-      "auditd-generator.html"
-    ]
-  },
-  {
-    "slug": "wasm-component-model-polyglot-sandboxing-on-edge-workers",
-    "title": "Wasm Component Model: Polyglot Sandboxing for High-Density Edge Compute",
-    "subtitle": "Architectural blueprint for building zero-trust polyglot micro-services with the WebAssembly Component Model and WIT interfaces on edge runtime workers.",
-    "category": "Zero Trust • Edge Computing",
-    "tags": [
-      "#WebAssembly",
-      "#WasmComponents",
-      "#EdgeCompute",
-      "#Microservices"
-    ],
-    "date_published": "2026-08-18",
-    "read_time_mins": 11,
-    "word_count": 1550,
-    "hero_image": "https://zyekh.com/assets/img/wasm_component_hero.jpg",
-    "hero_caption": "WebAssembly Component Model WIT Interface Sandboxing and Interoperability",
-    "exec_summary": [
-      "Wasm Component Model: Compose heterogeneous modules written in Rust, Go, Python, and C++ into a single isolated execution sandbox.",
-      "WIT Interface Standards: Define language-neutral WebAssembly Interface Type (WIT) contracts for seamless cross-language data exchange.",
-      "High-Density Multi-Tenancy: Achieve sub-millisecond cold starts (< 1ms) and minimal memory footprints (< 2MB) per sandboxed tenant worker.",
-      "Capability Security: Restrict network, filesystem, and environment access strictly through explicit WASI capability interfaces."
-    ],
-    "sections": [
-      {
-        "id": "wasm-component-model-fundamentals",
-        "h2_title": "1. The Evolution from Core Wasm to the Component Model",
-        "content_paragraphs": [
-          "Traditional WebAssembly (Core Wasm 1.0) defined a simple linear memory model with basic numerical primitive types (i32, i64, f32, f64). Interfacing between host runtimes and guest Wasm modules required complex, manual serialization rituals (such as wasm-bindgen) where strings and objects were copied back and forth across memory boundaries.",
-          "The WebAssembly Component Model standardizes a rich type system and module composition layer. Instead of treating Wasm modules as isolated low-level binaries, the Component Model defines Components: self-describing, composable units of software with strongly-typed imports and exports expressed via WebAssembly Interface Types (WIT).",
-          "Components can wrap libraries written in Rust, Go, or C++, and execute within a single Wasm runtime (such as Wasmtime or Cloudflare Workers) with zero-cost cross-language linking and strict capability-based isolation boundaries."
-        ],
-        "code_block": "// WIT Interface Definition: security-service.wit\npackage zyekh:security;\n\ninterface token-verifier {\n    record TokenPayload {\n        user-id: string,\n        roles: list<string>,\n        expires-at: u64,\n    }\n\n    enum VerificationStatus {\n        valid,\n        expired,\n        invalid-signature,\n    }\n\n    verify-token: func(raw-jwt: string, public-key-pem: string) -> result<TokenPayload, VerificationStatus>;\n}\n\nworld security-gateway {\n    export token-verifier;\n}",
-        "code_language": "c"
-      },
-      {
-        "id": "rust-component-implementation",
-        "h2_title": "2. Implementing WIT Interfaces in Idiomatic Rust",
-        "content_paragraphs": [
-          "Using the cargo-component toolchain and wit-bindgen, Rust developers can implement WIT interfaces naturally with native language types. The build system compiles the Rust code directly to the Wasm Component format (.wasm), generating memory allocation glue automatically.",
-          "At runtime, data structures such as strings, lists, and records are transferred efficiently using the Canonical ABI, eliminating serialization overhead while enforcing memory safety between components."
-        ],
-        "code_block": "// Rust Implementation of WIT Token Verifier Component\nuse bindings::exports::zyekh::security::token_verifier::{Guest, TokenPayload, VerificationStatus};\n\nstruct SecurityComponent;\n\nimpl Guest for SecurityComponent {\n    fn verify_token(raw_jwt: String, public_key_pem: String) -> Result<TokenPayload, VerificationStatus> {\n        // Secure in-memory cryptographic verification\n        if raw_jwt.is_empty() {\n            return Err(VerificationStatus::InvalidSignature);\n        }\n        \n        Ok(TokenPayload {\n            user_id: \"usr_99812_admin\".to_string(),\n            roles: vec![\"sysadmin\".to_string(), \"auditor\".to_string()],\n            expires_at: 1792400000,\n        })\n    }\n}\n\nbindings::export!(SecurityComponent with_types_in bindings);",
-        "code_language": "rust"
-      },
-      {
-        "id": "wasmtime-edge-orchestration",
-        "h2_title": "3. Embedding Wasm Components in Edge Host Runtimes",
-        "content_paragraphs": [
-          "Host applications written in Go, Rust, or Node.js can instantiate and link multiple Wasm components dynamically using embeddable engines like Wasmtime. Each tenant or microservice is granted a strictly isolated instance with dedicated memory limits and WASI capabilities.",
-          "This architecture achieves density levels unreachable with Docker containers or Kubernetes pods: thousands of independent customer components can run simultaneously on a single host machine with microsecond cold starts and absolute memory isolation."
-        ],
-        "code_block": "// Host Orchestrator in Rust using Wasmtime\nuse wasmtime::component::{Component, Linker, Store};\nuse wasmtime::{Config, Engine};\n\nfn main() -> wasmtime::Result<()> {\n    let mut config = Config::new();\n    config.wasm_component_model(true);\n    let engine = Engine::new(&config)?;\n    \n    let component = Component::from_file(&engine, \"security_gateway.wasm\")?;\n    let mut store = Store::new(&engine, ());\n    let linker = Linker::new(&engine);\n    \n    println!(\"[WASM HOST] Component loaded with strict capability bounds.\");\n    Ok(())\n}",
-        "code_language": "rust"
-      },
-      {
-        "id": "capability-security-model",
-        "h2_title": "4. WASI 0.2 Capability-Based Security Guardrails",
-        "content_paragraphs": [
-          "The Component Model builds upon WASI 0.2 (WebAssembly System Interface), which embraces the Principle of Least Privilege. Unlike conventional POSIX environments where any process inherits ambient access to all filesystem and network interfaces, WASI components have zero capabilities by default.",
-          "Access to specific directories (wasi:filesystem), network sockets (wasi:http, wasi:sockets), and clocks (wasi:clocks) must be explicitly granted by the host runtime during instantiation. If a compromised component attempts an unauthorized HTTP connection or file read, the runtime blocks the operation at the sandboxing boundary."
-        ],
-        "code_block": "# Building and Packaging Wasm Components\n# Install cargo component tooling\ncargo install cargo-component --locked\n\n# Compile Rust project directly to Wasm Component\ncargo component build --release\n\n# Inspect Component WIT Exports and Interfaces\nwasm-tools component wit target/wasm32-wasip1/release/security_gateway.wasm",
-        "code_language": "bash"
-      }
-    ],
-    "faqs": [
-      {
-        "question": "How does Wasm Component Model performance compare to native Docker containers?",
-        "answer": "Wasm components initialize in less than 1 millisecond with memory footprints under 2MB, whereas Docker containers require 200-500ms and 50-100MB of base image memory, enabling 50x higher tenant density on edge servers."
-      },
-      {
-        "question": "Can components written in different languages call each other directly?",
-        "answer": "Yes. A Rust component can import and invoke functions from a Python or Go component directly within the same Wasm runtime using Canonical ABI interface linking, with zero network serialization overhead."
-      },
-      {
-        "question": "Is the Wasm Component Model supported across modern browsers?",
-        "answer": "Browser support is evolving through Polyfill libraries and native bytecode compiler proposals (Wasm GC and Interface Types). In server and edge runtime environments (Wasmtime, Spin, Cloudflare Workers), the Component Model is fully standardized in production."
-      }
-    ],
-    "related_tools": [
-      "jwt.html",
-      "base64.html",
-      "hash.html"
-    ]
-  },
-  {
-    "slug": "fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth",
-    "title": "FP8 vs INT4 KV-Cache Quantization: Memory Bandwidth vs Perplexity Trade-offs",
-    "subtitle": "Comprehensive comparative analysis of FP8 (E4M3/E5M2) vs INT4 grouped quantization for long-context KV cache memory reduction in high-throughput LLM serving.",
-    "category": "LLM Serving • Quantization",
-    "tags": [
-      "#KVCache",
-      "#Quantization",
-      "#LLMServing",
-      "#VRAMOptimization"
+      "#MEV",
+      "#Flashbots",
+      "#Ethereum",
+      "#MempoolArchitecture"
     ],
     "date_published": "2026-08-18",
     "read_time_mins": 13,
     "word_count": 1750,
-    "hero_image": "https://zyekh.com/assets/img/fp8_int4_kv_hero.jpg",
-    "hero_caption": "KV-Cache Quantization Scaling Curves: FP8 E4M3 vs INT4 AWQ Memory Footprint",
+    "hero_image": "https://zyekh.com/assets/img/mev-mempool-architecture.jpg",
+    "hero_caption": "Ethereum MEV-Boost Relay Pipeline and Private Mempool Transaction Bundling",
     "exec_summary": [
-      "KV Cache Memory Bottleneck: Long-context inference (32k-128k tokens) is strictly bounded by KV cache VRAM capacity and memory bandwidth.",
-      "FP8 Quantization (E4M3): Delivers 2x memory reduction with zero noticeable perplexity loss and native hardware tensor core execution.",
-      "INT4 Grouped Quantization: Delivers 4x memory reduction enabling extreme context lengths on consumer/single-GPU nodes, with minor degradation in reasoning benchmarks.",
-      "Throughput vs Latency Trade-offs: FP8 maximizes batched token throughput on H100/A100 GPUs, while INT4 maximizes concurrency under severe VRAM constraints."
+      "Maximal Extractable Value (MEV): Understand arbitrage, liquidations, and malicious frontrunning/sandwiching across public transaction pools.",
+      "Proposer-Builder Separation (PBS): Decouple block construction from consensus validation via MEV-Boost relay architectures.",
+      "Private Mempool Routing: Protect user transactions from predatory sandwich attacks using Flashbots Protect and SUAVE private RPC endpoints.",
+      "Atomic Searcher Bundles: Submit multi-transaction bundles that guarantee atomicity (execution strictly succeeds or reverts entirely without gas penalties)."
     ],
     "sections": [
       {
-        "id": "kv-cache-memory-scaling-problem",
-        "h2_title": "1. The KV-Cache Scaling Problem in Long-Context LLM Serving",
+        "id": "mev-mechanics-and-the-dark-forest",
+        "h2_title": "1. MEV Taxonomy & The Public Mempool Landscape",
         "content_paragraphs": [
-          "In autoregressive transformer generation, Key and Value tensors for all preceding tokens are cached in GPU VRAM to avoid redundant projection calculations during decoding steps. For modern large models (such as Llama-3-70B with 64 layers, 8 key-value heads, and hidden dimensions of 128), each token consumes approximately 1.31 MB of VRAM in standard 16-bit precision (FP16/BF16).",
-          "At a context window of 64,000 tokens for a single user session, the KV cache alone consumes over 83.8 GB of VRAM—exceeding the entire physical memory capacity of an NVIDIA H100 80GB GPU before model weights are even loaded.",
-          "Quantizing the KV cache to lower bit precisions (FP8 or INT4) is the most effective architectural lever for scaling concurrent throughput and supporting 100k+ token context windows without requiring expensive multi-node GPU clusters."
+          "Maximal Extractable Value (MEV) represents the maximum value that block proposers, validators, and automated searchers can extract from blockchain users by including, excluding, or reordering transactions within a block. In the public Ethereum peer-to-peer mempool, unconfirmed transactions broadcast in plaintext are constantly inspected by automated arbitrage and searcher bots.",
+          "Predatory MEV strategies—most notably Sandwich Attacks—monitor Decentralized Exchange (DEX) swaps with loose slippage tolerance. A searcher bot immediately frontruns the user with a buy transaction (driving up asset price) and backruns the user with a sell transaction (extracting profit while inflicting maximum slippage on the victim).",
+          "Benign MEV strategies, such as multi-pool arbitrage and liquidation auctions on lending protocols (Aave, MakerDAO), stabilize on-chain market equilibrium but create intense Priority Gas Auction (PGA) spam when executed over public mempools."
         ],
-        "code_block": "# Python Mathematical Model for KV Cache Memory Size\ndef compute_kv_cache_gb(layers, kv_heads, head_dim, seq_len, batch_size, bytes_per_elem):\n    # KV Cache Formula: 2 (K+V) * layers * kv_heads * head_dim * seq_len * batch_size * bytes\n    total_bytes = 2 * layers * kv_heads * head_dim * seq_len * batch_size * bytes_per_elem\n    return total_bytes / (1024 ** 3)\n\n# Example: Llama-3-70B (64 layers, 8 KV heads, head_dim 128, 64k tokens, batch 1)\nfp16_size = compute_kv_cache_gb(64, 8, 128, 65536, 1, 2.0)  # 16-bit: 16.0 GB\nfp8_size  = compute_kv_cache_gb(64, 8, 128, 65536, 1, 1.0)  # 8-bit:  8.0 GB\nint4_size = compute_kv_cache_gb(64, 8, 128, 65536, 1, 0.5)  # 4-bit:  4.0 GB",
+        "code_block": "// Python: Calculating Optimal Sandwich Attack Profit Constraints\ndef calculate_sandwich_profit(pool_reserves_x, pool_reserves_y, victim_amount_in, max_slippage):\n    k = pool_reserves_x * pool_reserves_y\n    user_min_out = (victim_amount_in * pool_reserves_y / (pool_reserves_x + victim_amount_in)) * (1.0 - max_slippage)\n    \n    # Calculate maximum frontrun amount that pushes user execution exactly to min_out\n    frontrun_in = ((pool_reserves_x * victim_amount_in * pool_reserves_y / user_min_out) ** 0.5) - pool_reserves_x\n    return max(0.0, frontrun_in)",
         "code_language": "python"
       },
       {
-        "id": "fp8-quantization-mechanics",
-        "h2_title": "2. FP8 (E4M3 vs E5M2) Quantization Mechanics & Tensor Cores",
+        "id": "flashbots-and-mev-boost-architecture",
+        "h2_title": "2. Proposer-Builder Separation (PBS) & MEV-Boost Relays",
         "content_paragraphs": [
-          "The IEEE 8-bit floating point standard defines two primary formats: FP8 E4M3 (1 sign bit, 4 exponent bits, 3 mantissa bits) and FP8 E5M2 (1 sign bit, 5 exponent bits, 2 mantissa bits). For KV cache quantization, E4M3 is universally preferred because it offers higher numerical precision (3 mantissa bits) across typical bounded attention distributions.",
-          "On modern GPUs (NVIDIA Ada Lovelace, Hopper, and Blackwell), FP8 matrix operations are natively accelerated in Tensor Cores. During attention calculation, FP8 KV cache blocks can be multiplied directly with query tensors without dequantizing back to FP16 in registers, yielding up to 1.8x faster decode kernel execution.",
-          "Perplexity evaluations across GSM8K, MMLU, and HumanEval show less than 0.05% deviation between native BF16 KV cache and FP8 E4M3 KV cache."
+          "To prevent validator centralization and eliminate on-chain mempool spam, the Ethereum ecosystem implemented Proposer-Builder Separation (PBS) via MEV-Boost. In this architecture, specialized entities called Block Builders compile full candidate blocks maximizing fee revenue, which are submitted to independent Relays.",
+          "Consensus validators (Proposers) connect to MEV-Boost relays to receive blinded block headers containing the highest validator bid. The validator signs the header before receiving the block body, guaranteeing that validators cannot steal searcher MEV bundles or frontrun transactions before block publication."
         ],
-        "code_block": "// CUDA FP8 E4M3 Key-Value Cache Packing Kernel\n#include <cuda_fp8.h>\n\n__global__ void quantize_kv_fp8_kernel(const half* __restrict__ input,\n                                       __nv_fp8_e4m3* __restrict__ output,\n                                       float scale,\n                                       int num_elements) {\n    int idx = blockIdx.x * blockDim.x + threadIdx.x;\n    if (idx < num_elements) {\n        float val = __half2float(input[idx]);\n        float scaled = val * scale;\n        output[idx] = __nv_fp8_e4m3(scaled);\n    }\n}",
-        "code_language": "cpp"
+        "code_block": "// Go: MEV-Boost Relay Bid Header Verification\npackage main\n\nimport (\n    \"context\"\n    \"fmt\"\n    \"github.com/flashbots/go-boost-utils/types\"\n)\n\ntype RelayClient struct {\n    Endpoint string\n}\n\nfunc (c *RelayClient) GetHeader(ctx context.Context, slot uint64, parentHash types.Hash) (*types.SignedBuilderBid, error) {\n    // Query builder bid with highest execution payload value\n    bid := &types.SignedBuilderBid{\n        Message: &types.BuilderBid{\n            Value: types.IntToU256(1850000000000000000), // 1.85 ETH\n        },\n    }\n    fmt.Printf(\"[MEV-BOOST] Validated payload value: %s wei\n\", bid.Message.Value.String())\n    return bid, nil\n}",
+        "code_language": "go"
       },
       {
-        "id": "int4-grouped-quantization",
-        "h2_title": "3. INT4 Grouped Quantization & Outlier Mitigation",
+        "id": "private-rpc-and-searcher-bundling",
+        "h2_title": "3. Private RPC Routing & Atomic Searcher Bundles",
         "content_paragraphs": [
-          "For extreme memory reduction, INT4 quantization packs two 4-bit integers into a single byte, cutting KV cache footprint by 75% compared to FP16. However, because standard integer quantization has a uniform step size, outliers in attention key representations can cause significant quantization noise.",
-          "Grouped INT4 quantization mitigates this by computing independent scale and zero-point parameters across small groups of channels (e.g. group size 64 or 128).",
-          "While INT4 requires an on-the-fly dequantization step in registers before Tensor Core dot products on architectures lacking native INT4 MMA units, the 4x reduction in global memory bandwidth requirements often offsets the ALU dequantization overhead on memory-bound decode steps."
+          "Private RPC endpoints (such as Flashbots Protect, Eden Network, and MEVBlocker) allow decentralized applications and individual users to route transactions directly to trusted block builders, bypassing the public p2p mempool entirely.",
+          "For DeFi searchers, the eth_sendBundle JSON-RPC API provides atomic execution guarantees: a bundle containing multiple transactions (e.g. target swap + backrun liquidation) will either execute in the exact specified sequence within the target block or not be included at all, completely eliminating wasted gas fees on failed arbitrage transactions."
         ],
-        "code_block": "# vLLM Launch Configuration with INT4 / FP8 KV Cache\n# Option A: Native FP8 KV Cache on Hopper/Ada (Recommended)\nvllm serve meta-llama/Meta-Llama-3-70B-Instruct \\\n    --kv-cache-dtype fp8 \\\n    --max-model-len 32768\n\n# Option B: INT4 Quantized KV Cache via AWQ for High Concurrency\nvllm serve casperhansen/llama-3-70b-instruct-awq \\\n    --kv-cache-dtype int4 \\\n    --gpu-memory-utilization 0.92",
+        "code_block": "# JSON-RPC: Submitting Flashbots Searcher Bundle\ncurl -X POST https://relay.flashbots.net \\n  -H \"Content-Type: application/json\" \\n  -H \"X-Flashbots-Signature: 0x1234...\" \\n  -d '{\n    \"jsonrpc\": \"2.0\",\n    \"id\": 1,\n    \"method\": \"eth_sendBundle\",\n    \"params\": [{\n      \"txs\": [\"0x02f87...\", \"0x02f88...\"],\n      \"blockNumber\": \"0x1245A00\",\n      \"minTimestamp\": 1792400000,\n      \"maxTimestamp\": 1792400060\n    }]\n  }'",
         "code_language": "bash"
       },
       {
-        "id": "decision-matrix-and-recommendations",
-        "h2_title": "4. Architecture Decision Matrix & Production Guidelines",
+        "id": "orderflow-auctions-and-suave",
+        "h2_title": "4. Order Flow Auctions (OFAs) & Decentralized Block Building",
         "content_paragraphs": [
-          "Selecting the optimal KV cache quantization strategy depends strictly on the target hardware architecture and serving SLA constraints.",
-          "1. Enterprise Data Center (H100/H200/A100): Default to FP8 E4M3. It delivers near-zero accuracy loss, native Tensor Core math acceleration, and 2x memory density.",
-          "2. Edge / Single-GPU Consumer Nodes (RTX 4090/A6000): Use Grouped INT4 when serving context windows > 32k tokens where VRAM capacity is the hard ceiling.",
-          "3. Mission-Critical Reasoning & Code Generation: Benchmark target models with needle-in-a-haystack (NIAH) tests before deploying INT4 to ensure subtle recall accuracy is preserved."
+          "The frontier of cryptoeconomic security centers on Order Flow Auctions (OFAs) and decentralized block building architectures (such as SUAVE - Single Unifying Application for Value Expression). In an OFA, value extracted from transactions is automatically rebated back to the originating user rather than captured entirely by validators.",
+          "SUAVE acts as an independent execution chain and cryptographic mempool, executing confidential smart contracts inside Trusted Execution Environments (TEEs) to decentralize block construction across multi-chain ecosystems."
         ],
-        "code_block": "# Empirical Verification: NIAH Retrieval Testing\npython3 -m evaluation.needle_in_haystack \\\n    --model_path /models/Llama-3-70B-FP8-KV \\\n    --context_lengths 16384,32768,65536 \\\n    --document_depths 10,25,50,75,90 \\\n    --output_report data/niah_results.json",
-        "code_language": "bash"
+        "code_block": "// Python: Computing User MEV Rebate Distribution\ndef compute_mev_rebate(extracted_value_eth, searcher_margin=0.10, builder_fee=0.05):\n    retained_profit = extracted_value_eth * searcher_margin\n    infrastructure_cost = extracted_value_eth * builder_fee\n    user_refund = extracted_value_eth - (retained_profit + infrastructure_cost)\n    \n    return {\n        \"user_refund_eth\": user_refund,\n        \"searcher_profit_eth\": retained_profit,\n        \"builder_fee_eth\": infrastructure_cost\n    }",
+        "code_language": "python"
       }
     ],
     "faqs": [
       {
-        "question": "Does FP8 KV cache quantization degrade coding or reasoning performance?",
-        "answer": "Empirical tests across HumanEval, GSM8K, and ARC benchmarks confirm that FP8 E4M3 KV cache exhibits zero statistically significant degradation compared to baseline BF16."
+        "question": "How can everyday DeFi users protect themselves from MEV sandwich attacks?",
+        "answer": "Users should connect their Web3 wallets to private RPC endpoints (such as Flashbots Protect or MEVBlocker) and configure strict slippage tolerance (0.1% - 0.5%) on decentralized exchanges to eliminate profitable frontrun margins."
       },
       {
-        "question": "Can FP8 KV caching be used on NVIDIA Ampere (A100) GPUs?",
-        "answer": "Yes. While A100 lacks native FP8 Tensor Cores (requiring register dequantization to FP16 before computation), the 50% reduction in HBM2e memory bandwidth still yields significant throughput gains during memory-bound decoding."
+        "question": "What happens if a Flashbots searcher bundle fails simulation?",
+        "answer": "Unlike standard Ethereum transactions where failed execution consumes gas fees, Flashbots bundles that revert in simulation are dropped without being included on-chain, incurring zero gas penalties for searchers."
       },
       {
-        "question": "How does KV cache quantization interact with PagedAttention in vLLM?",
-        "answer": "vLLM seamlessly integrates KV cache quantization with PagedAttention block tables. Physical block allocations in GPU memory are simply halved (for FP8) or quartered (for INT4), immediately doubling the max concurrency capacity of the server."
+        "question": "Is MEV inherently harmful to blockchain networks?",
+        "answer": "Not all MEV is harmful. Non-predatory MEV (DEX arbitrage and collateral liquidations) ensures efficient market pricing and protocol solvency. Malicious MEV (frontrunning and sandwiching) harms users and is mitigated through private mempools and encrypted order flow."
       }
     ],
     "related_tools": [
-      "llm-calculator.html",
-      "speculative-decoding.html",
-      "webgpu-profiler.html"
+      {
+        "name": "Curl Command Builder",
+        "url": "/tools/curl.html",
+        "desc": "Construct and test JSON-RPC curl payloads."
+      },
+      {
+        "name": "Hash Generator",
+        "url": "/tools/hash.html",
+        "desc": "Calculate Keccak-256 transaction hashes."
+      }
+    ]
+  },
+  {
+    "slug": "zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups",
+    "title": "Zero-Knowledge Proofs in L2 Rollups: zk-SNARKs vs zk-STARKs Mathematical Architecture",
+    "subtitle": "In-depth comparative analysis of algebraic polynomial commitments, prover compute overhead, recursive circuits, and on-chain verification gas limits in zkEVMs.",
+    "category": "Cryptography • Zero-Knowledge",
+    "tags": [
+      "#ZeroKnowledge",
+      "#zkSNARKs",
+      "#zkSTARKs",
+      "#Layer2Rollups"
+    ],
+    "date_published": "2026-08-18",
+    "read_time_mins": 15,
+    "word_count": 1950,
+    "hero_image": "https://zyekh.com/assets/img/zk-proofs-snarks-starks.jpg",
+    "hero_caption": "Mathematical Architecture of Polynomial Commitments: KZG (SNARKs) vs FRI (STARKs)",
+    "exec_summary": [
+      "Zero-Knowledge Succinctness: Compress thousands of off-chain L2 execution transactions into a single cryptographic proof verified on L1.",
+      "zk-SNARKs (KZG / PlonK): Constant-size proofs (~200 bytes) with cheap on-chain gas costs (~200k gas), requiring trusted setups and elliptic curve assumptions.",
+      "zk-STARKs (FRI / AIR): Transparent setup with post-quantum security based solely on collision-resistant hash functions, with larger proof sizes (~50-100KB).",
+      "Recursive Proof Composition: Aggregate thousands of sub-proofs into a single master proof to scale Ethereum throughput to tens of thousands of TPS."
+    ],
+    "sections": [
+      {
+        "id": "zk-fundamentals-and-arithmetization",
+        "h2_title": "1. Arithmetization: Translating Computation to Polynomial Equations",
+        "content_paragraphs": [
+          "Zero-Knowledge Proofs allow a Prover to convince a Verifier that a specific computational statement is mathematically valid without revealing private inputs (witness). In Layer-2 zk-Rollups (such as zkSync Era, Scroll, Starknet, and Polygon zkEVM), every state transition executed by smart contracts is compiled into arithmetic circuits.",
+          "The process begins with Arithmetization: converting execution traces into constraint systems such as R1CS (Rank-1 Constraint Systems) or AIR (Algebraic Intermediate Representation). The prover constructs low-degree polynomials that evaluate to zero across constraint evaluation domains if and only if every execution step followed EVM opcode semantics.",
+          "By evaluating these polynomials at randomized challenge points using the Schwartz-Zippel Lemma, the verifier can verify millions of computation steps in sub-second verification times."
+        ],
+        "code_block": "// Rust: Simple R1CS Constraint Enforcement Example (Arkworks)\nuse ark_relations::r1cs::{ConstraintSynthesizer, ConstraintSystemRef, SynthesisError};\nuse ark_ff::PrimeField;\n\nstruct MultiplierCircuit<F: PrimeField> {\n    a: Option<F>,\n    b: Option<F>,\n}\n\nimpl<F: PrimeField> ConstraintSynthesizer<F> for MultiplierCircuit<F> {\n    fn generate_constraints(self, cs: ConstraintSystemRef<F>) -> Result<(), SynthesisError> {\n        let a_var = cs.new_witness_variable(|| self.a.ok_or(SynthesisError::AssignmentMissing))?;\n        let b_var = cs.new_witness_variable(|| self.b.ok_or(SynthesisError::AssignmentMissing))?;\n        let c_var = cs.new_input_variable(|| {\n            let mut res = self.a.ok_or(SynthesisError::AssignmentMissing)?;\n            res.mul_assign(&self.b.ok_or(SynthesisError::AssignmentMissing)?);\n            Ok(res)\n        })?;\n        \n        // Enforce: a * b = c\n        cs.enforce_constraint(a_var.into(), b_var.into(), c_var.into())?;\n        Ok(())\n    }\n}",
+        "code_language": "rust"
+      },
+      {
+        "id": "snarks-kzg-vs-starks-fri",
+        "h2_title": "2. Polynomial Commitment Schemes: KZG (SNARKs) vs FRI (STARKs)",
+        "content_paragraphs": [
+          "The core architectural distinction between zk-SNARKs and zk-STARKs lies in their Polynomial Commitment Schemes (PCS), which determine proof size, verification complexity, and cryptographic security foundations.",
+          "zk-SNARKs (e.g. Groth16, PlonK, Halo2) predominantly utilize KZG (Kate-Zaverucha-Goldberg) commitments based on bilinear pairings over elliptic curves (such as BN254 / BLS12-381). KZG produces constant-size proofs (~200 bytes) and constant-time pairing checks, making them extremely cost-effective for Ethereum L1 on-chain verification (~200,000 gas). However, KZG requires a trusted setup ceremony and is vulnerable to future quantum computing attacks.",
+          "zk-STARKs utilize FRI (Fast Reed-Solomon Interactive Oracle Proofs of Proximity) based entirely on collision-resistant cryptographic hash functions (such as Poseidon, Rescue, or Keccak-256). STARKs require zero trusted setups (fully transparent) and provide post-quantum security guarantees, though raw proof sizes are larger (50KB-100KB)."
+        ],
+        "code_block": "// Mathematical Comparison: Proof Size & Gas Complexity\n// -------------------------------------------------------------\n// Property               zk-SNARK (PlonK/KZG)    zk-STARK (FRI/AIR)\n// -------------------------------------------------------------\n// Proof Size             ~200 - 400 bytes        ~50 - 100 KB\n// L1 Verification Cost   ~200k - 300k gas        ~1.5M - 3M gas\n// Trusted Setup          Required (Ceremony)     Transparent (No Setup)\n// Quantum Resistance     No (Elliptic Curves)    Yes (Hash-Based)\n// Prover Memory Scaling  O(N log N) Elliptic     O(N log^2 N) Hash Fast",
+        "code_language": "c"
+      },
+      {
+        "id": "recursive-proof-aggregation",
+        "h2_title": "3. Recursive Proof Composition & zkEVM Scaling",
+        "content_paragraphs": [
+          "Directly verifying individual transaction proofs on Ethereum L1 remains too expensive for high-frequency trading applications. Modern rollups solve this through Recursive Proof Composition: a zero-knowledge circuit that takes multiple child proofs as inputs and outputs a single aggregated proof verifying the validity of all children.",
+          "In systems like STARK-to-SNARK wrappers (used in Starknet and Polygon zkEVM), massive computation is initially proven using ultra-fast STARK provers off-chain, and the resulting STARK proof is recursively proven inside a final compact PlonK/KZG SNARK circuit to minimize L1 verification gas costs."
+        ],
+        "code_block": "// Rust: Recursive Proof Verification Circuit Outline\nfn verify_and_aggregate_proofs<E: PairingEngine>(\n    proofs: &[Proof<E>],\n    public_inputs: &[Vec<E::Fr>],\n    vk: &VerifyingKey<E>\n) -> Result<AggregatedProof<E>, SynthesisError> {\n    println!(\"[ZK PROVER] Aggregating {} sub-proofs recursively...\", proofs.len());\n    // Verify pairing equations inside recursive circuit\n    let aggregated = synthesize_recursive_snark_tree(proofs, public_inputs, vk)?;\n    Ok(aggregated)\n}",
+        "code_language": "rust"
+      },
+      {
+        "id": "l1-solidity-verifier-contract",
+        "h2_title": "4. L1 Solidity Verifier Contract Deployment & Benchmarks",
+        "content_paragraphs": [
+          "On Ethereum Layer 1, the rollup state is finalized by invoking a Verifier contract that checks the validity proof against the previous state root and new state root.",
+          "Utilizing Ethereum precompiled contracts for elliptic curve addition (alt_bn128 ecAdd at 0x06), scalar multiplication (ecMul at 0x07), and pairing checks (ecPairing at 0x08), Solidity verifiers achieve cryptographic finality within a single transaction call."
+        ],
+        "code_block": "// Solidity: BN254 Pairing Precompile Invocation\npragma solidity ^0.8.24;\n\ncontract ZkSnarkVerifier {\n    function verifyPairing(\n        uint256[2] memory a,\n        uint256[2][2] memory b,\n        uint256[2] memory c,\n        uint256[2][2] memory gamma\n    ) public view returns (bool) {\n        bytes memory input = abi.encodePacked(a[0], a[1], b[0][1], b[0][0], b[1][1], b[1][0], c[0], c[1], gamma[0][1], gamma[0][0], gamma[1][1], gamma[1][0]);\n        uint256[1] memory out;\n        bool success;\n        assembly {\n            success := staticcall(gas(), 0x08, add(input, 0x20), mload(input), out, 0x20)\n        }\n        return success && out[0] == 1;\n    }\n}",
+        "code_language": "solidity"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "What is the purpose of a Trusted Setup ceremony in zk-SNARKs?",
+        "answer": "The Trusted Setup generates structured reference string (SRS) cryptographic parameters for elliptic curve pairings. If the toxic waste secrets from the ceremony are compromised, malicious actors could forge valid proofs without executing legitimate transactions."
+      },
+      {
+        "question": "Why do zk-STARKs have post-quantum security?",
+        "answer": "zk-STARKs rely exclusively on collision-resistant cryptographic hash functions (such as Keccak or Poseidon) and information-theoretic FRI protocols, which do not depend on the hardness of discrete logarithm or elliptic curve factorization problems vulnerable to Shor algorithm."
+      },
+      {
+        "question": "How does a zkEVM differ from a standard zk-Rollup?",
+        "answer": "A standard zk-Rollup supports only specialized transactions (transfers and specific swaps). A zkEVM proves the state transition of generic EVM bytecode directly, allowing arbitrary Solidity smart contracts to deploy on Layer 2 with zero modifications."
+      }
+    ],
+    "related_tools": [
+      {
+        "name": "Hash Generator",
+        "url": "/tools/hash.html",
+        "desc": "Calculate cryptographic hashes and digests."
+      },
+      {
+        "name": "JWT Decoder & Inspector",
+        "url": "/tools/jwt.html",
+        "desc": "Verify cryptographic tokens client-side."
+      }
+    ]
+  },
+  {
+    "slug": "defi-amm-mathematics-and-concentrated-liquidity-mechanics",
+    "title": "DeFi AMM Mathematics & Concentrated Liquidity: Invariant Curves & Tick Spacing",
+    "subtitle": "Mathematical derivation of Constant Product (x * y = k), concentrated liquidity virtual reserves, tick math, and dynamic swap fee routing in Uniswap v3/v4.",
+    "category": "DeFi Engineering • Quantitative Finance",
+    "tags": [
+      "#DeFiMath",
+      "#AutomatedMarketMaker",
+      "#UniswapV3",
+      "#LiquidityPools"
+    ],
+    "date_published": "2026-08-18",
+    "read_time_mins": 14,
+    "word_count": 1800,
+    "hero_image": "https://zyekh.com/assets/img/defi-amm-concentrated-liquidity.jpg",
+    "hero_caption": "Uniswap v3 Concentrated Liquidity Hyperbola and Virtual Reserve Bounds",
+    "exec_summary": [
+      "Constant Product Invariant: Understand the core bonding curve equation (x * y = k) and marginal price calculation (P = y / x).",
+      "Concentrated Liquidity: Allocate capital within custom price intervals [p_lower, p_upper] to achieve up to 4000x capital efficiency over Uniswap v2.",
+      "Virtual Reserves Math: Shift bonding curves along the coordinate axes using real reserves (x, y) and virtual reserves (x_v, y_v).",
+      "Tick Index Calculation: Discretize price space into geometric price ticks (p(i) = 1.0001^i) with Q64.96 fixed-point arithmetic."
+    ],
+    "sections": [
+      {
+        "id": "constant-product-foundations",
+        "h2_title": "1. Constant Product Foundations & Price Impact Derivation",
+        "content_paragraphs": [
+          "Automated Market Makers (AMMs) replace traditional centralized order books with deterministic mathematical invariant curves. In Uniswap v2, liquidity pools hold two tokens ($ and $) satisfying the Constant Product formula:  \\cdot y = k$, where $ remains constant throughout swap operations.",
+          "The marginal spot price of Token $ in terms of Token $ is defined as the negative derivative of the invariant curve:  = \frac{y}{x}$. When a trader swaps $\\Delta x$ tokens into the pool, the output $\\Delta y$ received by the trader is derived by preserving the constant product:",
+          " \\cdot (y - \\Delta y) = k \\implies \\Delta y = \frac{y \\cdot \\Delta x}{x + \\Delta x}$.",
+          "As transaction size $\\Delta x$ increases relative to total reserves $, the effective execution price degrades relative to the initial spot price, generating Price Impact and Slippage."
+        ],
+        "code_block": "// Python: Derivation of Exact Swap Output with Trading Fees (gamma = 1 - fee)\ndef compute_amm_swap_output(reserve_x, reserve_y, delta_x, fee_tier=0.003):\n    gamma = 1.0 - fee_tier\n    delta_x_with_fee = delta_x * gamma\n    delta_y = (reserve_y * delta_x_with_fee) / (reserve_x + delta_x_with_fee)\n    new_price = (reserve_y - delta_y) / (reserve_x + delta_x)\n    \n    return {\n        \"amount_out_y\": delta_y,\n        \"new_reserve_x\": reserve_x + delta_x,\n        \"new_reserve_y\": reserve_y - delta_y,\n        \"effective_price\": delta_x / delta_y,\n        \"marginal_price_after\": new_price\n    }",
+        "code_language": "python"
+      },
+      {
+        "id": "concentrated-liquidity-and-virtual-reserves",
+        "h2_title": "2. Concentrated Liquidity & Virtual Reserves in Uniswap v3",
+        "content_paragraphs": [
+          "In constant product pools (Uniswap v2), liquidity is distributed uniformly across the infinite price range  \\in (0, \\infty)$. Because real trading pairs fluctuate within bounded price intervals, over 99% of deposited capital sits idle in extreme tails, earning minimal fees.",
+          "Uniswap v3 introduces Concentrated Liquidity: Liquidity Providers (LPs) allocate capital within bounded price ranges 0$. Inside the range, the pool behaves as a standard constant product curve with magnified Virtual Reserves (, y_v$), shifting the curve so that reserves deplete exactly when the price crosses the range boundaries.",
+          "The relationship between real reserves $, liquidity  = \\sqrt{x_v \\cdot y_v}$, and price bounds $ is governed by the core virtual reserve equations:",
+          " = L \\cdot \\left(\frac{1}{\\sqrt{P}} - \frac{1}{\\sqrt{p_b}}\right), \\quad y = L \\cdot \\left(\\sqrt{P} - \\sqrt{p_a}\right)$."
+        ],
+        "code_block": "// Solidity: Calculating Liquidity L from Price Bounds (Q64.96 Fixed-Point)\npragma solidity ^0.8.24;\n\nlibrary SqrtPriceMath {\n    // Compute liquidity from token0 amount: L = amount0 * (sqrtRatioA * sqrtRatioB) / (sqrtRatioB - sqrtRatioA)\n    function getLiquidityForAmount0(\n        uint160 sqrtRatioAX96,\n        uint160 sqrtRatioBX96,\n        uint256 amount0\n    ) internal pure returns (uint128 liquidity) {\n        if (sqrtRatioAX96 > sqrtRatioBX96) {\n            (sqrtRatioAX96, sqrtRatioBX96) = (sqrtRatioBX96, sqrtRatioAX96);\n        }\n        uint256 intermediate = (uint256(sqrtRatioAX96) * sqrtRatioBX96) >> 96;\n        liquidity = uint128((amount0 * intermediate) / (sqrtRatioBX96 - sqrtRatioAX96));\n    }\n}",
+        "code_language": "solidity"
+      },
+      {
+        "id": "tick-spacing-and-q64-math",
+        "h2_title": "3. Geometric Price Ticks & Q64.96 Fixed-Point Arithmetic",
+        "content_paragraphs": [
+          "To track liquidity across multiple overlapping positions without looping through thousands of orders, Uniswap v3 discretizes the continuous price domain into discrete geometric Ticks: (i) = 1.0001^i$, where $ is an integer tick index.",
+          "Each tick $ corresponds to an exact $\\sqrt{P}$ value represented in Q64.96 binary fixed-point format (a 160-bit unsigned integer with 64 bits of integer and 96 bits of fraction).",
+          "When a swap pushes the current spot price across a tick boundary, the AMM updates active liquidity $ instantaneously by adding or subtracting the $\\Delta L$ delta stored in the tick bitmap data structure."
+        ],
+        "code_block": "// Python: Tick to SqrtPriceX96 Conversion\ndef tick_to_sqrt_price_x96(tick_index):\n    price = 1.0001 ** tick_index\n    sqrt_price = price ** 0.5\n    sqrt_price_x96 = int(sqrt_price * (2 ** 96))\n    return sqrt_price_x96\n\ndef sqrt_price_x96_to_tick(sqrt_price_x96):\n    import math\n    sqrt_price = sqrt_price_x96 / (2 ** 96)\n    price = sqrt_price ** 2\n    tick = math.log(price) / math.log(1.0001)\n    return round(tick)",
+        "code_language": "python"
+      },
+      {
+        "id": "impermanent-loss-and-lp-risk-management",
+        "h2_title": "4. Impermanent Loss Dynamics & Quantitative LP Risk Profiling",
+        "content_paragraphs": [
+          "While concentrated liquidity amplifies fee earnings by up to 4000x for stable pairs, it proportionally magnifies Impermanent Loss (IL) risk if market price moves outside the allocated range 0$. Once the price exits the range, the LP position is 100% converted into the depreciating asset and stops accumulating swap fees.",
+          "Professional DeFi market makers utilize dynamic hedging algorithms (such as perpetual futures deltas or options straddles) to neutralize directional market exposure and harvest pure swap fee yield."
+        ],
+        "code_block": "// Python: Concentrated Impermanent Loss Model\ndef compute_concentrated_il(price_ratio, p_lower, p_upper):\n    import math\n    # Ratio of current price over initial price\n    r = price_ratio\n    r_a = p_lower\n    r_b = p_upper\n    \n    v_hold = 0.5 * (1.0 + r)\n    v_lp = (2 * math.sqrt(r) - math.sqrt(r_a) - r / math.sqrt(r_b)) / (2 - math.sqrt(r_a) - 1.0 / math.sqrt(r_b))\n    \n    impermanent_loss = (v_lp / v_hold) - 1.0\n    return impermanent_loss",
+        "code_language": "python"
+      }
+    ],
+    "faqs": [
+      {
+        "question": "How does concentrated liquidity increase capital efficiency for LPs?",
+        "answer": "By restricting liquidity to a tight price interval where trading actually occurs (e.g. 0.999 - 1.001 for stablecoin pairs), LPs achieve the same market depth as a Uniswap v2 pool with a fraction of the capital, multiplying swap fee yield proportionally."
+      },
+      {
+        "question": "What is Q64.96 fixed-point notation used in Uniswap v3?",
+        "answer": "Q64.96 is a binary fixed-point number format with 64 bits before the decimal point and 96 bits after. It provides high precision without floating-point rounding errors in EVM integer arithmetic."
+      },
+      {
+        "question": "What happens when the spot price exits an LP concentrated range?",
+        "answer": "The position is completely converted into the less valuable of the two tokens (all Token X if price drops below the range, all Token Y if price exceeds the range) and ceases to earn swap fees until price returns inside the range."
+      }
+    ],
+    "related_tools": [
+      {
+        "name": "KPR Calculator",
+        "url": "/tools/kpr.html",
+        "desc": "Calculate financial amortization schedules."
+      },
+      {
+        "name": "Hash Generator",
+        "url": "/tools/hash.html",
+        "desc": "Calculate cryptographic pool hashes."
+      }
     ]
   }
 ]

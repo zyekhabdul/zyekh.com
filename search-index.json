@@ -360,6 +360,12 @@
     "type": "Article"
   },
   {
+    "title": "DeFi AMM Mathematics & Concentrated Liquidity: Invariant Curves & Tick Spacing",
+    "desc": "Mathematical derivation of Constant Product (x * y = k), concentrated liquidity virtual reserves, tick math, and dynamic swap fee routing in Uniswap v3/v4.",
+    "url": "/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html",
+    "type": "Article"
+  },
+  {
     "title": "DSPy: Replacing Prompt Engineering with Declarative Optimization Compilers",
     "desc": "Why manual prompt tweaking is obsolete. Learn how to compile and optimize LM pipelines using DSPy declarative modules and metric-driven teleprompter algorithms.",
     "url": "/blog/dspy-declarative-prompting-optimization.html",
@@ -375,18 +381,6 @@
     "title": "Automated Intrusion Prevention: Fail2ban Configuration for SSH & Nginx Protection",
     "desc": "Comprehensive blueprint for deploying Fail2ban to detect brute-force attacks, automate IP bans via iptables/nftables, and configure recidive long-term bans.",
     "url": "/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html",
-    "type": "Article"
-  },
-  {
-    "title": "FlashAttention-3 Architecture: Asynchronous FP8 Tensor Cores & Warp-Specialization",
-    "desc": "Deep-dive into NVIDIA Hopper H100 hardware innovations, Tensor Memory Accelerator (TMA), and warp-specialized asynchronous software pipelining for ultra-low latency attention computation.",
-    "url": "/blog/flashattention-3-asynchronous-fp8-warp-specialization.html",
-    "type": "Article"
-  },
-  {
-    "title": "FP8 vs INT4 KV-Cache Quantization: Memory Bandwidth vs Perplexity Trade-offs",
-    "desc": "Comprehensive comparative analysis of FP8 (E4M3/E5M2) vs INT4 grouped quantization for long-context KV cache memory reduction in high-throughput LLM serving.",
-    "url": "/blog/fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth.html",
     "type": "Article"
   },
   {
@@ -426,12 +420,6 @@
     "type": "Article"
   },
   {
-    "title": "Linux LSM BPF: Dynamic Kernel Security Policies Without Kernel Recompilation",
-    "desc": "Practical engineering guide for writing and enforcing programmable eBPF Linux Security Module (LSM) hooks to block unauthorized syscalls and file tampering in real time.",
-    "url": "/blog/linux-lsm-bpf-runtime-security-policies-and-kernel-hooks.html",
-    "type": "Article"
-  },
-  {
     "title": "Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces",
     "desc": "Step-by-step engineering blueprint for implementing Seccomp-BPF syscall filters to restrict Linux process capabilities and block zero-day kernel exploits.",
     "url": "/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html",
@@ -441,6 +429,12 @@
     "title": "Comprehensive Linux VPS Hardening Blueprint for 2026",
     "desc": "Production-grade security blueprint for Debian and Ubuntu Linux servers. Includes SSH key enforcement, kernel sysctl parameters, UFW rate-limiting, Fail2Ban auditing, and automated updates.",
     "url": "/blog/linux-vps-hardening-guide-2026.html",
+    "type": "Article"
+  },
+  {
+    "title": "MEV & Private Mempool Architecture: Flashbots, Searchers & Order Flow Defense",
+    "desc": "Technical analysis of Maximal Extractable Value (MEV), block builder auctions, sandwich attack mitigation, and MEV-Boost private RPC relay pipelines.",
+    "url": "/blog/mev-and-private-mempool-architecture-in-ethereum.html",
     "type": "Article"
   },
   {
@@ -498,6 +492,12 @@
     "type": "Article"
   },
   {
+    "title": "Smart Contract Security & EVM Bytecode Hardening: Formal Verification & Exploit Defense",
+    "desc": "Comprehensive vulnerability mitigation blueprint covering Read-Only Reentrancy, Storage Slot Collision, and Halmos/Slither formal verification in Solidity.",
+    "url": "/blog/smart-contract-security-and-evm-bytecode-hardening.html",
+    "type": "Article"
+  },
+  {
     "title": "Short-Lived SSH Certificate Authentication with HashiCorp Vault CA",
     "desc": "Zero-trust SSH architecture blueprint for eliminating static SSH public keys using HashiCorp Vault Certificate Authority and short-lived certificates.",
     "url": "/blog/ssh-certificates-vault-ca-short-lived-authentication.html",
@@ -534,12 +534,6 @@
     "type": "Article"
   },
   {
-    "title": "Wasm Component Model: Polyglot Sandboxing for High-Density Edge Compute",
-    "desc": "Architectural blueprint for building zero-trust polyglot micro-services with the WebAssembly Component Model and WIT interfaces on edge runtime workers.",
-    "url": "/blog/wasm-component-model-polyglot-sandboxing-on-edge-workers.html",
-    "type": "Article"
-  },
-  {
     "title": "WebGPU LLM Inference: Running 7B Models Natively in the Browser",
     "desc": "Leveraging WebGPU compute shaders, TVM WebAssembly, and WGSL pipelines to run private local LLMs entirely within client-side browser sandboxes without server infrastructure.",
     "url": "/blog/webgpu-llm-inference-browser-sandbox.html",
@@ -549,6 +543,12 @@
     "title": "Securing VPS Infrastructure with WireGuard Mesh VPN Tunnels & Strict Firewall Rules",
     "desc": "Step-by-step technical blueprint for creating encrypted private mesh networks between multi-cloud VPS nodes using WireGuard and UDP noise protocols.",
     "url": "/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html",
+    "type": "Article"
+  },
+  {
+    "title": "Zero-Knowledge Proofs in L2 Rollups: zk-SNARKs vs zk-STARKs Mathematical Architecture",
+    "desc": "In-depth comparative analysis of algebraic polynomial commitments, prover compute overhead, recursive circuits, and on-chain verification gas limits in zkEVMs.",
+    "url": "/blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html",
     "type": "Article"
   },
   {

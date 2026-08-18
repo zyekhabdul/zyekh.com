@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zero-Knowledge Proofs in L2 Rollups: zk-SNARKs vs zk-STARKs Mathematical Architecture — zyekh.com</title>
+<meta content="In-depth comparative analysis of algebraic polynomial commitments, prover compute overhead, recursive circuits, and on-chain verification gas limits in zkEVMs." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html" rel="canonical"/>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="Zero-Knowledge Proofs in L2 Rollups: zk-SNARKs vs zk-STARKs Mathematical Architecture" property="og:title"/>
+<meta content="In-depth comparative analysis of algebraic polynomial commitments, prover compute overhead, recursive circuits, and on-chain verification gas limits in zkEVMs." property="og:description"/>
+<meta content="https://zyekh.com/blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html" property="og:url"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="2026-08-18T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<meta content="@zyekh" name="twitter:creator"/>
+<meta content="@zyekh" name="twitter:site"/>
+<meta content="Zero-Knowledge Proofs in L2 Rollups: zk-SNARKs vs zk-STARKs Mathematical Architecture" name="twitter:title"/>
+<meta content="In-depth comparative analysis of algebraic polynomial commitments, prover compute overhead, recursive circuits, and on-chain verification gas limits in zkEVMs." name="twitter:description"/>
+<!-- Favicons & Manifest -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Zero-Knowledge Proofs in L2 Rollups: zk-SNARKs vs zk-STARKs Mathematical Architecture",
+      "description": "In-depth comparative analysis of algebraic polynomial commitments, prover compute overhead, recursive circuits, and on-chain verification gas limits in zkEVMs.",
+      "url": "https://zyekh.com/blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html",
+      "image": "https://zyekh.com/assets/img/zk-proofs-snarks-starks.jpg",
+      "datePublished": "2026-08-18",
+      "dateModified": "2026-08-18",
+      "wordCount": 1950,
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zyekh.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog & Articles",
+          "item": "https://zyekh.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Zero-Knowledge Proofs in L2 Rollups: zk-SNARKs vs zk-STARKs Mathematical Architecture",
+          "item": "https://zyekh.com/blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the purpose of a Trusted Setup ceremony in zk-SNARKs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Trusted Setup generates structured reference string (SRS) cryptographic parameters for elliptic curve pairings. If the toxic waste secrets from the ceremony are compromised, malicious actors could forge valid proofs without executing legitimate transactions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do zk-STARKs have post-quantum security?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "zk-STARKs rely exclusively on collision-resistant cryptographic hash functions (such as Keccak or Poseidon) and information-theoretic FRI protocols, which do not depend on the hardness of discrete logarithm or elliptic curve factorization problems vulnerable to Shor algorithm."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does a zkEVM differ from a standard zk-Rollup?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A standard zk-Rollup supports only specialized transactions (transfers and specific swaps). A zkEVM proves the state transition of generic EVM bytecode directly, allowing arbitrary Solidity smart contracts to deploy on Layer 2 with zero modifications."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/blog.min.css?v=1eb470b3" integrity="sha384-wnEjkEPBnaax3w1llsQyFN2j3IIOxSOTpt9lEkG0uW5ZnNWAQBH4zS0LsFp0LPKW" crossorigin="anonymous" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous"></script>
+<script defer="" src="/assets/js/article-actions.min.js?v=6cf0fa6c" integrity="sha384-7Zc8x9pMA4XVFbvKkDb77s0tC31UxKSpwWO9VZ/rbGTiNxaNERlsv1xKIPrVUHID" crossorigin="anonymous"></script>
+  <style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+  <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+  <link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous" as="script">
+  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
+  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
+  <meta property="og:image" content="https://zyekh.com/assets/img/social-cards/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups-dark-landscape.png?v=5098237a">
+  <meta property="og:image:secure_url" content="https://zyekh.com/assets/img/social-cards/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups-dark-landscape.png?v=5098237a">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="2400">
+  <meta property="og:image:height" content="1260">
+  <meta property="og:image:alt" content="Technical specification card for Zero-Knowledge Proofs in L2 Rollups: zk-SNARKs vs zk-STARKs Mathematical Architecture">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/social-cards/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups-dark-landscape.png?v=5098237a">
+</head>
+<body>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+  <!-- Back to Blog -->
+  <a class="back-link" href="/blog/">← Back to Articles</a>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="meta-tag">Cryptography • Zero-Knowledge</span>
+    <h1 class="article-title">Zero-Knowledge Proofs in L2 Rollups: zk-SNARKs vs zk-STARKs Mathematical Architecture</h1>
+    <div class="article-meta">
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="2026-08-18T00:00:00Z">Published: 2026-08-18</time>
+        <span>15 min read (1950+ Words)</span>
+      </div>
+      <div class="article-actions">
+        <button class="btn-share" id="shareBtn" type="button">Share</button>
+        <button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
+        <button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Article Body Content -->
+  <main class="article-content">
+    <!-- Featured Hero Image -->
+    <figure class="article-hero-wrapper">
+      <picture>
+        <source srcset="/assets/img/zk-proofs-snarks-starks.webp" type="image/webp"/>
+        <img alt="Zero-Knowledge Proofs in L2 Rollups: zk-SNARKs vs zk-STARKs Mathematical Architecture" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="/assets/img/zk-proofs-snarks-starks.jpg" width="1280"/>
+      </picture>
+      <figcaption class="hero-caption">Mathematical Architecture of Polynomial Commitments: KZG (SNARKs) vs FRI (STARKs)</figcaption>
+    </figure>
+
+    <!-- Executive Summary / Takeaways Box -->
+    <div class="exec-summary">
+      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+      <ul>
+<li>Zero-Knowledge Succinctness: Compress thousands of off-chain L2 execution transactions into a single cryptographic proof verified on L1.</li>
+<li>zk-SNARKs (KZG / PlonK): Constant-size proofs (~200 bytes) with cheap on-chain gas costs (~200k gas), requiring trusted setups and elliptic curve assumptions.</li>
+<li>zk-STARKs (FRI / AIR): Transparent setup with post-quantum security based solely on collision-resistant hash functions, with larger proof sizes (~50-100KB).</li>
+<li>Recursive Proof Composition: Aggregate thousands of sub-proofs into a single master proof to scale Ethereum throughput to tens of thousands of TPS.</li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc-card">
+      <div class="toc-title">Table of Contents</div>
+      <ol class="toc-list">
+<li><a href="#zk-fundamentals-and-arithmetization">1. Arithmetization: Translating Computation to Polynomial Equations</a></li>
+<li><a href="#snarks-kzg-vs-starks-fri">2. Polynomial Commitment Schemes: KZG (SNARKs) vs FRI (STARKs)</a></li>
+<li><a href="#recursive-proof-aggregation">3. Recursive Proof Composition & zkEVM Scaling</a></li>
+<li><a href="#l1-solidity-verifier-contract">4. L1 Solidity Verifier Contract Deployment & Benchmarks</a></li>
+<li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
+      </ol>
+    </nav>
+
+<h2 id="zk-fundamentals-and-arithmetization">1. Arithmetization: Translating Computation to Polynomial Equations</h2>
+<p>Zero-Knowledge Proofs allow a Prover to convince a Verifier that a specific computational statement is mathematically valid without revealing private inputs (witness). In Layer-2 zk-Rollups (such as zkSync Era, Scroll, Starknet, and Polygon zkEVM), every state transition executed by smart contracts is compiled into arithmetic circuits.</p>
+<p>The process begins with Arithmetization: converting execution traces into constraint systems such as R1CS (Rank-1 Constraint Systems) or AIR (Algebraic Intermediate Representation). The prover constructs low-degree polynomials that evaluate to zero across constraint evaluation domains if and only if every execution step followed EVM opcode semantics.</p>
+<p>By evaluating these polynomials at randomized challenge points using the Schwartz-Zippel Lemma, the verifier can verify millions of computation steps in sub-second verification times.</p>
+<pre><code class="language-rust">// Rust: Simple R1CS Constraint Enforcement Example (Arkworks)
+use ark_relations::r1cs::{ConstraintSynthesizer, ConstraintSystemRef, SynthesisError};
+use ark_ff::PrimeField;
+
+struct MultiplierCircuit<F: PrimeField> {
+    a: Option<F>,
+    b: Option<F>,
+}
+
+impl<F: PrimeField> ConstraintSynthesizer<F> for MultiplierCircuit<F> {
+    fn generate_constraints(self, cs: ConstraintSystemRef<F>) -> Result<(), SynthesisError> {
+        let a_var = cs.new_witness_variable(|| self.a.ok_or(SynthesisError::AssignmentMissing))?;
+        let b_var = cs.new_witness_variable(|| self.b.ok_or(SynthesisError::AssignmentMissing))?;
+        let c_var = cs.new_input_variable(|| {
+            let mut res = self.a.ok_or(SynthesisError::AssignmentMissing)?;
+            res.mul_assign(&self.b.ok_or(SynthesisError::AssignmentMissing)?);
+            Ok(res)
+        })?;
+        
+        // Enforce: a * b = c
+        cs.enforce_constraint(a_var.into(), b_var.into(), c_var.into())?;
+        Ok(())
+    }
+}</code></pre>
+
+<h2 id="snarks-kzg-vs-starks-fri">2. Polynomial Commitment Schemes: KZG (SNARKs) vs FRI (STARKs)</h2>
+<p>The core architectural distinction between zk-SNARKs and zk-STARKs lies in their Polynomial Commitment Schemes (PCS), which determine proof size, verification complexity, and cryptographic security foundations.</p>
+<p>zk-SNARKs (e.g. Groth16, PlonK, Halo2) predominantly utilize KZG (Kate-Zaverucha-Goldberg) commitments based on bilinear pairings over elliptic curves (such as BN254 / BLS12-381). KZG produces constant-size proofs (~200 bytes) and constant-time pairing checks, making them extremely cost-effective for Ethereum L1 on-chain verification (~200,000 gas). However, KZG requires a trusted setup ceremony and is vulnerable to future quantum computing attacks.</p>
+<p>zk-STARKs utilize FRI (Fast Reed-Solomon Interactive Oracle Proofs of Proximity) based entirely on collision-resistant cryptographic hash functions (such as Poseidon, Rescue, or Keccak-256). STARKs require zero trusted setups (fully transparent) and provide post-quantum security guarantees, though raw proof sizes are larger (50KB-100KB).</p>
+<pre><code class="language-c">// Mathematical Comparison: Proof Size & Gas Complexity
+// -------------------------------------------------------------
+// Property               zk-SNARK (PlonK/KZG)    zk-STARK (FRI/AIR)
+// -------------------------------------------------------------
+// Proof Size             ~200 - 400 bytes        ~50 - 100 KB
+// L1 Verification Cost   ~200k - 300k gas        ~1.5M - 3M gas
+// Trusted Setup          Required (Ceremony)     Transparent (No Setup)
+// Quantum Resistance     No (Elliptic Curves)    Yes (Hash-Based)
+// Prover Memory Scaling  O(N log N) Elliptic     O(N log^2 N) Hash Fast</code></pre>
+
+<h2 id="recursive-proof-aggregation">3. Recursive Proof Composition & zkEVM Scaling</h2>
+<p>Directly verifying individual transaction proofs on Ethereum L1 remains too expensive for high-frequency trading applications. Modern rollups solve this through Recursive Proof Composition: a zero-knowledge circuit that takes multiple child proofs as inputs and outputs a single aggregated proof verifying the validity of all children.</p>
+<p>In systems like STARK-to-SNARK wrappers (used in Starknet and Polygon zkEVM), massive computation is initially proven using ultra-fast STARK provers off-chain, and the resulting STARK proof is recursively proven inside a final compact PlonK/KZG SNARK circuit to minimize L1 verification gas costs.</p>
+<pre><code class="language-rust">// Rust: Recursive Proof Verification Circuit Outline
+fn verify_and_aggregate_proofs<E: PairingEngine>(
+    proofs: &[Proof<E>],
+    public_inputs: &[Vec<E::Fr>],
+    vk: &VerifyingKey<E>
+) -> Result<AggregatedProof<E>, SynthesisError> {
+    println!("[ZK PROVER] Aggregating {} sub-proofs recursively...", proofs.len());
+    // Verify pairing equations inside recursive circuit
+    let aggregated = synthesize_recursive_snark_tree(proofs, public_inputs, vk)?;
+    Ok(aggregated)
+}</code></pre>
+
+<h2 id="l1-solidity-verifier-contract">4. L1 Solidity Verifier Contract Deployment & Benchmarks</h2>
+<p>On Ethereum Layer 1, the rollup state is finalized by invoking a Verifier contract that checks the validity proof against the previous state root and new state root.</p>
+<p>Utilizing Ethereum precompiled contracts for elliptic curve addition (alt_bn128 ecAdd at 0x06), scalar multiplication (ecMul at 0x07), and pairing checks (ecPairing at 0x08), Solidity verifiers achieve cryptographic finality within a single transaction call.</p>
+<pre><code class="language-solidity">// Solidity: BN254 Pairing Precompile Invocation
+pragma solidity ^0.8.24;
+
+contract ZkSnarkVerifier {
+    function verifyPairing(
+        uint256[2] memory a,
+        uint256[2][2] memory b,
+        uint256[2] memory c,
+        uint256[2][2] memory gamma
+    ) public view returns (bool) {
+        bytes memory input = abi.encodePacked(a[0], a[1], b[0][1], b[0][0], b[1][1], b[1][0], c[0], c[1], gamma[0][1], gamma[0][0], gamma[1][1], gamma[1][0]);
+        uint256[1] memory out;
+        bool success;
+        assembly {
+            success := staticcall(gas(), 0x08, add(input, 0x20), mload(input), out, 0x20)
+        }
+        return success && out[0] == 1;
+    }
+}</code></pre>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+<details>
+  <summary>What is the purpose of a Trusted Setup ceremony in zk-SNARKs?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">The Trusted Setup generates structured reference string (SRS) cryptographic parameters for elliptic curve pairings. If the toxic waste secrets from the ceremony are compromised, malicious actors could forge valid proofs without executing legitimate transactions.</p>
+</details>
+<details>
+  <summary>Why do zk-STARKs have post-quantum security?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">zk-STARKs rely exclusively on collision-resistant cryptographic hash functions (such as Keccak or Poseidon) and information-theoretic FRI protocols, which do not depend on the hardness of discrete logarithm or elliptic curve factorization problems vulnerable to Shor algorithm.</p>
+</details>
+<details>
+  <summary>How does a zkEVM differ from a standard zk-Rollup?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">A standard zk-Rollup supports only specialized transactions (transfers and specific swaps). A zkEVM proves the state transition of generic EVM bytecode directly, allowing arbitrary Solidity smart contracts to deploy on Layer 2 with zero modifications.</p>
+</details>
+    </div>
+
+    <!-- Author Bio Card (EEAT & DFIR Branding) -->
+    <div class="author-card">
+      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+      <div class="author-info">
+        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener noreferrer" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener noreferrer" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener noreferrer" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="/.well-known/security.txt" rel="noopener noreferrer" style="font-weight:600" target="_blank">Security Policy</a> •
+          <a href="/gpg-key.asc" rel="noopener noreferrer" style="font-weight:600" target="_blank">PGP Key</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/hash.html">Hash Generator</a> dan <a class="blog-badge" href="/tools/jwt.html">JWT Decoder & Inspector</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
+</article>
+</body>
+</html>

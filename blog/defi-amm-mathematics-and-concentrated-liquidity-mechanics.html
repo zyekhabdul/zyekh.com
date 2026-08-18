@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DeFi AMM Mathematics & Concentrated Liquidity: Invariant Curves & Tick Spacing — zyekh.com</title>
+<meta content="Mathematical derivation of Constant Product (x * y = k), concentrated liquidity virtual reserves, tick math, and dynamic swap fee routing in Uniswap v3/v4." name="description"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html" rel="canonical"/>
+
+<!-- Open Graph / Social Meta Tags -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="article" property="og:type"/>
+<meta content="DeFi AMM Mathematics & Concentrated Liquidity: Invariant Curves & Tick Spacing" property="og:title"/>
+<meta content="Mathematical derivation of Constant Product (x * y = k), concentrated liquidity virtual reserves, tick math, and dynamic swap fee routing in Uniswap v3/v4." property="og:description"/>
+<meta content="https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html" property="og:url"/>
+<meta content="https://zyekh.com" property="article:publisher"/>
+<meta content="2026-08-18T00:00:00Z" property="article:published_time"/>
+<meta content="Zyekh Abdul Qadir Jailani" property="article:author"/>
+<meta content="@zyekh" name="twitter:creator"/>
+<meta content="@zyekh" name="twitter:site"/>
+<meta content="DeFi AMM Mathematics & Concentrated Liquidity: Invariant Curves & Tick Spacing" name="twitter:title"/>
+<meta content="Mathematical derivation of Constant Product (x * y = k), concentrated liquidity virtual reserves, tick math, and dynamic swap fee routing in Uniswap v3/v4." name="twitter:description"/>
+<!-- Favicons & Manifest -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "DeFi AMM Mathematics & Concentrated Liquidity: Invariant Curves & Tick Spacing",
+      "description": "Mathematical derivation of Constant Product (x * y = k), concentrated liquidity virtual reserves, tick math, and dynamic swap fee routing in Uniswap v3/v4.",
+      "url": "https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html",
+      "image": "https://zyekh.com/assets/img/defi-amm-concentrated-liquidity.jpg",
+      "datePublished": "2026-08-18",
+      "dateModified": "2026-08-18",
+      "wordCount": 1800,
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://zyekh.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog & Articles",
+          "item": "https://zyekh.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "DeFi AMM Mathematics & Concentrated Liquidity: Invariant Curves & Tick Spacing",
+          "item": "https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does concentrated liquidity increase capital efficiency for LPs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "By restricting liquidity to a tight price interval where trading actually occurs (e.g. 0.999 - 1.001 for stablecoin pairs), LPs achieve the same market depth as a Uniswap v2 pool with a fraction of the capital, multiplying swap fee yield proportionally."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is Q64.96 fixed-point notation used in Uniswap v3?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Q64.96 is a binary fixed-point number format with 64 bits before the decimal point and 96 bits after. It provides high precision without floating-point rounding errors in EVM integer arithmetic."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens when the spot price exits an LP concentrated range?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The position is completely converted into the less valuable of the two tokens (all Token X if price drops below the range, all Token Y if price exceeds the range) and ceases to earn swap fees until price returns inside the range."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/blog.min.css?v=1eb470b3" integrity="sha384-wnEjkEPBnaax3w1llsQyFN2j3IIOxSOTpt9lEkG0uW5ZnNWAQBH4zS0LsFp0LPKW" crossorigin="anonymous" rel="stylesheet"/>
+<script defer="" src="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous"></script>
+<script defer="" src="/assets/js/article-actions.min.js?v=6cf0fa6c" integrity="sha384-7Zc8x9pMA4XVFbvKkDb77s0tC31UxKSpwWO9VZ/rbGTiNxaNERlsv1xKIPrVUHID" crossorigin="anonymous"></script>
+  <style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+  <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
+  <link rel="preload" href="/assets/css/shared.min.css?v=0faadea9" integrity="sha384-BORz1R7Nh4kfV3jl0TGxAZ1caYn2+S2UQ4N5Yk2yoTym9o7DFJhku+AL1YZwsHUV" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=6093dc43" integrity="sha384-FiTgA2qYTG9wtfeixDa85c1rFl4NGz2UROB6HaAJL+3ZfnV/K4ZT96s4sjcPSxgE" crossorigin="anonymous" as="script">
+  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
+  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-PBFABwNCG5lBGU1M6sPOSZtnhfZ8AAFh2tybZ8kp3S0='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
+  <meta property="og:image" content="https://zyekh.com/assets/img/social-cards/defi-amm-mathematics-and-concentrated-liquidity-mechanics-dark-landscape.png?v=775f9696">
+  <meta property="og:image:secure_url" content="https://zyekh.com/assets/img/social-cards/defi-amm-mathematics-and-concentrated-liquidity-mechanics-dark-landscape.png?v=775f9696">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="2400">
+  <meta property="og:image:height" content="1260">
+  <meta property="og:image:alt" content="Technical specification card for DeFi AMM Mathematics &amp; Concentrated Liquidity: Invariant Curves &amp; Tick Spacing">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://zyekh.com/assets/img/social-cards/defi-amm-mathematics-and-concentrated-liquidity-mechanics-dark-landscape.png?v=775f9696">
+</head>
+<body>
+<!-- Pure CSS Scroll-Driven Reading Progress Bar -->
+<div class="reading-progress-bar"></div>
+
+<!-- Header Navigation -->
+<site-nav active="blog"></site-nav>
+
+<article class="container-article" itemscope="" itemtype="https://schema.org/TechArticle">
+  <!-- Back to Blog -->
+  <a class="back-link" href="/blog/">← Back to Articles</a>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    <span class="meta-tag">DeFi Engineering • Quantitative Finance</span>
+    <h1 class="article-title">DeFi AMM Mathematics & Concentrated Liquidity: Invariant Curves & Tick Spacing</h1>
+    <div class="article-meta">
+      <div class="meta-info">
+        <span>By Zyekh Abdul Qadir Jailani</span>
+        <time class="meta-item" datetime="2026-08-18T00:00:00Z">Published: 2026-08-18</time>
+        <span>14 min read (1800+ Words)</span>
+      </div>
+      <div class="article-actions">
+        <button class="btn-share" id="shareBtn" type="button">Share</button>
+        <button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
+        <button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Article Body Content -->
+  <main class="article-content">
+    <!-- Featured Hero Image -->
+    <figure class="article-hero-wrapper">
+      <picture>
+        <source srcset="/assets/img/defi-amm-concentrated-liquidity.webp" type="image/webp"/>
+        <img alt="DeFi AMM Mathematics & Concentrated Liquidity: Invariant Curves & Tick Spacing" class="article-hero-img" decoding="async" height="720" itemprop="image" loading="eager" src="/assets/img/defi-amm-concentrated-liquidity.jpg" width="1280"/>
+      </picture>
+      <figcaption class="hero-caption">Uniswap v3 Concentrated Liquidity Hyperbola and Virtual Reserve Bounds</figcaption>
+    </figure>
+
+    <!-- Executive Summary / Takeaways Box -->
+    <div class="exec-summary">
+      <div class="exec-summary-title">Executive Summary &amp; Key Security Takeaways</div>
+      <ul>
+<li>Constant Product Invariant: Understand the core bonding curve equation (x * y = k) and marginal price calculation (P = y / x).</li>
+<li>Concentrated Liquidity: Allocate capital within custom price intervals [p_lower, p_upper] to achieve up to 4000x capital efficiency over Uniswap v2.</li>
+<li>Virtual Reserves Math: Shift bonding curves along the coordinate axes using real reserves (x, y) and virtual reserves (x_v, y_v).</li>
+<li>Tick Index Calculation: Discretize price space into geometric price ticks (p(i) = 1.0001^i) with Q64.96 fixed-point arithmetic.</li>
+      </ul>
+    </div>
+
+    <!-- Table of Contents -->
+    <nav class="toc-card">
+      <div class="toc-title">Table of Contents</div>
+      <ol class="toc-list">
+<li><a href="#constant-product-foundations">1. Constant Product Foundations & Price Impact Derivation</a></li>
+<li><a href="#concentrated-liquidity-and-virtual-reserves">2. Concentrated Liquidity & Virtual Reserves in Uniswap v3</a></li>
+<li><a href="#tick-spacing-and-q64-math">3. Geometric Price Ticks & Q64.96 Fixed-Point Arithmetic</a></li>
+<li><a href="#impermanent-loss-and-lp-risk-management">4. Impermanent Loss Dynamics & Quantitative LP Risk Profiling</a></li>
+<li><a href="#faq">Frequently Asked Questions (FAQ)</a></li>
+      </ol>
+    </nav>
+
+<h2 id="constant-product-foundations">1. Constant Product Foundations & Price Impact Derivation</h2>
+<p>Automated Market Makers (AMMs) replace traditional centralized order books with deterministic mathematical invariant curves. In Uniswap v2, liquidity pools hold two tokens ($ and $) satisfying the Constant Product formula:  \cdot y = k$, where $ remains constant throughout swap operations.</p>
+<p>The marginal spot price of Token $ in terms of Token $ is defined as the negative derivative of the invariant curve:  = rac{y}{x}$. When a trader swaps $\Delta x$ tokens into the pool, the output $\Delta y$ received by the trader is derived by preserving the constant product:</p>
+<p> \cdot (y - \Delta y) = k \implies \Delta y = rac{y \cdot \Delta x}{x + \Delta x}$.</p>
+<p>As transaction size $\Delta x$ increases relative to total reserves $, the effective execution price degrades relative to the initial spot price, generating Price Impact and Slippage.</p>
+<pre><code class="language-python">// Python: Derivation of Exact Swap Output with Trading Fees (gamma = 1 - fee)
+def compute_amm_swap_output(reserve_x, reserve_y, delta_x, fee_tier=0.003):
+    gamma = 1.0 - fee_tier
+    delta_x_with_fee = delta_x * gamma
+    delta_y = (reserve_y * delta_x_with_fee) / (reserve_x + delta_x_with_fee)
+    new_price = (reserve_y - delta_y) / (reserve_x + delta_x)
+    
+    return {
+        "amount_out_y": delta_y,
+        "new_reserve_x": reserve_x + delta_x,
+        "new_reserve_y": reserve_y - delta_y,
+        "effective_price": delta_x / delta_y,
+        "marginal_price_after": new_price
+    }</code></pre>
+
+<h2 id="concentrated-liquidity-and-virtual-reserves">2. Concentrated Liquidity & Virtual Reserves in Uniswap v3</h2>
+<p>In constant product pools (Uniswap v2), liquidity is distributed uniformly across the infinite price range  \in (0, \infty)$. Because real trading pairs fluctuate within bounded price intervals, over 99% of deposited capital sits idle in extreme tails, earning minimal fees.</p>
+<p>Uniswap v3 introduces Concentrated Liquidity: Liquidity Providers (LPs) allocate capital within bounded price ranges 0$. Inside the range, the pool behaves as a standard constant product curve with magnified Virtual Reserves (, y_v$), shifting the curve so that reserves deplete exactly when the price crosses the range boundaries.</p>
+<p>The relationship between real reserves $, liquidity  = \sqrt{x_v \cdot y_v}$, and price bounds $ is governed by the core virtual reserve equations:</p>
+<p> = L \cdot \left(rac{1}{\sqrt{P}} - rac{1}{\sqrt{p_b}}
+ight), \quad y = L \cdot \left(\sqrt{P} - \sqrt{p_a}
+ight)$.</p>
+<pre><code class="language-solidity">// Solidity: Calculating Liquidity L from Price Bounds (Q64.96 Fixed-Point)
+pragma solidity ^0.8.24;
+
+library SqrtPriceMath {
+    // Compute liquidity from token0 amount: L = amount0 * (sqrtRatioA * sqrtRatioB) / (sqrtRatioB - sqrtRatioA)
+    function getLiquidityForAmount0(
+        uint160 sqrtRatioAX96,
+        uint160 sqrtRatioBX96,
+        uint256 amount0
+    ) internal pure returns (uint128 liquidity) {
+        if (sqrtRatioAX96 > sqrtRatioBX96) {
+            (sqrtRatioAX96, sqrtRatioBX96) = (sqrtRatioBX96, sqrtRatioAX96);
+        }
+        uint256 intermediate = (uint256(sqrtRatioAX96) * sqrtRatioBX96) >> 96;
+        liquidity = uint128((amount0 * intermediate) / (sqrtRatioBX96 - sqrtRatioAX96));
+    }
+}</code></pre>
+
+<h2 id="tick-spacing-and-q64-math">3. Geometric Price Ticks & Q64.96 Fixed-Point Arithmetic</h2>
+<p>To track liquidity across multiple overlapping positions without looping through thousands of orders, Uniswap v3 discretizes the continuous price domain into discrete geometric Ticks: (i) = 1.0001^i$, where $ is an integer tick index.</p>
+<p>Each tick $ corresponds to an exact $\sqrt{P}$ value represented in Q64.96 binary fixed-point format (a 160-bit unsigned integer with 64 bits of integer and 96 bits of fraction).</p>
+<p>When a swap pushes the current spot price across a tick boundary, the AMM updates active liquidity $ instantaneously by adding or subtracting the $\Delta L$ delta stored in the tick bitmap data structure.</p>
+<pre><code class="language-python">// Python: Tick to SqrtPriceX96 Conversion
+def tick_to_sqrt_price_x96(tick_index):
+    price = 1.0001 ** tick_index
+    sqrt_price = price ** 0.5
+    sqrt_price_x96 = int(sqrt_price * (2 ** 96))
+    return sqrt_price_x96
+
+def sqrt_price_x96_to_tick(sqrt_price_x96):
+    import math
+    sqrt_price = sqrt_price_x96 / (2 ** 96)
+    price = sqrt_price ** 2
+    tick = math.log(price) / math.log(1.0001)
+    return round(tick)</code></pre>
+
+<h2 id="impermanent-loss-and-lp-risk-management">4. Impermanent Loss Dynamics & Quantitative LP Risk Profiling</h2>
+<p>While concentrated liquidity amplifies fee earnings by up to 4000x for stable pairs, it proportionally magnifies Impermanent Loss (IL) risk if market price moves outside the allocated range 0$. Once the price exits the range, the LP position is 100% converted into the depreciating asset and stops accumulating swap fees.</p>
+<p>Professional DeFi market makers utilize dynamic hedging algorithms (such as perpetual futures deltas or options straddles) to neutralize directional market exposure and harvest pure swap fee yield.</p>
+<pre><code class="language-python">// Python: Concentrated Impermanent Loss Model
+def compute_concentrated_il(price_ratio, p_lower, p_upper):
+    import math
+    # Ratio of current price over initial price
+    r = price_ratio
+    r_a = p_lower
+    r_b = p_upper
+    
+    v_hold = 0.5 * (1.0 + r)
+    v_lp = (2 * math.sqrt(r) - math.sqrt(r_a) - r / math.sqrt(r_b)) / (2 - math.sqrt(r_a) - 1.0 / math.sqrt(r_b))
+    
+    impermanent_loss = (v_lp / v_hold) - 1.0
+    return impermanent_loss</code></pre>
+
+    <!-- FAQ Section -->
+    <div class="faq-section">
+      <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+<details>
+  <summary>How does concentrated liquidity increase capital efficiency for LPs?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">By restricting liquidity to a tight price interval where trading actually occurs (e.g. 0.999 - 1.001 for stablecoin pairs), LPs achieve the same market depth as a Uniswap v2 pool with a fraction of the capital, multiplying swap fee yield proportionally.</p>
+</details>
+<details>
+  <summary>What is Q64.96 fixed-point notation used in Uniswap v3?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">Q64.96 is a binary fixed-point number format with 64 bits before the decimal point and 96 bits after. It provides high precision without floating-point rounding errors in EVM integer arithmetic.</p>
+</details>
+<details>
+  <summary>What happens when the spot price exits an LP concentrated range?</summary>
+  <p style="padding: 1rem 1.25rem; margin: 0; color: var(--text-muted);">The position is completely converted into the less valuable of the two tokens (all Token X if price drops below the range, all Token Y if price exceeds the range) and ceases to earn swap fees until price returns inside the range.</p>
+</details>
+    </div>
+
+    <!-- Author Bio Card (EEAT & DFIR Branding) -->
+    <div class="author-card">
+      <img alt="Zyekh Abdul Qadir Jailani" class="author-avatar" decoding="async" height="60" loading="lazy" src="/assets/img/profile.webp" width="60"/>
+      <div class="author-info">
+        <h4>Written by Zyekh Abdul Qadir Jailani</h4>
+        <p>Digital Forensics &amp; Incident Response (DFIR) Specialist &amp; Security Researcher specializing in Linux kernel hardening, threat hunting, and system security research.</p>
+        <div class="author-social-links" style="margin-top:0.4rem; font-size:0.85rem; color:var(--text-muted);">
+          <a href="https://www.linkedin.com/in/zyekh-abdul-qadir-jailani/" rel="noopener noreferrer" style="font-weight:600" target="_blank">LinkedIn</a> •
+          <a href="https://github.com/zyekhabdul" rel="noopener noreferrer" style="font-weight:600" target="_blank">GitHub</a> •
+          <a href="https://discord.gg/jDmerBugvu" rel="noopener noreferrer" style="font-weight:600" target="_blank">Discord</a> •
+          <a href="/.well-known/security.txt" rel="noopener noreferrer" style="font-weight:600" target="_blank">Security Policy</a> •
+          <a href="/gpg-key.asc" rel="noopener noreferrer" style="font-weight:600" target="_blank">PGP Key</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Tools Recommendation -->
+    <div class="article-cross-links callout-card">
+      <h4 class="heading-reset">Utility Security Tools Related to this Article:</h4>
+      <p class="note-sm">
+        Gunakan <a class="blog-badge" href="/tools/kpr.html">KPR Calculator</a> dan <a class="blog-badge" href="/tools/hash.html">Hash Generator</a> untuk membantu alur kerja konfigurasi keamanan Anda secara privasi di browser.
+      </p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 <strong>zyekh.com</strong> — Zyekh Abdul Qadir Jailani. All rights reserved.</p>
+  </footer>
+</article>
+</body>
+</html>

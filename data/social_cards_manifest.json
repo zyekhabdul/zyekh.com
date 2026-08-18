@@ -135,6 +135,35 @@
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
+  "defi-amm-mathematics-and-concentrated-liquidity-mechanics": {
+    "slug": "defi-amm-mathematics-and-concentrated-liquidity-mechanics",
+    "title": "DeFi AMM Mathematics & Concentrated Liquidity: Invariant Curves & Tick Spacing",
+    "description": "Mathematical derivation of Constant Product (x * y = k), concentrated liquidity virtual reserves, tick math, and dynamic swap fee routing in Uniswap v3/v4.",
+    "tags": [
+      "defiengineering",
+      "quantitativefinance"
+    ],
+    "code_snippet": [
+      "// Python: Derivation of Exact Swap Output with Trading Fees (gamma = 1 - fee)",
+      "def compute_amm_swap_output(reserve_x, reserve_y, delta_x, fee_tier=0.003):",
+      "    gamma = 1.0 - fee_tier",
+      "    delta_x_with_fee = delta_x * gamma",
+      "    delta_y = (reserve_y * delta_x_with_fee) / (reserve_x + delta_x_with_fee)",
+      "    new_price = (reserve_y - delta_y) / (reserve_x + delta_x)",
+      "    return {",
+      "}"
+    ],
+    "invariants": [
+      "Constant Product Invariant: Understand the core bonding curve equation (x * y = k) and marginal price calculation (P = y / x).",
+      "Concentrated Liquidity: Allocate capital within custom price intervals [p_lower, p_upper] to achieve up to 4000x capital efficiency over Uniswap v2.",
+      "Virtual Reserves Math: Shift bonding curves along the coordinate axes using real reserves (x, y) and virtual reserves (x_v, y_v)."
+    ],
+    "metrics": [
+      "Operational Impact: Tick Index Calculation - Discretize price space into geometric price ticks (p(i) = 1.0001^i) with Q64.96 fixed-point arithmetic.",
+      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
+    ]
+  },
   "dspy-declarative-prompting-optimization": {
     "slug": "dspy-declarative-prompting-optimization",
     "title": "DSPy: Replacing Prompt Engineering with Declarative Optimization Compilers",
@@ -216,64 +245,6 @@
       "Operational Impact: NFTables Backend - Migrate from legacy iptables actions to high-performance nftables banning.",
       "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
-    ]
-  },
-  "flashattention-3-asynchronous-fp8-warp-specialization": {
-    "slug": "flashattention-3-asynchronous-fp8-warp-specialization",
-    "title": "FlashAttention-3 Architecture: Asynchronous FP8 Tensor Cores & Warp-Specialization",
-    "description": "Deep-dive into NVIDIA Hopper H100 hardware innovations, Tensor Memory Accelerator (TMA), and warp-specialized asynchronous software pipelining for ultra-low latency attention computation.",
-    "tags": [
-      "llmserving",
-      "gpuarchitecture"
-    ],
-    "code_snippet": [
-      "# Serving Engine Configuration with FlashAttention-3",
-      "python3 -m vllm.entrypoints.openai.api_server \\",
-      "    --model meta-llama/Meta-Llama-3-70B-Instruct \\",
-      "    --gpu-memory-utilization 0.95 \\",
-      "    --kv-cache-dtype fp8_e4m3 \\",
-      "    --attention-backend FLASHATTN3 \\",
-      "    --max-model-len 65536 \\",
-      "    --tensor-parallel-size 4"
-    ],
-    "invariants": [
-      "Warp Specialization: Separate Producer and Consumer warps to decouple asynchronous global-to-shared memory loads from Tensor Core GEMM operations.",
-      "TMA Hardware Acceleration: Utilize Hopper Tensor Memory Accelerator (TMA) hardware units for direct asynchronous multi-dimensional tensor transfers bypassing register files.",
-      "Asynchronous Softmax Overlap: Interleave softmax exponentiation directly with subsequent matrix multiplications to eliminate pipeline bubbles."
-    ],
-    "metrics": [
-      "Operational Impact: FP8 Mixed-Precision Scaling - Leverage FP8 (E4M3/E5M2) tensor cores with block-wise scaling factors to achieve 2x throughput over standard BF16 attention.",
-      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
-    ]
-  },
-  "fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth": {
-    "slug": "fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth",
-    "title": "FP8 vs INT4 KV-Cache Quantization: Memory Bandwidth vs Perplexity Trade-offs",
-    "description": "Comprehensive comparative analysis of FP8 (E4M3/E5M2) vs INT4 grouped quantization for long-context KV cache memory reduction in high-throughput LLM serving.",
-    "tags": [
-      "llmserving",
-      "quantization"
-    ],
-    "code_snippet": [
-      "# Python Mathematical Model for KV Cache Memory Size",
-      "def compute_kv_cache_gb(layers, kv_heads, head_dim, seq_len, batch_size, bytes_per_elem):",
-      "    # KV Cache Formula: 2 (K+V) * layers * kv_heads * head_dim * seq_len * batch_size * bytes",
-      "    total_bytes = 2 * layers * kv_heads * head_dim * seq_len * batch_size * bytes_per_elem",
-      "    return total_bytes / (1024 ** 3)",
-      "# Example: Llama-3-70B (64 layers, 8 KV heads, head_dim 128, 64k tokens, batch 1)",
-      "fp16_size = compute_kv_cache_gb(64, 8, 128, 65536, 1, 2.0)  # 16-bit: 16.0 GB",
-      "fp8_size  = compute_kv_cache_gb(64, 8, 128, 65536, 1, 1.0)  # 8-bit:  8.0 GB"
-    ],
-    "invariants": [
-      "KV Cache Memory Bottleneck: Long-context inference (32k-128k tokens) is strictly bounded by KV cache VRAM capacity and memory bandwidth.",
-      "FP8 Quantization (E4M3): Delivers 2x memory reduction with zero noticeable perplexity loss and native hardware tensor core execution.",
-      "INT4 Grouped Quantization: Delivers 4x memory reduction enabling extreme context lengths on consumer/single-GPU nodes, with minor degradation in reasoning benchmarks."
-    ],
-    "metrics": [
-      "Operational Impact: Throughput vs Latency Trade-offs - FP8 maximizes batched token throughput on H100/A100 GPUs, while INT4 maximizes concurrency under severe VRAM constraints.",
-      "Memory Efficiency: Paged non-contiguous tensor allocation eliminating GPU VRAM waste.",
-      "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
     ]
   },
   "http3-quic-security-hardening-and-0rtt-mitigation-blueprint": {
@@ -434,36 +405,6 @@
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
-  "linux-lsm-bpf-runtime-security-policies-and-kernel-hooks": {
-    "slug": "linux-lsm-bpf-runtime-security-policies-and-kernel-hooks",
-    "title": "Linux LSM BPF: Dynamic Kernel Security Policies Without Kernel Recompilation",
-    "description": "Practical engineering guide for writing and enforcing programmable eBPF Linux Security Module (LSM) hooks to block unauthorized syscalls and file tampering in real time.",
-    "tags": [
-      "linuxsecurity",
-      "ebpfarchitecture"
-    ],
-    "code_snippet": [
-      "// eBPF LSM Program: Block Binary Execution in /tmp",
-      "char LICENSE[] SEC(\"license\") = \"GPL\";",
-      "SEC(\"lsm/bprm_check_security\")",
-      "int BPF_PROG(restrict_tmp_execution, struct linux_binprm *bprm) {",
-      "    char filename[256];",
-      "    int ret = bpf_d_path(&bprm->file->f_path, filename, sizeof(filename));",
-      "    if (ret < 0) {",
-      "}",
-      "}"
-    ],
-    "invariants": [
-      "LSM BPF Integration: Attach eBPF programs directly into Linux Security Module hooks (bprm_check_security, file_open, socket_connect).",
-      "Zero Kernel Modification: Deploy mandatory access control (MAC) policies dynamically without custom kernel compilation or rebooting nodes.",
-      "Runtime Syscall Blocking: Return standard Linux error codes (-EPERM / -EACCES) directly from BPF programs to block malicious operations before execution."
-    ],
-    "metrics": [
-      "Operational Impact: Container Process Sandboxing - Enforce path-based and cgroup-scoped execution locks on unprivileged cloud microservices.",
-      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
-    ]
-  },
   "linux-seccomp-bpf-syscall-filtering-hardening-guide": {
     "slug": "linux-seccomp-bpf-syscall-filtering-hardening-guide",
     "title": "Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces",
@@ -515,6 +456,34 @@
     "metrics": [
       "Operational Impact: Automated Intrusion Prevention - Deploy fail2ban and auditd for continuous log analysis and kernel event tracking.",
       "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
+    ]
+  },
+  "mev-and-private-mempool-architecture-in-ethereum": {
+    "slug": "mev-and-private-mempool-architecture-in-ethereum",
+    "title": "MEV & Private Mempool Architecture: Flashbots, Searchers & Order Flow Defense",
+    "description": "Technical analysis of Maximal Extractable Value (MEV), block builder auctions, sandwich attack mitigation, and MEV-Boost private RPC relay pipelines.",
+    "tags": [
+      "defiinfrastructure",
+      "cryptoeconomics"
+    ],
+    "code_snippet": [
+      "// Python: Calculating Optimal Sandwich Attack Profit Constraints",
+      "def calculate_sandwich_profit(pool_reserves_x, pool_reserves_y, victim_amount_in, max_slippage):",
+      "    k = pool_reserves_x * pool_reserves_y",
+      "    user_min_out = (victim_amount_in * pool_reserves_y / (pool_reserves_x + victim_amount_in)) * (1.0 - max_slippage)",
+      "    # Calculate maximum frontrun amount that pushes user execution exactly to min_out",
+      "    frontrun_in = ((pool_reserves_x * victim_amount_in * pool_reserves_y / user_min_out) ** 0.5) - pool_reserves_x",
+      "    return max(0.0, frontrun_in)"
+    ],
+    "invariants": [
+      "Maximal Extractable Value (MEV): Understand arbitrage, liquidations, and malicious frontrunning/sandwiching across public transaction pools.",
+      "Proposer-Builder Separation (PBS): Decouple block construction from consensus validation via MEV-Boost relay architectures.",
+      "Private Mempool Routing: Protect user transactions from predatory sandwich attacks using Flashbots Protect and SUAVE private RPC endpoints."
+    ],
+    "metrics": [
+      "Operational Impact: Atomic Searcher Bundles - Submit multi-transaction bundles that guarantee atomicity (execution strictly succeeds or reverts entirely without gas penalties).",
+      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },
@@ -774,6 +743,36 @@
       "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
     ]
   },
+  "smart-contract-security-and-evm-bytecode-hardening": {
+    "slug": "smart-contract-security-and-evm-bytecode-hardening",
+    "title": "Smart Contract Security & EVM Bytecode Hardening: Formal Verification & Exploit Defense",
+    "description": "Comprehensive vulnerability mitigation blueprint covering Read-Only Reentrancy, Storage Slot Collision, and Halmos/Slither formal verification in Solidity.",
+    "tags": [
+      "web3security",
+      "evmarchitecture"
+    ],
+    "code_snippet": [
+      "// Solidity: ERC-7201 Namespaced Storage Implementation",
+      "pragma solidity ^0.8.24;",
+      "contract SecureVaultV1 {",
+      "    struct MainStorage {",
+      "        mapping(address => uint256) balances;",
+      "        uint256 totalDeposited;",
+      "        bool isPaused;",
+      "}",
+      "}"
+    ],
+    "invariants": [
+      "Reentrancy Defense: Implement Checks-Effects-Interactions (CEI) patterns alongside transient storage (TSTORE / TLOAD) reentrancy guards.",
+      "Read-Only Reentrancy: Mitigate cross-contract price oracle manipulation by protecting view functions during active state updates.",
+      "Storage Layout Verification: Prevent storage collision vulnerabilities in upgradeable proxy contracts using ERC-7201 namespaced storage."
+    ],
+    "metrics": [
+      "Operational Impact: Formal Verification - Mathematically prove contract invariants and absence of integer overflows using Halmos and Slither static analyzers.",
+      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
+    ]
+  },
   "ssh-certificates-vault-ca-short-lived-authentication": {
     "slug": "ssh-certificates-vault-ca-short-lived-authentication",
     "title": "Short-Lived SSH Certificate Authentication with HashiCorp Vault CA",
@@ -941,34 +940,6 @@
       "Runtime Standard: Baseline 2026 High-Performance AI Inference Architecture."
     ]
   },
-  "wasm-component-model-polyglot-sandboxing-on-edge-workers": {
-    "slug": "wasm-component-model-polyglot-sandboxing-on-edge-workers",
-    "title": "Wasm Component Model: Polyglot Sandboxing for High-Density Edge Compute",
-    "description": "Architectural blueprint for building zero-trust polyglot micro-services with the WebAssembly Component Model and WIT interfaces on edge runtime workers.",
-    "tags": [
-      "zerotrust",
-      "edgecomputing"
-    ],
-    "code_snippet": [
-      "// Rust Implementation of WIT Token Verifier Component",
-      "struct SecurityComponent;",
-      "impl Guest for SecurityComponent {",
-      "    fn verify_token(raw_jwt: String, public_key_pem: String) -> Result<TokenPayload, VerificationStatus> {",
-      "        // Secure in-memory cryptographic verification",
-      "}",
-      "}"
-    ],
-    "invariants": [
-      "Wasm Component Model: Compose heterogeneous modules written in Rust, Go, Python, and C++ into a single isolated execution sandbox.",
-      "WIT Interface Standards: Define language-neutral WebAssembly Interface Type (WIT) contracts for seamless cross-language data exchange.",
-      "High-Density Multi-Tenancy: Achieve sub-millisecond cold starts (< 1ms) and minimal memory footprints (< 2MB) per sandboxed tenant worker."
-    ],
-    "metrics": [
-      "Operational Impact: Capability Security - Restrict network, filesystem, and environment access strictly through explicit WASI capability interfaces.",
-      "Runtime Sandboxing: Wasm linear memory sandbox with sub-millisecond cold starts.",
-      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
-    ]
-  },
   "webgpu-llm-inference-browser-sandbox": {
     "slug": "webgpu-llm-inference-browser-sandbox",
     "title": "WebGPU LLM Inference: Running 7B Models Natively in the Browser",
@@ -1022,6 +993,32 @@
     "metrics": [
       "Operational Impact: Automated Peer Routing - Configure AllowedIPs to enforce point-to-point mesh routing.",
       "Attack Surface Defense: Kernel-level security policies and unprivileged sandbox enforcement.",
+      "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
+    ]
+  },
+  "zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups": {
+    "slug": "zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups",
+    "title": "Zero-Knowledge Proofs in L2 Rollups: zk-SNARKs vs zk-STARKs Mathematical Architecture",
+    "description": "In-depth comparative analysis of algebraic polynomial commitments, prover compute overhead, recursive circuits, and on-chain verification gas limits in zkEVMs.",
+    "tags": [
+      "cryptography",
+      "zero-knowledge"
+    ],
+    "code_snippet": [
+      "// Rust: Simple R1CS Constraint Enforcement Example (Arkworks)",
+      "struct MultiplierCircuit<F: PrimeField> {",
+      "    a: Option<F>,",
+      "    b: Option<F>,",
+      "}"
+    ],
+    "invariants": [
+      "Zero-Knowledge Succinctness: Compress thousands of off-chain L2 execution transactions into a single cryptographic proof verified on L1.",
+      "zk-SNARKs (KZG / PlonK): Constant-size proofs (~200 bytes) with cheap on-chain gas costs (~200k gas), requiring trusted setups and elliptic curve assumptions.",
+      "zk-STARKs (FRI / AIR): Transparent setup with post-quantum security based solely on collision-resistant hash functions, with larger proof sizes (~50-100KB)."
+    ],
+    "metrics": [
+      "Operational Impact: Recursive Proof Composition - Aggregate thousands of sub-proofs into a single master proof to scale Ethereum throughput to tens of thousands of TPS.",
+      "Runtime Isolation: Least-privilege process sandboxing with zero external telemetry.",
       "Compliance Standard: Baseline 2026 Linux Zero-Trust Architecture."
     ]
   },

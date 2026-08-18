@@ -36,11 +36,11 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 - [ DONE ] **Native Dark/Light Theme Toggle**: Theming CSS Custom Properties merespons `prefers-color-scheme`.
 - [ DONE ] **Self-Hosted Link Hub (`/links/`)**: Pengganti Linktree murni Vanilla HTML5/CSS dengan microformats `rel="me"`.
 
-## 4. Ekspansi Konten GEO & Technical Deep-Dives (Batch 4)
-- [ DONE ] **FlashAttention-3 Deep Dive**: Asynchronous FP8 Tensor Cores & Warp-Specialization in Hopper Architecture (`blog/flashattention-3-asynchronous-fp8-warp-specialization.html`).
-- [ DONE ] **Linux LSM BPF Security Policies**: Runtime kernel security hooks without kernel module recompilation (`blog/linux-lsm-bpf-runtime-security-policies-and-kernel-hooks.html`).
-- [ DONE ] **Wasm Component Model Polyglot Sandboxing**: Secure sandboxing on Cloudflare Edge Workers (`blog/wasm-component-model-polyglot-sandboxing-on-edge-workers.html`).
-- [ DONE ] **FP8 vs INT4 KV-Cache Quantization**: Memory bandwidth vs perplexity trade-offs in high-throughput inference (`blog/fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth.html`).
+## 4. Ekspansi Konten GEO & Technical Deep-Dives (Batch 4 - Web3 & Cryptographic Architecture)
+- [ DONE ] **Smart Contract Security & EVM Bytecode Hardening**: Mitigasi Reentrancy, Read-Only Reentrancy, Storage Slot Collision, dan Formal Verification menggunakan Slither dan Halmos (`blog/smart-contract-security-and-evm-bytecode-hardening.html`).
+- [ DONE ] **MEV (Maximal Extractable Value) & Mempool Architecture**: Analisis Flashbots, Searchers, Sandwich Attacks, dan arsitektur Private RPC / MEV-Boost relay (`blog/mev-and-private-mempool-architecture-in-ethereum.html`).
+- [ DONE ] **Zero-Knowledge Proofs (zk-SNARKs vs zk-STARKs) in L2 Rollups**: Sirkuit verifikasi matematis, polynomial commitments, dan komparasi overhead komputasi Prover vs Verifier pada zkEVM (`blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html`).
+- [ DONE ] **DeFi AMM Mathematics & Concentrated Liquidity**: Analisis matematis Constant Product Invariant ($x \cdot y = k$), tick spacing Uniswap v3, dan dynamic fee routing (`blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html`).
 
 ## 5. Proposal Tambahan & Inovasi Fitur (Backlog Aktif)
 - [ DONE ] **shop.zyekh.com Ecosystem Touchpoints**: Pemasangan touchpoints navigasi (`site-nav.js`), kartu unggulan di `links/index.html`, footer navigation di `index.html` dan seluruh 91 HTML files, serta architecture resource callout di `blueprints/index.html`.
@@ -51,10 +51,10 @@ Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Mi
 - [ DONE ] **Interactive Zero-Trust Architecture Topology Builder**: Utilitas visual Canvas/SVG murni di browser untuk merancang dan mengekspor topologi keamanan ke Mermaid Markdown, SVG, dan ASCII (`/blueprints/topology-builder.html`).
 
 ## 6. Web3, DeFi & Decentralized Infrastructure Suite (Roadmap)
-- [ BACKLOG ] **Smart Contract Security & EVM Bytecode Hardening**: Mitigasi Reentrancy, Read-Only Reentrancy, Storage Slot Collision, dan Formal Verification menggunakan Slither dan Halmos.
-- [ BACKLOG ] **MEV (Maximal Extractable Value) & Mempool Architecture**: Analisis Flashbots, Searchers, Sandwich Attacks, dan arsitektur Private RPC / MEV-Boost relay.
-- [ BACKLOG ] **Zero-Knowledge Proofs (zk-SNARKs vs zk-STARKs) in L2 Rollups**: Sirkuit verifikasi matematis, polynomial commitments, dan komparasi overhead komputasi Prover vs Verifier pada zkEVM.
-- [ BACKLOG ] **DeFi AMM Mathematics & Concentrated Liquidity**: Analisis matematis Constant Product Invariant ($x \cdot y = k$), tick spacing Uniswap v3, dan dynamic fee routing.
+- [ DONE ] **Smart Contract Security & EVM Bytecode Hardening**: (`blog/smart-contract-security-and-evm-bytecode-hardening.html`).
+- [ DONE ] **MEV (Maximal Extractable Value) & Mempool Architecture**: (`blog/mev-and-private-mempool-architecture-in-ethereum.html`).
+- [ DONE ] **Zero-Knowledge Proofs (zk-SNARKs vs zk-STARKs) in L2 Rollups**: (`blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html`).
+- [ DONE ] **DeFi AMM Mathematics & Concentrated Liquidity**: (`blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html`).
 - [ BACKLOG ] **Immutable Decentralized Archiving (IPFS / IPNS / Arweave Mirroring)**: Skrip otomatisasi build snapshot ke IPFS CID dan Arweave permaweb untuk preservasi knowledge base `llms.txt` tanpa runtime overhead ke browser pengunjung.
 - [ BACKLOG ] **ENS (Ethereum Name Service) Contenthash Resolution**: Pemetaan domain ENS `zyekh.eth` ke snapshot IPFS CID terbaru.
 - [ BACKLOG ] **Cryptographic Content Provenance (Verifiable Signatures)**: Pembuatan SHA-256 digest dan signature digital untuk setiap artikel blog / RAG database untuk integritas data anti-tampering.

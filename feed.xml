@@ -42,6 +42,13 @@
       <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
+      <title>DeFi AMM Mathematics &amp; Concentrated Liquidity: Invariant Curves &amp; Tick Spacing</title>
+      <link>https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html</link>
+      <guid>https://zyekh.com/blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html</guid>
+      <description>Mathematical derivation of Constant Product (x * y = k), concentrated liquidity virtual reserves, tick math, and dynamic swap fee routing in Uniswap v3/v4.</description>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>DSPy: Replacing Prompt Engineering with Declarative Optimization Compilers</title>
       <link>https://zyekh.com/blog/dspy-declarative-prompting-optimization.html</link>
       <guid>https://zyekh.com/blog/dspy-declarative-prompting-optimization.html</guid>
@@ -61,20 +68,6 @@
       <guid>https://zyekh.com/blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html</guid>
       <description>Comprehensive blueprint for deploying Fail2ban to detect brute-force attacks, automate IP bans via iptables/nftables, and configure recidive long-term bans.</description>
       <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
-    </item>
-    <item>
-      <title>FlashAttention-3 Architecture: Asynchronous FP8 Tensor Cores &amp; Warp-Specialization</title>
-      <link>https://zyekh.com/blog/flashattention-3-asynchronous-fp8-warp-specialization.html</link>
-      <guid>https://zyekh.com/blog/flashattention-3-asynchronous-fp8-warp-specialization.html</guid>
-      <description>Deep-dive into NVIDIA Hopper H100 hardware innovations, Tensor Memory Accelerator (TMA), and warp-specialized asynchronous software pipelining for ultra-low latency attention computation.</description>
-      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
-    </item>
-    <item>
-      <title>FP8 vs INT4 KV-Cache Quantization: Memory Bandwidth vs Perplexity Trade-offs</title>
-      <link>https://zyekh.com/blog/fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth.html</link>
-      <guid>https://zyekh.com/blog/fp8-vs-int4-kv-cache-quantization-and-inference-bandwidth.html</guid>
-      <description>Comprehensive comparative analysis of FP8 (E4M3/E5M2) vs INT4 grouped quantization for long-context KV cache memory reduction in high-throughput LLM serving.</description>
-      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>HTTP/3 &amp; QUIC Protocol Security Hardening: Mitigating 0-RTT Replay Attacks</title>
@@ -119,13 +112,6 @@
       <pubDate>Wed, 05 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Linux LSM BPF: Dynamic Kernel Security Policies Without Kernel Recompilation</title>
-      <link>https://zyekh.com/blog/linux-lsm-bpf-runtime-security-policies-and-kernel-hooks.html</link>
-      <guid>https://zyekh.com/blog/linux-lsm-bpf-runtime-security-policies-and-kernel-hooks.html</guid>
-      <description>Practical engineering guide for writing and enforcing programmable eBPF Linux Security Module (LSM) hooks to block unauthorized syscalls and file tampering in real time.</description>
-      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
-    </item>
-    <item>
       <title>Linux Seccomp-BPF Syscall Filtering: Restricting Process Attack Surfaces</title>
       <link>https://zyekh.com/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html</link>
       <guid>https://zyekh.com/blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html</guid>
@@ -138,6 +124,13 @@
       <guid>https://zyekh.com/blog/linux-vps-hardening-guide-2026.html</guid>
       <description>Production-grade security blueprint for Debian and Ubuntu Linux servers. Includes SSH key enforcement, kernel sysctl parameters, UFW rate-limiting, Fail2Ban auditing, and automated updates.</description>
       <pubDate>Sun, 26 Jul 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>MEV &amp; Private Mempool Architecture: Flashbots, Searchers &amp; Order Flow Defense</title>
+      <link>https://zyekh.com/blog/mev-and-private-mempool-architecture-in-ethereum.html</link>
+      <guid>https://zyekh.com/blog/mev-and-private-mempool-architecture-in-ethereum.html</guid>
+      <description>Technical analysis of Maximal Extractable Value (MEV), block builder auctions, sandwich attack mitigation, and MEV-Boost private RPC relay pipelines.</description>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>Why Minimalist Static Hosting Outperforms Monolithic Frameworks for Security</title>
@@ -203,6 +196,13 @@
       <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
+      <title>Smart Contract Security &amp; EVM Bytecode Hardening: Formal Verification &amp; Exploit Defense</title>
+      <link>https://zyekh.com/blog/smart-contract-security-and-evm-bytecode-hardening.html</link>
+      <guid>https://zyekh.com/blog/smart-contract-security-and-evm-bytecode-hardening.html</guid>
+      <description>Comprehensive vulnerability mitigation blueprint covering Read-Only Reentrancy, Storage Slot Collision, and Halmos/Slither formal verification in Solidity.</description>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
       <title>Short-Lived SSH Certificate Authentication with HashiCorp Vault CA</title>
       <link>https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html</link>
       <guid>https://zyekh.com/blog/ssh-certificates-vault-ca-short-lived-authentication.html</guid>
@@ -245,13 +245,6 @@
       <pubDate>Sun, 09 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>Wasm Component Model: Polyglot Sandboxing for High-Density Edge Compute</title>
-      <link>https://zyekh.com/blog/wasm-component-model-polyglot-sandboxing-on-edge-workers.html</link>
-      <guid>https://zyekh.com/blog/wasm-component-model-polyglot-sandboxing-on-edge-workers.html</guid>
-      <description>Architectural blueprint for building zero-trust polyglot micro-services with the WebAssembly Component Model and WIT interfaces on edge runtime workers.</description>
-      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
-    </item>
-    <item>
       <title>WebGPU LLM Inference: Running 7B Models Natively in the Browser</title>
       <link>https://zyekh.com/blog/webgpu-llm-inference-browser-sandbox.html</link>
       <guid>https://zyekh.com/blog/webgpu-llm-inference-browser-sandbox.html</guid>
@@ -264,6 +257,13 @@
       <guid>https://zyekh.com/blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html</guid>
       <description>Step-by-step technical blueprint for creating encrypted private mesh networks between multi-cloud VPS nodes using WireGuard and UDP noise protocols.</description>
       <pubDate>Tue, 04 Aug 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Zero-Knowledge Proofs in L2 Rollups: zk-SNARKs vs zk-STARKs Mathematical Architecture</title>
+      <link>https://zyekh.com/blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html</link>
+      <guid>https://zyekh.com/blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html</guid>
+      <description>In-depth comparative analysis of algebraic polynomial commitments, prover compute overhead, recursive circuits, and on-chain verification gas limits in zkEVMs.</description>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
     </item>
     <item>
       <title>Zero-Trust Microservices with WebAssembly (Wasm) Runtime Sandboxing</title>
