@@ -677,6 +677,27 @@ def sync_all(bump_version=False, dry_run=False):
         except Exception:
             pass
 
+    for bp in sorted(glob.glob("blueprints/*.html")):
+        if bp == "blueprints/index.html": continue
+        try:
+            soup_bp = BeautifulSoup(open(bp, encoding="utf-8").read(), "html.parser")
+            h1 = soup_bp.find("h1")
+            title = h1.text.strip() if h1 else os.path.basename(bp)
+            desc_meta = soup_bp.find("meta", {"name": "description"})
+            desc = desc_meta["content"].strip() if desc_meta else title
+            url = f"/{bp.replace(chr(92), '/')}"
+            search_index.append({"title": title, "desc": desc, "url": url, "type": "Blueprint"})
+        except Exception:
+            pass
+
+    # Core Hub Navigation Pages
+    search_index.append({"title": "Web Utility Tools Hub", "desc": "Collection of 53+ zero-dependency offline client-side developer & security utilities", "url": "/tools/", "type": "Hub"})
+    search_index.append({"title": "Deep Technical Articles & Security Research", "desc": "35+ production-grade Linux kernel, eBPF, zero-trust, and AI infrastructure articles", "url": "/blog/", "type": "Hub"})
+    search_index.append({"title": "Zero-Trust & Security Blueprints", "desc": "Production-ready kernel sandboxing, eBPF policies, and architecture blueprints", "url": "/blueprints/", "type": "Hub"})
+    search_index.append({"title": "Developer Bio Link Hub", "desc": "Verified developer identities, PGP keyring, security advisories, and contact channels", "url": "/links/", "type": "Hub"})
+    search_index.append({"title": "About & Technical Bio", "desc": "Author background, zero-dependency engineering philosophy, and infrastructure stack", "url": "/about/", "type": "Page"})
+    search_index.append({"title": "Contact & Security Disclosure", "desc": "PGP encrypted security vulnerability disclosure and direct communication channels", "url": "/contact/", "type": "Page"})
+
     search_index.insert(0, {
         "title": "Zyekh AI Chat Web App (chat.zyekh.com)",
         "desc": "Dedicated full-screen AI technical mentor, zero-trust advisor & security assistant",

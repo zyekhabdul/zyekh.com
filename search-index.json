@@ -538,5 +538,53 @@
     "desc": "Comprehensive technical blueprint for securing Linux SSH infrastructure using FIDO2/YubiKey hardware tokens, SSH Certificate Authority (SSH CA), and short-lived certificates.",
     "url": "/blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html",
     "type": "Article"
+  },
+  {
+    "title": "The Ultimate Linux & Cloud Security Architecture Cheatsheet (2026)",
+    "desc": "A massive, zero-dependency pillar hub indexing 25 advanced blueprints for eBPF, Kernel Sandboxing, Zero-Trust, and Cloud-Native DFIR architectures.",
+    "url": "/blueprints/the-ultimate-linux-and-cloud-security-architecture-cheatsheet.html",
+    "type": "Blueprint"
+  },
+  {
+    "title": "Zero-Trust Architecture Topology Builder",
+    "desc": "Visual node-graph designer for zero-trust microservices, eBPF kernel enforcement, Envoy proxies, and SPIFFE/Vault trust domains. 100% offline & client-side SVG/Canvas editor.",
+    "url": "/blueprints/topology-builder.html",
+    "type": "Blueprint"
+  },
+  {
+    "title": "Web Utility Tools Hub",
+    "desc": "Collection of 53+ zero-dependency offline client-side developer & security utilities",
+    "url": "/tools/",
+    "type": "Hub"
+  },
+  {
+    "title": "Deep Technical Articles & Security Research",
+    "desc": "35+ production-grade Linux kernel, eBPF, zero-trust, and AI infrastructure articles",
+    "url": "/blog/",
+    "type": "Hub"
+  },
+  {
+    "title": "Zero-Trust & Security Blueprints",
+    "desc": "Production-ready kernel sandboxing, eBPF policies, and architecture blueprints",
+    "url": "/blueprints/",
+    "type": "Hub"
+  },
+  {
+    "title": "Developer Bio Link Hub",
+    "desc": "Verified developer identities, PGP keyring, security advisories, and contact channels",
+    "url": "/links/",
+    "type": "Hub"
+  },
+  {
+    "title": "About & Technical Bio",
+    "desc": "Author background, zero-dependency engineering philosophy, and infrastructure stack",
+    "url": "/about/",
+    "type": "Page"
+  },
+  {
+    "title": "Contact & Security Disclosure",
+    "desc": "PGP encrypted security vulnerability disclosure and direct communication channels",
+    "url": "/contact/",
+    "type": "Page"
   }
 ]

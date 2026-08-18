@@ -321,6 +321,13 @@
     padding: 0 var(--space-lg);
     box-sizing: border-box;
   }
+  .nav-brand-group {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    position: relative;
+    z-index: 1001;
+  }
   .brand-logo {
     font-family: 'Fira Code', monospace;
     font-weight: 700;
@@ -330,7 +337,6 @@
     letter-spacing: -0.05em;
     white-space: nowrap;
     flex-shrink: 0;
-    z-index: 1001;
     position: relative;
   }
   .nav-toggle {
@@ -480,6 +486,37 @@
       color: #ffffff;
       border-left: 3px solid #ffffff;
       background: #141417;
+    }
+    .nav-brand-group {
+      gap: 0.65rem;
+      flex: 1;
+      max-width: calc(100% - 55px);
+    }
+    .nav-search {
+      flex: 1;
+      max-width: 220px;
+    }
+    .nav-search-input {
+      width: 100%;
+    }
+    .nav-search-input:focus {
+      width: 100%;
+    }
+    @media (max-width: 540px) {
+      .nav-search-kbd {
+        display: none;
+      }
+      .nav-search-input {
+        padding-right: 0.65rem;
+        width: 135px;
+      }
+      .nav-search-input:focus {
+        width: 170px;
+      }
+      .nav-search-dropdown {
+        width: calc(100vw - 2rem);
+        left: -50px;
+      }
     }
     .theme-toggle {
       margin-top: 1.5rem;
@@ -857,112 +894,145 @@
     border-radius: var(--radius-md);
   }
 
-  /* Command Palette Modal (Ctrl+K) */
-  dialog.cmd-palette {
-    padding: 0;
+  /* Inline Header Search & Floating Dropdown */
+  .nav-search {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+  .nav-search-input {
+    background: var(--bg-dark);
     border: 1px solid var(--border-color);
-    background: var(--bg-card);
-    border-radius: var(--radius-lg);
-    width: 90%;
-    max-width: 600px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-    top: 15vh;
-    bottom: auto;
-    margin: 0 auto;
-  }
-  [data-theme="light"] dialog.cmd-palette {
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-  }
-  dialog.cmd-palette::backdrop {
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(4px);
-  }
-  .cmd-container {
-    display: flex;
-    flex-direction: column;
-  }
-  dialog.cmd-palette .cmd-input {
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid var(--border-color);
-    border-radius: 0;
-    padding: 1.25rem;
-    font-size: 1.1rem;
     color: var(--text-main);
+    padding: 0.32rem 3.4rem 0.32rem 0.65rem;
+    border-radius: var(--radius-md);
+    font-size: 0.8rem;
+    font-family: 'Inter', system-ui, sans-serif;
+    width: 200px;
+    height: 30px;
+    box-sizing: border-box;
     margin: 0;
     margin-bottom: 0;
+    transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease;
   }
-  dialog.cmd-palette .cmd-input:focus {
+  .nav-search-input:focus {
+    width: 260px;
+    border-color: var(--border-hover);
     outline: none;
-    border-color: var(--border-color);
   }
-  [data-theme="light"] dialog.cmd-palette .cmd-input {
-    background: transparent;
-    border-color: var(--border-color);
-    color: var(--text-main);
-  }
-
-  .cmd-section-title {
+  .nav-search-kbd {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
     font-family: 'Fira Code', monospace;
-    font-size: 0.72rem;
+    font-size: 0.65rem;
     color: var(--text-muted);
-    padding: 0.5rem 1rem 0.25rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 0.1rem 0.3rem;
+    pointer-events: none;
+    line-height: 1;
+  }
+  .nav-search-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 380px;
+    max-width: 90vw;
+    max-height: 60vh;
+    overflow-y: auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    z-index: 10002;
+    padding: 0.35rem 0;
+  }
+  [data-theme="light"] .nav-search-input {
+    background: #ffffff;
+    border-color: #d4d4d8;
+    color: #09090b;
+  }
+  [data-theme="light"] .nav-search-kbd {
+    background: #f4f4f5;
+    border-color: #d4d4d8;
+    color: #71717a;
+  }
+  [data-theme="light"] .nav-search-dropdown {
+    background: #ffffff;
+    border-color: #e4e4e7;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  .nav-search-section {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    padding: 0.4rem 0.85rem 0.2rem 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
-  .cmd-results {
-    max-height: 50vh;
-    overflow-y: auto;
-    padding: 0.5rem 0;
-  }
-  .cmd-item {
+  .nav-search-item {
     display: flex;
-    gap: 1rem;
-    padding: 0.75rem 1rem;
+    gap: 0.75rem;
+    padding: 0.6rem 0.85rem;
     border-bottom: 1px solid var(--border-color);
     text-decoration: none;
     color: var(--text-main);
     align-items: center;
     transition: background-color var(--transition, 0.15s);
   }
-  .cmd-item:hover, .cmd-item:focus, .cmd-item.selected {
+  .nav-search-item:last-child {
+    border-bottom: none;
+  }
+  .nav-search-item:hover, .nav-search-item:focus, .nav-search-item.selected {
     background: var(--accent-glow);
     outline: none;
   }
-  [data-theme="light"] .cmd-item:hover,
-  [data-theme="light"] .cmd-item:focus,
-  [data-theme="light"] .cmd-item.selected {
+  [data-theme="light"] .nav-search-item:hover,
+  [data-theme="light"] .nav-search-item:focus,
+  [data-theme="light"] .nav-search-item.selected {
     background: #f4f4f5;
   }
-  .cmd-type {
-    font-size: 0.7rem;
+  .nav-search-type {
+    font-size: 0.68rem;
     font-weight: 600;
     font-family: 'Fira Code', monospace;
-    padding: 0.2rem 0.45rem;
+    padding: 0.15rem 0.4rem;
     background: var(--bg-dark);
     border-radius: var(--radius-sm, 4px);
     border: 1px solid var(--border-color);
     color: var(--text-muted);
     flex-shrink: 0;
   }
-  .cmd-text {
+  .nav-search-text {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0.15rem;
     min-width: 0;
     flex: 1;
   }
-  .cmd-title {
-    font-size: 0.92rem;
+  .nav-search-title {
+    font-size: 0.86rem;
     font-weight: 600;
     color: var(--text-main);
+    line-height: 1.25;
   }
-  .cmd-desc {
-    font-size: 0.78rem;
+  .nav-search-desc {
+    font-size: 0.74rem;
     color: var(--text-muted);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1.2;
+  }
+  .nav-search-empty {
+    padding: 1rem 0.85rem;
+    color: var(--text-muted);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.78rem;
+    text-align: center;
   }
 }
 
