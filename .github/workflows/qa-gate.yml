@@ -1,5 +1,5 @@
 name: QA Master Gate
-run-name: 21-Axis Programmatic QA Gate Verification
+run-name: 25-Axis Programmatic QA Gate Verification
 
 on:
   push:
@@ -12,7 +12,7 @@ on:
 
 jobs:
   verify:
-    name: Programmatic Quality Gate (Checks 1-21)
+    name: Programmatic Quality Gate (Checks 1-25)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -28,7 +28,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install beautifulsoup4 pillow
+          pip install beautifulsoup4 pillow playwright
+          playwright install --with-deps chromium
 
       - name: Execute QA Master Gate
         run: |

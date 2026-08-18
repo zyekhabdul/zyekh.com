@@ -1,5 +1,5 @@
 /* zyekh.com Service Worker — Cache Strategy */
-const CACHE_VERSION = "v=20260818_v274";
+const CACHE_VERSION = "v=20260818_v275";
 const APP_CACHE = `zyekh-app-${CACHE_VERSION}`;
 const ASSETS_CACHE = `zyekh-assets-${CACHE_VERSION}`;
 
@@ -10,7 +10,7 @@ const PRECACHE_APP = [
   '/assets/js/chat-widget.min.js'
 ];
 const PRECACHE_ASSETS = [
-  '/assets/fonts/fonts.css',
+  '/assets/fonts/fonts.min.css',
   '/assets/fonts/inter-variable-latin.woff2'
 ];
 
