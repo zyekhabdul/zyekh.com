@@ -55,7 +55,7 @@ class SiteNav extends HTMLElement {
               <span class="theme-icon-light">MODE: LIGHT</span>
               <span class="theme-icon-dark">MODE: DARK</span>
             </button>
-            <button class="pin-toggle" id="pinToggle" aria-label="Pin Tool" title="Pin this tool to Home" style="display:none; align-items:center; justify-content:center; background:none; border:none; cursor:pointer; font-size:1.1rem; filter:grayscale(100%); opacity:0.5; transition:transform 0.2s;">
+            <button class="pin-toggle" id="pinToggle" aria-label="Pin Tool" title="Pin this tool to Home" type="button" style="display:none; align-items:center; justify-content:center; background:none; border:none; color:var(--text-main); cursor:pointer; font-size:1.1rem; filter:grayscale(100%); opacity:0.5; transition:transform 0.2s;">
               <span class="pin-icon" style="font-size: 0.75rem; font-weight: bold;">[ PIN ]</span>
             </button>
           </nav>

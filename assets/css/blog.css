@@ -690,6 +690,7 @@ pre code {
 .btn-sim.danger:hover {
   background: rgba(239, 68, 68, 0.1);
   border-color: #ef4444;
+  color: #ef4444;
 }
 .sim-grid-layout {
   display: grid;

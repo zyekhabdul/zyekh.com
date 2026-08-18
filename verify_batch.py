@@ -435,12 +435,36 @@ def verify_all_articles():
         print(f"[FAIL] Exception during CSS performance audit execution: {e}")
         failures += 1
 
+    # Check 25A: CSS Property-Pair Invariant & Conflict Auditor
+    print("\n[ Check 25A ] CSS Property-Pair Invariants & Conflict Audit...")
+    try:
+        from scripts.audit_css_invariants import audit_css_invariants
+        invariants_passed = audit_css_invariants(verbose=False)
+        if not invariants_passed:
+            print("[FAIL] CSS Property-Pair Invariant violations detected.")
+            failures += 1
+    except Exception as e:
+        print(f"[FAIL] Exception during CSS Invariants audit: {e}")
+        failures += 1
+
+    # Check 25B: Playwright Headless Layout & Computed Style Probe
+    print("\n[ Check 25B ] Playwright Headless Layout & Computed Style Probe...")
+    try:
+        from scripts.audit_dom_layout import audit_dom_layout
+        dom_passed = audit_dom_layout(verbose=False)
+        if not dom_passed:
+            print("[FAIL] Headless DOM layout overflow or low computed contrast violations detected.")
+            failures += 1
+    except Exception as e:
+        print(f"[FAIL] Exception during Headless DOM layout probe: {e}")
+        failures += 1
+
     print("\n============================================================")
     if failures > 0:
         print(f"FAILED: {failures} QA audit violations detected across system.")
         sys.exit(1)
     else:
-        print(f"SUCCESS: All {len(articles)} articles, assets, and live server passed 100% QA audit (Checks 1-24)!")
+        print(f"SUCCESS: All {len(articles)} articles, assets, and live server passed 100% QA audit (Checks 1-25)!")
         print("============================================================")
 
 if __name__ == "__main__":

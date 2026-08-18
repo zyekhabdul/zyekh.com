@@ -801,10 +801,8 @@
   }
   .tool-card pre code { font-size: inherit; }
 
-  .pin-btn {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
+  .pin-btn,
+  .pin-toggle {
     background: transparent;
     border: none;
     color: var(--text-muted);
@@ -820,19 +818,29 @@
     margin: 0;
     -webkit-tap-highlight-color: transparent;
   }
-  .pin-btn:hover {
+  .pin-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+  .pin-btn:hover,
+  .pin-toggle:hover {
     color: var(--text-main);
     transform: scale(1.2);
   }
   .pinned-tool .pin-btn,
-  .pin-btn.pinned {
+  .pin-btn.pinned,
+  .pin-toggle.pinned {
     color: var(--text-main);
   }
-  [data-theme="light"] .pin-btn {
+  [data-theme="light"] .pin-btn,
+  [data-theme="light"] .pin-toggle {
     color: #71717a;
   }
   [data-theme="light"] .pin-btn:hover,
-  [data-theme="light"] .pinned-tool .pin-btn {
+  [data-theme="light"] .pin-toggle:hover,
+  [data-theme="light"] .pinned-tool .pin-btn,
+  [data-theme="light"] .pinned-tool .pin-toggle {
     color: #09090b;
   }
 
@@ -862,6 +870,7 @@
   .filter-btn:hover {
     border-color: var(--border-color-hover);
     background: var(--accent-glow);
+    color: var(--text-main);
   }
   :root:not([data-theme="light"]) .filter-btn.active,
   :root:not([data-theme="light"]) .filter-btn.active:focus,
