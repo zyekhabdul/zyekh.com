@@ -33,7 +33,7 @@ class SiteNav extends HTMLElement {
         <div class="nav-container">
           <div class="nav-brand-group">
             <a href="/" class="brand-logo">zyekh.com</a>
-            <div class="nav-search" id="navSearch"><input type="search" id="navSearchInput" class="nav-search-input" placeholder="Search..." autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="navSearchResults" aria-label="Search tools and articles">
+            <div class="nav-search" id="navSearch"><input type="search" id="navSearchInput" class="nav-search-input" placeholder="Search... (Ctrl+K)" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="navSearchResults" aria-label="Search tools and articles">
               <button type="button" class="nav-search-clear" id="navSearchClear" aria-label="Clear search" style="display:none;">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <line x1="18" y1="6" x2="6" y2="18"></line>

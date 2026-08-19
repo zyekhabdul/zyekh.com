@@ -33,10 +33,16 @@ class QuietHandler(http.server.SimpleHTTPRequestHandler):
         pass
 
 
-def parse_rgb(color_str: str) -> tuple:
-    """Parses rgb(r, g, b) or rgba(r, g, b, a) string into (r, g, b) floats (0-255)."""
+def parse_rgb(color_str: str, base_bg: tuple = (9.0, 9.0, 11.0)) -> tuple:
+    """Parses rgb(r, g, b) or rgba(r, g, b, a) string into composite (r, g, b) floats (0-255)."""
     nums = [float(x.strip()) for x in re_nums.findall(color_str)]
-    if len(nums) >= 3:
+    if len(nums) >= 4:
+        r, g, b, a = nums[0], nums[1], nums[2], nums[3]
+        cr = r * a + base_bg[0] * (1.0 - a)
+        cg = g * a + base_bg[1] * (1.0 - a)
+        cb = b * a + base_bg[2] * (1.0 - a)
+        return (cr, cg, cb)
+    elif len(nums) >= 3:
         return (nums[0], nums[1], nums[2])
     return (0.0, 0.0, 0.0)
 
@@ -181,6 +187,7 @@ def audit_dom_layout(verbose: bool = True) -> bool:
 
                     desktop_page.wait_for_timeout(40)
 
+                    base_bg = (255.0, 255.0, 255.0) if theme == "light" else (9.0, 9.0, 11.0)
                     all_buttons = desktop_page.query_selector_all("button")
                     visible_buttons = [b for b in all_buttons if b.is_visible()]
 
@@ -192,7 +199,7 @@ def audit_dom_layout(verbose: bool = True) -> bool:
                         # Normal state contrast
                         fg = desktop_page.evaluate("(el) => window.getComputedStyle(el).color", btn)
                         bg = desktop_page.evaluate(js_effective_bg, btn)
-                        ratio = contrast_ratio(parse_rgb(fg), parse_rgb(bg))
+                        ratio = contrast_ratio(parse_rgb(fg, base_bg), parse_rgb(bg, base_bg))
 
                         if ratio < 4.5:
                             violations.append(
@@ -206,7 +213,7 @@ def audit_dom_layout(verbose: bool = True) -> bool:
                             desktop_page.wait_for_timeout(30)
                             hover_fg = desktop_page.evaluate("(el) => window.getComputedStyle(el).color", btn)
                             hover_bg = desktop_page.evaluate(js_effective_bg, btn)
-                            hover_ratio = contrast_ratio(parse_rgb(hover_fg), parse_rgb(hover_bg))
+                            hover_ratio = contrast_ratio(parse_rgb(hover_fg, base_bg), parse_rgb(hover_bg, base_bg))
 
                             if hover_ratio < 4.5:
                                 violations.append(
