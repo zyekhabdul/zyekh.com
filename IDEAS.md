@@ -1,107 +1,105 @@
-# [ IDEAS ] Zyekh.com Enhancement Proposals
+# [ IDEAS ] Zyekh.com Enhancement Proposals & Master Roadmap
 
-Berdasarkan arsitektur Zyekh.com (Zero-Dependency, Local-First, AI-Optimized, Minimalist), berikut adalah peta jalan dan ide strategis:
+Dokumen ini adalah single source of truth untuk seluruh ide, backlog, dan peta jalan strategis ekosistem **zyekh.com** dan sub-proyek terkait. Seluruh usulan wajib mematuhi filosofi *Zero-Dependency*, *Zero-Framework*, *Local-First*, dan *Strict No-Emoji*.
 
-## 1. Ekspansi Tool Lokal (Zero-Dependency)
-- [ DONE ] **Offline Markdown Editor**: Editor markdown lokal dengan live preview dan export HTML (`/tools/markdown.html`).
-- [ DONE ] **RegEx Pattern Tester**: Tool pengujian Regular Expression murni di memori browser (`/tools/regex.html`).
-- [ DONE ] **Client-side Image Converter**: Konversi format gambar Canvas API (100% offline) (`/tools/image-converter.html`).
-- [ DONE ] **Speculative Decoding Interactive Simulator**: Simulator grafis pohon verifikasi token draft vs target model (`/tools/speculative-decoding.html`).
-- [ DONE ] **eBPF XDP Packet Filter Evaluator**: Evaluator aturan kernel packet filtering layer NIC (`/tools/ebpf-evaluator.html`).
-- [ DONE ] **LLM Token & GPU Inference Cost Calculator 2026**: Kalkulator perbandingan biaya token ($/1M tokens) dan kebutuhan VRAM (Claude 3.7, GPT-4.5, Gemini 2.0 Flash, DeepSeek-R1, Llama 3.3) murni *client-side* (`/tools/llm-calculator.html`).
-- [ DONE ] **WebGPU Shader & Inference Latency Profiler**: Profiler akselerasi perangkat keras lokal berbasis WebGPU API (`/tools/webgpu-profiler.html`).
+---
 
-## 2. Optimasi CI/CD, SEO & Distribusi Otomatis
-- [ DONE ] **Python-based Asset Minifier**: Skrip mandiri di `sync_content.py` untuk minifikasi CSS/JS tanpa Node.js.
-- [ DONE ] **Automated Subresource Integrity (SRI)**: Generator hash SHA-384 otomatis pada seluruh aset statis.
-- [ DONE ] **Automated Cloudflare CDN Cache Purge**: Pemicu Purge Cache Cloudflare otomatis via API.
-- [ DONE ] **Decoupled 3-Stage Manifest-Driven Social Card Generator**: Generator gambar Ultra-HD 2400px (Light Square untuk Bluesky + Dark Landscape untuk OpenGraph/Mastodon) berbasis `data/social_cards_manifest.json` (ADR-014).
-- [ DONE ] **Automated Data Desynchronization Guard (Check 16 in `verify_batch.py`)**: Validasi otomatis keutuhan kartu media sosial, manifest JSON, dan limit ukuran file < 950KB sebelum rilis artikel.
-- [ DONE ] **Dual-Pass File Size Quantization Guard**: Kompresi palet otomatis ke 256 warna (`MEDIANCUT`) di `generate_social_cards.py` jika ukuran file > 800KB untuk memastikan selalu lolos limit API Bluesky (1.0MB) dan Mastodon.
-- [ DONE ] **Safe Unicode Glyph Sanitization (`extract_card_manifest.py`)**: Normalisasi otomatis karakter smart quotes (`”`, `“`), em-dash (`—`), dan panah (`→`) ke format teks teknis bersih untuk mencegah glik/tofu `[?]`.
-- [ DONE ] **Bundled Local TTF Font Distribution (`assets/fonts/ttf/`)**: Pustaka font mandiri (`JetBrainsMono`, `DejaVuSans`) di repositori untuk menjamin rendering konsisten di semua OS dan CI/CD runner.
-- [ DONE ] **Automated Multi-Channel Broadcast Pipeline**: Orkestrasi otomatis `ping_indexers.py` (IndexNow Bing/Yandex) dan `scripts/syndicate.py` (Bluesky & Mastodon) pasca-rilis artikel.
-- [ DONE ] **Localhost Live HTTP Server Smoke Tester (Check 21)**: Pengujian live server ephemeral localhost via `scripts/smoke_test.py` terintegrasi ke QA Gate untuk memvalidasi seluruh routing arketipe, MIME types, anti-Clickjacking, dan anti-FOUC.
-- [ DONE ] **Atomic File Write Pattern & Dry-Run Mode**: Pola penulisan atomik file (`.tmp` + `os.replace`) dan simulasi `--dry-run` di `sync_content.py` untuk menjamin zero-corruption.
-- [ DONE ] **Strict Secret Masking & Error Trace Redaction**: Redaksi otomatis token Bearer, API keys, dan kata sandi di seluruh log error `scripts/syndicate.py` dan `run_pipeline.py`.
-- [ DONE ] **Content Hash Cache-Busting on OpenGraph & Twitter Tags**: Otomatis menyematkan hash query string `?v=<file_hash>` pada `og:image` dan `twitter:image` di seluruh 91 file HTML agar crawler media sosial (Facebook, LinkedIn, Discord, Telegram, X) tidak menampilkan thumbnail kadaluarsa.
-- [ DONE ] **Web AI Agent Tool Manifest (`/tools/tools-manifest.json`)**: Ekstraksi skema JSON terstruktur untuk seluruh 46 client-side tools (parameter, elemen form, model eksekusi client-side) untuk direct tool-calling oleh Browser AI agents (Claude Computer Use, ChatGPT Operator, Gemini Web Agent).
-- [ DONE ] **Dynamic Canvas Vertical Budgeting**: Kalkulator layout dinamis fleksibel di Pillow compiler untuk auto-adjust padding ketika judul/konten artikel sangat panjang.
-- [ DONE ] **Unified Workspace Health Diagnostic Doctor (`run_pipeline.py --doctor`)**: Generator matriks ground-truth deterministik untuk mengaudit cache version sync, manifest parity, sitemap count, dan git state.
-- [ DONE ] **Automated SOP-Compliant Tool Scaffolder (`scripts/create_tool.py`)**: Generator template tool client-side zero-dependency dengan integrasi otomatis manifest, Schema JSON-LD, and design tokens.
+## [ BAGIAN 1 ] Fitur & Infrastruktur yang Telah Selesai (Ground-Truth Verified)
 
-## 3. Peningkatan Aksesibilitas & UX
-- [ DONE ] **Command Palette / Quick Search (Ctrl+K)**: Pencarian cepat berbasis Vanilla JS untuk 46+ tools.
-- [ DONE ] **Local Bookmarking (Pinned Tools)**: Fitur favorit dengan penyimpanan lokal `localStorage` dan ikon SVG vektor.
-- [ DONE ] **Native Dark/Light Theme Toggle**: Theming CSS Custom Properties merespons `prefers-color-scheme`.
+### 1. Client-Side Web Tools (53 Tools Aktif di `/tools/`)
+- [ DONE ] **Developer & Syntax Utilities**: JSON Formatter & AST Validator (`json.html`), Diff Checker (`diff-checker.html`), Regex Tester (`regex.html`), Markdown Editor (`markdown.html`), Base64 Tool (`base64.html`), HTML Entity (`html-entity.html`), Case Converter (`case-converter.html`), CSS Minifier (`css-minifier.html`), SQL Formatter (`sql.html`), cURL Builder (`curl.html`), Cron Expression Tester (`cron.html`), Chmod Octal Calculator (`chmod-calculator.html`), UUID Generator (`uuid.html`), URL Encoder (`url.html`), Hash SHA/MD5 (`hash.html`), HMAC Generator (`hmac.html`), Epoch Timestamp (`epoch.html`), Subnet IPv4 (`subnet.html`).
+- [ DONE ] **Security & Kernel Generators**: Linux Security sysctl & sshd Generator (`linux-hardening-generator.html`), PAM & Faillock Account Lockout Policy Generator (`pam-generator.html`), Linux Auditd & DFIR Event Rule Generator (`auditd-generator.html`), OCI Container Seccomp Profile Generator (`seccomp-generator.html`), Systemd Service Sandboxing Override Generator (`systemd-generator.html`), WireGuard Mesh & Keypair Generator (`wireguard-generator.html`), JWT Token Decoder (`jwt.html`), Web Crypto Password Generator (`password.html`), eBPF XDP Packet Filter Evaluator (`ebpf-evaluator.html`).
+- [ DONE ] **AI & Compute Profilers**: LLM Token & GPU VRAM Inference Cost Calculator 2026 (`llm-calculator.html`), AI Token Counter (`ai-token.html`), Speculative Decoding Interactive Simulator (`speculative-decoding.html`), WebGPU Shader & Inference Latency Profiler (`webgpu-profiler.html`).
+- [ DONE ] **Finansial & Ketenagakerjaan**: PPh 21 Tax Calculator (`pph21.html`), KPR Mortgage Calculator (`kpr.html`), JHT BPJS (`jht.html`), JKP BPJS (`jkp.html`), Pesangon UU Cipta Kerja (`pesangon.html`), THR Keagamaan (`thr.html`), Zakat Mal & Fitrah (`zakat.html`), Split Bill (`split-bill.html`).
+- [ DONE ] **Media & Productivity Utilities**: Client-side Canvas Image Converter (`image-converter.html`), SVG Converter (`svg-converter.html`), QR Code Generator (`qr.html`), Text-to-Speech Web Speech API (`tts.html`), Pomodoro Timer (`pomodoro.html`), Countdown Timer (`countdown.html`), Counter (`counter.html`), Color Palette Picker (`color.html`), Unit Converter (`converter.html`), Random Picker (`random-picker.html`), Dice Roller (`dice.html`), Lorem Ipsum Generator (`lorem.html`), Env Parser (`env.html`), CSV to JSON Converter (`csv-json.html`).
+
+### 2. Pipeline Otomasi, CI/CD, Minifikasi & QA Gate
+- [ DONE ] **Python-based Asset Minifier**: Minifikasi mandiri CSS dan JS tanpa Node.js di `sync_content.py`.
+- [ DONE ] **Automated Subresource Integrity (SRI) & CSP**: Generator hash SHA-384 pada aset statis.
+- [ DONE ] **Cloudflare Edge Cache Purge**: Otomasi purge cache via API Zone `1427afa77c5824ee0c34b514260e2e5d`.
+- [ DONE ] **Decoupled 3-Stage Social Card Generator**: Generator gambar Ultra-HD 2400px (Light Square + Dark Landscape) berbasis `data/social_cards_manifest.json` (ADR-014).
+- [ DONE ] **25-Axis Programmatic QA Gate (`verify_batch.py`)**: Validasi 10 komponen SOP, MD5 image uniqueness, WCAG 2.2 AA accessibility, CSS property invariants, headless Playwright probe, dan Check 21 live localhost HTTP smoke test (32 route).
+- [ DONE ] **Multi-Format Feed Syndication**: RSS 2.0 (`feed.xml`), RFC 4287 Atom 1.0 (`atom.xml`), dan JSON Feed 1.1 (`feed.json`) terintegrasi autodiscovery `<link rel="alternate">`.
+- [ DONE ] **Web AI Agent Tool Manifest (`/tools/tools-manifest.json`)**: Skema JSON terstruktur untuk direct calling oleh Browser AI agents (Claude Computer Use, ChatGPT Operator).
+- [ DONE ] **GitHub Actions Automated CI QA Gate**: Workflow CI otomatis di `.github/workflows/qa-gate.yml` dan daily social drip di `.github/workflows/social-syndicate.yml`.
+
+### 3. UI/UX, Navigasi & Standar Baseline 2024+
+- [ DONE ] **Custom Web Component `<site-nav>`**: Navigasi responsif terpusat dengan mobile drawer breakpoint `max-width: 960px`.
+- [ DONE ] **CSS Cascade Layers (`@layer`)**: Pemisahan `@layer reset, base, components, utilities;` di `assets/css/shared.css` untuk eliminasi spesifisitas.
+- [ DONE ] **Native Search & Instant Mark**: Input pencarian dengan tombol reset native WebKit suppressed dan highlight token `<mark>`.
+- [ DONE ] **GPU View-Transition API**: Transisi tema gelap/terang mulus tanpa frame drop.
+- [ DONE ] **Native Lightbox `<dialog>`**: Zoom gambar arsitektur murni native browser tanpa library eksternal.
 - [ DONE ] **Self-Hosted Link Hub (`/links/`)**: Pengganti Linktree murni Vanilla HTML5/CSS dengan microformats `rel="me"`.
+- [ DONE ] **Interactive Zero-Trust Topology Builder (`/blueprints/topology-builder.html`)**: Desainer diagram topologi jaringan visual SVG/Canvas dengan ekspor Mermaid, SVG, dan ASCII.
 
-## 4. Ekspansi Konten GEO & Technical Deep-Dives (Batch 4 - 10 Artikel Lengkap)
-- [ DONE ] **Smart Contract Security & EVM Bytecode Hardening**: Mitigasi Reentrancy, Read-Only Reentrancy, Storage Slot Collision, dan Formal Verification menggunakan Slither dan Halmos (`blog/smart-contract-security-and-evm-bytecode-hardening.html`).
-- [ DONE ] **MEV (Maximal Extractable Value) & Mempool Architecture**: Analisis Flashbots, Searchers, Sandwich Attacks, dan arsitektur Private RPC / MEV-Boost relay (`blog/mev-and-private-mempool-architecture-in-ethereum.html`).
-- [ DONE ] **Zero-Knowledge Proofs (zk-SNARKs vs zk-STARKs) in L2 Rollups**: Sirkuit verifikasi matematis, polynomial commitments, dan komparasi overhead komputasi Prover vs Verifier pada zkEVM (`blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html`).
-- [ DONE ] **DeFi AMM Mathematics & Concentrated Liquidity**: Analisis matematis Constant Product Invariant ($x \cdot y = k$), tick spacing Uniswap v3, dan dynamic fee routing (`blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html`).
-- [ DONE ] **Cross-Chain Bridges & Light Client Verification**: Arsitektur trustless light client, Merkle Mountain Ranges (MMR), IBC packet flows, dan ZK-light clients (`blog/cross-chain-bridges-and-light-client-cryptographic-verification.html`).
-- [ DONE ] **Account Abstraction (ERC-4337) & Paymaster Engineering**: UserOperation mempools, EntryPoint singleton execution loop, gas sponsorship paymaster, dan WebAuthn/Passkey hardware signing via RIP-7212 (`blog/account-abstraction-erc-4337-and-paymasters-architecture.html`).
-- [ DONE ] **Post-Quantum Cryptography (ML-KEM & ML-DSA Migration)**: FIPS 203 (ML-KEM / Kyber), FIPS 204 (ML-DSA / Dilithium), hybrid TLS 1.3 handshakes (X25519MLKEM768), dan mitigasi Harvest Now, Decrypt Later (`blog/post-quantum-cryptography-mldsa-and-mlkem-migration.html`).
-- [ DONE ] **Database Storage Engine Internals (LSM-Trees vs B+ Trees)**: Read/Write/Space Amplification Trilemma, in-place page updates vs append-only SSTables, MemTables, WAL, dan leveled compaction di RocksDB/Postgres (`blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html`).
-- [ DONE ] **Distributed Consensus Protocols (Raft, Multi-Paxos & Leaderless Quorums)**: State Machine Replication, split-brain mitigation, quorum overlap equations ($R + W > N$), dan Vector Clocks (`blog/distributed-consensus-raft-vs-paxos-and-leaderless-quorums.html`).
-- [ DONE ] **Speculative Decoding & Medusa Architecture**: Multi-token parallel LLM inference acceleration, speculative sampling math, tree-attention kernels, dan mitigasi bottleneck memory bandwidth GPU (`blog/speculative-decoding-and-medusa-multi-token-llm-serving.html`).
+### 4. Deep-Tech Articles (45 Artikel Lengkap di `/blog/`)
+- [ DONE ] **Batch 1 (Sysadmin & Linux Security)**: Linux VPS Hardening 2026, UFW Firewall, Fail2ban, PAM faillock, Systemd Sandboxing, Auditd DFIR, eBPF Monitoring, SSH Certificates Vault CA, FIDO2 SSH-CA.
+- [ DONE ] **Batch 2 (Cloud Native & Network Security)**: eBPF XDP DDoS Mitigation, Cilium eBPF Tetragon, Linux Seccomp BPF, Landlock LSM Sandboxing, Chroot & Namespaces Isolation, Kubernetes PSS, Cosign SLSA Provenance, Nginx Hardening, HTTP/3 QUIC 0-RTT, Strict CSP, WireGuard VPN Mesh.
+- [ DONE ] **Batch 3 (AI & LLM Infrastructure)**: vLLM PagedAttention Tuning, Speculative Decoding & Medusa, MoE Mixture of Experts Routing, S-LoRA Adapter Multiplexing, WebGPU LLM Browser Sandbox, KV Cache INT4 Quantization, ColBERT Late-Interaction RAG, DSPy Prompt Optimization, OmniRouter Gateway Fallback, Structured Output Generation, Multi-Agent Swarm Patterns.
+- [ DONE ] **Batch 4 (Web3, Cryptography & Storage Engines)**: Smart Contract Security EVM Bytecode, MEV & Private Mempool, zk-SNARKs vs zk-STARKs L2 Rollups, DeFi AMM Concentrated Liquidity, Cross-Chain Bridges Light Client, Account Abstraction ERC-4337, Post-Quantum Cryptography ML-KEM/ML-DSA, Database Storage Engines LSM-Trees vs B+ Trees, Distributed Consensus Raft vs Paxos, Rust in Linux Kernel Memory Safety.
 
-## 5. Proposal Tambahan & Inovasi Fitur (Backlog Aktif)
-- [ DONE ] **shop.zyekh.com Ecosystem Touchpoints**: Pemasangan touchpoints navigasi (`site-nav.js`), kartu unggulan di `links/index.html`, footer navigation di `index.html` dan seluruh 91 HTML files, serta architecture resource callout di `blueprints/index.html`.
-- [ DONE ] **Multi-Persona & Time-Jittered Multi-Account Syndication**: Upgrade `scripts/syndicate.py` untuk mengorkestrasi multi-akun media sosial dengan klaster sudut pandang berbeda (Authority, Curation, Quick Tip), variasi copywriting otomatis, penundaan waktu acak (time-jitter 1.5s-4.5s), dan flag CLI `--persona` & `--jitter`.
-- [ DONE ] **Linux Security `sysctl` & `sshd` Hardening Config Builder**: Generator konfigurasi interaktif `/etc/sysctl.d/99-hardening.conf` dan `/etc/ssh/sshd_config.d/99-hardened.conf` berbasis use-case (`/tools/linux-hardening-generator.html`).
-- [ DONE ] **GitHub Actions Automated CI QA Gate**: Workflow CI otomatis di GitHub Actions untuk memvalidasi `verify_batch.py` (20-axis) pada setiap Pull Request/Commit (`.github/workflows/qa-gate.yml`).
-- [ DONE ] **JSON Feed v1.1 & RFC 4287 Atom Feed Modernization**: Penambahan output sindikasi modern `feed.json` dan `atom.xml` di `sync_content.py`, autodiscovery `<link rel="alternate">` tags di 91 file HTML, integrasi robots.txt, sitemap.xml, llms.txt, dan QA Check 17.
-- [ DONE ] **Interactive Zero-Trust Architecture Topology Builder**: Utilitas visual Canvas/SVG murni di browser untuk merancang dan mengekspor topologi keamanan ke Mermaid Markdown, SVG, dan ASCII (`/blueprints/topology-builder.html`).
+---
 
-## 6. Web3, DeFi & Decentralized Infrastructure Suite (Roadmap)
-- [ DONE ] **Smart Contract Security & EVM Bytecode Hardening**: (`blog/smart-contract-security-and-evm-bytecode-hardening.html`).
-- [ DONE ] **MEV (Maximal Extractable Value) & Mempool Architecture**: (`blog/mev-and-private-mempool-architecture-in-ethereum.html`).
-- [ DONE ] **Zero-Knowledge Proofs (zk-SNARKs vs zk-STARKs) in L2 Rollups**: (`blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html`).
-- [ DONE ] **DeFi AMM Mathematics & Concentrated Liquidity**: (`blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html`).
-- [ BACKLOG ] **Immutable Decentralized Archiving (IPFS / IPNS / Arweave Mirroring)**: Skrip otomatisasi build snapshot ke IPFS CID dan Arweave permaweb untuk preservasi knowledge base `llms.txt` tanpa runtime overhead ke browser pengunjung.
-- [ BACKLOG ] **ENS (Ethereum Name Service) Contenthash Resolution**: Pemetaan domain ENS `zyekh.eth` ke snapshot IPFS CID terbaru.
-- [ BACKLOG ] **Cryptographic Content Provenance (Verifiable Signatures)**: Pembuatan SHA-256 digest dan signature digital untuk setiap artikel blog / RAG database untuk integritas data anti-tampering.
+## [ BAGIAN 2 ] Peta Jalan & Backlog Aktif per Domain Target (Active Roadmap)
 
-## 7. AI Chatbot & Knowledge Base Assistant (Roadmap)
-- [ BACKLOG ] **Interactive Site AI Chatbot**: Asisten chatbot cerdas berbasis basis pengetahuan situs (`llms.txt` / `llms-full.txt`) dengan opsi arsitektur zero-dependency (Bring-Your-Own-Key / WebLLM in-browser WebGPU / API-driven) (detail teknis menyusul dari user).
+### Domain A: `zyekh.com` Web Hub (Zero-Dependency Static Site)
 
-## 8. Ekspansi Konten GEO & Technical Deep-Dives (Batch 5 - 10 Artikel Roadmap)
-- [ BACKLOG ] **EIP-4844 Proto-Danksharding & Blobspace Architecture**: Analisis ephemeral data blobs, KZG polynomial commitments, blob fee markets (`blob_base_fee`), Point Evaluation Precompile (0x0A), dan skalabilitas data availability L2 Rollups (`blog/eip-4844-proto-danksharding-and-blobspace-architecture.html`).
-- [ BACKLOG ] **Solana Sealevel Parallel Runtime & Transaction Pipeline**: Memory model non-overlapping accounts, Gulf Stream mempool-less forwarding, Pipeline transaction processing (TPU/TVU), Proof of History (PoH) verifiable delay functions, dan mitigasi state lock contention (`blog/solana-sealevel-parallel-runtime-and-transaction-pipeline.html`).
-- [ BACKLOG ] **Cosmos Tendermint / CometBFT Consensus & IBC Relayers**: State Machine Replication BFT 2/3 voting power, deterministic finality, light client state verification, packet commitment proofs, dan ICS-20 token transfers (`blog/cosmos-tendermint-cometbft-and-ibc-relayers-architecture.html`).
-- [ BACKLOG ] **Fully Homomorphic Encryption (FHE) & Confidential EVM Computing**: Komputasi terenkripsi di atas ciphertext, TFHE / CKKS schemes, bootstrapping noise reduction, FHE coprocessors, dan confidential smart contracts (`blog/fully-homomorphic-encryption-fhe-and-confidential-evm-computing.html`).
-- [ BACKLOG ] **Restaking Mechanics & Actively Validated Services (EigenLayer AVS)**: Pooled economic security, dual staking, slashing conditions, operator delegation, Attestation layers, dan komparasi native restaking vs liquid restaking tokens (LRT) (`blog/restaking-mechanics-and-actively-validated-services-eigenlayer-avs.html`).
-- [ BACKLOG ] **Decentralized Oracle Networks (Chainlink DON vs Pyth Pull Oracles)**: Push vs Pull oracle architectures, threshold signatures (OCR2 / Off-Chain Reporting), high-frequency financial feeds, Wormhole cross-chain attestation, dan mitigasi flash crash oracle manipulation (`blog/decentralized-oracle-networks-chainlink-don-vs-pyth-pull-oracles.html`).
-- [ BACKLOG ] **Bitcoin Lightning Network HTLCs & Payment Channel Factories**: Hashed Time-Locked Contracts, channel balance rebalancing, Eltoo penalty-less state updates, Taproot channel factories, dan routing onion packets via Sphinx (`blog/bitcoin-lightning-network-htlcs-and-payment-channel-factories.html`).
-- [ BACKLOG ] **Threshold Cryptography (MPC-TSS vs Multi-sig Wallets)**: Shamir Secret Sharing, GG20 / FROST threshold signature schemes, distributed key generation (DKG), off-chain signing vs on-chain verification gas efficiency, dan wallet disaster recovery models (`blog/threshold-cryptography-mpc-tss-vs-multi-sig-wallets.html`).
-- [ BACKLOG ] **Decentralized Storage Internals (IPFS BitSwap, Filecoin & Arweave)**: Content Addressing (CIDs), Directed Acyclic Graphs (UnixFS DAG), BitSwap peer exchange protocols, Proof of Spacetime (PoSt), Proof of Replication (PoRep), dan SPoRA (Succinct Proofs of Random Access) permaweb mechanics (`blog/decentralized-storage-internals-ipfs-filecoin-and-arweave.html`).
-- [ BACKLOG ] **ZK-Rollup Sequencer Decentralization & Shared Sequencing**: Centralized sequencer single-point-of-failure risks, Based Rollups (L1 sequencing), Espresso / Radius shared sequencer networks, PBS for L2, dan atomic cross-rollup composability (`blog/zk-rollup-sequencer-decentralization-and-shared-sequencing.html`).
+#### Cluster 1: Web3 & Client-Side Cryptography Tools
+- [ BACKLOG ] **Solidity Storage Slot & Layout Calculator (`/tools/solidity-storage-calculator.html`)**: Tool interaktif browser untuk memetakan packing variabel Solidity 32-byte slots, keccak256 mapping slot calculation, array dinamis, dan ERC-7201 namespaced storage.
+- [ BACKLOG ] **Ethereum ABI & Calldata Encoder / Decoder (`/tools/abi-decoder.html`)**: Parser calldata offline untuk mendecode function selector 4-byte, tuples, dynamic arrays, dan pembuatan payload multisig.
+- [ BACKLOG ] **Ed25519 & Secp256k1 WebCrypto Keypair Generator (`/tools/crypto-keypair-generator.html`)**: Pembangkit pasangan kunci kriptografis murni berbasis native `window.crypto.subtle` tanpa library eksternal.
 
-## 9. Ekspansi Client-Side Web3 & Cryptography Security Tools
-- [ BACKLOG ] **Solidity Storage Slot & Layout Calculator**: Tool interaktif murni di browser untuk memetakan packing variabel Solidity, mapping slot keccak256 hash calculation, dynamic array pointers, dan validasi ERC-7201 namespaced storage (`/tools/solidity-storage-calculator.html`).
-- [ BACKLOG ] **Ethereum ABI & Calldata Encoder / Decoder**: Utilitas parser calldata offline untuk mendecode function selector (4 bytes), parsing parameter kompleks (tuples, dynamic arrays), dan generate calldata payload untuk transaksi multisig (`/tools/abi-decoder.html`).
-- [ BACKLOG ] **Ed25519 & Secp256k1 WebCrypto Keypair Generator**: Generator pasangan kunci publik/privat kriptografis murni berbasis WebCrypto API lokal tanpa dependensi eksternal, lengkap dengan validasi checksum address (`/tools/crypto-keypair-generator.html`).
+#### Cluster 2: Content GEO Batch 5 (10 Artikel Deep-Tech)
+- [ BACKLOG ] **EIP-4844 Proto-Danksharding & Blobspace Architecture**: Ephemeral data blobs, KZG polynomial commitments, dan `blob_base_fee`.
+- [ BACKLOG ] **Solana Sealevel Parallel Runtime & Transaction Pipeline**: Memory model non-overlapping accounts, Gulf Stream, dan Proof of History.
+- [ BACKLOG ] **Cosmos Tendermint / CometBFT Consensus & IBC Relayers**: State Machine Replication BFT 2/3 voting power dan ICS-20 cross-chain token transfers.
+- [ BACKLOG ] **Fully Homomorphic Encryption (FHE) & Confidential EVM Computing**: TFHE/CKKS schemes dan confidential smart contracts.
+- [ BACKLOG ] **Restaking Mechanics & Actively Validated Services (EigenLayer AVS)**: Slashing conditions, dual staking, dan AVS operator delegation.
+- [ BACKLOG ] **Decentralized Oracle Networks (Chainlink DON vs Pyth Pull Oracles)**: OCR2 threshold signatures dan high-frequency price feeds.
+- [ BACKLOG ] **Bitcoin Lightning Network HTLCs & Payment Channel Factories**: Hashed Time-Locked Contracts, Eltoo, dan Taproot factories.
+- [ BACKLOG ] **Threshold Cryptography (MPC-TSS vs Multi-sig Wallets)**: FROST / GG20 threshold signatures, Shamir secret sharing, dan DKG.
+- [ BACKLOG ] **Decentralized Storage Internals (IPFS BitSwap, Filecoin & Arweave)**: UnixFS DAG, PoSt, PoRep, dan SPoRA permaweb mechanics.
+- [ BACKLOG ] **ZK-Rollup Sequencer Decentralization & Shared Sequencing**: Based Rollups, Espresso / Radius shared sequencer networks, dan L2 PBS.
 
-## 10. Advanced Provenance & Integrity Infrastructure
-- [ BACKLOG ] **Cryptographic Content Provenance Manifest**: Generator otomatis digest SHA-256 dan signature GPG/Ed25519 untuk setiap artikel blog, file feeds, dan `llms.txt` yang terekam pada manifest tanda tangan terverifikasi (`provenance-manifest.json`).
+#### Cluster 3: Decentralized Archiving & Cryptographic Provenance
+- [ BACKLOG ] **Immutable Decentralized Archiving (IPFS / IPNS / Arweave Mirroring)**: Skrip build snapshot ke IPFS CID dan Arweave permaweb untuk preservasi knowledge base `llms.txt`.
+- [ BACKLOG ] **ENS Contenthash Resolution**: Pemetaan domain ENS `zyekh.eth` ke snapshot IPFS terbaru.
+- [ BACKLOG ] **Cryptographic Content Provenance Manifest (`/data/provenance-manifest.json`)**: Generator digest SHA-256 dan signature PGP otomatis untuk seluruh artikel blog, feeds, dan `llms.txt` yang terekam pada manifest tanda tangan terverifikasi.
 
-## 11. Core Landing Pages Optimization & UI/UX Refinement (User Directive)
-- [ DONE ] **Home Landing Page (`index.html`) Refinement**:
-  - Efisiensi DOM: Audit layout containment, eliminasi redundansi inline styling, dan optimasi LCP hero rendering.
-  - Quick Metrics Sync: Penyelarasan counter metrik (53 Client-Side Tools, 45 Deep-Dive Articles, 100% Offline-Capable).
-  - Modern Visual Hierarchy: Typography tracking, dynamic responsive cards, dan fluid grid alignment.
-- [ DONE ] **About & Experience Page (`about/index.html`) Refinement**:
-  - Structured Timeline: Pembaruan riwayat riset sistem (Web3, eBPF, ZK-Rollups, Post-Quantum Cryptography, Linux Kernel Hardening).
-  - PGP / Security Verification Card: Tampilan verifikasi kunci publik GPG yang lebih scannable dan copyable.
-- [ DONE ] **Contact & Verification Page (`contact/index.html`) Refinement**:
-  - Direct PGP encrypted contact instructions dan zero-tracking secure comms guidance (RFC 9116 security policy).
-- [ DONE ] **Tools Hub (`tools/index.html`) & Blueprints (`blueprints/index.html`) Optimization**:
-  - Peningkatan filtering kategori tools (Security & Hardening, AI & Compute, Developer Utilities, Finansial, Text, Crypto).
-  - Peningkatan catalog blueprint cards (12 blueprints), live search, dan dynamic category filters.
+#### Cluster 4: Custom ArchISO & FOSS Distribution Hub
+- [ BACKLOG ] **Custom ArchISO & Linux Build Distribution Hub (`/downloads/` atau `/dist/`)**: Halaman katalog dan mirror download terverifikasi untuk custom image ArchISO, script deploy Linux, dan tooling FOSS karya pengembang.
+- [ BACKLOG ] **FOSS Artifact Cryptographic Checksum & Signature Verification**: SHA-256 / SHA-512 checksums, Minisign / PGP signature blocks, dan mirror links terverifikasi.
+- [ BACKLOG ] **FOSS Philosophy & Open Source Advocacy Statement**: Penegasan posisi zyekh.com sebagai platform independen pro-FOSS dan software bebas.
 
-Seluruh ide di atas mematuhi prinsip ketiadaan dependensi eksternal, performa tinggi, dan bebas elemen bloat/emoji.
+#### Cluster 5: UI/UX Micro-Enhancements
+- [ BACKLOG ] **Professional Social Media Placement**: Penambahan link profil media sosial profesional (LinkedIn, GitHub, GitLab, Codeberg) secara elegan pada Quick Links / Bento Grid di `index.html`.
+- [ BACKLOG ] **Client-Side AI Knowledge Assistant**: Asisten chat cerdas berbasis `llms.txt` dengan arsitektur zero-dependency (BYOK / WebLLM in-browser WebGPU) yang di-load murni saat interaksi pengguna (lazy-loaded).
 
+---
 
+### Domain B: `shop.zyekh.com-theme` (Shopify Liquid 2.0 Storefront)
+*Catatan Arsitektur: Seluruh item di domain ini berada di repositori terisolasi `Projects/shop.zyekh.com-theme` untuk menjaga kemurnian statis domain root.*
+
+- [ BACKLOG ] **Bundle & Save Multi-Pack Tier**: Komponen diskon kuantitas bertingkat pada PDP untuk melipatgandakan Average Order Value (AOV).
+- [ BACKLOG ] **Geo-IP Delivery Date Guarantee Widget**: Kalkulator estimasi tanggal tiba dinamis berbasis lokasi IP pengunjung untuk menekan *cart abandonment*.
+- [ BACKLOG ] **Sticky Express Purchase Bar**: Bilah ATC melayang bergaya glassmorphism untuk checkout cepat impulsif di perangkat seluler.
+
+---
+
+### Domain C: `zyekhabdul` GitHub Ecosystem & Python Security Frameworks
+*Catatan Arsitektur: Seluruh item di domain ini berada di repositori Python DFIR terpisah (`vol3-ebpf-detector`, `volatility3-ai-triage`).*
+
+- [ BACKLOG ] **Volatility 3 Cyber Suite Consolidation**: Penggabungan repositori `vol3-ebpf-detector` dan `volatility3-ai-triage` menjadi satu framework Python terpadu (`volatility3-cyber-suite`) dengan CLI seragam dan Web Dashboard lokal.
+- [ BACKLOG ] **PyPI Package Distribution**: Publikasi paket resmi ke Python Package Index (`pip install vol3-ebpf-detector` dan `pip install volatility3-ai-triage`).
+- [ BACKLOG ] **Terminal Recording & Visual Demo Artifacts**: Pembuatan demonstrasi visual terminal via VHS / asciinema (GIF/SVG) untuk landing page dan README repositori.
+- [ BACKLOG ] **Curated Awesome-Lists Inclusion**: Pengajuan Pull Request resmi untuk mendaftarkan proyek ke `awesome-ebpf`, `awesome-forensics`, `awesome-incident-response`, dan `awesome-laravel`.
+- [ BACKLOG ] **Technical Deep-Dive Community Writeups**: Penyusunan artikel "Show HN" untuk Hacker News dan serial tulisan teknis di komunitas Reddit (`r/netsec`, `r/ReverseEngineering`, `r/cybersecurity`, `r/Python`).
+
+---
+
+### Domain D: VPS Runtime & Mobile Client (`agy` Mobile Assistant)
+*Catatan Arsitektur: Seluruh item di domain ini berada di stack VPS daemon & aplikasi mobile terpisah.*
+
+- [ BACKLOG ] **VPS AI Engine to Mobile App (Play Store & App Store)**: Integrasi engine AI bot berbasis Antigravity CLI (`agy` / Gemini) yang berjalan di VPS menjadi backend API untuk aplikasi mobile (Android/iOS).
+- [ BACKLOG ] **Headless AGY Daemon with Strict Chat-Only Sandboxing**: Lightweight bridge daemon (Node.js/Go/Python) dengan Server-Sent Events (SSE) / WebSocket streaming, process pool, session isolation, dan penonaktifan akses command berbahaya untuk pengguna publik.
+- [ BACKLOG ] **Cross-Platform Mobile Client (Flutter / React Native)**: Frontend chat native dengan markdown & code syntax highlighting, real-time token streaming, sinkronisasi histori sesi, dan integrasi Play Billing / Apple IAP.

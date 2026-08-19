@@ -41,6 +41,11 @@
 7. PRE-PROPOSAL DISCOVERY & ANTI-REDUNDANCY:
    - Sebelum membuat script, tool, atau GitHub Action baru, AI WAJIB memeriksa direktori target (`.github/workflows/`, `scripts/`, `tools/`, `blueprints/`). DILARANG membuat script duplikat jika fungsi serupa sudah ada.
 
+8. IDEA MANAGEMENT & MASTER ROADMAP PROTOCOL:
+   - Format Entri Wajib: `- [ STATUS ] **Nama Fitur**: Deskripsi teknis, mekanisme, batasan arsitektur (target/path atau Domain)`.
+   - 4 Domain Target Terisolasi: Domain A (`zyekh.com` Static Hub), Domain B (`shop.zyekh.com-theme` Shopify Liquid), Domain C (`zyekhabdul` / Python DFIR), Domain D (VPS `agy` daemon & Mobile client).
+   - Lifecycle Status Baku: `[ PROPOSED ]` -> `[ BACKLOG ]` -> `[ IN-PROGRESS ]` -> `[ DONE ]` -> `[ REJECTED ]`. Usulan ditolak wajib dicatat ke `DECISIONS.md`.
+
 ---
 
 ## 3. UI/UX DESIGN SYSTEM & LAYOUT LAWS
