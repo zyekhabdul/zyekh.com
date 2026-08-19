@@ -9,24 +9,44 @@ class SiteNav extends HTMLElement {
   connectedCallback() {
     let active = this.getAttribute('active') || '';
 
-    const links = [
-      { href: '/',           label: 'Home',         key: 'home' },
-      { href: '/tools/',     label: 'Tools Hub',    key: 'tools' },
-      { href: '/blog/',      label: 'Articles',     key: 'blog' },
-      { href: '/blueprints/',label: 'Blueprints',   key: 'blueprints' },
-      { href: '/links/',     label: 'Link Hub',     key: 'links' },
-      { href: 'https://shop.zyekh.com', label: 'Store', key: 'shop', external: true },
-      { href: '/about/',     label: 'About & Bio',  key: 'about' },
-      { href: '/contact/',   label: 'Contact',      key: 'contact' }
+    const primaryLinks = [
+      { href: '/tools/',      label: 'Tools Hub',    key: 'tools' },
+      { href: '/blog/',       label: 'Articles',     key: 'blog' },
+      { href: '/blueprints/', label: 'Blueprints',   key: 'blueprints' }
     ];
 
-    const listItems = links.map(l => {
-      const cls = ['nav-link',
-        l.key === active ? 'active' : ''
-      ].filter(Boolean).join(' ');
+    const secondaryLinks = [
+      { href: '/about/',      label: 'About & Bio',  key: 'about' },
+      { href: '/links/',      label: 'Link Hub',     key: 'links' },
+      { href: 'https://shop.zyekh.com', label: 'Store', key: 'shop', external: true },
+      { href: '/contact/',    label: 'Contact',      key: 'contact' }
+    ];
+
+    const isSecondaryActive = secondaryLinks.some(l => l.key === active);
+
+    const primaryItems = primaryLinks.map(l => {
+      const cls = ['nav-link', l.key === active ? 'active' : ''].filter(Boolean).join(' ');
+      return `<li><a href="${l.href}" class="${cls}" data-nav="${l.key}">${l.label}</a></li>`;
+    }).join('');
+
+    const secondaryItems = secondaryLinks.map(l => {
+      const cls = ['dropdown-link', l.key === active ? 'active' : ''].filter(Boolean).join(' ');
       const extraAttr = l.external ? ' target="_blank" rel="noopener noreferrer"' : '';
       return `<li><a href="${l.href}" class="${cls}" data-nav="${l.key}"${extraAttr}>${l.label}</a></li>`;
     }).join('');
+
+    const dropdownHTML = `
+      <li class="nav-dropdown" id="navDropdown">
+        <button class="nav-link nav-dropdown-btn${isSecondaryActive ? ' active' : ''}" id="navDropdownBtn" type="button" aria-expanded="false" aria-haspopup="true" aria-label="More navigation links">
+          <span>More</span>
+          <svg class="dropdown-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+        <ul class="nav-dropdown-menu" id="navDropdownMenu" role="menu">
+          ${secondaryItems}
+        </ul>
+      </li>`;
 
     this.innerHTML = `
       <header class="header-nav">
@@ -49,7 +69,7 @@ class SiteNav extends HTMLElement {
             <span class="hamburger-bar"></span>
           </button>
           <nav class="nav-menu" id="navMenu">
-            <ul class="nav-list">${listItems}</ul>
+            <ul class="nav-list">${primaryItems}${dropdownHTML}</ul>
             <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" type="button">
               <span class="theme-icon-light">MODE: LIGHT</span>
               <span class="theme-icon-dark">MODE: DARK</span>
@@ -164,6 +184,35 @@ class SiteNav extends HTMLElement {
       } catch (e) {}
     }
 
+    // Dropdown Interactive Logic
+    const dropdown = this.querySelector('#navDropdown');
+    const dropdownBtn = this.querySelector('#navDropdownBtn');
+    if (dropdown && dropdownBtn) {
+      const toggleDropdown = (state) => {
+        const isOpen = typeof state === 'boolean' ? state : !dropdown.classList.contains('open');
+        dropdown.classList.toggle('open', isOpen);
+        dropdownBtn.setAttribute('aria-expanded', String(isOpen));
+      };
+
+      dropdownBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleDropdown();
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) {
+          toggleDropdown(false);
+        }
+      });
+
+      dropdown.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          toggleDropdown(false);
+          dropdownBtn.focus();
+        }
+      });
+    }
+
     if (!toggle || !menu) return;
 
     // Backdrop
@@ -193,7 +242,7 @@ class SiteNav extends HTMLElement {
     });
 
     menu.addEventListener('click', (e) => {
-      if (e.target.closest('.nav-link')) {
+      if (e.target.closest('a[href]')) {
         setTimeout(() => setOpen(false), 150);
       }
     });
