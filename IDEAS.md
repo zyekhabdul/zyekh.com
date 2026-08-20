@@ -100,6 +100,18 @@ Dokumen ini adalah single source of truth untuk seluruh ide, backlog, dan peta j
 ### Domain D: VPS Runtime & Mobile Client (`agy` Mobile Assistant)
 *Catatan Arsitektur: Seluruh item di domain ini berada di stack VPS daemon & aplikasi mobile terpisah.*
 
+- [ DONE ] **Self-Hosted Sovereign Dynamic QRIS Engine (`zyekh-ai-core`)**: Modul EMVCo Dynamic QRIS generator mandiri dengan injeksi Tag 54, checksum CRC16-CCITT, dan resolusi kode unik 3-digit untuk bypass ketergantungan pihak ketiga (`zyekh-ai-core/qrisEngine.js`).
+- [ DONE ] **Omnichannel Mutation Ingestor & Auto-Dispatcher**: Hub pembayaran terpadu yang memproses webhook mutasi bank/e-wallet dan melakukan dispatch produk digital otomatis ke Bot Telegram, Bot WhatsApp (`bot-whatsapp`), dan Web Storefront (`shop.zyekh.com`).
 - [ BACKLOG ] **VPS AI Engine to Mobile App (Play Store & App Store)**: Integrasi engine AI bot berbasis Antigravity CLI (`agy` / Gemini) yang berjalan di VPS menjadi backend API untuk aplikasi mobile (Android/iOS).
 - [ BACKLOG ] **Headless AGY Daemon with Strict Chat-Only Sandboxing**: Lightweight bridge daemon (Node.js/Go/Python) dengan Server-Sent Events (SSE) / WebSocket streaming, process pool, session isolation, dan penonaktifan akses command berbahaya untuk pengguna publik.
 - [ BACKLOG ] **Cross-Platform Mobile Client (Flutter / React Native)**: Frontend chat native dengan markdown & code syntax highlighting, real-time token streaming, sinkronisasi histori sesi, dan integrasi Play Billing / Apple IAP.
+
+---
+
+### Domain E: Arsitektur Hosting & Edge Delivery Standards (Hybrid Edge + VPS Indo)
+*Catatan Arsitektur: Standar deployment resmi untuk proyek open-source dan aplikasi web dengan backend terpisah.*
+
+- [ BACKLOG ] **Decoupled Architecture Standard (GitHub + Cloudflare Pages + VPS Indo)**: Menetapkan pola standar deployment di mana repositori kode publik tetap berada di GitHub (untuk exposure open-source, portofolio dev, dan CI/CD trigger), frontend statis/SPA di-deploy ke Cloudflare Pages (Anycast Edge CDN Jakarta, native SPA routing, zero-hack `_headers` CORS, custom domain SSL), dan backend komputasi/API hosted di VPS Indonesia (`api.domain.com`) untuk menjamin latensi transaksi data terendah bagi pengguna lokal tanpa limitasi routing/CORS di GitHub Pages.
+- [ BACKLOG ] **Cloudflare Pages Deployment Migration for Web Apps**: Migrasi project frontend yang membutuhkan routing SPA dan integrasi API dinamis dari GitHub Pages ke Cloudflare Pages dengan konfigurasi `_headers` dan `_redirects` terstandarisasi.
+
+
