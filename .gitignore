@@ -27,4 +27,6 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-
+# Cloudflare Wrangler & Node modules
+.wrangler/
+node_modules/
