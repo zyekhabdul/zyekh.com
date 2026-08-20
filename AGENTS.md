@@ -203,5 +203,19 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
     - **Finite Status Lifecycle**: Entri states MUST be one of `[ PROPOSED ]`, `[ BACKLOG ]`, `[ IN-PROGRESS ]`, `[ DONE ]`, or `[ REJECTED ]`. Rejected ideas MUST have their rationale recorded in `DECISIONS.md`.
     - **Security & Zero-Dependency Guard**: Ideas targeting Domain A that require NPM runtime dependencies or framework build steps are strictly prohibited. Ideas targeting Domain D must enforce strict Chat-Only Sandboxing.
 
+54. **STRICT WORKSPACE BOUNDARY & ZERO UNREQUESTED REMOTE MUTATION**:
+    - **Local Workspace Binding**: The AI Agent is strictly bound to the active local workspace directory (`/home/fuckadmin/Projects/zyekh.com`). All file mutations (`write_to_file`, `replace_file_content`, code edits) MUST remain 100% inside this workspace root.
+    - **Read-Only Remote SSH Access**: SSH access to external hosts or VPS (`servv`) is strictly restricted to **Read-Only Diagnostics** (e.g. passive status checks, `curl` probing, service health inspection).
+    - **Strict Prohibition of Autonomous Remote Mutations**: Mutating code, executing `docker build`, applying `docker service update`, modifying configs, or issuing write commands on remote servers (`servv`) without an explicit RFC and separate per-action user authorization is strictly forbidden.
+
+55. **SINGLE-REPOSITORY GIT PUSH SCOPE ENFORCEMENT**:
+    - **Strict Single-Repo Target**: When the user issues a `git push` command, it applies SOLELY and EXCLUSIVELY to the single repository in the current active local workspace.
+    - **Zero Autonomous Multi-Repo Expansion**: The AI MUST NEVER automatically expand a single push command into an autonomous loop across other local or remote repositories.
+
+56. **SUPREME SAFETY TIER OVERRIDE (ANTI-OVERREACH)**:
+    - **Absolute Hierarchy**: Global Safety Rules (Tier 1: `sensitive-area-guard.md`, `ai-proposal-protocol.md`, `git-push-restriction.md`, `ponytail-yagni.md`) strictly supersede local autonomous initiative clauses (such as `AGENTS.md` Rule 14).
+    - **Sensitive Surface Hard-Stop**: Any action touching production deployments, containers, authentication, or multi-repository architectures requires an immediate Hard Stop and explicit RFC proposal before execution.
+
+
 
 
