@@ -216,6 +216,10 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
     - **Absolute Hierarchy**: Global Safety Rules (Tier 1: `sensitive-area-guard.md`, `ai-proposal-protocol.md`, `git-push-restriction.md`, `ponytail-yagni.md`) strictly supersede local autonomous initiative clauses (such as `AGENTS.md` Rule 14).
     - **Sensitive Surface Hard-Stop**: Any action touching production deployments, containers, authentication, or multi-repository architectures requires an immediate Hard Stop and explicit RFC proposal before execution.
 
+57. **MANDATORY PRE-MUTATION GIT PULL PROTOCOL ("PULL DULU SEBELUM MEROMBAK")**:
+    - **Upstream Synchronization Gate**: Sebelum melakukan modifikasi kode, refactoring, perombakan arsitektur, atau eksekusi batch tasks pada proyek, AI Agent WAJIB memeriksa status repositori dan melakukan `git pull` (atau `git fetch && git status`) terlebih dahulu.
+    - **Conflict & Desync Prevention**: Memastikan state lokal 100% tersinkronisasi dengan remote branch terbaru sebelum mutasi kode dimulai untuk mencegah merge conflict, penimpaan commit lain, atau regresi kode.
+
 
 
 

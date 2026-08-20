@@ -132,3 +132,14 @@ python3 check_emojis.py
 
 2. **Native `_redirects` Maintenance**:
    - Aturan canonical URL trailing slash dikelola via `_redirects` di root repositori.
+
+---
+
+## [ GIT ] 9. PRE-MUTATION UPSTREAM GIT PULL PROTOCOL (WAJIB)
+
+1. **Pull Sebelum Merombak Proyek**:
+   - Sebelum memulai modifikasi kode, refactoring, atau task baru, AI WAJIB menjalankan sinkronisasi upstream:
+     ```bash
+     git status && git pull
+     ```
+   - *Alasan*: Mencegah merge conflict, penimpaan commit lain dari remote, atau regresi kode saat bekerja secara multi-agent atau multi-device.

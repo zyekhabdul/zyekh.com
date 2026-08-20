@@ -43,6 +43,7 @@
 - **Strict Workspace Boundary & Zero Remote Mutation (Protocol 54)**: The AI Agent is strictly bound to the active local workspace directory (`/home/fuckadmin/Projects/zyekh.com`). Remote SSH access to `servv` or external VPS instances is strictly restricted to **Read-Only Diagnostics** (`curl`, `docker service ls`, passive log viewing). Mutating code, executing `docker build`, applying `docker service update`, or writing files on remote hosts without explicit per-action user authorization is strictly forbidden.
 - **Single-Repository Git Push Enforcement (Protocol 55)**: When the user issues a `git push` instruction, it applies SOLELY and EXCLUSIVELY to the single repository in the current active working directory. Looping push commands across multiple local or remote repositories is strictly prohibited.
 - **Supreme Safety Tier Override (Protocol 56)**: Global Safety Rules (Tier 1: `sensitive-area-guard.md`, `ai-proposal-protocol.md`, `git-push-restriction.md`, `ponytail-yagni.md`) strictly supersede local autonomous initiative clauses. Any operation touching production deployment, container rebuilds, or multi-repo architecture requires an immediate Hard Stop and explicit RFC proposal before execution.
+- **Mandatory Pre-Mutation Git Pull (Protocol 57)**: Sebelum merombak arsitektur, refactoring kode, atau mengeksekusi batch tasks pada project, AI Agent WAJIB memeriksa remote status dan melakukan `git pull` (atau `git fetch && git status`) terlebih dahulu untuk memastikan state lokal 100% mutakhir dan mencegah merge conflicts / code regression.
 
 
 
