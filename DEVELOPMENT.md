@@ -118,3 +118,17 @@ Sebelum mengklaim tugas selesai atau mengirimkan laporan ke pengguna, AI WAJIB m
 python3 verify_batch.py
 python3 check_emojis.py
 ```
+
+---
+
+## [ CLOUDFLARE ] 8. CLOUDFLARE PAGES HEADERS & CACHE DIRECTIVES PROTOCOL
+
+1. **Native `_headers` Maintenance**:
+   - Seluruh aturan caching dan security header dikontrol langsung via file `_headers` di root repositori.
+   - `/*.html` dan `/` diset `Cache-Control: public, no-cache, must-revalidate`.
+   - `/sw.js` diset `Cache-Control: no-cache, no-store, must-revalidate` untuk mencegah retensi service worker lama.
+   - `/assets/*` diset `Cache-Control: public, max-age=31536000, immutable`.
+   - Manifest dan XML feeds diset `Cache-Control: public, max-age=3600, must-revalidate`.
+
+2. **Native `_redirects` Maintenance**:
+   - Aturan canonical URL trailing slash dikelola via `_redirects` di root repositori.

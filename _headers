@@ -1,0 +1,45 @@
+# Global Security Headers
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com https://shop.zyekh.com; frame-ancestors 'none'; base-uri 'self';
+
+# HTML & Root Documents (Always Fresh)
+/*.html
+  Cache-Control: public, no-cache, must-revalidate
+
+/
+  Cache-Control: public, no-cache, must-revalidate
+
+# Service Worker (Strict No-Store)
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+# Static Assets (Immutable 1-Year Edge Cache)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Feeds, Sitemaps & AI Manifests (1-Hour Cache)
+/feed.xml
+  Cache-Control: public, max-age=3600, must-revalidate
+/atom.xml
+  Cache-Control: public, max-age=3600, must-revalidate
+/feed.json
+  Cache-Control: public, max-age=3600, must-revalidate
+/sitemap.xml
+  Cache-Control: public, max-age=3600, must-revalidate
+/llms.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+/llms-full.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+/.well-known/llms.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+/.well-known/llms-full.txt
+  Cache-Control: public, max-age=3600, must-revalidate
+/tools/tools-manifest.json
+  Cache-Control: public, max-age=3600, must-revalidate
+/data/social_cards_manifest.json
+  Cache-Control: public, max-age=3600, must-revalidate

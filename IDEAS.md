@@ -112,6 +112,6 @@ Dokumen ini adalah single source of truth untuk seluruh ide, backlog, dan peta j
 *Catatan Arsitektur: Standar deployment resmi untuk proyek open-source dan aplikasi web dengan backend terpisah.*
 
 - [ BACKLOG ] **Decoupled Architecture Standard (GitHub + Cloudflare Pages + VPS Indo)**: Menetapkan pola standar deployment di mana repositori kode publik tetap berada di GitHub (untuk exposure open-source, portofolio dev, dan CI/CD trigger), frontend statis/SPA di-deploy ke Cloudflare Pages (Anycast Edge CDN Jakarta, native SPA routing, zero-hack `_headers` CORS, custom domain SSL), dan backend komputasi/API hosted di VPS Indonesia (`api.domain.com`) untuk menjamin latensi transaksi data terendah bagi pengguna lokal tanpa limitasi routing/CORS di GitHub Pages.
-- [ BACKLOG ] **Cloudflare Pages Deployment Migration for Web Apps**: Migrasi project frontend yang membutuhkan routing SPA dan integrasi API dinamis dari GitHub Pages ke Cloudflare Pages dengan konfigurasi `_headers` dan `_redirects` terstandarisasi.
+- [ DONE ] **Cloudflare Pages Deployment Migration & Static Headers Standard**: Migrasi konfigurasi edge hosting ke Cloudflare Pages dengan file `_headers` (granular `Cache-Control`, strict CSP, HSTS, Permissions-Policy) dan `_redirects` terstandarisasi untuk kecepatan akses Anycast Edge, eliminasi origin hop, dan zero-downtime custom domain routing.
 
 

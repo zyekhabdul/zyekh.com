@@ -1,0 +1,7 @@
+# Canonical Trailing Slash Redirects
+/blog /blog/ 301
+/tools /tools/ 301
+/blueprints /blueprints/ 301
+/links /links/ 301
+/about /about/ 301
+/contact /contact/ 301
