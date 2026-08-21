@@ -31,6 +31,7 @@ Dokumen ini adalah single source of truth untuk seluruh ide, backlog, dan peta j
 - [ DONE ] **Native Lightbox `<dialog>`**: Zoom gambar arsitektur murni native browser tanpa library eksternal.
 - [ DONE ] **Self-Hosted Link Hub (`/links/`)**: Pengganti Linktree murni Vanilla HTML5/CSS dengan microformats `rel="me"`.
 - [ DONE ] **Interactive Zero-Trust Topology Builder (`/blueprints/topology-builder.html`)**: Desainer diagram topologi jaringan visual SVG/Canvas dengan ekspor Mermaid, SVG, dan ASCII.
+- [ DONE ] **Omnichannel Adaptive Chat Widget (`chat-widget.js`)**: Scoped CSS variables, MutationObserver real-time host theme sync, dan in-header session reset button.
 
 ### 4. Deep-Tech Articles (45 Artikel Lengkap di `/blog/`)
 - [ DONE ] **Batch 1 (Sysadmin & Linux Security)**: Linux VPS Hardening 2026, UFW Firewall, Fail2ban, PAM faillock, Systemd Sandboxing, Auditd DFIR, eBPF Monitoring, SSH Certificates Vault CA, FIDO2 SSH-CA.
@@ -77,7 +78,7 @@ Dokumen ini adalah single source of truth untuk seluruh ide, backlog, dan peta j
 
 ---
 
-### Domain B: `shop.zyekh.com` (Shopify Liquid 2.0 Storefront)
+### Domain B: `shop.zyekh.com` (Shopify Liquid 2.0 Storefront & Digital Store)
 *Catatan Arsitektur: Seluruh item di domain ini berada di repositori terisolasi `Projects/shop.zyekh.com` untuk menjaga kemurnian statis domain root.*
 
 - [ BACKLOG ] **Bundle & Save Multi-Pack Tier**: Komponen diskon kuantitas bertingkat pada PDP untuk melipatgandakan Average Order Value (AOV).
@@ -108,10 +109,23 @@ Dokumen ini adalah single source of truth untuk seluruh ide, backlog, dan peta j
 
 ---
 
-### Domain E: Arsitektur Hosting & Edge Delivery Standards (Hybrid Edge + VPS Indo)
+### Domain E: `chat.zyekh.com` Conversational AI Workspace & Claude-Style Canvas Engine
+*Catatan Arsitektur: Seluruh item di domain ini berada di repositori `Projects/chat.zyekh.com`.*
+
+- [ BACKLOG ] **Claude-Style Live Interactive Canvas Panel**: Panel drawer kanan interaktif untuk live code execution (Pyodide Wasm), HTML/CSS/SVG sandbox preview, Mermaid architecture diagram rendering, dan artifact versioning navigasi.
+- [ BACKLOG ] **Collapsible `<thought>` Reasoning Drawer**: Menampilkan rantai penalaran (*Chain-of-Thought*) AI sebelum respon akhir dalam accordion lipat transparan.
+- [ BACKLOG ] **Isolated Project Workspaces & Local Vector Indexing**: Parsing dokumen lokal (PDF/MD/TXT/CSV) langsung di browser dan pengindeksan semantik via IndexedDB / SQLite-Wasm tanpa upload cloud.
+- [ BACKLOG ] **Conversation Branching & In-Place Prompt Iteration**: Tombol edit prompt pengguna dengan navigasi pohon percakapan multi-cabang (`< 1/2 >`).
+- [ BACKLOG ] **Model Context Protocol (MCP) Client Integration**: Integrasi klien web ke endpoint MCP lokal (Obsidian RAG, filesystem, web search).
+- [ BACKLOG ] **Adaptive Tone & Output Style Controls**: Dropdown gaya balasan per sesi: `Concise / Caveman`, `Explanatory / Mentor`, `Code-First`.
+- [ BACKLOG ] **Audio Voice Interaction (Web Speech API)**: Dukungan Speech-to-Text dan audio synthesizer suara lokal di browser.
+- [ BACKLOG ] **One-Click Export to Obsidian Markdown & PDF**: Ekspor riwayat obrolan lengkap langsung ke format Obsidian Vault `.md` dengan frontmatter YAML.
+- [ BACKLOG ] **Android Trusted Web Activity (TWA) / Google Play Store APK**: Pengemasan PWA `chat.zyekh.com` menjadi Android App Bundle via Google Bubblewrap/TWA untuk distribusi resmi.
+
+---
+
+### Domain F: Arsitektur Hosting & Edge Delivery Standards (Hybrid Edge + VPS Indo)
 *Catatan Arsitektur: Standar deployment resmi untuk proyek open-source dan aplikasi web dengan backend terpisah.*
 
-- [ BACKLOG ] **Decoupled Architecture Standard (GitHub + Cloudflare Pages + VPS Indo)**: Menetapkan pola standar deployment di mana repositori kode publik tetap berada di GitHub (untuk exposure open-source, portofolio dev, dan CI/CD trigger), frontend statis/SPA di-deploy ke Cloudflare Pages (Anycast Edge CDN Jakarta, native SPA routing, zero-hack `_headers` CORS, custom domain SSL), dan backend komputasi/API hosted di VPS Indonesia (`api.domain.com`) untuk menjamin latensi transaksi data terendah bagi pengguna lokal tanpa limitasi routing/CORS di GitHub Pages.
 - [ DONE ] **Cloudflare Pages Deployment Migration & Static Headers Standard**: Migrasi konfigurasi edge hosting ke Cloudflare Pages dengan file `_headers` (granular `Cache-Control`, strict CSP, HSTS, Permissions-Policy) dan `_redirects` terstandarisasi untuk kecepatan akses Anycast Edge, eliminasi origin hop, dan zero-downtime custom domain routing.
-
-
+- [ BACKLOG ] **Decoupled Architecture Standard (GitHub + Cloudflare Pages + VPS Indo)**: Menetapkan pola standar deployment di mana repositori kode publik tetap berada di GitHub (untuk exposure open-source, portofolio dev, dan CI/CD trigger), frontend statis/SPA di-deploy ke Cloudflare Pages (Anycast Edge CDN Jakarta, native SPA routing, zero-hack `_headers` CORS, custom domain SSL), dan backend komputasi/API hosted di VPS Indonesia (`api.domain.com`) untuk menjamin latensi transaksi data terendah bagi pengguna lokal tanpa limitasi routing/CORS di GitHub Pages.
