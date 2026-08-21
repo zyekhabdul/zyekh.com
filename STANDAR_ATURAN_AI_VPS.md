@@ -43,7 +43,7 @@
 
 8. IDEA MANAGEMENT & MASTER ROADMAP PROTOCOL:
    - Format Entri Wajib: `- [ STATUS ] **Nama Fitur**: Deskripsi teknis, mekanisme, batasan arsitektur (target/path atau Domain)`.
-   - 4 Domain Target Terisolasi: Domain A (`zyekh.com` Static Hub), Domain B (`shop.zyekh.com-theme` Shopify Liquid), Domain C (`zyekhabdul` / Python DFIR), Domain D (VPS `agy` daemon & Mobile client).
+   - 4 Domain Target Terisolasi: Domain A (`zyekh.com` Static Hub), Domain B (`shop.zyekh.com` Shopify Liquid), Domain C (`zyekhabdul` / Python DFIR), Domain D (VPS `agy` daemon & Mobile client).
    - Lifecycle Status Baku: `[ PROPOSED ]` -> `[ BACKLOG ]` -> `[ IN-PROGRESS ]` -> `[ DONE ]` -> `[ REJECTED ]`. Usulan ditolak wajib dicatat ke `DECISIONS.md`.
 
 ---

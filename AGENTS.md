@@ -199,7 +199,7 @@ This workspace follows strict code efficiency, minimalism, zero over-engineering
 
 53. **STANDARDIZED IDEA LIFECYCLE & DOMAIN-ISOLATED ROADMAP PROTOCOL**:
     - **Single-Line Entry Specification**: All backlog entries in `IDEAS.md` MUST use the structured format: `- [ STATUS ] **Feature Name**: Technical description, core mechanics, and architecture constraints (\`target/path\` or Target Domain)`.
-    - **Strict Domain Partitioning**: Roadmaps MUST be partitioned into 4 distinct domains: Domain A (`zyekh.com` Zero-Dependency Static Hub), Domain B (`shop.zyekh.com-theme` Shopify Liquid), Domain C (`zyekhabdul` GitHub Python Security Frameworks), and Domain D (VPS `agy` daemon & Mobile client).
+    - **Strict Domain Partitioning**: Roadmaps MUST be partitioned into 4 distinct domains: Domain A (`zyekh.com` Zero-Dependency Static Hub), Domain B (`shop.zyekh.com` Shopify Liquid), Domain C (`zyekhabdul` GitHub Python Security Frameworks), and Domain D (VPS `agy` daemon & Mobile client).
     - **Finite Status Lifecycle**: Entri states MUST be one of `[ PROPOSED ]`, `[ BACKLOG ]`, `[ IN-PROGRESS ]`, `[ DONE ]`, or `[ REJECTED ]`. Rejected ideas MUST have their rationale recorded in `DECISIONS.md`.
     - **Security & Zero-Dependency Guard**: Ideas targeting Domain A that require NPM runtime dependencies or framework build steps are strictly prohibited. Ideas targeting Domain D must enforce strict Chat-Only Sandboxing.
 

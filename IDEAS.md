@@ -77,8 +77,8 @@ Dokumen ini adalah single source of truth untuk seluruh ide, backlog, dan peta j
 
 ---
 
-### Domain B: `shop.zyekh.com-theme` (Shopify Liquid 2.0 Storefront)
-*Catatan Arsitektur: Seluruh item di domain ini berada di repositori terisolasi `Projects/shop.zyekh.com-theme` untuk menjaga kemurnian statis domain root.*
+### Domain B: `shop.zyekh.com` (Shopify Liquid 2.0 Storefront)
+*Catatan Arsitektur: Seluruh item di domain ini berada di repositori terisolasi `Projects/shop.zyekh.com` untuk menjaga kemurnian statis domain root.*
 
 - [ BACKLOG ] **Bundle & Save Multi-Pack Tier**: Komponen diskon kuantitas bertingkat pada PDP untuk melipatgandakan Average Order Value (AOV).
 - [ BACKLOG ] **Geo-IP Delivery Date Guarantee Widget**: Kalkulator estimasi tanggal tiba dinamis berbasis lokasi IP pengunjung untuk menekan *cart abandonment*.
