@@ -329,6 +329,36 @@
   :root:not([data-theme="light"]) .theme-icon-light { display: inline-block; }
   :root:not([data-theme="light"]) .theme-icon-dark { display: none; }
 
+  /* Pin Tool Toggle Desktop */
+  .pin-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border-color-hover);
+    color: var(--text-main);
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-family: 'Fira Code', monospace;
+    padding: 0.35rem 0.65rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+    margin-left: 0.5rem;
+    touch-action: manipulation;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .pin-toggle:hover {
+    border-color: var(--text-main);
+  }
+  .pin-toggle.pinned {
+    background: var(--border-color);
+    border-color: var(--text-main);
+  }
+
   /* Navigation Bar */
   site-nav {
     display: block;
@@ -603,22 +633,25 @@
     .nav-dropdown {
       width: 100%;
       display: block;
+      margin: 0;
+      padding: 0;
     }
     .nav-dropdown-btn {
-      display: none;
+      display: none !important;
     }
     .nav-dropdown-menu {
       display: flex !important;
-      position: static;
+      position: static !important;
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
-      padding: 0;
-      min-width: 100%;
-      flex-direction: column;
-      gap: 0;
+      padding: 0 !important;
+      margin: 0 !important;
+      min-width: 100% !important;
+      flex-direction: column !important;
+      gap: 0 !important;
     }
-    .nav-link,
+    .nav-link:not(.nav-dropdown-btn),
     .dropdown-link {
       display: block;
       padding: 0.75rem 0.5rem;
@@ -630,14 +663,14 @@
       color: var(--text-muted);
       transition: color var(--transition), padding-left var(--transition);
     }
-    .nav-link:hover,
-    .nav-link:focus,
+    .nav-link:not(.nav-dropdown-btn):hover,
+    .nav-link:not(.nav-dropdown-btn):focus,
     .dropdown-link:hover,
     .dropdown-link:focus {
       padding-left: 10px;
       color: var(--text-main);
     }
-    .nav-link.active,
+    .nav-link:not(.nav-dropdown-btn).active,
     .dropdown-link.active {
       padding-left: 10px;
       color: var(--text-main);
@@ -649,18 +682,18 @@
       border-left: 1px solid #d4d4d8;
       box-shadow: -4px 0 20px rgba(0, 0, 0, 0.08);
     }
-    [data-theme="light"] .nav-link,
+    [data-theme="light"] .nav-link:not(.nav-dropdown-btn),
     [data-theme="light"] .dropdown-link {
       color: #3f3f46;
       border-bottom: 1px solid #e4e4e7;
     }
-    [data-theme="light"] .nav-link:hover,
-    [data-theme="light"] .nav-link:focus,
+    [data-theme="light"] .nav-link:not(.nav-dropdown-btn):hover,
+    [data-theme="light"] .nav-link:not(.nav-dropdown-btn):focus,
     [data-theme="light"] .dropdown-link:hover,
     [data-theme="light"] .dropdown-link:focus {
       color: #09090b;
     }
-    [data-theme="light"] .nav-link.active,
+    [data-theme="light"] .nav-link:not(.nav-dropdown-btn).active,
     [data-theme="light"] .dropdown-link.active {
       color: #09090b;
       border-left: 3px solid #09090b;
@@ -670,18 +703,18 @@
       background: #09090b;
       border-left: 1px solid #27272a;
     }
-    :root:not([data-theme="light"]) .nav-link,
+    :root:not([data-theme="light"]) .nav-link:not(.nav-dropdown-btn),
     :root:not([data-theme="light"]) .dropdown-link {
       color: #a1a1aa;
       border-bottom: 1px solid #27272a;
     }
-    :root:not([data-theme="light"]) .nav-link:hover,
-    :root:not([data-theme="light"]) .nav-link:focus,
+    :root:not([data-theme="light"]) .nav-link:not(.nav-dropdown-btn):hover,
+    :root:not([data-theme="light"]) .nav-link:not(.nav-dropdown-btn):focus,
     :root:not([data-theme="light"]) .dropdown-link:hover,
     :root:not([data-theme="light"]) .dropdown-link:focus {
       color: #fafafa;
     }
-    :root:not([data-theme="light"]) .nav-link.active,
+    :root:not([data-theme="light"]) .nav-link:not(.nav-dropdown-btn).active,
     :root:not([data-theme="light"]) .dropdown-link.active {
       color: #ffffff;
       border-left: 3px solid #ffffff;
@@ -695,6 +728,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+    .pin-toggle {
+      margin-top: 0.5rem;
+      margin-left: 0;
+      width: 100%;
+      min-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.45rem 0.5rem;
     }
   }
 
@@ -1017,8 +1060,7 @@
   }
   .tool-card pre code { font-size: inherit; }
 
-  .pin-btn,
-  .pin-toggle {
+  .pin-btn {
     background: transparent;
     border: none;
     color: var(--text-muted);
@@ -1033,31 +1075,29 @@
     z-index: 5;
     margin: 0;
     -webkit-tap-highlight-color: transparent;
-  }
-  .pin-btn {
     position: absolute;
     top: 1rem;
     right: 1rem;
   }
-  .pin-btn:hover,
-  .pin-toggle:hover {
+  .pin-btn:hover {
     color: var(--text-main);
     transform: scale(1.2);
   }
   .pinned-tool .pin-btn,
-  .pin-btn.pinned,
-  .pin-toggle.pinned {
+  .pin-btn.pinned {
     color: var(--text-main);
   }
-  [data-theme="light"] .pin-btn,
-  [data-theme="light"] .pin-toggle {
-    color: #71717a;
+  [data-theme="light"] .pin-btn {
+    color: #27272a;
   }
   [data-theme="light"] .pin-btn:hover,
-  [data-theme="light"] .pin-toggle:hover,
-  [data-theme="light"] .pinned-tool .pin-btn,
-  [data-theme="light"] .pinned-tool .pin-toggle {
+  [data-theme="light"] .pinned-tool .pin-btn {
     color: #09090b;
+  }
+  [data-theme="light"] .pin-toggle {
+    color: #09090b;
+    background: #ffffff;
+    border-color: #d4d4d8;
   }
 
   /* Filter Bar & Pills */
