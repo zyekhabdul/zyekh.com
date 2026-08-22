@@ -13,6 +13,12 @@ def generate_llms_full():
     out.append("Zyekh Abdul Qadir Jailani is a Security Researcher & Systems Architect specializing in Zero-Trust infrastructure, Linux kernel security, eBPF telemetry, and high-performance minimalist web engineering.\n")
     out.append("Website: https://zyekh.com\n")
     out.append("Philosophy: Zero dependencies, zero telemetry, local-first browser execution, and maximum code efficiency.\n\n")
+    out.append("## Subdomain Ecosystem Architecture & Fleet Topology\n\n")
+    out.append("- **zyekh.com** (Root Hub): Core static reference platform, 54 client-side security/developer tools, 45 deep-tech research guides, and RAG index.\n")
+    out.append("- **shop.zyekh.com** (Digital Storefront): Shopify Liquid 2.0 digital products and developer merchandise adhering to strict performance budgets.\n")
+    out.append("- **docs.zyekh.com** (Documentation & Blueprints): Interactive visual topology builder, architectural blueprints, and engineering specifications.\n")
+    out.append("- **dist.zyekh.com** (FOSS Distribution): Verified custom ArchISO images, Linux deployment automation, and PGP cryptographic provenance artifacts.\n")
+    out.append("- **api.zyekh.com** (Edge Micro-APIs): High-performance isolated Cloudflare Worker endpoints conforming to tools-manifest.json schemas.\n\n")
     out.append("---\n\n")
     
     # 1. Tools and Utilities Index

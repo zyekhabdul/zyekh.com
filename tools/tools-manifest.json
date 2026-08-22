@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "description": "Structured machine-readable tool catalog and parameter schemas for Browser AI Agents & LLMs.",
   "platform": "https://zyekh.com",
-  "total_tools": 53,
-  "updated_at": "2026-08-20T04:58:38Z",
+  "total_tools": 54,
+  "updated_at": "2026-08-22T02:39:26Z",
   "tools": [
     {
       "id": "ai-token",
@@ -554,6 +554,57 @@
           "type": "string",
           "input_element": "text",
           "description": "* * * * *"
+        }
+      ]
+    },
+    {
+      "id": "crypto-keypair-generator",
+      "name": "Cryptographic Keypair Generator",
+      "description": "Generate cryptographically secure Ed25519, ECDSA P-256, and RSA keypairs 100% offline & client-side using Web Crypto API.",
+      "category": "AI & LLM Inference",
+      "url": "https://zyekh.com/tools/crypto-keypair-generator.html",
+      "execution": {
+        "type": "client_side_javascript",
+        "telemetry": "none",
+        "offline_ready": true,
+        "storage": "local_memory_or_localstorage"
+      },
+      "parameters": [
+        {
+          "name": "algoSelect",
+          "type": "string",
+          "input_element": "select",
+          "description": "Cryptographic Algorithm",
+          "enum": [
+            "Ed25519",
+            "ECDSA-P256",
+            "RSA-2048",
+            "RSA-4096"
+          ]
+        },
+        {
+          "name": "formatSelect",
+          "type": "string",
+          "input_element": "select",
+          "description": "Export Format",
+          "enum": [
+            "pem",
+            "hex",
+            "base64",
+            "jwk"
+          ]
+        },
+        {
+          "name": "publicKeyBox",
+          "type": "string",
+          "input_element": "textarea",
+          "description": "Generating public key..."
+        },
+        {
+          "name": "privateKeyBox",
+          "type": "string",
+          "input_element": "textarea",
+          "description": "Generating private key..."
         }
       ]
     },

@@ -37,6 +37,8 @@ CATEGORY_MAP = {
     "base64": "Cryptography & Encoding",
     "uuid": "Cryptography & Encoding",
     "password": "Cryptography & Encoding",
+    "crypto": "Cryptography & Encoding",
+    "keypair": "Cryptography & Encoding",
     "pesangon": "Indonesian Finance & Employment",
     "jht": "Indonesian Finance & Employment",
     "jkp": "Indonesian Finance & Employment",

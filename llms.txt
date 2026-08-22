@@ -31,6 +31,15 @@
 
 ---
 
+## Subdomain Ecosystem Architecture & Fleet Topology
+- **zyekh.com** (Root Hub): Core static reference platform, client-side security/developer tools, and 45 deep-tech research guides.
+- **shop.zyekh.com** (Digital Storefront): Shopify Liquid 2.0 digital products and developer merchandise adhering to strict performance budgets.
+- **docs.zyekh.com** (Documentation & Blueprints): Interactive visual topology builder, architectural blueprints, and engineering specifications.
+- **dist.zyekh.com** (FOSS Distribution): Verified custom ArchISO images, Linux deployment automation, and PGP cryptographic provenance artifacts.
+- **api.zyekh.com** (Edge Micro-APIs): High-performance isolated Cloudflare Worker endpoints conforming to tools-manifest.json schemas.
+
+---
+
 ## Technical Blog & Security Guides
 - [Account Abstraction (ERC-4337): Smart Accounts, Bundlers & Paymaster Engineering](https://zyekh.com/blog/account-abstraction-erc-4337-and-paymasters-architecture.html): Deep dive into UserOperation mempools, Alt-Mempool consensus, gas sponsorship via Paymasters, and WebAuthn/passkey hardware signing for smart wallets.
 - [Linux Auditd Blueprint: Real-Time Kernel Event Tracking & Security Auditing](https://zyekh.com/blog/auditd-kernel-event-monitoring-and-dfir-logging.html): Security guide for configuring Linux Audit Framework (auditd) to log execve system calls, file integrity changes, and privilege escalation events.
@@ -89,6 +98,7 @@
 - [Countdown Timer](https://zyekh.com/tools/countdown.html): Buat countdown timer instan ke tanggal atau waktu tertentu. Bagikan lewat URL, tanpa daftar akun.
 - [Word & Character Counter](https://zyekh.com/tools/counter.html): Penghitung kata dan karakter online gratis. Estimasi waktu baca untuk artikel Bahasa Indonesia.
 - [Cron Expression Generator & Explainer](https://zyekh.com/tools/cron.html): Tool penerjemah & pembuat cron expression ke Bahasa Indonesia secara gratis, instant, dan client-side.
+- [Cryptographic Keypair Generator](https://zyekh.com/tools/crypto-keypair-generator.html): Generate cryptographically secure Ed25519, ECDSA P-256, and RSA keypairs 100% offline & client-side using Web Crypto API.
 - [CSS Minifier & Formatter](https://zyekh.com/tools/css-minifier.html): Compress CSS stylesheet files to save payload bandwidth or format minified CSS 100% offline & client-side in browser.
 - [CSV to JSON & SQL Converter](https://zyekh.com/tools/csv-json.html): Convert CSV and TSV tabular data into clean JSON arrays or SQL INSERT statements 100% offline & client-side in browser.
 - [cURL Command to Code Converter](https://zyekh.com/tools/curl.html): Convert cURL commands to JavaScript Fetch, Python Requests, Go, Node.js, and PHP code 100% offline & client-side in browser.
@@ -141,7 +151,7 @@
 - **Performance:** Service Worker, Speculation Rules API, Navigation Preload
 - **Security:** Strict CSP, Automated Subresource Integrity (SRI), Anti-Clickjacking
 - **SEO & GEO:** Schema.org JSON-LD, Open Graph, llms.txt, IndexNow
-- **Privacy:** All 53 tools run 100% client-side, zero analytics, zero tracking
+- **Privacy:** All 54 tools run 100% client-side, zero analytics, zero tracking
 
 ---
 

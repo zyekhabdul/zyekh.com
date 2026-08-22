@@ -72,6 +72,12 @@
     "type": "Tool"
   },
   {
+    "title": "Cryptographic Keypair Generator",
+    "desc": "Generate cryptographically secure Ed25519, ECDSA P-256, and RSA keypairs 100% offline & client-side using Web Crypto API.",
+    "url": "/tools/crypto-keypair-generator.html",
+    "type": "Tool"
+  },
+  {
     "title": "CSS Minifier & Formatter",
     "desc": "Compress CSS stylesheet files to save payload bandwidth or format minified CSS 100% offline & client-side in browser.",
     "url": "/tools/css-minifier.html",

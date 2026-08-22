@@ -478,6 +478,15 @@ def sync_all(bump_version=False, dry_run=False):
 
 ---
 
+## Subdomain Ecosystem Architecture & Fleet Topology
+- **zyekh.com** (Root Hub): Core static reference platform, client-side security/developer tools, and 45 deep-tech research guides.
+- **shop.zyekh.com** (Digital Storefront): Shopify Liquid 2.0 digital products and developer merchandise adhering to strict performance budgets.
+- **docs.zyekh.com** (Documentation & Blueprints): Interactive visual topology builder, architectural blueprints, and engineering specifications.
+- **dist.zyekh.com** (FOSS Distribution): Verified custom ArchISO images, Linux deployment automation, and PGP cryptographic provenance artifacts.
+- **api.zyekh.com** (Edge Micro-APIs): High-performance isolated Cloudflare Worker endpoints conforming to tools-manifest.json schemas.
+
+---
+
 ## Technical Blog & Security Guides
 """
     for a in article_meta:

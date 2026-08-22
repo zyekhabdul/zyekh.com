@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+
+<html lang="id-ID">
+<head>
+<script>var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.setAttribute('data-theme','light');</script>
+<meta charset="utf-8"/>
+<link as="font" crossorigin="" href="/assets/fonts/outfit-700-normal.woff2" rel="preload" type="font/woff2"/>
+<meta content="#09090b" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Cryptographic Keypair Generator — Ed25519, ECDSA &amp; RSA | Zyekh</title>
+<meta content="Generate cryptographically secure Ed25519, ECDSA P-256, and RSA keypairs 100% offline &amp; client-side using Web Crypto API." name="description"/>
+<meta content="crypto keypair generator, ed25519 key generator, ecdsa p256 keygen, rsa keypair, web crypto api, offline crypto utility, public private key" name="keywords"/>
+<meta content="Zyekh Abdul Qadir Jailani" name="author"/>
+<link href="https://zyekh.com/tools/crypto-keypair-generator.html" rel="canonical"/>
+<!-- Favicons -->
+<link href="/assets/icons/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/assets/icons/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/assets/icons/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/assets/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="/manifest.json" rel="manifest"/>
+<!-- Open Graph -->
+<meta content="zyekh.com" property="og:site_name"/>
+<meta content="website" property="og:type"/>
+<meta content="Cryptographic Keypair Generator — Ed25519, ECDSA &amp; RSA | Zyekh" property="og:title"/>
+<meta content="Generate cryptographically secure Ed25519, ECDSA P-256, and RSA keypairs 100% offline &amp; client-side using Web Crypto API." property="og:description"/>
+<meta content="https://zyekh.com/tools/crypto-keypair-generator.html" property="og:url"/>
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://zyekh.com/tools/crypto-keypair-generator.html#app",
+      "name": "Cryptographic Keypair Generator",
+      "description": "Generate cryptographically secure Ed25519, ECDSA P-256, and RSA keypairs 100% offline & client-side using Web Crypto API.",
+      "url": "https://zyekh.com/tools/crypto-keypair-generator.html",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires JavaScript and Web Crypto API. Runs entirely client-side.",
+      "inLanguage": "id-ID",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IDR" },
+      "creator": {
+        "@type": "Person",
+        "@id": "https://zyekh.com/#person",
+        "name": "Zyekh Abdul Qadir Jailani",
+        "url": "https://zyekh.com/"
+      },
+      "isPartOf": { "@type": "WebPage", "@id": "https://zyekh.com/tools/" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://zyekh.com/tools/crypto-keypair-generator.html#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyekh.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Tools Hub", "item": "https://zyekh.com/tools/" },
+        { "@type": "ListItem", "position": 3, "name": "Keypair Generator", "item": "https://zyekh.com/tools/crypto-keypair-generator.html" }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Self-hosted Fonts & Styles -->
+<link as="font" crossorigin="" href="/assets/fonts/inter-variable-latin.woff2" rel="preload" type="font/woff2"/>
+<link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=496abfc3" integrity="sha384-3uliA0S+XsrT9kIYtfqZWNW0JzkQ3tbJm+VYRzpoPpn3YTVnkR0kla+L/Xiq7wWc" crossorigin="anonymous" rel="stylesheet"/>
+<style>
+  .keygen-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.25rem; }
+  .control-group label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.35rem; }
+  .control-select { width: 100%; background: var(--bg-dark); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.6rem 0.75rem; font-size: 0.9rem; }
+  .keygen-output { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.25rem; }
+  .key-card { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1rem; }
+  .key-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+  .key-title { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); }
+  .key-actions { display: flex; gap: 0.5rem; }
+  .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-main); cursor: pointer; }
+  .btn-sm:hover { border-color: var(--border-color-hover); }
+  .key-box { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.8rem; background: var(--code-bg); color: var(--text-main); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.75rem; width: 100%; min-height: 90px; resize: vertical; word-break: break-all; white-space: pre-wrap; }
+  .btn-generate { width: 100%; background: var(--text-main); color: var(--bg-dark); border: none; border-radius: var(--radius-md); padding: 0.75rem; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: var(--transition); }
+  .btn-generate:hover { opacity: 0.9; }
+</style>
+<script>
+window.debounceRAF = function(fn, delay) {
+  delay = delay || 60;
+  var timer = null;
+  return function() {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      window.requestAnimationFrame(function() {
+        fn.apply(context, args);
+      });
+    }, delay);
+  };
+};
+</script>
+<style id="antiClickjack">body{display:none !important;}</style>
+<script type="text/javascript">if(self===top){var ac=document.getElementById("antiClickjack");ac.parentNode.removeChild(ac);}else{top.location=self.location;}</script>
+<meta content="https://zyekh.com/assets/img/social-cards/tool-crypto-keypair-generator-dark-landscape.png?v=8980b870" property="og:image"/><meta content="https://zyekh.com/assets/img/social-cards/tool-crypto-keypair-generator-dark-landscape.png?v=8980b870" name="twitter:image"/>  <link rel="preload" href="/assets/css/shared.min.css?v=496abfc3" integrity="sha384-3uliA0S+XsrT9kIYtfqZWNW0JzkQ3tbJm+VYRzpoPpn3YTVnkR0kla+L/Xiq7wWc" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=e3c86969" integrity="sha384-omOc7bD0CSQ/cU5NZlkkPrhT96MZj79TxIUS1XsRBeHHzZnRRMpJF15f2Ss4AHBf" crossorigin="anonymous" as="script">
+  <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
+  <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-BNCnHS8jbGols4l6yebB2waDYSYypmvCOC498QuSa+0=' 'sha256-+wQx7aIWZh15T5V4JLVkmfXg48HMUFnV+COyXYfq0xM=' 'sha256-YX9eHUeGHxCmdfCuBjHkHQZF4BKmVY4s3QksBkgMOVk=' 'sha256-N2PomNMBwaAoVwD9lGe4O+Nkwu8kb1FkwxYz8i7Zmfw='; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.zyekh.com https://chat.zyekh.com; form-action 'self'; frame-ancestors 'none';">
+</head>
+<body>
+<site-nav active="tools"></site-nav>
+<main class="main-container">
+<nav aria-label="Breadcrumb">
+<ol class="breadcrumb">
+<li><a class="breadcrumb-link" href="/">Home</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li><a class="breadcrumb-link" href="/tools/">Tools</a></li>
+<li aria-hidden="true" class="breadcrumb-sep">/</li>
+<li aria-current="page" style="color:var(--text-main);">Keypair Generator</li>
+</ol>
+</nav>
+<header class="page-header">
+<span class="badge">SECURITY &amp; CRYPTOGRAPHY</span>
+<h1 class="page-title">Cryptographic Keypair Generator</h1>
+<p class="page-subtitle">Pembangkit pasangan kunci publik/privat Ed25519, ECDSA (P-256), dan RSA 100% offline via native Web Crypto API.</p>
+</header>
+<section class="tool-box">
+<div class="keygen-controls">
+<div class="control-group">
+<label for="algoSelect">Cryptographic Algorithm</label>
+<select class="control-select" id="algoSelect" onchange="generateKeypair()">
+<option selected="" value="Ed25519">Ed25519 (Edwards-curve 25519)</option>
+<option value="ECDSA-P256">ECDSA P-256 (NIST secp256r1)</option>
+<option value="RSA-2048">RSA 2048-bit (PKCS#1 / PSS)</option>
+<option value="RSA-4096">RSA 4096-bit (High Security)</option>
+</select>
+</div>
+<div class="control-group">
+<label for="formatSelect">Export Format</label>
+<select class="control-select" id="formatSelect" onchange="renderKeypair()">
+<option selected="" value="pem">PEM (SPKI / PKCS#8)</option>
+<option value="hex">Raw Hexadecimal</option>
+<option value="base64">Raw Base64</option>
+<option value="jwk">JSON Web Key (JWK)</option>
+</select>
+</div>
+</div>
+<button class="btn-generate" id="btnGenerate" onclick="generateKeypair()">Generate New Cryptographic Keypair</button>
+<div class="keygen-output">
+<div class="key-card">
+<div class="key-header">
+<span class="key-title">[ PUBLIC KEY ] (Safe to share)</span>
+<div class="key-actions">
+<button class="btn-sm" onclick="copyKey('publicKeyBox', this)">Copy Public</button>
+</div>
+</div>
+<textarea aria-label="Generated Public Key" class="key-box" id="publicKeyBox" placeholder="Generating public key..." readonly=""></textarea>
+</div>
+<div class="key-card">
+<div class="key-header">
+<span class="key-title">[ PRIVATE KEY ] (Confidential / Secret)</span>
+<div class="key-actions">
+<button class="btn-sm" id="togglePrivBtn" onclick="togglePrivateVisibility()">Hide</button>
+<button class="btn-sm" onclick="copyKey('privateKeyBox', this)">Copy Private</button>
+</div>
+</div>
+<textarea aria-label="Generated Private Key" class="key-box" id="privateKeyBox" placeholder="Generating private key..." readonly=""></textarea>
+</div>
+</div>
+</section>
+<section class="seo-content-block seo-block" style="margin-top:2rem;">
+<h2>Keamanan &amp; Integritas Pembangkit Kunci Web Crypto</h2>
+<p>Generator pasangan kunci kriptografis ini berjalan 100% di browser Anda menggunakan antarmuka standar <code>window.crypto.subtle</code>. Sumber entropi dijamin oleh random number generator tingkat kernel sistem operasi Anda (CSPRNG). Kunci privat yang dihasilkan tidak pernah dikirim atau terekam ke server mana pun.</p>
+<h3 class="mt-md">Pertanyaan Umum (FAQ)</h3>
+<div class="faq-accordion">
+<details class="faq-card">
+<summary class="faq-summary">Apakah kunci privat saya disimpan atau dikirim ke internet?</summary>
+<p class="faq-answer">Tidak. Seluruh komputasi kunci dilakukan murni pada memori browser Anda via Web Crypto API. Setelah tab browser ditutup, kunci hilang secara otomatis.</p>
+</details>
+<details class="faq-card">
+<summary class="faq-summary">Kapan saya sebaiknya menggunakan Ed25519 vs RSA?</summary>
+<p class="faq-answer">Ed25519 menawarkan performa tinggi, ukuran kunci ringkas (32-byte public key), dan keamanan setara RSA 3072-bit dengan resistensi terhadap serangan side-channel. RSA disarankan jika Anda membutuhkan kompatibilitas dengan sistem warisan (legacy).</p>
+</details>
+</div>
+</section>
+</main>
+<footer class="footer" role="contentinfo">
+<div style="margin-bottom: 0.75rem;">© 2026 <strong>zyekh.com</strong> — Portal Hub</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; align-items: center;">
+<a class="text-muted text-sm" href="/about/">About</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/tools/">54 Web Tools</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blog/">45 Articles</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/blueprints/">Blueprints</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="https://shop.zyekh.com" rel="noopener noreferrer" target="_blank">Official Store</a>
+<span class="text-muted text-sm">·</span>
+<a class="text-muted text-sm" href="/llms.txt">llms.txt (RAG Base)</a>
+</div>
+</footer>
+<script>
+let currentKeys = {
+  spki: null,
+  pkcs8: null,
+  rawPub: null,
+  rawPriv: null,
+  jwkPub: null,
+  jwkPriv: null
+};
+let isPrivateVisible = true;
+
+function arrayBufferToHex(buffer) {
+  return Array.from(new Uint8Array(buffer))
+    .map(b => b.toString(16).padStart(2, '0'))
+    .join('');
+}
+
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return window.btoa(binary);
+}
+
+function formatPEM(base64, type) {
+  const lines = base64.match(/.{1,64}/g) || [];
+  return `-----BEGIN ${type}-----\n${lines.join('\n')}\n-----END ${type}-----`;
+}
+
+async function generateKeypair() {
+  const algo = document.getElementById('algoSelect').value;
+  const pubBox = document.getElementById('publicKeyBox');
+  const privBox = document.getElementById('privateKeyBox');
+  
+  pubBox.value = 'Computing keypair in WebCrypto runtime...';
+  privBox.value = 'Computing keypair in WebCrypto runtime...';
+
+  try {
+    let keyPair;
+    if (algo === 'Ed25519') {
+      try {
+        keyPair = await window.crypto.subtle.generateKey(
+          { name: 'Ed25519' },
+          true,
+          ['sign', 'verify']
+        );
+      } catch (e) {
+        // Fallback for browsers without native Ed25519 Subtle support
+        throw new Error('Ed25519 WebCrypto is not supported on this browser engine.');
+      }
+    } else if (algo === 'ECDSA-P256') {
+      keyPair = await window.crypto.subtle.generateKey(
+        { name: 'ECDSA', namedCurve: 'P-256' },
+        true,
+        ['sign', 'verify']
+      );
+    } else if (algo === 'RSA-2048') {
+      keyPair = await window.crypto.subtle.generateKey(
+        {
+          name: 'RSASSA-PKCS1-v1_5',
+          modulusLength: 2048,
+          publicExponent: new Uint8Array([1, 0, 1]),
+          hash: 'SHA-256'
+        },
+        true,
+        ['sign', 'verify']
+      );
+    } else if (algo === 'RSA-4096') {
+      keyPair = await window.crypto.subtle.generateKey(
+        {
+          name: 'RSASSA-PKCS1-v1_5',
+          modulusLength: 4096,
+          publicExponent: new Uint8Array([1, 0, 1]),
+          hash: 'SHA-256'
+        },
+        true,
+        ['sign', 'verify']
+      );
+    }
+
+    currentKeys.spki = await window.crypto.subtle.exportKey('spki', keyPair.publicKey);
+    currentKeys.pkcs8 = await window.crypto.subtle.exportKey('pkcs8', keyPair.privateKey);
+    currentKeys.jwkPub = await window.crypto.subtle.exportKey('jwk', keyPair.publicKey);
+    currentKeys.jwkPriv = await window.crypto.subtle.exportKey('jwk', keyPair.privateKey);
+
+    try {
+      currentKeys.rawPub = await window.crypto.subtle.exportKey('raw', keyPair.publicKey);
+    } catch (_) {
+      currentKeys.rawPub = currentKeys.spki;
+    }
+    currentKeys.rawPriv = currentKeys.pkcs8;
+
+    renderKeypair();
+  } catch (err) {
+    pubBox.value = '[ ERROR ] ' + err.message;
+    privBox.value = '[ ERROR ] ' + err.message;
+  }
+}
+
+function renderKeypair() {
+  if (!currentKeys.spki) return;
+  const format = document.getElementById('formatSelect').value;
+  const pubBox = document.getElementById('publicKeyBox');
+  const privBox = document.getElementById('privateKeyBox');
+
+  let pubStr = '';
+  let privStr = '';
+
+  if (format === 'pem') {
+    pubStr = formatPEM(arrayBufferToBase64(currentKeys.spki), 'PUBLIC KEY');
+    privStr = formatPEM(arrayBufferToBase64(currentKeys.pkcs8), 'PRIVATE KEY');
+  } else if (format === 'hex') {
+    pubStr = arrayBufferToHex(currentKeys.rawPub);
+    privStr = arrayBufferToHex(currentKeys.rawPriv);
+  } else if (format === 'base64') {
+    pubStr = arrayBufferToBase64(currentKeys.rawPub);
+    privStr = arrayBufferToBase64(currentKeys.rawPriv);
+  } else if (format === 'jwk') {
+    pubStr = JSON.stringify(currentKeys.jwkPub, null, 2);
+    privStr = JSON.stringify(currentKeys.jwkPriv, null, 2);
+  }
+
+  pubBox.value = pubStr;
+  privBox.value = isPrivateVisible ? privStr : '•••••••••••••••••••••••••••••••••••••••• [ HIDDEN ]';
+  privBox.dataset.realValue = privStr;
+}
+
+function togglePrivateVisibility() {
+  const privBox = document.getElementById('privateKeyBox');
+  const btn = document.getElementById('togglePrivBtn');
+  isPrivateVisible = !isPrivateVisible;
+  btn.textContent = isPrivateVisible ? 'Hide' : 'Show';
+  renderKeypair();
+}
+
+function copyKey(elemId, btn) {
+  const box = document.getElementById(elemId);
+  const val = box.dataset.realValue || box.value;
+  if (!val || val.startsWith('[ ERROR ]') || val.startsWith('Computing')) return;
+  navigator.clipboard.writeText(val).then(() => {
+    const original = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = original; }, 1500);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  generateKeypair();
+});
+</script>
+<script async="" defer="" src="/assets/js/site-nav.min.js?v=e3c86969" integrity="sha384-omOc7bD0CSQ/cU5NZlkkPrhT96MZj79TxIUS1XsRBeHHzZnRRMpJF15f2Ss4AHBf" crossorigin="anonymous"></script>
+</body>
+</html>

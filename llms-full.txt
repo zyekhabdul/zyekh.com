@@ -8,6 +8,14 @@ Zyekh Abdul Qadir Jailani is a Security Researcher & Systems Architect specializ
 Website: https://zyekh.com
 Philosophy: Zero dependencies, zero telemetry, local-first browser execution, and maximum code efficiency.
 
+## Subdomain Ecosystem Architecture & Fleet Topology
+
+- **zyekh.com** (Root Hub): Core static reference platform, 54 client-side security/developer tools, 45 deep-tech research guides, and RAG index.
+- **shop.zyekh.com** (Digital Storefront): Shopify Liquid 2.0 digital products and developer merchandise adhering to strict performance budgets.
+- **docs.zyekh.com** (Documentation & Blueprints): Interactive visual topology builder, architectural blueprints, and engineering specifications.
+- **dist.zyekh.com** (FOSS Distribution): Verified custom ArchISO images, Linux deployment automation, and PGP cryptographic provenance artifacts.
+- **api.zyekh.com** (Edge Micro-APIs): High-performance isolated Cloudflare Worker endpoints conforming to tools-manifest.json schemas.
+
 ---
 
 ## Developer & Security Tools Suite (/tools/)
@@ -53,6 +61,10 @@ All tools execute 100% client-side in the user's browser with zero external serv
 ### Cron Expression Generator & Explainer
 - URL: https://zyekh.com/tools/cron.html
 - Description: Tool penerjemah & pembuat cron expression ke Bahasa Indonesia secara gratis, instant, dan client-side.
+
+### Cryptographic Keypair Generator
+- URL: https://zyekh.com/tools/crypto-keypair-generator.html
+- Description: Generate cryptographically secure Ed25519, ECDSA P-256, and RSA keypairs 100% offline & client-side using Web Crypto API.
 
 ### CSS Minifier & Formatter
 - URL: https://zyekh.com/tools/css-minifier.html

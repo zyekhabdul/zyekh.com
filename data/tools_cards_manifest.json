@@ -169,6 +169,23 @@
     ],
     "url": "https://zyekh.com/tools/cron.html"
   },
+  "crypto-keypair-generator": {
+    "slug": "crypto-keypair-generator",
+    "title": "Cryptographic Keypair Generator",
+    "category": "DEVELOPER UTILITY",
+    "description": "Generate cryptographically secure Ed25519, ECDSA P-256, and RSA keypairs 100% offline & client-side using Web Crypto API.",
+    "features": [
+      "100% Client-Side Execution: Zero telemetry, zero server-side logging, and complete local privacy.",
+      "Sub-Millisecond Computation: High-performance browser engine execution with instant interactive reactivity.",
+      "Universal Standard Compliance: Verified against RFC specifications and cryptographic standards."
+    ],
+    "metrics": [
+      "Execution Mode: Pure Client-Side Wasm/JS",
+      "Data Persistence: Zero Logging / Volatile",
+      "Accessibility: WCAG 2.1 AAA Compliant"
+    ],
+    "url": "https://zyekh.com/tools/crypto-keypair-generator.html"
+  },
   "css-minifier": {
     "slug": "css-minifier",
     "title": "CSS Minifier & Formatter",
