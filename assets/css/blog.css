@@ -422,8 +422,8 @@ pre code {
   .article-actions {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.4rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.45rem;
   }
   .btn-share, .btn-action {
     width: 100%;
@@ -450,6 +450,7 @@ pre code {
   .author-box,
   .nav-backdrop,
   #shareBtn,
+  #copyMdBtn,
   #downloadMdBtn,
   #downloadPdfBtn {
     display: none;

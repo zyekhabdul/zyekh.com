@@ -6,7 +6,7 @@
     "pgp_public_key": "https://zyekh.com/gpg-key.asc",
     "license": "MIT"
   },
-  "generated_at": "2026-08-22T03:23:28.977872+00:00",
+  "generated_at": "2026-08-22T03:33:33.767697+00:00",
   "hash_algorithm": "SHA-256",
   "artifacts": {
     "core_manifests": {
@@ -19,7 +19,7 @@
         "size_bytes": 348189
       },
       "tools/tools-manifest.json": {
-        "sha256": "555ce6bcf05c0ffc23bba400de018edf83f7910e8a106df1cbdc826e6ef171e2",
+        "sha256": "3db45c37049292308df21d9f7de20c3bb0819c873b13d9af17b6f541a5f56540",
         "size_bytes": 75606
       },
       "gpg-key.asc": {
@@ -35,7 +35,7 @@
         "size_bytes": 17757
       },
       "sw.js": {
-        "sha256": "8085c18cf6669593d84d38bb74001f378db96c9be6076b3a775979c938bbd39f",
+        "sha256": "7ef78d9519292c0a278b7a7d6ae6b7daf454b3e28ea992cfbff42d77614e1842",
         "size_bytes": 3546
       },
       "manifest.json": {
@@ -45,183 +45,183 @@
     },
     "articles": {
       "blog/account-abstraction-erc-4337-and-paymasters-architecture.html": {
-        "sha256": "cb559fe163cde5ff163be78239bde11bbd34363eddfe6bfc9026c892b87c5319",
+        "sha256": "4c72bfbfd5adaad5529073023198034b745c17e1277faec9213137233e167185",
         "size_bytes": 20992
       },
       "blog/auditd-kernel-event-monitoring-and-dfir-logging.html": {
-        "sha256": "87be0507e5d1f62d7ef4f4b89b02fc62d3fa78d8abe6a45807b22f4153a1287c",
+        "sha256": "8a641739a693c021313c70dcdb4f238f51e599f6d9db8b68ac193b475b136157",
         "size_bytes": 19497
       },
       "blog/chroot-jail-and-unprivileged-namespaces-isolation.html": {
-        "sha256": "222ddfa204cbcd8661d17c378b8db59d4f4c9c2f3ca3d33749e66e55a1ac2ac8",
+        "sha256": "66018409b5190a83f0cc9c3348ac124bc7e6551981a753b1044295c229363e1a",
         "size_bytes": 19958
       },
       "blog/cilium-ebpf-cloud-native-network-security-and-cilium-tetragon.html": {
-        "sha256": "e8830fe386a5d4efffc02aa8f6a33c4e11c1bbb00b85101996454d7d1371af22",
+        "sha256": "b1e2479498b35538620031360bde7998144dc025682db179ec042d243c869129",
         "size_bytes": 22596
       },
       "blog/colbert-late-interaction-advanced-rag.html": {
-        "sha256": "d9101693a452b847c30e8b3ca7979de5e37c7b7ef220804bf2e46d615c8357a5",
+        "sha256": "c8f6e2290481647182b49de07b1848cdfc2abb88874796698caf95edfa997bf5",
         "size_bytes": 19842
       },
       "blog/container-image-signing-and-slsa-provenance-with-cosign.html": {
-        "sha256": "f335798ab82227db8f8da1e1c99b4895bc232684b2edfbb700c9281c41c9e92d",
+        "sha256": "34aed0bc716425be1f16cea43e72f52cc1a87d1e55a5c370f1e6263efa2d0192",
         "size_bytes": 21412
       },
       "blog/cross-chain-bridges-and-light-client-cryptographic-verification.html": {
-        "sha256": "f7e00247219742ab11ca73ed39ebb02e1928207be52fab47a559be3252be94dd",
+        "sha256": "d16aadd12af13c39ac99cad1e93fa39073a0fbdefc5b4a7ee515763babb83ca6",
         "size_bytes": 21833
       },
       "blog/database-internals-lsm-trees-vs-b-trees-storage-engines.html": {
-        "sha256": "f9ba76cd249bee395f4c03115e4490ef16bcced39da46e4176ecc89473ac7307",
+        "sha256": "55e7e7133b1b0e587f7e1fec504dd91903211b2b46a79c67c3a52ddb6fc5a5c7",
         "size_bytes": 21517
       },
       "blog/defi-amm-mathematics-and-concentrated-liquidity-mechanics.html": {
-        "sha256": "74f8d40e10a68cd2293129f14e55796f72bc82add1b892f6934f3036c9978fba",
+        "sha256": "eef4d5cc46f6d30c4623986afb2763c6549cb13abe9dc967a25ac156dd1f74d1",
         "size_bytes": 21828
       },
       "blog/distributed-consensus-raft-vs-paxos-and-leaderless-quorums.html": {
-        "sha256": "35897298a8ee61e78a8d035ae6e48cce74320381432ffd7f04ca269be849a22e",
+        "sha256": "7e1c4539f1834d5811070a96924a641a3a7a4f96d7f92f5ca504345cab33c340",
         "size_bytes": 21145
       },
       "blog/dspy-declarative-prompting-optimization.html": {
-        "sha256": "6169e19c7db4cdd54fbd53c3489fb08f6e65ac4fc08c5806bf6ed8cb98935bb3",
+        "sha256": "d1df00fe12d7a15f2c21686837cb5003783052d894718b7f36757392081b1a5c",
         "size_bytes": 19993
       },
       "blog/ebpf-xdp-packet-filtering-and-ddos-mitigation.html": {
-        "sha256": "5ca5bb232d3a1762793374a37dda3a7df058c702166e4baed967a3c539bba999",
+        "sha256": "2e1c05c7ab88c2d5e6af4978409ad4d496fc4680920ed22102ff76b50434cbbd",
         "size_bytes": 19261
       },
       "blog/fail2ban-intrusion-prevention-and-ssh-abuse-mitigation.html": {
-        "sha256": "fd3a31624da6e404ce5319eac2cbb8c6ec637abb122546d7d7c9c16db5bfe3f1",
+        "sha256": "3a63aa68d11727bc46c4415a866ac2cd583d359427a965be1ae1721cb3446226",
         "size_bytes": 20632
       },
       "blog/http3-quic-security-hardening-and-0rtt-mitigation-blueprint.html": {
-        "sha256": "33dba00d27fb6072fe9d2a80d752959064d30836cf213a78123de336a064d90e",
+        "sha256": "adb7bb45a216be05395a42a3cf0a1e6c5f206dffd7b21261790863c9080725ff",
         "size_bytes": 21850
       },
       "blog/kubernetes-pod-security-standards-pss-and-admission-control.html": {
-        "sha256": "108774ac0c10cd8ac1b8dcd80816bce2e2411530492d5fbbc52001e4ff8c1923",
+        "sha256": "fba7627b6d28ea745282834b2bc638dea7d6673ce2f48959122d435e3f1844fd",
         "size_bytes": 21243
       },
       "blog/kv-cache-int4-quantization-long-context.html": {
-        "sha256": "870cc0a1a4d7356c7bdd0b9b9270f9466e89b07259bbde9e60fa0988a734f1a2",
+        "sha256": "30e9b38255e0bba824383a39c40601fab9c84c37f78287d737766c1324232d6e",
         "size_bytes": 19341
       },
       "blog/linux-audit-logging-with-vector-and-clickhouse-dfir.html": {
-        "sha256": "34c9b0dcd59934fd1596d50392917562d957f95f14fbf85bd831eab701f53150",
+        "sha256": "7d07d9277b530597dc98e2465f7173daf313a05ef61a47a928458d76b6ac3884",
         "size_bytes": 21459
       },
       "blog/linux-kernel-sysctl-hardening-network-stack-security.html": {
-        "sha256": "bc2f35bc662cbf14b57be5609efd182d30599d35edf1dd67ed35741e8ba3ea5d",
+        "sha256": "9b110ad171359f3ea0c43caf82b883f3b28aad5226364346b58d15554ca9f3dc",
         "size_bytes": 19882
       },
       "blog/linux-landlock-lsm-unprivileged-sandboxing-blueprint.html": {
-        "sha256": "3469ffae0e70a235db8e59638205b181382d74cb4883b9978f02aae1987203ff",
+        "sha256": "ce290ac3f757ff0bb86cbb523c39a85918353ccf7e253c34906574f7ae9bcae1",
         "size_bytes": 22270
       },
       "blog/linux-seccomp-bpf-syscall-filtering-hardening-guide.html": {
-        "sha256": "5af3b7770bcab857f3be3adc8778525de258a03a419cf794152a4d087cee1972",
+        "sha256": "1e7edbd9749e182136383b45e57d06e4aab37db150f25bb2aec82a74841c3a34",
         "size_bytes": 21879
       },
       "blog/linux-vps-hardening-guide-2026.html": {
-        "sha256": "a49354a993df9b8b6ddd56551e380698e5974f7bc8feb9ca3824fa83dbed0ab8",
+        "sha256": "b08e2a8838f3fde5fef98fd2aa9e1f154073ecd2bedeeaa38ec068e8f77e2247",
         "size_bytes": 23153
       },
       "blog/mev-and-private-mempool-architecture-in-ethereum.html": {
-        "sha256": "5dca38bc5ca9dff514b225daf2d0e9f7c9bc60c732c18ddc7e2b105d900bc9b5",
+        "sha256": "baa82a4350d25d8a99eb563a14745bc34e23558f069e05ceb52209e5e3fb5eb1",
         "size_bytes": 21513
       },
       "blog/minimalist-server-architecture-pure-css-and-static-hosting.html": {
-        "sha256": "4e3fabcbb4cc2bcb72967a1a15e40e352ab1bfe0f672f8ca2c2a9ff8bd4780ce",
+        "sha256": "40ed5a98ce23a68d60f6a48fae92a4e1f4f2e809da1c60d9b4e6b5c371bd1fac",
         "size_bytes": 21668
       },
       "blog/moe-serving-mixture-of-experts-routing.html": {
-        "sha256": "b09d50383647af49225894f797a341c95799d9a5c9ef93a581a9f024e0cfb056",
+        "sha256": "56c2c794747a7510b0a466f4934c8bd7cd64b2055d74f13f60e633987d36e4a9",
         "size_bytes": 19247
       },
       "blog/multi-agent-swarm-orchestration-patterns.html": {
-        "sha256": "aa1d351bd0b7dc454af2cc2fba1f5cb564f76cc7548a95574801e753ba1c096a",
+        "sha256": "cb867b3feaa684799cc41d9d5181fb03c22b223104f452c922fc0779a9ce3ba0",
         "size_bytes": 19776
       },
       "blog/nginx-reverse-proxy-security-hardening-blueprint-2026.html": {
-        "sha256": "bef479ce9e8e84132010170615a48b265f8abcf5943a26a028f9509ee49a3ede",
+        "sha256": "c7dee7f7b65e5a94acd8be7e00b68a7acc2deb11f157e13171bddf22a1d18c22",
         "size_bytes": 19476
       },
       "blog/omnirouter-llm-gateway-routing-fallback-patterns.html": {
-        "sha256": "a7a5c6576cf80d7328add60efede36d3fce0aab7686fdbe41d1ff9089c956777",
+        "sha256": "54fa11d7172928034e4e10145cb964e5fbd7e1c053dc634f159e08b6c9edd431",
         "size_bytes": 22122
       },
       "blog/pam-tally2-faillock-account-lockout-policy-guide.html": {
-        "sha256": "813bf0baa4ecc19eec4c8790632495ccd337b421c3fd0a4caf2a11a6cd61b98a",
+        "sha256": "faefeea828925f50505cfe0a7e5db1c72bc63d8080d0ffdd2dc63dab1b472516",
         "size_bytes": 20022
       },
       "blog/post-quantum-cryptography-mldsa-and-mlkem-migration.html": {
-        "sha256": "4bf19a324ec4da65cf921c96677d36068723f516d1f5c3ff491c06031e4832c0",
+        "sha256": "fe95801964576feeac7f6c8626072481556059fcbf36d71fbdc5a25fcdccfbcb",
         "size_bytes": 21061
       },
       "blog/rust-in-linux-kernel-security-and-memory-safety-blueprint-2026.html": {
-        "sha256": "b4472d5b97cbb7d53758ba136ce156dad8bb54628b774fde95190fc92f4e7ca6",
+        "sha256": "155460616fee0e7015857513f3995af1d530bcb79e9fdd26f4bf95dfea7ee5ee",
         "size_bytes": 23576
       },
       "blog/securing-web-applications-with-strict-content-security-policy.html": {
-        "sha256": "3da85c4615e39fa28cec3f9319ddd741d245aa6d134fd4eac67c080e2349716a",
+        "sha256": "f6c48a9b219ba653a22b33d0e83ab4db6439c05b244be9b1b94fc85993cf860d",
         "size_bytes": 20210
       },
       "blog/slora-adapter-multiplexing-single-gpu.html": {
-        "sha256": "d1bae62d446e397f73164c08a86474db493f45484b80b6cd129768ce04344d2f",
+        "sha256": "3852b9e2f217b7b24d5b303d2753fcbf834650d9520c17b0a23f94b58d08540d",
         "size_bytes": 19109
       },
       "blog/smart-contract-security-and-evm-bytecode-hardening.html": {
-        "sha256": "1eda7d42cf81a16ae82f3e0d2abd41ea3e14b1688e62150c80da9b80c3f03aad",
+        "sha256": "403db3097681ac7dadc20ee7bf008e01aee4d4ab46d0629721e3db163fd53da2",
         "size_bytes": 22412
       },
       "blog/speculative-decoding-and-medusa-multi-token-llm-serving.html": {
-        "sha256": "7920b4f0c0d3b9beb5f7a1f7e0ea5b58bf6cf533594371bcf467132fd3a4d630",
+        "sha256": "3a235fa7db1fc8f17563750628e1454e464ca6445048aec5941efbfaf846ccdf",
         "size_bytes": 21312
       },
       "blog/ssh-certificates-vault-ca-short-lived-authentication.html": {
-        "sha256": "f4ce544cc13db48c32de60ab82c12ea0602a0f7ca2b21c5a7b3451d24a81fbc3",
+        "sha256": "a6b14839c89f3bbc845d23ff3fe4babb51c9724c64668c0c00462798f3d7541f",
         "size_bytes": 20967
       },
       "blog/structured-output-generation-logits-constraints.html": {
-        "sha256": "6fa643ba46d61ac9f7baea23daa375cf5c928a6f6e5f4bfd6d4583f3d52d687e",
+        "sha256": "140f260b1148d179237c96df071b1cc5ec9c3d1969ba8ece8751e96723eb4eff",
         "size_bytes": 25880
       },
       "blog/systemd-service-sandboxing-and-security-hardening.html": {
-        "sha256": "e212f9adeb80e6cf10b95cb43f7f3a45a6f99651176b3ad8848f216d3ccb7b5e",
+        "sha256": "2e076efb679c9f87e7a3d9b5da4657d7fd1ab8756813b5c81290b8ccc419cbaa",
         "size_bytes": 20721
       },
       "blog/ufw-firewall-hardening-and-rate-limiting-blueprint-2026.html": {
-        "sha256": "85ce0b1ef3901ccfa8e1e10a97ab0e27abeb4c310377d526db9bd6549c90506e",
+        "sha256": "36164e9cfaf17422b52cfa8b49d950ce01aa1f19ca770642d24957100cae75eb",
         "size_bytes": 19570
       },
       "blog/understanding-linux-ebpf-security-monitoring.html": {
-        "sha256": "b16a53fcb8cfc23bbe2d0cc4463c76e0b5f3d417af1094c9af68174fbe7b2a82",
+        "sha256": "a409cbad0b1b41465b640f3c34335c33e323c566ab9d1bdda4d8da689ab705bf",
         "size_bytes": 20889
       },
       "blog/vllm-pagedattention-high-throughput-inference-tuning.html": {
-        "sha256": "d563bab40adaa3b2571bedefbc574ce9ad971f8c53bd3db41fbe21b6cacb535a",
+        "sha256": "6393ec5e58ef45fe57707a634280b791dec28abfe493314f985a1ecd76fc8db7",
         "size_bytes": 27594
       },
       "blog/webgpu-llm-inference-browser-sandbox.html": {
-        "sha256": "e125516471c38ad715cdfb976a42100e8bf6f1cebce51ccb6bb166ae97321459",
+        "sha256": "d32ea4a6d3d5ef0f7f69bb11d44e594e71f23a000ad56181bc2bd5b4535d158f",
         "size_bytes": 20022
       },
       "blog/wireguard-vpn-tunneling-for-secure-vps-mesh-networks.html": {
-        "sha256": "c715ec38c78a1bae02e9e58b69c1adc41aadbbc7ae9dffe99af9a7d04e676640",
+        "sha256": "54ba6fbbe43a1347f0a61a9dc976f7abdda3c756086aabcbbe32062024aba111",
         "size_bytes": 19467
       },
       "blog/zero-knowledge-proofs-snarks-vs-starks-in-l2-rollups.html": {
-        "sha256": "3c9f1e9678a32fe8460d99ec9de901bf454985b3e53238f4bba9f38721067b4f",
+        "sha256": "5fb0cc9b66f2de37888f2f732bbb244e68d660417fefbeafdc8035ea031cc7a8",
         "size_bytes": 22622
       },
       "blog/zero-trust-microservices-with-wasm-runtime-sandboxing.html": {
-        "sha256": "f0b205c5b1a23bdb6925c902233d01c8bcb6dc8ec5bc84b8dc1593bd277efee7",
+        "sha256": "e69788dda35272f879b05d67cebcd3d6bc4f89733e40c8df5a9b534cebf5e744",
         "size_bytes": 22002
       },
       "blog/zero-trust-ssh-access-with-fido2-and-ssh-ca.html": {
-        "sha256": "07132d315ef8ad671a54b9b2a96adda671c4230789cc645f73f7363a0455a7fb",
+        "sha256": "ff7f8765d8bee5fa501399aed2dd2087768d4168c6c636154c5dcd7956b173b7",
         "size_bytes": 20500
       }
     },
@@ -445,7 +445,7 @@
     },
     "blueprints": {
       "blueprints/the-ultimate-linux-and-cloud-security-architecture-cheatsheet.html": {
-        "sha256": "cb1a9f1873107c67083d0f75baa079ec1c622dded311360139d2c843dc48908a",
+        "sha256": "6c032057d98acc69f521f384386ffd0a26ed8bd10c62d6ff5dfc79b7727dfe24",
         "size_bytes": 21475
       },
       "blueprints/topology-builder.html": {
