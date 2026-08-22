@@ -6,7 +6,7 @@
     "pgp_public_key": "https://zyekh.com/gpg-key.asc",
     "license": "MIT"
   },
-  "generated_at": "2026-08-22T04:44:22.386191+00:00",
+  "generated_at": "2026-08-22T04:54:19.873134+00:00",
   "hash_algorithm": "SHA-256",
   "artifacts": {
     "core_manifests": {
@@ -19,7 +19,7 @@
         "size_bytes": 348189
       },
       "tools/tools-manifest.json": {
-        "sha256": "16cf87c202463f09946fa77a8464328cd3f11e41dc3a8822fc4f91bea555cf49",
+        "sha256": "5ae22011e9a2c54bc0e48ca9b1e8657f80940cb6b93686c0b81aae67a1c66bc2",
         "size_bytes": 75606
       },
       "gpg-key.asc": {
@@ -35,7 +35,7 @@
         "size_bytes": 17757
       },
       "sw.js": {
-        "sha256": "7cfb4081fd24f71363cb5f50dc5f8addecdf1d2b1d0243294ad00ce5e37862e1",
+        "sha256": "766ab1cbab831001901dc3da157ccad3843c451c37d1903be309b8b8b167020b",
         "size_bytes": 3546
       },
       "manifest.json": {
