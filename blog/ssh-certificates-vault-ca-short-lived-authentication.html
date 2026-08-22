@@ -47,6 +47,14 @@
       "dateModified": "2026-08-05",
       "wordCount": 1750,
       "inLanguage": "en-US",
+      "speakable": {
+        "@type": "SpeakableSpecification",
+        "cssSelector": [
+          ".exec-summary",
+          ".article-excerpt",
+          ".page-subtitle"
+        ]
+      },
       "author": {
         "@type": "Person",
         "name": "Zyekh Abdul Qadir Jailani",
@@ -111,13 +119,13 @@
 }
 </script>
 <link href="/assets/fonts/fonts.min.css?v=6690c84c" integrity="sha384-Ds9KQzOzX4zwIT/JqXPp7NWh4IhF4deXN+jMExMza45iXm4wN2Nkq1vC4dHh53aj" crossorigin="anonymous" rel="stylesheet"/>
-<link href="/assets/css/shared.min.css?v=496abfc3" integrity="sha384-3uliA0S+XsrT9kIYtfqZWNW0JzkQ3tbJm+VYRzpoPpn3YTVnkR0kla+L/Xiq7wWc" crossorigin="anonymous" rel="stylesheet"/>
+<link href="/assets/css/shared.min.css?v=791f73ce" integrity="sha384-FLZiZAuVmM2aqES7mPQJxNVvN4Crgsm+zW0iJhc6SbxBA4DXlHz1yjbGHgQk2i9e" crossorigin="anonymous" rel="stylesheet"/>
 <link href="/assets/css/blog.min.css?v=84d06dee" integrity="sha384-MSrCZgwddH7X+cByqetND4vRUUFEYrpNwgB6pmTFyRgwqE5ugfqNvnu0Qso8XKPx" crossorigin="anonymous" rel="stylesheet"/>
-<script defer="" src="/assets/js/site-nav.min.js?v=e3c86969" integrity="sha384-omOc7bD0CSQ/cU5NZlkkPrhT96MZj79TxIUS1XsRBeHHzZnRRMpJF15f2Ss4AHBf" crossorigin="anonymous"></script>
-<script defer="" src="/assets/js/article-actions.min.js?v=08e3ed60" integrity="sha384-vxj8HnyBDfHF87frqcywrS+Iipxk78yQh0UWUf9O5bDIULyCBSLTOd0a1JnFUb0Q" crossorigin="anonymous"></script>
+<script defer="" src="/assets/js/site-nav.min.js?v=0c56a47e" integrity="sha384-T5CTVk38IwtCQ0cOZrAIbOw8DIzdq1HRP2azR8jrpoQS2BzLJlcB7157jVxLIPMr" crossorigin="anonymous"></script>
+<script defer="" src="/assets/js/article-actions.min.js?v=1f6f7713" integrity="sha384-UkC7rc8fqj3PgHj/j68P4EwJukaVHT4nB/2UycHPytf6/1O69p1bu7XF8tzIVEAS" crossorigin="anonymous"></script>
   <script>!function(){var e=localStorage.getItem("theme");if(!e){e=window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.setAttribute("data-theme",e)}();</script>
-  <link rel="preload" href="/assets/css/shared.min.css?v=496abfc3" integrity="sha384-3uliA0S+XsrT9kIYtfqZWNW0JzkQ3tbJm+VYRzpoPpn3YTVnkR0kla+L/Xiq7wWc" crossorigin="anonymous" as="style">
-  <link rel="preload" href="/assets/js/site-nav.min.js?v=e3c86969" integrity="sha384-omOc7bD0CSQ/cU5NZlkkPrhT96MZj79TxIUS1XsRBeHHzZnRRMpJF15f2Ss4AHBf" crossorigin="anonymous" as="script">
+  <link rel="preload" href="/assets/css/shared.min.css?v=791f73ce" integrity="sha384-FLZiZAuVmM2aqES7mPQJxNVvN4Crgsm+zW0iJhc6SbxBA4DXlHz1yjbGHgQk2i9e" crossorigin="anonymous" as="style">
+  <link rel="preload" href="/assets/js/site-nav.min.js?v=0c56a47e" integrity="sha384-T5CTVk38IwtCQ0cOZrAIbOw8DIzdq1HRP2azR8jrpoQS2BzLJlcB7157jVxLIPMr" crossorigin="anonymous" as="script">
   <link rel="alternate" type="application/rss+xml" title="Zyekh RSS Feed" href="https://zyekh.com/feed.xml">
   <link rel="alternate" type="application/atom+xml" title="Zyekh Atom Feed" href="https://zyekh.com/atom.xml">
   <link rel="alternate" type="application/feed+json" title="Zyekh JSON Feed" href="https://zyekh.com/feed.json">
@@ -154,6 +162,7 @@
       </div>
       <div class="article-actions">
         <button class="btn-share" id="shareBtn" type="button">Share</button>
+        <button class="btn-action" id="copyMdBtn" type="button">Copy for AI</button>
         <button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
         <button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
       </div>

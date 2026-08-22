@@ -85,6 +85,35 @@ class SiteNav extends HTMLElement {
   }
 
   _initNav() {
+    // Embed Mode Detection (?embed=true)
+    if (window.location.search && window.location.search.includes('embed=true')) {
+      document.documentElement.setAttribute('data-embed', 'true');
+    }
+
+    // W3C Speculation Rules API (0ms Instant Background Prerendering)
+    if (HTMLScriptElement.supports && HTMLScriptElement.supports('speculationrules')) {
+      if (!document.querySelector('script[type="speculationrules"]')) {
+        try {
+          const specScript = document.createElement('script');
+          specScript.type = 'speculationrules';
+          specScript.textContent = JSON.stringify({
+            prerender: [
+              {
+                source: 'list',
+                urls: ['/tools/', '/blog/', '/blueprints/', '/about/'],
+                eagerness: 'moderate'
+              },
+              {
+                where: { href_matches: '/*' },
+                eagerness: 'conservative'
+              }
+            ]
+          });
+          document.head.appendChild(specScript);
+        } catch (_) {}
+      }
+    }
+
     // Centralized Service Worker Registration (Clean & Lightweight)
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {

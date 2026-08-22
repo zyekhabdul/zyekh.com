@@ -130,7 +130,18 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; 
 
 ---
 
-## 6. PRE-DEPLOYMENT QA GATE CHECKLIST
+## 6. VIRAL GROWTH & AI INGESTION ACCELERATORS
+
+1. **W3C Speculation Rules API (0ms Instant Load)**:
+   - All subdomains must inject speculation rules for background prerendering target routes upon moderate user hover.
+2. **AI Citation Magnet & Speakable Schema**:
+   - Technical deep-dives must include `SpeakableSpecification` in JSON-LD and provide a 1-click `[ Copy for AI ]` action to circulate canonical citations.
+3. **Embeddable Widget Mode (`?embed=true`)**:
+   - Interactive calculators and generators must support clean iframe embedding (`data-embed="true"`) to harvest organic backlinks from external developer sites.
+
+---
+
+## 7. PRE-DEPLOYMENT QA GATE CHECKLIST
 
 Before deploying any new page or subdomain service, the following checks must pass:
 1. `[ QA 1 ]` Zero emoji characters in code or content (verified by `check_emojis.py`).
@@ -140,3 +151,4 @@ Before deploying any new page or subdomain service, the following checks must pa
 5. `[ QA 5 ]` Responsive viewport verification at 360px, 768px, 960px, 1280px, and 1920px.
 6. `[ QA 6 ]` Live HTTP Smoke Test 200 OK on all routes without CSP errors.
 7. `[ QA 7 ]` Valid Schema.org JSON-LD without duplicate `@id` conflicts.
+8. `[ QA 8 ]` Speculation Rules API and Speakable schema verification.

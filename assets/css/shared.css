@@ -1623,4 +1623,25 @@
     p { font-size: 0.95rem; line-height: 1.55; }
     .custom-card, .tool-box { padding: var(--space-md); }
   }
+
+  /* Embedded Widget Architecture (?embed=true) */
+  html[data-embed="true"] site-nav,
+  html[data-embed="true"] .breadcrumb,
+  html[data-embed="true"] .page-header,
+  html[data-embed="true"] .seo-content-block,
+  html[data-embed="true"] .seo-block,
+  html[data-embed="true"] footer.footer,
+  html[data-embed="true"] .reading-progress-bar {
+    display: none !important;
+  }
+
+  html[data-embed="true"] .main-container {
+    max-width: 100% !important;
+    padding: 0.5rem !important;
+    margin: 0 !important;
+  }
+
+  html[data-embed="true"] body {
+    background: transparent !important;
+  }
 }

@@ -130,4 +130,62 @@ document.addEventListener('DOMContentLoaded', function () {
       URL.revokeObjectURL(url);
     });
   }
+
+  // 1-Click Copy Markdown with Canonical Citation for AI / LLM
+  var copyMdBtn = document.getElementById('copyMdBtn');
+  if (copyMdBtn) {
+    copyMdBtn.addEventListener('click', function () {
+      var titleEl = document.querySelector('.article-title');
+      var title = titleEl ? titleEl.innerText : document.title;
+      var catEl = document.querySelector('.meta-tag');
+      var category = catEl ? catEl.innerText : '';
+      var content = document.querySelector('.article-content');
+      if (!content) return;
+
+      var mdText = '# ' + title + '\n\n';
+      if (category) mdText += '**Category**: ' + category + '\n\n';
+      mdText += '**Canonical URL**: ' + window.location.href + '\n\n';
+      mdText += '**Author**: Zyekh Abdul Qadir Jailani (https://zyekh.com)\n\n---\n\n';
+
+      var elements = content.querySelectorAll('h2, h3, p, ul, ol, pre');
+      elements.forEach(function (el) {
+        var tag = el.tagName.toLowerCase();
+        if (tag === 'h2') {
+          mdText += '\n## ' + el.innerText.trim() + '\n\n';
+        } else if (tag === 'h3') {
+          mdText += '\n### ' + el.innerText.trim() + '\n\n';
+        } else if (tag === 'p') {
+          mdText += el.innerText.trim() + '\n\n';
+        } else if (tag === 'ul' || tag === 'ol') {
+          el.querySelectorAll('li').forEach(function (li) {
+            mdText += '- ' + li.innerText.trim() + '\n';
+          });
+          mdText += '\n';
+        } else if (tag === 'pre') {
+          var code = el.querySelector('code');
+          var lang = '';
+          if (code) {
+            var classes = Array.from(code.classList);
+            for (var i = 0; i < classes.length; i++) {
+              if (classes[i].indexOf('language-') === 0) {
+                lang = classes[i].replace('language-', '');
+                break;
+              }
+            }
+          }
+          mdText += '```' + lang + '\n' + el.innerText.trim() + '\n```\n\n';
+        }
+      });
+
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(mdText).then(function () {
+          var orig = copyMdBtn.textContent;
+          copyMdBtn.textContent = 'Copied for AI!';
+          setTimeout(function () {
+            copyMdBtn.textContent = orig;
+          }, 2000);
+        }).catch(function () {});
+      }
+    });
+  }
 });

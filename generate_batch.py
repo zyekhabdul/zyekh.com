@@ -128,6 +128,10 @@ def generate_article_html(article_data, current_cache_ver=None):
                 "dateModified": date_pub,
                 "wordCount": word_count,
                 "inLanguage": "en-US",
+                "speakable": {
+                    "@type": "SpeakableSpecification",
+                    "cssSelector": [".exec-summary", ".article-excerpt", ".page-subtitle"]
+                },
                 "author": {
                     "@type": "Person",
                     "name": "Zyekh Abdul Qadir Jailani",
@@ -244,6 +248,7 @@ def generate_article_html(article_data, current_cache_ver=None):
       </div>
       <div class="article-actions">
         <button class="btn-share" id="shareBtn" type="button">Share</button>
+        <button class="btn-action" id="copyMdBtn" type="button">Copy for AI</button>
         <button class="btn-action" id="downloadMdBtn" type="button">Download .md</button>
         <button class="btn-action" id="downloadPdfBtn" type="button">Download .pdf</button>
       </div>
