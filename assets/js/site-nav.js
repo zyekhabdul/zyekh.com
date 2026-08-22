@@ -75,10 +75,10 @@ class SiteNav extends HTMLElement {
               <span class="theme-icon-dark">MODE: DARK</span>
             </button>
             <button class="pin-toggle" id="pinToggle" aria-label="Pin tool to Home" title="Pin this tool to Home" type="button" style="display:none;">
-              <svg class="pin-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <svg class="pin-svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
               </svg>
-              <span class="pin-text">PIN TO HOME</span>
+              <span class="pin-text">PIN: HOME</span>
             </button>
           </nav>
         </div>
@@ -170,7 +170,7 @@ class SiteNav extends HTMLElement {
           pinBtn.classList.toggle('pinned', pinned);
           const text = pinBtn.querySelector('.pin-text');
           if (text) {
-            text.textContent = pinned ? 'UNPIN FROM HOME' : 'PIN TO HOME';
+            text.textContent = pinned ? 'PIN: SAVED' : 'PIN: HOME';
           }
           const title = pinned ? 'Unpin this tool from Home' : 'Pin this tool to Home';
           pinBtn.setAttribute('title', title);
@@ -193,8 +193,6 @@ class SiteNav extends HTMLElement {
           }
           localStorage.setItem('pinnedTools', JSON.stringify(pinned));
           updatePinUI();
-          pinBtn.style.transform = 'scale(1.3)';
-          setTimeout(() => pinBtn.style.transform = 'scale(1)', 200);
         });
       }
     }

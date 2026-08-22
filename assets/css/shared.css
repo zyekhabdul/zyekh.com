@@ -296,6 +296,7 @@
     justify-content: center;
     min-width: 124px;
     width: 124px;
+    height: 30px;
     box-sizing: border-box;
     background: var(--bg-card);
     border: 1.5px solid var(--border-color-hover);
@@ -329,42 +330,48 @@
   :root:not([data-theme="light"]) .theme-icon-light { display: inline-block; }
   :root:not([data-theme="light"]) .theme-icon-dark { display: none; }
 
-  /* Pin Tool Toggle Desktop (Compact Icon Button) */
+  /* Pin Tool Toggle */
   .pin-toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
-    min-width: 32px;
+    gap: 0.35rem;
+    min-width: 110px;
+    width: 110px;
+    height: 30px;
     box-sizing: border-box;
     background: var(--bg-card);
     border: 1.5px solid var(--border-color-hover);
     color: var(--text-main);
-    border-radius: 50%;
+    font-size: 0.78rem;
+    font-weight: 700;
+    font-family: 'Fira Code', monospace;
+    padding: 0.35rem 0.4rem;
+    border-radius: 20px;
     cursor: pointer;
-    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
     margin-left: 0.5rem;
-    padding: 0;
     touch-action: manipulation;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     flex-shrink: 0;
+    white-space: nowrap;
   }
   .pin-toggle:hover {
     border-color: var(--text-main);
-    color: var(--text-main);
-    transform: scale(1.08);
+    background-color: var(--bg-card);
   }
   .pin-toggle.pinned {
-    background: var(--text-main);
-    color: var(--bg-main);
+    background: var(--border-color);
     border-color: var(--text-main);
+    color: var(--text-main);
   }
   .pin-toggle.pinned .pin-svg {
     fill: currentColor;
   }
   .pin-toggle .pin-text {
-    display: none;
+    white-space: nowrap;
+    display: inline-block;
+    text-align: center;
   }
 
   /* Navigation Bar */
@@ -1114,16 +1121,17 @@
   [data-theme="light"] .pin-toggle {
     color: #09090b;
     background: #ffffff;
-    border-color: #d4d4d8;
+    border-color: #71717a;
   }
   [data-theme="light"] .pin-toggle:hover {
     border-color: #09090b;
+    background: #ffffff;
     color: #09090b;
   }
   [data-theme="light"] .pin-toggle.pinned {
-    background: #09090b;
-    color: #ffffff;
+    background: #e4e4e7;
     border-color: #09090b;
+    color: #09090b;
   }
 
   /* Filter Bar & Pills */
